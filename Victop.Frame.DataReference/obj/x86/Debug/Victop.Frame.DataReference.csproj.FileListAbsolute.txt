@@ -1,0 +1,8 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.DataReference\bin\x86\Debug\Victop.Frame.DataReference.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.DataReference\bin\x86\Debug\Victop.Frame.DataReference.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.DataReference.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.DataReference.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.DataReference\obj\x86\Debug\Victop.Frame.DataReference.Properties.Resources.resources
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.DataReference\obj\x86\Debug\Victop.Frame.DataReference.csproj.GenerateResource.Cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.DataReference\obj\x86\Debug\Victop.Frame.DataReference.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.DataReference\obj\x86\Debug\Victop.Frame.DataReference.pdb

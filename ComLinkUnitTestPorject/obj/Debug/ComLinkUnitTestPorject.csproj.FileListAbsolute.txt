@@ -1,0 +1,14 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\bin\Debug\ComLinkUnitTestPorject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\bin\Debug\ComLinkUnitTestPorject.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\bin\Debug\Victop.Frame.ComLink.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\bin\Debug\Ice.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\bin\Debug\Victop.Frame.CoreLibrary.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\bin\Debug\Glacier2.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\bin\Debug\Victop.Frame.PublicLib.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\bin\Debug\Newtonsoft.Json.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\bin\Debug\Victop.Frame.ComLink.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\bin\Debug\Victop.Frame.CoreLibrary.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\bin\Debug\Victop.Frame.PublicLib.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\obj\Debug\ComLinkUnitTestPorject.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\obj\Debug\ComLinkUnitTestPorject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ComLinkUnitTestPorject\obj\Debug\ComLinkUnitTestPorject.pdb

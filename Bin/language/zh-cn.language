@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<resourcecollection language="zh-cn">
+  <!--ToolBar-->
+	<resource id="L_R_1">
+		<value>关于</value>
+	</resource>
+	<resource id="L_R_2">
+		<value>登录</value>
+	</resource>
+	<resource id="L_R_3">
+		<value>取消</value>
+	</resource>
+	<resource id="L_R_4">
+		<value>注册信息</value>
+	</resource>
+	<resource id="L_R_5">
+		<value>服务器类型</value>
+	</resource>
+	<resource id="L_R_6">
+		<value>服务器名称</value>
+	</resource>
+	<resource id="L_R_7">
+		<value>系统设置</value>
+	</resource>
+	<resource id="L_R_8">
+		<value>POS版客户端</value>
+	</resource>
+	<resource id="L_R_9">
+		<value>SOA版客户端</value>
+	</resource>
+	<resource id="L_R_10">
+		<value>选择初始启动插件</value>
+	</resource>
+	<resource id="L_R_11">
+		<value>主服务器和端口信息</value>
+	</resource>
+	<resource id="L_R_12">
+		<value>主服务器地址</value>
+	</resource>
+	<resource id="L_R_13">
+		<value>端口</value>
+	</resource>
+	<resource id="L_R_14">
+		<value>业务系统</value>
+	</resource>
+	<resource id="L_R_15">
+		<value>用户名</value>
+	</resource>
+	<resource id="L_R_16">
+		<value>密码</value>
+	</resource>
+	<resource id="L_R_17">
+		<value>菜单</value>
+	</resource>
+	<resource id="L_R_18">
+		<value>飞道云</value>
+	</resource>
+	<resource id="L_R_19">
+		<value>企业云</value>
+	</resource>
+	<resource id="L_R_20">
+		<value>本地云</value>
+	</resource>
+	<resource id="L_R_21">
+		<value>退出</value>
+	</resource>
+	<resource id="L_R_22">
+		<value>删除</value>
+	</resource>
+	<resource id="L_R_23">
+		<value>全消</value>
+	</resource>
+	<resource id="L_R_24">
+		<value>保存</value>
+	</resource>
+	<resource id="L_R_25">
+		<value>查询</value>
+	</resource>
+	<resource id="L_R_26">
+		<value>打印</value>
+	</resource>
+	<resource id="L_R_27">
+		<value>新增</value>
+	</resource>
+	<resource id="L_R_28">
+		<value>删行</value>
+	</resource>
+	<resource id="L_R_29">
+		<value>删单</value>
+	</resource>
+	<resource id="L_R_30">
+		<value>确认</value>
+	</resource>
+	<resource id="L_R_31">
+		<value>冲销</value>
+	</resource>
+	<resource id="L_R_32">
+		<value>添加附件</value>
+	</resource>
+	<resource id="L_R_33">
+		<value>打开另存附件</value>
+	</resource>
+	<resource id="L_R_34">
+		<value>设计</value>
+	</resource>
+	<resource id="L_R_35">
+		<value>新建</value>
+	</resource>
+	<resource id="L_R_36">
+		<value>打印权限</value>
+	</resource>
+	<resource id="L_R_37">
+		<value>新单</value>
+	</resource>
+	<resource id="L_R_38">
+		<value>设默认值</value>
+	</resource>
+	<resource id="L_R_39">
+		<value>刷新</value>
+	</resource>
+	<resource id="L_R_40">
+		<value>切换</value>
+	</resource>
+	<resource id="L_R_41">
+		<value>新增同级节点</value>
+	</resource>
+	<resource id="L_R_42">
+		<value>新增下级节点</value>
+	</resource>
+	<resource id="L_R_43">
+		<value>删除节点</value>
+	</resource>
+	<resource id="L_R_44">
+		<value>升级</value>
+	</resource>
+	<resource id="L_R_45">
+		<value>允许拖动</value>
+	</resource>
+	<resource id="L_R_46">
+		<value>返回数据</value>
+	</resource>
+	<resource id="L_R_47">
+		<value>返回所有数据</value>
+	</resource>
+	<resource id="L_R_48">
+		<value>搜索</value>
+	</resource>
+  <!--进销存Left-->
+  <resource id="L_R_49">
+    <value>日期:从</value>
+  </resource>
+  <resource id="L_R_50">
+    <value>到</value>
+  </resource>
+  <resource id="L_R_51">
+    <value>模糊查询</value>
+  </resource>
+  <resource id="L_R_52">
+    <value>凭证状态</value>
+  </resource>
+  <resource id="L_R_53">
+    <value>本节点</value>
+  </resource>
+  <resource id="L_R_54">
+    <value>未确认</value>
+  </resource>
+  <resource id="L_R_55">
+    <value>已确认</value>
+  </resource>
+  <resource id="L_R_56">
+    <value>所有</value>
+  </resource>
+  <resource id="L_R_57">
+    <value>所有未确认单据</value>
+  </resource>
+  <resource id="L_R_58">
+    <value>未送达业务</value>
+  </resource>
+  <resource id="L_R_59">
+    <value>后续已处理</value>
+  </resource>
+  <!--进销存TopGridFrom-->
+  <resource id="L_R_60">
+    <value>单号</value>
+  </resource>
+  <resource id="L_R_61">
+    <value>门店编号</value>
+  </resource>
+  <resource id="L_R_62">
+    <value>备注</value>
+  </resource>
+  <resource id="L_R_63">
+    <value>日期</value>
+  </resource>
+  <resource id="L_R_64">
+    <value>门店</value>
+  </resource>
+  <resource id="L_R_65">
+    <value>相关单号</value>
+  </resource>
+  <resource id="L_R_66">
+    <value>供应商编号</value>
+  </resource>
+  <resource id="L_R_67">
+    <value>金额</value>
+  </resource>
+  <resource id="L_R_68">
+    <value>供应商</value>
+  </resource>
+  <resource id="L_R_69">
+    <value>订单单号</value>
+  </resource>
+  <resource id="L_R_70">
+    <value>客户编号</value>
+  </resource>
+  <resource id="L_R_71">
+    <value>客户名称</value>
+  </resource>
+  <resource id="L_R_72">
+    <value>业务员</value>
+  </resource>
+  <resource id="L_R_73">
+    <value>税率</value>
+  </resource>
+  <resource id="L_R_74">
+    <value>销售单号</value>
+  </resource>
+  <resource id="L_R_75">
+    <value>调拨单号</value>
+  </resource>
+  <resource id="L_R_76">
+    <value>调出门店</value>
+  </resource>
+  <resource id="L_R_77">
+    <value>调入门店</value>
+  </resource>
+  <resource id="L_R_78">
+    <value>产品大类</value>
+  </resource>
+  <resource id="L_R_79">
+    <value>产品种类</value>
+  </resource>
+  <resource id="L_R_80">
+    <value>产品品牌</value>
+  </resource>
+  <resource id="L_R_81">
+    <value>盘点单号</value>
+  </resource>
+  <resource id="L_R_82">
+    <value>盘点门店</value>
+  </resource>
+  <resource id="L_R_83">
+    <value>仓库编号</value>
+  </resource>
+  <resource id="L_R_84">
+    <value>名称</value>
+  </resource>
+  <resource id="L_R_85">
+    <value>类别</value>
+  </resource>
+  <resource id="L_R_86">
+    <value>品牌</value>
+  </resource>
+  <resource id="L_R_87">
+    <value>型号</value>
+  </resource>
+  <resource id="L_R_88">
+    <value>摆样类型</value>
+  </resource>
+  
+	<resource id="L_R_89">
+		<value>登录</value>
+	</resource>
+                <resource id="L_R_90">
+		<value>打印</value>
+	</resource>
+	<resource id="L_R_91">
+		<value>清单</value>
+	</resource>
+	<resource id="L_R_92">
+		<value>新单</value>
+	</resource>
+	<resource id="L_R_93">
+		<value>确认</value>
+	</resource>
+	<resource id="L_R_94">
+		<value>执行</value>
+	</resource>
+	<resource id="L_R_95">
+		<value>全选</value>
+	</resource>
+	<resource id="L_R_96">
+		<value>刷新数据</value>
+	</resource>
+</resourcecollection>

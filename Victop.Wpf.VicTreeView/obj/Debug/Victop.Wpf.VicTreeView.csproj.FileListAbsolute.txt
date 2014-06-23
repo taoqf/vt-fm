@@ -1,0 +1,13 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\obj\Debug\GeneratedInternalTypeHelper.g.cs
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\obj\Debug\Victop.Wpf.VicTreeView_MarkupCompile.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\obj\Debug\Victop.Wpf.VicTreeView_MarkupCompile.lref
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\obj\Debug\Themes\TreeView.baml
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\obj\Debug\Victop.Wpf.VicTreeView.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\obj\Debug\Victop.Wpf.VicTreeView.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\bin\Debug\Victop.Wpf.VicTreeView.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\bin\Debug\Victop.Wpf.VicTreeView.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\obj\Debug\Themes\generic.baml
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\obj\Debug\Victop.Wpf.VicTreeView.g.resources
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\obj\Debug\Victop.Wpf.VicTreeView.Properties.Resources.resources
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\obj\Debug\Victop.Wpf.VicTreeView.csproj.GenerateResource.Cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicTreeView\obj\Debug\Victop.Wpf.VicTreeView.csprojResolveAssemblyReference.cache

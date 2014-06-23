@@ -1,0 +1,52 @@
+﻿<Window x:Class="VictopControlShowDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+        Title="MainWindow" Height="500" Width="500">
+    <Window.Resources>
+        <ImageBrush x:Key="aa" ImageSource="run-btn.png"/>
+    </Window.Resources>
+    <Grid Loaded="Grid_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30">
+            </RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button Content="添加" Name="AddTabItem" Click="AddTabItem_Click"></Button>
+            <Button Content="ShowWindow" Name="ShowWindow" Click="ShowWindow_Click"></Button>
+            <Button Content="测试GridForm网格" Name="testGridForm" Click="testGridForm_Click"></Button>
+            <Button Content="测试TreeView" Name="testTreeView" Click="testTreeView_Click"></Button>
+            <Button Content="测试GridToolbar" Name="testGridToolbar" Click="testGridToolbar_Click"></Button>
+            <Button Content="测试DataGrid" Name="testDataGrid" Click="testDataGrid_Click"></Button>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <controls:TabControl Name="tControl"  AllowAddNew="False">
+                <controls:TabItem Header="首页" Height="40" Width="100">
+                    <controls:VicGridForm>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100"></RowDefinition>
+                            <RowDefinition  Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <controls:VicDatePickerNormal Name="dPicker" StringFormat="yyyy-MM-dd HH:mm:ss" Grid.Column="0" Grid.Row="0"  Width="150" Height="24" ></controls:VicDatePickerNormal>
+                            <controls:VicDatePickerNormal Name="dPicker1" StringFormat="yyyy-MM-dd HH:mm:ss" Grid.Column="0" Grid.Row="0"  Width="150" Height="24" ></controls:VicDatePickerNormal>
+                            <DatePicker Width="150"></DatePicker>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1">
+                            <Button  Grid.Column="1" Width="67" Height="23" BorderThickness="0" Padding="0">
+                            <Image Source="run-btn.png" Width="67" Height="23"></Image>
+                        </Button>
+                            <controls:VicTextBox Name="tbox" Width="200" VicTextBoxClick="tbox_VicTextBoxClick"></controls:VicTextBox>
+                        </StackPanel>
+                            <Label FontFamily="微软雅黑" Content="飞道云" FontSize="16" Height="37" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Padding="10,0,0,0" Grid.Row="1" Grid.Column="0" Background="#fcfcfc"></Label>
+                    </controls:VicGridForm>
+                    </controls:TabItem>
+            </controls:TabControl>
+        </Grid>
+    </Grid>
+</Window>

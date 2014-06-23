@@ -1,0 +1,36 @@
+﻿<Window x:Class="ThemeManagerPlugin.Views.ThemesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="531" Width="680" WindowStyle="None" AllowsTransparency="True" Style="{DynamicResource ShadowWindow}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition RowDefinition.Height="45"/>
+            <RowDefinition RowDefinition.Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid  Grid.Row="0"    Name="titleBar" MouseMove="titleBar_MouseMove" Style="{DynamicResource ThemesFrmTopGridStyle}">
+
+            <Button Content=""  Name="Mini" HorizontalAlignment="Right" Margin="0,0,33,0" VerticalAlignment="Top" Width="34" Style="{DynamicResource btnMiniStyle}" Height="34" Click="Mini_Click"/>
+            <Button Content="" Name="Close" HorizontalAlignment="Right" VerticalAlignment="Top" Width="34"  Style="{DynamicResource btnCloseStyle}" Height="34" Click="Close_Click"  />
+            <TextBlock HorizontalAlignment="Left" Margin="21,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="24" Width="124" Text="飞道ERP皮肤中心" FontSize="13" Foreground="White"/>
+
+        </Grid>
+        <Grid   Grid.Row="1" Style="{DynamicResource ThemesFrmMainGridStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition RowDefinition.Height="30"/>
+                <RowDefinition RowDefinition.Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid   Grid.Row="0"  >
+            <TextBlock HorizontalAlignment="Left" Margin="543,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" Text="共有"/>
+            <TextBlock Name="tblockSkinNum" HorizontalAlignment="Left" Margin="570,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="22" Height="16" TextAlignment="Center"/>
+            <TextBlock HorizontalAlignment="Left" Margin="594,7,0,0" TextWrapping="Wrap" Text="款皮肤" VerticalAlignment="Top" RenderTransformOrigin="0.655,-0.688"/>
+        </Grid>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1"  Style="{DynamicResource FavsScrollViewer}" >
+            <WrapPanel  Name="wp" Width="660">
+
+            </WrapPanel>
+
+
+        </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>

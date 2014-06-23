@@ -1,0 +1,15 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Plugin\PortalFramePlugin.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Plugin\PortalFramePlugin.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\PortalFramePlugin.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\Views\PortalWindow.g.cs
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\Views\UCPortalWindow.g.cs
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\PortalFramePlugin_MarkupCompile.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\PortalFramePlugin_MarkupCompile.lref
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\Views\PortalWindow.baml
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\Views\UCPortalWindow.baml
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\PortalFramePlugin.g.resources
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\PortalFramePlugin.Properties.Resources.resources
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\PortalFramePlugin.csproj.GenerateResource.Cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\PortalFramePlugin.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\PortalFramePlugin.pdb

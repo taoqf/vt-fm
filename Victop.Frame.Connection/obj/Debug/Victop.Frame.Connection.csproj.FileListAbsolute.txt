@@ -1,0 +1,8 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.Connection.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.Connection.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.Connection\obj\Debug\Victop.Frame.Connection.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.Connection\obj\Debug\Victop.Frame.Connection.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.Connection\obj\Debug\Victop.Frame.Connection.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.Connection\obj\Debug\Victop.Frame.Connection.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.Connection\obj\Debug\Victop.Frame.Connection.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.Connection\obj\Debug\Victop.Frame.Connection.pdb

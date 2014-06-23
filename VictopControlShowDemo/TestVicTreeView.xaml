@@ -1,0 +1,17 @@
+﻿<Window x:Class="VictopControlShowDemo.TestVicTreeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+        Title="TestVicTreeView" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"> </RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+        <Button Content="添加同级" Name="btnAddBrother" Click="btnAddBrother_Click"></Button>
+        <Button Content="添加下级" Name="btnAddChildren" Click="btnAddChildren_Click"></Button>
+        </StackPanel>
+        <controls:VicTreeView Name="tree" ItemsSource="{Binding TreeDt}" IDField="id" FIDField="fid" IsItemsAllowDrag="True" Grid.Row="1" Loaded="tree_Loaded" SelectedItemChanged="tree_SelectedItemChanged" ></controls:VicTreeView>
+    </Grid>
+</Window>

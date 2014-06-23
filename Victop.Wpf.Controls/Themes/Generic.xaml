@@ -1,0 +1,22 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopButtons.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopCheckBoxs.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopComboBoxs.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopDatePickers.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopGrids.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopGroupBoxs.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopLabels.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopMenuItems.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopMessageBoxs.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopRadioButtons.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopStackPanels.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopTabControls.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopTextBoxs.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopToolBars.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopDataGrid.xaml" />
+        <ResourceDictionary Source="/Victop.Wpf.Controls;component/Themes/VictopTreeView.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

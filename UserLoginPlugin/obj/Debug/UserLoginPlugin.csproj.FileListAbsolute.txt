@@ -1,0 +1,13 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Plugin\UserLoginPlugin.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Plugin\UserLoginPlugin.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UserLoginPlugin\obj\Debug\UserLoginPlugin.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UserLoginPlugin\obj\Debug\Views\UserLoginWindow.g.cs
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UserLoginPlugin\obj\Debug\GeneratedInternalTypeHelper.g.cs
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UserLoginPlugin\obj\Debug\UserLoginPlugin_MarkupCompile.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UserLoginPlugin\obj\Debug\UserLoginPlugin_MarkupCompile.lref
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UserLoginPlugin\obj\Debug\Views\UserLoginWindow.baml
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UserLoginPlugin\obj\Debug\UserLoginPlugin.g.resources
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UserLoginPlugin\obj\Debug\UserLoginPlugin.Properties.Resources.resources
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UserLoginPlugin\obj\Debug\UserLoginPlugin.csproj.GenerateResource.Cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UserLoginPlugin\obj\Debug\UserLoginPlugin.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UserLoginPlugin\obj\Debug\UserLoginPlugin.pdb

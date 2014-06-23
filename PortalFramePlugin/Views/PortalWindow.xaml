@@ -1,0 +1,141 @@
+﻿<Window x:Class="PortalFramePlugin.Views.PortalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:vm="clr-namespace:PortalFramePlugin.ViewModels"
+        xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+        Title="PortalWindow" Name="mainWindow" Width="952" ResizeMode="NoResize" Height="670" WindowStyle="None" AllowsTransparency="True" Style="{DynamicResource ShadowWindow}">
+    <Window.DataContext>
+        <vm:UCPortalWindowViewModel/>
+    </Window.DataContext>
+    <Grid Name="gridMain">
+        <Grid.RowDefinitions>
+            <RowDefinition RowDefinition.Height="96"/>
+            <RowDefinition RowDefinition.Height="*"/>
+            <RowDefinition RowDefinition.Height="27"/>
+        </Grid.RowDefinitions>
+        <Grid Name="gridTitle" Style="{DynamicResource MainFrmTopGridStyle}"  Grid.Row="0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="74"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <controls:VicButtonImage Grid.Column="0" Name="btnUserLogin" HorizontalAlignment="Left" Height="57" Margin="15,19,0,0" VerticalAlignment="Top" Width="59" 
+                                         Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}">
+                    
+                </controls:VicButtonImage>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="13,19,0,0" TextWrapping="Wrap" Text="飞道科技有限公司" FontFamily="SimSun" VerticalAlignment="Top" Foreground="#dbf3fa" FontSize="12" FontWeight="Bold" Focusable="True"/>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="13,40,0,0" TextWrapping="Wrap" Text="金牌会员（1年）" FontFamily="SimSun" VerticalAlignment="Top" Foreground="#aacfef"/>
+                <Image Grid.Column="1" Height="15" Margin="13,60,0,0" Width="100" Style="{DynamicResource MainBtnDaysStyle}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="34"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <controls:VicComboBoxNormal Grid.Row="0" ItemsSource="{Binding LanguageList}" SelectedItem="{Binding SelectedLanguage}" Visibility="Collapsed" Name="cmboxLanguage" HorizontalAlignment="Right" Margin="0,8,190,0"  VerticalAlignment="Top">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Loaded">
+                            <i:InvokeCommandAction Command="{Binding cboxLanguageLoadedCommand}" CommandParameter="{Binding ElementName=cmboxLanguage}"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding cboxLanguageSelectionChangedCommand}" CommandParameter="{Binding ElementName=cmboxLanguage, Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </controls:VicComboBoxNormal>
+                <controls:VicButtonImage Name="btnFeedBack" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,133,0" VerticalAlignment="Top" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>
+                <Button Name="btnChangeSkin" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,99,0" VerticalAlignment="Top" Width="34"  Style="{DynamicResource btnChangeSkinStyle}" Height="34" BorderThickness="0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnChangeSkinClickCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                </Button>
+                <Button Name="btnSet" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,66,0" VerticalAlignment="Top" Width="34" Style="{DynamicResource btnSetStyle}" Height="34">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnSetClickCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Name="btnMini" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,33,0" VerticalAlignment="Top" Width="34" Style="{DynamicResource btnMiniStyle}" Height="34">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnMiniClickCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Name="btnClose" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="34"  Style="{DynamicResource btnCloseStyle}" Height="34" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnCloseClickCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Grid Name="gridSearch" Grid.Row="1" HorizontalAlignment="Right"  Margin="0,10,78,0" VerticalAlignment="Top" Width="172" Height="29" Style="{DynamicResource MainFrmSearchGridStyle}">
+                    <controls:VicTextBoxNormal Width="160" BorderThickness="0" HorizontalAlignment="Right" WateMark="请输入想要搜索的软件"></controls:VicTextBoxNormal>
+                </Grid>
+                <controls:VicButtonImage HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Top" Width="33" Height="29" Margin="0,10,47,0" Style="{DynamicResource btnSearchStyle}"/>
+                <controls:VicButtonImage HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Top" Width="27" Height="27" Margin="0,25,10,0" Style="{DynamicResource btnMainShowSuspendStyle}"/>
+            </Grid>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseMove">
+                    <i:InvokeCommandAction Command="{Binding gridTitleMouseMoveCommand}" CommandParameter="{Binding ElementName=gridTitle}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Grid>
+        <Grid Name="gridMid" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ColumnDefinition.Width="191"/>
+                <ColumnDefinition ColumnDefinition.Width="0" />
+                <ColumnDefinition ColumnDefinition.Width="*" />
+            </Grid.ColumnDefinitions>
+            <ScrollViewer Grid.Column="0" Style="{DynamicResource MenuScrollViewer}">
+                <Grid Name="groupboxMenu" Width="182">
+                    <StackPanel Name="MenuStackPanel" Orientation="Vertical">
+                        <TreeView Name="tviewMenu" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
+                            <ItemsControl.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding SystemMenuList}">
+                                    <StackPanel>
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding MenuName}" />
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Loaded">
+                                    <i:InvokeCommandAction Command="{Binding tviewMenuLoadedCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseDoubleClick">
+                                    <i:InvokeCommandAction Command="{Binding tviewDoubleClickCommand}" CommandParameter="{Binding ElementName=tviewMenu,Path=SelectedItem}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TreeView>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+            <StackPanel Width="10" Grid.Column="1" VerticalAlignment="Center">
+                <Button Name="btnStretch" Height="70" Width="10" Style="{DynamicResource btnStretchStyle}" Margin="-3,0,-4,0"></Button>
+            </StackPanel>
+            <Grid Grid.Column="2" >
+                <controls:TabControl Name="MainTabControl" AllowAddNew="False" ItemsSource="{Binding TabItemList}">
+                    <!--<controls:TabItem Header="ERP主页" Name="MainTab" AllowDelete="False">
+                        <ScrollViewer>
+                            <DockPanel Name="ChildControl" Width="736" HorizontalAlignment="Center" Margin="5,5,5,0"/>
+                        </ScrollViewer>
+                    </controls:TabItem>-->
+                </controls:TabControl>
+            </Grid>
+        </Grid>
+        <Label Name="tb" Grid.Row="2" Content="当前软件已是最新版本（2014-04-23）" Style="{DynamicResource MainFrmBottomGridStyle}"/>
+    </Grid>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding gridMainLoadedCommand}"  CommandParameter="{Binding ElementName=mainWindow}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+</Window>
+

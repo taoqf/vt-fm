@@ -1,0 +1,7 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\DataChannelUnitTestProject\bin\Debug\DataChannelUnitTestProject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\DataChannelUnitTestProject\bin\Debug\DataChannelUnitTestProject.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\DataChannelUnitTestProject\bin\Debug\Victop.Frame.DataChannel.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\DataChannelUnitTestProject\bin\Debug\Victop.Frame.DataChannel.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\DataChannelUnitTestProject\obj\Debug\DataChannelUnitTestProject.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\DataChannelUnitTestProject\obj\Debug\DataChannelUnitTestProject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\DataChannelUnitTestProject\obj\Debug\DataChannelUnitTestProject.pdb

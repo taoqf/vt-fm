@@ -1,0 +1,9 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.MessageManager\bin\x86\Debug\Victop.Frame.MessageManager.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.MessageManager\bin\x86\Debug\Victop.Frame.MessageManager.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.MessageManager\bin\x86\Debug\Victop.Frame.CoreLibrary.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.MessageManager\bin\x86\Debug\Victop.Frame.CoreLibrary.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.MessageManager.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.MessageManager.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.MessageManager\obj\x86\Debug\Victop.Frame.MessageManager.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.MessageManager\obj\x86\Debug\Victop.Frame.MessageManager.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.MessageManager\obj\x86\Debug\Victop.Frame.MessageManager.pdb

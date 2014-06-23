@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<resourcecollection language="en-us">
+	<resource id="L_R_1">
+		<value>about</value>
+	</resource>
+	<resource id="L_R_2">
+		<value>register</value>
+	</resource>
+	<resource id="L_R_3">
+		<value>cancel </value>
+	</resource>
+	<resource id="L_R_4">
+		<value>registration information</value>
+	</resource>
+	<resource id="L_R_5">
+		<value></value>
+	</resource>
+	<resource id="L_R_6">
+		<value>server type</value>
+	</resource>
+	<resource id="L_R_7">
+		<value>system settings</value>
+	</resource>
+	<resource id="L_R_8">
+		<value>POS version of the client</value>
+	</resource>
+	<resource id="L_R_9">
+		<value>SOA version of the client</value>
+	</resource>
+	<resource id="L_R_10">
+		<value>thoose initial startup plug-ins</value>
+	</resource>
+	<resource id="L_R_11">
+		<value>the primary server and port information</value>
+	</resource>
+	<resource id="L_R_12">
+		<value>the primary server address</value>
+	</resource>
+	<resource id="L_R_13">
+		<value>port</value>
+	</resource>
+	<resource id="L_R_14">
+		<value>the business system</value>
+	</resource>
+	<resource id="L_R_15">
+		<value>user name</value>
+	</resource>
+	<resource id="L_R_16">
+		<value>password</value>
+	</resource>
+	<resource id="L_R_17">
+		<value>menu</value>
+	</resource>
+	<resource id="L_R_18">
+		<value>fly way cloud</value>
+	</resource>
+	<resource id="L_R_19">
+		<value>enterprise cloud</value>
+	</resource>
+	<resource id="L_R_20">
+		<value>local cloud</value>
+	</resource>
+	<resource id="L_R_21">
+		<value>exit</value>
+	</resource>
+	<resource id="L_R_22">
+		<value>delete</value>
+	</resource>
+	<resource id="L_R_23">
+		<value>All disappear</value>
+	</resource>
+	<resource id="L_R_24">
+		<value>save</value>
+	</resource>
+	<resource id="L_R_25">
+		<value>Search</value>
+	</resource>
+	<resource id="L_R_26">
+		<value>print</value>
+	</resource>
+	<resource id="L_R_27">
+		<value>newly increased</value>
+	</resource>
+	<resource id="L_R_28">
+		<value>delete rows</value>
+	</resource>
+	<resource id="L_R_29">
+		<value>Delete a single</value>
+	</resource>
+	<resource id="L_R_30">
+		<value>confirm</value>
+	</resource>
+	<resource id="L_R_31">
+		<value>sterilisation</value>
+	</resource>
+	<resource id="L_R_32">
+		<value>add attachments</value>
+	</resource>
+	<resource id="L_R_33">
+		<value>open the save the attachment</value>
+	</resource>
+	<resource id="L_R_34">
+		<value>design</value>
+	</resource>
+	<resource id="L_R_35">
+		<value>new</value>
+	</resource>
+	<resource id="L_R_36">
+		<value>print permissions</value>
+	</resource>
+	<resource id="L_R_37">
+		<value>a new single</value>
+	</resource>
+	<resource id="L_R_38">
+		<value>set the default value</value>
+	</resource>
+	<resource id="L_R_39">
+		<value>refresh</value>
+	</resource>
+	<resource id="L_R_40">
+		<value>switch</value>
+	</resource>
+	<resource id="L_R_41">
+		<value>the new node at the same level</value>
+	</resource>
+	<resource id="L_R_42">
+		<value>new lower nodes</value>
+	</resource>
+	<resource id="L_R_43">
+		<value>remove nodes</value>
+	</resource>
+	<resource id="L_R_44">
+		<value>upgrade</value>
+	</resource>
+	<resource id="L_R_45">
+		<value>allow to drag</value>
+	</resource>
+	<resource id="L_R_46">
+		<value>return the data</value>
+	</resource>
+	<resource id="L_R_47">
+		<value>return all of the data</value>
+	</resource>
+	<resource id="L_R_48">
+		<value>search</value>
+	</resource>
+  <resource id="L_R_49">
+    <value>date:from</value>
+  </resource>
+  <resource id="L_R_50">
+    <value>arrive</value>
+  </resource>
+  <resource id="L_R_51">
+    <value>fuzzy query</value>
+  </resource>
+  <resource id="L_R_52">
+    <value>certificate status</value>
+  </resource>
+  <resource id="L_R_53">
+    <value>this node</value>
+  </resource>
+  <resource id="L_R_54">
+    <value>unconfirmed</value>
+  </resource>
+  <resource id="L_R_55">
+    <value>confirmed</value>
+  </resource>
+  <resource id="L_R_56">
+    <value>all</value>
+  </resource>
+  <resource id="L_R_57">
+    <value>all did not confirm receipt</value>
+  </resource>
+  <resource id="L_R_58">
+    <value>non-delivery of business</value>
+  </resource>
+  <resource id="L_R_59">
+    <value>subsequent processed</value>
+  </resource>
+  <!--进销存TopGridFrom-->
+  <resource id="L_R_60">
+    <value>order</value>
+  </resource>
+  <resource id="L_R_61">
+    <value>stores number</value>
+  </resource>
+  <resource id="L_R_62">
+    <value>remark</value>
+  </resource>
+  <resource id="L_R_63">
+    <value>date</value>
+  </resource>
+  <resource id="L_R_64">
+    <value>stores</value>
+  </resource>
+  <resource id="L_R_65">
+    <value>related to a single number</value>
+  </resource>
+  <resource id="L_R_66">
+    <value>supplier number</value>
+  </resource>
+  <resource id="L_R_67">
+    <value>money</value>
+  </resource>
+  <resource id="L_R_68">
+    <value>supplier</value>
+  </resource>
+  <resource id="L_R_69">
+    <value>order number</value>
+  </resource>
+  <resource id="L_R_70">
+    <value>customer number</value>
+  </resource>
+  <resource id="L_R_71">
+    <value>customer name</value>
+  </resource>
+  <resource id="L_R_72">
+    <value>salesman</value>
+  </resource>
+  <resource id="L_R_73">
+    <value>rate</value>
+  </resource>
+  <resource id="L_R_74">
+    <value>sales order</value>
+  </resource>
+  <resource id="L_R_75">
+    <value>requisition</value>
+  </resource>
+  <resource id="L_R_76">
+    <value>bring up the store</value>
+  </resource>
+  <resource id="L_R_77">
+    <value>call in stores</value>
+  </resource>
+  <resource id="L_R_78">
+    <value>product categories</value>
+  </resource>
+  <resource id="L_R_79">
+    <value>product categories</value>
+  </resource>
+  <resource id="L_R_80">
+    <value>product brand</value>
+  </resource>
+  <resource id="L_R_81">
+    <value>inventory number</value>
+  </resource>
+  <resource id="L_R_82">
+    <value>inventory stores</value>
+  </resource>
+  <resource id="L_R_83">
+    <value>warehouse number</value>
+  </resource>
+  <resource id="L_R_84">
+    <value>name </value>
+  </resource>
+  <resource id="L_R_85">
+    <value>category</value>
+  </resource>
+  <resource id="L_R_86">
+    <value>brand</value>
+  </resource>
+  <resource id="L_R_87">
+    <value>model</value>
+  </resource>
+  <resource id="L_R_88">
+    <value>place the sample type</value>
+  </resource>
+	<resource id="L_R_89">
+		<value>Login</value>
+	</resource>
+                <resource id="L_R_90">
+		<value>print</value>
+	</resource>
+	<resource id="L_R_91">
+		<value>detailed list</value>
+	</resource>
+	<resource id="L_R_92">
+		<value>new bill</value>
+	</resource>
+	<resource id="L_R_93">
+		<value>confirm</value>
+	</resource>
+	<resource id="L_R_94">
+		<value>execute</value>
+	</resource>
+	<resource id="L_R_95">
+		<value>check all</value>
+	</resource>
+	<resource id="L_R_96">
+		<value>refresh data</value>
+	</resource>
+</resourcecollection>

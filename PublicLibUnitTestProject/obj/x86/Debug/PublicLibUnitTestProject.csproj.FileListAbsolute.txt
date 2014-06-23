@@ -1,0 +1,8 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PublicLibUnitTestProject\bin\x86\Debug\PublicLibUnitTestProject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PublicLibUnitTestProject\bin\x86\Debug\PublicLibUnitTestProject.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PublicLibUnitTestProject\bin\x86\Debug\Victop.Frame.PublicLib.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PublicLibUnitTestProject\bin\x86\Debug\Newtonsoft.Json.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PublicLibUnitTestProject\bin\x86\Debug\Victop.Frame.PublicLib.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PublicLibUnitTestProject\obj\x86\Debug\PublicLibUnitTestProject.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PublicLibUnitTestProject\obj\x86\Debug\PublicLibUnitTestProject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\PublicLibUnitTestProject\obj\x86\Debug\PublicLibUnitTestProject.pdb

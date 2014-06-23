@@ -1,0 +1,8 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.MessageManager.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.MessageManager.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.MessageManager\obj\Debug\Victop.Frame.MessageManager.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.MessageManager\obj\Debug\Victop.Frame.MessageManager.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.MessageManager\obj\Debug\Victop.Frame.MessageManager.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.MessageManager\obj\Debug\Victop.Frame.MessageManager.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.MessageManager\obj\Debug\Victop.Frame.MessageManager.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.MessageManager\obj\Debug\Victop.Frame.MessageManager.pdb

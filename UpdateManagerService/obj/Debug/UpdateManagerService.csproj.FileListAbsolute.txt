@@ -1,0 +1,8 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UpdateManagerService\bin\Debug\UpdateManagerService.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UpdateManagerService\bin\Debug\UpdateManagerService.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UpdateManagerService\bin\Debug\Victop.Server.Controls.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UpdateManagerService\bin\Debug\GalaSoft.MvvmLight.WPF4.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UpdateManagerService\bin\Debug\Victop.Server.Controls.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UpdateManagerService\obj\Debug\UpdateManagerService.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UpdateManagerService\obj\Debug\UpdateManagerService.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\UpdateManagerService\obj\Debug\UpdateManagerService.pdb

@@ -1,0 +1,13 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Plugin\AreaManagerPlugin.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Plugin\AreaManagerPlugin.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AreaManagerPlugin\obj\Debug\AreaManagerPlugin.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AreaManagerPlugin\obj\Debug\Views\AreaWindow.g.cs
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AreaManagerPlugin\obj\Debug\Views\UCAreaWindow.g.cs
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AreaManagerPlugin\obj\Debug\GeneratedInternalTypeHelper.g.cs
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AreaManagerPlugin\obj\Debug\AreaManagerPlugin_MarkupCompile.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AreaManagerPlugin\obj\Debug\AreaManagerPlugin_MarkupCompile.lref
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AreaManagerPlugin\obj\Debug\Views\AreaWindow.baml
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AreaManagerPlugin\obj\Debug\Views\UCAreaWindow.baml
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AreaManagerPlugin\obj\Debug\AreaManagerPlugin.g.resources
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AreaManagerPlugin\obj\Debug\AreaManagerPlugin.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AreaManagerPlugin\obj\Debug\AreaManagerPlugin.pdb

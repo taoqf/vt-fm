@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
+                    xmlns:controls="clr-namespace:Victop.Wpf.Controls">
+    <!--//////////////////////////////////////////VicStackPanelNormal样式//////////////////////////////////////////-->
+    <Style TargetType="{x:Type controls:VicStackPanelNormal}">
+    </Style>
+    <!--//////////////////////////////////////////VicWrapPanelNormal样式//////////////////////////////////////////-->
+    <Style TargetType="{x:Type controls:VicWrapPanelNormal}">
+    </Style>
+    <!--//////////////////////////////////////////VicDockPanelNormal样式//////////////////////////////////////////-->
+    <Style TargetType="{x:Type controls:VicDockPanelNormal}">
+    </Style>
+    <!--//////////////////////////////////////////VicCanvasNormal样式//////////////////////////////////////////-->
+    <Style TargetType="{x:Type controls:VicCanvasNormal}">
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,6 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.ServerManagerCenter.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.ServerManagerCenter.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.ServerManagerCenter\obj\Debug\Victop.Frame.ServerManagerCenter.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.ServerManagerCenter\obj\Debug\Victop.Frame.ServerManagerCenter.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.ServerManagerCenter\obj\Debug\Victop.Frame.ServerManagerCenter.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.ServerManagerCenter\obj\Debug\Victop.Frame.ServerManagerCenter.pdb

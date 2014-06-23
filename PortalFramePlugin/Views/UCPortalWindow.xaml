@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="PortalFramePlugin.Views.UCPortalWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:PortalFramePlugin.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <vm:UCPortalWindowViewModel x:Key="PortalViewModel"/>
+    </UserControl.Resources>
+    <Grid DataContext="{StaticResource ResourceKey=PortalViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <Button Height="24" Width="100" Content="请求数据" Name="btnSearchData">
+                <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding btnSearchDataClickCommand}"></i:InvokeCommandAction>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            </Button>
+        </DockPanel>
+        <DockPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <Button Content="查看选定菜单" Name="btnViewMenu" Margin="0,0,5,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding btnViewMenuClickCommand}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <ComboBox Margin="0,0,5,0" Name="cboxtable" ItemsSource="{Binding TableShowList,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="TableName" SelectedValuePath="TableId" SelectedItem="{Binding SelectedTable}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding cboxtableSelectionChangedCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+        </DockPanel>
+        <TreeView Grid.Row="1" Grid.Column="0" Name="tviewMenu" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
+            <ItemsControl.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding SystemMenuList}">
+                    <StackPanel>
+                        <TextBlock VerticalAlignment="Center" Text="{Binding MenuName}" />
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+            </ItemsControl.ItemTemplate>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding tviewMenuLoadedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TreeView>
+        <GridSplitter Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="2" Background="#FFFFFFFF" />
+        <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding MyDt, UpdateSourceTrigger=PropertyChanged}">
+            
+        </DataGrid>
+    </Grid>
+</UserControl>

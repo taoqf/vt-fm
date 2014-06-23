@@ -1,0 +1,7 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\CoreLibaryUnitTestProject\bin\Debug\CoreLibaryUnitTestProject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\CoreLibaryUnitTestProject\bin\Debug\CoreLibaryUnitTestProject.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\CoreLibaryUnitTestProject\bin\Debug\Victop.Frame.CoreLibrary.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\CoreLibaryUnitTestProject\bin\Debug\Victop.Frame.CoreLibrary.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\CoreLibaryUnitTestProject\obj\Debug\CoreLibaryUnitTestProject.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\CoreLibaryUnitTestProject\obj\Debug\CoreLibaryUnitTestProject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\CoreLibaryUnitTestProject\obj\Debug\CoreLibaryUnitTestProject.pdb

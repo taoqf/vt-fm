@@ -1,0 +1,7 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\Debug\AdapterUnitTestProject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\Debug\AdapterUnitTestProject.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\Debug\Victop.Frame.Adapter.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\Debug\Victop.Frame.Adapter.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\obj\Debug\AdapterUnitTestProject.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\obj\Debug\AdapterUnitTestProject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\obj\Debug\AdapterUnitTestProject.pdb

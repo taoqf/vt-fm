@@ -1,0 +1,9 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Plugin\ThemeManagerPlugin.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Plugin\ThemeManagerPlugin.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ThemeManagerPlugin\obj\Debug\ThemeManagerPlugin.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ThemeManagerPlugin\obj\Debug\Views\ThemesWindow.baml
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ThemeManagerPlugin\obj\Debug\Views\ThemesWindow.g.cs
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ThemeManagerPlugin\obj\Debug\ThemeManagerPlugin_MarkupCompile.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ThemeManagerPlugin\obj\Debug\ThemeManagerPlugin.g.resources
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ThemeManagerPlugin\obj\Debug\ThemeManagerPlugin.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ThemeManagerPlugin\obj\Debug\ThemeManagerPlugin.pdb

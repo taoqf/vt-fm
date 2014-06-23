@@ -1,0 +1,7 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ConnectionUnitTestProject\bin\Debug\ConnectionUnitTestProject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ConnectionUnitTestProject\bin\Debug\ConnectionUnitTestProject.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ConnectionUnitTestProject\bin\Debug\Victop.Frame.Connection.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ConnectionUnitTestProject\bin\Debug\Victop.Frame.Connection.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ConnectionUnitTestProject\obj\Debug\ConnectionUnitTestProject.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ConnectionUnitTestProject\obj\Debug\ConnectionUnitTestProject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\ConnectionUnitTestProject\obj\Debug\ConnectionUnitTestProject.pdb

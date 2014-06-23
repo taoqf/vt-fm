@@ -1,0 +1,15 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\bin\x86\Debug\VictopPartner.exe
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\bin\x86\Debug\VictopPartner.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\VictopPartner.exe.config
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\VictopPartner.exe
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\VictopPartner.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\VictopPartner.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\MainWindow.baml
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\MainWindow.g.cs
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\App.g.cs
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\VictopPartner_MarkupCompile.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\VictopPartner.g.resources
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\VictopPartner.Properties.Resources.resources
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\VictopPartner.csproj.GenerateResource.Cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\VictopPartner.exe
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\VictopPartner.pdb

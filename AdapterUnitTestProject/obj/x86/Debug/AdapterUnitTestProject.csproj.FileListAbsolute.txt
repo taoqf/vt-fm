@@ -1,0 +1,12 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\x86\Debug\AdapterUnitTestProject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\x86\Debug\AdapterUnitTestProject.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\x86\Debug\Victop.Frame.Adapter.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\x86\Debug\Victop.Frame.CoreLibrary.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\x86\Debug\Victop.Frame.PublicLib.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\x86\Debug\Newtonsoft.Json.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\x86\Debug\Victop.Frame.Adapter.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\x86\Debug\Victop.Frame.CoreLibrary.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\bin\x86\Debug\Victop.Frame.PublicLib.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\obj\x86\Debug\AdapterUnitTestProject.csprojResolveAssemblyReference.cache
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\obj\x86\Debug\AdapterUnitTestProject.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\AdapterUnitTestProject\obj\x86\Debug\AdapterUnitTestProject.pdb

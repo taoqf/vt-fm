@@ -1,0 +1,4 @@
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\FeiD.Frame.CoreLibrary.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\FeiD.Frame.CoreLibrary.pdb
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.CoreLibrary\obj\Debug\FeiD.Frame.CoreLibrary.dll
+F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.CoreLibrary\obj\Debug\FeiD.Frame.CoreLibrary.pdb
