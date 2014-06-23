@@ -71,6 +71,7 @@
     <Compile Include="ComlinkFactory.cs" />
     <Compile Include="Common\MessageHelper.cs" />
     <Compile Include="CoreDataCollection.cs" />
+    <Compile Include="Enums\DataOperateEnum.cs" />
     <Compile Include="Enums\ExitTypeEnum.cs" />
     <Compile Include="Enums\GalleryEnum.cs" />
     <Compile Include="Enums\MessageTargetEnum.cs" />

@@ -128,13 +128,25 @@ namespace Victop.Frame.Connection
         private ReplyMessage MessageSubmit(IAdapter adapter,RequestMessage messageInfo)
         {
             MessageOrganizeManager organizeManager = new MessageOrganizeManager();
-            bool saveDataFlag = false;
+            DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
+            string DataChannelId = JsonHelper.ReadJsonString(messageInfo.MessageContent, "DataChannelId");
             messageInfo = organizeManager.OrganizeMessage(messageInfo, out saveDataFlag);
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
-            if (saveDataFlag)
+            ReplyMessageResolver replyMessageResolver = new ReplyMessageResolver();
+            switch (saveDataFlag)
             {
-                ReplyMessageResolver replyMessageResolver = new ReplyMessageResolver();
-                replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo);
+                case DataOperateEnum.SAVE:
+                        replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo);
+                    break;
+                case DataOperateEnum.COMMIT:
+                    if (!JsonHelper.ReadJsonString(replyMessage.ReplyContent, "code").Equals("0"))
+                    {
+                        bool result = replyMessageResolver.CommitDataSetChange(DataChannelId);
+                    }
+                    break;
+                case DataOperateEnum.NONE:
+                default:
+                    break;
             }
             replyMessage.MessageId = messageInfo.MessageId;
             return replyMessage;

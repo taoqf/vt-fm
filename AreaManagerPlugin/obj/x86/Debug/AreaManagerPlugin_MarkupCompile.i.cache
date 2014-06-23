@@ -4,7 +4,7 @@
 library
 C#
 .cs
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\AreaManagerPlugin\obj\x86\Debug\
+F:\VictopTeach\VictopFrameWork\AreaManagerPlugin\obj\x86\Debug\
 AreaManagerPlugin
 none
 false
@@ -13,7 +13,7 @@ DEBUG;TRACE
 2-458256941
 
 7-197859905
-19-1103921690
+191624165111
 Views\AreaWindow.xaml;Views\UCAreaWindow.xaml;
 
 True

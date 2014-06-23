@@ -300,8 +300,12 @@ namespace AreaManagerPlugin.ViewModels
         {
             Dictionary<string, string> messageDic = new Dictionary<string, string>();
             messageDic.Add("MessageType", "DataChannelService.getSaveMasterDataAsync");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("DataChannelId", DataChannelId);
+            contentDic.Add("bzsystemid", "905");
+            Dictionary<string, string> paramsDic = new Dictionary<string, string>();
+            paramsDic.Add("mastername", "地区管理");
+            contentDic.Add("dataparam", paramsDic);
             string content = JsonHelper.ToJson(contentDic);
             messageDic.Add("MessageContent", content);
             return JsonHelper.ToJson(messageDic);

@@ -211,30 +211,30 @@ namespace Victop.Frame.DataChannel
                 stringBuilder.Append("<DATASET id=\"").Append(mastDt.TableName).Append("\">");
                 stringBuilder.Append("<DATAPACKET Version=\"").Append("2.0").Append("\">");
                 stringBuilder.Append("<METADATA>");
-                stringBuilder.Append("<FIELDS>");
-                foreach (DataColumn mastDc in mastDt.Columns)
-                {
-                    string fieldType = "string";
-                    switch (mastDc.DataType.Name)
-                    {
-                        case "Int16":
-                            fieldType = "i4";
-                            break;
-                        case "Int32":
-                        case "Int64":
-                            fieldType="i8";
-                            break;
-                        case "DateTime":
-                            fieldType = "dateTime";
-                            break;
-                        case "String":
-                        default:
-                            fieldType = "string";
-                            break;
-                    }
-                    stringBuilder.AppendFormat("<FIELD attrname='{0}' fieldtype='{1}' WIDTH='50' /> ",mastDc.ColumnName,fieldType);
-                }
-                stringBuilder.Append("</FIELDS>");
+                //stringBuilder.Append("<FIELDS>");
+                //foreach (DataColumn mastDc in mastDt.Columns)
+                //{
+                //    string fieldType = "string";
+                //    switch (mastDc.DataType.Name)
+                //    {
+                //        case "Int16":
+                //            fieldType = "i4";
+                //            break;
+                //        case "Int32":
+                //        case "Int64":
+                //            fieldType="i8";
+                //            break;
+                //        case "DateTime":
+                //            fieldType = "dateTime";
+                //            break;
+                //        case "String":
+                //        default:
+                //            fieldType = "string";
+                //            break;
+                //    }
+                //    stringBuilder.AppendFormat("<FIELD attrname='{0}' fieldtype='{1}' WIDTH='50' /> ",mastDc.ColumnName,fieldType);
+                //}
+                //stringBuilder.Append("</FIELDS>");
                 stringBuilder.Append("</METADATA>");
                 stringBuilder.Append("<ROWDATA>");
                 foreach (DataRow mastDr in mastDt.Rows)
@@ -300,11 +300,27 @@ namespace Victop.Frame.DataChannel
         }
 
 		/// <summary>
-		/// 更新通道数据
+		/// 提交通道数据
 		/// </summary>
-		public virtual bool UpdateChannelData(ReplyMessage messageInfo)
+		public virtual bool CommitChannelData(string channelId)
 		{
-			throw new System.NotImplementedException(); //TODO:方法实现
+            try
+            {
+                DataChannelManager dataManager = new DataChannelManager();
+                Hashtable hashData = dataManager.GetData(channelId);
+                ChannelData channelData = hashData["Data"] as ChannelData;
+                DataSet requestDs = channelData.DataInfo;
+                if (requestDs != null)
+                {
+                    requestDs.AcceptChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
 		}
 
 		/// <summary>

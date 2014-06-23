@@ -4,7 +4,7 @@
 library
 C#
 .cs
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\
+F:\VictopTeach\VictopFrameWork\PortalFramePlugin\obj\x86\Debug\
 PortalFramePlugin
 none
 false
@@ -13,7 +13,7 @@ DEBUG;TRACE
 2-661805809
 
 10-986166933
-22-641064350
+22517230700
 Views\PortalWindow.xaml;Views\UCPortalWindow.xaml;
 
 True

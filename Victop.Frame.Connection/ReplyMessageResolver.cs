@@ -169,6 +169,16 @@ namespace Victop.Frame.Connection
             string dataXml = dataManager.GetXmlData(channelId);
             return dataXml;
         }
+        /// <summary>
+        /// 提交数据集变更
+        /// </summary>
+        /// <param name="channelId">通道号Id</param>
+        /// <returns></returns>
+        public bool CommitDataSetChange(string channelId)
+        {
+            DataCreateManager createManger = new DataCreateManager();
+            return createManger.CommitChannelData(channelId);
+        }
 
 	}
 }

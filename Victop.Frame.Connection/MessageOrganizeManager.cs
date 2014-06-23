@@ -10,8 +10,11 @@ namespace Victop.Frame.Connection
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using Victop.Frame.CoreLibrary;
+    using Victop.Frame.CoreLibrary.Enums;
     using Victop.Frame.CoreLibrary.Models;
     using Victop.Frame.PublicLib.Helpers;
+    using Victop.Frame.PublicLib.Managers;
 
     /// <summary>
     /// 消息组织管理
@@ -23,9 +26,9 @@ namespace Victop.Frame.Connection
         /// </summary>
         /// <param name="messageInfo"></param>
         /// <returns></returns>
-        public virtual RequestMessage OrganizeMessage(RequestMessage messageInfo,out bool replyIsToChannel)
+        public virtual RequestMessage OrganizeMessage(RequestMessage messageInfo, out DataOperateEnum replyIsToChannel)
         {
-            replyIsToChannel = false;
+            replyIsToChannel = DataOperateEnum.NONE;
             try
             {
                 Dictionary<string, object> dicContent = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
@@ -33,24 +36,27 @@ namespace Victop.Frame.Connection
                 {
                     case "DataChannelService.getFormBusiDataAsync":
                         dicContent = GetDataByModelMessage(dicContent);
-                        replyIsToChannel = true;
+                        replyIsToChannel = DataOperateEnum.SAVE;
                         break;
                     case "DataChannelService.saveBusiData":
                         dicContent = SaveDataByModelMessage(dicContent);
+                        replyIsToChannel = DataOperateEnum.COMMIT;
                         break;
                     case "DataChannelService.getMasterPropDataAsync":
                         dicContent = GetMasterPropDataMessage(dicContent);
-                        replyIsToChannel = true;
+                        replyIsToChannel = DataOperateEnum.SAVE;
                         break;
                     case "DataChannelService.getSaveMasterDataAsync":
                         dicContent = SaveMasterPropDataMessage(dicContent);
+                        replyIsToChannel = DataOperateEnum.COMMIT;
                         break;
                     case "DataChannelService.getBusinessRulesDataAsync":
                         dicContent = GetBusinessRulesDataMessage(dicContent);
-                        replyIsToChannel = true;
+                        replyIsToChannel = DataOperateEnum.SAVE;
                         break;
                     case "DataChannelService.getSaveBusinessRulesDataAsync":
                         dicContent = SaveBusinessRulesDataMessage(dicContent);
+                        replyIsToChannel = DataOperateEnum.COMMIT;
                         break;
                     case "DataChannelService.getDocCodeAsync":
                         dicContent = GetDocCodeMessage(dicContent);
@@ -84,6 +90,19 @@ namespace Victop.Frame.Connection
                         break;
                     default:
                         break;
+                }
+
+                if (dicContent.ContainsKey("runUser"))
+                {
+                    GalleryManager galleryManager = new GalleryManager();
+                    CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+                    LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
+                    dicContent["runUser"] = loginUserInfo.UserCode;
+                }
+                if (dicContent.ContainsKey("clientId"))
+                {
+                    string clientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
+                    dicContent["clientId"] = clientId;
                 }
                 messageInfo.MessageContent = JsonHelper.ToJson(dicContent);
             }
@@ -302,28 +321,39 @@ namespace Victop.Frame.Connection
         {
             try
             {
-                if (!dicContent.ContainsKey("bzsystemid"))
+                if (!dicContent.ContainsKey("openType"))
+                {
+                    dicContent.Add("openType", null);
+                }
+                if(!dicContent.ContainsKey("bzsystemid"))
                 {
                     dicContent.Add("bzsystemid", null);
                 }
-                if (!dicContent.ContainsKey("DataChannelId"))
+                if (!dicContent.ContainsKey("formid"))
                 {
-                    dicContent.Add("DataChannelId", null);
+                    dicContent.Add("formid", null);
                 }
-                else
+                if (!dicContent.ContainsKey("dataSetID"))
                 {
-                    string channelId = dicContent["DataChannelId"].ToString();
-                    ReplyMessageResolver replyResolver = new ReplyMessageResolver();
-                    string dataXml = replyResolver.GetDataXmlByDataChannelId(channelId);
-                    if (dicContent.ContainsKey("deltaXml"))
-                    {
-                        dicContent["deltaXml"] = dataXml;
-                    }
-                    else
-                    {
-                        dicContent.Add("deltaXml", dataXml);
-                    }
+                    dicContent.Add("dataSetID", null);
                 }
+                if (!dicContent.ContainsKey("reportID"))
+                {
+                    dicContent.Add("reportID", null);
+                }
+                if (!dicContent.ContainsKey("modelId"))
+                {
+                    dicContent.Add("modelId", null);
+                }
+                if (!dicContent.ContainsKey("fieldName"))
+                {
+                    dicContent.Add("fieldName", null);
+                }
+                if (!dicContent.ContainsKey("masterOnly"))
+                {
+                    dicContent.Add("masterOnly", false);
+                }
+
                 if (!dicContent.ContainsKey("dataparam"))
                 {
                     Dictionary<string, object> dicDataParam = new Dictionary<string, object>();
@@ -339,27 +369,56 @@ namespace Victop.Frame.Connection
                     }
                     dicContent["dataparam"] = dicDataParam;
                 }
-                //要保存的表名(List<string>)
-                if (!dicContent.ContainsKey("DatasetIds"))
+                if (!dicContent.ContainsKey("whereArr"))
                 {
-                    List<string> listDatasetIds = new List<string>();
-                    dicContent.Add("DatasetIds", listDatasetIds);
+                    dicContent.Add("whereArr", null);
+                }
+                if (!dicContent.ContainsKey("masterParam"))
+                {
+                    dicContent.Add("masterParam", null);
+                }
+                if (!dicContent.ContainsKey("DataChannelId"))
+                {
+                    dicContent.Add("deltaXml", null);
+                }
+                else
+                {
+                    string channelId = dicContent["DataChannelId"].ToString();
+                    ReplyMessageResolver replyResolver = new ReplyMessageResolver();
+                    string dataXml = replyResolver.GetDataXmlByDataChannelId(channelId);
+                    if (dicContent.ContainsKey("deltaXml"))
+                    {
+                        dicContent["deltaXml"] = dataXml;
+                    }
+                    else
+                    {
+                        dicContent.Add("deltaXml", dataXml);
+                    }
+                    dicContent.Remove("DataChannelId");
                 }
                 if (!dicContent.ContainsKey("runUser"))
                 {
                     dicContent.Add("runUser", null);
                 }
+                if (!dicContent.ContainsKey("shareFlag"))
+                {
+                    dicContent.Add("shareFlag", null);
+                }
+                if (!dicContent.ContainsKey("treeStr"))
+                {
+                    dicContent.Add("treeStr", null);
+                }
+                if (!dicContent.ContainsKey("saveType"))
+                {
+                    dicContent.Add("saveType", null);
+                }
+                if (!dicContent.ContainsKey("doccode"))
+                {
+                    dicContent.Add("doccode", null);
+                }
                 if (!dicContent.ContainsKey("clientId"))
                 {
                     dicContent.Add("clientId", null);
-                }
-                if (!dicContent.ContainsKey("modelId"))
-                {
-                    dicContent.Add("modelId", null);
-                }
-                if (!dicContent.ContainsKey("formid"))
-                {
-                    dicContent.Add("formid", null);
                 }
                 return dicContent;
             }

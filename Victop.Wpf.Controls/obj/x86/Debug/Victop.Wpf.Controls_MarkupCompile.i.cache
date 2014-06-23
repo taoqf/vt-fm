@@ -4,7 +4,7 @@
 library
 C#
 .cs
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.Controls\obj\x86\Debug\
+F:\VictopTeach\VictopFrameWork\Victop.Wpf.Controls\obj\x86\Debug\
 Victop.Wpf.Controls
 none
 false
@@ -16,5 +16,5 @@ DEBUG;TRACE
 151438841547
 Themes\Colors.xaml;Themes\Fonts.xaml;Themes\Generic.xaml;Themes\TreeView.xaml;Themes\VictopButtons.xaml;Themes\VictopCheckBoxs.xaml;Themes\VictopComboBoxs.xaml;Themes\VictopDataGrid.xaml;Themes\VictopDatePickers.xaml;Themes\VictopGrids.xaml;Themes\VictopGroupBoxs.xaml;Themes\VictopLabels.xaml;Themes\VictopMenuItems.xaml;Themes\VictopMessageBoxs.xaml;Themes\VictopRadioButtons.xaml;Themes\VictopStackPanels.xaml;Themes\VictopTabControls.xaml;Themes\VictopTextBoxs.xaml;Themes\VictopToolBars.xaml;Themes\VictopTreeView.xaml;
 
-False
+True
 

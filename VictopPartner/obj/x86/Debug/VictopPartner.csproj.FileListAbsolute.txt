@@ -13,3 +13,6 @@ F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\Vict
 F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\VictopPartner.csproj.GenerateResource.Cache
 F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\VictopPartner.exe
 F:\VicTopSource\VictopFrameWork\VictopFrameWork\VictopPartner\obj\x86\Debug\VictopPartner.pdb
+F:\VictopTeach\VictopFrameWork\Bin\VictopPartner.exe.config
+F:\VictopTeach\VictopFrameWork\VictopPartner\obj\x86\Debug\VictopPartner.exe
+F:\VictopTeach\VictopFrameWork\VictopPartner\obj\x86\Debug\VictopPartner.pdb
