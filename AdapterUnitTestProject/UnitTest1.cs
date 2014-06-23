@@ -17,6 +17,7 @@ namespace AdapterUnitTestProject
             ssg.Add("dd", vlist);
             ssg.Add("dd", vlist);
             ssg.Add("dd", vlist);
+            //测试Git修改
             //MessagePoolManager messagePoolMana = new MessagePoolManager();
             //messagePoolManager.GetMessageData("ddd");
             //bool falg =  messagePoolManager.CreateMessagePool(null);
