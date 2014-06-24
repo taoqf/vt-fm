@@ -51,6 +51,7 @@ Bin/Plugin/*.pdb
 *.pidb
 *.log
 *.scc
+*.suo
 
 # Visual C++ cache files
 ipch/
