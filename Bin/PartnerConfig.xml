@@ -6,5 +6,5 @@
   <Server Host="127.0.0.1:9528"></Server><!--云服务协助通讯设置-->
   <Client Server="192.168.40.192:9999" Router="192.168.40.192:9527" Lan="1" IsNeedRouter="0"></Client><!--接入平台通讯配置 企业soa-->
   <P2PClient Server="192.168.110.213:9999"></P2PClient><!--p2p连接信息-->
-  <UserInfo User="liuhuidev" Pwd="system" ClientId="byerp"></UserInfo><!--用户信息-->
+  <UserInfo User="liuhuidev" Pwd="syste" ClientId="byerp"></UserInfo><!--用户信息-->
 </Partner> 

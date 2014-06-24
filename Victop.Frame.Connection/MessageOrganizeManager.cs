@@ -470,10 +470,6 @@ namespace Victop.Frame.Connection
                     Dictionary<string, object> dicDataParam = new Dictionary<string, object>();
                     dicContent.Add("dataparam", dicDataParam);
                 }
-                if (!dicContent.ContainsKey("mastername"))
-                {
-                    dicContent.Add("mastername", null);
-                }
                 return dicContent;
             }
             catch (Exception)
