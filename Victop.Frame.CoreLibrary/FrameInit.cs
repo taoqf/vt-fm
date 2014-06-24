@@ -87,11 +87,11 @@ namespace Victop.Frame.CoreLibrary
         /// <summary>
         /// 框架运行
         /// </summary>
-        public void FrameRun()
+        public bool FrameRun()
         {
             BuildInServerInit();
             CloudGalleryInit();
-            MessageComLinkOpen();
+            return MessageComLinkOpen();
         }
         /// <summary>
         /// 卸载

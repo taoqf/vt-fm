@@ -21,11 +21,12 @@ using System.Threading;
 using PortalFramePlugin.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
+using System.Xml.Linq;
 
 
 namespace PortalFramePlugin.ViewModels
 {
-    public class UCPortalWindowViewModel:ModelBase
+    public class UCPortalWindowViewModel : ModelBase
     {
         #region 字段
         private Window mainWindow;
@@ -121,7 +122,7 @@ namespace PortalFramePlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     mainWindow = (Window)x;
-                    
+
                     ChangeFrameWorkTheme();
                 });
             }
@@ -146,7 +147,7 @@ namespace PortalFramePlugin.ViewModels
             messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
             string messageStr = JsonHelper.ToJson(messageDic);
             PluginMessage pluginMessage = new PluginMessage();
-            pluginMessage.SendMessage("", messageStr,null);
+            pluginMessage.SendMessage("", messageStr, null);
         }
         #endregion
 
@@ -206,6 +207,7 @@ namespace PortalFramePlugin.ViewModels
                     {
                         mainWindow.Close();
                         FrameInit.GetInstance().FrameUnload();
+                        GC.Collect();
                     }
                 });
             }
@@ -275,7 +277,8 @@ namespace PortalFramePlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     UpdateMenu();
                 });
             }
@@ -285,18 +288,21 @@ namespace PortalFramePlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) => {
+                return new RelayCommand<object>((x) =>
+                {
                     if (x != null)
                     {
                         MenuModel menuModel = (MenuModel)x;
-                        Dictionary<string, string> messageDic = new Dictionary<string, string>();
-                        messageDic.Add("MessageType", "PluginService.PluginRun");
-                        Dictionary<string, string> contentDic = new Dictionary<string, string>();
-                        string plugin = ConfigurationManager.AppSettings["runplugin"];
-                        contentDic.Add("PluginName", plugin);
-                        contentDic.Add("PluginPath", "");
-                        messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-                        new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(PluginShow));
+                        if (menuModel.ResourceName.Contains("Plugin"))
+                        {
+                            Dictionary<string, string> messageDic = new Dictionary<string, string>();
+                            messageDic.Add("MessageType", "PluginService.PluginRun");
+                            Dictionary<string, string> contentDic = new Dictionary<string, string>();
+                            contentDic.Add("PluginName", menuModel.ResourceName);
+                            contentDic.Add("PluginPath", "");
+                            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
+                            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(PluginShow));
+                        }
                     }
                 });
             }
@@ -313,7 +319,7 @@ namespace PortalFramePlugin.ViewModels
                 });
             }
         }
-        private MenuModel GetChildMenuList(List<MenuInfo> menuResource, string parentMenuId,MenuModel parentMenu)
+        private MenuModel GetChildMenuList(List<MenuInfo> menuResource, string parentMenuId, MenuModel parentMenu)
         {
             foreach (MenuInfo item in menuResource.Where(it => it.ParentMenu == parentMenuId).OrderBy(it => it.Sequence))
             {
@@ -335,10 +341,10 @@ namespace PortalFramePlugin.ViewModels
         private void UpdateMenu()
         {
             BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
+            SystemMenuList.Clear();
             if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
             {
-                SystemMenuList.Clear();
-                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it=>it.ParentMenu.Equals("0")))
+                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.ParentMenu.Equals("0")))
                 {
                     MenuModel menuModel = new MenuModel()
                     {
@@ -349,10 +355,15 @@ namespace PortalFramePlugin.ViewModels
                     SystemMenuList.Add(menuModel);
                 }
             }
+            else
+            {
+                string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
+                ReadPluginInfoFromXml(FilePath);
+            }
         }
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
         {
-            foreach (MenuInfo item in fullMenuList.Where(it=>it.ParentMenu.Equals(parentMenu)))
+            foreach (MenuInfo item in fullMenuList.Where(it => it.ParentMenu.Equals(parentMenu)))
             {
                 MenuModel menuModel = new MenuModel()
                 {
@@ -364,6 +375,39 @@ namespace PortalFramePlugin.ViewModels
             }
             return parentModel;
         }
+
+        #region 读取本地xml文件
+        /// <summary>读取菜单信息</summary>
+        private void ReadPluginInfoFromXml(string PluginFilePath)
+        {
+            XDocument xDoc = XDocument.Load(PluginFilePath);
+            XElement root = xDoc.Element("MenuInfo");
+            UpdatePluginList(root);
+        }
+        /// <summary>设置一级和二级菜单数据源</summary>
+        private void UpdatePluginList(XElement element)
+        {
+            foreach (var item in element.Elements())
+            {
+                MenuModel plugin = GetPluginInfoModel(item);
+                SystemMenuList.Add(plugin);
+                if (item.HasElements)
+                {
+                    UpdatePluginList(item);
+                }
+            }
+        }
+        /// <summary>根据节点信息获取菜单实例</summary>
+        private MenuModel GetPluginInfoModel(XElement element)
+        {
+            MenuModel plugin = new MenuModel();
+            plugin.MenuName = element.Attribute("title").Value;
+            //plugin.MenuId = element.Attribute("action").Value;
+            plugin.ResourceName = element.Attribute("action").Value;
+            return plugin;
+        }
+        #endregion
+
         private void SearchData(object message)
         {
             try
@@ -377,7 +421,7 @@ namespace PortalFramePlugin.ViewModels
             {
                 string temp = ex.Message;
             }
-            
+
         }
 
         private void UpdateTableList(object ds)
@@ -402,7 +446,7 @@ namespace PortalFramePlugin.ViewModels
         {
             Dictionary<string, string> messageDic = new Dictionary<string, string>();
             messageDic.Add("MessageType", "DataChannelService.getMasterPropDataAsync");
-            string content="{\"openType\":null,\"bzsystemid\":\"905\",\"formid\":null,\"dataSetID\":null,\"reportID\":null,\"modelId\":null,\"fieldName\":null,\"masterOnly\":false,\"dataparam\":{\"isdata\":\"0\",\"mastername\":\"地区管理\",\"wheresql\":\"1=1\",\"prooplist\":null,\"proplisted\":null,\"dataed\":null,\"pageno\":\"-1\",\"ispage\":\"1\",\"getset\":\"1\"},\"whereArr\":null,\"masterParam\":null,\"deltaXml\":null,\"runUser\":\"test7\",\"shareFlag\":null,\"treeStr\":null,\"saveType\":null,\"doccode\":null,\"clientId\":\"byerp\"}";
+            string content = "{\"openType\":null,\"bzsystemid\":\"905\",\"formid\":null,\"dataSetID\":null,\"reportID\":null,\"modelId\":null,\"fieldName\":null,\"masterOnly\":false,\"dataparam\":{\"isdata\":\"0\",\"mastername\":\"地区管理\",\"wheresql\":\"1=1\",\"prooplist\":null,\"proplisted\":null,\"dataed\":null,\"pageno\":\"-1\",\"ispage\":\"1\",\"getset\":\"1\"},\"whereArr\":null,\"masterParam\":null,\"deltaXml\":null,\"runUser\":\"test7\",\"shareFlag\":null,\"treeStr\":null,\"saveType\":null,\"doccode\":null,\"clientId\":\"byerp\"}";
             messageDic.Add("MessageContent", content);
             return JsonHelper.ToJson(messageDic);
         }

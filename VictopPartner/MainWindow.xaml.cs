@@ -18,6 +18,7 @@ using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.CoreLibrary;
 using Victop.Frame.CoreLibrary.Models;
 using Victop.Server.Controls;
+using VictopPartner.PluginRun;
 
 namespace VictopPartner
 {
@@ -80,6 +81,7 @@ namespace VictopPartner
                 default:
                     break;
             }
+            this.Close();
         }
 
         private void btnRun_Click(object sender, RoutedEventArgs e)
@@ -156,7 +158,67 @@ namespace VictopPartner
         }
         private void AnonymousLoginBack(object message)
         {
-            string temp = message.ToString();
+            if (!JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
+            {
+                Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName("PortalFramePlugin", "");
+                Type[] types = pluginAssembly.GetTypes();
+                foreach (Type t in types)
+                {
+                    if (IsValidPlugin(t)) //判断是否有继承IPlugin
+                    {
+                        IPlugin plugin = (IPlugin)pluginAssembly.CreateInstance(t.FullName);
+                        System.Windows.Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new WaitCallback(RunMainFrame), plugin);
+                        break;
+                    }
+                }
+            }
+        }
+        private void RunMainFrame(object pluginInfo)
+        {
+            IPlugin plugin = (IPlugin)pluginInfo;
+            plugin.StartWindow.ShowDialog();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (FrameInit.GetInstance().FrameRun())
+            {
+                new PluginMessage().SendMessage(Guid.NewGuid().ToString(), AnonymousLogin(),null);
+                Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName("PortalFramePlugin", "");
+                Type[] types = pluginAssembly.GetTypes();
+                foreach (Type t in types)
+                {
+                    if (IsValidPlugin(t))
+                    {
+                        IPlugin plugin = (IPlugin)pluginAssembly.CreateInstance(t.FullName);
+                        this.Hide();
+                        plugin.StartWindow.ShowDialog();
+                        FrameInit.GetInstance().FrameUnload();
+                        Environment.Exit(0);
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 是否为有效的插件
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private bool IsValidPlugin(Type type)
+        {
+            bool ret = false;
+            Type[] interfaces = type.GetInterfaces();
+            foreach (Type theInterface in interfaces)
+            {
+                if (theInterface.FullName == "Victop.Server.Controls.IPlugin")
+                {
+                    ret = true;
+                    break;
+                }
+            }
+            return ret;
         }
     }
 }

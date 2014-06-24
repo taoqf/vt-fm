@@ -32,9 +32,14 @@ namespace Victop.Frame.Connection
             IAdapter adapter = new MessageManager();
             try
             {
-                if (messageInfo.MessageType == "LoginService.userLoginNew")
+                if (messageInfo.MessageType.Equals("LoginService.userLoginNew"))
                 {
                     ReplyMessage replyMessage = UserLoginSubmit(adapter, messageInfo);
+                    return replyMessage;
+                }
+                else if (messageInfo.MessageType.Equals("LoginService.getCurrentLinker"))
+                {
+                    ReplyMessage replyMessage = AnonymousLoginSubmit(adapter, messageInfo);
                     return replyMessage;
                 }
                 else
@@ -89,6 +94,26 @@ namespace Victop.Frame.Connection
                     replyMessage = ConnectLinkSubmit(adapter,messageInfo);
                 }
             }
+            return replyMessage;
+        }
+
+        private ReplyMessage AnonymousLoginSubmit(IAdapter adapter, RequestMessage messageInfo)
+        {
+            ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
+            if (replyMessage.ReplyMode == ReplyModeEnum.SYNCH || replyMessage.ReplyMode == ReplyModeEnum.BREAK)
+            {
+                if (!string.IsNullOrEmpty(replyMessage.ReplyContent))
+                {
+                    //解析ReplyContent内容完善当前通道的用户登录信息
+                    CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+                    currentGallery.ClientInfo.LinkRouterAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "routerAddress");
+                    currentGallery.ClientInfo.LinkServerAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "address");
+                    currentGallery.ClientInfo.SessionId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "sessionID");
+                    currentGallery.ClientInfo.ChannelId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "channelID");
+                    messageInfo.MessageContent = replyMessage.ReplyContent;
+                }
+            }
+            replyMessage.MessageId = messageInfo.MessageId;
             return replyMessage;
         }
         /// <summary>
