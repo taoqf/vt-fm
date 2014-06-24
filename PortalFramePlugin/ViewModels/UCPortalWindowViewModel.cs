@@ -293,7 +293,7 @@ namespace PortalFramePlugin.ViewModels
                     if (x != null)
                     {
                         MenuModel menuModel = (MenuModel)x;
-                        if (menuModel.ResourceName.Contains("Plugin"))
+                        if (menuModel.ResourceName != null && menuModel.ResourceName.Contains("Plugin"))
                         {
                             Dictionary<string, string> messageDic = new Dictionary<string, string>();
                             messageDic.Add("MessageType", "PluginService.PluginRun");
