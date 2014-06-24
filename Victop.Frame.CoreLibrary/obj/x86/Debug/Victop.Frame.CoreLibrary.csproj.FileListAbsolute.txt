@@ -1,7 +1,0 @@
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.CoreLibrary\bin\x86\Debug\Victop.Frame.CoreLibrary.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.CoreLibrary\bin\x86\Debug\Victop.Frame.CoreLibrary.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.CoreLibrary.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.CoreLibrary.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.CoreLibrary\obj\x86\Debug\Victop.Frame.CoreLibrary.csprojResolveAssemblyReference.cache
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.CoreLibrary\obj\x86\Debug\Victop.Frame.CoreLibrary.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.CoreLibrary\obj\x86\Debug\Victop.Frame.CoreLibrary.pdb

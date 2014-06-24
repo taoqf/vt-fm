@@ -1,7 +1,0 @@
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.PublicLib.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.PublicLib.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.PublicLib\obj\Debug\Victop.Frame.PublicLib.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.PublicLib\obj\Debug\Victop.Frame.PublicLib.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.PublicLib\obj\Debug\Victop.Frame.PublicLib.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.PublicLib\obj\Debug\Victop.Frame.PublicLib.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.PublicLib\obj\Debug\Victop.Frame.PublicLib.csprojResolveAssemblyReference.cache

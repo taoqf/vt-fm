@@ -1,7 +1,0 @@
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.ServerManagerCenter\bin\x86\Debug\Victop.Frame.ServerManagerCenter.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.ServerManagerCenter\bin\x86\Debug\Victop.Frame.ServerManagerCenter.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.ServerManagerCenter.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.ServerManagerCenter.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.ServerManagerCenter\obj\x86\Debug\Victop.Frame.ServerManagerCenter.csprojResolveAssemblyReference.cache
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.ServerManagerCenter\obj\x86\Debug\Victop.Frame.ServerManagerCenter.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.ServerManagerCenter\obj\x86\Debug\Victop.Frame.ServerManagerCenter.pdb

@@ -1,5 +1,0 @@
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Plugin\SystemThemeManagerService.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Plugin\SystemThemeManagerService.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\SystemThemeManagerService\obj\x86\Debug\SystemThemeManagerService.csprojResolveAssemblyReference.cache
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\SystemThemeManagerService\obj\x86\Debug\SystemThemeManagerService.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\SystemThemeManagerService\obj\x86\Debug\SystemThemeManagerService.pdb

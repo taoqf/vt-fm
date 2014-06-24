@@ -1,9 +1,0 @@
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.ComLink.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.ComLink.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.ComLink\obj\Debug\Victop.Frame.ComLink.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\FeiD.Frame.ComLink\obj\Debug\Victop.Frame.ComLink.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.ComLink\obj\Debug\Victop.Frame.ComLink.csprojResolveAssemblyReference.cache
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.ComLink\obj\Debug\Victop.Frame.ComLink.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.ComLink\obj\Debug\Victop.Frame.ComLink.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.ComLink\obj\Debug\Victop.Frame.ComLink.Properties.Resources.resources
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.ComLink\obj\Debug\Victop.Frame.ComLink.csproj.GenerateResource.Cache

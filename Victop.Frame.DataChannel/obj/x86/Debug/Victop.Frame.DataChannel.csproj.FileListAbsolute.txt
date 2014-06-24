@@ -1,7 +1,0 @@
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.DataChannel\bin\x86\Debug\Victop.Frame.DataChannel.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.DataChannel\bin\x86\Debug\Victop.Frame.DataChannel.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.DataChannel.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.DataChannel.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.DataChannel\obj\x86\Debug\Victop.Frame.DataChannel.csprojResolveAssemblyReference.cache
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.DataChannel\obj\x86\Debug\Victop.Frame.DataChannel.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.DataChannel\obj\x86\Debug\Victop.Frame.DataChannel.pdb

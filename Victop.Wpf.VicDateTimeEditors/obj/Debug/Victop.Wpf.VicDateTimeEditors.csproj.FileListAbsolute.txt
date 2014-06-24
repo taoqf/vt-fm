@@ -1,4 +1,0 @@
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicDateTimeEditors\obj\Debug\Victop.Wpf.VicDateTimeEditors.csprojResolveAssemblyReference.cache
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicDateTimeEditors\obj\Debug\Victop.Wpf.VicDateTimeEditors_MarkupCompile.cache
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicDateTimeEditors\obj\Debug\Victop.Wpf.VicDateTimeEditors.Properties.Resources.resources
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Wpf.VicDateTimeEditors\obj\Debug\Victop.Wpf.VicDateTimeEditors.csproj.GenerateResource.Cache

@@ -1,5 +1,0 @@
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.StandaloneAdapter.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Bin\Victop.Frame.StandaloneAdapter.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.StandaloneAdapter\obj\x86\Debug\Victop.Frame.StandaloneAdapter.csprojResolveAssemblyReference.cache
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.StandaloneAdapter\obj\x86\Debug\Victop.Frame.StandaloneAdapter.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\Victop.Frame.StandaloneAdapter\obj\x86\Debug\Victop.Frame.StandaloneAdapter.pdb

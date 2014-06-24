@@ -1,8 +1,0 @@
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\SystemThemeManagerService\bin\Debug\SystemThemeManagerService.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\SystemThemeManagerService\bin\Debug\SystemThemeManagerService.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\SystemThemeManagerService\bin\Debug\Victop.Server.Controls.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\SystemThemeManagerService\bin\Debug\GalaSoft.MvvmLight.WPF4.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\SystemThemeManagerService\bin\Debug\Victop.Server.Controls.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\SystemThemeManagerService\obj\Debug\SystemThemeManagerService.csprojResolveAssemblyReference.cache
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\SystemThemeManagerService\obj\Debug\SystemThemeManagerService.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\SystemThemeManagerService\obj\Debug\SystemThemeManagerService.pdb

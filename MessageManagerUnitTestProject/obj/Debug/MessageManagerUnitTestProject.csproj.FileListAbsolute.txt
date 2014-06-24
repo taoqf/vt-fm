@@ -1,7 +1,0 @@
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\MessageManagerUnitTestProject\bin\Debug\MessageManagerUnitTestProject.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\MessageManagerUnitTestProject\bin\Debug\MessageManagerUnitTestProject.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\MessageManagerUnitTestProject\bin\Debug\Victop.Frame.MessageManager.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\MessageManagerUnitTestProject\bin\Debug\Victop.Frame.MessageManager.pdb
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\MessageManagerUnitTestProject\obj\Debug\MessageManagerUnitTestProject.csprojResolveAssemblyReference.cache
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\MessageManagerUnitTestProject\obj\Debug\MessageManagerUnitTestProject.dll
-F:\VicTopSource\VictopFrameWork\VictopFrameWork\MessageManagerUnitTestProject\obj\Debug\MessageManagerUnitTestProject.pdb
