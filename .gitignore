@@ -13,7 +13,8 @@
 x64/
 build/
 [Bb]in/
-Bin/*
+Bin/*.dll
+Bin/*.pdb
 !Bin/ice.cfg
 !Bin/PartnerConfig.xml
 [Oo]bj/
