@@ -117,7 +117,7 @@ namespace Victop.Frame.Connection
         /// 组织模型取数消息
         /// </summary>
         /// <remarks>DataChannelService.getFormBusiDataAsync</remarks>
-        /// <param name="messageInfo"></param>
+        /// <param name="dicContent">消息内容</param>
         /// <returns></returns>
         private Dictionary<string, object> GetDataByModelMessage(Dictionary<string, object> dicContent)
         {
