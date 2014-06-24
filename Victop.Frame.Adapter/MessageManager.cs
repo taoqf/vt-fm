@@ -122,7 +122,7 @@ namespace Victop.Frame.Adapter
         /// </summary>
         public virtual ReplyMessage SubmitRequest(RequestMessage message, long time)
         {
-            if (message.MessageType == "LoginService.userLoginNew")
+            if (message.MessageType == "LoginService.userLoginNew" || message.MessageType == "LoginService.getCurrentLinker")
             {
                 message = CreateMessage(MessageTargetEnum.MAIN,message);
             }

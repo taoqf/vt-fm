@@ -118,17 +118,6 @@ namespace VictopPartner
             string userloginstr = JsonHelper.ToJson(messageDic);
             return userloginstr;
         }
-        private string AnonymousLogin()
-        {
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "LoginService.getCurrentLinker");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
-            contentDic.Add("usercode", "");
-            contentDic.Add("userpw", "");
-            contentDic.Add("clientId", "");
-            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-            return JsonHelper.ToJson(messageDic);
-        }
         private void Login(object message)
         {
             if (JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
@@ -150,6 +139,24 @@ namespace VictopPartner
             {
                 MessageBox.Show(JsonHelper.ReadJsonString(message.ToString(), "ReplyAlertMessage"));
             }
+        }
+
+        private void btnNiming_Click(object sender, RoutedEventArgs e)
+        {
+            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), AnonymousLogin(), new WaitCallback(AnonymousLoginBack));
+        }
+        private string AnonymousLogin()
+        {
+            Dictionary<string, string> messageDic = new Dictionary<string, string>();
+            messageDic.Add("MessageType", "LoginService.getCurrentLinker");
+            Dictionary<string, string> contentDic = new Dictionary<string, string>();
+            contentDic.Add("usercode", "test7");
+            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
+            return JsonHelper.ToJson(messageDic);
+        }
+        private void AnonymousLoginBack(object message)
+        {
+            string temp = message.ToString();
         }
     }
 }

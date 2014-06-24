@@ -123,7 +123,7 @@ namespace Victop.Frame.CoreLibrary
             }
             else
             {
-                return null;
+                return CoreDataCollection.CloudGalleryList.Values.FirstOrDefault();
             }
 		}
         /// <summary>
