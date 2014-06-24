@@ -87,7 +87,7 @@ namespace Victop.Frame.MessageManager
         /// <summary>
         /// 修改插件消息状态
         /// </summary>
-        public virtual bool UpdatePluginMessageStatus(string mykey)
+        public virtual bool UpdatePluginMessageStatus(string messageKey)
         {
             return true;
         }
