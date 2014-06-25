@@ -87,6 +87,18 @@ namespace UserLoginPlugin.ViewModels
                 }
             }
         }
+        public string SelectedGallery
+        {
+            get
+            {
+                return selectedGallery;
+            }
+            set
+            {
+                selectedGallery = value;
+                RaisePropertyChanged("SelectedGallery");
+            }
+        }
         #endregion
 
         #region Command命令
@@ -130,9 +142,8 @@ namespace UserLoginPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) => 
+                return new RelayCommand(() => 
                 {
-                    selectedGallery = Convert.ToString(x);
                     SetCurrentGallery();
                 });
             }
@@ -272,7 +283,7 @@ namespace UserLoginPlugin.ViewModels
             Dictionary<string, string> messageDic = new Dictionary<string, string>();
             messageDic.Add("MessageType", "GalleryService.SetGalleryInfo");
             Dictionary<string, string> contentDic = new Dictionary<string, string>();
-            contentDic.Add("GalleryKey", selectedGallery);
+            contentDic.Add("GalleryKey", SelectedGallery);
             messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
             new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(SetCurrentGallery));
         }
@@ -306,7 +317,6 @@ namespace UserLoginPlugin.ViewModels
             window.Cursor = Cursors.Wait;
             try
             {
-                new GalleryManager().SetCurrentGalleryId(Victop.Frame.CoreLibrary.Enums.GalleryEnum.ENTERPRISE);
                 Dictionary<string, string> messageDic = new Dictionary<string, string>();
                 messageDic.Add("MessageType", "LoginService.userLoginNew");
                 Dictionary<string, string> contentDic = new Dictionary<string, string>();

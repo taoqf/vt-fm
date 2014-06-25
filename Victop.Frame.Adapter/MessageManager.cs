@@ -44,7 +44,10 @@ namespace Victop.Frame.Adapter
                 {
                     case MessageTargetEnum.LINK:
                         message.SetTargetAddress(loginUserInfo.LinkServerAddress.Split(':')[0], loginUserInfo.LinkServerAddress.Split(':')[1]);
-                        message.SetRouterAddress(loginUserInfo.LinkRouterAddress.Split(':')[0], loginUserInfo.LinkRouterAddress.Split(':')[1]);
+                        if (cloudGallyInfo.IsNeedRouter)
+                        {
+                            message.SetRouterAddress(loginUserInfo.LinkRouterAddress.Split(':')[0], loginUserInfo.LinkRouterAddress.Split(':')[1]);
+                        }
                         break;
                     case MessageTargetEnum.MAIN:
                         if (cloudGallyInfo.IsNeedRouter)
@@ -55,7 +58,10 @@ namespace Victop.Frame.Adapter
                         break;
                     case MessageTargetEnum.NORMAL:
                         message.SetTargetAddress(loginUserInfo.LinkServerAddress.Split(':')[0], loginUserInfo.LinkServerAddress.Split(':')[1]);
-                        message.SetRouterAddress(loginUserInfo.LinkRouterAddress.Split(':')[0], loginUserInfo.LinkRouterAddress.Split(':')[1]);
+                        if (cloudGallyInfo.IsNeedRouter)
+                        {
+                            message.SetRouterAddress(loginUserInfo.LinkRouterAddress.Split(':')[0], loginUserInfo.LinkRouterAddress.Split(':')[1]);
+                        }
                         break;
                 }
             }
@@ -114,7 +120,7 @@ namespace Victop.Frame.Adapter
         /// </summary>
         public virtual ReplyMessage SubmitRequest(RequestMessage message)
         {
-            return SubmitRequest(message, 25000);
+            return SubmitRequest(message, 10000);
         }
 
         /// <summary>

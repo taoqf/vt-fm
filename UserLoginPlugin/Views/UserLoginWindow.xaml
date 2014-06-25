@@ -73,10 +73,10 @@
                 <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Content="找回密码" Foreground="#0f8ecc"/>
                 <ComboBox Grid.Row="2" Grid.Column="0"  Width="192" Height="28" Name="CloudSOAComboBox" 
                           ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
-                           HorizontalAlignment="Left"  VerticalAlignment="Top" VerticalContentAlignment="Center">
+                           HorizontalAlignment="Left"  VerticalAlignment="Top" VerticalContentAlignment="Center" SelectedValue="{Binding SelectedGallery,UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding CloudSOAComboBoxSelectionChangedCommand}" CommandParameter="{Binding ElementName=CloudSOAComboBox, Path=SelectedValue}"/>
+                            <i:InvokeCommandAction Command="{Binding CloudSOAComboBoxSelectionChangedCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>

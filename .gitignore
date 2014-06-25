@@ -13,6 +13,7 @@
 x64/
 build/
 [Bb]in/
+[Ll]og/
 Bin/*.dll
 Bin/*.pdb
 Bin/Plugin/*.dll

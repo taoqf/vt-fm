@@ -11,6 +11,7 @@ namespace Victop.Frame.MessageManager
     using System.Linq;
     using System.Text;
     using System.Threading;
+    using Victop.Frame.CoreLibrary;
     using Victop.Frame.CoreLibrary.Models;
     using Victop.Frame.PublicLib.Helpers;
 
@@ -41,6 +42,7 @@ namespace Victop.Frame.MessageManager
                     MessageBody = message,
                     MessageEffectiveTime = DateTime.Now.AddSeconds(15),
                     MessageId = message.MessageId,
+                    CloudGalleryId = GalleryManager.GetCurrentGalleryId().ToString(),
                     MessageCallBack = callBack
                 });
                 if (result)//插入成功

@@ -93,7 +93,7 @@ namespace Victop.Frame.CoreLibrary
                         CloudGalleryInfo localGalleryInfo = new CloudGalleryInfo();
                         localGalleryInfo.CloudGalleryId = GalleryEnum.LOCALSOA;
                         localGalleryInfo.CloudAddress = item;
-                        localGalleryInfo.IsNeedRouter = true;
+                        localGalleryInfo.IsNeedRouter = false;
                         galleryManager.AddGallery(localGalleryInfo);
                     }
 
