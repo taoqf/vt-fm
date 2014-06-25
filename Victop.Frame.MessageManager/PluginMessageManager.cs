@@ -12,6 +12,7 @@ namespace Victop.Frame.MessageManager
     using System.Text;
     using System.Threading;
     using Victop.Frame.CoreLibrary.Models;
+    using Victop.Frame.PublicLib.Helpers;
 
     /// <summary>
     /// 插件消息管理 【请求消息池】
@@ -30,12 +31,15 @@ namespace Victop.Frame.MessageManager
         {
             try
             {
+                if (string.IsNullOrEmpty(messageInfo.MessageBody.MessageType))
+                    return false;
                 PluginMessageInfo pluginMessageInfo = PluginMessageList.Values.FirstOrDefault(it => it.CloudGalleryId == messageInfo.CloudGalleryId && it.ObjectId == messageInfo.ObjectId && it.MessageBody.MessageType == messageInfo.MessageBody.MessageType);
                if (pluginMessageInfo!=null)
                 {
                     return false;
                 }
                 PluginMessageList.Add(messageKey, messageInfo);//插入消息队列
+                LoggerHelper.InfoFormat("PluginMessageList Count:{0}", PluginMessageList.Count);
                 return true;
             }
             catch (Exception)

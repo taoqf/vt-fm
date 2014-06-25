@@ -3,8 +3,8 @@
 	<Category title="企业云" action="" auto="0" showtype="0" imageurl="" displaymode="1" description="">
 		<MainMenu title="公共基础管理" action="" auto="0" showtype="0" imageurl="25.png" displaymode="1" description="">
 				<Trade title="地区管理" action="AreaManagerPlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="用于地区信息"/>
-				<Trade title="区域管理" action="RegionManage" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="用于区域信息维护"/>
-				<Trade title="公司管理" action="CompanyManage" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="用于公司信息维护"/>
+				<Trade title="区域管理" action="RegionManagePlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="用于区域信息维护"/>
+				<Trade title="供应商管理" action="SupplierManagePlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="用于公司信息维护"/>
 		</MainMenu>
 	</Category>
 </MenuInfo>

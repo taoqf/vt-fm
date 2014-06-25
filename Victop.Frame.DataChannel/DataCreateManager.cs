@@ -249,14 +249,16 @@ namespace Victop.Frame.DataChannel
                 {
                     if (mastDc.DataType == typeof(DateTime))
                     {
+                        string dateTimeStr = string.Empty;
                         if (isDelete)
                         {
-                            stringBuilder.AppendFormat(" {0}='{1}' ", mastDc.ColumnName, ((DateTime)mastDr[mastDc.ColumnName, DataRowVersion.Original]).ToString("yyyy-MM-ddTHH:mm:ss"));
+                            dateTimeStr = string.IsNullOrEmpty(mastDr[mastDc.ColumnName, DataRowVersion.Original].ToString())? "":((DateTime)mastDr[mastDc.ColumnName, DataRowVersion.Original]).ToString("yyyy-MM-ddTHH:mm:ss");
                         }
                         else
                         {
-                            stringBuilder.AppendFormat(" {0}='{1}' ", mastDc.ColumnName, ((DateTime)mastDr[mastDc.ColumnName]).ToString("yyyy-MM-ddTHH:mm:ss"));
+                            dateTimeStr = string.IsNullOrEmpty(mastDr[mastDc.ColumnName, DataRowVersion.Original].ToString()) ? "" : ((DateTime)mastDr[mastDc.ColumnName]).ToString("yyyy-MM-ddTHH:mm:ss");
                         }
+                        stringBuilder.AppendFormat(" {0}='{1}' ", mastDc.ColumnName, dateTimeStr);
                     }
                     else
                     {

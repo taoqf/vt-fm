@@ -95,7 +95,7 @@ using Victop.Frame.CoreLibrary.Enums;
 		}
 
 
-        private static GalleryEnum currentGalleryId;
+        private static GalleryEnum currentGalleryId = GalleryEnum.ENTERPRISE;
         /// <summary>
         /// 当前通道标识
         /// </summary>
