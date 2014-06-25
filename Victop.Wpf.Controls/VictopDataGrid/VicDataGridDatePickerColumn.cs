@@ -11,7 +11,7 @@ namespace Victop.Wpf.Controls
 {
     public class VicDataGridDatePickerColumn : DataGridBoundColumn
     {
-        #region 字段
+         #region 字段
         private static Style _defaultEditingElementStyle;
         private static Style _defaultElementStyle;
         #endregion
@@ -103,8 +103,11 @@ namespace Victop.Wpf.Controls
             }
 
             ApplyStyle(isEditing, true, datePicker);
-            ApplyBinding(datePicker, VicDatePickerNormal.SelectedDateProperty);
-
+            ApplyBinding(datePicker, VicDatePickerNormal.FormatTextProperty);
+            //if (!string.IsNullOrWhiteSpace(datePicker.FormatText))
+            //{
+            //    datePicker.SelectedDate = DateTime.Parse(datePicker.FormatText);
+            //}
             return datePicker;
         }
         /// <summary>申请样式</summary>

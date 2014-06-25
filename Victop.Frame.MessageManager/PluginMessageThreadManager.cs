@@ -31,7 +31,7 @@ namespace Victop.Frame.MessageManager
                 PluginMessageManager pluginMessageManager = new PluginMessageManager();
                 Thread thread = new Thread(new ThreadStart(pluginMessageManager.CheckPluginMessageValid));
                 thread.IsBackground = true;
-                thread.Start();
+                //thread.Start();
             }
             return instance;
         }

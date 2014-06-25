@@ -164,7 +164,7 @@
                             <VisualStateGroup x:Name="WatermarkStates">
                                 <VisualStateGroup.Transitions>
                                     <VisualTransition From="{x:Null}" GeneratedDuration="0" GeneratedEasingFunction="{x:Null}" Storyboard="{x:Null}" To="{x:Null}"/>
-                                </VisualStateGroup.Transitions>
+                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Unwatermarked"/>
                                 <VisualState x:Name="Watermarked">
                                     <Storyboard>
@@ -187,8 +187,8 @@
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="1" Opacity="1" Padding="{TemplateBinding Padding}">
                             <Grid x:Name="WatermarkContent" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                <ScrollViewer x:Name="ContentElement"  BorderBrush="White" BorderThickness="1"/>
-                                <Border x:Name="watermark_decorator" BorderBrush="White" BorderThickness="1" >
+                                <Border x:Name="ContentElement" BorderBrush="White" BorderThickness="1"/>
+                                <Border x:Name="watermark_decorator" BorderBrush="White" BorderThickness="1">
                                     <ContentControl x:Name="PART_Watermark" Focusable="False" IsHitTestVisible="False" Opacity="0" Padding="2"/>
                                 </Border>
                                 <ScrollViewer x:Name="PART_ContentHost" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="0" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>

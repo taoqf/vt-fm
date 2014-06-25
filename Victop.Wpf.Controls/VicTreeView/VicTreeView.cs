@@ -434,7 +434,7 @@ namespace Victop.Wpf.Controls
             return (this._brushList.Count - 1);
         }
 
-        [EnvironmentPermission(SecurityAction.LinkDemand, Unrestricted=true)]
+        [EnvironmentPermission(SecurityAction.LinkDemand, Unrestricted = true)]
         public void AddImage(Bitmap image)
         {
             if (image != null)
@@ -454,7 +454,8 @@ namespace Victop.Wpf.Controls
 
         private void AddMenuItem()
         {
-            Separator separator2 = new Separator {
+            Separator separator2 = new Separator
+            {
                 Name = "ahMenuItemSeperator"
             };
             Separator newItem = separator2;
@@ -462,7 +463,8 @@ namespace Victop.Wpf.Controls
             MenuItem item = new MenuItem();
             if (!string.IsNullOrEmpty(this.ItemChildExpandHeader))
             {
-                MenuItem item2 = new MenuItem {
+                MenuItem item2 = new MenuItem
+                {
                     Name = "ahItemChildExpandAll",
                     Header = this.ItemChildExpandHeader
                 };
@@ -472,7 +474,8 @@ namespace Victop.Wpf.Controls
             }
             if (!string.IsNullOrEmpty(this.ItemChildUnExpandHeader))
             {
-                MenuItem item3 = new MenuItem {
+                MenuItem item3 = new MenuItem
+                {
                     Name = "ahItemChildUnExpand",
                     Header = this.ItemChildUnExpandHeader
                 };
@@ -482,7 +485,8 @@ namespace Victop.Wpf.Controls
             }
             if (!string.IsNullOrEmpty(this.ItemChildSelectHeader))
             {
-                MenuItem item4 = new MenuItem {
+                MenuItem item4 = new MenuItem
+                {
                     Name = "ahMenuItemSelectChildAll",
                     Header = this.ItemChildSelectHeader
                 };
@@ -492,7 +496,8 @@ namespace Victop.Wpf.Controls
             }
             if (!string.IsNullOrEmpty(this.ItemChildUnSelectHeader))
             {
-                MenuItem item5 = new MenuItem {
+                MenuItem item5 = new MenuItem
+                {
                     Name = "ahMenuItemUnSelectChildAll",
                     Header = this.ItemChildUnSelectHeader
                 };
@@ -502,7 +507,8 @@ namespace Victop.Wpf.Controls
             }
             if (!string.IsNullOrEmpty(this.ItemChildCancelSelectHeader))
             {
-                MenuItem item6 = new MenuItem {
+                MenuItem item6 = new MenuItem
+                {
                     Name = "ahMenuItemCancelselectChildAll",
                     Header = this.ItemChildCancelSelectHeader
                 };
@@ -971,11 +977,13 @@ namespace Victop.Wpf.Controls
         public ContextMenu CreateMenu()
         {
             ContextMenu menu = new ContextMenu();
-            MenuItem item4 = new MenuItem {
+            MenuItem item4 = new MenuItem
+            {
                 Header = "全选"
             };
             MenuItem newItem = item4;
-            newItem.Click += delegate (object ss, RoutedEventArgs ee) {
+            newItem.Click += delegate(object ss, RoutedEventArgs ee)
+            {
                 if (base.ItemsSource != null)
                 {
                     foreach (DataRow row in (base.ItemsSource as DataView).Table.Rows)
@@ -985,11 +993,13 @@ namespace Victop.Wpf.Controls
                 }
             };
             menu.Items.Add(newItem);
-            MenuItem item5 = new MenuItem {
+            MenuItem item5 = new MenuItem
+            {
                 Header = "反选"
             };
             MenuItem item2 = item5;
-            item2.Click += delegate (object ss, RoutedEventArgs ee) {
+            item2.Click += delegate(object ss, RoutedEventArgs ee)
+            {
                 if (base.ItemsSource != null)
                 {
                     foreach (DataRow row in (base.ItemsSource as DataView).Table.Rows)
@@ -999,11 +1009,13 @@ namespace Victop.Wpf.Controls
                 }
             };
             menu.Items.Add(item2);
-            MenuItem item6 = new MenuItem {
+            MenuItem item6 = new MenuItem
+            {
                 Header = "清除"
             };
             MenuItem item3 = item6;
-            item3.Click += delegate (object ss, RoutedEventArgs ee) {
+            item3.Click += delegate(object ss, RoutedEventArgs ee)
+            {
                 if (base.ItemsSource != null)
                 {
                     foreach (DataRow row in (base.ItemsSource as DataView).Table.Rows)
@@ -1260,7 +1272,8 @@ namespace Victop.Wpf.Controls
             DataView view = null;
             try
             {
-                view = new DataView(drv.DataView.Table) {
+                view = new DataView(drv.DataView.Table)
+                {
                     RowFilter = string.Format(CultureInfo.CurrentCulture, "{0}='{1}'", new object[] { this.FIDField, drv[this.IDField] })
                 };
             }
@@ -1296,7 +1309,7 @@ namespace Victop.Wpf.Controls
                 return null;
             }
             string filterExpression = (row[this.FIDField] is string) ? string.Format(CultureInfo.CurrentCulture, "{0}='{1}'", new object[] { this.IDField, row[this.FIDField] }) : string.Format(CultureInfo.CurrentCulture, "{0}={1}", new object[] { this.IDField, row[this.FIDField] });
-            return ((DataView) base.ItemsSource).Table.Select(filterExpression)[0];
+            return ((DataView)base.ItemsSource).Table.Select(filterExpression)[0];
         }
 
         public DataRow GetFirstParentDataRow(DataRowView drvInput)
@@ -1349,7 +1362,7 @@ namespace Victop.Wpf.Controls
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily 避免进行不必要的强制转换")]
-        private static T GetTemplatedAncestor<T>(FrameworkElement element) where T: FrameworkElement
+        private static T GetTemplatedAncestor<T>(FrameworkElement element) where T : FrameworkElement
         {
             if (element is T)
             {
@@ -1380,7 +1393,8 @@ namespace Victop.Wpf.Controls
             {
                 this.CheckId = item.FieldName;
             }
-            Binding binding = new Binding(item.FieldName) {
+            Binding binding = new Binding(item.FieldName)
+            {
                 Mode = BindingMode.TwoWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 StringFormat = item.StringFormat
@@ -1399,7 +1413,8 @@ namespace Victop.Wpf.Controls
             {
                 this.CheckId = item.FieldName;
             }
-            Binding binding = new Binding(item.FieldName) {
+            Binding binding = new Binding(item.FieldName)
+            {
                 Mode = BindingMode.TwoWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 StringFormat = item.StringFormat
@@ -1420,7 +1435,8 @@ namespace Victop.Wpf.Controls
             DataColumn column2 = null;
             try
             {
-                column = new DataColumn(this.AhTempColName_Expanded, typeof(short)) {
+                column = new DataColumn(this.AhTempColName_Expanded, typeof(short))
+                {
                     DefaultValue = 1,
                     AllowDBNull = true
                 };
@@ -1440,7 +1456,8 @@ namespace Victop.Wpf.Controls
         private void InitImage(CtrlField item)
         {
             FrameworkElementFactory factory = new FrameworkElementFactory(typeof(System.Windows.Controls.Image), string.Format(CultureInfo.CurrentCulture, "myCtrlImage{0}", new object[] { this._controlCount++ }));
-            Binding binding = new Binding(item.FieldName) {
+            Binding binding = new Binding(item.FieldName)
+            {
                 Mode = BindingMode.TwoWay,
                 Converter = new ImageIndexToImageSource(),
                 ConverterParameter = this._imageSource,
@@ -1465,7 +1482,8 @@ namespace Victop.Wpf.Controls
                     DataColumn column2 = null;
                     try
                     {
-                        column = new DataColumn(name, typeof(string)) {
+                        column = new DataColumn(name, typeof(string))
+                        {
                             DefaultValue = string.Empty,
                             AllowDBNull = true
                         };
@@ -1498,7 +1516,8 @@ namespace Victop.Wpf.Controls
             {
                 this.CheckId = item.FieldName;
             }
-            Binding binding = new Binding(item.FieldName) {
+            Binding binding = new Binding(item.FieldName)
+            {
                 Mode = BindingMode.TwoWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 StringFormat = item.StringFormat
@@ -1517,7 +1536,8 @@ namespace Victop.Wpf.Controls
             DataColumn column2 = null;
             try
             {
-                column = new DataColumn(this.AhTempColName_Selected, typeof(short)) {
+                column = new DataColumn(this.AhTempColName_Selected, typeof(short))
+                {
                     DefaultValue = string.IsNullOrEmpty(newRowSelectItemSql) ? 1 : 0,
                     AllowDBNull = true
                 };
@@ -1537,7 +1557,8 @@ namespace Victop.Wpf.Controls
         private void InitTextBlock(CtrlField item)
         {
             FrameworkElementFactory factory = new FrameworkElementFactory(typeof(TextBlock), string.Format(CultureInfo.CurrentCulture, "myCtrlTextBlock{0}", new object[] { this._controlCount++ }));
-            Binding binding = new Binding(item.FieldName) {
+            Binding binding = new Binding(item.FieldName)
+            {
                 Mode = BindingMode.TwoWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 StringFormat = item.StringFormat
@@ -1550,7 +1571,8 @@ namespace Victop.Wpf.Controls
         private void InitTextBox(CtrlField item)
         {
             FrameworkElementFactory factory = new FrameworkElementFactory(typeof(TextBox), string.Format(CultureInfo.CurrentCulture, "myCtrlTexBox{0}", new object[] { this._controlCount++ }));
-            Binding binding = new Binding(item.FieldName) {
+            Binding binding = new Binding(item.FieldName)
+            {
                 Mode = BindingMode.TwoWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 StringFormat = item.StringFormat
@@ -1565,7 +1587,8 @@ namespace Victop.Wpf.Controls
         private void InitTextBoxRightAlign(CtrlField item)
         {
             FrameworkElementFactory factory = new FrameworkElementFactory(typeof(TextBox), string.Format(CultureInfo.CurrentCulture, "myCtrlTexBox{0}", new object[] { this._controlCount++ }));
-            Binding binding = new Binding(item.FieldName) {
+            Binding binding = new Binding(item.FieldName)
+            {
                 Mode = BindingMode.TwoWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 StringFormat = item.StringFormat
@@ -1624,6 +1647,7 @@ namespace Victop.Wpf.Controls
                 (base.GetTemplateChild("_txtFilter") as TextBox).TextChanged += new TextChangedEventHandler(this.FilterTextBoxChanged);
                 (base.GetTemplateChild("_txtFilter") as TextBox).MouseDoubleClick += new MouseButtonEventHandler(this.WatermarkTextBoxMouseDoubleClick);
             }
+            scroll = this.GetTemplateChild("_tv_scrollviewer_") as ScrollViewer;
         }
 
         private static void OnFilterChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -1633,7 +1657,7 @@ namespace Victop.Wpf.Controls
                 Victop.Wpf.Controls.VicTreeView view = o as Victop.Wpf.Controls.VicTreeView;
                 if (view != null)
                 {
-                    view.OnFilterTreeViewChanged(o, (string) e.OldValue, (string) e.NewValue);
+                    view.OnFilterTreeViewChanged(o, (string)e.OldValue, (string)e.NewValue);
                 }
             }
         }
@@ -1667,7 +1691,7 @@ namespace Victop.Wpf.Controls
                         {
                             throw new Exception("过滤条件FilterExpression为空！");
                         }
-                        DataView itemsSource = (DataView) base.ItemsSource;
+                        DataView itemsSource = (DataView)base.ItemsSource;
                         this._FilterListViewRowIndex = 0;
                         this._FilterListViewRowsDown = itemsSource.Table.Select(string.Format(CultureInfo.CurrentCulture, filterExpression, new object[] { newValue })).CopyToDataTable<DataRow>();
                         this._FilterListViewRowsUp = this._FilterListViewRowsDown.Clone();
@@ -1708,7 +1732,7 @@ namespace Victop.Wpf.Controls
                 Style style = new Style(typeof(TreeViewItem));
                 if (object.Equals(base.GetType(), typeof(Victop.Wpf.Controls.VicTreeView)))
                 {
-                    ResourceDictionary item = Application.LoadComponent(new Uri("Victop.Wpf.VicTreeView;component/Themes/TreeView.xaml", UriKind.Relative)) as ResourceDictionary;
+                    ResourceDictionary item = Application.LoadComponent(new Uri("Victop.Wpf.Controls;component/Themes/TreeView.xaml", UriKind.Relative)) as ResourceDictionary;
                     if (!base.Resources.MergedDictionaries.Contains(item))
                     {
                         base.Resources.MergedDictionaries.Add(item);
@@ -2014,22 +2038,22 @@ namespace Victop.Wpf.Controls
                 else
                 {
                     IEnumerator enumerator = newItemsSource.Rows.GetEnumerator();
-                        Func<string, object> selector = null;
-                        DataRow row;
-                        while (enumerator.MoveNext())
+                    Func<string, object> selector = null;
+                    DataRow row;
+                    while (enumerator.MoveNext())
+                    {
+                        row = (DataRow)enumerator.Current;
+                        list4.Clear();
+                        if (selector == null)
                         {
-                            row = (DataRow) enumerator.Current;
-                            list4.Clear();
-                            if (selector == null)
-                            {
-                                selector = str => row[str];
-                            }
-                            list4.AddRange(primaryKeyFields.Select<string, object>(selector));
-                            if (oldItemsSource.Rows.Find(list4.ToArray()) == null)
-                            {
-                                oldItemsSource.ImportRow(row);
-                            }
+                            selector = str => row[str];
                         }
+                        list4.AddRange(primaryKeyFields.Select<string, object>(selector));
+                        if (oldItemsSource.Rows.Find(list4.ToArray()) == null)
+                        {
+                            oldItemsSource.ImportRow(row);
+                        }
+                    }
                     if (isSetNewRowSelected)
                     {
                         DataRow[] rowArray2 = oldItemsSource.Select(string.IsNullOrEmpty(newRowSelectItemSql) ? string.Format(CultureInfo.CurrentCulture, "{0} = 1", new object[] { this.AhTempColName_Selected }) : newRowSelectItemSql);
@@ -2083,7 +2107,7 @@ namespace Victop.Wpf.Controls
             {
                 DataRowView selectedItem = base.SelectedItem as DataRowView;
                 short status = 1;
-                MenuItem source = (MenuItem) e.Source;
+                MenuItem source = (MenuItem)e.Source;
                 string name = source.Name;
                 if (name != null)
                 {
@@ -2108,7 +2132,7 @@ namespace Victop.Wpf.Controls
             if (base.SelectedItem != null)
             {
                 DataRowView selectedItem = base.SelectedItem as DataRowView;
-                MenuItem source = (MenuItem) e.Source;
+                MenuItem source = (MenuItem)e.Source;
                 bool expand = source.Name.Equals("ahItemChildExpandAll");
                 selectedItem.Row[this.AhTempColName_Expanded] = expand ? 1 : 0;
                 this.SetDataRowViewExpand(selectedItem.Row, this.IDField, this.FIDField, expand);
@@ -2570,7 +2594,8 @@ namespace Victop.Wpf.Controls
                             break;
                     }
                 }
-                if (controls.Any<CtrlField>(delegate (CtrlField it) {
+                if (controls.Any<CtrlField>(delegate(CtrlField it)
+                {
                     if (it.CtrlType != TreeViewControl.tvcCheckBox)
                     {
                         return it.CtrlType == TreeViewControl.tvcCheckBoxThreeState;
@@ -2876,7 +2901,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (bool) base.GetValue(DisplayFilterProperty);
+                return (bool)base.GetValue(DisplayFilterProperty);
             }
             set
             {
@@ -2895,7 +2920,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (string) base.GetValue(FilterProperty);
+                return (string)base.GetValue(FilterProperty);
             }
             set
             {
@@ -2908,7 +2933,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (System.Windows.Media.Color) base.GetValue(FilterBackgroundProperty);
+                return (System.Windows.Media.Color)base.GetValue(FilterBackgroundProperty);
             }
             set
             {
@@ -2921,7 +2946,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (string) base.GetValue(FilterExpressionProperty);
+                return (string)base.GetValue(FilterExpressionProperty);
             }
             set
             {
@@ -2934,7 +2959,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (string) base.GetValue(FilterLevelSeperateProperty);
+                return (string)base.GetValue(FilterLevelSeperateProperty);
             }
             set
             {
@@ -2947,7 +2972,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (System.Windows.Media.Color) base.GetValue(FilterRowColorProperty);
+                return (System.Windows.Media.Color)base.GetValue(FilterRowColorProperty);
             }
             set
             {
@@ -2973,7 +2998,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (string) base.GetValue(FilterWatermarkProperty);
+                return (string)base.GetValue(FilterWatermarkProperty);
             }
             set
             {
@@ -3015,7 +3040,8 @@ namespace Victop.Wpf.Controls
             get
             {
                 HierarchicalDataTemplate template = new HierarchicalDataTemplate();
-                Binding binding = new Binding {
+                Binding binding = new Binding
+                {
                     Path = new PropertyPath(this.RelParentChild, new object[0])
                 };
                 template.ItemsSource = binding;
@@ -3033,7 +3059,8 @@ namespace Victop.Wpf.Controls
                 else
                 {
                     FrameworkElementFactory factory3 = new FrameworkElementFactory(typeof(TextBlock), "myCtrlTextBlock");
-                    Binding binding2 = new Binding(this.DisplayField) {
+                    Binding binding2 = new Binding(this.DisplayField)
+                    {
                         Mode = BindingMode.TwoWay,
                         UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
                     };
@@ -3110,7 +3137,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (bool) base.GetValue(IsDownSearchProperty);
+                return (bool)base.GetValue(IsDownSearchProperty);
             }
             set
             {
@@ -3123,7 +3150,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (bool) base.GetValue(IsExpandCurrentItemProperty);
+                return (bool)base.GetValue(IsExpandCurrentItemProperty);
             }
             set
             {
@@ -3136,7 +3163,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (bool) base.GetValue(IsExpandItemChildProperty);
+                return (bool)base.GetValue(IsExpandItemChildProperty);
             }
             set
             {
@@ -3171,7 +3198,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (bool) base.GetValue(IsShowItemChildActionProperty);
+                return (bool)base.GetValue(IsShowItemChildActionProperty);
             }
             set
             {
@@ -3184,7 +3211,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (string) base.GetValue(ItemChildCancelSelectHeaderProperty);
+                return (string)base.GetValue(ItemChildCancelSelectHeaderProperty);
             }
             set
             {
@@ -3197,7 +3224,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (string) base.GetValue(ItemChildExpandHeaderProperty);
+                return (string)base.GetValue(ItemChildExpandHeaderProperty);
             }
             set
             {
@@ -3210,7 +3237,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (string) base.GetValue(ItemChildSelectHeaderProperty);
+                return (string)base.GetValue(ItemChildSelectHeaderProperty);
             }
             set
             {
@@ -3223,7 +3250,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (string) base.GetValue(ItemChildUnExpandHeaderProperty);
+                return (string)base.GetValue(ItemChildUnExpandHeaderProperty);
             }
             set
             {
@@ -3236,7 +3263,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (string) base.GetValue(ItemChildUnSelectHeaderProperty);
+                return (string)base.GetValue(ItemChildUnSelectHeaderProperty);
             }
             set
             {
@@ -3274,7 +3301,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (string) base.GetValue(PinYinFieldProperty);
+                return (string)base.GetValue(PinYinFieldProperty);
             }
             set
             {
@@ -3287,7 +3314,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (string) base.GetValue(PinYinSearchRelationProperty);
+                return (string)base.GetValue(PinYinSearchRelationProperty);
             }
             set
             {
@@ -3300,7 +3327,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (bool) base.GetValue(PinYinSearchTypeProperty);
+                return (bool)base.GetValue(PinYinSearchTypeProperty);
             }
             set
             {
@@ -3362,7 +3389,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (bool) base.GetValue(SetFilterFirstRowSelectedProperty);
+                return (bool)base.GetValue(SetFilterFirstRowSelectedProperty);
             }
             set
             {
@@ -3375,7 +3402,7 @@ namespace Victop.Wpf.Controls
         {
             get
             {
-                return (bool) base.GetValue(SetFilterRowColorProperty);
+                return (bool)base.GetValue(SetFilterRowColorProperty);
             }
             set
             {
@@ -3547,6 +3574,9 @@ namespace Victop.Wpf.Controls
         }
 
         #region 拖动节点
+        /// <summary>滚动条：如果拖动的是滚动条则返回（即正常拖动）</summary>
+        private ScrollViewer scroll;
+
         [Category("数据"), Description("节点是否允许拖拽(仅用于treeview)")]
         public bool IsItemsAllowDrag { get; set; }
         protected override void OnMouseMove(MouseEventArgs e)
@@ -3560,6 +3590,7 @@ namespace Victop.Wpf.Controls
                     targetDrv = null;
                     if ((selectedItem != null))
                     {
+                        if (scroll != null && scroll.IsMouseCaptureWithin) return;
                         TreeViewItem container = FindTreeViewItem(this, selectedItem);
                         if (container != null)
                         {

@@ -138,9 +138,11 @@ namespace Victop.Frame.DataChannel
             string fieldType = xmlNode.Attributes["fieldtype"].Value;
             switch (fieldType)
             {
-                case "i8":
                 case "i4":
-                    dc.DataType = typeof(int);
+                    dc.DataType = typeof(Int16);
+                    break;
+                case "i8":
+                    dc.DataType = typeof(Int32);
                     break;
                 case "dateTime":
                     dc.DataType = typeof(DateTime);
@@ -182,30 +184,34 @@ namespace Victop.Frame.DataChannel
                 stringBuilder.Append("<DATASET id=\"").Append(mastDt.TableName).Append("\">");
                 stringBuilder.Append("<DATAPACKET Version=\"").Append("2.0").Append("\">");
                 stringBuilder.Append("<METADATA>");
-                //stringBuilder.Append("<FIELDS>");
-                //foreach (DataColumn mastDc in mastDt.Columns)
-                //{
-                //    string fieldType = "string";
-                //    switch (mastDc.DataType.Name)
-                //    {
-                //        case "Int16":
-                //            fieldType = "i4";
-                //            break;
-                //        case "Int32":
-                //        case "Int64":
-                //            fieldType="i8";
-                //            break;
-                //        case "DateTime":
-                //            fieldType = "dateTime";
-                //            break;
-                //        case "String":
-                //        default:
-                //            fieldType = "string";
-                //            break;
-                //    }
-                //    stringBuilder.AppendFormat("<FIELD attrname='{0}' fieldtype='{1}' WIDTH='50' /> ",mastDc.ColumnName,fieldType);
-                //}
-                //stringBuilder.Append("</FIELDS>");
+                stringBuilder.Append("<FIELDS>");
+                foreach (DataColumn mastDc in mastDt.Columns)
+                {
+                    string fieldType = "string";
+                    long fieldLength = 50;
+                    switch (mastDc.DataType.Name)
+                    {
+                        case "Int16":
+                            fieldType = "i4";
+                            fieldLength = 11;
+                            break;
+                        case "Int32":
+                        case "Int64":
+                            fieldType = "i8";
+                            fieldLength = 20;
+                            break;
+                        case "DateTime":
+                            fieldType = "dateTime";
+                            fieldLength = 23;
+                            break;
+                        case "String":
+                        default:
+                            fieldType = "string";
+                            break;
+                    }
+                    stringBuilder.AppendFormat("<FIELD attrname='{0}' fieldtype='{1}' WIDTH='{2}' /> ", mastDc.ColumnName, fieldType, fieldLength);
+                }
+                stringBuilder.Append("</FIELDS>");
                 stringBuilder.Append("</METADATA>");
                 stringBuilder.Append("<ROWDATA>");
                 foreach (DataRow mastDr in mastDt.Rows)
@@ -217,10 +223,12 @@ namespace Victop.Frame.DataChannel
                     else if (mastDr.RowState == DataRowState.Modified)
                     {
                         GetDataRowXml(stringBuilder, mastDt, mastDr, "8");
+                        GetDataRowXml(stringBuilder, mastDt, mastDr, "1", true);
                     }
                     else if (mastDr.RowState == DataRowState.Deleted)
                     {
                         GetDataRowXml(stringBuilder, mastDt, mastDr, "2",true);
+                        GetDataRowXml(stringBuilder, mastDt, mastDr, "1", true);
                     }
                 }
                 stringBuilder.Append("</ROWDATA>");

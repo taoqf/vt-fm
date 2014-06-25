@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -62,22 +60,7 @@ namespace Victop.Wpf.Controls
             set { SetValue(FormatTextProperty, value); }
         }
 
-        //
-        // 摘要:
-        //     获取或设置自定义日期/时间格式字符串。
-        //
-        // 返回结果:
-        //     表示自定义日期/时间格式的字符串。默认值为 null。
-        [DefaultValue("")]
-        [Description("获取或设置自定义日期/时间格式字符串")]
-        public string StringFormat
-        {
-            get { return (string)GetValue(StringFormatProperty); }
-            set { SetValue(StringFormatProperty, value); }
-        }
-        public static readonly DependencyProperty StringFormatProperty = DependencyProperty.Register("StringFormat", typeof(string), typeof(VicDatePickerNormal), new FrameworkPropertyMetadata(OnStringFormatPropertyChanged));
-
-        public static readonly DependencyProperty FormatTextProperty = DependencyProperty.Register("FormatText", typeof(string), typeof(VicDatePickerNormal), new PropertyMetadata(string.Empty));
+        public static readonly DependencyProperty FormatTextProperty = DependencyProperty.Register("FormatText", typeof(string), typeof(VicDatePickerNormal), new FrameworkPropertyMetadata(OnFormatTextPropertyChanged) { BindsTwoWayByDefault=true});
 
         public static readonly DependencyProperty HideButtonProperty = DependencyProperty.Register("HideButton", typeof(bool), typeof(VicDatePickerNormal), new PropertyMetadata(default(bool)));
 
@@ -92,38 +75,35 @@ namespace Victop.Wpf.Controls
         static VicDatePickerNormal()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(VicDatePickerNormal), new FrameworkPropertyMetadata(typeof(VicDatePickerNormal)));
-            SelectedDateProperty.OverrideMetadata(typeof(VicDatePickerNormal), new FrameworkPropertyMetadata(OnSelectedDatePropertyChanged));
         }
 
-
-        public VicDatePickerNormal()
+        protected override void OnSelectedDateChanged(SelectionChangedEventArgs e)
         {
-           
-            //this.SelectedDateChanged += VicDatePickerNormal_SelectedDateChanged;
-        }
-
-        //void VicDatePickerNormal_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    this.SelectedDate = DateTime.Parse(this.SelectedDate.Value.ToString("yyyy-MM-dd HH:mm:ss"));
-        //    this.Text = (DateTime.Parse(this.Text)).ToString("yyyy-MM-dd HH:mm:ss");
-        //}
-        private static void OnSelectedDatePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            VicDatePickerNormal vicDatePicker = d as VicDatePickerNormal;
-            if (vicDatePicker != null )
+            base.OnSelectedDateChanged(e);
+            if (!string.IsNullOrWhiteSpace(this.FormatText) && !DateTime.Equals(DateTime.Parse(this.FormatText), this.SelectedDate))
             {
-                vicDatePicker.FormatText = vicDatePicker.SelectedDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                this.FormatText = this.SelectedDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+            else if (string.IsNullOrWhiteSpace(this.FormatText) && this.SelectedDate != null)
+            {
+                this.FormatText = this.SelectedDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
             }
         }
 
-        private static void OnStringFormatPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        #region FormatText依赖属性值改变事件
+        /// <summary>FormatText依赖属性值改变事件</summary>
+        private static void OnFormatTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            //VicDatePickerNormal vicDatePicker = d as VicDatePickerNormal;
-            //if (vicDatePicker != null)
-            //{
-            //    Thread.CurrentThread.CurrentCulture = (CultureInfo)Thread.CurrentThread.CurrentCulture.Clone();
-            //    Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern = vicDatePicker.StringFormat;
-            //}
+            VicDatePickerNormal datePicker = d as VicDatePickerNormal;
+            if (datePicker != null)
+            {
+                if (!string.IsNullOrWhiteSpace((datePicker.FormatText)) && datePicker.SelectedDate == null)
+                {
+                    datePicker.SelectedDate = DateTime.Parse(datePicker.FormatText);
+                    datePicker.FormatText = datePicker.SelectedDate.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                }
+            }
         }
+        #endregion
     }
 }

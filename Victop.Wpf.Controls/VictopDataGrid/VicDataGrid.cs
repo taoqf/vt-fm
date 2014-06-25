@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -49,16 +50,16 @@ namespace Victop.Wpf.Controls
     /// </summary>
     public class VicDataGrid : DataGrid
     {
-        //public static DependencyProperty LayOutFileNameProperty = DependencyProperty.Register("LayOutFileName", typeof(string), typeof(VicDataGrid), new UIPropertyMetadata(string.Empty));
+        public static DependencyProperty LayOutFileNameProperty = DependencyProperty.Register("LayOutFileName", typeof(string), typeof(VicDataGrid), new UIPropertyMetadata(string.Empty));
 
-        //[DefaultValue("")]
-        //[Description("获取或设置布局文件名称")]
-        //public string LayOutFileName
-        //{
-        //    get { return (string)GetValue(LayOutFileNameProperty); }
+        [DefaultValue("")]
+        [Description("获取或设置布局文件名称")]
+        public string LayOutFileName
+        {
+            get { return (string)GetValue(LayOutFileNameProperty); }
 
-        //    set { SetValue(LayOutFileNameProperty, value); }
-        //}
+            set { SetValue(LayOutFileNameProperty, value); }
+        }
 
         /// <summary>
         /// xml文件路径
@@ -66,24 +67,38 @@ namespace Victop.Wpf.Controls
         private string fullName;
 
         ContextMenu cm;
+
         static VicDataGrid()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(VicDataGrid), new FrameworkPropertyMetadata(typeof(VicDataGrid)));
         }
+        #region 构造函数
         public VicDataGrid()
         {
             this.LoadingRow += VicDataGrid_LoadingRow;
             this.MouseRightButtonDown += VicDataGrid_MouseRightButtonDown;
-            //this.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
-            //this.SelectionMode = DataGridSelectionMode.Extended;
-            //this.SelectionUnit = DataGridSelectionUnit.Cell;
-            //this.SelectedCellsChanged += VicDataGrid_SelectedCellsChanged;
+            this.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+            this.SelectionMode = DataGridSelectionMode.Extended;
+        }
+        #endregion
+
+        #region 重写事件
+        /// <summary> 鼠标离开 </summary>
+        protected override void OnMouseLeave(MouseEventArgs e)
+        {
+            base.OnMouseLeave(e);
+            if (this.SelectedItem != null)
+            {
+                this.CommitEdit();//提交修改，配合列绑定中的通知，可即时更新数据源
+            }
         }
 
-        private void VicDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        /// <summary> 选中单元格改变 </summary>
+        protected override void OnCurrentCellChanged(EventArgs e)
         {
-            if (e.AddedCells.Count == 0) return;
-            var currentCell = e.AddedCells[0];
+            base.OnCurrentCellChanged(e);
+            DataGridCellInfo currentCell = this.CurrentCell;
+            if (currentCell == null || currentCell.Column == null) return;
             bool isEdit = false;
             switch (currentCell.Column.GetType().Name)
             {
@@ -104,19 +119,72 @@ namespace Victop.Wpf.Controls
             {
                 this.BeginEdit();    //  进入编辑模式  这样单击一次就可以选择ComboBox里面的值了  
             }
-            DataRowView drv= (DataRowView)this.SelectedCells[0].Item;
+        }
 
-            DataView dv = (DataView)this.ItemsSource;
-            DataTable dt = dv.Table;
-            int rowIndex = dt.Rows.IndexOf(drv.Row);
-            this.SelectedIndex = rowIndex;
-            this.SelectedItem = drv;
-        }
-        /// <summary>增加行号</summary>
-        private void VicDataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        /// <summary> 数据源发生变化 </summary>
+        protected override void OnItemsSourceChanged(System.Collections.IEnumerable oldValue, System.Collections.IEnumerable newValue)
         {
-            e.Row.Header = e.Row.GetIndex() + 1;    //设置行表头的内容值  
+            base.OnItemsSourceChanged(oldValue, newValue);
+            if (newValue != null && newValue.GetType().Name == "DataView")
+            {
+                this.Columns.Clear();
+                DataTable dtSource = ((DataView)newValue).Table;
+                foreach (DataColumn dc in dtSource.Columns)
+                {
+                    switch (dc.DataType.Name.ToString())
+                    {
+                        case "Int32":
+                            VicDataGridNumericUpDownColumn numColumn = new VicDataGridNumericUpDownColumn();
+                            if (dc.ReadOnly)
+                            {
+                                numColumn.Binding = new Binding(dc.ColumnName) { Mode = BindingMode.OneWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+                            }
+                            else
+                            {
+                                numColumn.Binding = new Binding(dc.ColumnName) { UpdateSourceTrigger= UpdateSourceTrigger.PropertyChanged};
+                            }
+                            numColumn.Header = string.IsNullOrWhiteSpace(dc.Caption) ? dc.ColumnName : dc.Caption;
+                            numColumn.IsReadOnly = dc.ReadOnly;
+                            this.Columns.Add(numColumn);
+                            break;
+                        case "String":
+                            VicDataGridTextColumn textColumn = new VicDataGridTextColumn();
+                            if (dc.ReadOnly)
+                            {
+                                textColumn.Binding = new Binding(dc.ColumnName) { Mode = BindingMode.OneWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+                            }
+                            else
+                            {
+                                textColumn.Binding = new Binding(dc.ColumnName) { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+                            }
+                            textColumn.Binding = new Binding(dc.ColumnName);
+                            textColumn.Header = string.IsNullOrWhiteSpace(dc.Caption) ? dc.ColumnName : dc.Caption;
+                            textColumn.IsReadOnly = dc.ReadOnly;
+                            this.Columns.Add(textColumn);
+                            break;
+                        case "DateTime":
+                            VicDataGridDatePickerColumn dateColumn = new VicDataGridDatePickerColumn();
+                            if (dc.ReadOnly)
+                            {
+                                dateColumn.Binding = new Binding(dc.ColumnName) { Mode = BindingMode.OneWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+                            }
+                            else
+                            {
+                                dateColumn.Binding = new Binding(dc.ColumnName) { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+                            }
+                            dateColumn.Binding = new Binding(dc.ColumnName);
+                            dateColumn.Header = string.IsNullOrWhiteSpace(dc.Caption) ? dc.ColumnName : dc.Caption;
+                            dateColumn.IsReadOnly = dc.ReadOnly;
+                            this.Columns.Add(dateColumn);
+                            break;
+                    }
+                }
+            }
+            ReadXmlFileLayOutInfo(LayOutFileName);
         }
+        #endregion
+
+        #region 增加右键菜单
         /// <summary>增加右键菜单</summary>
         private void VicDataGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -145,20 +213,6 @@ namespace Victop.Wpf.Controls
             cm.Items.Add(btnClearLayout);
             this.ContextMenu = cm;
         }
-        /// <summary>清除列表布局</summary>
-        private void btnClearLayout_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (File.Exists(fullName))
-                {
-                    File.Delete(fullName);
-                }
-                cm.Visibility = Visibility.Collapsed;
-            }
-            catch (Exception ex)
-            { }
-        }
         /// <summary>
         /// 将DataGrid中的列的Visibility属性和CheckBox的IsCheck属性绑定
         /// </summary>
@@ -171,7 +225,9 @@ namespace Victop.Wpf.Controls
             binding.Converter = new ColumnVisibilityToBoolConverter(); // 设定Converter
             checkbox.SetBinding(CheckBox.IsCheckedProperty, binding);
         }
+        #endregion
 
+        #region 保存列表布局
         /// <summary>保存列表布局</summary>
         private void btnSaveLayout_Click(object sender, RoutedEventArgs e)
         {
@@ -318,6 +374,9 @@ namespace Victop.Wpf.Controls
                 dataPropertyName = binding.Path.Path.ToString();
             return dataPropertyName;
         }
+        #endregion
+
+        #region 读取XML文件中的列表布局信息
         /// <summary>
         /// 读取XML文件中的列表布局信息
         /// </summary>
@@ -326,8 +385,9 @@ namespace Victop.Wpf.Controls
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(fileName)) return;
-                fullName = "GridLayOutConfig//" + fileName + ".xml";
+                LayOutFileName = fileName;
+                if (string.IsNullOrWhiteSpace(LayOutFileName)) return;
+                fullName = "GridLayOutConfig//" + LayOutFileName + ".xml";
                 if (!System.IO.File.Exists(fullName)) return;
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.Load(fullName);
@@ -357,6 +417,32 @@ namespace Victop.Wpf.Controls
             {
             }
         }
+        #endregion
+
+        #region 清除列表布局
+        /// <summary>清除列表布局</summary>
+        private void btnClearLayout_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (File.Exists(fullName))
+                {
+                    File.Delete(fullName);
+                }
+                cm.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            { }
+        }
+        #endregion
+
+        #region 增加行号(暂不使用)
+        /// <summary>增加行号</summary>
+        private void VicDataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = e.Row.GetIndex() + 1;    //设置行表头的内容值  
+        }
+        #endregion
     }
 }
 

@@ -43,7 +43,7 @@ namespace Victop.Wpf.Controls
             ButtonBase button = this.Template.FindName("PART_CloseButton", this) as ButtonBase;
             if (button != null)
             {
-                button.Visibility = AllowDelete ? Visibility.Visible : Visibility.Collapsed;
+                //button.Visibility = AllowDelete ? Visibility.Visible : Visibility.Collapsed;
                 button.Click += delegate
                 {
                     // get the parent tabcontrol 
