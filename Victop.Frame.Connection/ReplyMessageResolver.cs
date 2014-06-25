@@ -163,10 +163,10 @@ namespace Victop.Frame.Connection
         /// </summary>
         /// <param name="channelId"></param>
         /// <returns></returns>
-        public string GetDataXmlByDataChannelId(string channelId)
+        public string GetDataXmlByDataChannelId(string channelId, bool masterFlag = true)
         {
             DataCreateManager dataManager = new DataCreateManager();
-            string dataXml = dataManager.GetXmlData(channelId);
+            string dataXml = dataManager.GetXmlData(channelId, masterFlag);
             return dataXml;
         }
         /// <summary>

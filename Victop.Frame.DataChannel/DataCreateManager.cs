@@ -168,7 +168,7 @@ namespace Victop.Frame.DataChannel
 		/// <summary>
 		/// 获取xml格式数据
 		/// </summary>
-		public virtual string GetXmlData(string channelId)
+		public virtual string GetXmlData(string channelId,bool masterFlag=true)
 		{
             DataChannelManager dataManager = new DataChannelManager();
             Hashtable hashData = dataManager.GetData(channelId);
@@ -179,7 +179,7 @@ namespace Victop.Frame.DataChannel
             stringBuilder.Append("<DATA>");
             foreach (DataTable mastDt in requestDs.Tables)
             {
-                if (!mastDt.TableName.Equals("masterdata"))
+                if (masterFlag && !mastDt.TableName.Equals("masterdata"))
                     continue;
                 stringBuilder.Append("<DATASET id=\"").Append(mastDt.TableName).Append("\">");
                 stringBuilder.Append("<DATAPACKET Version=\"").Append("2.0").Append("\">");

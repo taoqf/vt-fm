@@ -189,7 +189,7 @@ namespace Victop.Frame.Connection
                 {
                     string channelId = dicContent["DataChannelId"].ToString();
                     ReplyMessageResolver replyResolver = new ReplyMessageResolver();
-                    string dataXml = replyResolver.GetDataXmlByDataChannelId(channelId);
+                    string dataXml = replyResolver.GetDataXmlByDataChannelId(channelId,false);
                     if (dicContent.ContainsKey("deltaXml"))
                     {
                         dicContent["deltaXml"] = dataXml;
@@ -499,7 +499,7 @@ namespace Victop.Frame.Connection
                 {
                     string channelId = dicContent["DataChannelId"].ToString();
                     ReplyMessageResolver replyResolver = new ReplyMessageResolver();
-                    string dataXml = replyResolver.GetDataXmlByDataChannelId(channelId);
+                    string dataXml = replyResolver.GetDataXmlByDataChannelId(channelId,false);
                     if (dicContent.ContainsKey("deltaXml"))
                     {
                         dicContent["deltaXml"] = dataXml;
