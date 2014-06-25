@@ -118,6 +118,10 @@ namespace Victop.Frame.DataChannel
             XmlNodeList fieldList = xmlNode.SelectSingleNode("METADATA").SelectSingleNode("FIELDS").SelectNodes("FIELD");
             foreach (XmlNode item in fieldList)
             {
+                #region 临时处理SOA返回表结构出现重复列的情况
+                if (dt.Columns.Contains(item.Attributes["attrname"].Value))
+                    continue;
+                #endregion
                 dt.Columns.Add(SetDataColumnInfo(item));
             }
             return dt;
