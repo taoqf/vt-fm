@@ -34,18 +34,18 @@ namespace Victop.Frame.DataChannel
             Dictionary<string, string> contDic = JsonHelper.ToObject<Dictionary<string, string>>(replyMessageInfo.ReplyContent);
             if (contDic == null)
             {
-                channelData.DataInfo = CreateMasterDataSet(replyMessageInfo.ReplyContent);
+                channelData.DataInfo = CreateDataSet(replyMessageInfo.ReplyContent);
             }
             else
             {
-                channelData.DataInfo = CreateMasterDataSet(contDic["Result"]);
+                channelData.DataInfo = CreateDataSet(contDic["Result"]);
             }
             hashData.Add("Data", channelData);
             return hashData;
             
 		}
 
-        private DataSet CreateMasterDataSet(string dataXml)
+        private DataSet CreateDataSet(string dataXml)
         {
             DataSet ReplyData = new DataSet();
             if (string.IsNullOrEmpty(dataXml))
@@ -144,6 +144,7 @@ namespace Victop.Frame.DataChannel
                     break;
                 case "dateTime":
                     dc.DataType = typeof(DateTime);
+                    dc.DateTimeMode = DataSetDateTime.Utc;
                     break;
                 case "string":
                 default:
@@ -152,40 +153,6 @@ namespace Victop.Frame.DataChannel
                     break;
             }
             return dc;
-        }
-
-        private DataSet CreateDataSetByXml(string dataXml)
-        {
-            DataSet ReplyData=new DataSet();
-            if (string.IsNullOrEmpty(dataXml))
-            {
-                return ReplyData;
-            }
-            try
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(dataXml);
-                XmlNodeList xmlNodeList = doc.GetElementsByTagName("DATASET");
-                foreach (XmlNode node in xmlNodeList)
-                {
-                    string datasetId = node.Attributes["datasetid"].Value;
-                    XmlNodeList nodexmlNodeList = node.ChildNodes;
-                    foreach (XmlNode childNode in nodexmlNodeList)
-                    {
-                        if (childNode.Name.Equals("DATAPACKET"))
-                        {
-                            DataTable table = DataTool.ConvertXMLToDataTable(childNode, "ROW");
-                            table.TableName = datasetId;
-                            ReplyData.Tables.Add(table);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-            return ReplyData;
         }
 
 		/// <summary>

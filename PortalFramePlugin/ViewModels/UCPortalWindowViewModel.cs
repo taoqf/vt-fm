@@ -293,6 +293,8 @@ namespace PortalFramePlugin.ViewModels
                     if (x != null)
                     {
                         MenuModel menuModel = (MenuModel)x;
+                        if(menuModel.ResourceName==null)
+                            menuModel.ResourceName = ConfigurationManager.AppSettings["runplugin"];
                         if (menuModel.ResourceName != null && menuModel.ResourceName.Contains("Plugin"))
                         {
                             Dictionary<string, string> messageDic = new Dictionary<string, string>();

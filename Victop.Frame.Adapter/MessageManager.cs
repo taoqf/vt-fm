@@ -287,7 +287,7 @@ namespace Victop.Frame.Adapter
 
         public override void OnExit(ExitTypeEnum exitType)
         {
-            throw new NotImplementedException();
+            return;
         }
 
 
