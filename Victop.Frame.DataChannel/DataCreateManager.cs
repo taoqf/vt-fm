@@ -228,7 +228,6 @@ namespace Victop.Frame.DataChannel
                     else if (mastDr.RowState == DataRowState.Deleted)
                     {
                         GetDataRowXml(stringBuilder, mastDt, mastDr, "2",true);
-                        GetDataRowXml(stringBuilder, mastDt, mastDr, "1", true);
                     }
                 }
                 stringBuilder.Append("</ROWDATA>");
@@ -256,7 +255,7 @@ namespace Victop.Frame.DataChannel
                         }
                         else
                         {
-                            dateTimeStr = string.IsNullOrEmpty(mastDr[mastDc.ColumnName, DataRowVersion.Original].ToString()) ? "" : ((DateTime)mastDr[mastDc.ColumnName]).ToString("yyyy-MM-ddTHH:mm:ss");
+                            dateTimeStr = string.IsNullOrEmpty(mastDr[mastDc.ColumnName].ToString()) ? "" : ((DateTime)mastDr[mastDc.ColumnName]).ToString("yyyy-MM-ddTHH:mm:ss");
                         }
                         stringBuilder.AppendFormat(" {0}='{1}' ", mastDc.ColumnName, dateTimeStr);
                     }
