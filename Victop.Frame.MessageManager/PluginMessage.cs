@@ -28,7 +28,6 @@ namespace Victop.Frame.MessageManager
 		/// </summary>
         public virtual void SendMessage(string objectId, string messageInfo, WaitCallback replyCallBack)
 		{
-            LoggerHelper.InfoFormat("objectId:{0},messageInfo:{1}", objectId, messageInfo);
             PluginMessageFormManager pluginMessageFormManager = new PluginMessageFormManager();
             pluginMessageFormManager.CheckMessageFormat(messageInfo,replyCallBack);
 		}

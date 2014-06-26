@@ -7,13 +7,14 @@
 namespace Victop.Frame.MessageManager
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading;
-    using Victop.Frame.CoreLibrary;
-    using Victop.Frame.CoreLibrary.Models;
-    using Victop.Frame.PublicLib.Helpers;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using Victop.Frame.CoreLibrary;
+using Victop.Frame.CoreLibrary.Models;
+using Victop.Frame.MessageManager.Enums;
+using Victop.Frame.PublicLib.Helpers;
 
     /// <summary>
     /// 插件消息格式管理 【消息格式验证】
@@ -21,7 +22,6 @@ namespace Victop.Frame.MessageManager
     /// <remarks>插件消息格式管理</remarks>
     public class PluginMessageFormManager
     {
-        private delegate ReplyMessage ReturnImitativeReplyMessage(string msgId, string messageInfo);
         /// <summary>
         /// 检查插件消息格式
         /// <param name="messageInfo">消息信息</param>
@@ -51,20 +51,30 @@ namespace Victop.Frame.MessageManager
                 }
                 else
                 {
-                    ReturnReplyMessageToPlugin(messageInfo, callBack, CreateExsitRelyMessage);
+                    ReturnReplyMessageToPlugin(messageInfo, callBack,MesssageStatusEnum.EXIST);
                 }
             }
             else//验证失败
             {
-                ReturnReplyMessageToPlugin(messageInfo, callBack, CreateRelyMessage);
+                ReturnReplyMessageToPlugin(messageInfo, callBack, MesssageStatusEnum.FORMATERROR);
             }
         }
 
-        private void ReturnReplyMessageToPlugin(string messageInfo, WaitCallback callBack, ReturnImitativeReplyMessage returnMsgDel)
+        private void ReturnReplyMessageToPlugin(string messageInfo, WaitCallback callBack,MesssageStatusEnum messageStatus)
         {
             RequestMessage message = CreateMessage(callBack);
             //1.调用自身方法创建对应的消息格式信息。
-            ReplyMessage replyMessage = returnMsgDel(message.MessageId, messageInfo);
+            ReplyMessage replyMessage=new ReplyMessage();
+            switch (messageStatus)
+            {
+                case MesssageStatusEnum.EXIST:
+                    replyMessage = CreateExsitRelyMessage(message.MessageId);
+                    break;
+                case MesssageStatusEnum.FORMATERROR:
+                default:
+                    replyMessage = CreateFormatErrorRelyMessage(message.MessageId);
+                    break;
+            }
             //2.创建组织返回信息格式对象
             ReplyPluginMessageManager replyPluginMessageManager = new ReplyPluginMessageManager();
             //3.调用组织返回消息的方法。
@@ -113,7 +123,7 @@ namespace Victop.Frame.MessageManager
         /// </summary>
         /// <param name="messageInfo"></param>
         /// <returns></returns>
-        private ReplyMessage CreateRelyMessage(string messageId, string messageInfo)
+        private ReplyMessage CreateFormatErrorRelyMessage(string messageId)
         {
             ReplyMessage replyMessage = new ReplyMessage();//创建应答消息对象。
             replyMessage.MessageId = messageId;
@@ -127,7 +137,7 @@ namespace Victop.Frame.MessageManager
         /// </summary>
         /// <param name="messageInfo"></param>
         /// <returns></returns>
-        private ReplyMessage CreateExsitRelyMessage(string messageId, string messageInfo)
+        private ReplyMessage CreateExsitRelyMessage(string messageId)
         {
             ReplyMessage replyMessage = new ReplyMessage();//创建应答消息对象。
             replyMessage.MessageId = messageId;

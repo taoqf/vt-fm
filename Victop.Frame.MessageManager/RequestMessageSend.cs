@@ -6,14 +6,8 @@
 //------------------------------------------------------------------------------
 namespace Victop.Frame.MessageManager
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using Victop.Frame.Connection;
     using Victop.Frame.CoreLibrary.Models;
-    using Victop.Frame.Connection;
-    using Victop.Frame.CoreLibrary;
     /// <summary>
     /// 请求消息发送【消息发送】
     /// </summary>

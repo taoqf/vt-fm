@@ -212,7 +212,7 @@ namespace Victop.Frame.ComLink.ICE
             }
             catch (ConnectionLostException connLost)
             {
-                throw connLost;
+                throw connLost.InnerException;
             }
             catch (System.Exception ex)
             {
