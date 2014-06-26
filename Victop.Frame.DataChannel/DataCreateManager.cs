@@ -205,6 +205,8 @@ namespace Victop.Frame.DataChannel
                             fieldLength = 23;
                             break;
                         case "String":
+                            fieldLength = mastDc.MaxLength;
+                            break;
                         default:
                             fieldType = "string";
                             break;
