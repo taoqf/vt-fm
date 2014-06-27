@@ -218,7 +218,6 @@ namespace Victop.Frame.Adapter
             NotificationPoolManager notificationPoolManager = new NotificationPoolManager();
             OtherPoolManager otherPoolManager = new OtherPoolManager();
             TaskPoolManager taskPoolManager = new TaskPoolManager();
-            messagePoolManager.SaveMessageData(messageInfo);
             if ("notification".Equals(messageInfo.MessageType))
             {
                 string msgControl = messageInfo.MessageControl;
