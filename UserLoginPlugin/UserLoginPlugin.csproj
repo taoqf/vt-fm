@@ -81,18 +81,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Victop.Frame.CoreLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Bin\Victop.Frame.CoreLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="Victop.Frame.MessageManager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Bin\Victop.Frame.MessageManager.dll</HintPath>
-    </Reference>
-    <Reference Include="Victop.Frame.PublicLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Bin\Victop.Frame.PublicLib.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -129,6 +117,18 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Victop.Frame.CoreLibrary\Victop.Frame.CoreLibrary.csproj">
+      <Project>{9bf73423-7f54-4de6-bfbb-e179ba454f0e}</Project>
+      <Name>Victop.Frame.CoreLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Victop.Frame.MessageManager\Victop.Frame.MessageManager.csproj">
+      <Project>{e2066a80-e481-488d-a260-5c0ac9b7eff0}</Project>
+      <Name>Victop.Frame.MessageManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Victop.Frame.PublicLib\Victop.Frame.PublicLib.csproj">
+      <Project>{90c4d04f-f952-4c63-8a69-0c9d12e050fb}</Project>
+      <Name>Victop.Frame.PublicLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Victop.Server.Controls\Victop.Server.Controls.csproj">
       <Project>{d609f0a2-27e1-4855-a5b6-942e580d0d8a}</Project>
       <Name>Victop.Server.Controls</Name>
