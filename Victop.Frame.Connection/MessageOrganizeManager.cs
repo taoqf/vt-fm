@@ -183,7 +183,7 @@ namespace Victop.Frame.Connection
                 }
                 if (!dicContent.ContainsKey("DataChannelId"))
                 {
-                    dicContent.Add("DataChannelId", null);
+                    dicContent.Add("deltaXml", null);
                 }
                 else
                 {
@@ -198,6 +198,7 @@ namespace Victop.Frame.Connection
                     {
                         dicContent.Add("deltaXml", dataXml);
                     }
+                    dicContent.Remove("DataChannelId");
                 }
                 if (!dicContent.ContainsKey("dataparam"))
                 {
@@ -487,13 +488,57 @@ namespace Victop.Frame.Connection
         {
             try
             {
+                if (!dicContent.ContainsKey("openType"))
+                {
+                    dicContent.Add("openType", null);
+                }
+                if (!dicContent.ContainsKey("fieldName"))
+                {
+                    dicContent.Add("fieldName", null);
+                }
+                if (!dicContent.ContainsKey("dataSetID"))
+                {
+                    dicContent.Add("dataSetID", null);
+                }
+                if (!dicContent.ContainsKey("reportID"))
+                {
+                    dicContent.Add("reportID", null);
+                }
+                if (!dicContent.ContainsKey("masterOnly"))
+                {
+                    dicContent.Add("masterOnly", false);
+                }
+                if (!dicContent.ContainsKey("whereArr"))
+                {
+                    dicContent.Add("whereArr", null);
+                }
+                if (!dicContent.ContainsKey("masterParam"))
+                {
+                    dicContent.Add("masterParam", null);
+                }
+                if (!dicContent.ContainsKey("shareFlag"))
+                {
+                    dicContent.Add("shareFlag", null);
+                }
+                if (!dicContent.ContainsKey("treeStr"))
+                {
+                    dicContent.Add("treeStr", null);
+                }
+                if (!dicContent.ContainsKey("saveType"))
+                {
+                    dicContent.Add("saveType", null);
+                }
+                if (!dicContent.ContainsKey("doccode"))
+                {
+                    dicContent.Add("doccode", null);
+                }
                 if (!dicContent.ContainsKey("bzsystemid"))
                 {
                     dicContent.Add("bzsystemid", null);
                 }
                 if (!dicContent.ContainsKey("DataChannelId"))
                 {
-                    dicContent.Add("DataChannelId", null);
+                    dicContent.Add("deltaXml", null);
                 }
                 else
                 {
@@ -508,11 +553,12 @@ namespace Victop.Frame.Connection
                     {
                         dicContent.Add("deltaXml", dataXml);
                     }
+                    dicContent.Remove("DataChannelId");
                 }
                 if (!dicContent.ContainsKey("dataparam"))
                 {
                     Dictionary<string, object> dicDataParam = new Dictionary<string, object>();
-                    dicContent.Add("dataparam", dicDataParam);
+                    dicContent.Add("dataparam", null);
                 }
                 if (!dicContent.ContainsKey("runUser"))
                 {
@@ -528,7 +574,7 @@ namespace Victop.Frame.Connection
                 }
                 if (!dicContent.ContainsKey("formid"))
                 {
-                    dicContent.Add("formid", null);
+                    dicContent.Add("formid",null);
                 }
                 return dicContent;
             }
