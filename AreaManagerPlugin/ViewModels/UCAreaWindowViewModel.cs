@@ -129,7 +129,7 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() => {
                     PluginMessage pluginMessage = new PluginMessage();
-                    pluginMessage.SendMessage("", OrganizeMasterRequestMessage(), new System.Threading.WaitCallback(SearchData));
+                    pluginMessage.SendMessage("", OrganizeCommonRequestMessageMaster(), new System.Threading.WaitCallback(SearchData));
                 });
             }
         }
@@ -155,7 +155,8 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() => {
                     PluginMessage pluginMessage = new PluginMessage();
-                    pluginMessage.SendMessage("", OrganizeModelRequestMessage(), new System.Threading.WaitCallback(SearchData));
+                    //pluginMessage.SendMessage("", OrganizeModelRequestMessage(), new System.Threading.WaitCallback(SearchData));
+                    pluginMessage.SendMessage("", OrganizeCommonRequestMessage(), new System.Threading.WaitCallback(SearchData));
                 });
             }
         }
@@ -224,6 +225,103 @@ namespace AreaManagerPlugin.ViewModels
             contentDic.Add("saveType", null);
             contentDic.Add("doccode", null);
             contentDic.Add("clientId", "byerp");
+            string content = JsonHelper.ToJson(contentDic);
+            messageDic.Add("MessageContent", content);
+            return JsonHelper.ToJson(messageDic);
+        }
+
+        /// <summary>
+        /// 主档
+        /// </summary>
+        /// <returns></returns>
+        private string OrganizeCommonRequestMessageMaster()
+        {
+            Dictionary<string, string> messageDic = new Dictionary<string, string>();
+            messageDic.Add("MessageType", "DataChannelService.loadDataByModelAsync");
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("openType", null);
+            contentDic.Add("bzsystemid", null);
+            contentDic.Add("formid", null);
+            contentDic.Add("dataSetID", null);
+            contentDic.Add("reportID", null);
+            contentDic.Add("modelId", null);
+            contentDic.Add("fieldName", null);
+            contentDic.Add("masterOnly", false);
+            contentDic.Add("dataparam", null);
+            contentDic.Add("whereArr", null);
+            contentDic.Add("masterParam", null);
+            List<Dictionary<string, object>> detaList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> detaXmlDic = new Dictionary<string, object>();
+            detaXmlDic.Add("modeltype", "主档");
+            detaXmlDic.Add("modelid", "地区管理");
+            detaXmlDic.Add("systemid", "905");
+            detaXmlDic.Add("formid", null);
+            detaXmlDic.Add("tableid", null);
+            detaXmlDic.Add("formattype", null);
+            detaXmlDic.Add("ispage", "1");
+            detaXmlDic.Add("pageno", "-1");
+            detaXmlDic.Add("pagesize", "10");
+            detaXmlDic.Add("wherearr", null);
+            detaXmlDic.Add("dataparam", null);
+            detaXmlDic.Add("doccode", null);
+            detaXmlDic.Add("controlid", null);
+            detaXmlDic.Add("detail", "data,meta");
+            detaList.Add(detaXmlDic);
+            contentDic.Add("deltaXml", JsonHelper.ToJson(detaList));
+            contentDic.Add("shareFlag", null);
+            contentDic.Add("treeStr", null);
+            contentDic.Add("saveType", null);
+            contentDic.Add("doccode", null);
+            contentDic.Add("clientId", "byerp");
+            contentDic.Add("runUser", "test7");
+            string content = JsonHelper.ToJson(contentDic);
+            messageDic.Add("MessageContent", content);
+            return JsonHelper.ToJson(messageDic);
+        }
+        /// <summary>
+        /// 统一取数消息
+        /// </summary>
+        /// <returns></returns>
+        private string OrganizeCommonRequestMessage()
+        {
+            Dictionary<string, string> messageDic = new Dictionary<string, string>();
+            messageDic.Add("MessageType", "DataChannelService.loadDataByModelAsync");
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("openType", null);
+            contentDic.Add("bzsystemid", "905");
+            contentDic.Add("formid", "12103");
+            contentDic.Add("dataSetID", null);
+            contentDic.Add("reportID", null);
+            contentDic.Add("modelId", "ERP12103");
+            contentDic.Add("fieldName", null);
+            contentDic.Add("masterOnly", false);
+            contentDic.Add("dataparam", null);
+            contentDic.Add("whereArr", null);
+            contentDic.Add("masterParam", null);
+            List<Dictionary<string, object>> detaList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> detaXmlDic = new Dictionary<string, object>();
+            detaXmlDic.Add("modeltype", "数据模型");
+            detaXmlDic.Add("modelid", "ERP12103");
+            detaXmlDic.Add("systemid", "905");
+            detaXmlDic.Add("formid", "12103");
+            detaXmlDic.Add("tableid", null);
+            detaXmlDic.Add("formattype", null);
+            detaXmlDic.Add("ispage", "1");
+            detaXmlDic.Add("pageno", "-1");
+            detaXmlDic.Add("pagesize", "10");
+            detaXmlDic.Add("wherearr", null);
+            detaXmlDic.Add("dataparam", null);
+            detaXmlDic.Add("doccode", null);
+            detaXmlDic.Add("controlid", null);
+            detaXmlDic.Add("detail", "data,meta");
+            detaList.Add(detaXmlDic);
+            contentDic.Add("deltaXml", JsonHelper.ToJson(detaList));
+            contentDic.Add("shareFlag", null);
+            contentDic.Add("treeStr", null);
+            contentDic.Add("saveType", null);
+            contentDic.Add("doccode", null);
+            contentDic.Add("clientId", "byerp");
+            contentDic.Add("runUser", "test7");
             string content = JsonHelper.ToJson(contentDic);
             messageDic.Add("MessageContent", content);
             return JsonHelper.ToJson(messageDic);

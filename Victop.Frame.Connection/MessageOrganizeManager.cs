@@ -88,6 +88,9 @@ namespace Victop.Frame.Connection
                     case "LinkBaseService.getServerDateTime":
                         dicContent = GetServerDateTimeMessage(dicContent);
                         break;
+                    case "DataChannelService.loadDataByModelAsync":
+                        replyIsToChannel = DataOperateEnum.SAVE;
+                        break;
                     default:
                         break;
                 }

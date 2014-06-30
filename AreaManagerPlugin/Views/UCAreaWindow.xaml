@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:AreaManagerPlugin.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Name="UCMain">
     <UserControl.Resources>
@@ -52,9 +53,12 @@
                 </i:Interaction.Triggers>
             </Button>
         </DockPanel>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding MyDt, UpdateSourceTrigger=PropertyChanged}">
+        <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding MyDt, UpdateSourceTrigger=PropertyChanged}">
+            
+        </ctrl:VicDataGrid>
+        <!--<DataGrid Grid.Row="1" ItemsSource="{Binding MyDt, UpdateSourceTrigger=PropertyChanged}">
 
-        </DataGrid>
+        </DataGrid>-->
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">
                 <i:InvokeCommandAction Command="{Binding gridLoadedCommand}"/>

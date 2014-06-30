@@ -157,7 +157,6 @@ namespace Victop.Wpf.Controls
                             {
                                 textColumn.Binding = new Binding(dc.ColumnName) { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
                             }
-                            textColumn.Binding = new Binding(dc.ColumnName);
                             textColumn.Header = string.IsNullOrWhiteSpace(dc.Caption) ? dc.ColumnName : dc.Caption;
                             textColumn.IsReadOnly = dc.ReadOnly;
                             this.Columns.Add(textColumn);
@@ -172,7 +171,6 @@ namespace Victop.Wpf.Controls
                             {
                                 dateColumn.Binding = new Binding(dc.ColumnName) { UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
                             }
-                            dateColumn.Binding = new Binding(dc.ColumnName);
                             dateColumn.Header = string.IsNullOrWhiteSpace(dc.Caption) ? dc.ColumnName : dc.Caption;
                             dateColumn.IsReadOnly = dc.ReadOnly;
                             this.Columns.Add(dateColumn);

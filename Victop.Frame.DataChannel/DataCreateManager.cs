@@ -17,34 +17,45 @@ namespace Victop.Frame.DataChannel
     using Victop.Frame.CoreLibrary.Models;
     using Victop.Frame.PublicLib.Helpers;
 
-	/// <summary>
-	/// 数据创建器
-	/// </summary>
-	/// <remarks>数据创建管理器</remarks>
-	public class DataCreateManager
-	{
-		/// <summary>
-		/// 依据应答消息创建DataSet并存储到Hashtable
-		/// </summary>
-        private Hashtable CreateDataSetByReplyMessage(ReplyMessage replyMessageInfo,RequestMessage messageInfo)
-		{
+    /// <summary>
+    /// 数据创建器
+    /// </summary>
+    /// <remarks>数据创建管理器</remarks>
+    public class DataCreateManager
+    {
+        /// <summary>
+        /// 依据应答消息创建DataSet并存储到Hashtable
+        /// </summary>
+        private Hashtable CreateDataSetByReplyMessage(ReplyMessage replyMessageInfo, RequestMessage messageInfo)
+        {
             Hashtable hashData = new Hashtable();
             ChannelData channelData = new ChannelData();
             channelData.MessageInfo = messageInfo;
             Dictionary<string, string> contDic = JsonHelper.ToObject<Dictionary<string, string>>(replyMessageInfo.ReplyContent);
-            if (contDic == null)
+            if (messageInfo.MessageType.Equals("DataChannelService.loadDataByModelAsync"))
             {
-                channelData.DataInfo = CreateDataSet(replyMessageInfo.ReplyContent);
+                channelData.DataInfo = CreateDataSetByJSON(replyMessageInfo.ReplyContent);
             }
             else
             {
-                channelData.DataInfo = CreateDataSet(contDic["Result"]);
+                if (contDic == null)
+                {
+                    channelData.DataInfo = CreateDataSet(replyMessageInfo.ReplyContent);
+                }
+                else
+                {
+                    channelData.DataInfo = CreateDataSet(contDic["Result"]);
+                }
             }
             hashData.Add("Data", channelData);
             return hashData;
-            
-		}
 
+        }
+        /// <summary>
+        /// 根据Xml格式文本创建DataSet
+        /// </summary>
+        /// <param name="dataXml"></param>
+        /// <returns></returns>
         private DataSet CreateDataSet(string dataXml)
         {
             DataSet ReplyData = new DataSet();
@@ -77,12 +88,86 @@ namespace Victop.Frame.DataChannel
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
             ReplyData.AcceptChanges();
             return ReplyData;
         }
+        /// <summary>
+        /// 根据JSON格式文本创建DataSet
+        /// </summary>
+        /// <param name="dataJSON"></param>
+        /// <returns></returns>
+        private DataSet CreateDataSetByJSON(string dataJSON)
+        {
+            DataSet ds = new DataSet();
+            string resultStr = JsonHelper.ReadJsonString(dataJSON, "Result");
+            string metaStr = JsonHelper.ReadJsonString(resultStr, "meta");
+            string dataStr = JsonHelper.ReadJsonString(resultStr, "data");
+            List<object> metaList = JsonHelper.ToObject<List<object>>(metaStr);
+            List<object> dataList = JsonHelper.ToObject<List<object>>(dataStr);
+            Dictionary<string, object> metaDic = JsonHelper.ToObject<Dictionary<string, object>>(metaList[0].ToString());
+            Dictionary<string, object> dataDic = JsonHelper.ToObject<Dictionary<string, object>>(dataList[0].ToString());
+            string datasetsStr = metaDic["datasets"].ToString();
+            string datarowsStr = dataDic["datarows"].ToString();
+            List<object> datatableList = JsonHelper.ToObject<List<object>>(datasetsStr);
+            List<object> datarowsList = JsonHelper.ToObject<List<object>>(datarowsStr);
+            for (int i = 0; i < datatableList.Count; i++)
+            {
+                Dictionary<string, object> tableInfoDic = JsonHelper.ToObject<Dictionary<string, object>>(datatableList[i].ToString());
+                string keyField = tableInfoDic["keys"].ToString();
+                DataTable dt = new DataTable(tableInfoDic["datasetname"].ToString());
+                string fieldStr = tableInfoDic["fields"].ToString();
+                List<object> fieldList = JsonHelper.ToObject<List<object>>(fieldStr);
+                for (int j = 0; j < fieldList.Count; j++)
+                {
+                    Dictionary<string, object> fieldInfo = JsonHelper.ToObject<Dictionary<string, object>>(fieldList[j].ToString());
+                    DataColumn dc = new DataColumn();
+                    dc.ColumnName = fieldInfo["fieldid"].ToString();
+                    dc.Caption = fieldInfo["fieldcaption"].ToString();
+                    switch (fieldInfo["datatype"].ToString())
+                    {
+                        case "日期":
+                            dc.DataType = typeof(DateTime);
+                            break;
+                        case "GUID":
+                            dc.DataType = typeof(Guid);
+                            break;
+                        case "整型":
+                            dc.DataType = typeof(Int32);
+                            break;
+                        case "字符":
+                        default:
+                            dc.DataType = typeof(String);
+                            break;
+                    }
+                    dt.Columns.Add(dc);
+                }
+                for (int j = 0; j < datarowsList.Count; j++)
+                {
+                    Dictionary<string, object> datarowInfo = JsonHelper.ToObject<Dictionary<string, object>>(datarowsList[j].ToString());
+                    DataRow dr = dt.NewRow();
+                    foreach (DataColumn dataCol in dt.Columns)
+                    {
+                        if (datarowInfo[dataCol.ColumnName] == null)
+                            continue;
+                        if (dataCol.DataType == typeof(DateTime))
+                        {
+                            dr[dataCol] = datarowInfo[dataCol.ColumnName].ToString().Replace("T", " ").Substring(0, 19);
+                        }
+                        else
+                        {
+                            dr[dataCol] = datarowInfo[dataCol.ColumnName];
+                        }
+                    }
+                    dt.Rows.Add(dr);
+                }
+                ds.Tables.Add(dt);
+            }
+            return ds;
+        }
+
         private DataTable SetDataTableRow(DataTable dt, XmlNode xmlNode)
         {
             dt.Clear();
@@ -157,19 +242,19 @@ namespace Victop.Frame.DataChannel
             return dc;
         }
 
-		/// <summary>
-		/// 根据DataSet完善应答消息体
-		/// </summary>
-		public virtual RequestMessage CreateMessageByDataSet(string channelId)
-		{
-			throw new System.NotImplementedException(); //TODO:方法实现
-		}
+        /// <summary>
+        /// 根据DataSet完善应答消息体
+        /// </summary>
+        public virtual RequestMessage CreateMessageByDataSet(string channelId)
+        {
+            throw new System.NotImplementedException(); //TODO:方法实现
+        }
 
-		/// <summary>
-		/// 获取xml格式数据
-		/// </summary>
-		public virtual string GetXmlData(string channelId,bool masterFlag=true)
-		{
+        /// <summary>
+        /// 获取xml格式数据
+        /// </summary>
+        public virtual string GetXmlData(string channelId, bool masterFlag = true)
+        {
             DataChannelManager dataManager = new DataChannelManager();
             Hashtable hashData = dataManager.GetData(channelId);
             ChannelData channelData = hashData["Data"] as ChannelData;
@@ -220,7 +305,7 @@ namespace Victop.Frame.DataChannel
                 {
                     if (mastDr.RowState == DataRowState.Added)
                     {
-                        GetDataRowXml(stringBuilder, mastDt, mastDr,"4");
+                        GetDataRowXml(stringBuilder, mastDt, mastDr, "4");
                     }
                     else if (mastDr.RowState == DataRowState.Modified)
                     {
@@ -229,7 +314,7 @@ namespace Victop.Frame.DataChannel
                     }
                     else if (mastDr.RowState == DataRowState.Deleted)
                     {
-                        GetDataRowXml(stringBuilder, mastDt, mastDr, "2",true);
+                        GetDataRowXml(stringBuilder, mastDt, mastDr, "2", true);
                     }
                 }
                 stringBuilder.Append("</ROWDATA>");
@@ -238,9 +323,9 @@ namespace Victop.Frame.DataChannel
             }
             stringBuilder.Append("</DATA>");
             return stringBuilder.ToString();
-		}
+        }
 
-        private static void GetDataRowXml(StringBuilder stringBuilder, DataTable mastDt, DataRow mastDr,string rowState,bool isDelete=false)
+        private static void GetDataRowXml(StringBuilder stringBuilder, DataTable mastDt, DataRow mastDr, string rowState, bool isDelete = false)
         {
             try
             {
@@ -253,7 +338,7 @@ namespace Victop.Frame.DataChannel
                         string dateTimeStr = string.Empty;
                         if (isDelete)
                         {
-                            dateTimeStr = string.IsNullOrEmpty(mastDr[mastDc.ColumnName, DataRowVersion.Original].ToString())? "":((DateTime)mastDr[mastDc.ColumnName, DataRowVersion.Original]).ToString("yyyy-MM-ddTHH:mm:ss");
+                            dateTimeStr = string.IsNullOrEmpty(mastDr[mastDc.ColumnName, DataRowVersion.Original].ToString()) ? "" : ((DateTime)mastDr[mastDc.ColumnName, DataRowVersion.Original]).ToString("yyyy-MM-ddTHH:mm:ss");
                         }
                         else
                         {
@@ -277,15 +362,15 @@ namespace Victop.Frame.DataChannel
             }
             catch (Exception ex)
             {
- 
+
             }
         }
 
-		/// <summary>
-		/// 提交通道数据
-		/// </summary>
-		public virtual bool CommitChannelData(string channelId)
-		{
+        /// <summary>
+        /// 提交通道数据
+        /// </summary>
+        public virtual bool CommitChannelData(string channelId)
+        {
             try
             {
                 DataChannelManager dataManager = new DataChannelManager();
@@ -303,14 +388,14 @@ namespace Victop.Frame.DataChannel
             {
                 return false;
             }
-		}
+        }
 
-		/// <summary>
-		/// 发送应答消息(连接器使用)
-		/// </summary>
+        /// <summary>
+        /// 发送应答消息(连接器使用)
+        /// </summary>
         public virtual ReplyMessage SendReplyMessage(ReplyMessage replyMessageInfo, RequestMessage messageInfo)
-		{
-            Hashtable replyHashtable = CreateDataSetByReplyMessage(replyMessageInfo,messageInfo);
+        {
+            Hashtable replyHashtable = CreateDataSetByReplyMessage(replyMessageInfo, messageInfo);
             DataChannelManager dataManager = new DataChannelManager();
             if (dataManager.AddData(replyMessageInfo.MessageId, replyHashtable))
             {
@@ -318,16 +403,16 @@ namespace Victop.Frame.DataChannel
                 replyMessageInfo.ReplyContent = string.Empty;
             }
             return replyMessageInfo;
-		}
+        }
 
-		/// <summary>
-		/// 发送消息(到消息管理器)
-		/// </summary>
-		public virtual ReplyMessage SendMessage(string messageInfo)
-		{
-			throw new System.NotImplementedException(); //TODO:方法实现
-		}
+        /// <summary>
+        /// 发送消息(到消息管理器)
+        /// </summary>
+        public virtual ReplyMessage SendMessage(string messageInfo)
+        {
+            throw new System.NotImplementedException(); //TODO:方法实现
+        }
 
-	}
+    }
 }
 

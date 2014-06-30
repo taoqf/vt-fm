@@ -108,6 +108,10 @@
       <Project>{d609f0a2-27e1-4855-a5b6-942e580d0d8a}</Project>
       <Name>Victop.Server.Controls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Victop.Wpf.Controls\Victop.Wpf.Controls.csproj">
+      <Project>{509d06bd-aeb6-4e92-8e5b-21188ebdbd9c}</Project>
+      <Name>Victop.Wpf.Controls</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\AreaWindow.xaml">
