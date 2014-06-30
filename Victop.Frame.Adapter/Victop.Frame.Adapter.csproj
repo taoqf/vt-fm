@@ -59,10 +59,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Victop.Frame.PublicLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Bin\Victop.Frame.PublicLib.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="KickoutPoolManager.cs" />
@@ -83,6 +79,10 @@
     <ProjectReference Include="..\Victop.Frame.CoreLibrary\Victop.Frame.CoreLibrary.csproj">
       <Project>{9bf73423-7f54-4de6-bfbb-e179ba454f0e}</Project>
       <Name>Victop.Frame.CoreLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Victop.Frame.PublicLib\Victop.Frame.PublicLib.csproj">
+      <Project>{90c4d04f-f952-4c63-8a69-0c9d12e050fb}</Project>
+      <Name>Victop.Frame.PublicLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
