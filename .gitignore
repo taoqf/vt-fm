@@ -21,6 +21,7 @@ Bin/Plugin/*.pdb
 !Bin/ice.cfg
 !Bin/PartnerConfig.xml
 !Bin/UserPlugins.xml
+!VictopLib/
 [Oo]bj/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
