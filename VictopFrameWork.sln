@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.CoreLibrary", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.DataChannel", "Victop.Frame.DataChannel\Victop.Frame.DataChannel.csproj", "{AD1DEB10-B0B3-44FB-8214-5E1CBBCF9147}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.DataReference", "Victop.Frame.DataReference\Victop.Frame.DataReference.csproj", "{131DCA99-3434-419E-8D51-760E9F04C86D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.Templates", "Victop.Frame.Templates\Victop.Frame.Templates.csproj", "{131DCA99-3434-419E-8D51-760E9F04C86D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.MessageManager", "Victop.Frame.MessageManager\Victop.Frame.MessageManager.csproj", "{E2066A80-E481-488D-A260-5C0AC9B7EFF0}"
 EndProject

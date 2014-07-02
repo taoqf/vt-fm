@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Victop.Frame.DataReference.Properties {
+namespace Victop.Frame.Templates.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
