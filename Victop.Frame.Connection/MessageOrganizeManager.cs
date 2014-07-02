@@ -63,6 +63,7 @@ namespace Victop.Frame.Connection
                         break;
                     case "DataChannelService.getFormReferenceSpecial":
                         dicContent = GetFormReferenceSpecialMessage(dicContent);
+                        replyIsToChannel = DataOperateEnum.SAVE;
                         break;
                     case "DataChannelService.getFormReferenceDataAsync":
                         dicContent = GetFormReferenceDataMessage(dicContent);
