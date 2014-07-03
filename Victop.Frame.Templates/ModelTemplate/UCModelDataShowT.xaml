@@ -6,7 +6,8 @@
              xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
+             d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded">
+
     <controls:VicGridNormal>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -54,13 +55,13 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <controls:VicLabelNormal Grid.Row="1" Grid.Column="0" Content="{DynamicResource L_R_49}" HorizontalAlignment="Right" ></controls:VicLabelNormal>
-                    <controls:VicDatePickerNormal Grid.Row="1" Grid.Column="1" Margin="3" SelectedDate="{Binding SearchModel.StartDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></controls:VicDatePickerNormal>
+                    <controls:VicDatePickerNormal Name="datePickerStartDate" Grid.Row="1" Grid.Column="1" Margin="3" ></controls:VicDatePickerNormal>
                     <controls:VicLabelNormal Grid.Row="2" Grid.Column="0" Content="{DynamicResource L_R_50}" HorizontalAlignment="Right"></controls:VicLabelNormal>
-                    <controls:VicDatePickerNormal Grid.Row="2" Grid.Column="1" Margin="3" SelectedDate="{Binding SearchModel.EndDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></controls:VicDatePickerNormal>
+                    <controls:VicDatePickerNormal Name="datePickerEndDate" Grid.Row="2" Grid.Column="1" Margin="3" ></controls:VicDatePickerNormal>
                     <controls:VicLabelNormal Grid.Row="4" Grid.Column="0" Content="{DynamicResource L_R_51}" Grid.ColumnSpan="2"></controls:VicLabelNormal>
-                    <controls:VicComboBoxNormal Name="cmboxSqlFilter" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" SelectedValue="{Binding SearchModel.CombSqlFilter,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Loaded="cmboxSqlFilter_Loaded" >
+                    <controls:VicComboBoxNormal Name="cmboxSqlFilter" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="5"   >
                     </controls:VicComboBoxNormal>
-                    <controls:VicTextBoxNormal Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Text="{Binding SearchModel.TboxSqlFilter,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></controls:VicTextBoxNormal>
+                    <controls:VicTextBoxNormal Grid.Row="6" Name="txtSqlFilter"  Grid.Column="0" Grid.ColumnSpan="2" Margin="0,3,10,9" ></controls:VicTextBoxNormal>
                 </controls:VicGridNormal>
                 <controls:VicGroupBoxNormal Grid.Row="1" Header="{DynamicResource L_R_52}">
                     <controls:VicStackPanelNormal Margin="5">
@@ -76,8 +77,11 @@
                 </controls:VicGroupBoxNormal>
             </controls:VictGridSearch>
             <controls:VicGridNormal Grid.Column="1">
-                <controls:VicDataGrid Name="dgrid" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" MouseDoubleClick="dgrid_MouseDoubleClick" ItemsSource="{Binding DtData}">
+                <controls:VicDataGrid Name="dgrid" AutoGenerateColumns="True" CanUserAddRows="False" SelectionMode="Single" MouseDoubleClick="dgrid_MouseDoubleClick" ItemsSource="{Binding DtData}">
                 </controls:VicDataGrid>
+                <!--<DataGrid Name="dgrid" AutoGenerateColumns="True" CanUserAddRows="False" SelectionMode="Single" MouseDoubleClick="dgrid_MouseDoubleClick" ItemsSource="{Binding DtData}">
+                </DataGrid>-->
+                
             </controls:VicGridNormal>
         </controls:VicGridNormal>
     </controls:VicGridNormal>

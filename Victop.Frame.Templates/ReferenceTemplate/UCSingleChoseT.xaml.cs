@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Victop.Frame.DataChannel;
 using Victop.Frame.MessageManager;
 using Victop.Frame.PublicLib.Helpers;
@@ -19,7 +21,7 @@ using Victop.Frame.PublicLib.Helpers;
 namespace Victop.Frame.Templates.ReferenceTemplate
 {
     /// <summary>
-    /// UCSingleChoseWinT.xaml 的交互逻辑
+    /// 数据引用用户控件的交互逻辑
     /// </summary>
     public partial class UCSingleChoseT : UserControl
     {
@@ -42,8 +44,11 @@ namespace Victop.Frame.Templates.ReferenceTemplate
         private string datasourcetype = "";
         private string datasourcename = "";
         private string bsname = ""; //数据集名称
-        private string isdata = "1";
+        private string isdata = "";
         private DataTable dtDataParm = null;
+        /// <summary>
+        /// 点击“确定”，返回的结果
+        /// </summary>
         private Dictionary<string, string> returnResult;
         /// <summary>
         /// 返回列
@@ -53,6 +58,16 @@ namespace Victop.Frame.Templates.ReferenceTemplate
         /// 数据引用数据集
         /// </summary>
         private DataTable dtData = null;
+        /// <summary>
+        /// 委托类型
+        /// </summary>
+        /// <param name="sender">“确定”对象</param>
+        /// <param name="_returnResult">返回结果字典数据</param>
+        public delegate void ReferenceResult(object sender,Dictionary<string, string> _returnResult);
+        /// <summary>
+        /// 委托事件（返回结果）
+        /// </summary>
+        public event ReferenceResult RefrenceResultClick;
         #endregion 
 
         #region 属性
@@ -95,15 +110,7 @@ namespace Victop.Frame.Templates.ReferenceTemplate
         {
             get { return dtDataParm; }
             set { dtDataParm = value; }
-        }
-        /// <summary>
-        /// 返回字典数据
-        /// </summary>
-        public Dictionary<string, string> ReturnResult
-        {
-            get { return returnResult; }
-            set { returnResult = value; }
-        }
+        }   
         #endregion         
 
         #region 方法
@@ -114,7 +121,7 @@ namespace Victop.Frame.Templates.ReferenceTemplate
         /// </summary>
         private void GetFieldReturn() 
         {
-            if(!string.IsNullOrEmpty(FieldName) && DtDataParm !=null && DtDataParm.TableName=="ROW")
+            if(!string.IsNullOrEmpty(FieldName) && DtDataParm !=null && DtDataParm.Rows.Count >0)
             {
                 foreach(DataRow dr in DtDataParm.Rows)
                 {
@@ -154,9 +161,10 @@ namespace Victop.Frame.Templates.ReferenceTemplate
         {
             try
             {
-                GetFieldReturn();
+                DtDataParm = new DataTable();
                 if (DtDataParm != null && DtDataParm.Rows.Count > 0)
                 {
+                    GetFieldReturn();
                     GetDataParm();
                 }
                 else
@@ -165,12 +173,13 @@ namespace Victop.Frame.Templates.ReferenceTemplate
                     DataSet ds = operateData.GetData(DataChannelId);
                     if (ds != null && ds.Tables.Count > 0)
                     {
-                        DtDataParm = ds.Tables["ROW"];
+                        DtDataParm = ds.Tables["gmDatareference"];
+                        GetFieldReturn();
                         GetDataParm();
                     }
                 }
                 PluginMessage pluginMessage = new PluginMessage();
-                pluginMessage.SendMessage("", ReferenceRequestMessage(), new System.Threading.WaitCallback(SearchData));
+                pluginMessage.SendMessage("", ReferenceRequestMessage(), new System.Threading.WaitCallback(SearchData));                
             }
             catch (Exception ex)
             {
@@ -224,17 +233,29 @@ namespace Victop.Frame.Templates.ReferenceTemplate
                 DataOperation operateData = new DataOperation();
 
                 DataSet ds = operateData.GetData(searchDataChannelId);
-
-                if (ds != null && ds.Tables.Count > 0)
-                {
-                    dtData = ds.Tables["returndata"];
-                    dgridCustomerData.ItemsSource = dtData.DefaultView;
-                }
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new WaitCallback(UpdateTableList), ds);                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        #endregion
+
+        #region 更新数据表列表
+        /// <summary>
+        /// 更新数据表列表
+        /// </summary>
+        /// <param name="ds"></param>
+        private void UpdateTableList(object ds)
+        {
+            DataSet tables = (DataSet)ds;
+            if (tables != null && tables.Tables.Count > 0)
+            {
+                dtData = tables.Tables["returndata"];
+                dgridCustomerData.ItemsSource = dtData.DefaultView;
+                dgridCustomerData.Focus();
+            }           
         }
         #endregion
 
@@ -248,16 +269,21 @@ namespace Victop.Frame.Templates.ReferenceTemplate
         {
             if (dgridCustomerData.SelectedItem != null)
             {
-                ReturnResult = new Dictionary<string, string>();
+                returnResult = new Dictionary<string, string>();
                 foreach(Dictionary<string,string> key in fieldreturn)
                 {
-                    if(!ReturnResult.ContainsKey(key["data"]))
+                    if(!returnResult.ContainsKey(key["data"]))
                     {
                         string keystr = key["data"].ToLower();
                         DataRowView drv = (DataRowView)dgridCustomerData.SelectedItem;
                         string value = drv[key["linkdata"]].ToString();
-                        ReturnResult.Add(keystr, value);
+                        returnResult.Add(keystr, value);
                     }
+                }
+
+                if (RefrenceResultClick != null) 
+                {
+                    RefrenceResultClick(sender,returnResult);
                 }
             }
             else 
@@ -266,6 +292,40 @@ namespace Victop.Frame.Templates.ReferenceTemplate
             }
         }
         #endregion 
+
+        #region DataGrid双击事件
+        /// <summary>
+        /// DataGrid双击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgridCustomerData_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (dgridCustomerData.SelectedItem != null)
+            {
+                returnResult = new Dictionary<string, string>();
+                foreach (Dictionary<string, string> key in fieldreturn)
+                {
+                    if (!returnResult.ContainsKey(key["data"]))
+                    {
+                        string keystr = key["data"].ToLower();
+                        DataRowView drv = (DataRowView)dgridCustomerData.SelectedItem;
+                        string value = drv[key["linkdata"]].ToString();
+                        returnResult.Add(keystr, value);
+                    }
+                }
+
+                if (RefrenceResultClick != null)
+                {
+                    RefrenceResultClick(sender, returnResult);
+                }
+            }
+            else
+            {
+                MessageBox.Show("请先选中一条数据！");
+            }
+        }
+        #endregion       
 
         #endregion
     }

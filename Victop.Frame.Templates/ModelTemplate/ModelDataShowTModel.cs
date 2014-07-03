@@ -6,9 +6,9 @@ using Victop.Server.Controls.Models;
 
 namespace Victop.Frame.Templates.ModelTemplate
 {
-    public class ModelDataShowT:ModelBase
+    public class ModelDataShowTModel:ModelBase
     {
-        private DateTime startDate = DateTime.Now.AddDays(-7);
+        private DateTime startDate = DateTime.Now.AddDays(-70);//----待修改
         /// <summary>
         /// 开始日期
         /// </summary>
