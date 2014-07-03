@@ -129,10 +129,24 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() => {
                     PluginMessage pluginMessage = new PluginMessage();
+                    pluginMessage.SendMessage("", OrganizeMasterRequestMessage(), new System.Threading.WaitCallback(SearchData));
+                });
+            }
+        }
+        /// <summary>
+        /// 新主档取数
+        /// </summary>
+        public ICommand btnGetMasterNewClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    PluginMessage pluginMessage = new PluginMessage();
                     pluginMessage.SendMessage("", OrganizeCommonRequestMessageMaster(), new System.Threading.WaitCallback(SearchData));
                 });
             }
         }
+
         /// <summary>
         /// 主档保存
         /// </summary>
@@ -155,8 +169,8 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() => {
                     PluginMessage pluginMessage = new PluginMessage();
-                    //pluginMessage.SendMessage("", OrganizeModelRequestMessage(), new System.Threading.WaitCallback(SearchData));
-                    pluginMessage.SendMessage("", OrganizeCommonRequestMessage(), new System.Threading.WaitCallback(SearchData));
+                    pluginMessage.SendMessage("", OrganizeModelRequestMessage(), new System.Threading.WaitCallback(SearchData));
+                    //pluginMessage.SendMessage("", OrganizeCommonRequestMessage(), new System.Threading.WaitCallback(SearchData));
                 });
             }
         }
@@ -351,18 +365,16 @@ namespace AreaManagerPlugin.ViewModels
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("openType", null);
             contentDic.Add("bzsystemid", "905");
-            contentDic.Add("formid", "12103");
+            contentDic.Add("formid", "11101");
             contentDic.Add("dataSetID", null);
             contentDic.Add("reportID", null);
-            contentDic.Add("modelId", "ERP12103");
+            contentDic.Add("modelId", "ERP11101");
             contentDic.Add("fieldName", null);
             contentDic.Add("masterOnly", false);
             Dictionary<string, string> paramsDic = new Dictionary<string, string>();
             paramsDic.Add("isdata", "0");
             contentDic.Add("dataparam", paramsDic);
-            Dictionary<string, string> sqlstrDic = new Dictionary<string, string>();
-            sqlstrDic.Add("1", " 1=1  and docdate >=cast('2014-06-13' as VARCHAR(10)) and docdate <cast('2014-06-21' as VARCHAR(10))");
-            contentDic.Add("whereArr", sqlstrDic);
+            contentDic.Add("whereArr", null);
             contentDic.Add("masterParam", null);
             contentDic.Add("deltaXml", null);
             contentDic.Add("runUser", "test7");

@@ -15,6 +15,7 @@ namespace Victop.Frame.DataChannel
     using System.Xml;
     using System.Xml.Linq;
     using Victop.Frame.CoreLibrary.Models;
+    using Victop.Frame.DataChannel.Enums;
     using Victop.Frame.PublicLib.Helpers;
 
     /// <summary>
@@ -40,23 +41,26 @@ namespace Victop.Frame.DataChannel
             {
                 if (contDic == null)
                 {
-                    channelData.DataInfo = CreateDataSet(replyMessageInfo.ReplyContent);
+                    channelData.DataInfo = CreateDataSet(replyMessageInfo.ReplyContent, SOADataTypeEnum.MASTERDATA);
                 }
                 else
                 {
-                    channelData.DataInfo = CreateDataSet(contDic["Result"]);
+                    channelData.DataInfo = CreateDataSet(contDic["Result"], SOADataTypeEnum.MODELDATA);
                 }
             }
             hashData.Add("Data", channelData);
             return hashData;
 
         }
+
+
+
         /// <summary>
         /// 根据Xml格式文本创建DataSet
         /// </summary>
         /// <param name="dataXml"></param>
         /// <returns></returns>
-        private DataSet CreateDataSet(string dataXml)
+        private DataSet CreateDataSet(string dataXml, SOADataTypeEnum typeEnum)
         {
             DataSet ReplyData = new DataSet();
             if (string.IsNullOrEmpty(dataXml))
@@ -67,24 +71,24 @@ namespace Victop.Frame.DataChannel
             {
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(dataXml);
-
                 XmlNodeList xmlNodeList = doc.DocumentElement.SelectNodes("DATASET");
-                foreach (XmlNode node in xmlNodeList)
+                BuildModeDataReferenceTable(ReplyData, xmlNodeList);
+                switch (typeEnum)
                 {
-                    DataTable dt = new DataTable();
-                    string datasetId = node.Attributes["datasetid"].Value;
-                    XmlNodeList nodexmlNodeList = node.ChildNodes;
-                    foreach (XmlNode childNode in nodexmlNodeList)
-                    {
-                        if (childNode.Name.Equals("DATAPACKET"))
-                        {
-                            dt = CreateDataSchema(childNode);
-                            dt = SetDataTableRow(dt, childNode);
-                        }
-                    }
-                    dt.TableName = datasetId;
-                    ReplyData.Tables.Add(dt);
+                    case SOADataTypeEnum.MODELDATA:
+                        ModelDataOrganize(ReplyData, xmlNodeList);
+                        break;
+                    case SOADataTypeEnum.MASTERDATA:
+                        BuildMasterFieldTable(ReplyData, xmlNodeList);
+                        MasterDataOrganize(ReplyData, xmlNodeList);
+                        break;
+                    case SOADataTypeEnum.BUSINESSRULE:
+                        break;
+                    default:
+                        break;
                 }
+
+
             }
             catch (Exception)
             {
@@ -94,6 +98,147 @@ namespace Victop.Frame.DataChannel
             ReplyData.AcceptChanges();
             return ReplyData;
         }
+        /// <summary>
+        /// 模型数据组织
+        /// </summary>
+        /// <param name="ReplyData"></param>
+        /// <param name="xmlNodeList"></param>
+        private void ModelDataOrganize(DataSet ReplyData, XmlNodeList xmlNodeList)
+        {
+            foreach (XmlNode node in xmlNodeList)
+            {
+                DataTable dt = new DataTable();
+                string datasetId = node.Attributes["datasetid"].Value;
+                if (ReplyData.Tables.Contains(datasetId))
+                    continue;
+                XmlNodeList nodexmlNodeList = node.ChildNodes;
+                Dictionary<string, string> columnDes = new Dictionary<string, string>();
+                foreach (XmlNode childNode in nodexmlNodeList)
+                {
+                    if (childNode.Name.Equals("fieldinfo"))
+                    {
+                        columnDes = GetColumnCaption(childNode);
+                    }
+                    if (childNode.Name.Equals("DATAPACKET"))
+                    {
+                        if (ReplyData.Tables.Contains("gmDatareference"))
+                        {
+                            dt = CreateDataSchema(childNode, columnDes, ReplyData.Tables["gmDatareference"]);
+                        }
+                        else
+                        {
+                            dt = CreateDataSchema(childNode, columnDes);
+                        }
+                        dt = SetDataTableRow(dt, childNode);
+                    }
+                }
+                dt.TableName = datasetId;
+                ReplyData.Tables.Add(dt);
+            }
+        }
+        /// <summary>
+        /// 主档数据组织
+        /// </summary>
+        /// <param name="ReplyData"></param>
+        /// <param name="xmlNodeList"></param>
+        private void MasterDataOrganize(DataSet ReplyData, XmlNodeList xmlNodeList)
+        {
+            foreach (XmlNode node in xmlNodeList)
+            {
+                DataTable dt = new DataTable();
+                string datasetId = node.Attributes["datasetid"].Value;
+                if (ReplyData.Tables.Contains(datasetId))
+                    continue;
+                XmlNodeList nodexmlNodeList = node.ChildNodes;
+                Dictionary<string, string> columnDes = new Dictionary<string, string>();
+                if (ReplyData.Tables.Contains("masterfield"))
+                {
+                    foreach (DataRow dr in ReplyData.Tables["masterfield"].Rows)
+                    {
+                        columnDes.Add(dr["columnid"].ToString().ToLower(), dr["columncaption"].ToString());
+                    }
+                }
+                foreach (XmlNode childNode in nodexmlNodeList)
+                {
+                    if (childNode.Name.Equals("DATAPACKET"))
+                    {
+                        if (ReplyData.Tables.Contains("gmDatareference"))
+                        {
+                            dt = CreateDataSchema(childNode, columnDes, ReplyData.Tables["gmDatareference"]);
+                        }
+                        else
+                        {
+                            dt = CreateDataSchema(childNode, columnDes);
+                        }
+                        dt = SetDataTableRow(dt, childNode);
+                    }
+                }
+                dt.TableName = datasetId;
+                ReplyData.Tables.Add(dt);
+            }
+        }
+        /// <summary>
+        /// 构建模型数据引用Table
+        /// </summary>
+        /// <param name="ReplyData"></param>
+        /// <param name="xmlNodeList"></param>
+        private void BuildModeDataReferenceTable(DataSet ReplyData, XmlNodeList xmlNodeList)
+        {
+            foreach (XmlNode item in xmlNodeList)
+            {
+                if (item.Attributes["datasetid"].Value.Equals("gmDatareference"))
+                {
+                    DataTable gmdt = new DataTable();
+                    foreach (XmlNode childNode in item.ChildNodes)
+                    {
+                        gmdt = CreateDataSchema(childNode, null);
+                        gmdt = SetDataTableRow(gmdt, childNode);
+                    }
+                    gmdt.TableName = "gmDatareference";
+                    ReplyData.Tables.Add(gmdt);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 构建主档数据字段表
+        /// </summary>
+        /// <param name="ReplyData"></param>
+        /// <param name="xmlNodeList"></param>
+        private void BuildMasterFieldTable(DataSet ReplyData, XmlNodeList xmlNodeList)
+        {
+            foreach (XmlNode item in xmlNodeList)
+            {
+                if (item.Attributes["datasetid"].Value.Equals("masterfield"))
+                {
+                    DataTable masterFieldDt = new DataTable();
+                    foreach (XmlNode childNode in item.ChildNodes)
+                    {
+                        masterFieldDt = CreateDataSchema(childNode, null);
+                        masterFieldDt = SetDataTableRow(masterFieldDt, childNode);
+                    }
+                    masterFieldDt.TableName = "masterfield";
+                    ReplyData.Tables.Add(masterFieldDt);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 读取模型取数字段描述
+        /// </summary>
+        /// <param name="xmlNode"></param>
+        /// <returns></returns>
+        private Dictionary<string, string> GetColumnCaption(XmlNode xmlNode)
+        {
+            Dictionary<string, string> columnDes = new Dictionary<string, string>();
+            XmlNodeList nodeList = xmlNode.SelectSingleNode("DATAPACKET").SelectSingleNode("ROWDATA").SelectNodes("ROW");
+            foreach (XmlNode item in nodeList)
+            {
+                columnDes.Add(item.Attributes["columnid"].Value, item.Attributes["columncaption"].Value);
+            }
+            return columnDes;
+        }
+
         /// <summary>
         /// 根据JSON格式文本创建DataSet
         /// </summary>
@@ -197,7 +342,7 @@ namespace Victop.Frame.DataChannel
         /// </summary>
         /// <param name="xmlNode"></param>
         /// <returns></returns>
-        private DataTable CreateDataSchema(XmlNode xmlNode)
+        private DataTable CreateDataSchema(XmlNode xmlNode, Dictionary<string, string> fieldDc, DataTable gmDt = null)
         {
             DataTable dt = new DataTable();
             XmlNodeList fieldList = xmlNode.SelectSingleNode("METADATA").SelectSingleNode("FIELDS").SelectNodes("FIELD");
@@ -207,7 +352,24 @@ namespace Victop.Frame.DataChannel
                 if (dt.Columns.Contains(item.Attributes["attrname"].Value))
                     continue;
                 #endregion
-                dt.Columns.Add(SetDataColumnInfo(item));
+                DataColumn dc = SetDataColumnInfo(item);
+                if (gmDt != null && gmDt.Rows.Count > 0)
+                {
+                    DataRow[] drs = gmDt.Select("columnid='" + dc.ColumnName + "'");
+                    if (drs.Count() > 0)
+                    {
+                        dc.ExtendedProperties.Add("DataReference", dc.ColumnName);
+                    }
+                }
+                if (fieldDc != null && fieldDc.Count > 0)
+                {
+                    string fieldKey=item.Attributes["attrname"].Value;
+                    if (fieldDc.ContainsKey(fieldKey))
+                    {
+                        dc.Caption = fieldDc[fieldKey];
+                    }
+                }
+                dt.Columns.Add(dc);
             }
             return dt;
         }
