@@ -13,9 +13,9 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>   
         <DockPanel VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Row="0">
-            <Button Name="btnConfirm" Width="50" Click="btnConfirm_Click">确定</Button>            
+            <Button Name="btnConfirm" Width="50" Click="btnConfirm_Click"  Margin="5,0,0,0">确定</Button>            
         </DockPanel>
-        <DataGrid Name="dgridCustomerData" Grid.Row="2"></DataGrid>
+        <DataGrid Name="dgridCustomerData" Grid.Row="2" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single" MouseDoubleClick="dgridCustomerData_MouseDoubleClick" SelectedIndex="0" ></DataGrid>
         <DockPanel VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="3">
             <TextBlock VerticalAlignment="Center" Margin="0,0,15,0">共58条记录</TextBlock>
             <TextBlock VerticalAlignment="Center" Margin="0,0,5,0">1/6</TextBlock>
