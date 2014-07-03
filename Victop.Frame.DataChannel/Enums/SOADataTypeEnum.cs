@@ -18,6 +18,10 @@ namespace Victop.Frame.DataChannel.Enums
         /// <summary>
         /// 业务规则
         /// </summary>
-        BUSINESSRULE
+        BUSINESSRULE,
+        /// <summary>
+        /// 数据引用
+        /// </summary>
+        DATAREFERENCE
     }
 }

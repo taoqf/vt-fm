@@ -37,6 +37,10 @@ namespace Victop.Frame.DataChannel
             {
                 channelData.DataInfo = CreateDataSetByJSON(replyMessageInfo.ReplyContent);
             }
+            if (messageInfo.MessageType.Equals("DataChannelService.getFormReferenceSpecial"))
+            {
+                channelData.DataInfo = CreateDataSet(replyMessageInfo.ReplyContent, SOADataTypeEnum.DATAREFERENCE);
+            }
             else
             {
                 if (contDic == null)
@@ -79,10 +83,14 @@ namespace Victop.Frame.DataChannel
                         ModelDataOrganize(ReplyData, xmlNodeList);
                         break;
                     case SOADataTypeEnum.MASTERDATA:
-                        BuildMasterFieldTable(ReplyData, xmlNodeList);
-                        MasterDataOrganize(ReplyData, xmlNodeList);
+                        BuildMasterFieldTable(ReplyData, xmlNodeList, "masterfield");
+                        MasterDataOrganize(ReplyData, xmlNodeList, "masterfield");
                         break;
                     case SOADataTypeEnum.BUSINESSRULE:
+                        break;
+                    case SOADataTypeEnum.DATAREFERENCE:
+                        BuildMasterFieldTable(ReplyData, xmlNodeList, "returnfield");
+                        MasterDataOrganize(ReplyData, xmlNodeList, "returnfield");
                         break;
                     default:
                         break;
@@ -141,7 +149,7 @@ namespace Victop.Frame.DataChannel
         /// </summary>
         /// <param name="ReplyData"></param>
         /// <param name="xmlNodeList"></param>
-        private void MasterDataOrganize(DataSet ReplyData, XmlNodeList xmlNodeList)
+        private void MasterDataOrganize(DataSet ReplyData, XmlNodeList xmlNodeList, string fieldTableName)
         {
             foreach (XmlNode node in xmlNodeList)
             {
@@ -151,9 +159,9 @@ namespace Victop.Frame.DataChannel
                     continue;
                 XmlNodeList nodexmlNodeList = node.ChildNodes;
                 Dictionary<string, string> columnDes = new Dictionary<string, string>();
-                if (ReplyData.Tables.Contains("masterfield"))
+                if (ReplyData.Tables.Contains(fieldTableName))
                 {
-                    foreach (DataRow dr in ReplyData.Tables["masterfield"].Rows)
+                    foreach (DataRow dr in ReplyData.Tables[fieldTableName].Rows)
                     {
                         columnDes.Add(dr["columnid"].ToString().ToLower(), dr["columncaption"].ToString());
                     }
@@ -205,11 +213,11 @@ namespace Victop.Frame.DataChannel
         /// </summary>
         /// <param name="ReplyData"></param>
         /// <param name="xmlNodeList"></param>
-        private void BuildMasterFieldTable(DataSet ReplyData, XmlNodeList xmlNodeList)
+        private void BuildMasterFieldTable(DataSet ReplyData, XmlNodeList xmlNodeList,string fieldTableName)
         {
             foreach (XmlNode item in xmlNodeList)
             {
-                if (item.Attributes["datasetid"].Value.Equals("masterfield"))
+                if (item.Attributes["datasetid"].Value.Equals(fieldTableName))
                 {
                     DataTable masterFieldDt = new DataTable();
                     foreach (XmlNode childNode in item.ChildNodes)
@@ -217,7 +225,7 @@ namespace Victop.Frame.DataChannel
                         masterFieldDt = CreateDataSchema(childNode, null);
                         masterFieldDt = SetDataTableRow(masterFieldDt, childNode);
                     }
-                    masterFieldDt.TableName = "masterfield";
+                    masterFieldDt.TableName = fieldTableName;
                     ReplyData.Tables.Add(masterFieldDt);
                 }
             }
