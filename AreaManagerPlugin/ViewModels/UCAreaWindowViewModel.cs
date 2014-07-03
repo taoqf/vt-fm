@@ -173,6 +173,20 @@ namespace AreaManagerPlugin.ViewModels
                 });
             }
         }
+        /// <summary>
+        /// 数据引用
+        /// </summary>
+        public ICommand btnDataReferenceClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    PluginMessage pluginMessage = new PluginMessage();
+                    pluginMessage.SendMessage("", OrganizeReferenceMessage(), new System.Threading.WaitCallback(SearchData));
+                });
+            }
+        }
+
         #region 私有方法
         /// <summary>
         /// 组织关闭消息
@@ -369,6 +383,39 @@ namespace AreaManagerPlugin.ViewModels
         private string OrganizeModelSaveMessage()
         {
             return null;
+        }
+        /// <summary>
+        /// 组织数据引用
+        /// </summary>
+        /// <returns></returns>
+        private string OrganizeReferenceMessage()
+        {
+            Dictionary<string, string> messageDic = new Dictionary<string, string>();
+            messageDic.Add("MessageType", "DataChannelService.getFormReferenceSpecial");
+            RequestMessageModel messageModel = new RequestMessageModel();
+            messageModel.bzsystemid = "905";
+            messageModel.formid = "13104";
+            messageModel.modelId = "ERP13104";
+            messageModel.fieldName = "stcode";
+            messageModel.dataparam = new Dictionary<string, object>();
+            messageModel.dataparam.Add("datasourcetype", null);
+            messageModel.dataparam.Add("datasourcename", null);
+            messageModel.dataparam.Add("bsname", "店面管理查询");
+            messageModel.dataparam.Add("bsgroupname", null);
+            messageModel.dataparam.Add("isdata", "1");
+            messageModel.dataparam.Add("isbs", null);
+            messageModel.dataparam.Add("pageno", "-1");
+            messageDic.Add("MessageContent", JsonHelper.ToJson(messageModel));
+            string messageStr = JsonHelper.ToJson(messageDic);
+            return messageStr;
+        }
+        /// <summary>
+        /// 数据应用回调
+        /// </summary>
+        /// <param name="message"></param>
+        private void DataReferenceData(object message)
+        {
+            string temp = message.ToString();
         }
 
         /// <summary>
