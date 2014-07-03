@@ -14,10 +14,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Victop.Frame.DataChannel;
 using Victop.Frame.MessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
+using Victop.Wpf.Controls;
 
 
 namespace Victop.Frame.Templates.ModelTemplate
@@ -30,16 +32,30 @@ namespace Victop.Frame.Templates.ModelTemplate
         #region 委托
         public delegate void newBill();
         public delegate void dgridDouble();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// 属性改变通知
+        /// </summary>
+        /// <param name="propertyName"></param>
+        public void RaisePropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
         #endregion
 
         #region 变量
         private string doccode;
-        private ModelDataShowT searchModel;
+        private ModelDataShowTModel searchModel;
         private string DataChannelId;
         private DataTable dtData;
         public event newBill newBillClick;
-
+        private bool IsBoundColumn = false;
         public event dgridDouble dgridDoubleClick;
+        private DataTable dtTable;
         /// <summary>
         /// 是否初次加载（默认“是”，“是”则执行初始化命令，“否”则跳过初始化）
         /// </summary>
@@ -52,12 +68,14 @@ namespace Victop.Frame.Templates.ModelTemplate
         /// <summary>
         /// 查询条件实体
         /// </summary>
-        public ModelDataShowT SearchModel
+        public ModelDataShowTModel SearchModel
         {
             get
             {
                 if (searchModel == null)
-                    searchModel = new ModelDataShowT();
+                    searchModel = new ModelDataShowTModel();
+                // searchModel.StartDate = DateTime.Now.AddDays(-7);
+
                 return searchModel;
             }
             set
@@ -65,10 +83,11 @@ namespace Victop.Frame.Templates.ModelTemplate
                 if (searchModel != value)
                 {
                     searchModel = value;
-                    //RaisePropertyChanged("SearchModel");
+                    RaisePropertyChanged("SearchModel");
                 }
             }
         }
+
         #endregion
 
         #region SystemId
@@ -139,6 +158,15 @@ namespace Victop.Frame.Templates.ModelTemplate
         public static readonly DependencyProperty ModelIdProperty = DependencyProperty.Register("ModelId", typeof(string), typeof(UCModelDataShowT));
         public static readonly DependencyProperty IsShowNewBillProperty = DependencyProperty.Register("IsShowNewBill", typeof(string), typeof(UCModelDataShowT));
         #endregion
+
+        /// <summary>
+        /// 单据号
+        /// </summary>
+        public string Doccode
+        {
+            get { return doccode; }
+            set { doccode = value; }
+        }
         #endregion
 
         #region 无参构造函数
@@ -157,6 +185,26 @@ namespace Victop.Frame.Templates.ModelTemplate
         /// <param name="e"></param>
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            Binding binding = new Binding();
+            binding.Source = SearchModel;
+            binding.Path = new PropertyPath("StartDate");
+            BindingOperations.SetBinding(datePickerStartDate, VicDatePickerNormal.SelectedDateProperty, binding);
+
+            Binding binding2 = new Binding();
+            binding2.Source = SearchModel;
+            binding2.Path = new PropertyPath("EndDate");
+            BindingOperations.SetBinding(datePickerEndDate, VicDatePickerNormal.SelectedDateProperty, binding2);
+
+            Binding binding3 = new Binding();
+            binding3.Source = SearchModel;
+            binding3.Path = new PropertyPath("TboxSqlFilter");
+            BindingOperations.SetBinding(txtSqlFilter, VicTextBox.TextProperty, binding3);
+
+            Binding binding4 = new Binding() { Mode= BindingMode.TwoWay,UpdateSourceTrigger= UpdateSourceTrigger.PropertyChanged};
+            binding4.Source = SearchModel;
+            binding4.Path = new PropertyPath("CombSqlFilter");
+            BindingOperations.SetBinding(cmboxSqlFilter, VicComboBoxNormal.SelectedValueProperty, binding4);
+
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
                 GetDataFromServerByModel();
@@ -204,7 +252,7 @@ namespace Victop.Frame.Templates.ModelTemplate
                     currentChosedDr["docstatus"] = "10";  //单据状态(已确认未收款)
                     currentChosedDr["postname"] = "zhao";  //确认人员
                     currentChosedDr["postdate"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); //确认日期
-                    currentChosedDr["modifyname"] = "zhao";  //修改人
+                    //currentChosedDr["modifyname"] = "zhao";  //修改人
                     currentChosedDr["modifydate"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"); //修改日期
                 }
                 else
@@ -236,8 +284,8 @@ namespace Victop.Frame.Templates.ModelTemplate
         /// </summary>
         private void btnEliminate_Click(object sender, RoutedEventArgs e)
         {
-            cmboxSqlFilter_Loaded(null, null);
-            searchModel.StartDate = DateTime.Now.AddDays(-7);
+            SetCmBoxSqlFilterDataSouce();
+            searchModel.StartDate = DateTime.Now.AddDays(-70);//------待修改
             searchModel.EndDate = DateTime.Now;
             searchModel.TboxSqlFilter = string.Empty;
             rdoBtnBenjieduan.IsChecked = true;
@@ -253,7 +301,7 @@ namespace Victop.Frame.Templates.ModelTemplate
         /// <param name="e"></param>
         private void btnNewBill_Click(object sender, RoutedEventArgs e)
         {
-            if (IsShowNewBill == "Visible")
+            if (IsShowNewBill == "Visible" && newBillClick != null)
             {
                 newBillClick();
             }
@@ -276,17 +324,45 @@ namespace Victop.Frame.Templates.ModelTemplate
         /// <summary>
         /// 绑定模糊查询下拉列表
         /// </summary>
-        private void cmboxSqlFilter_Loaded(object sender, RoutedEventArgs e)
+        private void SetCmBoxSqlFilterDataSouce()
         {
-            if (!DesignerProperties.GetIsInDesignMode(this))
+            if (DtData == null) return;
+            #region 设置下拉列表绑定列
+            if (!IsBoundColumn)
             {
-                if (DtData == null) return;
-                cmboxSqlFilter.ItemsSource = DtData.DefaultView;
-                cmboxSqlFilter.DisplayMemberPath = "columncaption";
-                cmboxSqlFilter.SelectedValuePath = "columnid";
-                cmboxSqlFilter.SelectedIndex = 0;
+                dtTable = new DataTable();
+                dtTable.Columns.Add("columncaption");//列中文名
+                dtTable.Columns.Add("columnid");//列英文名。
+                foreach (DataColumn column in DtData.Columns)
+                {
+                    DataRow dr = dtTable.NewRow();
+                    if (string.IsNullOrEmpty(column.Caption))
+                    {
+                        dr[0] = column.ColumnName;
+                    }
+                    else
+                    {
+                        dr[0] = column.Caption;
+                    }
+                    dr[1] = column.ColumnName;
+                    dtTable.Rows.Add(dr);
+                }
             }
+            #endregion 
         }
+
+        #region 将数据绑定到下拉列表上
+        /// <summary>
+        /// 将数据绑定到combox上。
+        /// </summary>
+        private void SetDataToCmBox()
+        {
+            cmboxSqlFilter.DisplayMemberPath = "columncaption";//columncaption
+            cmboxSqlFilter.SelectedValuePath = "columnid";//columnid
+            cmboxSqlFilter.SelectedIndex = 0;
+            cmboxSqlFilter.ItemsSource = dtTable.DefaultView;
+        }
+        #endregion
         #endregion
 
         #region Dgrid双击方法，弹出销售换货明细界面
@@ -295,7 +371,14 @@ namespace Victop.Frame.Templates.ModelTemplate
         /// </summary>
         private void dgrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            dgridDoubleClick();//怎么赋值
+            if (dtData != null && dtData.Rows.Count > 0 && dgrid.SelectedIndex != -1)
+            {
+                this.Doccode = dtData.Rows[dtData.Rows.IndexOf(((DataRowView)dgrid.SelectedItem).Row)]["doccode"].ToString();
+                if (dgridDoubleClick != null)
+                {
+                    dgridDoubleClick();
+                }
+            }
         }
         #endregion
 
@@ -357,6 +440,7 @@ namespace Victop.Frame.Templates.ModelTemplate
         /// <returns></returns>
         private string OrganizeModelRequestMessage()
         {
+
             Dictionary<string, string> messageDic = new Dictionary<string, string>();
             messageDic.Add("MessageType", "DataChannelService.getFormBusiDataAsync");
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
@@ -372,6 +456,8 @@ namespace Victop.Frame.Templates.ModelTemplate
             paramsDic.Add("isdata", "1");
             Dictionary<string, string> sqlstrDic = new Dictionary<string, string>();
             sqlstrDic.Add("1", GetSqlFilterConditionData());
+            //sqlstrDic.Add("1", " 1=1");
+            sqlstrDic.Add("2", " 1=1");
             contentDic.Add("whereArr", sqlstrDic);
             contentDic.Add("masterParam", null);
             contentDic.Add("deltaXml", null);
@@ -388,7 +474,7 @@ namespace Victop.Frame.Templates.ModelTemplate
 
         #region 获取数据，并设置界面数据
         /// <summary>
-        /// 获取数据，并设置界面数据
+        /// 获取数据
         /// </summary>
         /// <param name="message"></param>
         private void SearchData(object message)
@@ -396,12 +482,31 @@ namespace Victop.Frame.Templates.ModelTemplate
             DataChannelId = JsonHelper.ReadJsonString(message.ToString(), "DataChannelId");
             DataOperation operateData = new DataOperation();
             DataSet ds = operateData.GetData(DataChannelId);
-            if (ds != null)
-            {
-                dtData = ds.Tables["2"];
-            }
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new WaitCallback(UpdateTableList), ds);
+
         }
         #endregion
+
+        #region 并设置界面数据
+        /// <summary>
+        /// 设置界面数据
+        /// </summary>
+        /// <param name="state"></param>
+        private void UpdateTableList(object ds)
+        {
+            if (ds != null)
+            {
+                dtData = ((DataSet)ds).Tables["1"];
+                dgrid.ItemsSource = dtData.DefaultView;
+                //设置界面数据。
+                SetCmBoxSqlFilterDataSouce();
+                SetDataToCmBox();
+                IsBoundColumn = true;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region 模型保存
@@ -456,7 +561,7 @@ namespace Victop.Frame.Templates.ModelTemplate
                 DataSet ds = operateData.GetData(DataChannelId);
                 if (ds != null)
                 {
-                    DtData = ds.Tables["2"];
+                    DtData = ds.Tables["1"];
                 }
             }
             catch (Exception ex)
@@ -483,7 +588,7 @@ namespace Victop.Frame.Templates.ModelTemplate
                     if (starttime > endtime) { MessageBox.Show("时间区间有误！"); return "1=0"; }
                     else
                     {
-                        sqlstr += " and docdate between '" + starttime + "' and '" + endtime + "'";
+                        sqlstr += "and docdate >=cast('" + searchModel.StartDate.ToString("yyyy-MM-dd") + "' as VARCHAR(10)) and docdate <cast('" + searchModel.EndDate.AddDays(1).ToString("yyyy-MM-dd") + "' as VARCHAR(10))";
                     }
                 }
                 if (SearchModel.CombSqlFilter != null)
@@ -502,7 +607,8 @@ namespace Victop.Frame.Templates.ModelTemplate
             catch (Exception ex) { return "1=0"; }
         }
 
-        #endregion 
+        #endregion
+
         #endregion
     }
 }

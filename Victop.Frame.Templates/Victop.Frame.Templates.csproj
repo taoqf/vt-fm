@@ -86,7 +86,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModelTemplate\ModelDataShowT.cs" />
+    <Compile Include="ModelTemplate\ModelDataShowTModel.cs" />
     <Compile Include="ModelTemplate\UCModelDataShowT.xaml.cs">
       <DependentUpon>UCModelDataShowT.xaml</DependentUpon>
     </Compile>
