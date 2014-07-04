@@ -10,8 +10,8 @@
         <controls:VicStackPanelNormal Orientation="Horizontal">
             <controls:VicButtonTopBottom Style="{DynamicResource btnAdd}" Name="btnAdd" Click="btnAdd_Click"></controls:VicButtonTopBottom>
             <controls:VicButtonTopBottom Style="{DynamicResource btnDelete}" Name="btnDelete" Click="btnDelete_Click"></controls:VicButtonTopBottom>
-            <controls:VicButtonTopBottom Style="{DynamicResource btnCancel}" Name="btnCancel" Click="btnCancel_Click"></controls:VicButtonTopBottom>
-            <controls:VicButtonTopBottom Style="{DynamicResource btnCancelAll}" Name="btnCancelAll" Click="btnCancelAll_Click"></controls:VicButtonTopBottom>
+            <controls:VicButtonTopBottom Style="{DynamicResource btnCancel}" Name="btnCancel" Click="btnCancel_Click" IsEnabled="{Binding CancelFlag,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></controls:VicButtonTopBottom>
+            <!--<controls:VicButtonTopBottom Style="{DynamicResource btnCancelAll}" Name="btnCancelAll" Click="btnCancelAll_Click"></controls:VicButtonTopBottom>-->
             <controls:VicButtonTopBottom Style="{DynamicResource btnSave}" Name="btnSave" Click="btnSave_Click"></controls:VicButtonTopBottom>
         </controls:VicStackPanelNormal>
     </controls:VicGridToolBar>

@@ -17,6 +17,8 @@ using System.Windows.Threading;
 using Victop.Frame.DataChannel;
 using Victop.Frame.MessageManager;
 using Victop.Frame.PublicLib.Helpers;
+using Victop.Frame.Templates.ReferenceTemplate;
+using Victop.Wpf.Controls;
 
 namespace Victop.Frame.Templates.DataGridTemplates
 {
@@ -30,14 +32,6 @@ namespace Victop.Frame.Templates.DataGridTemplates
         /// 系统ID
         /// </summary>
         private string systemId = "905";        
-        /// <summary>
-        /// 功能号
-        /// </summary>
-        //private string formId = "10402";        
-        /// <summary>
-        /// 模型ID
-        /// </summary>
-        //private string modelId = "供应商柜台管理";        
         /// <summary>
         /// 数据通道ID
         /// </summary>
@@ -53,7 +47,7 @@ namespace Victop.Frame.Templates.DataGridTemplates
         /// <summary>
         /// 主档名称
         /// </summary>
-        private string masterName = "供应商柜台管理表";        
+        private string masterName = "";        
         /// <summary>
         /// 取消按钮置灰状态
         /// </summary>
@@ -62,6 +56,19 @@ namespace Victop.Frame.Templates.DataGridTemplates
         /// 查询条件
         /// </summary>
         private string sqlFilter = " 1=1 ";
+        /// <summary>
+        /// 数据引用数据集
+        /// </summary>
+        private DataTable dtGmDatareference;
+        /// <summary>
+        /// 数据引用列
+        /// </summary>
+        VicTextBox vtbName;
+        private string referenceColumnName;
+        /// <summary>
+        /// 数据引用窗体
+        /// </summary>
+        Window referenceWindow;
         #endregion
 
         #region 无参构造函数
@@ -128,10 +135,29 @@ namespace Victop.Frame.Templates.DataGridTemplates
             get { return sqlFilter; }
             set { sqlFilter = value; }
         }
+
+        /// <summary>
+        /// 数据引用数据集
+        /// </summary>
+        public DataTable DtGmDatareference
+        {
+            get { return dtGmDatareference; }
+            set { dtGmDatareference = value; }
+        }
         #endregion
 
+        #region 委托
+        /// <summary>
+        /// 委托类型
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="dr"></param>
         public delegate void ButtonDelegate(object sender, DataRow dr);
+        /// <summary>
+        /// 添加委托事件
+        /// </summary>
         public event ButtonDelegate AddClick;
+        #endregion 
 
         #region 方法
 
@@ -146,9 +172,7 @@ namespace Victop.Frame.Templates.DataGridTemplates
         /// <param name="_sqlFilter"></param>
         public void UserControlInit(string _systemId,string _masterName,string _sqlFilter) 
         {
-            this.SystemId = _systemId;
-            //this.FormId = _formId;
-            //this.ModelId = _modelId;
+            this.SystemId = _systemId;            
             this.MasterName = _masterName;
             this.SqlFilter = _sqlFilter;
             this.VerticalAlignment = VerticalAlignment.Stretch;
@@ -165,8 +189,63 @@ namespace Victop.Frame.Templates.DataGridTemplates
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             GetDataFromServer();
+            dgrid.DataReferenceColumnClick+=dgrid_DataReferenceColumnClick; //添加数据引用
+        }
+        #endregion
+
+        #region 弹出数据引用
+        /// <summary>
+        /// 弹出数据引用
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="columnName"></param>
+        /// <param name="columnCaption"></param>
+        private void dgrid_DataReferenceColumnClick(object sender, string columnName, string columnCaption)
+        {
+            vtbName = (VicTextBox)sender;
+            referenceColumnName = columnName;
+            if (DtGmDatareference != null && DtGmDatareference.Rows.Count > 0)
+            {
+                referenceWindow = new Window();
+                referenceWindow.Title = columnCaption;
+                referenceWindow.Height = 400;
+                referenceWindow.Width = 600;
+                referenceWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                UCSingleChoseT ucSingleChoseT = new UCSingleChoseT();
+                ucSingleChoseT.UserControlInit(systemId, masterName, columnName, DataChannelId, DtGmDatareference, SetRefrence);
+                referenceWindow.Content = ucSingleChoseT;
+                referenceWindow.ShowDialog();
+            }
         }
         #endregion 
+
+        #region 数据引用回调函数
+        /// <summary>
+        /// 数据引用回调函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="_returnResult"></param>
+        private void SetRefrence(object sender, Dictionary<string, string> _returnResult)
+        {
+            Dictionary<string, string> ReturnResult = _returnResult;
+            DataRow dr = dtData.Rows[dtData.Rows.IndexOf(((DataRowView)dgrid.SelectedItem).Row)];
+            if (ReturnResult != null && ReturnResult.Count > 0)
+            {                
+                foreach(var key in _returnResult.Keys)
+                {
+                    if (key == referenceColumnName)
+                    {
+                        vtbName.VicText = ReturnResult[key].ToString();
+                    }
+                    else
+                    {
+                        dr[key] = ReturnResult[key].ToString();
+                    }
+                }                
+            }
+            referenceWindow.Close();
+        }
+        #endregion        
 
         #region 获取业务数据
         /// <summary>
@@ -257,7 +336,7 @@ namespace Victop.Frame.Templates.DataGridTemplates
             if (tables != null && tables.Tables.Count > 0)
             {
                 dtData = tables.Tables["masterdata"];
-                //dtGmDatareference = tables.Tables["gmDatareference"];
+                DtGmDatareference = tables.Tables["gmDatareference"];
                 dataNum = dtData.Rows.Count;
                 dgrid.ItemsSource = dtData.DefaultView;
                 if (dtData == null || dtData.Rows.Count == 0)
@@ -272,18 +351,15 @@ namespace Victop.Frame.Templates.DataGridTemplates
         /// <summary>
         /// 添加
         /// </summary>
-        private void Add()
+        public void Add()
         {
-            DataRow dr = dtData.NewRow();
-            //dr["vndcntguid"] = Guid.NewGuid();
-            //dr["cntcode"] = Guid.NewGuid();
-            //dr["id"] = Guid.NewGuid();            
-            //dr["actived"] = "1";                    //是否生效（默认值：是）
-            if (AddClick !=null)
+            DataRow dr = dtData.NewRow();                         
+            if (AddClick != null)
             {
-                AddClick(null,dr);
+                AddClick(null, dr);
             }
             dtData.Rows.Add(dr);
+            CannelFlag = true;
         }
         #endregion
 
@@ -302,6 +378,17 @@ namespace Victop.Frame.Templates.DataGridTemplates
             dr.Delete();
         }
         #endregion
+
+        #region 保存
+        /// <summary>
+        /// 保存
+        /// </summary>
+        public void Save() 
+        {
+            PluginMessage pluginMessage = new PluginMessage();
+            pluginMessage.SendMessage("", MasterSaveRequestMessage(), new System.Threading.WaitCallback(SaveData));
+        }
+        #endregion 
 
         #region 保存
         /// <summary>
