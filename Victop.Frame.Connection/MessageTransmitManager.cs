@@ -50,6 +50,7 @@ namespace Victop.Frame.Connection
             }
             catch (Exception ex)
             {
+                LoggerHelper.Info(messageInfo, ex);
                 ReplyMessage replyMessage = new ReplyMessage()
                 {
                     MessageId = messageInfo.MessageId,

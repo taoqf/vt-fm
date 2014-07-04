@@ -325,15 +325,39 @@ namespace PortalFramePlugin.ViewModels
         {
             foreach (MenuInfo item in menuResource.Where(it => it.ParentMenu == parentMenuId).OrderBy(it => it.Sequence))
             {
-                MenuModel menu = new MenuModel()
+                MenuModel menuModel = new MenuModel()
                 {
-                    Id = item.Id,
                     MenuId = item.MenuId,
                     MenuName = item.MenuName,
-                    DataFormId = item.DataFormId
+                    Actived = item.Actived,
+                    AutoOpenFlag = item.AutoOpenFlag,
+                    BzSystemId = item.BzSystemId,
+                    Compatible = item.Compatible,
+                    DataFormId = item.DataFormId,
+                    DefaultPrintTemplate = item.DefaultPrintTemplate,
+                    DisplayType = item.DisplayType,
+                    DocStatus = item.DocStatus,
+                    EndPoint = item.EndPoint,
+                    EndPointParam = item.EndPointParam,
+                    FormId = item.FormId,
+                    FormMemo = item.FormMemo,
+                    FormName = item.FormName,
+                    HomeId = item.HomeId,
+                    Id = item.Id,
+                    MaxPrintCount = item.MaxPrintCount,
+                    Memo = item.Memo,
+                    OpenType = item.OpenType,
+                    ParentMenu = item.ParentMenu,
+                    PredocStatus = item.PredocStatus,
+                    ResourceName = item.ResourceName,
+                    ResourceTree = item.ResourceTree,
+                    ResourceType = item.ResourceType,
+                    SaveProject = item.SaveProject,
+                    Sequence = item.Sequence,
+                    Stamp = item.Stamp
                 };
-                menu = GetChildMenuList(menuResource, item.MenuId, menu);
-                parentMenu.SystemMenuList.Add(menu);
+                menuModel = GetChildMenuList(menuResource, item.MenuId, menuModel);
+                parentMenu.SystemMenuList.Add(menuModel);
             }
             return parentMenu;
         }
@@ -342,29 +366,55 @@ namespace PortalFramePlugin.ViewModels
         #region 自定义方法
         private void UpdateMenu()
         {
-            BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
-            SystemMenuList.Clear();
-            if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
-            {
-                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.ParentMenu.Equals("0")))
-                {
-                    MenuModel menuModel = new MenuModel()
-                    {
-                        MenuId = item.MenuId,
-                        MenuName = item.MenuName
-                    };
-                    menuModel = CreateMenuList(item.MenuId, resourceInfo.ResourceMnenus, menuModel);
-                    SystemMenuList.Add(menuModel);
-                }
-            }
-            else
-            {
-                string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
-                ReadPluginInfoFromXml(FilePath);
-            }
+            //BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
             //SystemMenuList.Clear();
-            //string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
-            //ReadPluginInfoFromXml(FilePath);
+            //if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
+            //{
+            //    foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.ParentMenu.Equals("0")))
+            //    {
+            //        MenuModel menuModel = new MenuModel()
+            //        {
+            //            MenuId = item.MenuId,
+            //            MenuName = item.MenuName,
+            //            Actived = item.Actived,
+            //            AutoOpenFlag = item.AutoOpenFlag,
+            //            BzSystemId = item.BzSystemId,
+            //            Compatible = item.Compatible,
+            //            DataFormId = item.DataFormId,
+            //            DefaultPrintTemplate = item.DefaultPrintTemplate,
+            //            DisplayType = item.DisplayType,
+            //            DocStatus = item.DocStatus,
+            //            EndPoint = item.EndPoint,
+            //            EndPointParam = item.EndPointParam,
+            //            FormId = item.FormId,
+            //            FormMemo = item.FormMemo,
+            //            FormName = item.FormName,
+            //            HomeId = item.HomeId,
+            //            Id = item.Id,
+            //            MaxPrintCount = item.MaxPrintCount,
+            //            Memo = item.Memo,
+            //            OpenType = item.OpenType,
+            //            ParentMenu = item.ParentMenu,
+            //            PredocStatus = item.PredocStatus,
+            //            ResourceName = item.ResourceName,
+            //            ResourceTree = item.ResourceTree,
+            //            ResourceType = item.ResourceType,
+            //            SaveProject = item.SaveProject,
+            //            Sequence = item.Sequence,
+            //            Stamp = item.Stamp
+            //        };
+            //        menuModel = CreateMenuList(item.MenuId, resourceInfo.ResourceMnenus, menuModel);
+            //        SystemMenuList.Add(menuModel);
+            //    }
+            //}
+            //else
+            //{
+            //    string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
+            //    ReadPluginInfoFromXml(FilePath);
+            //}
+            SystemMenuList.Clear();
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
+            ReadPluginInfoFromXml(FilePath);
         }
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
         {
@@ -373,7 +423,33 @@ namespace PortalFramePlugin.ViewModels
                 MenuModel menuModel = new MenuModel()
                 {
                     MenuId = item.MenuId,
-                    MenuName = item.MenuName
+                    MenuName = item.MenuName,
+                    Actived = item.Actived,
+                    AutoOpenFlag = item.AutoOpenFlag,
+                    BzSystemId = item.BzSystemId,
+                    Compatible = item.Compatible,
+                    DataFormId = item.DataFormId,
+                    DefaultPrintTemplate = item.DefaultPrintTemplate,
+                    DisplayType = item.DisplayType,
+                    DocStatus = item.DocStatus,
+                    EndPoint = item.EndPoint,
+                    EndPointParam = item.EndPointParam,
+                    FormId = item.FormId,
+                    FormMemo = item.FormMemo,
+                    FormName = item.FormName,
+                    HomeId = item.HomeId,
+                    Id = item.Id,
+                    MaxPrintCount = item.MaxPrintCount,
+                    Memo = item.Memo,
+                    OpenType = item.OpenType,
+                    ParentMenu = item.ParentMenu,
+                    PredocStatus = item.PredocStatus,
+                    ResourceName = item.ResourceName,
+                    ResourceTree = item.ResourceTree,
+                    ResourceType = item.ResourceType,
+                    SaveProject = item.SaveProject,
+                    Sequence = item.Sequence,
+                    Stamp = item.Stamp
                 };
                 menuModel = CreateMenuList(item.MenuId, fullMenuList, menuModel);
                 parentModel.SystemMenuList.Add(menuModel);

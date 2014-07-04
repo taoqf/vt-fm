@@ -90,7 +90,12 @@ namespace Victop.Frame.Connection
                         dicContent = GetServerDateTimeMessage(dicContent);
                         break;
                     case "DataChannelService.loadDataByModelAsync":
+                        //dicContent = GetLoadDataByModelMessage(dicContent);
                         replyIsToChannel = DataOperateEnum.SAVE;
+                        break;
+                    case "DataChannelService.saveDataByModelAsync":
+                        //dicContent = GetSaveDataByModelMessage(dicContent);
+                        replyIsToChannel = DataOperateEnum.COMMIT;
                         break;
                     default:
                         break;
@@ -160,10 +165,6 @@ namespace Victop.Frame.Connection
                     Dictionary<string, object> dicDataParam = new Dictionary<string, object>();
                     dicContent.Add("dataparam", dicDataParam);
                 }
-                //if (!dicContent.ContainsKey("mastername"))
-                //{
-                //    dicContent.Add("mastername", null);
-                //}
                 return dicContent;
             }
             catch (Exception)
@@ -193,7 +194,7 @@ namespace Victop.Frame.Connection
                 {
                     string channelId = dicContent["DataChannelId"].ToString();
                     ReplyMessageResolver replyResolver = new ReplyMessageResolver();
-                    string dataXml = replyResolver.GetDataXmlByDataChannelId(channelId,false);
+                    string dataXml = replyResolver.GetDataXmlByDataChannelId(channelId, false);
                     if (dicContent.ContainsKey("deltaXml"))
                     {
                         dicContent["deltaXml"] = dataXml;
@@ -330,7 +331,7 @@ namespace Victop.Frame.Connection
                 {
                     dicContent.Add("openType", null);
                 }
-                if(!dicContent.ContainsKey("bzsystemid"))
+                if (!dicContent.ContainsKey("bzsystemid"))
                 {
                     dicContent.Add("bzsystemid", null);
                 }
@@ -548,7 +549,7 @@ namespace Victop.Frame.Connection
                 {
                     string channelId = dicContent["DataChannelId"].ToString();
                     ReplyMessageResolver replyResolver = new ReplyMessageResolver();
-                    string dataXml = replyResolver.GetDataXmlByDataChannelId(channelId,false);
+                    string dataXml = replyResolver.GetDataXmlByDataChannelId(channelId, false);
                     if (dicContent.ContainsKey("deltaXml"))
                     {
                         dicContent["deltaXml"] = dataXml;
@@ -578,7 +579,7 @@ namespace Victop.Frame.Connection
                 }
                 if (!dicContent.ContainsKey("formid"))
                 {
-                    dicContent.Add("formid",null);
+                    dicContent.Add("formid", null);
                 }
                 return dicContent;
             }
@@ -726,7 +727,7 @@ namespace Victop.Frame.Connection
                 {
                     dicContent.Add("masterParam", new Dictionary<string, string>());
                 }
-                
+
                 return dicContent;
             }
             catch (Exception)
@@ -872,7 +873,7 @@ namespace Victop.Frame.Connection
                 }
                 if (!dicContent.ContainsKey("dataparam"))
                 {
-                    dicContent.Add("dataparam", new Dictionary<string,string>());
+                    dicContent.Add("dataparam", new Dictionary<string, string>());
                 }
                 if (!dicContent.ContainsKey("DataChannelId"))
                 {
@@ -1165,7 +1166,196 @@ namespace Victop.Frame.Connection
         /// <returns></returns>
         private Dictionary<string, object> GetServerDateTimeMessage(Dictionary<string, object> dicContent)
         {
-                return dicContent;
+            return dicContent;
+        }
+        /// <summary>
+        /// 通用数据请求
+        /// </summary>
+        /// <param name="dicContent"></param>
+        /// <returns></returns>
+        private Dictionary<string, object> GetLoadDataByModelMessage(Dictionary<string, object> dicContent)
+        {
+            OrginaizeCommonParam(dicContent);
+            if (!dicContent.ContainsKey("deltaXml"))
+            {
+                dicContent.Add("deltaXml", null);
+            }
+            else
+            {
+                try
+                {
+                    List<Dictionary<string, object>> deltaList = JsonHelper.ToObject<List<Dictionary<string, object>>>(dicContent["deltaXml"].ToString());
+                    foreach (Dictionary<string, object> item in deltaList)
+                    {
+                        if (!item.ContainsKey("modeltype"))
+                        {
+                            item.Add("modeltype", null);
+                        }
+                        if (!item.ContainsKey("modelid"))
+                        {
+                            item.Add("modelid", null);
+                        }
+                        if (!item.ContainsKey("systemid"))
+                        {
+                            item.Add("systemid", null);
+                        }
+                        if (!item.ContainsKey("formid"))
+                        {
+                            item.Add("formid", null);
+                        }
+                        if (!item.ContainsKey("tableid"))
+                        {
+                            item.Add("tableid", null);
+                        }
+                        if (!item.ContainsKey("formattype"))
+                        {
+                            item.Add("formattype", null);
+                        }
+                        if (!item.ContainsKey("ispage"))
+                        {
+                            item.Add("ispage", 1);
+                        }
+                        if (!item.ContainsKey("pageno"))
+                        {
+                            item.Add("pageno", -1);
+                        }
+                        if (!item.ContainsKey("pagesize"))
+                        {
+                            item.Add("pagesize", 10);
+                        }
+                        if (!item.ContainsKey("wherearr"))
+                        {
+                            item.Add("wherearr", null);
+                        }
+                        if (!item.ContainsKey("dataparam"))
+                        {
+                            item.Add("dataparam", null);
+                        }
+                        if (!item.ContainsKey("doccode"))
+                        {
+                            item.Add("doccode", null);
+                        }
+                        if (!item.ContainsKey("controlid"))
+                        {
+                            item.Add("controlid", null);
+                        }
+                        if (!item.ContainsKey("detail"))
+                        {
+                            item.Add("dataparam", "data,meta");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            return dicContent;
+        }
+        /// <summary>
+        /// 组织通用消息体参数
+        /// </summary>
+        /// <param name="dicContent"></param>
+        private static void OrginaizeCommonParam(Dictionary<string, object> dicContent)
+        {
+            if (!dicContent.ContainsKey("openType"))
+            {
+                dicContent.Add("openType", null);
+            }
+            if (!dicContent.ContainsKey("bzsystemid"))
+            {
+                dicContent.Add("bzsystemid", null);
+            }
+            if (!dicContent.ContainsKey("formid"))
+            {
+                dicContent.Add("formid", null);
+            }
+            if (!dicContent.ContainsKey("dataSetID"))
+            {
+                dicContent.Add("dataSetID", null);
+            }
+            if (!dicContent.ContainsKey("reportID"))
+            {
+                dicContent.Add("reportID", null);
+            }
+            if (!dicContent.ContainsKey("modelId"))
+            {
+                dicContent.Add("modelId", null);
+            }
+            if (!dicContent.ContainsKey("fieldName"))
+            {
+                dicContent.Add("fieldName", null);
+            }
+            if (!dicContent.ContainsKey("masterOnly"))
+            {
+                dicContent.Add("masterOnly", false);
+            }
+            if (!dicContent.ContainsKey("dataparam"))
+            {
+                dicContent.Add("dataparam", false);
+            }
+            if (!dicContent.ContainsKey("whereArr"))
+            {
+                dicContent.Add("whereArr", false);
+            }
+            if (!dicContent.ContainsKey("masterParam"))
+            {
+                dicContent.Add("masterParam", false);
+            }
+            if (!dicContent.ContainsKey("masterParam"))
+            {
+                dicContent.Add("masterParam", false);
+            }
+            if (!dicContent.ContainsKey("shareFlag"))
+            {
+                dicContent.Add("shareFlag", false);
+            }
+            if (!dicContent.ContainsKey("treeStr"))
+            {
+                dicContent.Add("treeStr", false);
+            }
+            if (!dicContent.ContainsKey("saveType"))
+            {
+                dicContent.Add("saveType", false);
+            }
+            if (!dicContent.ContainsKey("doccode"))
+            {
+                dicContent.Add("doccode", false);
+            }
+        }
+        /// <summary>
+        /// 通用数据保存
+        /// </summary>
+        /// <param name="dicContent"></param>
+        /// <returns></returns>
+        private Dictionary<string, object> GetSaveDataByModelMessage(Dictionary<string, object> dicContent)
+        {
+            OrginaizeCommonParam(dicContent);
+            if (!dicContent.ContainsKey("deltaXml"))
+            {
+                dicContent.Add("deltaXml", null);
+            }
+            else
+            {
+                GalleryManager galleryManager = new GalleryManager();
+                CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+                LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
+                Dictionary<string, object> deltaDic = JsonHelper.ToObject<Dictionary<string, object>>(dicContent["deltaXml"].ToString());
+                if (!deltaDic.ContainsKey("clientid"))
+                {
+                    deltaDic.Add("clientid", cloudGallyInfo.ClientId);
+                }
+                if (!deltaDic.ContainsKey("runuser"))
+                {
+                    deltaDic.Add("runuser", loginUserInfo.UserCode);
+                }
+                if (!deltaDic.ContainsKey("datalist"))
+                {
+                    deltaDic.Add("datalist", null);
+                    //TODO:完善取数
+                }
+            }
+            return dicContent;
         }
     }
 }

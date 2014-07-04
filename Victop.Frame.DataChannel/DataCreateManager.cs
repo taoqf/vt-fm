@@ -494,6 +494,20 @@ namespace Victop.Frame.DataChannel
             stringBuilder.Append("</DATA>");
             return stringBuilder.ToString();
         }
+        /// <summary>
+        /// 获取JSON格式数据
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <returns></returns>
+        public virtual string GetJSONData(string channelId)
+        {
+            DataChannelManager dataManager = new DataChannelManager();
+            Hashtable hashData = dataManager.GetData(channelId);
+            ChannelData channelData = hashData["Data"] as ChannelData;
+            DataSet requestDs = channelData.DataInfo;
+            return string.Empty;
+        }
+
 
         private static void GetDataRowXml(StringBuilder stringBuilder, DataTable mastDt, DataRow mastDr, string rowState, bool isDelete = false)
         {
