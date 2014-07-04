@@ -359,7 +359,7 @@ namespace Victop.Frame.Templates.ModelTemplate
         {
             cmboxSqlFilter.DisplayMemberPath = "columncaption";//columncaption
             cmboxSqlFilter.SelectedValuePath = "columnid";//columnid
-            cmboxSqlFilter.SelectedIndex = 0;
+           // cmboxSqlFilter.SelectedIndex = 0;
             cmboxSqlFilter.ItemsSource = dtTable.DefaultView;
         }
         #endregion
@@ -385,17 +385,30 @@ namespace Victop.Frame.Templates.ModelTemplate
         #region 三个radioButton
         private void rdoBtnBenjieduan_Checked(object sender, RoutedEventArgs e)
         {
+
             SearchModel.RdoBtnDocStatus = "0";
+            if (!DesignerProperties.GetIsInDesignMode(this)&&SystemId!=null)
+            {
+                GetDataFromServerByModel();
+            }
         }
 
         private void rdoBtnUnConfirm_Checked(object sender, RoutedEventArgs e)
         {
             SearchModel.RdoBtnDocStatus = "1";
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+              GetDataFromServerByModel();
+            }
         }
 
         private void rdoBtnConfirm_Checked(object sender, RoutedEventArgs e)
         {
             SearchModel.RdoBtnDocStatus = "2";
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                GetDataFromServerByModel();
+            }
         }
         #endregion
 
@@ -483,7 +496,6 @@ namespace Victop.Frame.Templates.ModelTemplate
             DataOperation operateData = new DataOperation();
             DataSet ds = operateData.GetData(DataChannelId);
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new WaitCallback(UpdateTableList), ds);
-
         }
         #endregion
 
@@ -496,12 +508,15 @@ namespace Victop.Frame.Templates.ModelTemplate
         {
             if (ds != null)
             {
-                dtData = ((DataSet)ds).Tables["1"];
-                dgrid.ItemsSource = dtData.DefaultView;
-                //设置界面数据。
-                SetCmBoxSqlFilterDataSouce();
-                SetDataToCmBox();
-                IsBoundColumn = true;
+                if (((DataSet)ds).Tables.Contains("1"))
+                {
+                    dtData = ((DataSet)ds).Tables["1"];
+                    dgrid.ItemsSource = dtData.DefaultView;
+                    //设置界面数据。
+                    SetCmBoxSqlFilterDataSouce();
+                    SetDataToCmBox();
+                    IsBoundColumn = true;
+                }    
             }
         }
 

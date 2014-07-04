@@ -59,7 +59,7 @@
                     <controls:VicLabelNormal Grid.Row="2" Grid.Column="0" Content="{DynamicResource L_R_50}" HorizontalAlignment="Right"></controls:VicLabelNormal>
                     <controls:VicDatePickerNormal Name="datePickerEndDate" Grid.Row="2" Grid.Column="1" Margin="3" ></controls:VicDatePickerNormal>
                     <controls:VicLabelNormal Grid.Row="4" Grid.Column="0" Content="{DynamicResource L_R_51}" Grid.ColumnSpan="2"></controls:VicLabelNormal>
-                    <controls:VicComboBoxNormal Name="cmboxSqlFilter" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="5"   >
+                    <controls:VicComboBoxNormal Name="cmboxSqlFilter" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="5"  SelectedIndex="0" >
                     </controls:VicComboBoxNormal>
                     <controls:VicTextBoxNormal Grid.Row="6" Name="txtSqlFilter"  Grid.Column="0" Grid.ColumnSpan="2" Margin="0,3,10,9" ></controls:VicTextBoxNormal>
                 </controls:VicGridNormal>
