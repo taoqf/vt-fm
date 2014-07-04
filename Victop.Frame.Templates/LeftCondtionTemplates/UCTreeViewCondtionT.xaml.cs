@@ -25,7 +25,7 @@ namespace Victop.Frame.Templates.LeftCondtionTemplates
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private delegate void TreeViewDelegate(object sender, EventArgs e);
+        public delegate void TreeViewDelegate(object sender, EventArgs e);
         /// <summary>
         /// TreeView加载事件。
         /// </summary>
