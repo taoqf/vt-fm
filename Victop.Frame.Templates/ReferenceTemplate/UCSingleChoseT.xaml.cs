@@ -115,6 +115,29 @@ namespace Victop.Frame.Templates.ReferenceTemplate
 
         #region 方法
 
+        #region 数据引用初始化事件
+        /// <summary>
+        /// 数据引用初始化事件
+        /// </summary>
+        /// <param name="_systemId">系统ID</param>
+        /// <param name="_modelId">插件ID</param>
+        /// <param name="_fieldName">列名关键字</param>
+        /// <param name="_dataChannelId">数据通道ID</param>
+        /// <param name="_dtGmDatareference">数据引用数据集</param>
+        /// <param name="_referenceResult">返回结果回调函数（委托）</param>
+        public void UserControlInit(string _systemId, string _modelId, string _fieldName, string _dataChannelId, DataTable _dtGmDatareference, ReferenceResult _referenceResult) 
+        {
+            this.SystemId = _systemId;
+            this.ModelId = _modelId;
+            this.FieldName = _fieldName;
+            this.DataChannelId = _dataChannelId;
+            this.DtDataParm = _dtGmDatareference;
+            this.RefrenceResultClick += _referenceResult;
+            this.VerticalAlignment = VerticalAlignment.Stretch;
+            this.HorizontalAlignment = HorizontalAlignment.Stretch;
+        }
+        #endregion 
+
         #region 获取返回列
         /// <summary>
         /// 获取返回列

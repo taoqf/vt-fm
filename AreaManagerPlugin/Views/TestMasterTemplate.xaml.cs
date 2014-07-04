@@ -12,14 +12,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Victop.Frame.Templates.DataGridTemplates
+namespace AreaManagerPlugin.Views
 {
     /// <summary>
-    /// UCSearchDataGridT.xaml 的交互逻辑
+    /// TestMasterTemplate.xaml 的交互逻辑
     /// </summary>
-    public partial class UCSearchDataGridT : UserControl
+    public partial class TestMasterTemplate : UserControl
     {
-        public UCSearchDataGridT()
+        public TestMasterTemplate()
         {
             InitializeComponent();
         }
