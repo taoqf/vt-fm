@@ -98,13 +98,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="DataGridTemplates\UCSearchDataGridT.xaml.cs">
       <DependentUpon>UCSearchDataGridT.xaml</DependentUpon>
     </Compile>
     <Compile Include="LeftCondtionTemplates\UCTreeViewCondtionT.xaml.cs">
       <DependentUpon>UCTreeViewCondtionT.xaml</DependentUpon>
-=======
+    </Compile>
     <Compile Include="LayoutTemplate\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
@@ -119,7 +118,6 @@
     </Compile>
     <Compile Include="LayoutTemplate\UpUpLeftRightT.xaml.cs">
       <DependentUpon>UpUpLeftRightT.xaml</DependentUpon>
->>>>>>> efecbf78507884446e7e26cf54b8f63c3157dc51
     </Compile>
     <Compile Include="ModelTemplate\ModelDataShowTModel.cs" />
     <Compile Include="ModelTemplate\UCModelDataShowT.xaml.cs">
@@ -155,13 +153,14 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Page Include="DataGridTemplates\UCSearchDataGridT.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LeftCondtionTemplates\UCTreeViewCondtionT.xaml">
-=======
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LayoutTemplate\Test.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -179,7 +178,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LayoutTemplate\UpUpLeftRightT.xaml">
->>>>>>> efecbf78507884446e7e26cf54b8f63c3157dc51
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
