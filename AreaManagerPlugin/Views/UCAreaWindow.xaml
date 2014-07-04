@@ -1,4 +1,4 @@
-﻿<UserControl xmlns:ModelTemplate="clr-namespace:Victop.Frame.Templates.ModelTemplate;assembly=Victop.Frame.Templates"  x:Class="AreaManagerPlugin.Views.UCAreaWindow"
+﻿<UserControl xmlns:ToolBarTemplates="clr-namespace:Victop.Frame.Templates.ToolBarTemplates;assembly=Victop.Frame.Templates"  xmlns:ModelTemplate="clr-namespace:Victop.Frame.Templates.ModelTemplate;assembly=Victop.Frame.Templates"  x:Class="AreaManagerPlugin.Views.UCAreaWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -73,7 +73,7 @@
                 </ctrl:VicDataGrid>
             </TabItem>
             <TabItem Header="模版测试">
-                <ModelTemplate:UCModelDataShowT SystemId="905" ModelId="ERP11101" />
+                <ToolBarTemplates:UCSearchToolBarT />
             </TabItem>
         </TabControl>
         <i:Interaction.Triggers>
