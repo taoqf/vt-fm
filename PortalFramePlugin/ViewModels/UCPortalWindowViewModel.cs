@@ -342,29 +342,29 @@ namespace PortalFramePlugin.ViewModels
         #region 自定义方法
         private void UpdateMenu()
         {
-            //BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
-            //SystemMenuList.Clear();
-            //if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
-            //{
-            //    foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.ParentMenu.Equals("0")))
-            //    {
-            //        MenuModel menuModel = new MenuModel()
-            //        {
-            //            MenuId = item.MenuId,
-            //            MenuName = item.MenuName
-            //        };
-            //        menuModel = CreateMenuList(item.MenuId, resourceInfo.ResourceMnenus, menuModel);
-            //        SystemMenuList.Add(menuModel);
-            //    }
-            //}
-            //else
-            //{
-            //    string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
-            //    ReadPluginInfoFromXml(FilePath);
-            //}
+            BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
             SystemMenuList.Clear();
-            string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
-            ReadPluginInfoFromXml(FilePath);
+            if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
+            {
+                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.ParentMenu.Equals("0")))
+                {
+                    MenuModel menuModel = new MenuModel()
+                    {
+                        MenuId = item.MenuId,
+                        MenuName = item.MenuName
+                    };
+                    menuModel = CreateMenuList(item.MenuId, resourceInfo.ResourceMnenus, menuModel);
+                    SystemMenuList.Add(menuModel);
+                }
+            }
+            else
+            {
+                string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
+                ReadPluginInfoFromXml(FilePath);
+            }
+            //SystemMenuList.Clear();
+            //string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
+            //ReadPluginInfoFromXml(FilePath);
         }
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
         {

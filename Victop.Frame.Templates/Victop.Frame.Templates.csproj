@@ -90,6 +90,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataGridTemplates\UCSearchDataGridT.xaml.cs">
+      <DependentUpon>UCSearchDataGridT.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LeftCondtionTemplates\UCTreeViewCondtionT.xaml.cs">
+      <DependentUpon>UCTreeViewCondtionT.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ModelTemplate\ModelDataShowTModel.cs" />
     <Compile Include="ModelTemplate\UCModelDataShowT.xaml.cs">
       <DependentUpon>UCModelDataShowT.xaml</DependentUpon>
@@ -110,6 +116,9 @@
     <Compile Include="ReferenceTemplate\UCSingleChoseT.xaml.cs">
       <DependentUpon>UCSingleChoseT.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ToolBarTemplates\UCSearchToolBarT.xaml.cs">
+      <DependentUpon>UCSearchToolBarT.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -121,11 +130,23 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="DataGridTemplates\UCSearchDataGridT.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LeftCondtionTemplates\UCTreeViewCondtionT.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ModelTemplate\UCModelDataShowT.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReferenceTemplate\UCSingleChoseT.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToolBarTemplates\UCSearchToolBarT.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -148,6 +169,7 @@
       <Name>Victop.Server.Controls</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

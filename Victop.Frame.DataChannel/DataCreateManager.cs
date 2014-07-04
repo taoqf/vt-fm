@@ -37,7 +37,7 @@ namespace Victop.Frame.DataChannel
             {
                 channelData.DataInfo = CreateDataSetByJSON(replyMessageInfo.ReplyContent);
             }
-            if (messageInfo.MessageType.Equals("DataChannelService.getFormReferenceSpecial"))
+            else if (messageInfo.MessageType.Equals("DataChannelService.getFormReferenceSpecial"))
             {
                 channelData.DataInfo = CreateDataSet(replyMessageInfo.ReplyContent, SOADataTypeEnum.DATAREFERENCE);
             }
@@ -213,7 +213,7 @@ namespace Victop.Frame.DataChannel
         /// </summary>
         /// <param name="ReplyData"></param>
         /// <param name="xmlNodeList"></param>
-        private void BuildMasterFieldTable(DataSet ReplyData, XmlNodeList xmlNodeList,string fieldTableName)
+        private void BuildMasterFieldTable(DataSet ReplyData, XmlNodeList xmlNodeList, string fieldTableName)
         {
             foreach (XmlNode item in xmlNodeList)
             {
@@ -371,7 +371,7 @@ namespace Victop.Frame.DataChannel
                 }
                 if (fieldDc != null && fieldDc.Count > 0)
                 {
-                    string fieldKey=item.Attributes["attrname"].Value;
+                    string fieldKey = item.Attributes["attrname"].Value;
                     if (fieldDc.ContainsKey(fieldKey))
                     {
                         dc.Caption = fieldDc[fieldKey];
