@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid x:Name="grid" x:FieldModifier="public">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+    <Grid x:Name="grid" x:FieldModifier="public" >
+        <Grid.RowDefinitions >
+            <RowDefinition x:Name="row1" x:FieldModifier="public" Height="40"></RowDefinition>
+            <RowDefinition x:Name="row2" x:FieldModifier="public" Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid x:Name="gridTop" x:FieldModifier="public" Grid.Row="0" Background="Azure"> </Grid>
-        <Grid x:Name="gridDown" x:FieldModifier="public" Grid.Row="1" Background="Red"></Grid>
+        <Grid  Grid.Row="0" Background="Azure"> </Grid>
+        <Grid  Grid.Row="1" Background="AliceBlue"></Grid>
     </Grid>
 </UserControl>

@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <controls:VicGridTree>
-        <controls:VicTreeView Name="tviewEmployee"   ItemsSource="{Binding TreeDt}" Loaded="tviewEmployee_Loaded" SelectedItemChanged="tviewEmployee_SelectedItemChanged" >
+        <controls:VicTreeView Name="treeView"    Loaded="treeView_Loaded" SelectedItemChanged="treeView_SelectedItemChanged" >
             
         </controls:VicTreeView>
     </controls:VicGridTree>

@@ -101,8 +101,11 @@
     <Compile Include="DataGridTemplates\UCSearchDataGridT.xaml.cs">
       <DependentUpon>UCSearchDataGridT.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LeftCondtionTemplates\UCTreeViewCondtionT.xaml.cs">
-      <DependentUpon>UCTreeViewCondtionT.xaml</DependentUpon>
+    <Compile Include="LeftCondtionTemplates\UCModelCondition.xaml.cs">
+      <DependentUpon>UCModelCondition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LeftCondtionTemplates\UCMasterTreeViewT.xaml.cs">
+      <DependentUpon>UCMasterTreeViewT.xaml</DependentUpon>
     </Compile>
     <Compile Include="LayoutTemplate\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
@@ -157,7 +160,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LeftCondtionTemplates\UCTreeViewCondtionT.xaml">
+    <Page Include="LeftCondtionTemplates\UCModelCondition.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LeftCondtionTemplates\UCMasterTreeViewT.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
