@@ -183,8 +183,7 @@ namespace Victop.Frame.Templates.ReferenceTemplate
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             try
-            {
-                DtDataParm = new DataTable();
+            {                
                 if (DtDataParm != null && DtDataParm.Rows.Count > 0)
                 {
                     GetFieldReturn();

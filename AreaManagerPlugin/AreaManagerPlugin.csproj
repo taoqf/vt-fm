@@ -92,8 +92,8 @@
     <Compile Include="Views\AreaWindow.xaml.cs">
       <DependentUpon>AreaWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TestMasterTemplate.xaml.cs">
-      <DependentUpon>TestMasterTemplate.xaml</DependentUpon>
+    <Compile Include="Views\UCTestMasterTemplate.xaml.cs">
+      <DependentUpon>UCTestMasterTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UCAreaWindow.xaml.cs">
       <DependentUpon>UCAreaWindow.xaml</DependentUpon>
@@ -126,7 +126,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TestMasterTemplate.xaml">
+    <Page Include="Views\UCTestMasterTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
