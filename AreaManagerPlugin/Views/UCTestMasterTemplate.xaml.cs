@@ -85,7 +85,7 @@ namespace AreaManagerPlugin.Views
         private void UCSearchToolBarT_btnCancelClick(object sender, EventArgs e)
         {
             dgrid.Cancle();
-            
+            searchToolBar.CancelFlag = dgrid.CannelFlag;
         }
         #endregion 
 

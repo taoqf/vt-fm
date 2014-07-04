@@ -359,6 +359,7 @@ namespace Victop.Frame.Templates.DataGridTemplates
                 AddClick(null, dr);
             }
             dtData.Rows.Add(dr);
+            CannelFlag = true;
         }
         #endregion
 
