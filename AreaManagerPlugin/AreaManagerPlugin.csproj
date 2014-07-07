@@ -100,14 +100,8 @@
     <Compile Include="Views\AreaWindow.xaml.cs">
       <DependentUpon>AreaWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UCTestMasterTemplate.xaml.cs">
-      <DependentUpon>UCTestMasterTemplate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\UCAreaWindow.xaml.cs">
       <DependentUpon>UCAreaWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UCTestTreeTemplate.xaml.cs">
-      <DependentUpon>UCTestTreeTemplate.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -133,15 +127,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UCTestMasterTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\UCAreaWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UCTestTreeTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

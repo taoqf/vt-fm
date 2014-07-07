@@ -129,7 +129,6 @@ namespace Victop.Frame.Connection
         {
             messageInfo.MessageType = "LinkService.registAsync";
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
-            LoggerHelper.Info(replyMessage.ReplyContent);
             if (!string.IsNullOrEmpty(replyMessage.ReplyContent))
             {
                 BaseResourceInfo baseResourceInfo = new BaseResourceInfo();
