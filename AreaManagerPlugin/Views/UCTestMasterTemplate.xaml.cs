@@ -101,13 +101,24 @@ namespace AreaManagerPlugin.Views
         }
         #endregion 
 
+        #region 查询方法
+        /// <summary>
+        /// 查询方法
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void searchToolBar_btnSearchClick(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtName.Text.Trim()))
+            if (!string.IsNullOrEmpty(txtName.Text.Trim()))
             {
                 dgrid.SqlFilter = " vndname like '%" + txtName.Text.Trim() + "%'";
             }
+            else 
+            {
+                dgrid.SqlFilter = " 1=1 ";
+            }
             dgrid.Search();
         }
+        #endregion 
     }
 }
