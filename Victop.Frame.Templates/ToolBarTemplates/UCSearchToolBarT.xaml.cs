@@ -65,7 +65,7 @@ namespace Victop.Frame.Templates.ToolBarTemplates
         /// <summary>
         /// 全消按钮点击事件
         /// </summary>
-        public event ButtonDelegate btnCancelAllClick;
+        //public event ButtonDelegate btnCancelAllClick;
         /// <summary>
         /// 保存按钮点击事件
         /// </summary>
@@ -76,7 +76,7 @@ namespace Victop.Frame.Templates.ToolBarTemplates
         /// <summary>
         /// 取消按钮标志
         /// </summary>
-        private bool cancelFlag; 
+        private bool cancelFlag=false; 
         #endregion
 
         #region 属性
@@ -159,13 +159,13 @@ namespace Victop.Frame.Templates.ToolBarTemplates
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnCancelAll_Click(object sender, RoutedEventArgs e)
-        {
-            if (btnCancelAllClick!=null)
-            {
-                btnCancelAllClick(sender, e);
-            }
-        } 
+        //private void btnCancelAll_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (btnCancelAllClick!=null)
+        //    {
+        //        btnCancelAllClick(sender, e);
+        //    }
+        //} 
         #endregion
 
         #region 保存按钮单击
