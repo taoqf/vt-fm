@@ -7,6 +7,9 @@
 				<Trade title="供应商管理" action="SupplierManagePlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description=""/>
 				<Trade title="供应商柜台管理" action="CounterManagePlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description=""/>
 				<Trade title="供应商类别品牌管理" action="BrandTypeManagePlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description=""/>
+<Trade title="模型取数测试" action="ModelTestPlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description=""/>
+<Trade title="工具栏模板测试" action="LayoutTemplatePlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description=""/>
+<Trade title="生产线调度" action="ProductionSchedulingPlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description=""/>
 		</MainMenu>
 	</Category>
 </MenuInfo>

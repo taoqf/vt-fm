@@ -116,13 +116,13 @@ namespace Victop.Frame.Templates.LeftCondtionTemplates
         /// </summary>
         /// <param name="systemId"></param>
         /// <param name="masterName"></param>
-        public void InitTreeViewParams(string systemId, string masterName, string id, string pid, string displayField)
+        public void InitTreeViewParams(string _systemId, string _masterName, string _id, string _pid, string _displayField)
         {
-            this.systemId = systemId;
-            this.masterName = masterName;
-            this.id = id;
-            this.pid = pid;
-            this.displayField = displayField;
+            this.systemId = _systemId;
+            this.masterName = _masterName;
+            this.id = _id;
+            this.pid = _pid;
+            this.displayField = _displayField;
         } 
         #endregion
 
@@ -210,12 +210,10 @@ namespace Victop.Frame.Templates.LeftCondtionTemplates
             contentDic.Add("whereArr", null);
             contentDic.Add("masterParam", null);
             contentDic.Add("deltaXml", null);
-            contentDic.Add("runUser", "test4");
             contentDic.Add("shareFlag", null);
             contentDic.Add("treeStr", null);
             contentDic.Add("saveType", null);
             contentDic.Add("doccode", null);
-            contentDic.Add("clientId", "byerp");
             string content = JsonHelper.ToJson(contentDic);
             messageDic.Add("MessageContent", content);
             return JsonHelper.ToJson(messageDic);
