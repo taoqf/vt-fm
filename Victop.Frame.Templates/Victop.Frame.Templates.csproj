@@ -142,6 +142,9 @@
     <Compile Include="ReferenceTemplate\UCSingleChoseT.xaml.cs">
       <DependentUpon>UCSingleChoseT.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ToolBarTemplates\UCAddSearchToolBar.xaml.cs">
+      <DependentUpon>UCAddSearchToolBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ToolBarTemplates\UCSearchToolBarT.xaml.cs">
       <DependentUpon>UCSearchToolBarT.xaml</DependentUpon>
     </Compile>
@@ -193,6 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ReferenceTemplate\UCSingleChoseT.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToolBarTemplates\UCAddSearchToolBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -16,9 +16,9 @@ using System.Windows.Shapes;
 namespace Victop.Frame.Templates.ToolBarTemplates
 {
     /// <summary>
-    /// UCSearchToolBarT.xaml 的交互逻辑
+    /// UCAddSearchToolBar.xaml 的交互逻辑
     /// </summary>
-    public partial class UCSearchToolBarT : UserControl
+    public partial class UCAddSearchToolBar : UserControl
     {
         #region 属性改变通知
         #region 属性通知事件
@@ -51,6 +51,10 @@ namespace Victop.Frame.Templates.ToolBarTemplates
         /// <param name="e"></param>
         public delegate void ButtonDelegate(object sender, EventArgs e);
         /// <summary>
+        /// 查询按钮点击事件
+        /// </summary>
+        public event ButtonDelegate btnSearchClick;
+        /// <summary>
         /// 新增按钮点击事件
         /// </summary>
         public event ButtonDelegate btnAddClick;
@@ -76,7 +80,7 @@ namespace Victop.Frame.Templates.ToolBarTemplates
         /// <summary>
         /// 取消按钮标志
         /// </summary>
-        private bool cancelFlag=false; 
+        private bool cancelFlag = false;
         #endregion
 
         #region 属性
@@ -95,18 +99,12 @@ namespace Victop.Frame.Templates.ToolBarTemplates
                 }
             }
         }
-        
-        #endregion
 
-        #region 无参构造函数
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        public UCSearchToolBarT()
+        #endregion
+        public UCAddSearchToolBar()
         {
             InitializeComponent();
-        } 
-        #endregion
+        }
 
         #region 新增按钮单击
         /// <summary>
@@ -116,11 +114,11 @@ namespace Victop.Frame.Templates.ToolBarTemplates
         /// <param name="e"></param>
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (btnAddClick!=null)
+            if (btnAddClick != null)
             {
-                btnAddClick(sender,e);
+                btnAddClick(sender, e);
             }
-        } 
+        }
         #endregion
 
         #region 删除按钮点击
@@ -131,11 +129,11 @@ namespace Victop.Frame.Templates.ToolBarTemplates
         /// <param name="e"></param>
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (btnDeleteClick!=null)
+            if (btnDeleteClick != null)
             {
                 btnDeleteClick(sender, e);
             }
-        } 
+        }
         #endregion
 
         #region 取消按钮单击
@@ -146,11 +144,11 @@ namespace Victop.Frame.Templates.ToolBarTemplates
         /// <param name="e"></param>
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (btnCancelClick!=null)
+            if (btnCancelClick != null)
             {
                 btnCancelClick(sender, e);
             }
-        } 
+        }
         #endregion
 
         #region 全消按钮单击
@@ -176,12 +174,26 @@ namespace Victop.Frame.Templates.ToolBarTemplates
         /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (btnSaveClick!=null)
+            if (btnSaveClick != null)
             {
                 btnSaveClick(sender, e);
             }
-        } 
+        }
         #endregion
 
+        #region 查询
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnSearchClick!=null)
+            {
+                btnSearchClick(sender, e);
+            }
+        } 
+        #endregion
     }
 }
