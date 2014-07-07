@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:AreaManagerPlugin.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+             xmlns:local="clr-namespace:AreaManagerPlugin.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Name="UCMain">
     <UserControl.Resources>
@@ -72,8 +73,8 @@
                 <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding MyDt, UpdateSourceTrigger=PropertyChanged}">
                 </ctrl:VicDataGrid>
             </TabItem>
-            <TabItem Header="模版测试">
-                <ToolBarTemplates:UCSearchToolBarT />
+            <TabItem Header="主档增删改查模版测试">
+                <local:UCTestMasterTemplate/>
             </TabItem>
         </TabControl>
         <i:Interaction.Triggers>

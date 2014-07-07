@@ -4,18 +4,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              xmlns:ToolBarTemplates="clr-namespace:Victop.Frame.Templates.ToolBarTemplates;assembly=Victop.Frame.Templates" 
-             xmlns:DataGridTemplates="clr-namespace:Victop.Frame.Templates.DataGridTemplates;assembly=Victop.Frame.Templates"                          
+             xmlns:DataGridTemplates="clr-namespace:Victop.Frame.Templates.DataGridTemplates;assembly=Victop.Frame.Templates"     
+             xmlns:control="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ToolBarTemplates:UCSearchToolBarT Name="searchToolBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0"  btnAddClick="UCSearchToolBarT_btnAddClick" btnDeleteClick="UCSearchToolBarT_btnDeleteClick" btnCancelClick="UCSearchToolBarT_btnCancelClick" btnSaveClick="UCSearchToolBarT_btnSaveClick"/>
-
-        <DataGridTemplates:UCMasterDataGridT Name="dgrid" Grid.Row="1"/>
+        <!--<ToolBarTemplates:UCSearchToolBarT Name="searchToolBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0"  btnAddClick="UCSearchToolBarT_btnAddClick" btnDeleteClick="UCSearchToolBarT_btnDeleteClick" btnCancelClick="UCSearchToolBarT_btnCancelClick" btnSaveClick="UCSearchToolBarT_btnSaveClick"/>-->
+        <ToolBarTemplates:UCAddSearchToolBar Name="searchToolBar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0"  btnAddClick="UCSearchToolBarT_btnAddClick" btnDeleteClick="UCSearchToolBarT_btnDeleteClick" btnCancelClick="UCSearchToolBarT_btnCancelClick" btnSaveClick="UCSearchToolBarT_btnSaveClick" btnSearchClick="searchToolBar_btnSearchClick"/>
+        <control:VicDockPanelNormal Grid.Row="1">
+            <control:VicLabelNormal>供应商名称</control:VicLabelNormal>
+            <control:VicTextBoxNormal Name="txtName"></control:VicTextBoxNormal>
+        </control:VicDockPanelNormal>
+        <DataGridTemplates:UCMasterDataGridT Name="dgrid" Grid.Row="2"/>
 
     </Grid>
 </UserControl>

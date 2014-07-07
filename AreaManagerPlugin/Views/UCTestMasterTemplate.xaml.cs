@@ -100,5 +100,14 @@ namespace AreaManagerPlugin.Views
             dgrid.Save();
         }
         #endregion 
+
+        private void searchToolBar_btnSearchClick(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtName.Text.Trim()))
+            {
+                dgrid.SqlFilter = " vndname like '%" + txtName.Text.Trim() + "%'";
+            }
+            dgrid.Search();
+        }
     }
 }

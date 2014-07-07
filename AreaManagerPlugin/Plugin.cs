@@ -48,7 +48,7 @@ namespace AreaManagerPlugin
 
         public UserControl StartControl
         {
-            get { return new UCTestMasterTemplate(); }
+            get { return new UCAreaWindow(); }
         }
 
         public void Init()
