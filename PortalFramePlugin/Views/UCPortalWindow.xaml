@@ -45,20 +45,40 @@
                 </i:Interaction.Triggers>
             </ComboBox>
         </DockPanel>
-        <TreeView Grid.Row="1" Grid.Column="0" Name="tviewMenu" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
-            <ItemsControl.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding SystemMenuList}">
-                    <StackPanel>
-                        <TextBlock VerticalAlignment="Center" Text="{Binding MenuName}" />
-                    </StackPanel>
-                </HierarchicalDataTemplate>
-            </ItemsControl.ItemTemplate>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction Command="{Binding tviewMenuLoadedCommand}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </TreeView>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.3*"/>
+                <RowDefinition Height="0.7*"/>
+            </Grid.RowDefinitions>
+            <TreeView Grid.Row="0" Name="tviewLocalMenu" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding SystemMenuList}">
+                        <StackPanel>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding MenuName}" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </ItemsControl.ItemTemplate>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding tviewMenuLoadedCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TreeView>
+            <!--<TreeView Grid.Row="1" Name="tviewRemoteMenu" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding SystemMenuList}">
+                        <StackPanel>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding MenuName}" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </ItemsControl.ItemTemplate>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding tviewMenuLoadedCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TreeView>-->
+        </Grid>
         <GridSplitter Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" ShowsPreview="True" Width="2" Background="#FFFFFFFF" />
         <DataGrid Grid.Row="1" Grid.Column="2" ItemsSource="{Binding MyDt, UpdateSourceTrigger=PropertyChanged}">
             
