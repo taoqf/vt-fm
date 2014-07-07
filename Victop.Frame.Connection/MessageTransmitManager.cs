@@ -79,6 +79,7 @@ namespace Victop.Frame.Connection
             }
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
+            LoggerHelper.InfoFormat("Content:{0},ReplyMode:{1}", replyMessage.ReplyContent, replyMessage.ReplyMode);
             if (replyMessage.ReplyMode == ReplyModeEnum.SYNCH || replyMessage.ReplyMode == ReplyModeEnum.BREAK)
             {
                 if (!string.IsNullOrEmpty(replyMessage.ReplyContent) && !(JsonHelper.ReadJsonString(replyMessage.ReplyContent, "code").Equals("0")))
@@ -92,6 +93,7 @@ namespace Victop.Frame.Connection
                     currentGallery.ClientInfo.UserPwd = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userpw");
                     currentGallery.ClientInfo.UserCode = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "usercode");
                     messageInfo.MessageContent = replyMessage.ReplyContent;
+                    LoggerHelper.Info("ConnectLinkSubmit");
                     replyMessage = ConnectLinkSubmit(adapter,messageInfo);
                 }
             }

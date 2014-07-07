@@ -322,7 +322,7 @@ namespace UserLoginPlugin.ViewModels
                 Dictionary<string, string> contentDic = new Dictionary<string, string>();
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
-                contentDic.Add("clientId", "byerp");
+                contentDic.Add("clientId", ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId"));
                 messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
                 new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(Login));
             }
