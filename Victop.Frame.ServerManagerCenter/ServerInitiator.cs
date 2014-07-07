@@ -93,6 +93,7 @@ namespace Victop.Frame.ServerManagerCenter
         }
         private string SetCurrentGallery(RequestMessage messageInfo)
         {
+            Dictionary<string, string> returnDic = new Dictionary<string, string>();
             Dictionary<string, string> contDic = JsonHelper.ToObject<Dictionary<string, string>>(messageInfo.MessageContent);
             if (contDic.ContainsKey("GalleryKey"))
             {
@@ -112,14 +113,22 @@ namespace Victop.Frame.ServerManagerCenter
                     {
                         galleryManager.SetCurrentGalleryId(GalleryEnum.VICTOP);
                     }
-                    return "更改当前通道成功";
+                    returnDic.Add("ReplyMode", "0");
+                    returnDic.Add("ReplyContent", "更改当前通道成功");
+                    return JsonHelper.ToJson(returnDic);
         }
                 else
                 {
-                    return "不存需要调整通道信息";
+                    returnDic = new Dictionary<string, string>();
+                    returnDic.Add("ReplyMode", "1");
+                    returnDic.Add("ReplyContent", "不存需要调整通道信息");
+                    return JsonHelper.ToJson(returnDic);
                 }
             }
-            return "请传入通道信息";
+            returnDic = new Dictionary<string, string>();
+            returnDic.Add("ReplyMode", "2");
+            returnDic.Add("ReplyContent", "请传入通道信息");
+            return JsonHelper.ToJson(returnDic);
         }
 		/// <summary>
 		/// 服务启动
@@ -128,6 +137,7 @@ namespace Victop.Frame.ServerManagerCenter
 		{
             //通过注册服务信息，得到服务的路径，并通过反射方式将服务实例化
             //执行运行方法
+            Dictionary<string, string> returnDic = new Dictionary<string, string>();
             string replyContent = string.Empty;
             Assembly serviceAssembly = ServerFactory.GetServerAssemblyByName(serverInfo.ServerName, serverInfo.ServerPath);
             Type[] types = serviceAssembly.GetTypes();
@@ -138,8 +148,18 @@ namespace Victop.Frame.ServerManagerCenter
                     IService service = (IService)serviceAssembly.CreateInstance(t.FullName);
                     service.ServiceParams = JsonHelper.ReadJsonString(messageInfo.MessageContent, "ServiceParams");
                     service.CurrentMessageType = messageInfo.MessageType;
-                    service.ServiceRun();
-                    replyContent = "true";
+                    if (service.ServiceRun())
+                    {
+                        returnDic.Add("ReplyMode", "0");
+                        returnDic.Add("ReplyContent", "服务启动成功");
+                        replyContent = JsonHelper.ToJson(returnDic);
+                    }
+                    else
+                    {
+                        returnDic.Add("ReplyMode", "1");
+                        returnDic.Add("ReplyContent", "服务启动失败");
+                        replyContent = JsonHelper.ToJson(returnDic);
+                    }
                 }
             }
             return replyContent;
@@ -171,11 +191,17 @@ namespace Victop.Frame.ServerManagerCenter
                         activePluginManager.AddPlugin(activePluginInfo);
                     }
                 }
-                return "插件启动成功";
+                Dictionary<string, string> returnDic = new Dictionary<string, string>();
+                returnDic.Add("ReplyMode", "0");
+                returnDic.Add("ReplyContent", "启动成功");
+                return JsonHelper.ToJson(returnDic);
             }
             catch (Exception ex)
             {
-                throw;
+                Dictionary<string, string> returnDic = new Dictionary<string, string>();
+                returnDic.Add("ReplyMode", "1");
+                returnDic.Add("ReplyContent", ex.Message);
+                return JsonHelper.ToJson(returnDic);
             }
 
 		}

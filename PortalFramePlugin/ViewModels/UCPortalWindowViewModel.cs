@@ -544,7 +544,7 @@ namespace PortalFramePlugin.ViewModels
         #region 用户登录
         private void UserLogin()
         {
-            new GalleryManager().SetCurrentGalleryId(Victop.Frame.CoreLibrary.Enums.GalleryEnum.ENTERPRISE);
+            //new GalleryManager().SetCurrentGalleryId(Victop.Frame.CoreLibrary.Enums.GalleryEnum.ENTERPRISE);
             Dictionary<string, string> messageDic = new Dictionary<string, string>();
             messageDic.Add("MessageType", "PluginService.PluginRun");
             Dictionary<string, string> contentDic = new Dictionary<string, string>();

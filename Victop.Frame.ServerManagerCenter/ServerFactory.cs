@@ -35,9 +35,16 @@ namespace Victop.Frame.ServerManagerCenter
             }
             serverName = string.Concat(serverName, ".dll");
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, serverPath, serverName);
-            byte[] fileBytes = LoadServerFile(filePath);
-            Assembly assemblyLoad = AppDomain.CurrentDomain.Load(fileBytes);
-            return assemblyLoad;
+            if (File.Exists(filePath))
+            {
+                byte[] fileBytes = LoadServerFile(filePath);
+                Assembly assemblyLoad = AppDomain.CurrentDomain.Load(fileBytes);
+                return assemblyLoad;
+            }
+            else
+            {
+                throw new Exception("插件不存在");
+            }
 		}
 
 		/// <summary>

@@ -33,11 +33,32 @@ namespace Victop.Frame.ServerManagerCenter
                 {
                     case RamifyEnum.RUN:
                         string replyContent = ServerInitiator.GetInstance().Run(messageInfo);
-                        replyMessage = new ReplyMessage()
+                        try
                         {
-                            MessageId = messageInfo.MessageId,
-                            ReplyContent = replyContent
-                        };
+                            Dictionary<string, string> replyDic = JsonHelper.ToObject<Dictionary<string, string>>(replyContent);
+                            replyMessage = new ReplyMessage()
+                            {
+                                MessageId = messageInfo.MessageId,
+                                ReplyContent = replyContent,
+                                ReplyAlertMessage = replyDic["ReplyContent"],
+                            };
+                            if (replyDic["ReplyMode"].Equals("0"))
+                            {
+                                replyMessage.ReplyMode = (CoreLibrary.Enums.ReplyModeEnum)0;
+                            }
+                            else
+                            {
+                                replyMessage.ReplyMode = (CoreLibrary.Enums.ReplyModeEnum)1;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            replyMessage = new ReplyMessage()
+                            {
+                                MessageId = messageInfo.MessageId,
+                                ReplyContent = replyContent
+                            };
+                        }
                         break;
                     case RamifyEnum.CHECK:
                         ServerJudgeManager serverJudgeManager = new ServerJudgeManager();
