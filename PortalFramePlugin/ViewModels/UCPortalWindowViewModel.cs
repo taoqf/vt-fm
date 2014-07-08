@@ -594,10 +594,11 @@ namespace PortalFramePlugin.ViewModels
         }
         private void CtrlDoWork(object pluginInfo)
         {
-            UserControl userctrl = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).StartControl;
-            userctrl.Uid = ((ActivePluginInfo)pluginInfo).ObjectId;
+            PluginModel pluginModel = pluginInfo as PluginModel;
+            UserControl userctrl = pluginModel.PluginInterface.StartControl;
+            userctrl.Uid = pluginModel.ObjectId;
             Victop.Wpf.Controls.TabItem tabItem = new Victop.Wpf.Controls.TabItem();
-            tabItem.Header = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).PluginTitle;
+            tabItem.Header = pluginModel.PluginInterface.PluginTitle;
             tabItem.Content = userctrl;
             tabItem.AllowDelete = true;
             TabItemList.Add(tabItem);
