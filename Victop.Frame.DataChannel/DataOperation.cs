@@ -6,15 +6,10 @@
 //------------------------------------------------------------------------------
 namespace Victop.Frame.DataChannel
 {
-    using System;
     using System.Collections;
-    using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
-    using System.Text;
-    using Victop.Frame.CoreLibrary.Interfaces;
 
-	/// <summary>
+    /// <summary>
 	/// 数据操作
 	/// </summary>
 	/// <remarks>数据操作类</remarks>

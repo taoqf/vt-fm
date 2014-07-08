@@ -242,7 +242,14 @@ namespace Victop.Frame.DataChannel
             XmlNodeList nodeList = xmlNode.SelectSingleNode("DATAPACKET").SelectSingleNode("ROWDATA").SelectNodes("ROW");
             foreach (XmlNode item in nodeList)
             {
-                columnDes.Add(item.Attributes["columnid"].Value, item.Attributes["columncaption"].Value);
+                if (item.Attributes["columnid"] == null && string.IsNullOrEmpty(item.Attributes["columnid"].Value))
+                {
+                    columnDes.Add(item.Attributes["columnid2"].Value, item.Attributes["columncaption"].Value);
+                }
+                else
+                {
+                    columnDes.Add(item.Attributes["columnid"].Value, item.Attributes["columncaption"].Value);
+                }
             }
             return columnDes;
         }
