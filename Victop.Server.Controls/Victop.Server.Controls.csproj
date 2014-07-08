@@ -79,6 +79,7 @@
     <Compile Include="IPlugin.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\PluginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

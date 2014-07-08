@@ -3,19 +3,5 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="0" Width="0" Loaded="Window_Loaded">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Button Grid.Row="0" Grid.Column="0" Width="100" Height="24" Content="框架运行" Name="btnRun" Click="btnRun_Click"/>
-        <Button Grid.Row="0" Grid.Column="1" Width="100" Height="24" Content="门户启动" Name="btnTest" Click="btnTest_Click"/>
-        <Button Grid.Row="0" Grid.Column="2" Width="100" Height="24" Content="匿名登录" Name="btnNiming" Click="btnNiming_Click"/>
-        <Grid Grid.Row="1" Grid.ColumnSpan="4" Name="pluginGrid"/>
     </Grid>
 </Window>

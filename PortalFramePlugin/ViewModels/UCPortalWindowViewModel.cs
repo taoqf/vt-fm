@@ -544,12 +544,14 @@ namespace PortalFramePlugin.ViewModels
         #region 用户登录
         private void UserLogin()
         {
-            //new GalleryManager().SetCurrentGalleryId(Victop.Frame.CoreLibrary.Enums.GalleryEnum.ENTERPRISE);
             Dictionary<string, string> messageDic = new Dictionary<string, string>();
             messageDic.Add("MessageType", "PluginService.PluginRun");
             Dictionary<string, string> contentDic = new Dictionary<string, string>();
             contentDic.Add("PluginName", "UserLoginPlugin");
             contentDic.Add("PluginPath", "");
+            Dictionary<string, string> paramDic = new Dictionary<string, string>();
+            paramDic.Add("my", "prince");
+            contentDic.Add("PluginParam", JsonHelper.ToJson(paramDic));
             messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
             new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(PluginShow));
         }
@@ -557,15 +559,20 @@ namespace PortalFramePlugin.ViewModels
         {
             if (JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
             {
-                ActivePluginManager pluginManager = new ActivePluginManager();
-                ActivePluginInfo pluginInfo = pluginManager.GetActivePlugins()[JsonHelper.ReadJsonString(message.ToString(), "MessageId")];
-                switch (pluginInfo.ShowType)
+                string messageId = JsonHelper.ReadJsonString(message.ToString(), "MessageId");
+                DataOperation PluginOper = new DataOperation();
+                Dictionary<string, object> pluginDict = PluginOper.GetPluginInfo(messageId);
+                PluginModel pluginModel = new PluginModel();
+                pluginModel.PluginInterface = pluginDict["IPlugin"] as IPlugin;
+                pluginModel.AppId = pluginDict["AppId"].ToString();
+                pluginModel.ObjectId = pluginDict["ObjectId"].ToString();
+                switch (pluginModel.PluginInterface.ShowType)
                 {
                     case 0:
-                        System.Windows.Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new WaitCallback(DoWork), pluginInfo);
+                        System.Windows.Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new WaitCallback(DoWork), pluginModel);
                         break;
                     case 1:
-                        System.Windows.Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new WaitCallback(CtrlDoWork), pluginInfo);
+                        System.Windows.Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new WaitCallback(CtrlDoWork), pluginModel);
                         break;
                     default:
                         break;
@@ -579,8 +586,9 @@ namespace PortalFramePlugin.ViewModels
         /// <summary>打开插件</summary>
         private void DoWork(object pluginInfo)
         {
-            Window win = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).StartWindow;
-            win.Uid = ((ActivePluginInfo)pluginInfo).ObjectId;
+            PluginModel pluginModel = pluginInfo as PluginModel;
+            Window win = pluginModel.PluginInterface.StartWindow;
+            win.Uid = pluginModel.ObjectId;
             bool? result = win.ShowDialog();
             UpdateMenu();
         }

@@ -67,5 +67,20 @@ namespace ThemeManagerPlugin
         {
             get { return new List<string>(); }
         }
+
+        private Dictionary<string, object> paramDict;
+        public Dictionary<string, object> ParamDict
+        {
+            get
+            {
+                if (paramDict == null)
+                    paramDict = new Dictionary<string, object>();
+                return paramDict;
+            }
+            set
+            {
+                paramDict = value;
+            }
+        }
     }
 }

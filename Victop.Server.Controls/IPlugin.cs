@@ -61,6 +61,10 @@ using System.Windows.Controls;
         /// 初始化方法
         /// </summary>
 		void Init();
+        /// <summary>
+        /// 参数键值对
+        /// </summary>
+        Dictionary<string, object> ParamDict { get; set; }
 
 	}
 }
