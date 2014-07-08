@@ -1126,30 +1126,29 @@ namespace Victop.Frame.Connection
         {
             try
             {
-                if (!dicContent.ContainsKey("systemid"))
+                if (!dicContent.ContainsKey("runUser"))
                 {
-                    dicContent.Add("systemid", null);
+                    dicContent.Add("runUser", null);
+                }
+                if (!dicContent.ContainsKey("clientId"))
+                {
+                    dicContent.Add("clientId", null);
                 }
                 if (!dicContent.ContainsKey("controlid"))
                 {
                     dicContent.Add("controlid", null);
                 }
-                if (!dicContent.ContainsKey("formid"))
+                if (dicContent.ContainsKey("dataparam"))
                 {
-                    dicContent.Add("formid", null);
-                }
-                if (!dicContent.ContainsKey("doccode"))
-                {
-                    dicContent.Add("doccode", null);
-                }
-                if (!dicContent.ContainsKey("usercode"))
-                {
-                    dicContent.Add("usercode", null);
-                }
-                if (!dicContent.ContainsKey("flexObj"))
-                {
-                    Dictionary<object, object> dicFlexObj = new Dictionary<object, object>();
-                    dicContent.Add("flexObj", dicFlexObj);
+                    Dictionary<string, object> dataParDic = JsonHelper.ToObject<Dictionary<string, object>>(dicContent["dataparam"].ToString());
+                    if (!dataParDic.ContainsKey("usercode"))
+                    {
+                        GalleryManager galleryManager = new GalleryManager();
+                        CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+                        LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
+                        dataParDic.Add("usercode", loginUserInfo.UserCode);
+                    }
+                    dicContent["dataparam"] = dataParDic;
                 }
                 return dicContent;
             }
