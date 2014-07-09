@@ -34,7 +34,7 @@ namespace Victop.Frame.SyncOperation
             Dictionary<string, string> contentDic = new Dictionary<string, string>();
             contentDic.Add("PluginName", PluginName);
             contentDic.Add("PluginPath", "");
-            contentDic.Add("PluginParam", null);
+            contentDic.Add("PluginParam", JsonHelper.ToJson(paramDic));
             messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
             new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic),new WaitCallback(PluginShow));
             if (waitTime > 0)
