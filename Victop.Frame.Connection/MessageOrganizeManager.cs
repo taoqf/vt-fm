@@ -72,7 +72,7 @@ namespace Victop.Frame.Connection
                         dicContent = GetSynchronousMessageServerMessage(dicContent);
                         break;
                     case "TaskService.excute":
-                        dicContent = GetDoEJBMessage(dicContent);
+                        dicContent = GetDoEJBMessage(dicContent, messageInfo);
                         break;
                     case "DataService.execSQLAsyn":
                         dicContent = GetExecSQLMessage(dicContent);
@@ -100,7 +100,6 @@ namespace Victop.Frame.Connection
                     default:
                         break;
                 }
-
                 if (dicContent.ContainsKey("runUser"))
                 {
                     GalleryManager galleryManager = new GalleryManager();
@@ -113,6 +112,7 @@ namespace Victop.Frame.Connection
                     string clientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
                     dicContent["clientId"] = clientId;
                 }
+
                 messageInfo.MessageContent = JsonHelper.ToJson(dicContent);
             }
             catch (Exception)
@@ -906,31 +906,79 @@ namespace Victop.Frame.Connection
         /// <remarks>TaskService.excute</remarks>
         /// <param name="dicContent"></param>
         /// <returns></returns>
-        private Dictionary<string, object> GetDoEJBMessage(Dictionary<string, object> dicContent)
+        private Dictionary<string, object> GetDoEJBMessage(Dictionary<string, object> dicContent, RequestMessage messageInfo)
         {
             try
             {
-                if (!dicContent.ContainsKey("SystemId"))
+                GalleryManager galleryManager = new GalleryManager();
+                CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+                LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
+                #region 处理消息体
+                messageInfo.ToRole = "victop-task-role";
+                messageInfo.MessageControl = cloudGallyInfo.ControlId;
+                #endregion
+                #region 处理Content
+                Dictionary<string, object> result = new Dictionary<string, object>();
+                result.Add("uuid", Guid.NewGuid().ToString());
+                result.Add("priority", 10);
+                result.Add("taskid", null);
+                result.Add("usercode", null);
+                result.Add("runserver", messageInfo.MessageId);
+                if (dicContent.ContainsKey("FlexObj"))
                 {
-                    dicContent.Add("SystemId", null);
+                    Dictionary<string, object> objDic = JsonHelper.ToObject<Dictionary<string, object>>(dicContent["FlexObj"].ToString());
+                    if (objDic != null && objDic.ContainsKey("tasktype"))
+                    {
+                        result.Add("tasktype", objDic["tasktype"]);
+                    }
                 }
-                if (!dicContent.ContainsKey("ModelId"))
+                else
                 {
-                    dicContent.Add("ModelId", null);
+                    result.Add("tasktype", "业务过账");
                 }
-                if (!dicContent.ContainsKey("FormId"))
-                {
-                    dicContent.Add("FormId", null);
-                }
-                if (!dicContent.ContainsKey("ControlId"))
-                {
-                    dicContent.Add("ControlId", null);
-                }
-                if (!dicContent.ContainsKey("DocCode"))
-                {
-                    dicContent.Add("DocCode", null);
-                }
-                return dicContent;
+                result.Add("reply", 1);
+                result.Add("stamp", null);
+                result.Add("summary", null);
+                result.Add("prioritycontrol", "取任务类型优先级");
+                result.Add("replystatus", null);
+                result.Add("replyresult", null);
+                result.Add("jbossURL", null);
+                Dictionary<string, object> runMessage = new Dictionary<string, object>();
+                Dictionary<string, object> argValues = new Dictionary<string, object>();
+                Dictionary<string, object> connectserver = new Dictionary<string, object>();
+                connectserver.Add("reply", 1);
+                runMessage.Add("methodName", "execute");
+                runMessage.Add("ejbJNDIName", "过账总控EJB");
+                List<string> listaryTypes = new List<string>();
+                listaryTypes.Add("java.lang.String");
+                runMessage.Add("argTypes", listaryTypes);
+                runMessage.Add("reply", true);
+                runMessage.Add("argBeans", null);
+                runMessage.Add("jbossUrl", null);
+                runMessage.Add("ejbInterfaceName", "com.victop.platform.ejb.postlogic.PostingLogic");
+                argValues.Add("controlid", dicContent.ContainsKey("ControlId") ? dicContent["ControlId"] : null);
+                argValues.Add("modelId", dicContent.ContainsKey("ModelId") ? dicContent["ModelId"] : null);
+                argValues.Add("clientId", cloudGallyInfo.ClientId);
+                argValues.Add("doccode", dicContent.ContainsKey("DocCode") ? dicContent["DocCode"] : null);
+                Dictionary<string, object> dataparam = new Dictionary<string, object>();
+                dataparam.Add("companyid", null);
+                dataparam.Add("username", loginUserInfo.UserName);
+                dataparam.Add("usercode", loginUserInfo.UserCode);
+                dataparam.Add("prdoccode", null);
+                dataparam.Add("accountsid", null);
+                dataparam.Add("flex", dicContent.ContainsKey("FlexObj") ? dicContent["FlexObj"] : null);
+                argValues.Add("dataparam", dataparam);
+                argValues.Add("reportcasejson", null);
+                argValues.Add("runUser", loginUserInfo.UserCode);
+                argValues.Add("bzsystemid", dicContent.ContainsKey("SystemId") ? dicContent["SystemId"] : null);
+                argValues.Add("formid", dicContent.ContainsKey("FormId") ? dicContent["FormId"] : null);
+                List<string> list = new List<string>();
+                list.Add(JsonHelper.ToJson(argValues));
+                runMessage.Add("argValues", list);
+                result.Add("connectserver", JsonHelper.ToJson(connectserver));
+                result.Add("runMessage", JsonHelper.ToJson(runMessage));
+                #endregion
+                return result;
             }
             catch (Exception)
             {
