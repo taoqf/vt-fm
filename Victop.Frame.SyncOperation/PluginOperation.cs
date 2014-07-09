@@ -28,7 +28,6 @@ namespace Victop.Frame.SyncOperation
         /// <returns></returns>
         public PluginModel StratPlugin(string PluginName, Dictionary<string, object> paramDic = null, int waitTime = 15)
         {
-            waitTime = waitTime * 1000;
             PluginModel returnModel = null;
             Dictionary<string, string> messageDic = new Dictionary<string, string>();
             messageDic.Add("MessageType", "PluginService.PluginRun");

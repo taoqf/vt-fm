@@ -27,7 +27,7 @@ namespace Victop.Frame.SyncOperation
                 {
                     try
                     {
-                        Monitor.Wait(this, time);
+                        Monitor.Wait(this, time * 1000);
                     }
                     catch (ThreadInterruptedException ex)
                     {

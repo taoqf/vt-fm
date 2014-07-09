@@ -117,6 +117,10 @@
       <Project>{90c4d04f-f952-4c63-8a69-0c9d12e050fb}</Project>
       <Name>Victop.Frame.PublicLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Victop.Frame.SyncOperation\Victop.Frame.SyncOperation.csproj">
+      <Project>{d852f8b6-0ff8-4637-bdaa-9cd145d1aa65}</Project>
+      <Name>Victop.Frame.SyncOperation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Victop.Server.Controls\Victop.Server.Controls.csproj">
       <Project>{d609f0a2-27e1-4855-a5b6-942e580d0d8a}</Project>
       <Name>Victop.Server.Controls</Name>

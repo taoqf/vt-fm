@@ -14,6 +14,7 @@ using System.Windows.Threading;
 using Victop.Frame.DataChannel;
 using Victop.Frame.MessageManager;
 using Victop.Frame.PublicLib.Helpers;
+using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.Models;
 
 namespace AreaManagerPlugin.ViewModels
@@ -129,7 +130,16 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() => {
                     PluginMessage pluginMessage = new PluginMessage();
-                    pluginMessage.SendMessage("", OrganizeMasterRequestMessage(), new System.Threading.WaitCallback(SearchData));
+                    string MessageType = "DataChannelService.getMasterPropDataAsync";
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeMasterRequestMessage());
+                    if (returnDic.ContainsKey("DataChannelId") && returnDic["DataChannelId"] != null)
+                    {
+                        DataOperation operateData = new DataOperation();
+                        DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
+                        UpdateTableList(ds);
+                    }
+
                 });
             }
         }
@@ -220,10 +230,8 @@ namespace AreaManagerPlugin.ViewModels
         /// 组织主档取数消息
         /// </summary>
         /// <returns></returns>
-        private string OrganizeMasterRequestMessage()
+        private Dictionary<string, object> OrganizeMasterRequestMessage()
         {
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "DataChannelService.getMasterPropDataAsync");
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("openType", null);
             contentDic.Add("bzsystemid", "905");
@@ -253,9 +261,7 @@ namespace AreaManagerPlugin.ViewModels
             contentDic.Add("saveType", null);
             contentDic.Add("doccode", null);
             contentDic.Add("clientId", "byerp");
-            string content = JsonHelper.ToJson(contentDic);
-            messageDic.Add("MessageContent", content);
-            return JsonHelper.ToJson(messageDic);
+            return contentDic;
         }
 
         /// <summary>
