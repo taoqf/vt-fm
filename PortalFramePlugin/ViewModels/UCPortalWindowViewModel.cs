@@ -22,6 +22,7 @@ using PortalFramePlugin.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using Victop.Frame.SyncOperation;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -293,17 +294,45 @@ namespace PortalFramePlugin.ViewModels
                     if (x != null)
                     {
                         MenuModel menuModel = (MenuModel)x;
-                        if(menuModel.ResourceName==null)
+                        if (menuModel.ResourceName == null)
                             menuModel.ResourceName = ConfigurationManager.AppSettings["runplugin"];
                         if (menuModel.ResourceName != null && menuModel.ResourceName.Contains("Plugin"))
                         {
-                            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-                            messageDic.Add("MessageType", "PluginService.PluginRun");
-                            Dictionary<string, string> contentDic = new Dictionary<string, string>();
-                            contentDic.Add("PluginName", menuModel.ResourceName);
-                            contentDic.Add("PluginPath", "");
-                            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-                            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(PluginShow));
+                            PluginOperation pluginOp = new PluginOperation();
+                            try
+                            {
+                                PluginModel pluginModel = pluginOp.StratPlugin(menuModel.ResourceName, null);
+                                if (pluginModel != null && string.IsNullOrEmpty(pluginModel.ErrorMsg))
+                                {
+                                    switch (pluginModel.PluginInterface.ShowType)
+                                    {
+                                        case 0:
+                                            Window pluginWindow = pluginModel.PluginInterface.StartWindow;
+                                            pluginWindow.Uid = pluginModel.ObjectId;
+                                            pluginWindow.ShowDialog();
+                                            break;
+                                        case 1:
+                                            UserControl userctrl = pluginModel.PluginInterface.StartControl;
+                                            userctrl.Uid = pluginModel.ObjectId;
+                                            Victop.Wpf.Controls.TabItem tabItem = new Victop.Wpf.Controls.TabItem();
+                                            tabItem.Header = pluginModel.PluginInterface.PluginTitle;
+                                            tabItem.Content = userctrl;
+                                            tabItem.AllowDelete = true;
+                                            TabItemList.Add(tabItem);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show(pluginModel.ErrorMsg);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
                         }
                     }
                 });
@@ -544,64 +573,11 @@ namespace PortalFramePlugin.ViewModels
         #region 用户登录
         private void UserLogin()
         {
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "PluginService.PluginRun");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
-            contentDic.Add("PluginName", "UserLoginPlugin");
-            contentDic.Add("PluginPath", "");
-            Dictionary<string, string> paramDic = new Dictionary<string, string>();
-            paramDic.Add("my", "prince");
-            contentDic.Add("PluginParam", JsonHelper.ToJson(paramDic));
-            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(PluginShow));
-        }
-        private void PluginShow(object message)
-        {
-            if (JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
-            {
-                string messageId = JsonHelper.ReadJsonString(message.ToString(), "MessageId");
-                DataOperation PluginOper = new DataOperation();
-                Dictionary<string, object> pluginDict = PluginOper.GetPluginInfo(messageId);
-                PluginModel pluginModel = new PluginModel();
-                pluginModel.PluginInterface = pluginDict["IPlugin"] as IPlugin;
-                pluginModel.AppId = pluginDict["AppId"].ToString();
-                pluginModel.ObjectId = pluginDict["ObjectId"].ToString();
-                switch (pluginModel.PluginInterface.ShowType)
-                {
-                    case 0:
-                        System.Windows.Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new WaitCallback(DoWork), pluginModel);
-                        break;
-                    case 1:
-                        System.Windows.Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new WaitCallback(CtrlDoWork), pluginModel);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                MessageBox.Show(JsonHelper.ReadJsonString(message.ToString(), "ReplyAlertMessage"));
-            }
-        }
-        /// <summary>打开插件</summary>
-        private void DoWork(object pluginInfo)
-        {
-            PluginModel pluginModel = pluginInfo as PluginModel;
+            PluginOperation pluginOp = new PluginOperation();
+            PluginModel pluginModel = pluginOp.StratPlugin("UserLoginPlugin");
             Window win = pluginModel.PluginInterface.StartWindow;
             win.Uid = pluginModel.ObjectId;
-            bool? result = win.ShowDialog();
-            UpdateMenu();
-        }
-        private void CtrlDoWork(object pluginInfo)
-        {
-            PluginModel pluginModel = pluginInfo as PluginModel;
-            UserControl userctrl = pluginModel.PluginInterface.StartControl;
-            userctrl.Uid = pluginModel.ObjectId;
-            Victop.Wpf.Controls.TabItem tabItem = new Victop.Wpf.Controls.TabItem();
-            tabItem.Header = pluginModel.PluginInterface.PluginTitle;
-            tabItem.Content = userctrl;
-            tabItem.AllowDelete = true;
-            TabItemList.Add(tabItem);
+            win.ShowDialog();
         }
         #endregion
 

@@ -34,5 +34,14 @@ namespace Victop.Server.Controls.Models
             get { return objectId; }
             set { objectId = value; }
         }
+        private string errorMsg;
+        /// <summary>
+        /// 错误信息
+        /// </summary>
+        public string ErrorMsg
+        {
+            get { return errorMsg; }
+            set { errorMsg = value; }
+        }
     }
 }

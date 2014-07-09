@@ -57,19 +57,15 @@ namespace UserLoginPlugin
         {
             get { return new List<string>(); }
         }
-
-        private Dictionary<string, object> paramDict;
         public Dictionary<string, object> ParamDict
         {
             get
             {
-                if (paramDict == null)
-                    paramDict = new Dictionary<string, object>();
-                return paramDict;
+                return new Dictionary<string,object>();
             }
             set
             {
-                paramDict = value;
+                
             }
         }
     }
