@@ -77,15 +77,25 @@ namespace Victop.Frame.Connection
             {
                 contentDic.Add("clientId", clientId);
             }
+            CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+            if (contentDic.ContainsKey("channelID"))
+            {
+                if (string.IsNullOrEmpty(currentGallery.ClientInfo.ChannelId))
+                {
+                    currentGallery.ClientInfo.ChannelId = Guid.NewGuid().ToString();
+                }
+                contentDic["channelID"] = currentGallery.ClientInfo.ChannelId;
+            }
+            else
+            {
+                contentDic.Add("channelID", currentGallery.ClientInfo.ChannelId);
+            }
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
-            LoggerHelper.InfoFormat("Content:{0},ReplyMode:{1}", replyMessage.ReplyContent, replyMessage.ReplyMode);
             if (replyMessage.ReplyMode == ReplyModeEnum.SYNCH || replyMessage.ReplyMode == ReplyModeEnum.BREAK)
             {
                 if (!string.IsNullOrEmpty(replyMessage.ReplyContent) && !(JsonHelper.ReadJsonString(replyMessage.ReplyContent, "code").Equals("0")))
                 {
-                    //解析ReplyContent内容完善当前通道的用户登录信息
-                    CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
                     currentGallery.ClientInfo.LinkRouterAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "routerAddress");
                     currentGallery.ClientInfo.LinkServerAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "linkInfo");
                     currentGallery.ClientInfo.SessionId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "sessionID");
@@ -93,7 +103,6 @@ namespace Victop.Frame.Connection
                     currentGallery.ClientInfo.UserPwd = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userpw");
                     currentGallery.ClientInfo.UserCode = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "usercode");
                     messageInfo.MessageContent = replyMessage.ReplyContent;
-                    LoggerHelper.Info("ConnectLinkSubmit");
                     replyMessage = ConnectLinkSubmit(adapter,messageInfo);
                 }
             }

@@ -77,8 +77,14 @@ namespace Victop.Frame.CoreLibrary.Models
         /// </summary>
         public string ChannelId
         {
-            get { return channelId; }
-            set { channelId = value; }
+            get
+            {
+                return channelId;
+            }
+            set
+            {
+                channelId = value;
+            }
         }
 
 	}

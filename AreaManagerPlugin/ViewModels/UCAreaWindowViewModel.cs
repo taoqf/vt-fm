@@ -129,7 +129,6 @@ namespace AreaManagerPlugin.ViewModels
             get
             {
                 return new RelayCommand(() => {
-                    PluginMessage pluginMessage = new PluginMessage();
                     string MessageType = "DataChannelService.getMasterPropDataAsync";
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeMasterRequestMessage());
@@ -139,7 +138,6 @@ namespace AreaManagerPlugin.ViewModels
                         DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
                         UpdateTableList(ds);
                     }
-
                 });
             }
         }
@@ -151,8 +149,15 @@ namespace AreaManagerPlugin.ViewModels
             get
             {
                 return new RelayCommand(() => {
-                    PluginMessage pluginMessage = new PluginMessage();
-                    pluginMessage.SendMessage("", OrganizeCommonRequestMessageMaster(), new System.Threading.WaitCallback(SearchData));
+                    string MessageType = "DataChannelService.loadDataByModelAsync";
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeCommonRequestMessageMaster());
+                    if (returnDic.ContainsKey("DataChannelId") && returnDic["DataChannelId"] != null)
+                    {
+                        DataOperation operateData = new DataOperation();
+                        DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
+                        UpdateTableList(ds);
+                    }
                 });
             }
         }
@@ -178,9 +183,15 @@ namespace AreaManagerPlugin.ViewModels
             get
             {
                 return new RelayCommand(() => {
-                    PluginMessage pluginMessage = new PluginMessage();
-                    pluginMessage.SendMessage("", OrganizeModelRequestMessage(), new System.Threading.WaitCallback(SearchData));
-                    //pluginMessage.SendMessage("", OrganizeCommonRequestMessage(), new System.Threading.WaitCallback(SearchData));
+                    string MessageType = "DataChannelService.getFormBusiDataAsync";
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeModelRequestMessage());
+                    if (returnDic.ContainsKey("DataChannelId") && returnDic["DataChannelId"] != null)
+                    {
+                        DataOperation operateData = new DataOperation();
+                        DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
+                        UpdateTableList(ds);
+                    }
                 });
             }
         }
@@ -205,8 +216,15 @@ namespace AreaManagerPlugin.ViewModels
             get
             {
                 return new RelayCommand(() => {
-                    PluginMessage pluginMessage = new PluginMessage();
-                    pluginMessage.SendMessage("", OrganizeReferenceMessage(), new System.Threading.WaitCallback(SearchData));
+                    string MessageType = "DataChannelService.getFormReferenceSpecial";
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeModelRequestMessage());
+                    if (returnDic.ContainsKey("DataChannelId") && returnDic["DataChannelId"] != null)
+                    {
+                        DataOperation operateData = new DataOperation();
+                        DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
+                        UpdateTableList(ds);
+                    }
                 });
             }
         }
@@ -268,10 +286,8 @@ namespace AreaManagerPlugin.ViewModels
         /// 主档
         /// </summary>
         /// <returns></returns>
-        private string OrganizeCommonRequestMessageMaster()
+        private Dictionary<string, object> OrganizeCommonRequestMessageMaster()
         {
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "DataChannelService.loadDataByModelAsync");
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("openType", null);
             contentDic.Add("bzsystemid", null);
@@ -308,9 +324,7 @@ namespace AreaManagerPlugin.ViewModels
             contentDic.Add("doccode", null);
             contentDic.Add("clientId", "byerp");
             contentDic.Add("runUser", "test7");
-            string content = JsonHelper.ToJson(contentDic);
-            messageDic.Add("MessageContent", content);
-            return JsonHelper.ToJson(messageDic);
+            return contentDic;
         }
         /// <summary>
         /// 统一取数消息
@@ -364,10 +378,8 @@ namespace AreaManagerPlugin.ViewModels
         /// 组织模型取数消息
         /// </summary>
         /// <returns></returns>
-        private string OrganizeModelRequestMessage()
+        private Dictionary<string, object> OrganizeModelRequestMessage()
         {
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "DataChannelService.getFormBusiDataAsync");
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("openType", null);
             contentDic.Add("bzsystemid", "905");
@@ -389,10 +401,7 @@ namespace AreaManagerPlugin.ViewModels
             contentDic.Add("saveType", null);
             contentDic.Add("doccode", null);
             contentDic.Add("clientId", "byerp");
-            string content = JsonHelper.ToJson(contentDic);
-            //string content = "{\"openType\":null,\"bzsystemid\":\"905\",\"formid\":null,\"dataSetID\":null,\"reportID\":null,\"modelId\":\"ERP11101\",\"fieldName\":null,\"masterOnly\":false,\"dataparam\":{\"isdata\":\"0\"},\"whereArr\":{\"1\":\" 1=1  and docdate >=cast('2014-06-09' as VARCHAR(10)) and docdate <cast('2014-06-18' as VARCHAR(10))\"},\"masterParam\":null,\"deltaXml\":null,\"runUser\":\"zzq\",\"shareFlag\":null,\"treeStr\":null,\"saveType\":null,\"doccode\":null,\"clientId\":\"byerp\"}";
-            messageDic.Add("MessageContent", content);
-            return JsonHelper.ToJson(messageDic);
+            return contentDic;
         }
         /// <summary>
         /// 组织模型保存消息

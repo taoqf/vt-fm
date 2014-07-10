@@ -38,7 +38,7 @@ namespace Victop.Frame.Adapter
                 //message.MessageId = Guid.NewGuid().ToString();
                 message.FromRole = "WPF客户端";
                 message.FromId = loginUserInfo.UserCode;
-                message.CurrentSenderId = String.IsNullOrWhiteSpace(loginUserInfo.ChannelId) ? Guid.NewGuid().ToString() : loginUserInfo.SessionId;
+                message.CurrentSenderId = String.IsNullOrWhiteSpace(loginUserInfo.ChannelId) ? Guid.NewGuid().ToString() : loginUserInfo.ChannelId;
                 message.SessionId = loginUserInfo.SessionId;
                 switch (messageTarget)
                 {
@@ -95,8 +95,10 @@ namespace Victop.Frame.Adapter
         public virtual RequestMessage CreateMessage(MessageTargetEnum messageTarget, RequestMessage messageInfo)
         {
             string messageId = messageInfo.MessageId;
+            string messageToRole = messageInfo.ToRole;
             messageInfo = CreateMessage(messageTarget, messageInfo.MessageType, messageInfo.MessageControl, messageInfo.MessageContent);
             messageInfo.MessageId = messageId;
+            messageInfo.ToRole = messageToRole;
             return messageInfo;
         }
         /// <summary>

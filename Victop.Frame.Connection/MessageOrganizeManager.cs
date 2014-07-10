@@ -901,7 +901,7 @@ namespace Victop.Frame.Connection
             }
         }
         /// <summary>
-        ///  组织业务过账消息（暂不实现）
+        ///  组织业务过账消息
         /// </summary>
         /// <remarks>TaskService.excute</remarks>
         /// <param name="dicContent"></param>
@@ -922,7 +922,7 @@ namespace Victop.Frame.Connection
                 result.Add("uuid", Guid.NewGuid().ToString());
                 result.Add("priority", 10);
                 result.Add("taskid", null);
-                result.Add("usercode", null);
+                result.Add("usercode", loginUserInfo.UserCode);
                 result.Add("runserver", messageInfo.MessageId);
                 if (dicContent.ContainsKey("FlexObj"))
                 {
@@ -930,6 +930,10 @@ namespace Victop.Frame.Connection
                     if (objDic != null && objDic.ContainsKey("tasktype"))
                     {
                         result.Add("tasktype", objDic["tasktype"]);
+                    }
+                    else
+                    {
+                        result.Add("tasktype", "业务过账");
                     }
                 }
                 else
@@ -960,13 +964,13 @@ namespace Victop.Frame.Connection
                 argValues.Add("modelId", dicContent.ContainsKey("ModelId") ? dicContent["ModelId"] : null);
                 argValues.Add("clientId", cloudGallyInfo.ClientId);
                 argValues.Add("doccode", dicContent.ContainsKey("DocCode") ? dicContent["DocCode"] : null);
-                Dictionary<string, object> dataparam = new Dictionary<string, object>();
+                Dictionary<string, string> dataparam = new Dictionary<string, string>();
                 dataparam.Add("companyid", null);
                 dataparam.Add("username", loginUserInfo.UserName);
                 dataparam.Add("usercode", loginUserInfo.UserCode);
                 dataparam.Add("prdoccode", null);
                 dataparam.Add("accountsid", null);
-                dataparam.Add("flex", dicContent.ContainsKey("FlexObj") ? dicContent["FlexObj"] : null);
+                dataparam.Add("flex", dicContent.ContainsKey("FlexObj") ? dicContent["FlexObj"].ToString() : null);
                 argValues.Add("dataparam", dataparam);
                 argValues.Add("reportcasejson", null);
                 argValues.Add("runUser", loginUserInfo.UserCode);
