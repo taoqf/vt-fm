@@ -194,6 +194,9 @@ namespace Victop.Frame.Adapter
                 case ReplyModeEnum.ROUTER:
                     break;
                 case ReplyModeEnum.SYNCH:
+                    replyMessage.MessageId = message.MessageId;
+                    replyMessage.ReplyMode = (ReplyModeEnum)0;
+                    replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "result");
                     break;
                 default:
                     break;

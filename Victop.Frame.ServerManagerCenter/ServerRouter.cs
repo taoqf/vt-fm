@@ -35,12 +35,12 @@ namespace Victop.Frame.ServerManagerCenter
                         string replyContent = ServerInitiator.GetInstance().Run(messageInfo);
                         try
                         {
-                            Dictionary<string, string> replyDic = JsonHelper.ToObject<Dictionary<string, string>>(replyContent);
+                            Dictionary<string, object> replyDic = JsonHelper.ToObject<Dictionary<string, object>>(replyContent);
                             replyMessage = new ReplyMessage()
                             {
                                 MessageId = messageInfo.MessageId,
-                                ReplyContent = replyContent,
-                                ReplyAlertMessage = replyDic["ReplyContent"],
+                                ReplyContent = replyDic["ReplyContent"].ToString(),
+                                ReplyAlertMessage = replyDic["ReplyContent"].ToString(),
                             };
                             if (replyDic["ReplyMode"].Equals("0"))
                             {
@@ -56,7 +56,8 @@ namespace Victop.Frame.ServerManagerCenter
                             replyMessage = new ReplyMessage()
                             {
                                 MessageId = messageInfo.MessageId,
-                                ReplyContent = replyContent
+                                ReplyMode = (CoreLibrary.Enums.ReplyModeEnum)0,
+                                ReplyAlertMessage=ex.Message
                             };
                         }
                         break;

@@ -264,7 +264,7 @@ namespace UserLoginPlugin.ViewModels
         /// <summary>绑定通道信息 </summary>
         private void BandingGalleryInfo(object message)
         {
-            if (JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
+            if (!JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
             {
                 string messageContent = JsonHelper.ReadJsonString(message.ToString(), "ReplyContent");
                 GalleryList = JsonHelper.ReadJsonObject<Dictionary<string, string>>(messageContent);
@@ -289,7 +289,7 @@ namespace UserLoginPlugin.ViewModels
         }
         private void SetCurrentGallery(object message)
         {
-            if (JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
+            if (!JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
             {
                
             }

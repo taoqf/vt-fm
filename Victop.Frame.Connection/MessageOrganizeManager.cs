@@ -598,17 +598,69 @@ namespace Victop.Frame.Connection
         {
             try
             {
+                if (!dicContent.ContainsKey("openType"))
+                {
+                    dicContent.Add("openType", null);
+                }
+                if (!dicContent.ContainsKey("fieldName"))
+                {
+                    dicContent.Add("fieldName", null);
+                }
+                if (!dicContent.ContainsKey("dataSetID"))
+                {
+                    dicContent.Add("dataSetID", null);
+                }
+                if (!dicContent.ContainsKey("reportID"))
+                {
+                    dicContent.Add("reportID", null);
+                }
+                if (!dicContent.ContainsKey("masterOnly"))
+                {
+                    dicContent.Add("masterOnly", false);
+                }
+                if (!dicContent.ContainsKey("dataparam"))
+                {
+                    dicContent.Add("dataparam", null);
+                }
+                else
+                {
+                    dicContent["dataparam"] = null;
+                }
+                if (!dicContent.ContainsKey("whereArr"))
+                {
+                    dicContent.Add("whereArr", null);
+                }
+                if (!dicContent.ContainsKey("masterParam"))
+                {
+                    dicContent.Add("masterParam", null);
+                }
+                if (!dicContent.ContainsKey("shareFlag"))
+                {
+                    dicContent.Add("shareFlag", null);
+                }
+                if (!dicContent.ContainsKey("treeStr"))
+                {
+                    dicContent.Add("treeStr", null);
+                }
+                if (!dicContent.ContainsKey("saveType"))
+                {
+                    dicContent.Add("saveType", null);
+                }
+                if (!dicContent.ContainsKey("doccode"))
+                {
+                    dicContent.Add("doccode", null);
+                }
                 if (!dicContent.ContainsKey("bzsystemid"))
                 {
                     dicContent.Add("bzsystemid", null);
                 }
+                if (!dicContent.ContainsKey("deltaXml"))
+                {
+                    dicContent.Add("deltaXml", null);
+                }
                 if (!dicContent.ContainsKey("key"))
                 {
                     dicContent.Add("key", null);
-                }
-                if (!dicContent.ContainsKey("formid"))
-                {
-                    dicContent.Add("formid", null);
                 }
                 if (!dicContent.ContainsKey("modelId"))
                 {
@@ -1343,19 +1395,15 @@ namespace Victop.Frame.Connection
             }
             if (!dicContent.ContainsKey("dataparam"))
             {
-                dicContent.Add("dataparam", false);
+                dicContent.Add("dataparam", null);
             }
             if (!dicContent.ContainsKey("whereArr"))
             {
-                dicContent.Add("whereArr", false);
+                dicContent.Add("whereArr", null);
             }
             if (!dicContent.ContainsKey("masterParam"))
             {
-                dicContent.Add("masterParam", false);
-            }
-            if (!dicContent.ContainsKey("masterParam"))
-            {
-                dicContent.Add("masterParam", false);
+                dicContent.Add("masterParam", null);
             }
             if (!dicContent.ContainsKey("shareFlag"))
             {
@@ -1363,15 +1411,15 @@ namespace Victop.Frame.Connection
             }
             if (!dicContent.ContainsKey("treeStr"))
             {
-                dicContent.Add("treeStr", false);
+                dicContent.Add("treeStr", null);
             }
             if (!dicContent.ContainsKey("saveType"))
             {
-                dicContent.Add("saveType", false);
+                dicContent.Add("saveType", null);
             }
             if (!dicContent.ContainsKey("doccode"))
             {
-                dicContent.Add("doccode", false);
+                dicContent.Add("doccode", null);
             }
         }
         /// <summary>

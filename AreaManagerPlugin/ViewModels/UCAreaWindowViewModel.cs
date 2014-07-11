@@ -132,11 +132,18 @@ namespace AreaManagerPlugin.ViewModels
                     string MessageType = "DataChannelService.getMasterPropDataAsync";
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeMasterRequestMessage());
-                    if (returnDic.ContainsKey("DataChannelId") && returnDic["DataChannelId"] != null)
+                    if (!(returnDic["ReplyMode"].ToString().Equals("0")))
                     {
-                        DataOperation operateData = new DataOperation();
-                        DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
-                        UpdateTableList(ds);
+                        if (returnDic.ContainsKey("DataChannelId") && returnDic["DataChannelId"] != null)
+                        {
+                            DataOperation operateData = new DataOperation();
+                            DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
+                            UpdateTableList(ds);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(returnDic["ReplyAlertMessage"].ToString());
                     }
                 });
             }

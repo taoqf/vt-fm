@@ -59,9 +59,14 @@
     <Reference Include="GalaSoft.MvvmLight.WPF4">
       <HintPath>..\VictopLib\GalaSoft.MvvmLight.WPF4.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\VictopLib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -78,6 +83,7 @@
   <ItemGroup>
     <Compile Include="IPlugin.cs" />
     <Compile Include="IService.cs" />
+    <Compile Include="Models\CustomerMessageModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\PluginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

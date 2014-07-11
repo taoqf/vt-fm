@@ -94,7 +94,13 @@ namespace Victop.Frame.Connection
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
             if (replyMessage.ReplyMode == ReplyModeEnum.SYNCH || replyMessage.ReplyMode == ReplyModeEnum.BREAK)
             {
-                if (!string.IsNullOrEmpty(replyMessage.ReplyContent) && !(JsonHelper.ReadJsonString(replyMessage.ReplyContent, "code").Equals("0")))
+                if (JsonHelper.ReadJsonString(replyMessage.ReplyContent, "code").Equals("0"))
+                {
+                    replyMessage.MessageId = messageInfo.MessageId;
+                    replyMessage.ReplyMode = (ReplyModeEnum)0;
+                    replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "msg");
+                }
+                else
                 {
                     currentGallery.ClientInfo.LinkRouterAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "routerAddress");
                     currentGallery.ClientInfo.LinkServerAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "linkInfo");
@@ -103,7 +109,7 @@ namespace Victop.Frame.Connection
                     currentGallery.ClientInfo.UserPwd = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userpw");
                     currentGallery.ClientInfo.UserCode = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "usercode");
                     messageInfo.MessageContent = replyMessage.ReplyContent;
-                    replyMessage = ConnectLinkSubmit(adapter,messageInfo);
+                    replyMessage = ConnectLinkSubmit(adapter, messageInfo);
                 }
             }
             return replyMessage;
@@ -138,20 +144,28 @@ namespace Victop.Frame.Connection
         {
             messageInfo.MessageType = "LinkService.registAsync";
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
-            if (!string.IsNullOrEmpty(replyMessage.ReplyContent))
+            if (replyMessage.ReplyMode == ReplyModeEnum.SYNCH || replyMessage.ReplyMode == ReplyModeEnum.BREAK)
             {
-                BaseResourceInfo baseResourceInfo = new BaseResourceInfo();
-                baseResourceInfo.GalleryId = GalleryManager.GetCurrentGalleryId();
-                Dictionary<string, string> replyContentDic = JsonHelper.ToObject<Dictionary<string, string>>(replyMessage.ReplyContent);
-                baseResourceInfo.ResourceXml = replyMessage.ReplyContent;
-                baseResourceInfo.ResourceMnenus = JsonHelper.ToObject<List<MenuInfo>>(JsonHelper.ReadJsonString(replyContentDic["menu"], "result"));
-                BaseResourceManager baseResourceManager = new BaseResourceManager();
-                bool result = baseResourceManager.AddResouce(baseResourceInfo);
-                if (result)
+                if (!string.IsNullOrEmpty(replyMessage.ReplyContent))
                 {
-                    replyMessage.ReplyContent = string.Empty;
-                    replyMessage.ReplyAlertMessage = replyContentDic["msg"];
+                    BaseResourceInfo baseResourceInfo = new BaseResourceInfo();
+                    baseResourceInfo.GalleryId = GalleryManager.GetCurrentGalleryId();
+                    Dictionary<string, string> replyContentDic = JsonHelper.ToObject<Dictionary<string, string>>(replyMessage.ReplyContent);
+                    baseResourceInfo.ResourceXml = replyMessage.ReplyContent;
+                    baseResourceInfo.ResourceMnenus = JsonHelper.ToObject<List<MenuInfo>>(JsonHelper.ReadJsonString(replyContentDic["menu"], "result"));
+                    BaseResourceManager baseResourceManager = new BaseResourceManager();
+                    bool result = baseResourceManager.AddResouce(baseResourceInfo);
+                    if (result)
+                    {
+                        replyMessage.ReplyContent = string.Empty;
+                        replyMessage.ReplyAlertMessage = replyContentDic["msg"];
+                    }
                 }
+            }
+            else
+            {
+                replyMessage.ReplyMode = (ReplyModeEnum)0;
+                replyMessage.ReplyAlertMessage = "注册连接器失败";
             }
             replyMessage.MessageId = messageInfo.MessageId;
             return replyMessage;
@@ -169,23 +183,26 @@ namespace Victop.Frame.Connection
             string DataChannelId = JsonHelper.ReadJsonString(messageInfo.MessageContent, "DataChannelId");
             messageInfo = organizeManager.OrganizeMessage(messageInfo, out saveDataFlag);
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
-            ReplyMessageResolver replyMessageResolver = new ReplyMessageResolver();
-            switch (saveDataFlag)
+            if (!(replyMessage.ReplyMode == (ReplyModeEnum)0))
             {
-                case DataOperateEnum.SAVE:
+                ReplyMessageResolver replyMessageResolver = new ReplyMessageResolver();
+                switch (saveDataFlag)
+                {
+                    case DataOperateEnum.SAVE:
                         replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo);
-                    break;
-                case DataOperateEnum.COMMIT:
-                    if (!JsonHelper.ReadJsonString(replyMessage.ReplyContent, "code").Equals("0"))
-                    {
-                        bool result = replyMessageResolver.CommitDataSetChange(DataChannelId);
-                    }
-                    break;
-                case DataOperateEnum.NONE:
-                default:
-                    break;
+                        break;
+                    case DataOperateEnum.COMMIT:
+                        if (!JsonHelper.ReadJsonString(replyMessage.ReplyContent, "code").Equals("0"))
+                        {
+                            bool result = replyMessageResolver.CommitDataSetChange(DataChannelId);
+                        }
+                        break;
+                    case DataOperateEnum.NONE:
+                    default:
+                        break;
+                }
+                replyMessage.MessageId = messageInfo.MessageId;
             }
-            replyMessage.MessageId = messageInfo.MessageId;
             return replyMessage;
         }
         private bool UpdateBaseResourceByGalleryId(BaseResourceInfo resourceInfo)

@@ -76,7 +76,7 @@ namespace Victop.Frame.SyncOperation
 
         private void PluginShow(object message)
         {
-            if (JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
+            if (!JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
             {
                 string messageId = JsonHelper.ReadJsonString(message.ToString(), "MessageId");
                 DataOperation PluginOper = new DataOperation();

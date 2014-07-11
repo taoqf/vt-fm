@@ -84,12 +84,15 @@ namespace Victop.Frame.ServerManagerCenter
         {
             Dictionary<string, CloudGalleryInfo> galleryList = new Dictionary<string, CloudGalleryInfo>();
             galleryList = new GalleryManager().GetAllGalleryInfo();
-            Dictionary<string, string> returnList = new Dictionary<string, string>();
+            Dictionary<string, object> returnDic = new Dictionary<string, object>();
+            Dictionary<string, object> returnList = new Dictionary<string, object>();
             foreach (CloudGalleryInfo item in galleryList.Values)
             {
                 returnList.Add(item.CloudGalleryId.ToString(), item.CloudGalleryId.ToString());
             }
-            return JsonHelper.ToJson(returnList);
+            returnDic.Add("ReplyMode", "1");
+            returnDic.Add("ReplyContent", returnList);
+            return JsonHelper.ToJson(returnDic);
         }
         private string SetCurrentGallery(RequestMessage messageInfo)
         {
@@ -113,20 +116,20 @@ namespace Victop.Frame.ServerManagerCenter
                     {
                         galleryManager.SetCurrentGalleryId(GalleryEnum.VICTOP);
                     }
-                    returnDic.Add("ReplyMode", "0");
+                    returnDic.Add("ReplyMode", "1");
                     returnDic.Add("ReplyContent", "更改当前通道成功");
                     return JsonHelper.ToJson(returnDic);
         }
                 else
                 {
                     returnDic = new Dictionary<string, string>();
-                    returnDic.Add("ReplyMode", "1");
+                    returnDic.Add("ReplyMode", "0");
                     returnDic.Add("ReplyContent", "不存需要调整通道信息");
                     return JsonHelper.ToJson(returnDic);
                 }
             }
             returnDic = new Dictionary<string, string>();
-            returnDic.Add("ReplyMode", "2");
+            returnDic.Add("ReplyMode", "0");
             returnDic.Add("ReplyContent", "请传入通道信息");
             return JsonHelper.ToJson(returnDic);
         }
@@ -150,13 +153,13 @@ namespace Victop.Frame.ServerManagerCenter
                     service.CurrentMessageType = messageInfo.MessageType;
                     if (service.ServiceRun())
                     {
-                        returnDic.Add("ReplyMode", "0");
+                        returnDic.Add("ReplyMode", "1");
                         returnDic.Add("ReplyContent", "服务启动成功");
                         replyContent = JsonHelper.ToJson(returnDic);
                     }
                     else
                     {
-                        returnDic.Add("ReplyMode", "1");
+                        returnDic.Add("ReplyMode", "0");
                         returnDic.Add("ReplyContent", "服务启动失败");
                         replyContent = JsonHelper.ToJson(returnDic);
                     }
@@ -199,14 +202,14 @@ namespace Victop.Frame.ServerManagerCenter
                     }
                 }
                 Dictionary<string, string> returnDic = new Dictionary<string, string>();
-                returnDic.Add("ReplyMode", "0");
+                returnDic.Add("ReplyMode", "1");
                 returnDic.Add("ReplyContent", "启动成功");
                 return JsonHelper.ToJson(returnDic);
             }
             catch (Exception ex)
             {
                 Dictionary<string, string> returnDic = new Dictionary<string, string>();
-                returnDic.Add("ReplyMode", "1");
+                returnDic.Add("ReplyMode", "0");
                 returnDic.Add("ReplyContent", ex.Message);
                 return JsonHelper.ToJson(returnDic);
             }
