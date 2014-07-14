@@ -325,13 +325,20 @@ namespace UserLoginPlugin.ViewModels
                 string MessageType = "LoginService.userLoginNew";
                 MessageOperation messageOp = new MessageOperation();
                 Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic);
-                if (!returnDic["ReplyMode"].ToString().Equals("0"))
+                if (returnDic != null)
                 {
-                    LoginWindow.Close();
+                    if (!returnDic["ReplyMode"].ToString().Equals("0"))
+                    {
+                        LoginWindow.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show((returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString())) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
+                    }
                 }
                 else
                 {
-                    MessageBox.Show(string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString()) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
+                    MessageBox.Show("登录失败");
                 }
             }
             catch (Exception ex)
