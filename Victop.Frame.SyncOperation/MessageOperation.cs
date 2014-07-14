@@ -26,6 +26,10 @@ namespace Victop.Frame.SyncOperation
             Dictionary<string, object> returnDic;
             Dictionary<string, object> messageDic = new Dictionary<string, object>();
             messageDic.Add("MessageType", messageType);
+            if (messageContent == null)
+            {
+                messageContent = new Dictionary<string, object>();
+            }
             messageDic.Add("MessageContent", messageContent);
             new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(MessageBack));
             if (waiteTime > 0)

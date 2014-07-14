@@ -50,6 +50,10 @@ namespace Victop.Server.Controls
         /// 初始化方法
         /// </summary>
 		bool ServiceRun();
+        /// <summary>
+        /// 返回数据
+        /// </summary>
+        string ReplyContent { get; }
 
 	}
 }

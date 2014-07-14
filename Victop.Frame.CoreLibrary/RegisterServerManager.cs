@@ -165,6 +165,16 @@ namespace Victop.Frame.CoreLibrary
                 ThemeInfo.ServerStatus = ResourceEnum.NONE;
                 serverManager.RegisterServer(ThemeInfo);
                 #endregion
+                #region 获取用户信息服务
+                RegisterServerInfo UserInfo = new RegisterServerInfo();
+                UserInfo.CloudGalleryId = item.ToString();
+                UserInfo.ServerName = "UserManagerService";
+                UserInfo.ReceiptMessageType.Add("ServerCenterService.GetUserInfo");
+                UserInfo.ServerType = ServerTypeEnum.LOCAL;
+                UserInfo.ServerPath = string.Empty;
+                UserInfo.ServerStatus = ResourceEnum.NONE;
+                serverManager.RegisterServer(UserInfo);
+                #endregion
             }
 		}
         /// <summary>

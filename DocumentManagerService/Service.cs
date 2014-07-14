@@ -31,7 +31,8 @@ namespace DocumentManagerService
                 if (serviceReceiptMessageType == null)
                 {
                     serviceReceiptMessageType = new List<string>();
-                    //TODO:添加消息类型
+                    serviceReceiptMessageType.Add("ServerCenterService.UploadDocument");
+                    serviceReceiptMessageType.Add("ServiceCenterService.DownloadDocument");
                 }
                 return serviceReceiptMessageType;
             }
@@ -61,12 +62,18 @@ namespace DocumentManagerService
             {
                 WebClient webClient = new WebClient();
                 
+                
             }
             catch (Exception ex)
             {
                
             }
             return result;
+        }
+
+        public string ReplyContent
+        {
+            get { return string.Empty; }
         }
     }
 }

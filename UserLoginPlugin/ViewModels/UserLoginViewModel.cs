@@ -19,6 +19,7 @@ using Victop.Frame.CoreLibrary;
 using Victop.Frame.PublicLib.Helpers;
 using System.Threading;
 using System.Data;
+using Victop.Frame.SyncOperation;
 
 namespace UserLoginPlugin.ViewModels
 {
@@ -317,41 +318,30 @@ namespace UserLoginPlugin.ViewModels
             window.Cursor = Cursors.Wait;
             try
             {
-                Dictionary<string, string> messageDic = new Dictionary<string, string>();
-                messageDic.Add("MessageType", "LoginService.userLoginNew");
-                Dictionary<string, string> contentDic = new Dictionary<string, string>();
+                Dictionary<string, object> contentDic = new Dictionary<string, object>();
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
-                messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-                new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(Login));
+                //new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(Login));
+                string MessageType = "LoginService.userLoginNew";
+                MessageOperation messageOp = new MessageOperation();
+                Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic);
+                if (!returnDic["ReplyMode"].ToString().Equals("0"))
+                {
+                    LoginWindow.Close();
+                }
+                else
+                {
+                    MessageBox.Show(string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString()) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
+                }
             }
             catch (Exception ex)
             {
-                
+                MessageBox.Show(ex.Message);
             }
             finally
             {
                 window.Cursor = Cursors.Arrow;
             }
-        }
-        private void Login(object message)
-        {
-            try
-            {
-                if (!JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
-                {
-                    System.Windows.Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new WaitCallback(DoWork),null);
-                }
-                else
-                {
-                    MessageBox.Show(JsonHelper.ReadJsonString(message.ToString(), "ReplyAlertMessage"));
-                }
-            }
-            catch(Exception ex) { }
-        }
-        private void DoWork(object message)
-        {
-            LoginWindow.Close();
         }
         /// <summary>检查输入信息</summary>
         private bool CheckUserLogin()

@@ -225,5 +225,11 @@ namespace SystemThemeManagerService
             }
         }
         #endregion
+
+
+        public string ReplyContent
+        {
+            get { return string.Empty; }
+        }
     }
 }

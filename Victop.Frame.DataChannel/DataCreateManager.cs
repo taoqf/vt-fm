@@ -12,6 +12,7 @@ namespace Victop.Frame.DataChannel
     using System.Data;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Xml;
     using System.Xml.Linq;
     using Victop.Frame.CoreLibrary.Models;
@@ -401,10 +402,10 @@ namespace Victop.Frame.DataChannel
             switch (fieldType)
             {
                 case "i4":
-                    dc.DataType = typeof(Int16);
+                    dc.DataType = typeof(Int32);
                     break;
                 case "i8":
-                    dc.DataType = typeof(Int32);
+                    dc.DataType = typeof(Int64);
                     break;
                 case "dateTime":
                     dc.DataType = typeof(DateTime);
@@ -439,9 +440,26 @@ namespace Victop.Frame.DataChannel
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("<?xml version=\"1.0\"  encoding=\"utf-8\"?>");
             stringBuilder.Append("<DATA>");
+
             foreach (DataTable mastDt in requestDs.Tables)
             {
-                if (masterFlag && !mastDt.TableName.Equals("masterdata"))
+                bool  ValidTableFlag= false;
+                if (masterFlag)
+                {
+                    if (mastDt.TableName.Equals("masterdata"))
+                    {
+                        ValidTableFlag = true;
+                    }
+                }
+                else
+                {
+                    if (Regex.IsMatch(mastDt.TableName, @"^[1-9]\d*$"))
+                    {
+                        ValidTableFlag = true;
+                    }
+                }
+
+                if (!ValidTableFlag)
                     continue;
                 stringBuilder.Append("<DATASET id=\"").Append(mastDt.TableName).Append("\">");
                 stringBuilder.Append("<DATAPACKET Version=\"").Append("2.0").Append("\">");
@@ -453,11 +471,10 @@ namespace Victop.Frame.DataChannel
                     long fieldLength = 50;
                     switch (mastDc.DataType.Name)
                     {
-                        case "Int16":
+                        case "Int32":
                             fieldType = "i4";
                             fieldLength = 11;
                             break;
-                        case "Int32":
                         case "Int64":
                             fieldType = "i8";
                             fieldLength = 20;

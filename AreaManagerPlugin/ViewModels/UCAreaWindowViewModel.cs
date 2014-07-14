@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -236,6 +237,20 @@ namespace AreaManagerPlugin.ViewModels
             }
         }
 
+
+        public ICommand btnGetUserInfoClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> result = messageOp.SendMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                    string temp = string.Empty;
+
+                });
+            }
+        }
+
         #region 私有方法
         /// <summary>
         /// 组织关闭消息
@@ -257,15 +272,8 @@ namespace AreaManagerPlugin.ViewModels
         /// <returns></returns>
         private Dictionary<string, object> OrganizeMasterRequestMessage()
         {
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("openType", null);
-            contentDic.Add("bzsystemid", "905");
-            contentDic.Add("formid", null);
-            contentDic.Add("dataSetID", null);
-            contentDic.Add("reportID", null);
-            contentDic.Add("modelId", null);
-            contentDic.Add("fieldName", null);
-            contentDic.Add("masterOnly", "false");
+            CustomerMessageModel messageModel = new CustomerMessageModel();
+            messageModel.SystemId = "905";
             Dictionary<string, string> paramsDic = new Dictionary<string, string>();
             paramsDic.Add("isdata", "0");
             paramsDic.Add("mastername", "地区管理");
@@ -276,16 +284,9 @@ namespace AreaManagerPlugin.ViewModels
             paramsDic.Add("dataed", null);
             paramsDic.Add("ispage", "1");
             paramsDic.Add("getset", "1");
-            contentDic.Add("dataparam", paramsDic);
-            contentDic.Add("whereArr", null);
-            contentDic.Add("masterParam", null);
-            contentDic.Add("deltaXml", null);
-            contentDic.Add("runUser", "test7");
-            contentDic.Add("shareFlag", null);
-            contentDic.Add("treeStr", null);
-            contentDic.Add("saveType", null);
-            contentDic.Add("doccode", null);
-            contentDic.Add("clientId", "byerp");
+            messageModel.DataParam = paramsDic;
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(messageModel));
             return contentDic;
         }
 

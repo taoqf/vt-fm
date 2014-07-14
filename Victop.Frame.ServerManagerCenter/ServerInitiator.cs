@@ -75,6 +75,10 @@ namespace Victop.Frame.ServerManagerCenter
                     RegisterServerInfo serverInfo = JsonHelper.ToObject<RegisterServerInfo>(JsonHelper.ReadJsonString(messageInfo.MessageContent, "ServerInfo"));
                     ReplyContent = ServerRun(serverInfo,messageInfo);
                     break;
+                case "ServerCenterService.GetUserInfo":
+                    RegisterServerInfo serverInfoEx = JsonHelper.ToObject<RegisterServerInfo>(JsonHelper.ReadJsonString(messageInfo.MessageContent, "ServerInfo"));
+                    ReplyContent = ServerRun(serverInfoEx, messageInfo);
+                    break;
                 default:
                     break;
             }
@@ -153,9 +157,16 @@ namespace Victop.Frame.ServerManagerCenter
                     service.CurrentMessageType = messageInfo.MessageType;
                     if (service.ServiceRun())
                     {
-                        returnDic.Add("ReplyMode", "1");
-                        returnDic.Add("ReplyContent", "服务启动成功");
-                        replyContent = JsonHelper.ToJson(returnDic);
+                        if (string.IsNullOrEmpty(service.ReplyContent))
+                        {
+                            returnDic.Add("ReplyMode", "1");
+                            returnDic.Add("ReplyContent", "服务启动成功");
+                            replyContent = JsonHelper.ToJson(returnDic);
+                        }
+                        else
+                        {
+                            replyContent = service.ReplyContent;
+                        }
                     }
                     else
                     {

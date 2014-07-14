@@ -73,5 +73,11 @@ namespace UpdateManagerService
             //更新插件启动
             throw new NotImplementedException();
         }
+
+
+        public string ReplyContent
+        {
+            get { return string.Empty; }
+        }
     }
 }
