@@ -53,14 +53,6 @@ namespace PortalFramePlugin
         {
             get { return new PortalWindow(); }
         }
-        /// <summary>
-        /// 起始用户组件
-        /// </summary>
-        public UserControl StartControl
-        {
-            get { return new UCPortalWindow(); }
-        }
-
 
         public List<string> ServiceReceiptMessageType
         {
@@ -81,6 +73,12 @@ namespace PortalFramePlugin
             {
                 paramDict = value;
             }
+        }
+
+
+        public UserControl StartControl
+        {
+            get { return null; }
         }
     }
 }

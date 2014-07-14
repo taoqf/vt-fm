@@ -88,6 +88,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\VicListBoxSecondLevelMenu.cs" />
+    <Compile Include="Controls\VicRadioButtonFirstLevelMenu.cs" />
+    <Compile Include="Controls\VicRadioButtonSecondLevelMenu.cs" />
+    <Compile Include="Convert\DataSourceToNullOrSelfConvert.cs" />
+    <Compile Include="Convert\ImgeNameToBackgroundConverter.cs" />
+    <Compile Include="Convert\ImgeNameToImageUrlConverter.cs" />
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\TableModel.cs" />
     <Compile Include="Plugin.cs" />
@@ -108,8 +114,8 @@
     <Compile Include="Views\PortalWindow.xaml.cs">
       <DependentUpon>PortalWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UCPortalWindow.xaml.cs">
-      <DependentUpon>UCPortalWindow.xaml</DependentUpon>
+    <Compile Include="Views\UCPluginContainer.xaml.cs">
+      <DependentUpon>UCPluginContainer.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -149,13 +155,17 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\PortalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UCPortalWindow.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\UCPluginContainer.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

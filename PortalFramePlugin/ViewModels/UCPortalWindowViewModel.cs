@@ -22,7 +22,8 @@ using PortalFramePlugin.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Xml.Linq;
-using Victop.Frame.SyncOperation;
+using System.Reflection;
+using PortalFramePlugin.Views;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -32,88 +33,165 @@ namespace PortalFramePlugin.ViewModels
         #region 字段
         private Window mainWindow;
         private Grid gridTitle;
-        private VicComboBoxNormal cmboxLanguage;
+        private ObservableCollection<MenuModel>  systemMenuListEnterprise;
+        private ObservableCollection<MenuModel> systemMenuListLocal;
+        private ObservableCollection<MenuModel> systemThirdLevelMenuList;
+        private ObservableCollection<MenuModel> systemFourthLevelMenuList;
+        private MenuModel selectedSecondMenuModel;
+        private MenuModel selectedThirdMenuModel;
+        private ObservableCollection<Victop.Wpf.Controls.TabItem> tabItemList;
+        private Victop.Wpf.Controls.TabItem selectedTabItem;
+
         #endregion
 
         #region 属性
-        private ObservableCollection<MenuModel> systemMenuList;
-        /// <summary>
-        /// 菜单列表
-        /// </summary>
-        public ObservableCollection<MenuModel> SystemMenuList
+        /// <summary>本地菜单列表 </summary>
+        public ObservableCollection<MenuModel> SystemMenuListLocal
         {
             get
             {
-                if (systemMenuList == null)
-                    systemMenuList = new ObservableCollection<MenuModel>();
-                return systemMenuList;
+                if (systemMenuListLocal == null)
+                    systemMenuListLocal = new ObservableCollection<MenuModel>();
+                return systemMenuListLocal;
             }
             set
             {
-                if (systemMenuList != value)
+                if (systemMenuListLocal != value)
                 {
-                    systemMenuList = value;
-                    RaisePropertyChanged("SystemMenuList");
+                    systemMenuListLocal = value;
+                    RaisePropertyChanged("SystemMenuListLocal");
                 }
             }
         }
 
-        private MenuInfo selectedMenu;
-        /// <summary>选定菜单 </summary>
-        public MenuInfo SelectedMenu
-        {
-            get { return selectedMenu; }
-            set
-            {
-                if (selectedMenu != value)
-                {
-                    selectedMenu = value;
-                    RaisePropertyChanged("SelectedMenu");
-                }
-            }
-        }
-
-        private string infoMsg;
-        /// <summary> 提示信息 </summary>
-        public string InfoMsg
+        /// <summary>企业菜单列表 </summary>
+        public ObservableCollection<MenuModel> SystemMenuListEnterprise
         {
             get
             {
-                return infoMsg;
+                if (systemMenuListEnterprise == null)
+                    systemMenuListEnterprise = new ObservableCollection<MenuModel>();
+                return systemMenuListEnterprise;
             }
             set
             {
-                if (infoMsg != value)
+                if (systemMenuListEnterprise != value)
                 {
-                    infoMsg = value;
-                    RaisePropertyChanged("InfoMsg");
+                    systemMenuListEnterprise = value;
+                    RaisePropertyChanged("SystemMenuListEnterprise");
                 }
             }
         }
 
-        private DataTable myDt;
-        public DataTable MyDt
+        /// <summary>三级菜单列表 </summary>
+        public ObservableCollection<MenuModel> SystemThirdLevelMenuList
         {
             get
             {
-                if (myDt == null)
-                    myDt = new DataTable();
-                return myDt;
+                if (systemThirdLevelMenuList == null)
+                    systemThirdLevelMenuList = new ObservableCollection<MenuModel>();
+                return systemThirdLevelMenuList;
             }
             set
             {
-                if (myDt != value)
+                SelectedThirdMenuModel = null;
+                systemThirdLevelMenuList = value;
+                SelectedThirdMenuModel = systemThirdLevelMenuList.First();
+                RaisePropertyChanged("SystemThirdLevelMenuList");
+            }
+        }
+
+        /// <summary>四级菜单列表 </summary>
+        public ObservableCollection<MenuModel> SystemFourthLevelMenuList
+        {
+            get
+            {
+                if (systemFourthLevelMenuList == null)
+                    systemFourthLevelMenuList = new ObservableCollection<MenuModel>();
+                return systemFourthLevelMenuList;
+            }
+            set
+            {
+                if (systemFourthLevelMenuList != value)
                 {
-                    myDt = value;
-                    RaisePropertyChanged("MyDt");
+                    systemFourthLevelMenuList = value;
+                    RaisePropertyChanged("SystemFourthLevelMenuList");
                 }
             }
         }
 
+        /// <summary>当前选中的二级菜单 </summary>
+        public MenuModel SelectedSecondMenuModel
+        {
+            get { return selectedSecondMenuModel; }
+            set
+            {
+                if (value == null)
+                {
+                    return;
+                }
+                selectedSecondMenuModel = value;
+                RaisePropertyChanged("SelectedSecondMenuModel");
+            }
+        }
 
+        /// <summary>当前选中的三级菜单 </summary>
+        public MenuModel SelectedThirdMenuModel
+        {
+            get { return selectedThirdMenuModel; }
+            set
+            {
+                selectedThirdMenuModel = value;
+                RaisePropertyChanged("SelectedThirdMenuModel");
+            }
+        }
+
+        /// <summary>选项卡集合 </summary>
+        public ObservableCollection<Victop.Wpf.Controls.TabItem> TabItemList
+        {
+            get
+            {
+                if (tabItemList == null)
+                {
+                    tabItemList = new ObservableCollection<Victop.Wpf.Controls.TabItem>();
+                    Victop.Wpf.Controls.TabItem homeItem = new Victop.Wpf.Controls.TabItem();
+                    homeItem.Name = "homeItem";
+                    homeItem.AllowDelete = false;
+                    homeItem.Header = "ERP主页";
+                    ScrollViewer scroll = new ScrollViewer();
+                    scroll.Content = new UCPluginContainer();
+                    homeItem.Content = scroll;
+                    tabItemList.Add(homeItem);
+                }
+                return tabItemList;
+            }
+            set
+            {
+                if (tabItemList != value)
+                {
+                    tabItemList = value;
+                    RaisePropertyChanged("TabItemList");
+                }
+            }
+        }
+
+        /// <summary>当前选项卡 </summary>
+        public Victop.Wpf.Controls.TabItem SelectedTabItem
+        {
+            get { return selectedTabItem; }
+            set
+            {
+                if (selectedTabItem != value)
+                {
+                    selectedTabItem = value;
+                    RaisePropertyChanged("SelectedTabItem");
+                }
+            }
+        }
         #endregion
 
         #region 命令
+
         #region 窗体加载命令
         /// <summary>窗体加载命令 </summary>
         public ICommand gridMainLoadedCommand
@@ -123,8 +201,8 @@ namespace PortalFramePlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     mainWindow = (Window)x;
-
                     ChangeFrameWorkTheme();
+                    LoadMenuListLocal();
                 });
             }
         }
@@ -215,77 +293,8 @@ namespace PortalFramePlugin.ViewModels
         }
         #endregion
 
-        private ObservableCollection<TableModel> tableShowList;
-
-        public ObservableCollection<TableModel> TableShowList
-        {
-            get
-            {
-                if (tableShowList == null)
-                    tableShowList = new ObservableCollection<TableModel>();
-                return tableShowList;
-            }
-            set
-            {
-                if (tableShowList != value)
-                {
-                    tableShowList = value;
-                    RaisePropertyChanged("TableShowList");
-                }
-            }
-        }
-        private TableModel selectedTable;
-
-        public TableModel SelectedTable
-        {
-            get
-            {
-                if (selectedTable == null)
-                    selectedTable = new TableModel();
-                return selectedTable;
-            }
-            set
-            {
-                if (selectedTable != value)
-                {
-                    selectedTable = value;
-                    RaisePropertyChanged("SelectedTable");
-                }
-            }
-        }
-
-        private ObservableCollection<Victop.Wpf.Controls.TabItem> tabItemList;
-
-        public ObservableCollection<Victop.Wpf.Controls.TabItem> TabItemList
-        {
-            get
-            {
-                if (tabItemList == null)
-                    tabItemList = new ObservableCollection<Victop.Wpf.Controls.TabItem>();
-                return tabItemList;
-            }
-            set
-            {
-                if (tabItemList != value)
-                {
-                    tabItemList = value;
-                    RaisePropertyChanged("TabItemList");
-                }
-            }
-        }
-
-        public ICommand tviewMenuLoadedCommand
-        {
-            get
-            {
-                return new RelayCommand(() =>
-                {
-                    UpdateMenu();
-                });
-            }
-        }
-
-        public ICommand tviewDoubleClickCommand
+        #region 本地选中菜单改变命令
+        public ICommand listSecondMenuLocalSelectionChangedCommand
         {
             get
             {
@@ -294,218 +303,184 @@ namespace PortalFramePlugin.ViewModels
                     if (x != null)
                     {
                         MenuModel menuModel = (MenuModel)x;
-                        if (menuModel.ResourceName == null)
-                            menuModel.ResourceName = ConfigurationManager.AppSettings["runplugin"];
-                        if (menuModel.ResourceName != null && menuModel.ResourceName.Contains("Plugin"))
-                        {
-                            PluginOperation pluginOp = new PluginOperation();
-                            try
-                            {
-                                PluginModel pluginModel = pluginOp.StratPlugin(menuModel.ResourceName, null);
-                                if (pluginModel != null && string.IsNullOrEmpty(pluginModel.ErrorMsg))
-                                {
-                                    switch (pluginModel.PluginInterface.ShowType)
-                                    {
-                                        case 0:
-                                            Window pluginWindow = pluginModel.PluginInterface.StartWindow;
-                                            pluginWindow.Uid = pluginModel.ObjectId;
-                                            pluginWindow.ShowDialog();
-                                            break;
-                                        case 1:
-                                            UserControl userctrl = pluginModel.PluginInterface.StartControl;
-                                            userctrl.Uid = pluginModel.ObjectId;
-                                            Victop.Wpf.Controls.TabItem tabItem = new Victop.Wpf.Controls.TabItem();
-                                            tabItem.Header = pluginModel.PluginInterface.PluginTitle;
-                                            tabItem.Content = userctrl;
-                                            tabItem.AllowDelete = true;
-                                            TabItemList.Add(tabItem);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }
-                                else
-                                {
-                                    MessageBox.Show(pluginModel.ErrorMsg);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.Message);
-                            }
-                        }
+                        SystemThirdLevelMenuList = menuModel.SystemMenuList;
+                        SelectedTabItem = TabItemList[0];
                     }
                 });
             }
         }
+        #endregion
 
-        public ICommand btnViewMenuClickCommand
+        #region 企业云选中菜单改变命令
+        public ICommand listSecondMenuEnterpriseSelectionChangedCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                    if (x != null)
+                    {
+                        MenuModel menuModel = (MenuModel)x;
+                        SystemThirdLevelMenuList = menuModel.SystemMenuList;
+                        SelectedTabItem = TabItemList[0];
+                    }
+                });
+            }
+        }
+        #endregion
+
+        #region 三级菜单改变命令
+        public ICommand listBoxThirdMenuListSelectionChangedCommand
         {
             get
             {
                 return new RelayCommand(() =>
                 {
-                    PluginMessage pluginMessage = new PluginMessage();
-                    pluginMessage.SendMessage("", OrganizeRequestData(), new System.Threading.WaitCallback(SearchData));
+                    if(SelectedThirdMenuModel!=null)
+                        SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
                 });
             }
         }
-        private MenuModel GetChildMenuList(List<MenuInfo> menuResource, string parentMenuId, MenuModel parentMenu)
+        #endregion
+
+        #region 单击插件图标命令
+        public ICommand btnPluginIcoClickCommand
         {
-            foreach (MenuInfo item in menuResource.Where(it => it.ParentMenu == parentMenuId).OrderBy(it => it.Sequence))
+            get
             {
-                MenuModel menuModel = new MenuModel()
+                return new RelayCommand<object>((x) =>
                 {
-                    MenuId = item.MenuId,
-                    MenuName = item.MenuName,
-                    Actived = item.Actived,
-                    AutoOpenFlag = item.AutoOpenFlag,
-                    BzSystemId = item.BzSystemId,
-                    Compatible = item.Compatible,
-                    DataFormId = item.DataFormId,
-                    DefaultPrintTemplate = item.DefaultPrintTemplate,
-                    DisplayType = item.DisplayType,
-                    DocStatus = item.DocStatus,
-                    EndPoint = item.EndPoint,
-                    EndPointParam = item.EndPointParam,
-                    FormId = item.FormId,
-                    FormMemo = item.FormMemo,
-                    FormName = item.FormName,
-                    HomeId = item.HomeId,
-                    Id = item.Id,
-                    MaxPrintCount = item.MaxPrintCount,
-                    Memo = item.Memo,
-                    OpenType = item.OpenType,
-                    ParentMenu = item.ParentMenu,
-                    PredocStatus = item.PredocStatus,
-                    ResourceName = item.ResourceName,
-                    ResourceTree = item.ResourceTree,
-                    ResourceType = item.ResourceType,
-                    SaveProject = item.SaveProject,
-                    Sequence = item.Sequence,
-                    Stamp = item.Stamp
-                };
-                menuModel = GetChildMenuList(menuResource, item.MenuId, menuModel);
-                parentMenu.SystemMenuList.Add(menuModel);
+                    if (x != null)
+                    {
+                        MenuModel menuModel = (MenuModel)x;
+                        LoadPlugin(menuModel);
+                    }
+                });
             }
-            return parentMenu;
         }
         #endregion
 
-        #region 自定义方法
-        private void UpdateMenu()
+        #region 单击插件运行命令
+        public ICommand btnPluginRunClickCommand
         {
-            //BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
-            //SystemMenuList.Clear();
-            //if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
-            //{
-            //    foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.ParentMenu.Equals("0")))
-            //    {
-            //        MenuModel menuModel = new MenuModel()
-            //        {
-            //            MenuId = item.MenuId,
-            //            MenuName = item.MenuName,
-            //            Actived = item.Actived,
-            //            AutoOpenFlag = item.AutoOpenFlag,
-            //            BzSystemId = item.BzSystemId,
-            //            Compatible = item.Compatible,
-            //            DataFormId = item.DataFormId,
-            //            DefaultPrintTemplate = item.DefaultPrintTemplate,
-            //            DisplayType = item.DisplayType,
-            //            DocStatus = item.DocStatus,
-            //            EndPoint = item.EndPoint,
-            //            EndPointParam = item.EndPointParam,
-            //            FormId = item.FormId,
-            //            FormMemo = item.FormMemo,
-            //            FormName = item.FormName,
-            //            HomeId = item.HomeId,
-            //            Id = item.Id,
-            //            MaxPrintCount = item.MaxPrintCount,
-            //            Memo = item.Memo,
-            //            OpenType = item.OpenType,
-            //            ParentMenu = item.ParentMenu,
-            //            PredocStatus = item.PredocStatus,
-            //            ResourceName = item.ResourceName,
-            //            ResourceTree = item.ResourceTree,
-            //            ResourceType = item.ResourceType,
-            //            SaveProject = item.SaveProject,
-            //            Sequence = item.Sequence,
-            //            Stamp = item.Stamp
-            //        };
-            //        menuModel = CreateMenuList(item.MenuId, resourceInfo.ResourceMnenus, menuModel);
-            //        SystemMenuList.Add(menuModel);
-            //    }
-            //}
-            //else
-            //{
-            //    string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
-            //    ReadPluginInfoFromXml(FilePath);
-            //}
-            SystemMenuList.Clear();
-            string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
-            ReadPluginInfoFromXml(FilePath);
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                    if (x != null)
+                    {
+                        MenuModel menuModel = (MenuModel)x;
+                        LoadPlugin(menuModel);
+                    }
+                });
+            }
         }
+        #endregion
+
+        #endregion
+
+        #region 自定义方法
+
+        #region 加载标准化菜单
+        /// <summary>加载标准化菜单</summary>
+        private void LoadStandardMenu()
+        {
+            //LoadMenuListLocal();
+            LoadMenuListEnterprise();
+        }
+        /// <summary>加载企业云菜单集合 </summary>
+        private void LoadMenuListEnterprise()
+        {
+            BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
+            SystemMenuListEnterprise.Clear();
+            if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
+            {
+                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.ParentMenu.Equals("0")))
+                {
+                    MenuModel menuModel = GetMenuModel(item);
+                    menuModel = CreateMenuList(item.MenuId, resourceInfo.ResourceMnenus, menuModel);
+                    SystemMenuListEnterprise.Add(menuModel);
+                }
+            }
+            //DataTable dt = FillDataTable(SystemMenuListEnterprise);
+            GetStandardMenuList(SystemMenuListEnterprise);
+        }
+        /// <summary>创建完整的菜单模型 </summary>
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
         {
             foreach (MenuInfo item in fullMenuList.Where(it => it.ParentMenu.Equals(parentMenu)))
             {
-                MenuModel menuModel = new MenuModel()
-                {
-                    MenuId = item.MenuId,
-                    MenuName = item.MenuName,
-                    Actived = item.Actived,
-                    AutoOpenFlag = item.AutoOpenFlag,
-                    BzSystemId = item.BzSystemId,
-                    Compatible = item.Compatible,
-                    DataFormId = item.DataFormId,
-                    DefaultPrintTemplate = item.DefaultPrintTemplate,
-                    DisplayType = item.DisplayType,
-                    DocStatus = item.DocStatus,
-                    EndPoint = item.EndPoint,
-                    EndPointParam = item.EndPointParam,
-                    FormId = item.FormId,
-                    FormMemo = item.FormMemo,
-                    FormName = item.FormName,
-                    HomeId = item.HomeId,
-                    Id = item.Id,
-                    MaxPrintCount = item.MaxPrintCount,
-                    Memo = item.Memo,
-                    OpenType = item.OpenType,
-                    ParentMenu = item.ParentMenu,
-                    PredocStatus = item.PredocStatus,
-                    ResourceName = item.ResourceName,
-                    ResourceTree = item.ResourceTree,
-                    ResourceType = item.ResourceType,
-                    SaveProject = item.SaveProject,
-                    Sequence = item.Sequence,
-                    Stamp = item.Stamp
-                };
+                MenuModel menuModel = GetMenuModel(item);
                 menuModel = CreateMenuList(item.MenuId, fullMenuList, menuModel);
                 parentModel.SystemMenuList.Add(menuModel);
             }
             return parentModel;
         }
+        /// <summary>获得菜单模型实例</summary>
+        private MenuModel GetMenuModel(MenuInfo item)
+        {
+            MenuModel menuModel = new MenuModel();
+            menuModel.MenuId = item.MenuId;
+            menuModel.MenuName = item.MenuName;
+            menuModel.Actived = item.Actived;
+            menuModel.AutoOpenFlag = item.AutoOpenFlag;
+            menuModel.BzSystemId = item.BzSystemId;
+            menuModel.Compatible = item.Compatible;
+            menuModel.DataFormId = item.DataFormId;
+            menuModel.DefaultPrintTemplate = item.DefaultPrintTemplate;
+            menuModel.DisplayType = item.DisplayType;
+            menuModel.DocStatus = item.DocStatus;
+            menuModel.EndPoint = item.EndPoint;
+            menuModel.EndPointParam = item.EndPointParam;
+            menuModel.FormId = item.FormId;
+            menuModel.FormMemo = item.FormMemo;
+            menuModel.FormName = item.FormName;
+            menuModel.HomeId = item.HomeId;
+            menuModel.Id = item.Id;
+            menuModel.MaxPrintCount = item.MaxPrintCount;
+            menuModel.Memo = item.Memo;
+            menuModel.OpenType = item.OpenType;
+            menuModel.ParentMenu = item.ParentMenu;
+            menuModel.PredocStatus = item.PredocStatus;
+            menuModel.ResourceName = item.ResourceName;
+            menuModel.ResourceTree = item.ResourceTree;
+            menuModel.ResourceType = item.ResourceType;
+            menuModel.SaveProject = item.SaveProject;
+            menuModel.Sequence = item.Sequence;
+            menuModel.Stamp = item.Stamp;
+            return menuModel;
+        }
+        #endregion
 
-        #region 读取本地xml文件
+        #region 加载本地菜单集合
+        /// <summary>加载本地菜单集合 </summary>
+        private void LoadMenuListLocal()
+        {
+            SystemMenuListLocal.Clear();
+            string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
+            ReadLocalMenuListFromXml(FilePath);
+        }
         /// <summary>读取菜单信息</summary>
-        private void ReadPluginInfoFromXml(string PluginFilePath)
+        private void ReadLocalMenuListFromXml(string PluginFilePath)
         {
             XDocument xDoc = XDocument.Load(PluginFilePath);
             XElement root = xDoc.Element("MenuInfo");
-            UpdatePluginList(root);
+            foreach (var item in root.Elements())
+            {
+                MenuModel menuModel = GetPluginInfoModel(item);
+                menuModel = CreatLocalMenuModel(item,menuModel);
+                SystemMenuListLocal.Add(menuModel);
+            }
         }
-        /// <summary>设置一级和二级菜单数据源</summary>
-        private void UpdatePluginList(XElement element)
+        private MenuModel CreatLocalMenuModel(XElement element, MenuModel menuModel)
         {
             foreach (var item in element.Elements())
             {
-                MenuModel plugin = GetPluginInfoModel(item);
-                SystemMenuList.Add(plugin);
-                if (item.HasElements)
-                {
-                    UpdatePluginList(item);
-                }
+                MenuModel childMenuModel = GetPluginInfoModel(item);
+                childMenuModel = CreatLocalMenuModel(item, childMenuModel);
+                menuModel.SystemMenuList.Add(childMenuModel);
             }
+            return menuModel;
         }
         /// <summary>根据节点信息获取菜单实例</summary>
         private MenuModel GetPluginInfoModel(XElement element)
@@ -518,48 +493,163 @@ namespace PortalFramePlugin.ViewModels
         }
         #endregion
 
-        private void SearchData(object message)
+        #region 将菜单模型转成DataTable
+        /// <summary>
+        /// 实体类转换成DataTable
+        /// </summary>
+        /// <param name="modelList">实体类列表</param>
+        /// <returns></returns>
+        private DataTable FillDataTable(ObservableCollection<MenuModel> modelList)
         {
-            try
+            if (modelList == null || modelList.Count == 0)
             {
-                DataOperation operateData = new DataOperation();
-                DataSet ds = operateData.GetData(JsonHelper.ReadJsonString(message.ToString(), "DataChannelId"));
-                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new WaitCallback(UpdateTableList), ds);
-                UpdateTableList(ds);
+                return null;
             }
-            catch (Exception ex)
+            DataTable dt = CreateData(modelList[0]);
+            foreach (MenuModel model in modelList)
             {
-                string temp = ex.Message;
+                dt = GetDataTable(dt, model);
             }
-
+            return dt;
         }
-
-        private void UpdateTableList(object ds)
+        private DataTable GetDataTable(DataTable dt,MenuModel menuModel)
         {
-            DataSet tables = (DataSet)ds;
-            if (tables != null && tables.Tables.Count > 0)
+            foreach (MenuModel item in menuModel.SystemMenuList)
             {
-                TableShowList.Clear();
-                for (int i = 0; i < tables.Tables.Count; i++)
+                dt = GetDataTable(dt, item); 
+                DataRow dataRow = dt.NewRow();
+                foreach (PropertyInfo propertyInfo in typeof(MenuModel).GetProperties())
                 {
-                    TableShowList.Add(new TableModel()
-                    {
-                        TableId = i,
-                        TableName = tables.Tables[i].TableName,
-                        DataInfo = tables.Tables[i]
-                    });
+                    dataRow[propertyInfo.Name] = propertyInfo.GetValue(item, null);
                 }
-                SelectedTable = TableShowList[0];
+                dt.Rows.Add(dataRow);
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// 根据实体类得到表结构
+        /// </summary>
+        /// <param name="model">实体类</param>
+        /// <returns></returns>
+        private DataTable CreateData(MenuModel model)
+        {
+            DataTable dataTable = new DataTable(typeof(MenuModel).Name);
+            foreach (PropertyInfo propertyInfo in typeof(MenuModel).GetProperties())
+            {
+                dataTable.Columns.Add(new DataColumn(propertyInfo.Name, propertyInfo.PropertyType));
+            }
+            return dataTable;
+        }
+        #endregion
+
+        #region 转换为标准的四级菜单
+        /// <summary>获取标准的菜单集合 </summary>
+        private void GetStandardMenuList(ObservableCollection<MenuModel> disStandardMenuList)
+        {
+            foreach (MenuModel secondLevelMenu in disStandardMenuList)
+            {
+                GetStandardSecondLevelMenu(secondLevelMenu);
             }
         }
-        private string OrganizeRequestData()
+        /// <summary>获取标准的二级菜单</summary>
+        private void GetStandardSecondLevelMenu(MenuModel secondLevelMenu)
         {
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "DataChannelService.getMasterPropDataAsync");
-            string content = "{\"openType\":null,\"bzsystemid\":\"905\",\"formid\":null,\"dataSetID\":null,\"reportID\":null,\"modelId\":null,\"fieldName\":null,\"masterOnly\":false,\"dataparam\":{\"isdata\":\"0\",\"mastername\":\"地区管理\",\"wheresql\":\"1=1\",\"prooplist\":null,\"proplisted\":null,\"dataed\":null,\"pageno\":\"-1\",\"ispage\":\"1\",\"getset\":\"1\"},\"whereArr\":null,\"masterParam\":null,\"deltaXml\":null,\"runUser\":\"test7\",\"shareFlag\":null,\"treeStr\":null,\"saveType\":null,\"doccode\":null,\"clientId\":\"byerp\"}";
-            messageDic.Add("MessageContent", content);
-            return JsonHelper.ToJson(messageDic);
+            MenuModel newThirdLevelMenu = new MenuModel();
+            newThirdLevelMenu.MenuId = new Guid().ToString();
+            for (int i = secondLevelMenu.SystemMenuList.Count - 1; i >= 0; i--)
+            {
+                MenuModel thirdLevelMenu = secondLevelMenu.SystemMenuList[i];
+                if (thirdLevelMenu.SystemMenuList.Count == 0)
+                {
+                    secondLevelMenu.SystemMenuList.Remove(thirdLevelMenu);
+
+                    thirdLevelMenu.ParentMenu = newThirdLevelMenu.MenuId;
+                    newThirdLevelMenu.SystemMenuList.Add(thirdLevelMenu);
+                }
+                else
+                {
+                    GetStandardThirdLevelMenu(thirdLevelMenu);
+                }
+            }
+            if (newThirdLevelMenu.SystemMenuList.Count > 0)
+            {
+                newThirdLevelMenu.Id = new Guid().ToString();
+                newThirdLevelMenu.MenuName = "其他";
+            }
+            secondLevelMenu.SystemMenuList.Add(newThirdLevelMenu);
         }
+         /// <summary>获取标准的三级菜单</summary>
+        private void GetStandardThirdLevelMenu(MenuModel thirdLevelMenu)
+        {
+            for (int i = thirdLevelMenu.SystemMenuList.Count - 1; i >= 0; i--)
+            {
+                MenuModel fourthLevelMenu = thirdLevelMenu.SystemMenuList[i];
+                foreach (MenuModel item in fourthLevelMenu.SystemMenuList)
+                {
+                    thirdLevelMenu.SystemMenuList.Remove(fourthLevelMenu);
+                    item.ParentMenu = thirdLevelMenu.MenuId;
+                    thirdLevelMenu.SystemMenuList.Add(item);
+                }
+            }
+        }
+        #endregion
+
+        #region 加载插件
+        /// <summary>
+        /// 加载插件
+        /// </summary>
+        /// <param name="selectedFourthMenu">当前选择的四级菜单</param>
+        private void LoadPlugin(MenuModel selectedFourthMenu)
+        {
+            if (selectedFourthMenu.ResourceName == null)
+                selectedFourthMenu.ResourceName = ConfigurationManager.AppSettings["runplugin"];
+            if (selectedFourthMenu.ResourceName != null && selectedFourthMenu.ResourceName.Contains("Plugin"))
+            {
+                Dictionary<string, string> messageDic = new Dictionary<string, string>();
+                messageDic.Add("MessageType", "PluginService.PluginRun");
+                Dictionary<string, string> contentDic = new Dictionary<string, string>();
+                contentDic.Add("PluginName", selectedFourthMenu.ResourceName);
+                contentDic.Add("PluginPath", "");
+                messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
+                new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(PluginShow));
+            }
+        }
+
+        private void PluginShow(object message)
+        {
+            if (JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("1"))
+            {
+                ActivePluginManager pluginManager = new ActivePluginManager();
+                ActivePluginInfo pluginInfo = pluginManager.GetActivePlugins()[JsonHelper.ReadJsonString(message.ToString(), "MessageId")];
+                switch (pluginInfo.ShowType)
+                {
+                    case 0:
+                        System.Windows.Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new WaitCallback(DoWork), pluginInfo);
+                        break;
+                    case 1:
+                        System.Windows.Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new WaitCallback(CtrlDoWork), pluginInfo);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show(JsonHelper.ReadJsonString(message.ToString(), "ReplyAlertMessage"));
+            }
+        }
+        private void CtrlDoWork(object pluginInfo)
+        {
+            UserControl userctrl = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).StartControl;
+            userctrl.Uid = ((ActivePluginInfo)pluginInfo).ObjectId;
+            Victop.Wpf.Controls.TabItem tabItem = new Victop.Wpf.Controls.TabItem();
+            tabItem.Header = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).PluginTitle;
+            tabItem.Content = userctrl;
+            tabItem.AllowDelete = true;
+            TabItemList.Add(tabItem);
+        }
+        #endregion
 
         #region 窗体移动
         void gridTitle_MouseMove(object sender, MouseEventArgs e)
@@ -573,14 +663,27 @@ namespace PortalFramePlugin.ViewModels
         #region 用户登录
         private void UserLogin()
         {
-            PluginOperation pluginOp = new PluginOperation();
-            PluginModel pluginModel = pluginOp.StratPlugin("UserLoginPlugin");
-            Window win = pluginModel.PluginInterface.StartWindow;
-            win.Uid = pluginModel.ObjectId;
-            win.ShowDialog();
+            //new GalleryManager().SetCurrentGalleryId(Victop.Frame.CoreLibrary.Enums.GalleryEnum.ENTERPRISE);
+            Dictionary<string, string> messageDic = new Dictionary<string, string>();
+            messageDic.Add("MessageType", "PluginService.PluginRun");
+            Dictionary<string, string> contentDic = new Dictionary<string, string>();
+            contentDic.Add("PluginName", "UserLoginPlugin");
+            contentDic.Add("PluginPath", "");
+            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
+            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(PluginShow));
         }
-        #endregion
+        /// <summary>打开插件</summary>
+        private void DoWork(object pluginInfo)
+        {
+            Window win = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).StartWindow;
+            win.Uid = ((ActivePluginInfo)pluginInfo).ObjectId;
+            bool? result = win.ShowDialog();
+            //UpdateMenu();
+            LoadStandardMenu();
+        }
 
         #endregion
+        #endregion
+
     }
 }

@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace PortalFramePlugin.Views
 {
     /// <summary>
-    /// UCPortalWindow.xaml 的交互逻辑
+    /// UCPluginContainer.xaml 的交互逻辑
     /// </summary>
-    public partial class UCPortalWindow : UserControl
+    public partial class UCPluginContainer : UserControl
     {
-        public UCPortalWindow()
+        public UCPluginContainer()
         {
             InitializeComponent();
         }

@@ -1,0 +1,138 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+    xmlns:local="clr-namespace:PortalFramePlugin">
+    <local:ImgeNameToImageUrlConverter x:Key="ImgeNameToImageUrlConverter"/>
+    <local:DataSourceToNullOrSelfConvert x:Key="DataSourceToNullOrSelfConvert"/>
+
+    <Style TargetType="{x:Type local:VicRadioButtonFirstLevelMenu}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="#F1F3F5"/>
+        <Setter Property="BorderBrush" Value="#CCD2D9"/>
+        <Setter Property="Foreground" Value="#435058"></Setter>
+        <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
+        <Setter Property="FontSize" Value="14"></Setter>
+        <Setter Property="FontWeight"  Value="Bold"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="MinWidth" Value="30"></Setter>
+        <Setter Property="Height" Value="37"></Setter>
+        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="Padding" Value="18,0,0,0"/>
+        <Setter Property="IsEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:VicRadioButtonFirstLevelMenu}">
+                    <BulletDecorator Background="Transparent">
+                        <Border x:Name="border"  
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}">
+                            <Grid>
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
+                        </Border>
+                    </BulletDecorator>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:VicListBoxSecondLevelMenu}">
+        <Setter Property="Background" Value="#F1F3F5"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <local:VicRadioButtonSecondLevelMenu GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                    Content="{Binding MenuName}" ImgName="25.png"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger  Property="IsSelected" Value="true">
+                            <Setter Property="Background" Value="#46B2E7"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:VicListBoxSecondLevelMenu}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="1" SnapsToDevicePixels="true">
+                        <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsGrouping" Value="true">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="{x:Type local:VicRadioButtonSecondLevelMenu}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="#F1F3F5"/>
+        <Setter Property="BorderBrush" Value="#CCD2D9"/>
+        <Setter Property="Foreground" Value="#435058"></Setter>
+        <Setter Property="FontFamily" Value="SimSun"></Setter>
+        <Setter Property="FontSize" Value="12"></Setter>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="MinWidth" Value="90"></Setter>
+        <Setter Property="MinHeight" Value="30"></Setter>
+        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="Padding" Value="18,0,0,0"/>
+        <Setter Property="IsEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:VicRadioButtonSecondLevelMenu}">
+                    <BulletDecorator Background="Transparent">
+                        <Border x:Name="border"  
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="43"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+                                <Image Width="14" Height="14" VerticalAlignment="Center" HorizontalAlignment="Right" Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ImgName,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Image>
+                                <ContentPresenter Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
+                        </Border>
+                    </BulletDecorator>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

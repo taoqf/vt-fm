@@ -4,6 +4,8 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:PortalFramePlugin.ViewModels"
         xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+        xmlns:local="clr-namespace:PortalFramePlugin"
+        xmlns:views="clr-namespace:PortalFramePlugin.Views"
         Title="PortalWindow" Name="mainWindow" Width="952" ResizeMode="NoResize" Height="670" WindowStyle="None" AllowsTransparency="True" Style="{DynamicResource ShadowWindow}">
     <Window.DataContext>
         <vm:UCPortalWindowViewModel/>
@@ -97,23 +99,23 @@
             <ScrollViewer Grid.Column="0" Style="{DynamicResource MenuScrollViewer}">
                 <Grid Name="groupboxMenu" Width="182">
                     <StackPanel Name="MenuStackPanel" Orientation="Vertical">
-                        <TreeView Name="tviewMenu" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
-                            <ItemsControl.ItemTemplate>
-                                <HierarchicalDataTemplate ItemsSource="{Binding SystemMenuList}">
-                                    <StackPanel>
-                                        <TextBlock VerticalAlignment="Center" Text="{Binding MenuName}" />
-                                    </StackPanel>
-                                </HierarchicalDataTemplate>
-                            </ItemsControl.ItemTemplate>
+                        <local:VicRadioButtonFirstLevelMenu Content="飞道云"></local:VicRadioButtonFirstLevelMenu>
+                        <local:VicRadioButtonFirstLevelMenu Content="本地"></local:VicRadioButtonFirstLevelMenu>
+                        <local:VicListBoxSecondLevelMenu x:Name="listSecondMenuLocal" SelectedItem="{Binding SelectedSecondMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
                             <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Loaded">
-                                    <i:InvokeCommandAction Command="{Binding tviewMenuLoadedCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseDoubleClick">
-                                    <i:InvokeCommandAction Command="{Binding tviewDoubleClickCommand}" CommandParameter="{Binding ElementName=tviewMenu,Path=SelectedItem}"/>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding listSecondMenuLocalSelectionChangedCommand}" CommandParameter="{Binding ElementName=listSecondMenuLocal,Path=SelectedItem}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TreeView>
+                        </local:VicListBoxSecondLevelMenu>
+                        <local:VicRadioButtonFirstLevelMenu Content="企业云"></local:VicRadioButtonFirstLevelMenu>
+                        <local:VicListBoxSecondLevelMenu x:Name="listSecondMenuEnterprise" SelectedItem="{Binding SelectedSecondMenuModel}" BorderBrush="#F1F3F5" BorderThickness="0" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListEnterprise,UpdateSourceTrigger=PropertyChanged}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding listSecondMenuEnterpriseSelectionChangedCommand}" CommandParameter="{Binding ElementName=listSecondMenuEnterprise,Path=SelectedItem}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </local:VicListBoxSecondLevelMenu>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>
@@ -121,10 +123,10 @@
                 <Button Name="btnStretch" Height="70" Width="10" Style="{DynamicResource btnStretchStyle}" Margin="-3,0,-4,0"></Button>
             </StackPanel>
             <Grid Grid.Column="2" >
-                <controls:TabControl Name="MainTabControl" AllowAddNew="False" ItemsSource="{Binding TabItemList}">
+                <controls:TabControl Name="MainTabControl" AllowAddNew="False"  ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
                     <!--<controls:TabItem Header="ERP主页" Name="MainTab" AllowDelete="False">
                         <ScrollViewer>
-                            <DockPanel Name="ChildControl" Width="736" HorizontalAlignment="Center" Margin="5,5,5,0"/>
+                            <views:UCPluginContainer Width="736" HorizontalAlignment="Center" Margin="5,5,5,0"/>
                         </ScrollViewer>
                     </controls:TabItem>-->
                 </controls:TabControl>
