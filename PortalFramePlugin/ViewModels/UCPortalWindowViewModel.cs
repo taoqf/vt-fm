@@ -41,6 +41,8 @@ namespace PortalFramePlugin.ViewModels
         private MenuModel selectedThirdMenuModel;
         private ObservableCollection<Victop.Wpf.Controls.TabItem> tabItemList;
         private Victop.Wpf.Controls.TabItem selectedTabItem;
+        /// <summary>是否首次登录 </summary>
+        private bool isFirstLogin=true;
 
         #endregion
 
@@ -253,7 +255,10 @@ namespace PortalFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    UserLogin();
+                    if (isFirstLogin)
+                    {
+                        UserLogin();
+                    }
                 });
             }
         }
@@ -459,6 +464,16 @@ namespace PortalFramePlugin.ViewModels
             SystemMenuListLocal.Clear();
             string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
             ReadLocalMenuListFromXml(FilePath);
+            if (SystemMenuListLocal.Count > 0)
+            {
+                SelectedSecondMenuModel = SystemMenuListLocal[0];
+                SystemThirdLevelMenuList = SelectedSecondMenuModel.SystemMenuList;
+                if (SystemThirdLevelMenuList.Count > 0)
+                {
+                    SelectedThirdMenuModel = SystemThirdLevelMenuList[0];
+                    SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
+                }
+            }
         }
         /// <summary>读取菜单信息</summary>
         private void ReadLocalMenuListFromXml(string PluginFilePath)
@@ -490,56 +505,6 @@ namespace PortalFramePlugin.ViewModels
             //plugin.MenuId = element.Attribute("action").Value;
             plugin.ResourceName = element.Attribute("action").Value;
             return plugin;
-        }
-        #endregion
-
-        #region 将菜单模型转成DataTable
-        /// <summary>
-        /// 实体类转换成DataTable
-        /// </summary>
-        /// <param name="modelList">实体类列表</param>
-        /// <returns></returns>
-        private DataTable FillDataTable(ObservableCollection<MenuModel> modelList)
-        {
-            if (modelList == null || modelList.Count == 0)
-            {
-                return null;
-            }
-            DataTable dt = CreateData(modelList[0]);
-            foreach (MenuModel model in modelList)
-            {
-                dt = GetDataTable(dt, model);
-            }
-            return dt;
-        }
-        private DataTable GetDataTable(DataTable dt,MenuModel menuModel)
-        {
-            foreach (MenuModel item in menuModel.SystemMenuList)
-            {
-                dt = GetDataTable(dt, item); 
-                DataRow dataRow = dt.NewRow();
-                foreach (PropertyInfo propertyInfo in typeof(MenuModel).GetProperties())
-                {
-                    dataRow[propertyInfo.Name] = propertyInfo.GetValue(item, null);
-                }
-                dt.Rows.Add(dataRow);
-            }
-            return dt;
-        }
-
-        /// <summary>
-        /// 根据实体类得到表结构
-        /// </summary>
-        /// <param name="model">实体类</param>
-        /// <returns></returns>
-        private DataTable CreateData(MenuModel model)
-        {
-            DataTable dataTable = new DataTable(typeof(MenuModel).Name);
-            foreach (PropertyInfo propertyInfo in typeof(MenuModel).GetProperties())
-            {
-                dataTable.Columns.Add(new DataColumn(propertyInfo.Name, propertyInfo.PropertyType));
-            }
-            return dataTable;
         }
         #endregion
 
@@ -678,11 +643,65 @@ namespace PortalFramePlugin.ViewModels
             Window win = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).StartWindow;
             win.Uid = ((ActivePluginInfo)pluginInfo).ObjectId;
             bool? result = win.ShowDialog();
-            //UpdateMenu();
-            LoadStandardMenu();
+            if (win.GetType().Name == "UserLoginWindow" && result==true)
+            {
+                isFirstLogin = false;
+                LoadStandardMenu();
+            }
         }
 
         #endregion
+
+        #region 将树型菜单模型转成DataTable
+        /// <summary>
+        /// 实体类转换成DataTable
+        /// </summary>
+        /// <param name="modelList">实体类列表</param>
+        /// <returns></returns>
+        private DataTable FillDataTable(ObservableCollection<MenuModel> modelList)
+        {
+            if (modelList == null || modelList.Count == 0)
+            {
+                return null;
+            }
+            DataTable dt = CreateData(modelList[0]);
+            foreach (MenuModel model in modelList)
+            {
+                dt = GetDataTable(dt, model);
+            }
+            return dt;
+        }
+        private DataTable GetDataTable(DataTable dt, MenuModel menuModel)
+        {
+            foreach (MenuModel item in menuModel.SystemMenuList)
+            {
+                dt = GetDataTable(dt, item);
+                DataRow dataRow = dt.NewRow();
+                foreach (PropertyInfo propertyInfo in typeof(MenuModel).GetProperties())
+                {
+                    dataRow[propertyInfo.Name] = propertyInfo.GetValue(item, null);
+                }
+                dt.Rows.Add(dataRow);
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// 根据实体类得到表结构
+        /// </summary>
+        /// <param name="model">实体类</param>
+        /// <returns></returns>
+        private DataTable CreateData(MenuModel model)
+        {
+            DataTable dataTable = new DataTable(typeof(MenuModel).Name);
+            foreach (PropertyInfo propertyInfo in typeof(MenuModel).GetProperties())
+            {
+                dataTable.Columns.Add(new DataColumn(propertyInfo.Name, propertyInfo.PropertyType));
+            }
+            return dataTable;
+        }
+        #endregion
+
         #endregion
 
     }

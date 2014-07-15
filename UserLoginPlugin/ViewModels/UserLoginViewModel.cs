@@ -329,6 +329,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     if (!returnDic["ReplyMode"].ToString().Equals("0"))
                     {
+                        LoginWindow.DialogResult = true;
                         LoginWindow.Close();
                     }
                     else
