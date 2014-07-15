@@ -87,6 +87,10 @@ namespace Victop.Frame.Connection
             }
             else
             {
+                if (string.IsNullOrEmpty(currentGallery.ClientInfo.ChannelId))
+                {
+                    currentGallery.ClientInfo.ChannelId = Guid.NewGuid().ToString();
+                }
                 contentDic.Add("channelID", currentGallery.ClientInfo.ChannelId);
             }
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
