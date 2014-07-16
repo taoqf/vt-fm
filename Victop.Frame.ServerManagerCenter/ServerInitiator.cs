@@ -76,6 +76,8 @@ namespace Victop.Frame.ServerManagerCenter
                     ReplyContent = ServerRun(serverInfo,messageInfo);
                     break;
                 case "ServerCenterService.GetUserInfo":
+                case "ServerCenterService.DownloadDocument":
+                case "ServerCenterService.UploadDocument":
                     RegisterServerInfo serverInfoEx = JsonHelper.ToObject<RegisterServerInfo>(JsonHelper.ReadJsonString(messageInfo.MessageContent, "ServerInfo"));
                     ReplyContent = ServerRun(serverInfoEx, messageInfo);
                     break;

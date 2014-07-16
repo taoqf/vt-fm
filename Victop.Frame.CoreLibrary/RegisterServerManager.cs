@@ -6,26 +6,26 @@
 //------------------------------------------------------------------------------
 namespace Victop.Frame.CoreLibrary
 {
-	using Victop.Frame.CoreLibrary.Models;
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+    using Victop.Frame.CoreLibrary.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
     using Victop.Frame.CoreLibrary.Enums;
     using System.Configuration;
 
-	/// <summary>
-	/// 注册服务管理
-	/// </summary>
-	/// <remarks>注册服务管理</remarks>
-	public class RegisterServerManager
-	{
-		/// <summary>
-		/// 注册服务
+    /// <summary>
+    /// 注册服务管理
+    /// </summary>
+    /// <remarks>注册服务管理</remarks>
+    public class RegisterServerManager
+    {
+        /// <summary>
+        /// 注册服务
         /// <param name="serverInfo">服务信息</param>
-		/// </summary>
-		public virtual bool RegisterServer(RegisterServerInfo serverInfo)
-		{
+        /// </summary>
+        public virtual bool RegisterServer(RegisterServerInfo serverInfo)
+        {
             if (serverInfo == null)
                 return false;
             if (CoreDataCollection.RegisterServerList.ContainsKey(serverInfo.CloudGalleryId))
@@ -46,13 +46,13 @@ namespace Victop.Frame.CoreLibrary
                 CoreDataCollection.RegisterServerList.Add(serverInfo.CloudGalleryId, galleryDictionary);
             }
             return true;
-		}
+        }
 
-		/// <summary>
-		/// 获取注册服务(根据云id和消息类型)
-		/// </summary>
-		public virtual RegisterServerInfo GetServer(string cloudGalleryId, string messageType)
-		{
+        /// <summary>
+        /// 获取注册服务(根据云id和消息类型)
+        /// </summary>
+        public virtual RegisterServerInfo GetServer(string cloudGalleryId, string messageType)
+        {
             RegisterServerInfo registerServerInfo = null;
             if (CoreDataCollection.RegisterServerList.ContainsKey(cloudGalleryId))
             {
@@ -67,14 +67,14 @@ namespace Victop.Frame.CoreLibrary
                 }
             }
             return registerServerInfo;
-		}
+        }
 
-		/// <summary>
-		/// 注销服务
+        /// <summary>
+        /// 注销服务
         /// <param name="serverInfo">服务通道标识及服务名称</param>
-		/// </summary>
-		public virtual bool UnRegisterServer(RegisterServerInfo serverInfo)
-		{
+        /// </summary>
+        public virtual bool UnRegisterServer(RegisterServerInfo serverInfo)
+        {
             if (CoreDataCollection.RegisterServerList.ContainsKey(serverInfo.CloudGalleryId))
             {
                 if (CoreDataCollection.RegisterServerList[serverInfo.CloudGalleryId].ContainsKey(serverInfo.ServerName))
@@ -84,13 +84,13 @@ namespace Victop.Frame.CoreLibrary
                 }
             }
             return false;
-		}
+        }
 
-		/// <summary>
-		/// 初始化内置服务
-		/// </summary>
-		public void InitServerList()
-		{
+        /// <summary>
+        /// 初始化内置服务
+        /// </summary>
+        public void InitServerList()
+        {
             RegisterServerManager serverManager = new RegisterServerManager();
             foreach (GalleryEnum item in Enum.GetValues(typeof(GalleryEnum)))
             {
@@ -175,8 +175,19 @@ namespace Victop.Frame.CoreLibrary
                 UserInfo.ServerStatus = ResourceEnum.NONE;
                 serverManager.RegisterServer(UserInfo);
                 #endregion
+                #region 文件管理服务
+                RegisterServerInfo documentInfo = new RegisterServerInfo();
+                documentInfo.CloudGalleryId = item.ToString();
+                documentInfo.ServerName = "DocumentManagerService";
+                documentInfo.ReceiptMessageType.Add("ServerCenterService.UploadDocument");
+                documentInfo.ReceiptMessageType.Add("ServerCenterService.DownloadDocument");
+                documentInfo.ServerType = ServerTypeEnum.LOCAL;
+                documentInfo.ServerPath = string.Empty;
+                documentInfo.ServerStatus = ResourceEnum.NONE;
+                serverManager.RegisterServer(documentInfo);
+                #endregion
             }
-		}
+        }
         /// <summary>
         /// 获取所有注册服务信息
         /// </summary>
@@ -185,6 +196,6 @@ namespace Victop.Frame.CoreLibrary
         {
             return CoreDataCollection.RegisterServerList;
         }
-	}
+    }
 }
 

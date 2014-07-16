@@ -1,5 +1,6 @@
 ﻿using AreaManagerPlugin.Models;
 using GalaSoft.MvvmLight.Command;
+using System.Windows.Forms;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,10 +18,12 @@ using Victop.Frame.MessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.Models;
+using System.IO;
+using System.Net;
 
 namespace AreaManagerPlugin.ViewModels
 {
-    public class UCAreaWindowViewModel:ModelBase
+    public class UCAreaWindowViewModel : ModelBase
     {
         private bool IsLoaded = true;
         private string DataChannelId = string.Empty;
@@ -62,7 +65,7 @@ namespace AreaManagerPlugin.ViewModels
             }
         }
         private TableModel selectedTable;
-
+        private System.Windows.Controls.Grid gridDoc;
         public TableModel SelectedTable
         {
             get
@@ -80,7 +83,7 @@ namespace AreaManagerPlugin.ViewModels
                 }
             }
         }
-
+        private static System.Windows.Controls.ProgressBar progressBar;
         /// <summary>
         /// comboBox选择改变
         /// </summary>
@@ -88,7 +91,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     MyDt = SelectedTable.DataInfo;
                 });
             }
@@ -100,7 +104,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     //if (IsLoaded)
                     //{
                     //    PluginMessage pluginMessage = new PluginMessage();
@@ -115,8 +120,9 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) => {
-                    UserControl userCtrl = (UserControl)x;
+                return new RelayCommand<object>((x) =>
+                {
+                    System.Windows.Controls.UserControl userCtrl = (System.Windows.Controls.UserControl)x;
                     PluginMessage pluginMessage = new PluginMessage();
                     pluginMessage.SendMessage("", OrganizeCloseMessage(userCtrl.Uid), null);
                 });
@@ -129,7 +135,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     string MessageType = "DataChannelService.getMasterPropDataAsync";
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeMasterRequestMessage());
@@ -144,7 +151,7 @@ namespace AreaManagerPlugin.ViewModels
                     }
                     else
                     {
-                        MessageBox.Show(returnDic["ReplyAlertMessage"].ToString());
+                        System.Windows.Forms.MessageBox.Show(returnDic["ReplyAlertMessage"].ToString());
                     }
                 });
             }
@@ -156,7 +163,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     string MessageType = "DataChannelService.loadDataByModelAsync";
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeCommonRequestMessageMaster());
@@ -177,7 +185,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     PluginMessage pluginMessage = new PluginMessage();
                     pluginMessage.SendMessage("", OrganizeMasterSaveMessage(), new WaitCallback(SaveDataSuccess));
                 });
@@ -190,7 +199,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     string MessageType = "DataChannelService.getFormBusiDataAsync";
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeModelRequestMessage());
@@ -210,7 +220,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     PluginMessage pluginMessage = new PluginMessage();
                     pluginMessage.SendMessage("", OrganizeModelSaveMessage(), new WaitCallback(SaveDataSuccess));
                 });
@@ -223,7 +234,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     string MessageType = "DataChannelService.getFormReferenceSpecial";
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeModelRequestMessage());
@@ -242,7 +254,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> result = messageOp.SendMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                     string temp = string.Empty;
@@ -251,6 +264,78 @@ namespace AreaManagerPlugin.ViewModels
             }
         }
 
+      
+        /// <summary>
+        /// 下载
+        /// </summary>
+        public ICommand btnDownloadFileClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                    string fromPath = @"http://c.hiphotos.baidu.com/image/pic/item/d043ad4bd11373f05044406aa60f4bfbfaed04cf.jpg";
+                    FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+                    folderBrowserDialog.Description = "下载到";
+                    string path = "";
+                    if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        path = folderBrowserDialog.SelectedPath;
+                    }
+                    if (path=="")
+                    {
+                        return;
+                    }
+                    path = Path.Combine(path, Path.GetFileName(fromPath));
+                    MessageOperation messageOperation = new MessageOperation();
+                    Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                    Dictionary<string, string> address = new Dictionary<string, string>();
+                    address.Add("downloadToAddresss", path);
+                    address.Add("downloadFromAddress", fromPath);
+                    messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+                    Dictionary<string, object> result = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
+                    System.Windows.MessageBox.Show(JsonHelper.ToJson(result));
+                });
+            }
+        }
+
+        /// <summary>
+        /// 上传
+        /// </summary>
+        public ICommand btnUploadFileClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    string uploadToPath = "";
+                    string uploadFromPath = "";
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Title = "选择上传的文件";
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        uploadFromPath = openFileDialog.FileName;
+                    }
+                    FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+                    folderBrowserDialog.Description = "上传到";
+                    if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        uploadToPath = folderBrowserDialog.SelectedPath;
+                    }
+                    uploadToPath = Path.Combine(uploadToPath, Path.GetFileName(uploadFromPath));
+                    Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                    Dictionary<string, string> address = new Dictionary<string, string>();
+                    address.Add("UploadToAddresss", uploadToPath);
+                    address.Add("UploadFromAddress", uploadFromPath);
+                    messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+                    Dictionary<string, object> result = new MessageOperation().SendMessage("ServerCenterService.UploadDocument", messageContent);
+                    System.Windows.Forms.MessageBox.Show(JsonHelper.ToJson(result));
+                });
+            }
+        }
+
+     
         #region 私有方法
         /// <summary>
         /// 组织关闭消息
@@ -464,7 +549,7 @@ namespace AreaManagerPlugin.ViewModels
                 DataChannelId = JsonHelper.ReadJsonString(message.ToString(), "DataChannelId");
                 DataOperation operateData = new DataOperation();
                 DataSet ds = operateData.GetData(DataChannelId);
-                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new WaitCallback(UpdateTableList), ds);
+                System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new WaitCallback(UpdateTableList), ds);
             }
             catch (Exception ex)
             {
