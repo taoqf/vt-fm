@@ -978,7 +978,7 @@ namespace Victop.Frame.Connection
                 result.Add("taskid", null);
                 result.Add("usercode", loginUserInfo.UserCode);
                 result.Add("runserver", messageInfo.MessageId);
-                if (dicContent.ContainsKey("FlexObj"))
+                if (dicContent.ContainsKey("FlexObj") && dicContent["FlexObj"] != null)
                 {
                     Dictionary<string, object> objDic = JsonHelper.ToObject<Dictionary<string, object>>(dicContent["FlexObj"].ToString());
                     if (objDic != null && objDic.ContainsKey("tasktype"))
