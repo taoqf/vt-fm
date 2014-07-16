@@ -46,7 +46,7 @@ namespace VictopPartner
         {
             if (FrameInit.GetInstance().FrameRun())
             {
-                new PluginMessage().SendMessage(Guid.NewGuid().ToString(), AnonymousLogin(),null);
+                //new PluginMessage().SendMessage(Guid.NewGuid().ToString(), AnonymousLogin(),null);
                 Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName("PortalFramePlugin", "");
                 Type[] types = pluginAssembly.GetTypes();
                 foreach (Type t in types)

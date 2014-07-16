@@ -29,6 +29,11 @@ namespace Victop.Frame.Connection
         public virtual RequestMessage OrganizeMessage(RequestMessage messageInfo, out DataOperateEnum replyIsToChannel)
         {
             replyIsToChannel = DataOperateEnum.NONE;
+            #region 通道及用户相关
+            GalleryManager galleryManager = new GalleryManager();
+            CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+            LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
+            #endregion
             try
             {
                 Dictionary<string, object> dicContent = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
@@ -102,14 +107,11 @@ namespace Victop.Frame.Connection
                 }
                 if (dicContent.ContainsKey("runUser"))
                 {
-                    GalleryManager galleryManager = new GalleryManager();
-                    CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
-                    LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
                     dicContent["runUser"] = loginUserInfo.UserCode;
                 }
                 if (dicContent.ContainsKey("clientId"))
                 {
-                    string clientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
+                    string clientId = cloudGallyInfo.ClientId;
                     dicContent["clientId"] = clientId;
                 }
 
@@ -976,7 +978,7 @@ namespace Victop.Frame.Connection
                 result.Add("taskid", null);
                 result.Add("usercode", loginUserInfo.UserCode);
                 result.Add("runserver", messageInfo.MessageId);
-                if (dicContent.ContainsKey("FlexObj"))
+                if (dicContent.ContainsKey("FlexObj") && dicContent["FlexObj"] != null)
                 {
                     Dictionary<string, object> objDic = JsonHelper.ToObject<Dictionary<string, object>>(dicContent["FlexObj"].ToString());
                     if (objDic != null && objDic.ContainsKey("tasktype"))

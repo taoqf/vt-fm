@@ -135,7 +135,7 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ListBox Name="listBoxThirdMenuList" SelectedItem="{Binding SelectedThirdMenuModel,Mode=TwoWay}" Style="{DynamicResource ListBoxThirdMenuListStyle}" ItemsSource="{Binding SystemThirdLevelMenuList,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="MenuName">
+        <ListBox Name="listBoxThirdMenuList" SelectedItem="{Binding SelectedThirdMenuModel}" Style="{DynamicResource ListBoxThirdMenuListStyle}" ItemsSource="{Binding SystemThirdLevelMenuList,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="MenuName">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding listBoxThirdMenuListSelectionChangedCommand}"/>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <MenuInfo version="1.0">
 		<MainMenu title="公共基础管理" action="TradeContainerControl" auto="0" showtype="0" imageurl="25.png" displaymode="1" description="">
 			<SubMenu title="全部" action="" auto="0" showtype="0" imageurl="" displaymode="1" description="">

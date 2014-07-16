@@ -78,9 +78,10 @@ namespace Victop.Frame.CoreLibrary
             #region 内置飞道云
             CloudGalleryInfo victopGalleryInfo = new CloudGalleryInfo();
             victopGalleryInfo.CloudGalleryId = GalleryEnum.VICTOP;
-            victopGalleryInfo.CloudAddress = "192.168.1.1:9999";
-            victopGalleryInfo.RouterAddress = "192.168.1.1:9527";
+            victopGalleryInfo.CloudAddress = "192.168.40.198:9999";
+            victopGalleryInfo.RouterAddress = "192.168.40.198:9527";
             victopGalleryInfo.IsNeedRouter = true;
+            victopGalleryInfo.ClientId = "sys";
             galleryManager.AddGallery(victopGalleryInfo);
             #endregion
             #region 本地MiniSOA

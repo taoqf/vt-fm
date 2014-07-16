@@ -67,17 +67,16 @@ namespace Victop.Frame.Connection
         /// <returns></returns>
         private ReplyMessage UserLoginSubmit(IAdapter adapter,RequestMessage messageInfo)
         {
-            string clientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
+            CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
             Dictionary<string, string> contentDic = JsonHelper.ToObject<Dictionary<string, string>>(messageInfo.MessageContent);
             if (contentDic.ContainsKey("clientId"))
             {
-                contentDic["clientId"] = clientId;
+                contentDic["clientId"] = currentGallery.ClientId;
             }
             else
             {
-                contentDic.Add("clientId", clientId);
+                contentDic.Add("clientId", currentGallery.ClientId);
             }
-            CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
             if (contentDic.ContainsKey("channelID"))
             {
                 if (string.IsNullOrEmpty(currentGallery.ClientInfo.ChannelId))
@@ -88,6 +87,10 @@ namespace Victop.Frame.Connection
             }
             else
             {
+                if (string.IsNullOrEmpty(currentGallery.ClientInfo.ChannelId))
+                {
+                    currentGallery.ClientInfo.ChannelId = Guid.NewGuid().ToString();
+                }
                 contentDic.Add("channelID", currentGallery.ClientInfo.ChannelId);
             }
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);

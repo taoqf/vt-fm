@@ -580,6 +580,7 @@ namespace Victop.Frame.ComLink.ICE
         /// <summary>
         /// 通信器运行
         /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private int ComLinkRun()
         {
             if (GetStatus() == 1)

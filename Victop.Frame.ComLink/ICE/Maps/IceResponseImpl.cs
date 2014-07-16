@@ -71,8 +71,8 @@ namespace Victop.Frame.ComLink.ICE.Maps
         {
             //entry = ResponseUtil.toReply(replyMessage);//TODO:
             flag = true;
-            if (cb != null)
-                cb.ice_response(this.entry);
+            if (_cb != null)
+                _cb.ice_response(this.entry);
         }
     }
 }
