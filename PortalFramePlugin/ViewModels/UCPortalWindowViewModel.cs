@@ -39,8 +39,8 @@ namespace PortalFramePlugin.ViewModels
         private ObservableCollection<MenuModel> systemFourthLevelMenuList;
         private MenuModel selectedSecondMenuModel;
         private MenuModel selectedThirdMenuModel;
-        private ObservableCollection<Victop.Wpf.Controls.TabItem> tabItemList;
-        private Victop.Wpf.Controls.TabItem selectedTabItem;
+        private ObservableCollection<Victop.Wpf.Controls.VicTabItemNormal> tabItemList;
+        private Victop.Wpf.Controls.VicTabItemNormal selectedTabItem;
         /// <summary>是否首次登录 </summary>
         private bool isFirstLogin=true;
 
@@ -149,17 +149,18 @@ namespace PortalFramePlugin.ViewModels
         }
 
         /// <summary>选项卡集合 </summary>
-        public ObservableCollection<Victop.Wpf.Controls.TabItem> TabItemList
+        public ObservableCollection<Victop.Wpf.Controls.VicTabItemNormal> TabItemList
         {
             get
             {
                 if (tabItemList == null)
                 {
-                    tabItemList = new ObservableCollection<Victop.Wpf.Controls.TabItem>();
-                    Victop.Wpf.Controls.TabItem homeItem = new Victop.Wpf.Controls.TabItem();
+                    tabItemList = new ObservableCollection<Victop.Wpf.Controls.VicTabItemNormal>();
+                    Victop.Wpf.Controls.VicTabItemNormal homeItem = new Victop.Wpf.Controls.VicTabItemNormal();
                     homeItem.Name = "homeItem";
                     homeItem.AllowDelete = false;
                     homeItem.Header = "ERP主页";
+                    homeItem.Height = 40;
                     ScrollViewer scroll = new ScrollViewer();
                     scroll.Content = new UCPluginContainer();
                     homeItem.Content = scroll;
@@ -178,7 +179,7 @@ namespace PortalFramePlugin.ViewModels
         }
 
         /// <summary>当前选项卡 </summary>
-        public Victop.Wpf.Controls.TabItem SelectedTabItem
+        public Victop.Wpf.Controls.VicTabItemNormal SelectedTabItem
         {
             get { return selectedTabItem; }
             set
@@ -608,7 +609,7 @@ namespace PortalFramePlugin.ViewModels
         {
             UserControl userctrl = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).StartControl;
             userctrl.Uid = ((ActivePluginInfo)pluginInfo).ObjectId;
-            Victop.Wpf.Controls.TabItem tabItem = new Victop.Wpf.Controls.TabItem();
+            Victop.Wpf.Controls.VicTabItemNormal tabItem = new Victop.Wpf.Controls.VicTabItemNormal();
             tabItem.Header = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).PluginTitle;
             tabItem.Content = userctrl;
             tabItem.AllowDelete = true;

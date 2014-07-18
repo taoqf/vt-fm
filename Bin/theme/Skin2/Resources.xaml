@@ -787,41 +787,6 @@
 			</Style.Triggers>
 		</Style>
 
-	<Style x:Key="UserTabItemStyle" TargetType="{x:Type controls:TabItem}">
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type controls:TabItem}">
-						<Grid SnapsToDevicePixels="true">
-							<Border x:Name="Bd" >
-                	<Border.Background>
-									<ImageBrush ImageSource="tabDefault.png"/>
-								</Border.Background>
-								<ContentPresenter x:Name="Content" ContentSource="Header" />
-							</Border>
-						</Grid>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver" Value="true">
-										<Setter Property="Background" TargetName="Bd" >
-                      <Setter.Value>
-              <ImageBrush ImageSource="tabSelected.png"/>
-            </Setter.Value>
-          </Setter>
-							</Trigger>
-							<Trigger Property="IsSelected" Value="true">
-								<Setter Property="Panel.ZIndex" Value="1"/>
-								<Setter Property="Background" TargetName="Bd" >
-                      <Setter.Value>
-              <ImageBrush ImageSource="tabSelected.png"/>
-            </Setter.Value>
-          </Setter>
-							</Trigger>
-						
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-
   <Style x:Key="btnMainFeedBackStyle" TargetType="{x:Type controls:VicButtonImage}">
     <Setter Property="Background">
       <Setter.Value>

@@ -123,13 +123,13 @@
                 <Button Name="btnStretch" Height="70" Width="10" Style="{DynamicResource btnStretchStyle}" Margin="-3,0,-4,0"></Button>
             </StackPanel>
             <Grid Grid.Column="2" >
-                <controls:TabControl Name="MainTabControl" AllowAddNew="False"  ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
+                <controls:VicTabControlNormal Name="MainTabControl"  ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
                     <!--<controls:TabItem Header="ERP主页" Name="MainTab" AllowDelete="False">
                         <ScrollViewer>
                             <views:UCPluginContainer Width="736" HorizontalAlignment="Center" Margin="5,5,5,0"/>
                         </ScrollViewer>
                     </controls:TabItem>-->
-                </controls:TabControl>
+                </controls:VicTabControlNormal>
             </Grid>
         </Grid>
         <Label Name="tb" Grid.Row="2" Content="当前软件已是最新版本（2014-04-23）" Style="{DynamicResource MainFrmBottomGridStyle}"/>
