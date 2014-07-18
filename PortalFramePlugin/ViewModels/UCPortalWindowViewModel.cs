@@ -613,6 +613,7 @@ namespace PortalFramePlugin.ViewModels
             tabItem.Header = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).PluginTitle;
             tabItem.Content = userctrl;
             tabItem.AllowDelete = true;
+            tabItem.IsSelected = true;
             TabItemList.Add(tabItem);
         }
         #endregion
