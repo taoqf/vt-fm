@@ -161,7 +161,21 @@ namespace Victop.Frame.Adapter
                             {
                                 replyMessage.ReplyControl = returnMessage.MessageControl;
                                 replyMessage.ReplyContent = returnMessage.MessageContent;
-                                replyMessage.ReplyMode = ReplyModeEnum.BREAK;
+                                string replyCode = JsonHelper.ReadJsonString(returnMessage.MessageContent, "code");
+                                if (!string.IsNullOrEmpty(replyCode))
+                                {
+                                    long codeInt = Convert.ToInt32(replyCode);
+                                    replyMessage.ReplyMode = (ReplyModeEnum)codeInt;
+                                    if (codeInt == 0)
+                                    {
+                                        replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(returnMessage.MessageContent, "Result");
+                                    }
+                                }
+                                else
+                                {
+                                    replyMessage.ReplyMode = ReplyModeEnum.BREAK;
+                                }
+                                replyMessage.MessageId = messageID;
                                 messagePoolManager.RemoveMessageData(messageID);
                                 lock (this)
                                 {

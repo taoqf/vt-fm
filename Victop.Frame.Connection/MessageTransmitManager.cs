@@ -18,17 +18,17 @@ namespace Victop.Frame.Connection
     using Victop.Frame.CoreLibrary;
     using Victop.Frame.PublicLib.Managers;
 
-	/// <summary>
-	/// 消息转发器
-	/// </summary>
-	/// <remarks>消息转发器</remarks>
-	public class MessageTransmitManager
-	{
-		/// <summary>
-		/// 发送消息
-		/// </summary>
-		public virtual ReplyMessage SendRmoteMessage(RequestMessage messageInfo)
-		{
+    /// <summary>
+    /// 消息转发器
+    /// </summary>
+    /// <remarks>消息转发器</remarks>
+    public class MessageTransmitManager
+    {
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        public virtual ReplyMessage SendRmoteMessage(RequestMessage messageInfo)
+        {
             IAdapter adapter = new MessageManager();
             try
             {
@@ -56,16 +56,16 @@ namespace Victop.Frame.Connection
                     MessageId = messageInfo.MessageId,
                     ReplyContent = ex.Message
                 };
-                
+
                 return replyMessage;
             }
-		}
+        }
         /// <summary>
         /// 用户登录
         /// </summary>
         /// <param name="messageInfo"></param>
         /// <returns></returns>
-        private ReplyMessage UserLoginSubmit(IAdapter adapter,RequestMessage messageInfo)
+        private ReplyMessage UserLoginSubmit(IAdapter adapter, RequestMessage messageInfo)
         {
             CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
             Dictionary<string, string> contentDic = JsonHelper.ToObject<Dictionary<string, string>>(messageInfo.MessageContent);
@@ -143,7 +143,7 @@ namespace Victop.Frame.Connection
         /// <param name="adapter"></param>
         /// <param name="messageInfo"></param>
         /// <returns></returns>
-        private ReplyMessage ConnectLinkSubmit(IAdapter adapter,RequestMessage messageInfo)
+        private ReplyMessage ConnectLinkSubmit(IAdapter adapter, RequestMessage messageInfo)
         {
             messageInfo.MessageType = "LinkService.registAsync";
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
@@ -179,7 +179,7 @@ namespace Victop.Frame.Connection
         /// <param name="adapter"></param>
         /// <param name="messageInfo"></param>
         /// <returns></returns>
-        private ReplyMessage MessageSubmit(IAdapter adapter,RequestMessage messageInfo)
+        private ReplyMessage MessageSubmit(IAdapter adapter, RequestMessage messageInfo)
         {
             MessageOrganizeManager organizeManager = new MessageOrganizeManager();
             DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
@@ -195,10 +195,7 @@ namespace Victop.Frame.Connection
                         replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo);
                         break;
                     case DataOperateEnum.COMMIT:
-                        if (!JsonHelper.ReadJsonString(replyMessage.ReplyContent, "code").Equals("0"))
-                        {
-                            bool result = replyMessageResolver.CommitDataSetChange(DataChannelId);
-                        }
+                        bool result = replyMessageResolver.CommitDataSetChange(DataChannelId);
                         break;
                     case DataOperateEnum.NONE:
                     default:
@@ -212,6 +209,6 @@ namespace Victop.Frame.Connection
         {
             return true;
         }
-	}
+    }
 }
 

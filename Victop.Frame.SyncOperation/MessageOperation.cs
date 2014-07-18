@@ -21,7 +21,7 @@ namespace Victop.Frame.SyncOperation
         /// <param name="messageContent">消息体</param>
         /// <param name="waitTime">等待时间</param>
         /// <returns></returns>
-        public Dictionary<string, object> SendMessage(string messageType, Dictionary<string, object> messageContent, int waiteTime = 15)
+        public Dictionary<string, object> SendMessage(string messageType, Dictionary<string, object> messageContent, int waiteTime = 16)
         {
             Dictionary<string, object> returnDic;
             Dictionary<string, object> messageDic = new Dictionary<string, object>();
