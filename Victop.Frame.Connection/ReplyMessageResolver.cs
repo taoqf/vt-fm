@@ -170,6 +170,18 @@ namespace Victop.Frame.Connection
             return dataXml;
         }
         /// <summary>
+        /// 根据数据通道id获取数据的JSON
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="masterFlag"></param>
+        /// <returns></returns>
+        public List<object> GetDataJSONByDataChannelId(string channelId, bool masterFlag = true)
+        {
+            DataCreateManager dataManager = new DataCreateManager();
+            List<object> dataJson = dataManager.GetJSONData(channelId, masterFlag);
+            return dataJson;
+        }
+        /// <summary>
         /// 提交数据集变更
         /// </summary>
         /// <param name="channelId">通道号Id</param>

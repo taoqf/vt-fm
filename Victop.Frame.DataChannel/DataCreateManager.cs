@@ -278,7 +278,7 @@ namespace Victop.Frame.DataChannel
             {
                 Dictionary<string, object> tableInfoDic = JsonHelper.ToObject<Dictionary<string, object>>(datatableList[i].ToString());
                 string keyField = tableInfoDic["keys"].ToString();
-                DataTable dt = new DataTable(tableInfoDic["datasetname"].ToString());
+                DataTable dt = new DataTable(tableInfoDic["datasetid"].ToString());
                 string fieldStr = tableInfoDic["fields"].ToString();
                 List<object> fieldList = JsonHelper.ToObject<List<object>>(fieldStr);
                 for (int j = 0; j < fieldList.Count; j++)
@@ -304,6 +304,10 @@ namespace Victop.Frame.DataChannel
                             break;
                     }
                     dt.Columns.Add(dc);
+                    if (fieldInfo["fieldid"].ToString().Equals(keyField))
+                    {
+                        dt.PrimaryKey = new DataColumn[] { dc };
+                    }
                 }
                 for (int j = 0; j < datarowsList.Count; j++)
                 {
@@ -326,6 +330,7 @@ namespace Victop.Frame.DataChannel
                 }
                 ds.Tables.Add(dt);
             }
+            ds.AcceptChanges();
             return ds;
         }
 
@@ -523,13 +528,83 @@ namespace Victop.Frame.DataChannel
         /// </summary>
         /// <param name="channelId"></param>
         /// <returns></returns>
-        public virtual string GetJSONData(string channelId)
+        public virtual List<object> GetJSONData(string channelId, bool masterFlag = true)
         {
             DataChannelManager dataManager = new DataChannelManager();
             Hashtable hashData = dataManager.GetData(channelId);
             ChannelData channelData = hashData["Data"] as ChannelData;
             DataSet requestDs = channelData.DataInfo;
-            return string.Empty;
+            List<object> updateRowList = new List<object>();
+            foreach (DataTable mastDt in requestDs.Tables)
+            {
+                #region 判定信息
+                //bool ValidTableFlag = false;
+                //if (masterFlag)
+                //{
+                //    if (mastDt.TableName.Equals("masterdata"))
+                //    {
+                //        ValidTableFlag = true;
+                //    }
+                //}
+                //else
+                //{
+                //    if (Regex.IsMatch(mastDt.TableName, @"^[1-9]\d*$"))
+                //    {
+                //        ValidTableFlag = true;
+                //    }
+                //}
+
+                //if (!ValidTableFlag)
+                //    continue;
+                #endregion
+                foreach (DataRow dr in mastDt.Rows)
+                {
+                    if (dr.RowState == DataRowState.Modified)
+                    {
+                        Dictionary<string, object> oldDic = new Dictionary<string, object>();
+                        oldDic.Add("rowstate", 1);
+                        foreach (DataColumn dc in mastDt.Columns)
+                        {
+                            
+                            oldDic.Add(dc.ColumnName, dr[dc.ColumnName, DataRowVersion.Original]);
+                        }
+                        oldDic.Add("statedescribe", null);
+                        updateRowList.Add(oldDic);
+                        Dictionary<string, object> newDic = new Dictionary<string, object>();
+                        newDic.Add("rowstate", 8);
+                        foreach (DataColumn dc in mastDt.Columns)
+                        {
+
+                            newDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                        }
+                        newDic.Add("statedescribe", null);
+                        updateRowList.Add(newDic);
+                    }
+                    if (dr.RowState == DataRowState.Deleted)
+                    {
+                        Dictionary<string, object> newDic = new Dictionary<string, object>();
+                        newDic.Add("rowstate", 2);
+                        foreach (DataColumn dc in mastDt.Columns)
+                        {
+                            newDic.Add(dc.ColumnName, dr[dc.ColumnName, DataRowVersion.Original]);
+                        }
+                        newDic.Add("statedescribe", null);
+                        updateRowList.Add(newDic);
+                    }
+                    if (dr.RowState == DataRowState.Added)
+                    {
+                        Dictionary<string, object> newDic = new Dictionary<string, object>();
+                        newDic.Add("rowstate", 4);
+                        foreach (DataColumn dc in mastDt.Columns)
+                        {
+                            newDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                        }
+                        newDic.Add("statedescribe", null);
+                        updateRowList.Add(newDic);
+                    }
+                }
+            }
+            return updateRowList;
         }
 
 

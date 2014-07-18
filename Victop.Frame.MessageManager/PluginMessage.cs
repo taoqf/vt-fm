@@ -25,11 +25,12 @@ namespace Victop.Frame.MessageManager
         /// <param name="objectId">对象id</param>
         /// <param name="messageInfo">请求消息</param>
         /// <param name="replyCallBack">应答回调</param>
+        /// <param name="validTime">消息有效时间(秒)</param>
 		/// </summary>
-        public virtual void SendMessage(string objectId, string messageInfo, WaitCallback replyCallBack)
+        public virtual void SendMessage(string objectId, string messageInfo, WaitCallback replyCallBack,long validTime=15)
 		{
             PluginMessageFormManager pluginMessageFormManager = new PluginMessageFormManager();
-            pluginMessageFormManager.CheckMessageFormat(messageInfo,replyCallBack);
+            pluginMessageFormManager.CheckMessageFormat(messageInfo,replyCallBack,validTime);
 		}
         /// <summary>
         /// 执行插件回调

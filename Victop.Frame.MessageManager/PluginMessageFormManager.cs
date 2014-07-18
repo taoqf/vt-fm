@@ -25,8 +25,10 @@ using Victop.Frame.PublicLib.Helpers;
         /// <summary>
         /// 检查插件消息格式
         /// <param name="messageInfo">消息信息</param>
+        /// <param name="callBack">消息回调方法</param>
+        /// <param name="validTime">有效时间</param>
         /// </summary>
-        public virtual void CheckMessageFormat(string messageInfo, WaitCallback callBack)
+        public virtual void CheckMessageFormat(string messageInfo, WaitCallback callBack, long validTime)
         {
             PluginMessageManager pluginMessageManager = new PluginMessageManager();
             if (CheckMessageValid(messageInfo))//验证成功
@@ -40,7 +42,7 @@ using Victop.Frame.PublicLib.Helpers;
                 bool result = pluginMessageManager.InsertPluginMessage(message.MessageId, new PluginMessageInfo()
                 {
                     MessageBody = message,
-                    MessageEffectiveTime = DateTime.Now.AddSeconds(15),
+                    MessageEffectiveTime = DateTime.Now.AddSeconds(validTime),
                     MessageId = message.MessageId,
                     CloudGalleryId = GalleryManager.GetCurrentGalleryId().ToString(),
                     MessageCallBack = callBack

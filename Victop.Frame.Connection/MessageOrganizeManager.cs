@@ -95,11 +95,11 @@ namespace Victop.Frame.Connection
                         dicContent = GetServerDateTimeMessage(dicContent);
                         break;
                     case "DataChannelService.loadDataByModelAsync":
-                        //dicContent = GetLoadDataByModelMessage(dicContent);
+                        dicContent = GetLoadDataByModelMessage(dicContent);
                         replyIsToChannel = DataOperateEnum.SAVE;
                         break;
                     case "DataChannelService.saveDataByModelAsync":
-                        //dicContent = GetSaveDataByModelMessage(dicContent);
+                        dicContent = GetSaveDataByModelMessage(dicContent);
                         replyIsToChannel = DataOperateEnum.COMMIT;
                         break;
                     default:
@@ -1436,25 +1436,46 @@ namespace Victop.Frame.Connection
             {
                 dicContent.Add("deltaXml", null);
             }
+            GalleryManager galleryManager = new GalleryManager();
+            CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+            Dictionary<string, object> deltaDic;
+            if (dicContent["deltaXml"] == null)
+                deltaDic = new Dictionary<string, object>();
             else
+                deltaDic = JsonHelper.ToObject<Dictionary<string, object>>(dicContent["deltaXml"].ToString());
+            if (!deltaDic.ContainsKey("clientid"))
             {
-                GalleryManager galleryManager = new GalleryManager();
-                CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
-                LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
-                Dictionary<string, object> deltaDic = JsonHelper.ToObject<Dictionary<string, object>>(dicContent["deltaXml"].ToString());
-                if (!deltaDic.ContainsKey("clientid"))
+                deltaDic.Add("clientid", cloudGallyInfo.ClientId);
+            }
+            if (!deltaDic.ContainsKey("runuser"))
+            {
+                deltaDic.Add("runuser", cloudGallyInfo.ClientInfo.UserCode);
+            }
+            if (!deltaDic.ContainsKey("datalist"))
+            {
+                deltaDic.Add("datalist", null);
+                List<object> DataList = new List<object>();
+                Dictionary<string, object> listDic = new Dictionary<string, object>();
+                listDic.Add("modelType", dicContent["modelType"]);
+                listDic.Add("modelID", dicContent["modelId"]);
+                listDic.Add("tableid", "");
+                listDic.Add("systemid", dicContent["bysystemid"]);
+                listDic.Add("formid", dicContent["formid"]);
+                listDic.Add("controlid", dicContent["controlid"]);
+                Dictionary<string, object> dataDic = new Dictionary<string, object>();
+                if (dicContent.ContainsKey("DataChannelId"))
                 {
-                    deltaDic.Add("clientid", cloudGallyInfo.ClientId);
+                    string channelId = dicContent["DataChannelId"].ToString();
+                    ReplyMessageResolver replyResolver = new ReplyMessageResolver();
+                    List<object> dataJson = replyResolver.GetDataJSONByDataChannelId(channelId);
+                    dataDic.Add("datarows", dataJson);
                 }
-                if (!deltaDic.ContainsKey("runuser"))
-                {
-                    deltaDic.Add("runuser", loginUserInfo.UserCode);
-                }
-                if (!deltaDic.ContainsKey("datalist"))
-                {
-                    deltaDic.Add("datalist", null);
-                    //TODO:完善取数
-                }
+                listDic.Add("delta", dataDic);
+                DataList.Add(listDic);
+                deltaDic["datalist"] = DataList;
+                dicContent.Remove("DataChannelId");
+                dicContent.Remove("modelType");
+                dicContent["deltaXml"] = deltaDic;
             }
             return dicContent;
         }

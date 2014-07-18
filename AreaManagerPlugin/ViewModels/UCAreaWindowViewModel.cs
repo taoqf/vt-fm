@@ -156,6 +156,8 @@ namespace AreaManagerPlugin.ViewModels
                 });
             }
         }
+
+        private string newChannelId = string.Empty;
         /// <summary>
         /// 新主档取数
         /// </summary>
@@ -170,6 +172,7 @@ namespace AreaManagerPlugin.ViewModels
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeCommonRequestMessageMaster());
                     if (returnDic.ContainsKey("DataChannelId") && returnDic["DataChannelId"] != null)
                     {
+                        newChannelId = returnDic["DataChannelId"].ToString();
                         DataOperation operateData = new DataOperation();
                         DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
                         UpdateTableList(ds);
@@ -192,6 +195,29 @@ namespace AreaManagerPlugin.ViewModels
                 });
             }
         }
+        /// <summary>
+        /// 主档保存新
+        /// </summary>
+        public ICommand btnSaveNewClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    string MessageType = "DataChannelService.saveDataByModelAsync";
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("modelType", "主档");
+                    contentDic.Add("modelId", "地区管理");
+                    contentDic.Add("bysystemid", "905");
+                    contentDic.Add("formid", null);
+                    contentDic.Add("controlid", null);
+                    contentDic.Add("DataChannelId", newChannelId);
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic);
+                    string temp = string.Empty;
+                });
+            }
+        }
+
         /// <summary>
         /// 模型取数
         /// </summary>
@@ -357,8 +383,15 @@ namespace AreaManagerPlugin.ViewModels
         /// <returns></returns>
         private Dictionary<string, object> OrganizeMasterRequestMessage()
         {
-            CustomerMessageModel messageModel = new CustomerMessageModel();
-            messageModel.SystemId = "905";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("openType", null);
+            contentDic.Add("bzsystemid", "905");
+            contentDic.Add("formid", null);
+            contentDic.Add("dataSetID", null);
+            contentDic.Add("reportID", null);
+            contentDic.Add("modelId", null);
+            contentDic.Add("fieldName", null);
+            contentDic.Add("masterOnly", "false");
             Dictionary<string, string> paramsDic = new Dictionary<string, string>();
             paramsDic.Add("isdata", "0");
             paramsDic.Add("mastername", "地区管理");
@@ -369,9 +402,14 @@ namespace AreaManagerPlugin.ViewModels
             paramsDic.Add("dataed", null);
             paramsDic.Add("ispage", "1");
             paramsDic.Add("getset", "1");
-            messageModel.DataParam = paramsDic;
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(messageModel));
+            contentDic.Add("dataparam", paramsDic);
+            contentDic.Add("whereArr", null);
+            contentDic.Add("masterParam", null);
+            contentDic.Add("deltaXml", null);
+            contentDic.Add("shareFlag", null);
+            contentDic.Add("treeStr", null);
+            contentDic.Add("saveType", null);
+            contentDic.Add("doccode", null);
             return contentDic;
         }
 
