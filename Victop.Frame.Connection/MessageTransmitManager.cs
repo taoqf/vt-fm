@@ -156,7 +156,17 @@ namespace Victop.Frame.Connection
                     baseResourceInfo.GalleryId = GalleryManager.GetCurrentGalleryId();
                     Dictionary<string, string> replyContentDic = JsonHelper.ToObject<Dictionary<string, string>>(replyMessage.ReplyContent);
                     baseResourceInfo.ResourceXml = replyMessage.ReplyContent;
-                    baseResourceInfo.ResourceMnenus = JsonHelper.ToObject<List<MenuInfo>>(JsonHelper.ReadJsonString(replyContentDic["menu"], "result"));
+                    List<object> menuObj = JsonHelper.ToObject<List<object>>(JsonHelper.ReadJsonString(replyContentDic["menu"], "result"));
+                    if (menuObj != null)
+                    {
+                        foreach (object item in menuObj)
+                        {
+                            MenuInfo menuInfo = JsonHelper.ToObject<MenuInfo>(item.ToString());
+                            if (menuInfo == null || baseResourceInfo.ResourceMnenus.Exists(it => it.Id == menuInfo.Id))
+                                continue;
+                            baseResourceInfo.ResourceMnenus.Add(menuInfo);
+                        }
+                    }
                     BaseResourceManager baseResourceManager = new BaseResourceManager();
                     bool result = baseResourceManager.AddResouce(baseResourceInfo);
                     if (result)
@@ -164,7 +174,7 @@ namespace Victop.Frame.Connection
                         replyMessage.ReplyContent = string.Empty;
                         replyMessage.ReplyAlertMessage = replyContentDic["msg"];
                     }
-                }   
+                }
             }
             replyMessage.MessageId = messageInfo.MessageId;
             return replyMessage;
@@ -182,7 +192,7 @@ namespace Victop.Frame.Connection
             string DataChannelId = JsonHelper.ReadJsonString(messageInfo.MessageContent, "DataChannelId");
             messageInfo = organizeManager.OrganizeMessage(messageInfo, out saveDataFlag);
             string DataSource = ConfigurationManager.AppSettings.Get("DataSource").ToLower();
-            ReplyMessage replyMessage=new ReplyMessage();
+            ReplyMessage replyMessage = new ReplyMessage();
             switch (DataSource)
             {
                 case "local":

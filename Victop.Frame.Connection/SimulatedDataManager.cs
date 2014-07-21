@@ -56,7 +56,7 @@ namespace Victop.Frame.Connection
         /// </summary>
         /// <param name="modelId">模型标识</param>
         /// <returns></returns>
-        private string ReadLocalData(string modelId,out int opCode)
+        private string ReadLocalData(string modelId, out int opCode)
         {
             try
             {

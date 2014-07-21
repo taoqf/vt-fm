@@ -96,7 +96,12 @@ namespace Victop.Frame.CoreLibrary.Models
         /// </summary>
         public List<MenuInfo> ResourceMnenus
         {
-            get { return resourceMnenus; }
+            get
+            {
+                if (resourceMnenus == null)
+                    resourceMnenus = new List<MenuInfo>();
+                return resourceMnenus;
+            }
             set { resourceMnenus = value; }
         }
 
