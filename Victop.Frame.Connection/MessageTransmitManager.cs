@@ -95,25 +95,21 @@ namespace Victop.Frame.Connection
             }
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
-            if (replyMessage.ReplyMode == ReplyModeEnum.SYNCH || replyMessage.ReplyMode == ReplyModeEnum.BREAK)
+            if (replyMessage.ReplyMode == (ReplyModeEnum)0)
             {
-                if (JsonHelper.ReadJsonString(replyMessage.ReplyContent, "code").Equals("0"))
-                {
-                    replyMessage.MessageId = messageInfo.MessageId;
-                    replyMessage.ReplyMode = (ReplyModeEnum)0;
-                    replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "msg");
-                }
-                else
-                {
-                    currentGallery.ClientInfo.LinkRouterAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "routerAddress");
-                    currentGallery.ClientInfo.LinkServerAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "linkInfo");
-                    currentGallery.ClientInfo.SessionId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "sessionID");
-                    currentGallery.ClientInfo.UserName = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userName");
-                    currentGallery.ClientInfo.UserPwd = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userpw");
-                    currentGallery.ClientInfo.UserCode = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "usercode");
-                    messageInfo.MessageContent = replyMessage.ReplyContent;
-                    replyMessage = ConnectLinkSubmit(adapter, messageInfo);
-                }
+                replyMessage.MessageId = messageInfo.MessageId;
+                replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "msg");
+            }
+            else
+            {
+                currentGallery.ClientInfo.LinkRouterAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "routerAddress");
+                currentGallery.ClientInfo.LinkServerAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "linkInfo");
+                currentGallery.ClientInfo.SessionId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "sessionID");
+                currentGallery.ClientInfo.UserName = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userName");
+                currentGallery.ClientInfo.UserPwd = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userpw");
+                currentGallery.ClientInfo.UserCode = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "usercode");
+                messageInfo.MessageContent = replyMessage.ReplyContent;
+                replyMessage = ConnectLinkSubmit(adapter, messageInfo);
             }
             return replyMessage;
         }
@@ -147,7 +143,11 @@ namespace Victop.Frame.Connection
         {
             messageInfo.MessageType = "LinkService.registAsync";
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
-            if (replyMessage.ReplyMode == ReplyModeEnum.SYNCH || replyMessage.ReplyMode == ReplyModeEnum.BREAK)
+            if (replyMessage.ReplyMode == (ReplyModeEnum)0)
+            {
+                replyMessage.ReplyAlertMessage = "注册连接器失败";
+            }
+            else
             {
                 if (!string.IsNullOrEmpty(replyMessage.ReplyContent))
                 {
@@ -163,12 +163,7 @@ namespace Victop.Frame.Connection
                         replyMessage.ReplyContent = string.Empty;
                         replyMessage.ReplyAlertMessage = replyContentDic["msg"];
                     }
-                }
-            }
-            else
-            {
-                replyMessage.ReplyMode = (ReplyModeEnum)0;
-                replyMessage.ReplyAlertMessage = "注册连接器失败";
+                }   
             }
             replyMessage.MessageId = messageInfo.MessageId;
             return replyMessage;
@@ -201,8 +196,12 @@ namespace Victop.Frame.Connection
                     default:
                         break;
                 }
-                replyMessage.MessageId = messageInfo.MessageId;
             }
+            else
+            {
+                replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "Result");
+            }
+            replyMessage.MessageId = messageInfo.MessageId;
             return replyMessage;
         }
         private bool UpdateBaseResourceByGalleryId(BaseResourceInfo resourceInfo)

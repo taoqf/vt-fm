@@ -166,10 +166,6 @@ namespace Victop.Frame.Adapter
                                 {
                                     long codeInt = Convert.ToInt32(replyCode);
                                     replyMessage.ReplyMode = (ReplyModeEnum)codeInt;
-                                    if (codeInt == 0)
-                                    {
-                                        replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(returnMessage.MessageContent, "Result");
-                                    }
                                 }
                                 else
                                 {
