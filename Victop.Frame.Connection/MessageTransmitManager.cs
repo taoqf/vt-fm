@@ -17,6 +17,7 @@ namespace Victop.Frame.Connection
     using Victop.Frame.PublicLib.Helpers;
     using Victop.Frame.CoreLibrary;
     using Victop.Frame.PublicLib.Managers;
+    using System.Configuration;
 
     /// <summary>
     /// 消息转发器
@@ -180,7 +181,19 @@ namespace Victop.Frame.Connection
             DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
             string DataChannelId = JsonHelper.ReadJsonString(messageInfo.MessageContent, "DataChannelId");
             messageInfo = organizeManager.OrganizeMessage(messageInfo, out saveDataFlag);
-            ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
+            string DataSource = ConfigurationManager.AppSettings.Get("DataSource").ToLower();
+            ReplyMessage replyMessage=new ReplyMessage();
+            switch (DataSource)
+            {
+                case "local":
+                    SimulatedDataManager simDataManager = new SimulatedDataManager();
+                    replyMessage = simDataManager.SubmitRequest(messageInfo);
+                    break;
+                case "remote":
+                default:
+                    replyMessage = adapter.SubmitRequest(messageInfo);
+                    break;
+            }
             if (!(replyMessage.ReplyMode == (ReplyModeEnum)0))
             {
                 ReplyMessageResolver replyMessageResolver = new ReplyMessageResolver();

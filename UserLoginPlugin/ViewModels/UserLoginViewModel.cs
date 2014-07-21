@@ -20,6 +20,7 @@ using Victop.Frame.PublicLib.Helpers;
 using System.Threading;
 using System.Data;
 using Victop.Frame.SyncOperation;
+using Victop.Wpf.Controls;
 
 namespace UserLoginPlugin.ViewModels
 {
@@ -186,7 +187,7 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    MessageBoxResult result = MessageBox.Show("确定要退出么？", "", MessageBoxButton.YesNo);
+                    MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "", MessageBoxButton.YesNo);
                     if (result == MessageBoxResult.Yes)
                     {
                         LoginWindow.Close();

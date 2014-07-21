@@ -287,7 +287,7 @@ namespace PortalFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    MessageBoxResult result = MessageBox.Show("确定要退出么？", "", MessageBoxButton.YesNo);
+                    MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo,MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
                     {
                         mainWindow.Close();

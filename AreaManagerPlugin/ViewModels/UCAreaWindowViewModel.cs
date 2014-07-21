@@ -236,6 +236,10 @@ namespace AreaManagerPlugin.ViewModels
                         DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
                         UpdateTableList(ds);
                     }
+                    else
+                    {
+                        System.Windows.MessageBox.Show(returnDic["ReplyAlertMessage"].ToString());
+                    }
                 });
             }
         }
@@ -275,7 +279,9 @@ namespace AreaManagerPlugin.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// 用户信息
+        /// </summary>
         public ICommand btnGetUserInfoClickCommand
         {
             get
@@ -360,7 +366,6 @@ namespace AreaManagerPlugin.ViewModels
                 });
             }
         }
-
      
         #region 私有方法
         /// <summary>
