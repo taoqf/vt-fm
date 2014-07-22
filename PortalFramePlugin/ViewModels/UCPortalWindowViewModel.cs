@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using System.Xml.Linq;
 using System.Reflection;
 using PortalFramePlugin.Views;
+using Victop.Frame.SyncOperation;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -29,7 +30,7 @@ namespace PortalFramePlugin.ViewModels
         #region 字段
         private Window mainWindow;
         private Grid gridTitle;
-        private ObservableCollection<MenuModel>  systemMenuListEnterprise;
+        private ObservableCollection<MenuModel> systemMenuListEnterprise;
         private ObservableCollection<MenuModel> systemMenuListLocal;
         private ObservableCollection<MenuModel> systemThirdLevelMenuList;
         private ObservableCollection<MenuModel> systemFourthLevelMenuList;
@@ -38,7 +39,11 @@ namespace PortalFramePlugin.ViewModels
         private ObservableCollection<Victop.Wpf.Controls.VicTabItemNormal> tabItemList;
         private Victop.Wpf.Controls.VicTabItemNormal selectedTabItem;
         /// <summary>是否首次登录 </summary>
-        private bool isFirstLogin=true;
+        private bool isFirstLogin = true;
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        private string userName;
 
         #endregion
 
@@ -187,6 +192,30 @@ namespace PortalFramePlugin.ViewModels
                 }
             }
         }
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public string UserName
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(userName))
+                {
+                    Random rd = new Random();
+                    userName = "游客"+rd.Next();
+                }
+                return userName;
+            }
+            set
+            {
+                if (userName != value)
+                {
+                    userName = value;
+                    RaisePropertyChanged("UserName");
+                }
+            }
+        }
+
         #endregion
 
         #region 命令
@@ -207,25 +236,20 @@ namespace PortalFramePlugin.ViewModels
         }
         private void ChangeFrameWorkTheme()
         {
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "ServerCenterService.ChangeTheme");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
+            string messageType="ServerCenterService.ChangeTheme";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("ServiceParams", "");
-            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-            string messageStr = JsonHelper.ToJson(messageDic);
-            PluginMessage pluginMessage = new PluginMessage();
-            pluginMessage.SendMessage("", messageStr, new WaitCallback(ChangeFrameWorkLanguage));
+            MessageOperation messageOp = new MessageOperation();
+            messageOp.SendMessage(messageType, contentDic);
+            ChangeFrameWorkLanguage();
         }
-        private void ChangeFrameWorkLanguage(object message)
+        private void ChangeFrameWorkLanguage()
         {
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "ServerCenterService.ChangeLanguage");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
+            string messageType = "ServerCenterService.ChangeLanguage";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("ServiceParams", "");
-            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-            string messageStr = JsonHelper.ToJson(messageDic);
-            PluginMessage pluginMessage = new PluginMessage();
-            pluginMessage.SendMessage("", messageStr, null);
+            MessageOperation messageOp = new MessageOperation();
+            messageOp.SendMessage(messageType, contentDic);
         }
         #endregion
 
@@ -283,7 +307,7 @@ namespace PortalFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo,MessageBoxImage.Information);
+                    MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
                     {
                         mainWindow.Close();
@@ -338,7 +362,7 @@ namespace PortalFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if(SelectedThirdMenuModel!=null)
+                    if (SelectedThirdMenuModel != null)
                         SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
                 });
             }
@@ -387,7 +411,6 @@ namespace PortalFramePlugin.ViewModels
         /// <summary>加载标准化菜单</summary>
         private void LoadStandardMenu()
         {
-            //LoadMenuListLocal();
             LoadMenuListEnterprise();
         }
         /// <summary>加载企业云菜单集合 </summary>
@@ -404,7 +427,6 @@ namespace PortalFramePlugin.ViewModels
                     SystemMenuListEnterprise.Add(menuModel);
                 }
             }
-            //DataTable dt = FillDataTable(SystemMenuListEnterprise);
             GetStandardMenuList(SystemMenuListEnterprise);
         }
         /// <summary>创建完整的菜单模型 </summary>
@@ -480,7 +502,7 @@ namespace PortalFramePlugin.ViewModels
             foreach (var item in root.Elements())
             {
                 MenuModel menuModel = GetPluginInfoModel(item);
-                menuModel = CreatLocalMenuModel(item,menuModel);
+                menuModel = CreatLocalMenuModel(item, menuModel);
                 SystemMenuListLocal.Add(menuModel);
             }
         }
@@ -541,7 +563,7 @@ namespace PortalFramePlugin.ViewModels
             }
             secondLevelMenu.SystemMenuList.Add(newThirdLevelMenu);
         }
-         /// <summary>获取标准的三级菜单</summary>
+        /// <summary>获取标准的三级菜单</summary>
         private void GetStandardThirdLevelMenu(MenuModel thirdLevelMenu)
         {
             for (int i = thirdLevelMenu.SystemMenuList.Count - 1; i >= 0; i--)
@@ -568,49 +590,41 @@ namespace PortalFramePlugin.ViewModels
                 selectedFourthMenu.ResourceName = ConfigurationManager.AppSettings["runplugin"];
             if (selectedFourthMenu.ResourceName != null && selectedFourthMenu.ResourceName.Contains("Plugin"))
             {
-                Dictionary<string, string> messageDic = new Dictionary<string, string>();
-                messageDic.Add("MessageType", "PluginService.PluginRun");
-                Dictionary<string, string> contentDic = new Dictionary<string, string>();
-                contentDic.Add("PluginName", selectedFourthMenu.ResourceName);
-                contentDic.Add("PluginPath", "");
-                messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-                new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(PluginShow));
+                PluginOperation pluginOp = new PluginOperation();
+                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName);
+                if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
+                {
+                    PluginShow(pluginModel);
+                }
+                else
+                {
+                    VicMessageBoxNormal.Show(pluginModel.ErrorMsg);
+                }
             }
         }
 
-        private void PluginShow(object message)
+        private void PluginShow(PluginModel pluginModel)
         {
-            if (JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("1"))
+            switch (pluginModel.PluginInterface.ShowType)
             {
-                ActivePluginManager pluginManager = new ActivePluginManager();
-                ActivePluginInfo pluginInfo = pluginManager.GetActivePlugins()[JsonHelper.ReadJsonString(message.ToString(), "MessageId")];
-                switch (pluginInfo.ShowType)
-                {
-                    case 0:
-                        System.Windows.Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new WaitCallback(DoWork), pluginInfo);
-                        break;
-                    case 1:
-                        System.Windows.Application.Current.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new WaitCallback(CtrlDoWork), pluginInfo);
-                        break;
-                    default:
-                        break;
-                }
+                case 0:
+                    Window pluginWin = pluginModel.PluginInterface.StartWindow;
+                    pluginWin.Uid = pluginModel.ObjectId;
+                    pluginWin.ShowDialog();
+                    break;
+                case 1:
+                    UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;
+                    pluginCtrl.Uid = pluginModel.ObjectId;
+                    VicTabItemNormal tabItem = new VicTabItemNormal();
+                    tabItem.Header = pluginModel.PluginInterface.PluginTitle;
+                    tabItem.Content = pluginCtrl;
+                    tabItem.AllowDelete = true;
+                    tabItem.IsSelected = true;
+                    TabItemList.Add(tabItem);
+                    break;
+                default:
+                    break;
             }
-            else
-            {
-                MessageBox.Show(JsonHelper.ReadJsonString(message.ToString(), "ReplyAlertMessage"));
-            }
-        }
-        private void CtrlDoWork(object pluginInfo)
-        {
-            UserControl userctrl = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).StartControl;
-            userctrl.Uid = ((ActivePluginInfo)pluginInfo).ObjectId;
-            Victop.Wpf.Controls.VicTabItemNormal tabItem = new Victop.Wpf.Controls.VicTabItemNormal();
-            tabItem.Header = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).PluginTitle;
-            tabItem.Content = userctrl;
-            tabItem.AllowDelete = true;
-            tabItem.IsSelected = true;
-            TabItemList.Add(tabItem);
         }
         #endregion
 
@@ -626,26 +640,24 @@ namespace PortalFramePlugin.ViewModels
         #region 用户登录
         private void UserLogin()
         {
-            //new GalleryManager().SetCurrentGalleryId(Victop.Frame.CoreLibrary.Enums.GalleryEnum.ENTERPRISE);
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "PluginService.PluginRun");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
-            contentDic.Add("PluginName", "UserLoginPlugin");
-            contentDic.Add("PluginPath", "");
-            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(PluginShow));
-        }
-        /// <summary>打开插件</summary>
-        private void DoWork(object pluginInfo)
-        {
-            Window win = ((IPlugin)((ActivePluginInfo)pluginInfo).PluginInstance).StartWindow;
-            win.Uid = ((ActivePluginInfo)pluginInfo).ObjectId;
-            bool? result = win.ShowDialog();
-            if (win.GetType().Name == "UserLoginWindow" && result==true)
+            PluginOperation pluginOp = new PluginOperation();
+            PluginModel pluginModel = pluginOp.StratPlugin("UserLoginPlugin");
+            IPlugin PluginInstance = pluginModel.PluginInterface;
+            Window loginWin = PluginInstance.StartWindow;
+            loginWin.Uid = pluginModel.ObjectId;
+            bool? result = loginWin.ShowDialog();
+            if (result == true)
             {
+                MessageOperation messageOp = new MessageOperation();
+                Dictionary<string, object> userDic = messageOp.SendMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                if (userDic != null)
+                {
+                    UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
+                }
                 isFirstLogin = false;
                 LoadStandardMenu();
             }
+
         }
 
         #endregion

@@ -30,9 +30,9 @@
                                          Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}">
                     
                 </controls:VicButtonImage>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="13,19,0,0" TextWrapping="Wrap" Text="飞道科技有限公司" FontFamily="SimSun" VerticalAlignment="Top" Foreground="#dbf3fa" FontSize="12" FontWeight="Bold" Focusable="True"/>
-                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="13,40,0,0" TextWrapping="Wrap" Text="金牌会员（1年）" FontFamily="SimSun" VerticalAlignment="Top" Foreground="#aacfef"/>
-                <Image Grid.Column="1" Height="15" Margin="13,60,0,0" Width="100" Style="{DynamicResource MainBtnDaysStyle}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Column="1" Visibility="Collapsed" HorizontalAlignment="Left" Margin="13,19,0,0" TextWrapping="Wrap" Text="{Binding UserName}" FontFamily="SimSun" VerticalAlignment="Top" Foreground="#dbf3fa" FontSize="12" FontWeight="Bold" Focusable="True"/>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="13,40,0,0" TextWrapping="Wrap" Text="{Binding UserName}" FontFamily="SimSun" VerticalAlignment="Top" Foreground="#dbf3fa" FontSize="12" FontWeight="Bold" Focusable="True"/>
+                <Image Grid.Column="1" Visibility="Collapsed" Height="15" Margin="13,60,0,0" Width="100" Style="{DynamicResource MainBtnDaysStyle}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
