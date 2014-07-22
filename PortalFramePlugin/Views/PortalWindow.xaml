@@ -83,7 +83,7 @@
                 </Grid>
                 <controls:VicButtonImage HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Top" Width="33" Height="29" Margin="0,10,47,0" Style="{DynamicResource btnSearchStyle}"/>
                 <controls:VicButtonImage HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Top" Width="27" Height="27" Margin="0,25,10,0" Style="{DynamicResource btnMainShowSuspendStyle}">
-                    <TextBlock Text="{Binding ActivePluginNum}"/>
+                    <!--<TextBlock Text="{Binding ActivePluginNum}"/>-->
                 </controls:VicButtonImage>
             </Grid>
             <i:Interaction.Triggers>
