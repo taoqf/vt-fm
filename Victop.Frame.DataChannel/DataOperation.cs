@@ -34,15 +34,21 @@ namespace Victop.Frame.DataChannel
         /// </summary>
         /// <param name="objectId">对象id</param>
         /// <returns></returns>
-        public virtual Dictionary<string, object> GetPluginInfo(string objectId)
+        public virtual List<Dictionary<string, object>> GetPluginInfo()
         {
+            List<Dictionary<string, object>> pluginList = new List<Dictionary<string, object>>();
             ActivePluginManager pluginManager = new ActivePluginManager();
-            ActivePluginInfo pluginInfo = pluginManager.GetActivePlugins()[objectId];
-            Dictionary<string, object> pluginDict = new Dictionary<string, object>();
-            pluginDict.Add("AppId", pluginInfo.AppId);
-            pluginDict.Add("IPlugin", pluginInfo.PluginInstance);
-            pluginDict.Add("ObjectId", pluginInfo.ObjectId);
-            return pluginDict;
+            Dictionary<string,ActivePluginInfo> pluginInfoDic = pluginManager.GetActivePlugins();
+            foreach (string item in pluginInfoDic.Keys)
+            {
+                ActivePluginInfo pluginInfo = pluginInfoDic[item];
+                Dictionary<string, object> pluginDict = new Dictionary<string, object>();
+                pluginDict.Add("AppId", pluginInfo.AppId);
+                pluginDict.Add("IPlugin", pluginInfo.PluginInstance);
+                pluginDict.Add("ObjectId", pluginInfo.ObjectId);
+                pluginList.Add(pluginDict);
+            }
+            return pluginList;
         }
     }
 }

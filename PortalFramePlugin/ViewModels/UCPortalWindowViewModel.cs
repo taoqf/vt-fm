@@ -36,15 +36,18 @@ namespace PortalFramePlugin.ViewModels
         private ObservableCollection<MenuModel> systemFourthLevelMenuList;
         private MenuModel selectedSecondMenuModel;
         private MenuModel selectedThirdMenuModel;
-        private ObservableCollection<Victop.Wpf.Controls.VicTabItemNormal> tabItemList;
-        private Victop.Wpf.Controls.VicTabItemNormal selectedTabItem;
+        private ObservableCollection<VicTabItemNormal> tabItemList;
+        private VicTabItemNormal selectedTabItem;
         /// <summary>是否首次登录 </summary>
         private bool isFirstLogin = true;
         /// <summary>
         /// 用户名
         /// </summary>
         private string userName;
-
+        /// <summary>
+        /// 活动插件数目
+        /// </summary>
+        private long activePluginNum;
         #endregion
 
         #region 属性
@@ -150,14 +153,14 @@ namespace PortalFramePlugin.ViewModels
         }
 
         /// <summary>选项卡集合 </summary>
-        public ObservableCollection<Victop.Wpf.Controls.VicTabItemNormal> TabItemList
+        public ObservableCollection<VicTabItemNormal> TabItemList
         {
             get
             {
                 if (tabItemList == null)
                 {
-                    tabItemList = new ObservableCollection<Victop.Wpf.Controls.VicTabItemNormal>();
-                    Victop.Wpf.Controls.VicTabItemNormal homeItem = new Victop.Wpf.Controls.VicTabItemNormal();
+                    tabItemList = new ObservableCollection<VicTabItemNormal>();
+                    VicTabItemNormal homeItem = new VicTabItemNormal();
                     homeItem.Name = "homeItem";
                     homeItem.AllowDelete = false;
                     homeItem.Header = "ERP主页";
@@ -180,7 +183,7 @@ namespace PortalFramePlugin.ViewModels
         }
 
         /// <summary>当前选项卡 </summary>
-        public Victop.Wpf.Controls.VicTabItemNormal SelectedTabItem
+        public VicTabItemNormal SelectedTabItem
         {
             get { return selectedTabItem; }
             set
@@ -202,7 +205,7 @@ namespace PortalFramePlugin.ViewModels
                 if (string.IsNullOrEmpty(userName))
                 {
                     Random rd = new Random();
-                    userName = "游客"+rd.Next();
+                    userName = "游客" + rd.Next();
                 }
                 return userName;
             }
@@ -212,6 +215,24 @@ namespace PortalFramePlugin.ViewModels
                 {
                     userName = value;
                     RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        /// <summary>
+        /// 活动插件数目
+        /// </summary>
+        public long ActivePluginNum
+        {
+            get
+            {
+                return activePluginNum;
+            }
+            set
+            {
+                if (activePluginNum != value)
+                {
+                    activePluginNum = value;
+                    RaisePropertyChanged("ActivePluginNum");
                 }
             }
         }
@@ -236,7 +257,7 @@ namespace PortalFramePlugin.ViewModels
         }
         private void ChangeFrameWorkTheme()
         {
-            string messageType="ServerCenterService.ChangeTheme";
+            string messageType = "ServerCenterService.ChangeTheme";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("ServiceParams", "");
             MessageOperation messageOp = new MessageOperation();
@@ -398,6 +419,29 @@ namespace PortalFramePlugin.ViewModels
                         MenuModel menuModel = (MenuModel)x;
                         LoadPlugin(menuModel);
                     }
+                });
+            }
+        }
+        #endregion
+
+        #region TabItem关闭命令
+        public ICommand tbctrlTabItemClosingCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    UserControl tabCtrl = (UserControl)(SelectedTabItem.Content);
+                    if (!string.IsNullOrEmpty(tabCtrl.Uid))
+                    {
+                        MessageOperation messageOp = new MessageOperation();
+                        string messageType = "PluginService.PluginStop";
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        contentDic.Add("ObjectId", tabCtrl.Uid);
+                        messageOp.SendMessage(messageType, contentDic);
+                    }
+                    PluginOperation pluginOp = new PluginOperation();
+                    ActivePluginNum = pluginOp.GetActivePluginList().Count;
                 });
             }
         }
@@ -605,12 +649,19 @@ namespace PortalFramePlugin.ViewModels
 
         private void PluginShow(PluginModel pluginModel)
         {
+            PluginOperation pluginOp = new PluginOperation();
             switch (pluginModel.PluginInterface.ShowType)
             {
                 case 0:
                     Window pluginWin = pluginModel.PluginInterface.StartWindow;
                     pluginWin.Uid = pluginModel.ObjectId;
+                    ActivePluginNum = pluginOp.GetActivePluginList().Count;
                     pluginWin.ShowDialog();
+                    MessageOperation messageOp = new MessageOperation();
+                    string messageType = "PluginService.PluginStop";
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("ObjectId", pluginModel.ObjectId);
+                    messageOp.SendMessage(messageType, contentDic);
                     break;
                 case 1:
                     UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;
@@ -625,6 +676,7 @@ namespace PortalFramePlugin.ViewModels
                 default:
                     break;
             }
+            ActivePluginNum = pluginOp.GetActivePluginList().Count;
         }
         #endregion
 
@@ -709,6 +761,13 @@ namespace PortalFramePlugin.ViewModels
                 dataTable.Columns.Add(new DataColumn(propertyInfo.Name, propertyInfo.PropertyType));
             }
             return dataTable;
+        }
+        #endregion
+
+        #region 获取活动插件信息
+        private void GetActivePluginInfo()
+        {
+
         }
         #endregion
 

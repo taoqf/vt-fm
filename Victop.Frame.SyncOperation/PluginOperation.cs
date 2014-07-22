@@ -74,18 +74,45 @@ namespace Victop.Frame.SyncOperation
             return returnModel;
         }
 
+        /// <summary>
+        /// 获取活动插件列表
+        /// </summary>
+        /// <returns></returns>
+        public List<PluginModel> GetActivePluginList()
+        {
+            List<PluginModel> PluginList = new List<PluginModel>();
+            DataOperation PluginOper = new DataOperation();
+            List<Dictionary<string, object>> pluginInfo = PluginOper.GetPluginInfo();
+            foreach (var item in pluginInfo)
+            {
+                PluginModel pluginModel = new PluginModel();
+                pluginModel.PluginInterface = item["IPlugin"] as IPlugin;
+                pluginModel.AppId = item["AppId"].ToString();
+                pluginModel.ObjectId = item["ObjectId"].ToString();
+                PluginList.Add(pluginModel);
+            }
+            return PluginList;
+        }
+
         private void PluginShow(object message)
         {
             if (!JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
             {
                 string messageId = JsonHelper.ReadJsonString(message.ToString(), "MessageId");
                 DataOperation PluginOper = new DataOperation();
-                Dictionary<string, object> pluginDict = PluginOper.GetPluginInfo(messageId);
-                PluginModel pluginModel = new PluginModel();
-                pluginModel.PluginInterface = pluginDict["IPlugin"] as IPlugin;
-                pluginModel.AppId = pluginDict["AppId"].ToString();
-                pluginModel.ObjectId = pluginDict["ObjectId"].ToString();
-                PluginInfo = pluginModel;
+                List<Dictionary<string, object>> pluginList = PluginOper.GetPluginInfo();
+                foreach (var item in pluginList)
+                {
+                    if (item["ObjectId"].ToString().Equals(messageId))
+                    {
+                        PluginModel pluginModel = new PluginModel();
+                        pluginModel.PluginInterface = item["IPlugin"] as IPlugin;
+                        pluginModel.AppId = item["AppId"].ToString();
+                        pluginModel.ObjectId = item["ObjectId"].ToString();
+                        PluginInfo = pluginModel;
+                        break;
+                    }
+                }
             }
             else
             {

@@ -17,7 +17,7 @@ using Victop.Frame.CoreLibrary.Enums;
 	/// 核心数据集合(静态类)
 	/// </summary>
 	/// <remarks>核心数据集合(静态类)</remarks>
-	internal static class CoreDataCollection
+	public static class CoreDataCollection
 	{
         private static Dictionary<string, BaseResourceInfo> baseResourceList;
 		/// <summary>

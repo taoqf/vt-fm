@@ -64,11 +64,6 @@
                              helpers:PasswordBoxBindingHelper.Attach="True" helpers:PasswordBoxBindingHelper.Password=
                      "{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              VerticalAlignment="Top"  BorderBrush="#b2e6ff"  Background="White"  VerticalContentAlignment="Center">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="PasswordChanged">
-                            <i:InvokeCommandAction Command="{Binding pwBoxPasswordChangedCommand}" CommandParameter="{Binding ElementName=pwBox}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
                 </PasswordBox>
                 <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Content="找回密码" Foreground="#0f8ecc"/>
                 <ComboBox Grid.Row="2" Grid.Column="0"  Width="192" Height="28" Name="CloudSOAComboBox" 
@@ -82,7 +77,7 @@
                 </ComboBox>
             </Grid>
             <TextBlock Grid.Row="2" Grid.Column="0" Padding="5,0,0,0" HorizontalAlignment="Left" Name="ErrLabel"  Text="{Binding ErrMsg}" Foreground="Red" Height="22"/>
-            <Button Grid.Row="2" Grid.Column="1" Margin="0,0,0,15"  Name="btnLogin" Width="100" Content="{DynamicResource L_R_89}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Command="{Binding btnLoginClickCommand}" CommandParameter="{Binding ElementName=pwBox}" TabIndex="5" />
+            <Button Grid.Row="2" Grid.Column="1" Margin="0,0,0,15"  Name="btnLogin" Width="100" Content="{DynamicResource L_R_89}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Command="{Binding btnLoginClickCommand}" TabIndex="5" />
         </Grid>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">

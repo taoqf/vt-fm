@@ -117,24 +117,21 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
+        /// <summary>
+        /// 窗体卸载
+        /// </summary>
         public ICommand winMainUnloadedCommand
         {
             get
             {
                 return new RelayCommand(() => {
-                    PluginMessage pluginMessage = new PluginMessage();
-                    pluginMessage.SendMessage("", OrganizeCloseData(LoginWindow.Uid), null);
+                    MessageOperation messageOp = new MessageOperation();
+                    string messageType = "PluginService.PluginStop";
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("ObjectId", LoginWindow.Uid);
+                    messageOp.SendMessage(messageType,contentDic);
                 });
             }
-        }
-        private string OrganizeCloseData(string ObjectId)
-        {
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "PluginService.PluginStop");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
-            contentDic.Add("ObjectId", ObjectId);
-            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-            return JsonHelper.ToJson(messageDic);
         }
         #endregion
 
@@ -202,29 +199,13 @@ namespace UserLoginPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) =>
+                return new RelayCommand(() =>
                 {
-                    pwBox = (PasswordBox)x;
-                    UserLogin(pwBox.Password, LoginWindow);
-                }, (x) => { return CheckUserLogin(); });
+                    UserLogin();
+                }, () => { return CheckUserLogin(); });
             }
         }
         #endregion
-
-        #region 密码框内容改变时命令
-        public ICommand pwBoxPasswordChangedCommand
-        {
-            get
-            {
-                return new RelayCommand<object>((x) => {
-                    //PasswordBox pwBoxCtrl = (PasswordBox)x;
-                    //var select = pwBoxCtrl.GetType().GetMethod("Select", BindingFlags.Instance | BindingFlags.NonPublic);
-                    //select.Invoke(pwBoxCtrl, new object[] { pwBox.Password.Length + 1, pwBox.Password.Length + 1 });
-                });
-            }
-        }
-        #endregion
-
         #endregion
 
         #region 自定义方法
@@ -255,25 +236,14 @@ namespace UserLoginPlugin.ViewModels
         /// <summary>获取通道信息 </summary>
         private void GetGalleryInfo()
         {
-            new GalleryManager().SetCurrentGalleryId(Victop.Frame.CoreLibrary.Enums.GalleryEnum.ENTERPRISE);
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "GalleryService.GetGalleryInfo");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
+            string messageType = "GalleryService.GetGalleryInfo";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("usercode", "test7");
-            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(BandingGalleryInfo));
-        }
-        /// <summary>绑定通道信息 </summary>
-        private void BandingGalleryInfo(object message)
-        {
-            if (!JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
+            MessageOperation messageOp = new MessageOperation();
+            Dictionary<string, object> returnDic = messageOp.SendMessage(messageType, contentDic);
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {
-                string messageContent = JsonHelper.ReadJsonString(message.ToString(), "ReplyContent");
-                GalleryList = JsonHelper.ReadJsonObject<Dictionary<string, string>>(messageContent);
-            }
-            else
-            {
-                MessageBox.Show(JsonHelper.ReadJsonString(message.ToString(), "ReplyAlertMessage"));
+                GalleryList = JsonHelper.ReadJsonObject<Dictionary<string, string>>(returnDic["ReplyContent"].ToString());
             }
         }
         #endregion
@@ -282,23 +252,11 @@ namespace UserLoginPlugin.ViewModels
         /// <summary>设置通道信息 </summary>
         private void SetCurrentGallery()
         {
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "GalleryService.SetGalleryInfo");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
+            string messageType = "GalleryService.SetGalleryInfo";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("GalleryKey", SelectedGallery);
-            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(SetCurrentGallery));
-        }
-        private void SetCurrentGallery(object message)
-        {
-            if (!JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
-            {
-               
-            }
-            else
-            {
-                MessageBox.Show(JsonHelper.ReadJsonString(message.ToString(), "ReplyAlertMessage"));
-            }
+            MessageOperation messageOp = new MessageOperation();
+            messageOp.SendMessage(messageType, contentDic);
         }
         #endregion
 
@@ -314,15 +272,14 @@ namespace UserLoginPlugin.ViewModels
         #endregion
 
         #region 登录操作
-        private void UserLogin(string pass,Window window)
+        private void UserLogin()
         {
-            window.Cursor = Cursors.Wait;
             try
             {
+                LoginWindow.Cursor = Cursors.Wait;
                 Dictionary<string, object> contentDic = new Dictionary<string, object>();
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
-                //new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(Login));
                 string MessageType = "LoginService.userLoginNew";
                 MessageOperation messageOp = new MessageOperation();
                 Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic);
@@ -349,7 +306,7 @@ namespace UserLoginPlugin.ViewModels
             }
             finally
             {
-                window.Cursor = Cursors.Arrow;
+                LoginWindow.Cursor = Cursors.Arrow;
             }
         }
         /// <summary>检查输入信息</summary>

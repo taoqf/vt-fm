@@ -82,7 +82,9 @@
                     <controls:VicTextBoxNormal Width="160" BorderThickness="0" HorizontalAlignment="Right" WateMark="请输入想要搜索的软件"></controls:VicTextBoxNormal>
                 </Grid>
                 <controls:VicButtonImage HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Top" Width="33" Height="29" Margin="0,10,47,0" Style="{DynamicResource btnSearchStyle}"/>
-                <controls:VicButtonImage HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Top" Width="27" Height="27" Margin="0,25,10,0" Style="{DynamicResource btnMainShowSuspendStyle}"/>
+                <controls:VicButtonImage HorizontalAlignment="Right" Grid.Row="1" VerticalAlignment="Top" Width="27" Height="27" Margin="0,25,10,0" Style="{DynamicResource btnMainShowSuspendStyle}">
+                    <TextBlock Text="{Binding ActivePluginNum}"/>
+                </controls:VicButtonImage>
             </Grid>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseMove">
@@ -124,11 +126,11 @@
             </StackPanel>
             <Grid Grid.Column="2" >
                 <controls:VicTabControlNormal Name="MainTabControl"  ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
-                    <!--<controls:TabItem Header="ERP主页" Name="MainTab" AllowDelete="False">
-                        <ScrollViewer>
-                            <views:UCPluginContainer Width="736" HorizontalAlignment="Center" Margin="5,5,5,0"/>
-                        </ScrollViewer>
-                    </controls:TabItem>-->
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TabItemClosing">
+                            <i:InvokeCommandAction Command="{Binding tbctrlTabItemClosingCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </controls:VicTabControlNormal>
             </Grid>
         </Grid>

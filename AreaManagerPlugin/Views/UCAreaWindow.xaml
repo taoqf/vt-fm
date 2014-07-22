@@ -115,9 +115,6 @@
             <i:EventTrigger EventName="Loaded">
                 <i:InvokeCommandAction Command="{Binding gridLoadedCommand}"/>
             </i:EventTrigger>
-            <i:EventTrigger EventName="Unloaded">
-                <i:InvokeCommandAction Command="{Binding gridUnloadedCommand}" CommandParameter="{Binding ElementName=UCMain}"/>
-            </i:EventTrigger>
         </i:Interaction.Triggers>
     </Grid>
 </UserControl>

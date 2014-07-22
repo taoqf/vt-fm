@@ -115,19 +115,6 @@ namespace AreaManagerPlugin.ViewModels
                 });
             }
         }
-
-        public ICommand gridUnloadedCommand
-        {
-            get
-            {
-                return new RelayCommand<object>((x) =>
-                {
-                    System.Windows.Controls.UserControl userCtrl = (System.Windows.Controls.UserControl)x;
-                    PluginMessage pluginMessage = new PluginMessage();
-                    pluginMessage.SendMessage("", OrganizeCloseMessage(userCtrl.Uid), null);
-                });
-            }
-        }
         /// <summary>
         /// 主档取数
         /// </summary>
