@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
         xmlns:local="clr-namespace:PortalFramePlugin"
         xmlns:views="clr-namespace:PortalFramePlugin.Views"
-        Title="PortalWindow" Name="mainWindow" Width="952" ResizeMode="NoResize" Height="670" WindowStyle="None" AllowsTransparency="True" Style="{DynamicResource ShadowWindow}">
+        Title="PortalWindow" Name="mainWindow" Width="952" ResizeMode="NoResize" Height="670" WindowStyle="None" Style="{DynamicResource ShadowWindow}">
     <Window.DataContext>
         <vm:UCPortalWindowViewModel/>
     </Window.DataContext>
