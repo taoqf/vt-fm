@@ -735,9 +735,10 @@ namespace PortalFramePlugin.ViewModels
             PluginOperation pluginOp = new PluginOperation();
             PluginModel pluginModel = pluginOp.StratPlugin("ThemeManagerPlugin");
             IPlugin PluginInstance = pluginModel.PluginInterface;
-            Window loginWin = PluginInstance.StartWindow;
-            loginWin.ShowDialog();
-          
+            Window themeWin = PluginInstance.StartWindow;
+            themeWin.Owner = mainWindow;
+            themeWin.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            themeWin.ShowDialog();
         }
 
         #endregion
