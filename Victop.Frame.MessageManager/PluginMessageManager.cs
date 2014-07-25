@@ -73,12 +73,10 @@ namespace Victop.Frame.MessageManager
                     PluginMessageInfo pluginMessageInfo = PluginMessageList.Values.FirstOrDefault(it => it.MessageEffectiveTime < DateTime.Now);
                     if (pluginMessageInfo != null)
                     {
-                        //2.创建超时消息
                         ReplyMessage replyMessage = new ReplyMessage();//重新组织返回过来的超时消息
                         replyMessage.MessageId = pluginMessageInfo.MessageId;//设置对应的消息标识。
                         replyMessage.ReplyAlertMessage = "请求超时";
                         replyMessage.ReplyContent = "请求失败";
-                        //3.组织返回消息串
                         ReplyPluginMessageManager replyPluginMessageManager = new ReplyPluginMessageManager();
                         replyPluginMessageManager.OrganizeReplyMessage(replyMessage);
                     }
