@@ -108,6 +108,10 @@
       <Project>{90c4d04f-f952-4c63-8a69-0c9d12e050fb}</Project>
       <Name>Victop.Frame.PublicLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Victop.Server.Controls\Victop.Server.Controls.csproj">
+      <Project>{d609f0a2-27e1-4855-a5b6-942e580d0d8a}</Project>
+      <Name>Victop.Server.Controls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

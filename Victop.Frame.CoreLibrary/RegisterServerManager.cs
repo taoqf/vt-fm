@@ -13,6 +13,9 @@ namespace Victop.Frame.CoreLibrary
     using System.Text;
     using Victop.Frame.CoreLibrary.Enums;
     using System.Configuration;
+    using System.IO;
+    using System.Reflection;
+    using Victop.Server.Controls;
 
     /// <summary>
     /// 注册服务管理
@@ -154,40 +157,63 @@ namespace Victop.Frame.CoreLibrary
                 setGalleryInfo.ServerStatus = ResourceEnum.NONE;
                 serverManager.RegisterServer(setGalleryInfo);
                 #endregion
-                #region 换肤服务
-                RegisterServerInfo ThemeInfo = new RegisterServerInfo();
-                ThemeInfo.CloudGalleryId = item.ToString();
-                ThemeInfo.ServerName = "SystemThemeManagerService";
-                ThemeInfo.ReceiptMessageType.Add("ServerCenterService.ChangeTheme");
-                ThemeInfo.ReceiptMessageType.Add("ServerCenterService.ChangeLanguage");
-                ThemeInfo.ServerType = ServerTypeEnum.LOCAL;
-                ThemeInfo.ServerPath = string.Empty;
-                ThemeInfo.ServerStatus = ResourceEnum.NONE;
-                serverManager.RegisterServer(ThemeInfo);
-                #endregion
-                #region 获取用户信息服务
-                RegisterServerInfo UserInfo = new RegisterServerInfo();
-                UserInfo.CloudGalleryId = item.ToString();
-                UserInfo.ServerName = "UserManagerService";
-                UserInfo.ReceiptMessageType.Add("ServerCenterService.GetUserInfo");
-                UserInfo.ServerType = ServerTypeEnum.LOCAL;
-                UserInfo.ServerPath = string.Empty;
-                UserInfo.ServerStatus = ResourceEnum.NONE;
-                serverManager.RegisterServer(UserInfo);
-                #endregion
-                #region 文件管理服务
-                RegisterServerInfo documentInfo = new RegisterServerInfo();
-                documentInfo.CloudGalleryId = item.ToString();
-                documentInfo.ServerName = "DocumentManagerService";
-                documentInfo.ReceiptMessageType.Add("ServerCenterService.UploadDocument");
-                documentInfo.ReceiptMessageType.Add("ServerCenterService.DownloadDocument");
-                documentInfo.ServerType = ServerTypeEnum.LOCAL;
-                documentInfo.ServerPath = string.Empty;
-                documentInfo.ServerStatus = ResourceEnum.NONE;
-                serverManager.RegisterServer(documentInfo);
-                #endregion
+                RegisterLocalServer(serverManager, item.ToString());
             }
         }
+        /// <summary>
+        /// 注册本地服务
+        /// </summary>
+        /// <param name="serverManager"></param>
+        /// <param name="galleryId"></param>
+        private void RegisterLocalServer(RegisterServerManager serverManager,string galleryId)
+        {
+            string FolderPath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["pluginpath"];
+            DirectoryInfo folderInfo = new DirectoryInfo(FolderPath);
+            FileInfo[] files = folderInfo.GetFiles("*Service.dll");
+            if (files != null && files.Count() > 0)
+            {
+                foreach (FileInfo file in files)
+                {
+                    Assembly assembly = ServerFactory.GetServerAssemblyByName(file.Name.Substring(0, file.Name.IndexOf(".")), "");
+                    Type[] types = assembly.GetTypes();
+                    foreach (Type t in types)
+                    {
+                        if (IsValidServer(t))
+                        {
+                            IService service = (IService)assembly.CreateInstance(t.FullName);
+                            RegisterServerInfo serviceInfo = new RegisterServerInfo();
+                            serviceInfo.CloudGalleryId = galleryId;
+                            serviceInfo.ServerName = service.ServiceName;
+                            serviceInfo.ReceiptMessageType = service.ServiceReceiptMessageType;
+                            serviceInfo.ServerType = ServerTypeEnum.LOCAL;
+                            serviceInfo.ServerPath = string.Empty;
+                            serviceInfo.ServerStatus = ResourceEnum.NONE;
+                            serverManager.RegisterServer(serviceInfo);
+                        }
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 是否为有效的服务
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private bool IsValidServer(Type type)
+        {
+            bool ret = false;
+            Type[] interfaces = type.GetInterfaces();
+            foreach (Type theInterface in interfaces)
+            {
+                if (theInterface.FullName == "Victop.Server.Controls.IService")
+                {
+                    ret = true;
+                    break;
+                }
+            }
+            return ret;
+        }
+
         /// <summary>
         /// 获取所有注册服务信息
         /// </summary>
