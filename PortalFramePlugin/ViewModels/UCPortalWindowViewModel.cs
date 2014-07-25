@@ -289,6 +289,20 @@ namespace PortalFramePlugin.ViewModels
         }
         #endregion
 
+        #region 换肤命令
+        /// <summary>用户登录命令 </summary>
+        public ICommand btnChangeSkinClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                    {
+                        ChangeTheme();
+                    });
+            }
+        }
+        #endregion
+
         #region 用户登录命令
         /// <summary>用户登录命令 </summary>
         public ICommand btnUserLoginClickCommand
@@ -710,6 +724,20 @@ namespace PortalFramePlugin.ViewModels
                 LoadStandardMenu();
             }
 
+        }
+
+        #endregion
+
+
+        #region 换肤
+        private void ChangeTheme()
+        {
+            PluginOperation pluginOp = new PluginOperation();
+            PluginModel pluginModel = pluginOp.StratPlugin("ThemeManagerPlugin");
+            IPlugin PluginInstance = pluginModel.PluginInterface;
+            Window loginWin = PluginInstance.StartWindow;
+            loginWin.ShowDialog();
+          
         }
 
         #endregion

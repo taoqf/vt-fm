@@ -1,75 +1,90 @@
 ﻿<ResourceDictionary
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
   xmlns:controls = "clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
   >
-       <!--<Setter Property="AllowsTransparency" Value="true"/>-->
-        <!--<Setter Property="Background" Value="Transparent"/>-->
-        <!--<Setter Property="ResizeMode" Value="NoResize"/>-->
-      <!--<Setter Property="WindowStyle" Value="None"/>-->
+  <!--<Setter Property="AllowsTransparency" Value="true"/>-->
+  <!--<Setter Property="Background" Value="Transparent"/>-->
+  <!--<Setter Property="ResizeMode" Value="NoResize"/>-->
+  <!--<Setter Property="WindowStyle" Value="None"/>-->
 
+  <Style x:Key="SelectedGridImage" TargetType="{x:Type  Grid}">
+  <Setter Property="Background" >
+      <Setter.Value>
+        <ImageBrush ImageSource="indexSelected.png" />
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+<Style x:Key="GridImage" TargetType="{x:Type Grid}">
+    <Setter Property="Background" >
+      <Setter.Value>
+        <ImageBrush ImageSource="index.png" />
+      </Setter.Value>
+    </Setter>
+  </Style>
   <Style x:Key="btnClear" TargetType="{x:Type controls:VicButtonTopBottom}">
-      <Setter Property="TopBackground">
-        <Setter.Value>
-          <ImageBrush ImageSource="btnDelete.png"/>
-        </Setter.Value>
-      </Setter>
-      <Setter Property="BottomContent" Value="{DynamicResource L_R_300}"/>
-    </Style>
+    <Setter Property="TopBackground">
+      <Setter.Value>
+        <ImageBrush ImageSource="btnDelete.png"/>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BottomContent" Value="{DynamicResource L_R_300}"/>
+  </Style>
 
-    <Style x:Key="btnAdd" TargetType="{x:Type controls:VicButtonTopBottom}">
-      <Setter Property="TopBackground">
-        <Setter.Value>
-          <ImageBrush ImageSource="btnAdd.png"/>
-        </Setter.Value>
-      </Setter>
-      <Setter Property="BottomContent" Value="{DynamicResource L_R_35}"/>
-    </Style>
-  
-    <Style x:Key="btnCancel" TargetType="{x:Type controls:VicButtonTopBottom}">
-      <Setter Property="TopBackground">
-        <Setter.Value>
-          <ImageBrush ImageSource="btnCancel.png"/>
-        </Setter.Value>
-      </Setter>
-      <Setter Property="BottomContent" Value="{DynamicResource L_R_3}"/>
-    </Style>
+  <Style x:Key="btnAdd" TargetType="{x:Type controls:VicButtonTopBottom}">
+    <Setter Property="TopBackground">
+      <Setter.Value>
+        <ImageBrush ImageSource="btnAdd.png"/>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BottomContent" Value="{DynamicResource L_R_35}"/>
+  </Style>
 
-    <Style x:Key="btnCancelAll" TargetType="{x:Type controls:VicButtonTopBottom}">
-      <Setter Property="TopBackground">
-        <Setter.Value>
-          <ImageBrush ImageSource="btnCancelAll.png"/>
-        </Setter.Value>
-      </Setter>
-      <Setter Property="BottomContent" Value="{DynamicResource L_R_23}"/>
-    </Style>
-    
-    <Style x:Key="btnDelete" TargetType="{x:Type controls:VicButtonTopBottom}">
-      <Setter Property="TopBackground">
-        <Setter.Value>
-          <ImageBrush ImageSource="btnDelete.png"/>
-        </Setter.Value>
-      </Setter>
-      <Setter Property="BottomContent" Value="{DynamicResource L_R_22}"/>
-    </Style>
-    
-    <Style x:Key="btnSave" TargetType="{x:Type controls:VicButtonTopBottom}">
-      <Setter Property="TopBackground">
-        <Setter.Value>
-          <ImageBrush ImageSource="btnSave.png"/>
-        </Setter.Value>
-      </Setter>
-      <Setter Property="BottomContent" Value="{DynamicResource L_R_24}"/>
-    </Style>
-    
-    <Style x:Key="btnSearch" TargetType="{x:Type controls:VicButtonTopBottom}">
-      <Setter Property="TopBackground">
-        <Setter.Value>
-          <ImageBrush ImageSource="btnSearch.png"/>
-        </Setter.Value>
-      </Setter>
-      <Setter Property="BottomContent" Value="{DynamicResource L_R_25}"/>
-    </Style>
+  <Style x:Key="btnCancel" TargetType="{x:Type controls:VicButtonTopBottom}">
+    <Setter Property="TopBackground">
+      <Setter.Value>
+        <ImageBrush ImageSource="btnCancel.png"/>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BottomContent" Value="{DynamicResource L_R_3}"/>
+  </Style>
+
+  <Style x:Key="btnCancelAll" TargetType="{x:Type controls:VicButtonTopBottom}">
+    <Setter Property="TopBackground">
+      <Setter.Value>
+        <ImageBrush ImageSource="btnCancelAll.png"/>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BottomContent" Value="{DynamicResource L_R_23}"/>
+  </Style>
+
+  <Style x:Key="btnDelete" TargetType="{x:Type controls:VicButtonTopBottom}">
+    <Setter Property="TopBackground">
+      <Setter.Value>
+        <ImageBrush ImageSource="btnDelete.png"/>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BottomContent" Value="{DynamicResource L_R_22}"/>
+  </Style>
+
+  <Style x:Key="btnSave" TargetType="{x:Type controls:VicButtonTopBottom}">
+    <Setter Property="TopBackground">
+      <Setter.Value>
+        <ImageBrush ImageSource="btnSave.png"/>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BottomContent" Value="{DynamicResource L_R_24}"/>
+  </Style>
+
+  <Style x:Key="btnSearch" TargetType="{x:Type controls:VicButtonTopBottom}">
+    <Setter Property="TopBackground">
+      <Setter.Value>
+        <ImageBrush ImageSource="btnSearch.png"/>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BottomContent" Value="{DynamicResource L_R_25}"/>
+  </Style>
 
   <Style x:Key="btnPrint" TargetType="{x:Type controls:VicButtonTopBottom}">
     <Setter Property="TopBackground">
@@ -153,7 +168,7 @@
     </Setter>
     <Setter Property="RightContent" Value="{DynamicResource L_R_42}"/>
   </Style>
-  
+
   <Style x:Key="btnDeleteNode" TargetType="{x:Type controls:VicButtonLeftRight}">
     <Setter Property="LeftBackground">
       <Setter.Value>
@@ -162,32 +177,32 @@
     </Setter>
     <Setter Property="RightContent" Value="{DynamicResource L_R_43}"/>
   </Style>
-  
-      <Style x:Key="ShadowWindow" TargetType="{x:Type Window}">
-        <Setter Property="Template">
-             <Setter.Value>
-                   <ControlTemplate TargetType="{x:Type Window}">
-                          <Grid >
-                    <Rectangle Fill="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-                            RadiusX="1" RadiusY="1">
-                   <Rectangle.Effect>
-                       <DropShadowEffect BlurRadius="10" ShadowDepth="0"/>
+
+  <Style x:Key="ShadowWindow" TargetType="{x:Type Window}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Window}">
+          <Grid >
+            <Rectangle Fill="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                    RadiusX="1" RadiusY="1">
+              <Rectangle.Effect>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="0"/>
               </Rectangle.Effect>
             </Rectangle>
-                   <Border Background="{TemplateBinding Background}"
-                            BorderBrush="#024672"
-                          BorderThickness="1"
-                          Padding="{TemplateBinding Margin}"
-                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                          CornerRadius="0">
-                  <ContentPresenter />
+            <Border Background="{TemplateBinding Background}"
+                     BorderBrush="#024672"
+                   BorderThickness="1"
+                   Padding="{TemplateBinding Margin}"
+                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                   CornerRadius="0">
+              <ContentPresenter />
             </Border>
           </Grid>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <Style x:Key="loginWindowStyle" TargetType="{x:Type Window}">
     <Setter Property="Background">
       <Setter.Value>
@@ -195,7 +210,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <Style x:Key="loginTopGridStyle" TargetType="{x:Type Grid}">
     <Setter Property="Background">
       <Setter.Value>
@@ -203,8 +218,8 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
-  
+
+
   <Style x:Key="loginMainGridStyle" TargetType="{x:Type Grid}">
     <Setter Property="Background">
       <Setter.Value>
@@ -236,7 +251,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <Style x:Key="LoginTopLeftGridStyle1" TargetType="{x:Type Grid}">
     <Setter Property="Background">
       <Setter.Value>
@@ -275,7 +290,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-    
+
   <Style x:Key="MainFrmBottomGridStyle" TargetType="{x:Type Label}">
     <Setter Property="Foreground" Value="#828282"></Setter>
     <Setter Property="FontFamily" Value="SimSun"/>
@@ -324,7 +339,7 @@
     </Setter>
   </Style>
 
-  
+
   <Style x:Key="MainBtnDaysStyle" TargetType="{x:Type Image}">
     <Setter Property="Source" Value="btnDays.png">
     </Setter>
@@ -337,7 +352,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <Style x:Key="btnChangeSkinStyle" TargetType="{x:Type Button}">
     <Setter Property="BorderThickness" Value="0"/>
     <Setter Property="Padding" Value="0"/>
@@ -377,7 +392,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <Style x:Key="btnMiniStyle" TargetType="{x:Type Button}">
     <Setter Property="BorderThickness" Value="0"/>
     <Setter Property="Padding" Value="0"/>
@@ -416,7 +431,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <Style x:Key="btnMaxiStyle" TargetType="{x:Type Button}">
     <Setter Property="Padding" Value="0"/>
     <Setter Property="BorderThickness" Value="0"/>
@@ -497,7 +512,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <Style x:Key="btnCloseStyle" TargetType="{x:Type Button}">
     <Setter Property="BorderThickness" Value="0"/>
     <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -514,8 +529,8 @@
             <Themes:ButtonChrome.Background>
               <ImageBrush  ImageSource="Close.png"/>
             </Themes:ButtonChrome.Background>
-          
-        </Themes:ButtonChrome>
+
+          </Themes:ButtonChrome>
           <ControlTemplate.Triggers>
             <Trigger Property="IsKeyboardFocused" Value="true">
               <Setter Property="RenderDefaulted" TargetName="Chrome" Value="true"/>
@@ -640,7 +655,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <Style x:Key="MainFrmLeftMenuStyle1st" TargetType="{x:Type Label}">
     <Setter Property="Foreground" Value="#435058"></Setter>
     <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
@@ -717,8 +732,8 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RadioButton}">
-            <BulletDecorator RenderTransformOrigin="0.804,0.763"   x:Name="Chrome">
-              <ContentPresenter VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,90,0,0"  RecognizesAccessKey="True"  Height="20" Width="203">
+          <BulletDecorator RenderTransformOrigin="0.804,0.763"   x:Name="Chrome">
+            <ContentPresenter VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,90,0,0"  RecognizesAccessKey="True"  Height="20" Width="203">
             </ContentPresenter>
             <BulletDecorator.Background>
               <ImageBrush ImageSource="index.png"/>
@@ -752,7 +767,7 @@
     <Setter Property="Height" Value="25"/>
     <Setter Property="Margin" Value="5,5,5,5"/>
     <Setter Property="Padding" Value="5,5,5,0"/>
-      <Setter Property="Background">
+    <Setter Property="Background">
       <Setter.Value>
         <ImageBrush ImageSource="MenuItemDefault.png" />
       </Setter.Value>
@@ -765,27 +780,27 @@
           </Setter.Value>
         </Setter>
         <Setter Property="TextElement.Foreground"  Value="White"/>
-           </Trigger>
+      </Trigger>
 
     </Style.Triggers>
   </Style>
-  
+
   <Style x:Key="tblockAdvertisementStyle" TargetType="{x:Type TextBlock}">
-					<Setter Property="Background">
-				<Setter.Value>
-					<ImageBrush ImageSource="AdvertiseBack.png"/>
-				</Setter.Value>
-			</Setter>
-    	<Style.Triggers>
-        <Trigger Property="IsMouseOver" Value="True">
-          <Setter Property="Background">
-            <Setter.Value>
-              <ImageBrush ImageSource="AdvertiseBackMouseOver.png"/>
-            </Setter.Value>
-          </Setter>
-        </Trigger>
-			</Style.Triggers>
-		</Style>
+    <Setter Property="Background">
+      <Setter.Value>
+        <ImageBrush ImageSource="AdvertiseBack.png"/>
+      </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background">
+          <Setter.Value>
+            <ImageBrush ImageSource="AdvertiseBackMouseOver.png"/>
+          </Setter.Value>
+        </Setter>
+      </Trigger>
+    </Style.Triggers>
+  </Style>
 
   <Style x:Key="btnMainFeedBackStyle" TargetType="{x:Type controls:VicButtonImage}">
     <Setter Property="Background">
@@ -803,7 +818,7 @@
       </Trigger>
     </Style.Triggers>
   </Style>
-  
+
   <Style x:Key="btnSearchStyle" TargetType="{x:Type controls:VicButtonImage}">
     <Setter Property="Background">
       <Setter.Value>
@@ -811,7 +826,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <Style x:Key="btnMainShowSuspendStyle" TargetType="{x:Type controls:VicButtonImage}">
     <Setter Property="Background">
       <Setter.Value>
@@ -1070,9 +1085,9 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
-  
-  
+
+
+
   <Style x:Key="FavsScrollViewer" TargetType="{x:Type ScrollViewer}">
     <Setter Property="OverridesDefaultStyle" Value="True"/>
     <Setter Property="Template">

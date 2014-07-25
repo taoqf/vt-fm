@@ -8,6 +8,21 @@
         <!--<Setter Property="ResizeMode" Value="NoResize"/>-->
       <!--<Setter Property="WindowStyle" Value="None"/>-->
 
+<Style x:Key="SelectedGridImage" TargetType="{x:Type  Grid}">
+  <Setter Property="Background" >
+      <Setter.Value>
+        <ImageBrush ImageSource="indexSelected.png" />
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+<Style x:Key="GridImage" TargetType="{x:Type Grid}">
+    <Setter Property="Background" >
+      <Setter.Value>
+        <ImageBrush ImageSource="index.png" />
+      </Setter.Value>
+    </Setter>
+  </Style>
   <Style x:Key="btnClear" TargetType="{x:Type controls:VicButtonTopBottom}">
       <Setter Property="TopBackground">
         <Setter.Value>
