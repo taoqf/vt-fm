@@ -24,7 +24,7 @@ namespace Victop.Frame.Connection
 		/// <summary>
 		/// 应答消息数据部分
 		/// </summary>
-		public virtual ReplyMessage DataReplyMessage
+		private ReplyMessage DataReplyMessage
 		{
 			get;
 			set;
@@ -33,7 +33,7 @@ namespace Victop.Frame.Connection
 		/// <summary>
 		/// 应答消息状态部分
 		/// </summary>
-		public virtual ReplyMessage MessageStatusReplyMessage
+        private ReplyMessage MessageStatusReplyMessage
 		{
 			get;
 			set;
@@ -100,14 +100,6 @@ namespace Victop.Frame.Connection
             }
             return result;
         }
-
-		/// <summary>
-		/// 应答状态部分返回到消息管理器(丢弃)
-		/// </summary>
-		public virtual void ReplyToMessageManager(ReplyMessage messageInfo)
-		{
-			throw new System.NotImplementedException(); //TODO:方法实现
-		}
 
 		/// <summary>
 		/// 更新核心类库服务注册表

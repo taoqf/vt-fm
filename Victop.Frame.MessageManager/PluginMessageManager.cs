@@ -85,30 +85,6 @@ namespace Victop.Frame.MessageManager
             }
 
         }
-
-        /// <summary>
-        /// 修改插件消息状态
-        /// </summary>
-        public virtual bool UpdatePluginMessageStatus(string messageKey)
-        {
-            return true;
-        }
-
-        /// <summary>
-        /// 启动消息线程
-        /// </summary>
-        private void RunMessageThread()
-        {
-            throw new System.NotImplementedException(); //TODO:方法实现
-        }
-
-        /// <summary>
-        /// 获取应答消息(回调)
-        /// </summary>
-        private void GetRequestMessage(ReplyMessage messageInfo)
-        {
-            throw new System.NotImplementedException(); //TODO:方法实现
-        }
         /// <summary>
         /// 取得消息列表
         /// </summary>

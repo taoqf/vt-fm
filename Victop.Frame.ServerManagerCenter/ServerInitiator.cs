@@ -70,18 +70,9 @@ namespace Victop.Frame.ServerManagerCenter
                 case "GalleryService.GetGalleryInfo":
                     ReplyContent = GetGalleryInfo(messageInfo);
                     break;
-                case "ServerCenterService.ChangeTheme":
-                case "ServerCenterService.ChangeLanguage":
+                default:
                     RegisterServerInfo serverInfo = JsonHelper.ToObject<RegisterServerInfo>(JsonHelper.ReadJsonString(messageInfo.MessageContent, "ServerInfo"));
                     ReplyContent = ServerRun(serverInfo,messageInfo);
-                    break;
-                case "ServerCenterService.GetUserInfo":
-                case "ServerCenterService.DownloadDocument":
-                case "ServerCenterService.UploadDocument":
-                    RegisterServerInfo serverInfoEx = JsonHelper.ToObject<RegisterServerInfo>(JsonHelper.ReadJsonString(messageInfo.MessageContent, "ServerInfo"));
-                    ReplyContent = ServerRun(serverInfoEx, messageInfo);
-                    break;
-                default:
                     break;
             }
             return ReplyContent;

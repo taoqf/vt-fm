@@ -67,7 +67,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RamifyEnum.cs" />
-    <Compile Include="ServerFactory.cs" />
     <Compile Include="ServerInfoEntity.cs" />
     <Compile Include="ServerInitiator.cs" />
     <Compile Include="ServerJudgeManager.cs" />

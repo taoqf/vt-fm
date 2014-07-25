@@ -4,7 +4,7 @@
 //     如果重新生成代码，将丢失对此文件所做的更改。
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace VictopPartner.PluginRun
+namespace Victop.Frame.CoreLibrary
 {
     using System;
     using System.Collections.Generic;
@@ -16,14 +16,14 @@ namespace VictopPartner.PluginRun
 	/// <summary>
 	/// 插件工厂
 	/// </summary>
-    internal class ServerFactory
+    public class ServerFactory
 	{
 		/// <summary>
 		/// 反射启动插件
         /// <param name="serverName">服务名称</param>
         /// <param name="serverPath">服务路径</param>
 		/// </summary>
-        internal static Assembly GetServerAssemblyByName(string serverName, string serverPath = "")
+        public static Assembly GetServerAssemblyByName(string serverName, string serverPath = "")
 		{
             if (string.IsNullOrWhiteSpace(serverName))
             {
@@ -35,9 +35,16 @@ namespace VictopPartner.PluginRun
             }
             serverName = string.Concat(serverName, ".dll");
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, serverPath, serverName);
-            byte[] fileBytes = LoadServerFile(filePath);
-            Assembly assemblyLoad = AppDomain.CurrentDomain.Load(fileBytes);
-            return assemblyLoad;
+            if (File.Exists(filePath))
+            {
+                byte[] fileBytes = LoadServerFile(filePath);
+                Assembly assemblyLoad = AppDomain.CurrentDomain.Load(fileBytes);
+                return assemblyLoad;
+            }
+            else
+            {
+                throw new Exception("插件不存在");
+            }
 		}
 
 		/// <summary>

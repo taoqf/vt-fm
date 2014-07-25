@@ -65,10 +65,10 @@
   <ItemGroup>
     <Compile Include="AbsClasses\Base.cs" />
     <Compile Include="ActivePluginManager.cs" />
-    <Compile Include="AdapterFactory.cs" />
+    <Compile Include="Factorys\AdapterFactory.cs" />
     <Compile Include="AutoDiscover.cs" />
     <Compile Include="BaseResourceManager.cs" />
-    <Compile Include="ComlinkFactory.cs" />
+    <Compile Include="Factorys\ComlinkFactory.cs" />
     <Compile Include="Common\MessageHelper.cs" />
     <Compile Include="CoreDataCollection.cs" />
     <Compile Include="Enums\DataOperateEnum.cs" />
@@ -79,6 +79,7 @@
     <Compile Include="Enums\ResourceEnum.cs" />
     <Compile Include="Enums\ServerTypeEnum.cs" />
     <Compile Include="Enums\ThreadStatusEnum.cs" />
+    <Compile Include="Factorys\ServerFactory.cs" />
     <Compile Include="FrameInit.cs" />
     <Compile Include="FrameUnload.cs" />
     <Compile Include="GalleryManager.cs" />
