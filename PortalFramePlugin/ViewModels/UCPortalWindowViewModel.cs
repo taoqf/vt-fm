@@ -48,6 +48,10 @@ namespace PortalFramePlugin.ViewModels
         /// 活动插件数目
         /// </summary>
         private long activePluginNum;
+        /// <summary>
+        /// 本地插件集合
+        /// </summary>
+        private List<MenuModel> localMenuList = new List<MenuModel>();
         #endregion
 
         #region 属性
@@ -165,9 +169,18 @@ namespace PortalFramePlugin.ViewModels
                     homeItem.AllowDelete = false;
                     homeItem.Header = "ERP主页";
                     homeItem.Height = 40;
-                    ScrollViewer scroll = new ScrollViewer();
-                    scroll.Content = new UCPluginContainer();
-                    homeItem.Content = scroll;
+                    if (ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+                    {
+                        WebBrowser browser = new WebBrowser();
+                        browser.Source = new Uri("http://www.victop.com");
+                        homeItem.Content = browser;
+                    }
+                    else
+                    {
+                        ScrollViewer scroll = new ScrollViewer();
+                        scroll.Content = new UCPluginContainer();
+                        homeItem.Content = scroll;
+                    }
                     tabItemList.Add(homeItem);
                 }
                 return tabItemList;
@@ -334,6 +347,30 @@ namespace PortalFramePlugin.ViewModels
         }
         #endregion
 
+        #region 窗体最大化命令
+        /// <summary>窗体最大化命令 </summary>
+        public ICommand btnMaxClickCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                    Button btnMax = (Button)x;
+                    if (mainWindow.WindowState == WindowState.Normal)
+                    {
+                        btnMax.SetResourceReference(Button.StyleProperty, "btnRenewStyle");
+                        mainWindow.WindowState = WindowState.Maximized;
+                    }
+                    else
+                    {
+                        btnMax.SetResourceReference(Button.StyleProperty, "btnMaxiStyle");
+                        mainWindow.WindowState = WindowState.Normal;
+                    }
+                });
+            }
+        }
+        #endregion
+
         #region 窗体关闭命令
         /// <summary>窗体关闭命令 </summary>
         public ICommand btnCloseClickCommand
@@ -381,6 +418,12 @@ namespace PortalFramePlugin.ViewModels
                 {
                     if (x != null)
                     {
+                        if (TabItemList[0].Content.GetType().Name.Equals("WebBrowser"))
+                        {
+                            ScrollViewer scroll = new ScrollViewer();
+                            scroll.Content = new UCPluginContainer();
+                            TabItemList[0].Content = scroll;
+                        }
                         MenuModel menuModel = (MenuModel)x;
                         SystemThirdLevelMenuList = menuModel.SystemMenuList;
                         SelectedTabItem = TabItemList[0];
@@ -433,6 +476,19 @@ namespace PortalFramePlugin.ViewModels
                         MenuModel menuModel = (MenuModel)x;
                         LoadPlugin(menuModel);
                     }
+                });
+            }
+        }
+
+        public ICommand enterPriseBtnClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    WebBrowser browser = new WebBrowser();
+                    browser.Source = new Uri("http://www.victop.com");
+                    TabItemList[0].Content = browser;
                 });
             }
         }
@@ -530,6 +586,9 @@ namespace PortalFramePlugin.ViewModels
             menuModel.SaveProject = item.SaveProject;
             menuModel.Sequence = item.Sequence;
             menuModel.Stamp = item.Stamp;
+            MenuModel localModel = localMenuList.Find(it => it.MenuName.Equals(item.MenuName));
+            if (localModel != null)
+                menuModel.ResourceName = localModel.ResourceName;
             return menuModel;
         }
         #endregion
@@ -569,6 +628,10 @@ namespace PortalFramePlugin.ViewModels
             foreach (var item in element.Elements())
             {
                 MenuModel childMenuModel = GetPluginInfoModel(item);
+                if (item.Name.LocalName.Equals("Trade"))
+                {
+                    localMenuList.Add(childMenuModel);
+                }
                 childMenuModel = CreatLocalMenuModel(item, childMenuModel);
                 menuModel.SystemMenuList.Add(childMenuModel);
             }

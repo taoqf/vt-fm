@@ -18,6 +18,7 @@ using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.CoreLibrary;
 using Victop.Frame.CoreLibrary.Models;
 using Victop.Server.Controls;
+using System.Windows.Media.Animation;
 
 namespace VictopPartner
 {
@@ -43,9 +44,12 @@ namespace VictopPartner
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+        }
+
+        void mainstory_Completed(object sender, EventArgs e)
+        {
             if (FrameInit.GetInstance().FrameRun())
             {
-                //new PluginMessage().SendMessage(Guid.NewGuid().ToString(), AnonymousLogin(),null);
                 Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName("PortalFramePlugin", "");
                 Type[] types = pluginAssembly.GetTypes();
                 foreach (Type t in types)
@@ -54,6 +58,7 @@ namespace VictopPartner
                     {
                         IPlugin plugin = (IPlugin)pluginAssembly.CreateInstance(t.FullName);
                         this.Hide();
+                        plugin.StartWindow.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
                         plugin.StartWindow.ShowDialog();
                         FrameInit.GetInstance().FrameUnload();
                         Environment.Exit(0);
