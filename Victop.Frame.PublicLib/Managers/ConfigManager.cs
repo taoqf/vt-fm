@@ -106,8 +106,11 @@ namespace Victop.Frame.PublicLib.Managers
                         {
                             if (attrDic.ContainsKey(attrItem.Name))
                             {
-                                attrItem.Value = attrDic[attrItem.Name];
-                                SaveFlag = true;
+                                if (!attrItem.Value.Equals(attrDic[attrItem.Name]))
+                                {
+                                    attrItem.Value = attrDic[attrItem.Name];
+                                    SaveFlag = true;
+                                }
                             }
                         }
                         break;
