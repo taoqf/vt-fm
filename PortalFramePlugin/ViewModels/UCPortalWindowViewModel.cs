@@ -428,6 +428,11 @@ namespace PortalFramePlugin.ViewModels
                         }
                         MenuModel menuModel = (MenuModel)x;
                         SystemThirdLevelMenuList = menuModel.SystemMenuList;
+                        if (SystemThirdLevelMenuList.Count > 0)
+                        {
+                            SelectedThirdMenuModel = SystemThirdLevelMenuList[0];
+                            SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
+                        }
                         SelectedTabItem = TabItemList[0];
                     }
                 });
@@ -548,16 +553,6 @@ namespace PortalFramePlugin.ViewModels
                 }
             }
             GetStandardMenuList(SystemMenuListEnterprise);
-            if (SystemMenuListEnterprise.Count > 0)
-            {
-                SelectedSecondMenuModel = SystemMenuListEnterprise[0];
-                SystemThirdLevelMenuList = SelectedSecondMenuModel.SystemMenuList;
-                if (SystemThirdLevelMenuList.Count > 0)
-                {
-                    SelectedThirdMenuModel = SystemThirdLevelMenuList[0];
-                    SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
-                }
-            }
         }
         /// <summary>创建完整的菜单模型 </summary>
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
@@ -616,16 +611,6 @@ namespace PortalFramePlugin.ViewModels
             SystemMenuListLocal.Clear();
             string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
             ReadLocalMenuListFromXml(FilePath);
-            //if (SystemMenuListLocal.Count > 0)
-            //{
-            //    SelectedSecondMenuModel = SystemMenuListLocal[0];
-            //    SystemThirdLevelMenuList = SelectedSecondMenuModel.SystemMenuList;
-            //    if (SystemThirdLevelMenuList.Count > 0)
-            //    {
-            //        SelectedThirdMenuModel = SystemThirdLevelMenuList[0];
-            //        SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
-            //    }
-            //}
         }
         /// <summary>读取菜单信息</summary>
         private void ReadLocalMenuListFromXml(string PluginFilePath)
