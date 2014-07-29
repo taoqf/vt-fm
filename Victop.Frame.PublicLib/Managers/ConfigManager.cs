@@ -83,6 +83,44 @@ namespace Victop.Frame.PublicLib.Managers
             return attrValue;
         }
         /// <summary>
+        /// 保存节点名下的属性值
+        /// </summary>
+        /// <param name="nodeName">节点名称</param>
+        /// <param name="attrDic">属性键值对</param>
+        /// <returns>保存是否成功</returns>
+        public static bool SaveAttributeOfNodeByName(string nodeName, Dictionary<string,string> attrDic)
+        {
+            if (xmlDoc == null)
+            {
+                LoadPartnerConfig();
+            }
+            bool SaveFlag = false;
+            XmlElement rootElement = xmlDoc.DocumentElement;
+            if (rootElement != null && rootElement.ChildNodes.Count > 0)
+            {
+                foreach (XmlNode item in rootElement.ChildNodes)
+                {
+                    if (item.Name.Equals(nodeName))
+                    {
+                        foreach (XmlAttribute attrItem in item.Attributes)
+                        {
+                            if (attrDic.ContainsKey(attrItem.Name))
+                            {
+                                attrItem.Value = attrDic[attrItem.Name];
+                                SaveFlag = true;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            if (SaveFlag)
+            {
+                SavePartnerConfig();
+            }
+            return SaveFlag;
+        }
+        /// <summary>
         ///  加载配置文件
         /// </summary>
         private static void LoadPartnerConfig()
@@ -94,6 +132,17 @@ namespace Victop.Frame.PublicLib.Managers
                 xmlDoc = new XmlDocument();
                 xmlDoc.Load(fileFullPath);
             }
+        }
+        private static void SavePartnerConfig()
+        {
+            string configFile = ConfigurationManager.AppSettings.Get("partnerconfig");
+            string fileFullPath = AppDomain.CurrentDomain.BaseDirectory + configFile;
+            if (!File.Exists(fileFullPath))
+            {
+                File.Create(fileFullPath);
+                
+            }
+            xmlDoc.Save(fileFullPath);
         }
     }
 }

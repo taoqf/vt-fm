@@ -214,6 +214,8 @@ namespace UserLoginPlugin.ViewModels
         private void UserLoginInit()
         {
             string versionString = ConfigManager.GetAttributeOfNodeByName("System", "Mode");
+            LoginInfoModel.UserName = ConfigManager.GetAttributeOfNodeByName("UserInfo", "User");
+            LoginInfoModel.UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
             switch (versionString)
             {
                 case null:
@@ -244,6 +246,10 @@ namespace UserLoginPlugin.ViewModels
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {
                 GalleryList = JsonHelper.ReadJsonObject<Dictionary<string, string>>(returnDic["ReplyContent"].ToString());
+                if (GalleryList != null && GalleryList.Count > 0)
+                {
+                    SelectedGallery = GalleryList[GalleryList.Keys.First()];
+                }
             }
         }
         #endregion
@@ -288,6 +294,7 @@ namespace UserLoginPlugin.ViewModels
                     if (!returnDic["ReplyMode"].ToString().Equals("0"))
                     {
                         LoginWindow.DialogResult = true;
+                        SaveLoginUserInfo();
                         LoginWindow.Close();
                     }
                     else
@@ -324,6 +331,16 @@ namespace UserLoginPlugin.ViewModels
                 return CheckStatus;
             }
             return CheckStatus;
+        }
+        /// <summary>
+        /// 保存登录用户信息
+        /// </summary>
+        private void SaveLoginUserInfo()
+        {
+            Dictionary<string, string> userDic = new Dictionary<string, string>();
+            userDic.Add("User", LoginInfoModel.UserName);
+            userDic.Add("Pwd", LoginInfoModel.UserPwd);
+            ConfigManager.SaveAttributeOfNodeByName("UserInfo", userDic);
         }
         #endregion
       

@@ -167,16 +167,17 @@ namespace PortalFramePlugin.ViewModels
                     VicTabItemNormal homeItem = new VicTabItemNormal();
                     homeItem.Name = "homeItem";
                     homeItem.AllowDelete = false;
-                    homeItem.Header = "ERP主页";
                     homeItem.Height = 40;
                     if (ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
                     {
+                        homeItem.Header = "飞道科技";
                         WebBrowser browser = new WebBrowser();
                         browser.Source = new Uri("http://www.victop.com");
                         homeItem.Content = browser;
                     }
                     else
                     {
+                        homeItem.Header = "功能列表";
                         ScrollViewer scroll = new ScrollViewer();
                         scroll.Content = new UCPluginContainer();
                         homeItem.Content = scroll;
@@ -423,6 +424,7 @@ namespace PortalFramePlugin.ViewModels
                             ScrollViewer scroll = new ScrollViewer();
                             scroll.Content = new UCPluginContainer();
                             TabItemList[0].Content = scroll;
+                            TabItemList[0].Header = "功能列表";
                         }
                         MenuModel menuModel = (MenuModel)x;
                         SystemThirdLevelMenuList = menuModel.SystemMenuList;
@@ -489,6 +491,7 @@ namespace PortalFramePlugin.ViewModels
                     WebBrowser browser = new WebBrowser();
                     browser.Source = new Uri("http://www.victop.com");
                     TabItemList[0].Content = browser;
+                    TabItemList[0].Header = "飞道科技";
                 });
             }
         }
