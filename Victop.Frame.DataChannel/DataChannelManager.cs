@@ -12,6 +12,8 @@ namespace Victop.Frame.DataChannel
     using System.Data;
     using System.Linq;
     using System.Text;
+using Victop.Frame.CoreLibrary.Models;
+    using Victop.Frame.PublicLib.Helpers;
 
 	/// <summary>
 	/// 数据通道管理器
@@ -103,6 +105,58 @@ namespace Victop.Frame.DataChannel
             }
             return null;
 		}
+        /// <summary>
+        /// 判定数据是否存在
+        /// </summary>
+        /// <param name="messageInfo"></param>
+        /// <param name="channelId"></param>
+        /// <returns></returns>
+        public virtual bool CheckDataExist(RequestMessage messageInfo, out string channelId)
+        {
+            string dataKey = string.Empty;
+            channelId = string.Empty;
+            Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
+            if (contentDic.ContainsKey("modelId") && !string.IsNullOrEmpty(contentDic["modelId"].ToString()))
+            {
+                dataKey = contentDic["modelId"].ToString();
+            }
+            else if (contentDic.ContainsKey("dataparam")&&!string.IsNullOrEmpty(contentDic["dataparam"].ToString()))
+            {
+                dataKey = JsonHelper.ReadJsonString(contentDic["dataparam"].ToString(), "mastername");
+            }
+            if (!string.IsNullOrEmpty(dataKey))
+            {
+                foreach (string key in ChannelMap.Keys)
+                {
+                    ChannelData channelData = (ChannelData)((Hashtable)(ChannelMap[key]))["Data"];
+                    if (JsonHelper.ReadJsonString(channelData.MessageInfo.MessageContent, "modelId").Equals(dataKey))
+                    {
+                        channelId = key;
+                        break;
+                    }
+                    else
+                    {
+                        Dictionary<string, object> contDic = JsonHelper.ToObject<Dictionary<string, object>>(channelData.MessageInfo.MessageContent);
+                        if (contDic.ContainsKey("dataparam") && !string.IsNullOrEmpty(contDic["dataparam"].ToString()))
+                        {
+                            if (JsonHelper.ReadJsonString(contDic["dataparam"].ToString(), "mastername").Equals(dataKey))
+                            {
+                                channelId = key;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(channelId))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
 
 	}
 }

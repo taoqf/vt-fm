@@ -4,7 +4,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:ThemeManagerPlugin.ViewModels" 
         xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
-       Title="飞道ERP皮肤中心" Height="531" Width="680" >
+       Title="飞道皮肤中心" Height="531" Width="680" >
     <controls:VicWindowNormal.Resources>
         <Style  x:Key="RadioButtonListStyle" TargetType="{x:Type ListBox}">
             <Setter Property="HorizontalAlignment" Value="Stretch" />

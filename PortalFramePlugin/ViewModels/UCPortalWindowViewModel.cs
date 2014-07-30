@@ -713,7 +713,10 @@ namespace PortalFramePlugin.ViewModels
             if (selectedFourthMenu.ResourceName != null && selectedFourthMenu.ResourceName.Contains("Plugin"))
             {
                 PluginOperation pluginOp = new PluginOperation();
-                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName);
+                Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
+                paramDic.Add("formid", selectedFourthMenu.FormId);
+                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
                 if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {
                     PluginShow(pluginModel);
@@ -735,11 +738,7 @@ namespace PortalFramePlugin.ViewModels
                     pluginWin.Uid = pluginModel.ObjectId;
                     ActivePluginNum = pluginOp.GetActivePluginList().Count;
                     pluginWin.ShowDialog();
-                    MessageOperation messageOp = new MessageOperation();
-                    string messageType = "PluginService.PluginStop";
-                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    contentDic.Add("ObjectId", pluginModel.ObjectId);
-                    messageOp.SendMessage(messageType, contentDic);
+                    SendPluginCloseMessage(pluginModel);
                     break;
                 case 1:
                     UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;
@@ -755,6 +754,18 @@ namespace PortalFramePlugin.ViewModels
                     break;
             }
             ActivePluginNum = pluginOp.GetActivePluginList().Count;
+        }
+        /// <summary>
+        /// 发送关闭插件消息
+        /// </summary>
+        /// <param name="pluginModel"></param>
+        private static void SendPluginCloseMessage(PluginModel pluginModel)
+        {
+            MessageOperation messageOp = new MessageOperation();
+            string messageType = "PluginService.PluginStop";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("ObjectId", pluginModel.ObjectId);
+            messageOp.SendMessage(messageType, contentDic);
         }
         #endregion
 

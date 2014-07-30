@@ -448,7 +448,7 @@ namespace Victop.Frame.DataChannel
 
             foreach (DataTable mastDt in requestDs.Tables)
             {
-                bool  ValidTableFlag= false;
+                bool ValidTableFlag = false;
                 if (masterFlag)
                 {
                     if (mastDt.TableName.Equals("masterdata"))
@@ -565,7 +565,7 @@ namespace Victop.Frame.DataChannel
                         oldDic.Add("rowstate", 1);
                         foreach (DataColumn dc in mastDt.Columns)
                         {
-                            
+
                             oldDic.Add(dc.ColumnName, dr[dc.ColumnName, DataRowVersion.Original]);
                         }
                         oldDic.Add("statedescribe", null);
@@ -680,9 +680,14 @@ namespace Victop.Frame.DataChannel
         {
             Hashtable replyHashtable = CreateDataSetByReplyMessage(replyMessageInfo, messageInfo);
             DataChannelManager dataManager = new DataChannelManager();
-            if (dataManager.AddData(replyMessageInfo.MessageId, replyHashtable))
+            string DataChannelId = string.Empty;
+            if (!dataManager.CheckDataExist(messageInfo, out DataChannelId))
             {
-                replyMessageInfo.DataChannelId = replyMessageInfo.MessageId;
+                DataChannelId = replyMessageInfo.MessageId;
+            }
+            if (dataManager.AddData(DataChannelId, replyHashtable))
+            {
+                replyMessageInfo.DataChannelId = DataChannelId;
                 replyMessageInfo.ReplyContent = string.Empty;
             }
             return replyMessageInfo;

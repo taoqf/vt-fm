@@ -49,12 +49,13 @@ namespace Victop.Frame.Connection
                 MessageId = messageInfo.MessageId,
                 ReplyContent = replyMessageInfo.ReplyContent
             };
-            if (ReplyToDataChannel(DataReplyMessage,messageInfo))
+            string channelId = string.Empty;
+            if (ReplyToDataChannel(DataReplyMessage,messageInfo,out channelId))
             {
                 MessageStatusReplyMessage = new ReplyMessage()
                 {
                     MessageId = messageInfo.MessageId,
-                    DataChannelId = messageInfo.MessageId,
+                    DataChannelId = channelId,
                     ReplyMode = ReplyModeEnum.SYNCH
                 };
                 return MessageStatusReplyMessage;
@@ -73,8 +74,9 @@ namespace Victop.Frame.Connection
 		/// <summary>
 		/// 应答消息数据部分保存到数据通道
 		/// </summary>
-        private bool ReplyToDataChannel(ReplyMessage replyMessageInfo,RequestMessage messageInfo)
+        private bool ReplyToDataChannel(ReplyMessage replyMessageInfo,RequestMessage messageInfo,out string channelId)
         {
+            channelId = string.Empty;
             //与数据通道连接，将MessageInfo中的数据部分存储到数据通道中，
             //通道标识使用消息Id
             ReplyMessage ReplyMessage = new ReplyMessage();
@@ -83,8 +85,8 @@ namespace Victop.Frame.Connection
             try
             {
                 ReplyMessage = dataCreateManager.SendReplyMessage(replyMessageInfo, messageInfo);
-                //保存成功后DataChannelId=MessageId
-                if (string.IsNullOrEmpty(ReplyMessage.DataChannelId)) 
+                channelId = ReplyMessage.DataChannelId;
+                if (string.IsNullOrEmpty(channelId)) 
                 {
                     result = false;
                 }
