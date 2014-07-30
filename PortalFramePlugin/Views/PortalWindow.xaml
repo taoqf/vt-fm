@@ -110,14 +110,20 @@
                 <Grid Name="groupboxMenu" Width="182">
                     <StackPanel Name="MenuStackPanel" Orientation="Vertical">
                         <local:VicRadioButtonFirstLevelMenu Content="飞道云"></local:VicRadioButtonFirstLevelMenu>
-                        <local:VicRadioButtonFirstLevelMenu Content="本地"></local:VicRadioButtonFirstLevelMenu>
-                        <!--<local:VicListBoxSecondLevelMenu Visibility="Collapsed" x:Name="listSecondMenuLocal" SelectedItem="{Binding SelectedSecondMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
+                        <local:VicRadioButtonFirstLevelMenu Content="本地">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding localBtnClickCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </local:VicRadioButtonFirstLevelMenu>
+                        <local:VicListBoxSecondLevelMenu x:Name="listSecondMenuLocal" SelectedItem="{Binding SelectedSecondMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding listSecondMenuLocalSelectionChangedCommand}" CommandParameter="{Binding ElementName=listSecondMenuLocal,Path=SelectedItem}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </local:VicListBoxSecondLevelMenu>-->
+                        </local:VicListBoxSecondLevelMenu>
                         <local:VicRadioButtonFirstLevelMenu Content="企业云">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">

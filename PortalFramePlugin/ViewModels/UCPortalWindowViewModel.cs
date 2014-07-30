@@ -21,6 +21,7 @@ using System.Xml.Linq;
 using System.Reflection;
 using PortalFramePlugin.Views;
 using Victop.Frame.SyncOperation;
+using System.Windows.Navigation;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -392,6 +393,19 @@ namespace PortalFramePlugin.ViewModels
         }
         #endregion
 
+
+        #region 本地按钮点击命令
+        public ICommand localBtnClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    CreateBrowser("www.baidu.com","百度搜索");
+                });
+            }
+        }
+        #endregion
+
         #region 本地选中菜单改变命令
         public ICommand listSecondMenuLocalSelectionChangedCommand
         {
@@ -401,12 +415,32 @@ namespace PortalFramePlugin.ViewModels
                 {
                     if (x != null)
                     {
-                        MenuModel menuModel = (MenuModel)x;
-                        SystemThirdLevelMenuList = menuModel.SystemMenuList;
-                        SelectedTabItem = TabItemList[0];
+                        BuildPluginContainer(x);
                     }
                 });
             }
+        }
+        /// <summary>
+        /// 构建插件容器
+        /// </summary>
+        /// <param name="x"></param>
+        private void BuildPluginContainer(object x)
+        {
+            if (TabItemList[0].Content.GetType().Name.Equals("WebBrowser"))
+            {
+                ScrollViewer scroll = new ScrollViewer();
+                scroll.Content = new UCPluginContainer();
+                TabItemList[0].Content = scroll;
+                TabItemList[0].Header = "功能列表";
+            }
+            MenuModel menuModel = (MenuModel)x;
+            SystemThirdLevelMenuList = menuModel.SystemMenuList;
+            if (SystemThirdLevelMenuList.Count > 0)
+            {
+                SelectedThirdMenuModel = SystemThirdLevelMenuList[0];
+                SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
+            }
+            SelectedTabItem = TabItemList[0];
         }
         #endregion
 
@@ -419,21 +453,7 @@ namespace PortalFramePlugin.ViewModels
                 {
                     if (x != null)
                     {
-                        if (TabItemList[0].Content.GetType().Name.Equals("WebBrowser"))
-                        {
-                            ScrollViewer scroll = new ScrollViewer();
-                            scroll.Content = new UCPluginContainer();
-                            TabItemList[0].Content = scroll;
-                            TabItemList[0].Header = "功能列表";
-                        }
-                        MenuModel menuModel = (MenuModel)x;
-                        SystemThirdLevelMenuList = menuModel.SystemMenuList;
-                        if (SystemThirdLevelMenuList.Count > 0)
-                        {
-                            SelectedThirdMenuModel = SystemThirdLevelMenuList[0];
-                            SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
-                        }
-                        SelectedTabItem = TabItemList[0];
+                        BuildPluginContainer(x);
                     }
                 });
             }
@@ -496,10 +516,7 @@ namespace PortalFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    WebBrowser browser = new WebBrowser();
-                    browser.Source = new Uri("http://www.victop.com");
-                    TabItemList[0].Content = browser;
-                    TabItemList[0].Header = "飞道科技";
+                    CreateBrowser("www.victop.com", "飞道科技");
                 });
             }
         }
@@ -622,6 +639,10 @@ namespace PortalFramePlugin.ViewModels
                 MenuModel menuModel = GetPluginInfoModel(item);
                 menuModel = CreatLocalMenuModel(item, menuModel);
                 SystemMenuListLocal.Add(menuModel);
+            }
+            if (!ConfigurationManager.AppSettings["DataSource"].ToLower().Equals("local"))
+            {
+                SystemMenuListLocal.Clear();
             }
         }
         private MenuModel CreatLocalMenuModel(XElement element, MenuModel menuModel)
@@ -875,6 +896,38 @@ namespace PortalFramePlugin.ViewModels
         }
         #endregion
 
+        #endregion
+
+        #region 关于WebBrowser相关的操作
+
+        /// <summary>
+        /// 创建浏览器
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="title"></param>
+        private void CreateBrowser(string url, string title)
+        {
+            WebBrowser browser = new WebBrowser();
+            browser.Navigating += browser_Navigating;
+            browser.Source = new Uri(string.Format("http://{0}", url));
+            TabItemList[0].Content = browser;
+            TabItemList[0].Header = title;
+        }
+        void browser_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            SuppressScriptErrors((WebBrowser)sender, true);
+        }
+
+        private void SuppressScriptErrors(WebBrowser webBrowser, bool Hide)
+        {
+            FieldInfo fiComWebBrowser = typeof(WebBrowser).GetField("_axIWebBrowser2", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (fiComWebBrowser == null) return;
+
+            object objComWebBrowser = fiComWebBrowser.GetValue(webBrowser);
+            if (objComWebBrowser == null) return;
+
+            objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { Hide });
+        }
         #endregion
 
     }
