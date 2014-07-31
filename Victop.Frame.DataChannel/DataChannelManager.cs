@@ -113,48 +113,56 @@ using Victop.Frame.CoreLibrary.Models;
         /// <returns></returns>
         public virtual bool CheckDataExist(RequestMessage messageInfo, out string channelId)
         {
-            string dataKey = string.Empty;
-            channelId = string.Empty;
-            Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
-            if (contentDic.ContainsKey("modelId") && !string.IsNullOrEmpty(contentDic["modelId"].ToString()))
+            try
             {
-                dataKey = contentDic["modelId"].ToString();
-            }
-            else if (contentDic.ContainsKey("dataparam")&&!string.IsNullOrEmpty(contentDic["dataparam"].ToString()))
-            {
-                dataKey = JsonHelper.ReadJsonString(contentDic["dataparam"].ToString(), "mastername");
-            }
-            if (!string.IsNullOrEmpty(dataKey))
-            {
-                foreach (string key in ChannelMap.Keys)
+                string dataKey = string.Empty;
+                channelId = string.Empty;
+                Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
+                if (contentDic.ContainsKey("modelId") && contentDic["modelId"] != null && !string.IsNullOrEmpty(contentDic["modelId"].ToString()))
                 {
-                    ChannelData channelData = (ChannelData)((Hashtable)(ChannelMap[key]))["Data"];
-                    if (JsonHelper.ReadJsonString(channelData.MessageInfo.MessageContent, "modelId").Equals(dataKey))
+                    dataKey = contentDic["modelId"].ToString();
+                }
+                else if (contentDic.ContainsKey("dataparam") && contentDic["dataparam"]!=null && !string.IsNullOrEmpty(contentDic["dataparam"].ToString()))
+                {
+                    dataKey = JsonHelper.ReadJsonString(contentDic["dataparam"].ToString(), "mastername");
+                }
+                if (!string.IsNullOrEmpty(dataKey))
+                {
+                    foreach (string key in ChannelMap.Keys)
                     {
-                        channelId = key;
-                        break;
-                    }
-                    else
-                    {
-                        Dictionary<string, object> contDic = JsonHelper.ToObject<Dictionary<string, object>>(channelData.MessageInfo.MessageContent);
-                        if (contDic.ContainsKey("dataparam") && !string.IsNullOrEmpty(contDic["dataparam"].ToString()))
+                        ChannelData channelData = (ChannelData)((Hashtable)(ChannelMap[key]))["Data"];
+                        if (JsonHelper.ReadJsonString(channelData.MessageInfo.MessageContent, "modelId").Equals(dataKey))
                         {
-                            if (JsonHelper.ReadJsonString(contDic["dataparam"].ToString(), "mastername").Equals(dataKey))
+                            channelId = key;
+                            break;
+                        }
+                        else
+                        {
+                            Dictionary<string, object> contDic = JsonHelper.ToObject<Dictionary<string, object>>(channelData.MessageInfo.MessageContent);
+                            if (contDic.ContainsKey("dataparam") && contDic["dataparam"]!=null && !string.IsNullOrEmpty(contDic["dataparam"].ToString()))
                             {
-                                channelId = key;
-                                break;
+                                if (JsonHelper.ReadJsonString(contDic["dataparam"].ToString(), "mastername").Equals(dataKey))
+                                {
+                                    channelId = key;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
+                if (string.IsNullOrEmpty(channelId))
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
-            if (string.IsNullOrEmpty(channelId))
+            catch (Exception ex)
             {
-                return false;
-            }
-            else
-            {
-                return true;
+
+                throw;
             }
         }
 
