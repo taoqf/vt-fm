@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="UserLoginPlugin.Views.UCUserLogin"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:helpers="clr-namespace:UserLoginPlugin.Helpers"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="292" d:DesignWidth="389" Name="ucUserLongin">
+    <Grid x:Name="gridMain">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="86"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Style="{DynamicResource loginTopGridStyle}" Name="titleBar" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="34"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition ColumnDefinition.Width="120"/>
+                    <ColumnDefinition ColumnDefinition.Width="*" />
+                    <ColumnDefinition ColumnDefinition.Width="102" />
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Column="0">
+                    <Grid HorizontalAlignment="Left" Height="16" Margin="5"   Width="23" Style="{DynamicResource LoginTopLeftGridStyle1}"/>
+                    <Grid HorizontalAlignment="Left" Height="15" Margin="3"   Width="71" Style="{DynamicResource LoginTopLeftGridStyle2}"/>
+                </DockPanel >
+                <DockPanel Grid.Column="2">
+                    <Button Content="" Name="btnSystemSet" HorizontalAlignment="Right"   Width="34" Style="{DynamicResource btnLoginSetStyle}" Height="34" Command="{Binding btnSystemSetClickCommand}"/>
+                    <Button Content="" Name="btnMini" HorizontalAlignment="Right"  Width="34" Style="{DynamicResource btnMiniStyle}" Height="34" Command="{Binding btnMiniClickCommand}" />
+                    <Button Content="" Name="btnClose" HorizontalAlignment="Right"  Width="34"  Style="{DynamicResource btnCloseStyle}" Height="34" Command="{Binding btnCloseClickCommand}"/>
+                </DockPanel>
+            </Grid>
+            <Grid  Grid.Row="1" HorizontalAlignment="Right" Height="41" Margin="0,8,8,0" VerticalAlignment="Top" Width="133" Style="{DynamicResource LoginTopRightGridStyle}" />
+        </Grid>
+        <Grid Grid.Row="1"  Style="{DynamicResource loginMainGridStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="117"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="112"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid HorizontalAlignment="Left" Height="91" Width="91" Margin="13,0,10,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Style="{DynamicResource loginMainUserPhotoGridStyle}"/>
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="38"></RowDefinition>
+                    <RowDefinition Height="38"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="202"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Row="0" Grid.Column="0" Width="192" Height="28"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding LoginInfoModel.UserName}"  VerticalContentAlignment="Center"/>
+                <Label Grid.Row="0" Grid.Column="1" FontFamily="SimSun" Content="注册账号" Foreground="#0f8ecc" HorizontalAlignment="Left"/>
+                <PasswordBox Grid.Row="1" Name="pwBox" Grid.Column="0"  Width="192" Height="28" HorizontalAlignment="Left"  
+                            helpers:PasswordBoxBindingHelper.Attach="True" helpers:PasswordBoxBindingHelper.Password=
+                    "{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            VerticalAlignment="Top"  BorderBrush="#b2e6ff"  Background="White"  VerticalContentAlignment="Center">
+                </PasswordBox>
+                <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Content="找回密码" Foreground="#0f8ecc"/>
+                <ComboBox Grid.Row="2" Grid.Column="0"  Width="192" Height="28" Name="CloudSOAComboBox" 
+                        ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
+                        HorizontalAlignment="Left"  VerticalAlignment="Top" VerticalContentAlignment="Center" SelectedValue="{Binding SelectedGallery,UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding CloudSOAComboBoxSelectionChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </Grid>
+            <TextBlock Grid.Row="2" Grid.Column="0" Padding="5,0,0,0" HorizontalAlignment="Left" Name="ErrLabel"  Text="{Binding ErrMsg}" Foreground="Red" Height="22"/>
+            <Button Grid.Row="2" Grid.Column="1" Margin="0,0,0,15"  Name="btnLogin" Width="100" Content="{DynamicResource L_R_89}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Command="{Binding btnLoginClickCommand}" TabIndex="5" />
+        </Grid>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding gridMainLoadedCommand}" CommandParameter="{Binding ElementName=ucUserLongin}"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="Unloaded">
+                <i:InvokeCommandAction Command="{Binding gridMainUnloadedCommand}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+    </Grid>
+</UserControl>

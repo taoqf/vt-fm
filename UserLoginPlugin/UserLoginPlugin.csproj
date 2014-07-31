@@ -94,8 +94,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Convert\CheckboxBoolConverter.cs" />
     <Compile Include="Helpers\PasswordBoxBindingHelper.cs" />
     <Compile Include="Models\LoginUserInfoModel.cs" />
+    <Compile Include="Models\SystemConfigModel.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -110,7 +112,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\SystemConfigViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ViewModels\UserLoginViewModel.cs" />
+    <Compile Include="Views\UCSystemConfig.xaml.cs">
+      <DependentUpon>UCSystemConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UCUserLogin.xaml.cs">
+      <DependentUpon>UCUserLogin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserLoginWindow.xaml.cs">
       <DependentUpon>UserLoginWindow.xaml</DependentUpon>
     </Compile>
@@ -148,6 +159,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Views\UCSystemConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UCUserLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserLoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -112,7 +112,17 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    LoginWindow = (Window)x;
+                    UserControl ucLogin = (UserControl)x;
+                    FrameworkElement ct = (FrameworkElement)ucLogin.Parent;
+                    while (true)
+                    {
+                        if (ct is Window)
+                        {
+                            LoginWindow = (Window)ct;
+                            break;
+                        }
+                        ct = (FrameworkElement)ct.Parent;
+                    }
                     UserLoginInit();
                 });
             }
@@ -120,7 +130,7 @@ namespace UserLoginPlugin.ViewModels
         /// <summary>
         /// 窗体卸载
         /// </summary>
-        public ICommand winMainUnloadedCommand
+        public ICommand gridMainUnloadedCommand
         {
             get
             {
@@ -156,7 +166,7 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    OpenSystemConfigWindow();
+                    VisualStateManager.GoToState(LoginWindow, "SecondPage", true);
                 });
             }
         }
@@ -184,7 +194,7 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "", MessageBoxButton.YesNo);
+                    MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo);
                     if (result == MessageBoxResult.Yes)
                     {
                         LoginWindow.Close();
@@ -206,6 +216,7 @@ namespace UserLoginPlugin.ViewModels
             }
         }
         #endregion
+        
         #endregion
 
         #region 自定义方法
@@ -231,6 +242,7 @@ namespace UserLoginPlugin.ViewModels
                 default:
                     break;
             }
+            VisualStateManager.GoToState(LoginWindow, "FirstPage", false);
         }
         #endregion
 
@@ -263,17 +275,6 @@ namespace UserLoginPlugin.ViewModels
             contentDic.Add("GalleryKey", SelectedGallery);
             MessageOperation messageOp = new MessageOperation();
             messageOp.SendMessage(messageType, contentDic);
-        }
-        #endregion
-
-        #region 打开系统设置窗体
-        /// <summary>
-        ///打开系统设置窗体
-        /// </summary>
-        private void OpenSystemConfigWindow()
-        {
-            //SystemConfig scWindow = new SystemConfig();
-            //scWindow.ShowDialog();
         }
         #endregion
 
