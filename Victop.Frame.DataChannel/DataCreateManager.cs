@@ -76,6 +76,18 @@ namespace Victop.Frame.DataChannel
             {
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(dataXml);
+
+                XmlNodeList jsonNodeList = doc.DocumentElement.SelectSingleNode("treejson").SelectNodes("DATASET");
+                foreach (XmlNode item in jsonNodeList)
+                {
+                    DataTable dt = new DataTable(item.Attributes["datasetid"].Value);
+                    dt.Columns.Add("treejson");
+                    DataRow dr = dt.NewRow();
+                    dr["treejson"] = item.InnerText;
+                    dt.Rows.Add(dr);
+                    ReplyData.Tables.Add(dt);
+                }
+
                 XmlNodeList xmlNodeList = doc.DocumentElement.SelectNodes("DATASET");
                 BuildModeDataReferenceTable(ReplyData, xmlNodeList);
                 switch (typeEnum)
