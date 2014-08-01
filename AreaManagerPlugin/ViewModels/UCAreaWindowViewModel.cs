@@ -386,7 +386,7 @@ namespace AreaManagerPlugin.ViewModels
             contentDic.Add("masterOnly", "false");
             Dictionary<string, string> paramsDic = new Dictionary<string, string>();
             paramsDic.Add("isdata", "0");
-            paramsDic.Add("mastername", "地区管理");
+            paramsDic.Add("mastername", "区域管理");
             paramsDic.Add("wheresql", "1=1");
             paramsDic.Add("pageno", "-1");
             paramsDic.Add("prooplist", null);

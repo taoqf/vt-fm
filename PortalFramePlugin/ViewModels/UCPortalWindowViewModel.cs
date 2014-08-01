@@ -803,7 +803,8 @@ namespace PortalFramePlugin.ViewModels
         private void UserLogin()
         {
             PluginOperation pluginOp = new PluginOperation();
-            PluginModel pluginModel = pluginOp.StratPlugin("UserLoginPlugin");
+            string loginPlugin = ConfigurationManager.AppSettings["loginWindow"];
+            PluginModel pluginModel = pluginOp.StratPlugin(loginPlugin);
             IPlugin PluginInstance = pluginModel.PluginInterface;
             Window loginWin = PluginInstance.StartWindow;
             loginWin.Uid = pluginModel.ObjectId;

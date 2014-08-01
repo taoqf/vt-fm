@@ -19,6 +19,7 @@ using Victop.Frame.CoreLibrary;
 using Victop.Frame.CoreLibrary.Models;
 using Victop.Server.Controls;
 using System.Windows.Media.Animation;
+using System.Configuration;
 
 namespace VictopPartner
 {
@@ -50,7 +51,8 @@ namespace VictopPartner
         {
             if (FrameInit.GetInstance().FrameRun())
             {
-                Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName("PortalFramePlugin", "");
+                string mainPlugin = ConfigurationManager.AppSettings["portalWindow"];
+                Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName(mainPlugin, "");
                 Type[] types = pluginAssembly.GetTypes();
                 foreach (Type t in types)
                 {
