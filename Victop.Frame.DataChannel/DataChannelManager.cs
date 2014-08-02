@@ -117,6 +117,7 @@ using Victop.Frame.CoreLibrary.Models;
             {
                 string dataKey = string.Empty;
                 channelId = string.Empty;
+                bool masterFlag = false;
                 Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
                 if (contentDic.ContainsKey("modelId") && contentDic["modelId"] != null && !string.IsNullOrEmpty(contentDic["modelId"].ToString()))
                 {
@@ -125,21 +126,25 @@ using Victop.Frame.CoreLibrary.Models;
                 else if (contentDic.ContainsKey("dataparam") && contentDic["dataparam"]!=null && !string.IsNullOrEmpty(contentDic["dataparam"].ToString()))
                 {
                     dataKey = JsonHelper.ReadJsonString(contentDic["dataparam"].ToString(), "mastername");
+                    masterFlag = true;
                 }
                 if (!string.IsNullOrEmpty(dataKey))
                 {
                     foreach (string key in ChannelMap.Keys)
                     {
                         ChannelData channelData = (ChannelData)((Hashtable)(ChannelMap[key]))["Data"];
-                        if (JsonHelper.ReadJsonString(channelData.MessageInfo.MessageContent, "modelId").Equals(dataKey))
+                        if (!masterFlag)
                         {
-                            channelId = key;
-                            break;
+                            if (JsonHelper.ReadJsonString(channelData.MessageInfo.MessageContent, "modelId").Equals(dataKey))
+                            {
+                                channelId = key;
+                                break;
+                            }
                         }
                         else
                         {
                             Dictionary<string, object> contDic = JsonHelper.ToObject<Dictionary<string, object>>(channelData.MessageInfo.MessageContent);
-                            if (contDic.ContainsKey("dataparam") && contDic["dataparam"]!=null && !string.IsNullOrEmpty(contDic["dataparam"].ToString()))
+                            if (contDic.ContainsKey("dataparam") && contDic["dataparam"] != null && !string.IsNullOrEmpty(contDic["dataparam"].ToString()))
                             {
                                 if (JsonHelper.ReadJsonString(contDic["dataparam"].ToString(), "mastername").Equals(dataKey))
                                 {

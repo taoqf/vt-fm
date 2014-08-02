@@ -31,11 +31,11 @@ namespace Victop.Frame.MessageManager
         {
             try
             {
-                PluginMessageInfo pluginMessageInfo = PluginMessageList.Values.FirstOrDefault(it => it.CloudGalleryId == messageInfo.CloudGalleryId && it.ObjectId == messageInfo.ObjectId && it.MessageBody.MessageType == messageInfo.MessageBody.MessageType);
-               if (pluginMessageInfo!=null)
-                {
-                    return false;
-                }
+               // PluginMessageInfo pluginMessageInfo = PluginMessageList.Values.FirstOrDefault(it => it.CloudGalleryId == messageInfo.CloudGalleryId && it.ObjectId == messageInfo.ObjectId && it.MessageBody.MessageType == messageInfo.MessageBody.MessageType);
+               //if (pluginMessageInfo!=null)
+               // {
+               //     return false;
+               // }
                 PluginMessageList.Add(messageKey, messageInfo);//插入消息队列
                 return true;
             }
