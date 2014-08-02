@@ -220,10 +220,7 @@ namespace Victop.Frame.Connection
                         break;
                 }
             }
-            else
-            {
-                replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "Result");
-            }
+            replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "Result");
             replyMessage.MessageId = messageInfo.MessageId;
             return replyMessage;
         }
