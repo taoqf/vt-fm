@@ -76,18 +76,19 @@ namespace Victop.Frame.DataChannel
             {
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(dataXml);
-
-                XmlNodeList jsonNodeList = doc.DocumentElement.SelectSingleNode("treejson").SelectNodes("DATASET");
-                foreach (XmlNode item in jsonNodeList)
+                if (doc.DocumentElement.SelectSingleNode("treejson") != null)
                 {
-                    DataTable dt = new DataTable(item.Attributes["datasetid"].Value);
-                    dt.Columns.Add("treejson");
-                    DataRow dr = dt.NewRow();
-                    dr["treejson"] = item.InnerText;
-                    dt.Rows.Add(dr);
-                    ReplyData.Tables.Add(dt);
+                    XmlNodeList jsonNodeList = doc.DocumentElement.SelectSingleNode("treejson").SelectNodes("DATASET");
+                    foreach (XmlNode item in jsonNodeList)
+                    {
+                        DataTable dt = new DataTable(item.Attributes["datasetid"].Value);
+                        dt.Columns.Add("treejson");
+                        DataRow dr = dt.NewRow();
+                        dr["treejson"] = item.InnerText;
+                        dt.Rows.Add(dr);
+                        ReplyData.Tables.Add(dt);
+                    }
                 }
-
                 XmlNodeList xmlNodeList = doc.DocumentElement.SelectNodes("DATASET");
                 BuildModeDataReferenceTable(ReplyData, xmlNodeList);
                 switch (typeEnum)
@@ -171,12 +172,17 @@ namespace Victop.Frame.DataChannel
                 if (ReplyData.Tables.Contains(datasetId))
                     continue;
                 XmlNodeList nodexmlNodeList = node.ChildNodes;
-                Dictionary<string, string> columnDes = new Dictionary<string, string>();
+                Dictionary<string, string> columnDic = new Dictionary<string, string>();
                 if (ReplyData.Tables.Contains(fieldTableName))
                 {
                     foreach (DataRow dr in ReplyData.Tables[fieldTableName].Rows)
                     {
-                        columnDes.Add(dr["columnid"].ToString().ToLower(), dr["columncaption"].ToString());
+                        Dictionary<string, object> rowDic = new Dictionary<string, object>();
+                        foreach (DataColumn dc in ReplyData.Tables[fieldTableName].Columns)
+                        {
+                            rowDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                        }
+                        columnDic.Add(dr["columnid"].ToString().ToLower(), JsonHelper.ToJson(rowDic));
                     }
                 }
                 foreach (XmlNode childNode in nodexmlNodeList)
@@ -185,11 +191,11 @@ namespace Victop.Frame.DataChannel
                     {
                         if (ReplyData.Tables.Contains("gmDatareference"))
                         {
-                            dt = CreateDataSchema(childNode, columnDes, ReplyData.Tables["gmDatareference"]);
+                            dt = CreateDataSchema(childNode, columnDic, ReplyData.Tables["gmDatareference"]);
                         }
                         else
                         {
-                            dt = CreateDataSchema(childNode, columnDes);
+                            dt = CreateDataSchema(childNode, columnDic);
                         }
                         dt = SetDataTableRow(dt, childNode);
                     }
@@ -251,20 +257,26 @@ namespace Victop.Frame.DataChannel
         /// <returns></returns>
         private Dictionary<string, string> GetColumnCaption(XmlNode xmlNode)
         {
-            Dictionary<string, string> columnDes = new Dictionary<string, string>();
+            Dictionary<string, string> columnDic = new Dictionary<string, string>();
             XmlNodeList nodeList = xmlNode.SelectSingleNode("DATAPACKET").SelectSingleNode("ROWDATA").SelectNodes("ROW");
             foreach (XmlNode item in nodeList)
             {
+                Dictionary<string, object> RowDic = new Dictionary<string, object>();
+                for (int i = 0; i < item.Attributes.Count; i++)
+                {
+                    RowDic.Add(item.Attributes[i].Name, item.Attributes[i].Value);
+                }
                 if (item.Attributes["columnid"] == null || string.IsNullOrEmpty(item.Attributes["columnid"].Value))
                 {
-                    columnDes.Add(item.Attributes["columnid2"].Value, item.Attributes["columncaption"].Value);
+
+                    columnDic.Add(item.Attributes["columnid2"].Value, JsonHelper.ToJson(RowDic));
                 }
                 else
                 {
-                    columnDes.Add(item.Attributes["columnid"].Value, item.Attributes["columncaption"].Value);
+                    columnDic.Add(item.Attributes["columnid"].Value, JsonHelper.ToJson(RowDic));
                 }
             }
-            return columnDes;
+            return columnDic;
         }
 
         /// <summary>
@@ -378,6 +390,7 @@ namespace Victop.Frame.DataChannel
         private DataTable CreateDataSchema(XmlNode xmlNode, Dictionary<string, string> fieldDc, DataTable gmDt = null)
         {
             DataTable dt = new DataTable();
+            List<DataColumn> keyDcList = new List<DataColumn>();
             XmlNodeList fieldList = xmlNode.SelectSingleNode("METADATA").SelectSingleNode("FIELDS").SelectNodes("FIELD");
             foreach (XmlNode item in fieldList)
             {
@@ -399,10 +412,32 @@ namespace Victop.Frame.DataChannel
                     string fieldKey = item.Attributes["attrname"].Value;
                     if (fieldDc.ContainsKey(fieldKey))
                     {
-                        dc.Caption = fieldDc[fieldKey];
+                        Dictionary<string, object> rowDic = JsonHelper.ToObject<Dictionary<string, object>>(fieldDc[fieldKey]);
+                        dc.Caption = rowDic["columncaption"].ToString();
+                        if (rowDic.ContainsKey("ismust") && rowDic["ismust"] != null)
+                        {
+                            dc.AllowDBNull = !rowDic["ismust"].ToString().Equals("0");
+                        }
+                        else
+                        {
+                            dc.AllowDBNull = true;
+                        }
+                        if (rowDic.ContainsKey("isreadonly") && rowDic["isreadonly"] != null)
+                        {
+                            dc.ReadOnly = rowDic["isreadonly"].ToString().Equals("0");
+                        }
+                        if (rowDic.ContainsKey("iskey") && rowDic["iskey"] != null && rowDic["iskey"].ToString().Equals("1"))
+                        {
+                            dc.ReadOnly = true;
+                            keyDcList.Add(dc);
+                        }
                     }
                 }
                 dt.Columns.Add(dc);
+            }
+            if (keyDcList.Count > 0)
+            {
+                dt.PrimaryKey = new DataColumn[] { keyDcList[0] };
             }
             return dt;
         }

@@ -31,11 +31,14 @@ namespace Victop.Frame.MessageManager
         {
             try
             {
-               // PluginMessageInfo pluginMessageInfo = PluginMessageList.Values.FirstOrDefault(it => it.CloudGalleryId == messageInfo.CloudGalleryId && it.ObjectId == messageInfo.ObjectId && it.MessageBody.MessageType == messageInfo.MessageBody.MessageType);
-               //if (pluginMessageInfo!=null)
-               // {
-               //     return false;
-               // }
+                string contentKey = GetMessageConentKey(messageInfo);
+                foreach (PluginMessageInfo item in PluginMessageList.Values.Where(it => it.CloudGalleryId == messageInfo.CloudGalleryId && it.ObjectId == messageInfo.ObjectId && it.MessageBody.MessageType == messageInfo.MessageBody.MessageType))
+                {
+                    if (contentKey.Equals(GetMessageConentKey(item)))
+                    {
+                        return false;
+                    }
+                }
                 PluginMessageList.Add(messageKey, messageInfo);//插入消息队列
                 return true;
             }
@@ -43,6 +46,26 @@ namespace Victop.Frame.MessageManager
             {
                 return false;
             }
+        }
+        /// <summary>
+        /// 获取消息体的表示
+        /// </summary>
+        /// <param name="dataKey"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private string GetMessageConentKey(PluginMessageInfo item)
+        {
+            string dataKey = string.Empty;
+            Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(item.MessageBody.MessageContent);
+            if (contentDic.ContainsKey("modelId") && contentDic["modelId"] != null && !string.IsNullOrEmpty(contentDic["modelId"].ToString()))
+            {
+                dataKey = contentDic["modelId"].ToString();
+            }
+            else if (contentDic.ContainsKey("dataparam") && contentDic["dataparam"] != null && !string.IsNullOrEmpty(contentDic["dataparam"].ToString()))
+            {
+                dataKey = JsonHelper.ReadJsonString(contentDic["dataparam"].ToString(), "mastername");
+            }
+            return dataKey;
         }
 
         /// <summary>
