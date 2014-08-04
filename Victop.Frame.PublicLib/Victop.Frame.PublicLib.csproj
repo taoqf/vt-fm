@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\LoggerHelper.cs" />
+    <Compile Include="Helpers\SpellCodeHelper.cs" />
     <Compile Include="Managers\ConfigManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
