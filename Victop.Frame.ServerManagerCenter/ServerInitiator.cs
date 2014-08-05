@@ -189,6 +189,7 @@ namespace Victop.Frame.ServerManagerCenter
                 }
                 Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName(pluginName, pluginPath);
                 Type[] types = pluginAssembly.GetTypes();
+                bool validPlugin = false;
                 foreach (Type t in types)
                 {
                     if (IsValidPlugin(t)) //判断是否有继承IPlugin
@@ -203,11 +204,22 @@ namespace Victop.Frame.ServerManagerCenter
                         activePluginInfo.PluginInstance = plugin;
                         ActivePluginManager activePluginManager = new ActivePluginManager();
                         activePluginManager.AddPlugin(activePluginInfo);
+                        validPlugin = true;
                     }
                 }
-                Dictionary<string, string> returnDic = new Dictionary<string, string>();
-                returnDic.Add("ReplyMode", "1");
-                returnDic.Add("ReplyContent", "启动成功");
+                Dictionary<string, string> returnDic = null;
+                if (validPlugin)
+                {
+                    returnDic = new Dictionary<string, string>();
+                    returnDic.Add("ReplyMode", "1");
+                    returnDic.Add("ReplyContent", "启动成功");
+                }
+                else
+                {
+                    returnDic = new Dictionary<string, string>();
+                    returnDic.Add("ReplyMode", "0");
+                    returnDic.Add("ReplyContent", "无效插件");
+                }
                 return JsonHelper.ToJson(returnDic);
             }
             catch (Exception ex)

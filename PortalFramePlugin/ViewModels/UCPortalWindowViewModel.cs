@@ -405,6 +405,8 @@ namespace PortalFramePlugin.ViewModels
                 {
                     if (x != null)
                     {
+                        //if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+                        //SetCurrentGallery("VICTOP");
                         BuildPluginContainer(x);
                     }
                 });
@@ -443,6 +445,7 @@ namespace PortalFramePlugin.ViewModels
                 {
                     if (x != null)
                     {
+                        SetCurrentGallery("ENTERPRISE");
                         BuildPluginContainer(x);
                     }
                 });
@@ -885,6 +888,22 @@ namespace PortalFramePlugin.ViewModels
         {
 
         }
+        #endregion
+
+
+        #region 设置当前通道信息
+        /// <summary>
+        /// 设置当前通道信息
+        /// </summary>
+        /// <param name="GaleryKey">通道key值</param>
+        private void SetCurrentGallery(string GaleryKey)
+        {
+            string messageType = "GalleryService.SetGalleryInfo";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("GalleryKey", GaleryKey);
+            MessageOperation messageOp = new MessageOperation();
+            messageOp.SendMessage(messageType, contentDic);
+        } 
         #endregion
 
         #endregion
