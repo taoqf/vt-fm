@@ -11,6 +11,7 @@ using UserLoginPlugin.Models;
 using Victop.Frame.PublicLib.Managers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
+using System.Diagnostics;
 
 namespace UserLoginPlugin.ViewModels
 {
@@ -132,23 +133,28 @@ namespace UserLoginPlugin.ViewModels
         private void InitSystemConfigInfo()
         {
             //系统和日志
-            SysConfigModel.AppName = ConfigManager.GetAttributeOfNodeByName("System", "AppName");
-            SysConfigModel.Mode = ConfigManager.GetAttributeOfNodeByName("System", "Mode");
-            SysConfigModel.ComLink = ConfigManager.GetAttributeOfNodeByName("System", "ComLink");
-            SysConfigModel.AutoSearch = ConfigManager.GetAttributeOfNodeByName("System", "AutoSearch");
-            SysConfigModel.StartPoint = ConfigManager.GetAttributeOfNodeByName("System", "StartPoint");
-            SysConfigModel.EndPoint = ConfigManager.GetAttributeOfNodeByName("System", "EndPoint");
-            SysConfigModel.BroadCastTime = ConfigManager.GetAttributeOfNodeByName("System", "BroadCastTime");
-            SysConfigModel.Debug = ConfigManager.GetAttributeOfNodeByName("Log", "Debug");
-            SysConfigModel.Clean = ConfigManager.GetAttributeOfNodeByName("Log", "Clean");
-            SysConfigModel.Unit = ConfigManager.GetAttributeOfNodeByName("Log", "Unit");
-            SysConfigModel.Num = ConfigManager.GetAttributeOfNodeByName("Log", "Num");
+            Dictionary<string, string> sysDic = ConfigManager.GetNodeAttributes("System");
+            SysConfigModel.AppName = sysDic["AppName"];
+            SysConfigModel.Mode = sysDic["Mode"];
+            SysConfigModel.ComLink = sysDic["ComLink"];
+            SysConfigModel.AutoSearch = sysDic["AutoSearch"];
+            SysConfigModel.StartPoint = sysDic["StartPoint"];
+            SysConfigModel.EndPoint = sysDic["EndPoint"];
+            SysConfigModel.BroadCastTime = sysDic["BroadCastTime"];
+
+
+            Dictionary<string, string> logDic = ConfigManager.GetNodeAttributes("Log");
+            SysConfigModel.Debug = logDic["Debug"];
+            SysConfigModel.Clean = logDic["Clean"];
+            SysConfigModel.Unit = logDic["Unit"];
+            SysConfigModel.Num = logDic["Num"];
             //接入平台
-            string masterServer = ConfigManager.GetAttributeOfNodeByName("Master", "Server");
+            Dictionary<string, string> masterDic = ConfigManager.GetNodeAttributes("Master");
+            string masterServer = masterDic["Server"];
             SysConfigModel.CloudServerIP =string.IsNullOrEmpty(masterServer)?string.Empty: masterServer.Split(':')[0];
             SysConfigModel.CloudServerPort = string.IsNullOrEmpty(masterServer) ? string.Empty : masterServer.Split(':')[1];
 
-            string masterRouter = ConfigManager.GetAttributeOfNodeByName("Master", "Router");
+            string masterRouter = masterDic["Router"];
             SysConfigModel.CloudRouterIP = string.IsNullOrEmpty(masterRouter) ? string.Empty : masterRouter.Split(':')[0];
             SysConfigModel.CloudRouterPort = string.IsNullOrEmpty(masterRouter) ? string.Empty : masterRouter.Split(':')[1];
 
@@ -156,24 +162,26 @@ namespace UserLoginPlugin.ViewModels
             SysConfigModel.CloudHostIP = string.IsNullOrEmpty(serverHost) ? string.Empty : serverHost.Split(':')[0];
             SysConfigModel.CloudHostPort = string.IsNullOrEmpty(serverHost) ? string.Empty : serverHost.Split(':')[1];
 
-            string clientServer = ConfigManager.GetAttributeOfNodeByName("Client", "Server");
+            Dictionary<string, string> clientDic = ConfigManager.GetNodeAttributes("Client");
+            string clientServer = clientDic["Server"];
             SysConfigModel.EnterpriseServerIP = string.IsNullOrEmpty(clientServer) ? string.Empty : clientServer.Split(':')[0];
             SysConfigModel.EnterpriseServerPort = string.IsNullOrEmpty(clientServer) ? string.Empty : clientServer.Split(':')[1];
 
-            string clientRouter = ConfigManager.GetAttributeOfNodeByName("Client", "Router");
+            string clientRouter = clientDic["Router"];
             SysConfigModel.EnterpriseRouterIP = string.IsNullOrEmpty(clientRouter) ? string.Empty : clientRouter.Split(':')[0];
             SysConfigModel.EnterpriseRouterPort = string.IsNullOrEmpty(clientRouter) ? string.Empty : clientRouter.Split(':')[1];
 
-            SysConfigModel.EnterpriseLan = ConfigManager.GetAttributeOfNodeByName("Client", "Lan");
-            SysConfigModel.EnterpriseIsNeedRouter = ConfigManager.GetAttributeOfNodeByName("Client", "IsNeedRouter");
+            SysConfigModel.EnterpriseLan = clientDic["Lan"];
+            SysConfigModel.EnterpriseIsNeedRouter = clientDic["IsNeedRouter"];
 
             string p2pServer = ConfigManager.GetAttributeOfNodeByName("P2PClient", "Server");
             SysConfigModel.P2PServerIP = string.IsNullOrEmpty(p2pServer) ? string.Empty : p2pServer.Split(':')[0];
             SysConfigModel.P2PServerPort = string.IsNullOrEmpty(p2pServer) ? string.Empty : p2pServer.Split(':')[1];
             //用户信息
-            SysConfigModel.UserName = ConfigManager.GetAttributeOfNodeByName("UserInfo", "User");
-            SysConfigModel.PassWord = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
-            SysConfigModel.ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
+            Dictionary<string, string> userDic = ConfigManager.GetNodeAttributes("UserInfo");
+            SysConfigModel.UserName = userDic["User"];
+            SysConfigModel.PassWord = userDic["Pwd"];
+            SysConfigModel.ClientId = userDic["ClientId"];
         }
         #endregion
 

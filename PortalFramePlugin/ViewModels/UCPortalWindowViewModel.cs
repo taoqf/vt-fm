@@ -169,20 +169,10 @@ namespace PortalFramePlugin.ViewModels
                     homeItem.Name = "homeItem";
                     homeItem.AllowDelete = false;
                     homeItem.Height = 40;
-                    if (ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
-                    {
-                        homeItem.Header = "飞道科技";
-                        WebBrowser browser = new WebBrowser();
-                        browser.Source = new Uri("http://www.victop.com");
-                        homeItem.Content = browser;
-                    }
-                    else
-                    {
-                        homeItem.Header = "功能列表";
-                        ScrollViewer scroll = new ScrollViewer();
-                        scroll.Content = new UCPluginContainer();
-                        homeItem.Content = scroll;
-                    }
+                    homeItem.Header = "飞道科技";
+                    WebBrowser browser = new WebBrowser();
+                    browser.Source = new Uri("http://www.victop.com");
+                    homeItem.Content = browser;
                     tabItemList.Add(homeItem);
                 }
                 return tabItemList;
@@ -640,7 +630,7 @@ namespace PortalFramePlugin.ViewModels
                 menuModel = CreatLocalMenuModel(item, menuModel);
                 SystemMenuListLocal.Add(menuModel);
             }
-            if (!ConfigurationManager.AppSettings["DataSource"].ToLower().Equals("local"))
+            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             {
                 SystemMenuListLocal.Clear();
             }

@@ -8,6 +8,7 @@ namespace Victop.Frame.MessageManager
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using System.Text;
     using System.Threading;
@@ -31,7 +32,10 @@ namespace Victop.Frame.MessageManager
                 PluginMessageManager pluginMessageManager = new PluginMessageManager();
                 Thread thread = new Thread(new ThreadStart(pluginMessageManager.CheckPluginMessageValid));
                 thread.IsBackground = true;
-                thread.Start();
+                if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+                {
+                    thread.Start();
+                }
             }
             return instance;
         }
