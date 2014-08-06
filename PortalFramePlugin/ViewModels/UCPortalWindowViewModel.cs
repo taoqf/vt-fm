@@ -255,6 +255,10 @@ namespace PortalFramePlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     mainWindow = (Window)x;
+                    Rect rect = SystemParameters.WorkArea;
+                    mainWindow.MaxWidth = rect.Width;
+                    mainWindow.MaxHeight = rect.Height;
+                    mainWindow.WindowState = WindowState.Maximized;
                     ChangeFrameWorkTheme();
                     LoadMenuListLocal();
                 });
