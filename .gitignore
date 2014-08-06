@@ -18,9 +18,6 @@ Bin/*.dll
 Bin/*.pdb
 Bin/Plugin/*.dll
 Bin/Plugin/*.pdb
-!Bin/theme/Skin1/*.*
-!Bin/theme/Skin2/*.*
-!Bin/theme/SkinDefault/*.*
 !Bin/ice.cfg
 !Bin/PartnerConfig.xml
 !Bin/UserPlugins.xml

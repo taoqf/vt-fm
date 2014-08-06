@@ -56,6 +56,7 @@ namespace Victop.Frame.ServerManagerCenter
         public string Run(RequestMessage messageInfo)
         {
             string ReplyContent = string.Empty;
+            GC.Collect();
             switch (messageInfo.MessageType)
             {
                 case "PluginService.PluginRun":
