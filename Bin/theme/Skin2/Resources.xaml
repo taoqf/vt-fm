@@ -177,6 +177,42 @@
     <Setter Property="BottomContent" Value="{DynamicResource L_R_96}"/>
   </Style>
 
+  <Style x:Key="btnModify" TargetType="{x:Type controls:VicButtonTopBottom}">
+    <Setter Property="TopBackground">
+      <Setter.Value>
+        <ImageBrush ImageSource="btnCheckAll.png"/>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BottomContent" Value="{DynamicResource L_R_312}"/>
+  </Style>
+
+ <Style x:Key="btnDeleteBill" TargetType="{x:Type controls:VicButtonTopBottom}">
+    <Setter Property="TopBackground">
+      <Setter.Value>
+        <ImageBrush ImageSource="btnCheckAll.png"/>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BottomContent" Value="{DynamicResource L_R_29}"/>
+  </Style>
+
+ <Style x:Key="btnNullify" TargetType="{x:Type controls:VicButtonTopBottom}">
+    <Setter Property="TopBackground">
+      <Setter.Value>
+        <ImageBrush ImageSource="btnCheckAll.png"/>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BottomContent" Value="{DynamicResource L_R_318}"/>
+  </Style>
+
+<Style x:Key="btnDerecognize" TargetType="{x:Type controls:VicButtonTopBottom}">
+    <Setter Property="TopBackground">
+      <Setter.Value>
+        <ImageBrush ImageSource="btnCheckAll.png"/>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="BottomContent" Value="{DynamicResource L_R_296}"/>
+  </Style>
+
   <Style x:Key="btnAddBrotherNode" TargetType="{x:Type controls:VicButtonLeftRight}">
     <Setter Property="LeftBackground">
       <Setter.Value>
