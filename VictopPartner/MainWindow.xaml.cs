@@ -51,21 +51,30 @@ namespace VictopPartner
         {
             if (FrameInit.GetInstance().FrameRun())
             {
-                string mainPlugin = ConfigurationManager.AppSettings["portalWindow"];
-                Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName(mainPlugin, "");
-                Type[] types = pluginAssembly.GetTypes();
-                foreach (Type t in types)
+                try
                 {
-                    if (IsValidPlugin(t))
+                    string mainPlugin = ConfigurationManager.AppSettings["portalWindow"];
+                    Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName(mainPlugin, "");
+                    Type[] types = pluginAssembly.GetTypes();
+                    foreach (Type t in types)
                     {
-                        IPlugin plugin = (IPlugin)pluginAssembly.CreateInstance(t.FullName);
-                        this.Hide();
-                        plugin.StartWindow.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
-                        plugin.StartWindow.ShowDialog();
-                        FrameInit.GetInstance().FrameUnload();
-                        Environment.Exit(0);
-                        break;
+                        if (IsValidPlugin(t))
+                        {
+                            IPlugin plugin = (IPlugin)pluginAssembly.CreateInstance(t.FullName);
+                            this.Hide();
+                            plugin.StartWindow.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+                            plugin.StartWindow.ShowDialog();
+                            FrameInit.GetInstance().FrameUnload();
+                            Environment.Exit(0);
+                            break;
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("门户"+ex.Message);
+                    FrameInit.GetInstance().FrameUnload();
+                    Environment.Exit(0);
                 }
             }
         }
