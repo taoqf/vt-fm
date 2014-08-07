@@ -449,7 +449,7 @@ namespace PortalFramePlugin.ViewModels
                 {
                     if (x != null)
                     {
-                        SetCurrentGallery("ENTERPRISE");
+                        //SetCurrentGallery("ENTERPRISE");
                         BuildPluginContainer(x);
                     }
                 });
