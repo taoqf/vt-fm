@@ -361,7 +361,6 @@ namespace Victop.Frame.DataChannel
         private DataTable SetDataTableRow(DataTable dt, XmlNode xmlNode)
         {
             dt.Clear();
-            dt.DataSet.EnforceConstraints = false;
             XmlNodeList nodeList = xmlNode.SelectSingleNode("ROWDATA").SelectNodes("ROW");
             foreach (XmlNode item in nodeList)
             {
@@ -381,7 +380,6 @@ namespace Victop.Frame.DataChannel
                 }
                 dt.Rows.Add(dr);
             }
-            dt.DataSet.EnforceConstraints = true;
             return dt;
         }
         /// <summary>
@@ -437,15 +435,15 @@ namespace Victop.Frame.DataChannel
                 }
                 dt.Columns.Add(dc);
             }
-            if (keyDcList.Count > 0)
-            {
-                DataColumn[] keyDCs = new DataColumn[keyDcList.Count];
-                for (int i = 0; i < keyDcList.Count; i++)
-                {
-                    keyDCs[i] = keyDcList[i];
-                }
-                dt.PrimaryKey = keyDCs;
-            }
+            //if (keyDcList.Count > 0)
+            //{
+            //    DataColumn[] keyDCs = new DataColumn[keyDcList.Count];
+            //    for (int i = 0; i < keyDcList.Count; i++)
+            //    {
+            //        keyDCs[i] = keyDcList[i];
+            //    }
+            //    dt.PrimaryKey = keyDCs;
+            //}
             return dt;
         }
         /// <summary>
