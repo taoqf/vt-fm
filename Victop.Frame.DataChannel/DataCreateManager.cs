@@ -361,6 +361,7 @@ namespace Victop.Frame.DataChannel
         private DataTable SetDataTableRow(DataTable dt, XmlNode xmlNode)
         {
             dt.Clear();
+            dt.DataSet.EnforceConstraints = false;
             XmlNodeList nodeList = xmlNode.SelectSingleNode("ROWDATA").SelectNodes("ROW");
             foreach (XmlNode item in nodeList)
             {
@@ -380,6 +381,7 @@ namespace Victop.Frame.DataChannel
                 }
                 dt.Rows.Add(dr);
             }
+            dt.DataSet.EnforceConstraints = true;
             return dt;
         }
         /// <summary>
