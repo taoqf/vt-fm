@@ -437,7 +437,7 @@ namespace Victop.Frame.DataChannel
             }
             if (keyDcList.Count > 0)
             {
-                DataColumn[] keyDCs = new DataColumn[keyDcList.Count];
+                DataColumn[] keyDCs = new DataColumn[keyDcList.Count - 1];
                 for (int i = 0; i < keyDcList.Count; i++)
                 {
                     keyDCs[i] = keyDcList[i];
