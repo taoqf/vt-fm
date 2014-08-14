@@ -12,21 +12,21 @@ namespace Victop.Frame.DataChannel
     using System.Data;
     using System.Linq;
     using System.Text;
-using Victop.Frame.CoreLibrary.Models;
+    using Victop.Frame.CoreLibrary.Models;
     using Victop.Frame.PublicLib.Helpers;
 
-	/// <summary>
-	/// 数据通道管理器
-	/// </summary>
-	/// <remarks>数据通道管理器</remarks>
-	public class DataChannelManager
-	{
+    /// <summary>
+    /// 数据通道管理器
+    /// </summary>
+    /// <remarks>数据通道管理器</remarks>
+    public class DataChannelManager
+    {
         private static Hashtable channelMap;
-		/// <summary>
-		/// 通道集合
-		/// </summary>
-		internal static Hashtable ChannelMap
-		{
+        /// <summary>
+        /// 通道集合
+        /// </summary>
+        internal static Hashtable ChannelMap
+        {
             get
             {
                 if (channelMap == null)
@@ -37,13 +37,13 @@ using Victop.Frame.CoreLibrary.Models;
             {
                 channelMap = value;
             }
-		}
+        }
 
-		/// <summary>
-		/// 添加数据
-		/// </summary>
-		public virtual bool AddData(string channelId, Hashtable replyHashtable)
-		{
+        /// <summary>
+        /// 添加数据
+        /// </summary>
+        public virtual bool AddData(string channelId, Hashtable replyHashtable)
+        {
             try
             {
                 if (!ChannelMap.ContainsKey(channelId))
@@ -60,13 +60,13 @@ using Victop.Frame.CoreLibrary.Models;
             {
                 return false;
             }
-		}
+        }
 
-		/// <summary>
-		/// 更新数据
-		/// </summary>
+        /// <summary>
+        /// 更新数据
+        /// </summary>
         public virtual bool UpdateData(string channelId, Hashtable replyHashtable)
-		{
+        {
             if (ChannelMap.ContainsKey(channelId))
             {
                 ChannelMap[channelId] = replyHashtable;
@@ -76,13 +76,13 @@ using Victop.Frame.CoreLibrary.Models;
             {
                 return false;
             }
-		}
+        }
 
-		/// <summary>
-		/// 删除数据
-		/// </summary>
-		public virtual bool DeleteData(string channelId)
-		{
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        public virtual bool DeleteData(string channelId)
+        {
             if (ChannelMap.ContainsKey(channelId))
             {
                 ChannelMap.Remove(channelId);
@@ -92,19 +92,19 @@ using Victop.Frame.CoreLibrary.Models;
             {
                 return false;
             }
-		}
+        }
 
-		/// <summary>
-		/// 插件获取数据
-		/// </summary>
-		public virtual Hashtable GetData(string channelId)
-		{
+        /// <summary>
+        /// 插件获取数据
+        /// </summary>
+        public virtual Hashtable GetData(string channelId)
+        {
             if (ChannelMap.ContainsKey(channelId))
             {
                 return ChannelMap[channelId] as Hashtable;
             }
             return null;
-		}
+        }
         /// <summary>
         /// 判定数据是否存在
         /// </summary>
@@ -117,13 +117,12 @@ using Victop.Frame.CoreLibrary.Models;
             {
                 string dataKey = string.Empty;
                 channelId = string.Empty;
-                bool masterFlag = false;
-                Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
+                bool masterFlag = false; Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
                 if (contentDic.ContainsKey("modelId") && contentDic["modelId"] != null && !string.IsNullOrEmpty(contentDic["modelId"].ToString()))
                 {
                     dataKey = contentDic["modelId"].ToString();
                 }
-                else if (contentDic.ContainsKey("dataparam") && contentDic["dataparam"]!=null && !string.IsNullOrEmpty(contentDic["dataparam"].ToString()))
+                else if (contentDic.ContainsKey("dataparam") && contentDic["dataparam"] != null && !string.IsNullOrEmpty(contentDic["dataparam"].ToString()))
                 {
                     dataKey = JsonHelper.ReadJsonString(contentDic["dataparam"].ToString(), "mastername");
                     masterFlag = true;
@@ -135,7 +134,7 @@ using Victop.Frame.CoreLibrary.Models;
                         ChannelData channelData = (ChannelData)((Hashtable)(ChannelMap[key]))["Data"];
                         if (!masterFlag)
                         {
-                            if (JsonHelper.ReadJsonString(channelData.MessageInfo.MessageContent, "modelId").Equals(dataKey))
+                            if (JsonHelper.ReadJsonString(channelData.MessageInfo.MessageContent, "modelId").Equals(dataKey) && channelData.MessageInfo.MessageType.Equals(messageInfo.MessageType))
                             {
                                 channelId = key;
                                 break;
@@ -146,7 +145,7 @@ using Victop.Frame.CoreLibrary.Models;
                             Dictionary<string, object> contDic = JsonHelper.ToObject<Dictionary<string, object>>(channelData.MessageInfo.MessageContent);
                             if (contDic.ContainsKey("dataparam") && contDic["dataparam"] != null && !string.IsNullOrEmpty(contDic["dataparam"].ToString()))
                             {
-                                if (JsonHelper.ReadJsonString(contDic["dataparam"].ToString(), "mastername").Equals(dataKey))
+                                if (JsonHelper.ReadJsonString(contDic["dataparam"].ToString(), "mastername").Equals(dataKey) && channelData.MessageInfo.MessageType.Equals(messageInfo.MessageType))
                                 {
                                     channelId = key;
                                     break;
@@ -171,6 +170,6 @@ using Victop.Frame.CoreLibrary.Models;
             }
         }
 
-	}
+    }
 }
 
