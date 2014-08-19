@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="AbsClasses\Base.cs" />
     <Compile Include="ActivePluginManager.cs" />
+    <Compile Include="Enums\DataFormEnum.cs" />
     <Compile Include="Factorys\AdapterFactory.cs" />
     <Compile Include="AutoDiscover.cs" />
     <Compile Include="BaseResourceManager.cs" />
