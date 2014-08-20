@@ -12,6 +12,7 @@ namespace Victop.Frame.DataChannel
     using System.Linq;
     using System.Text;
     using Victop.Frame.CoreLibrary.Models;
+    using Victop.Frame.CoreLibrary.Enums;
 
 	/// <summary>
 	/// 数据通道数据类
@@ -36,7 +37,30 @@ namespace Victop.Frame.DataChannel
 			get;
 			set;
 		}
-
+        /// <summary>
+        /// 数据类型(JSON/DATASET)
+        /// </summary>
+        public virtual DataFormEnum DataForm
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// JSON数据信息
+        /// </summary>
+        public virtual string JSONData
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 调整的JSON数据信息
+        /// </summary>
+        public virtual string CrudJSONData
+        {
+            get;
+            set;
+        }
 	}
 }
 
