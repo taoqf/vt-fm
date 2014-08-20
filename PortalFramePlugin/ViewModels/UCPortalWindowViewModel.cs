@@ -726,8 +726,6 @@ namespace PortalFramePlugin.ViewModels
         /// <param name="selectedFourthMenu">当前选择的四级菜单</param>
         private void LoadPlugin(MenuModel selectedFourthMenu)
         {
-            if (selectedFourthMenu.ResourceName == null)
-                selectedFourthMenu.ResourceName = ConfigurationManager.AppSettings["runplugin"];
             if (selectedFourthMenu.ResourceName != null && selectedFourthMenu.ResourceName.Contains("Plugin"))
             {
                 PluginOperation pluginOp = new PluginOperation();
@@ -743,6 +741,10 @@ namespace PortalFramePlugin.ViewModels
                 {
                     VicMessageBoxNormal.Show(pluginModel.ErrorMsg);
                 }
+            }
+            else
+            {
+                VicMessageBoxNormal.Show("不存在关联功能");
             }
         }
 

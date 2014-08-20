@@ -70,14 +70,43 @@ namespace Victop.Frame.Connection
         {
             CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
             Dictionary<string, string> contentDic = JsonHelper.ToObject<Dictionary<string, string>>(messageInfo.MessageContent);
-            if (contentDic.ContainsKey("clientId"))
+            DataFormEnum dataForm = ConfigurationManager.AppSettings["SystemType"].Equals("JSON") ? DataFormEnum.JSON : DataFormEnum.DATASET;
+            switch (dataForm)
             {
-                contentDic["clientId"] = currentGallery.ClientId;
+                case DataFormEnum.DATASET:
+                    if (contentDic.ContainsKey("clientId"))
+                    {
+                        contentDic["clientId"] = currentGallery.ClientId;
+                    }
+                    else
+                    {
+                        contentDic.Add("clientId", currentGallery.ClientId);
+                    }
+                    break;
+                case DataFormEnum.JSON:
+                    if (contentDic.ContainsKey("clientId"))
+                    {
+                        contentDic.Remove("clientId");
+                        contentDic.Add("spaceId", currentGallery.ClientId);
+                    }
+                    if (contentDic.ContainsKey("spaceId"))
+                    {
+                        contentDic["spaceId"] = currentGallery.ClientId;
+                    }
+                    else
+                    {
+                        contentDic.Add("spaceId", currentGallery.ClientId);
+                    }
+                    if (contentDic.ContainsKey("usercode"))
+                    {
+                        contentDic.Add("userCode", contentDic["usercode"]);
+                        contentDic.Remove("usercode");
+                    }
+                    break;
+                default:
+                    break;
             }
-            else
-            {
-                contentDic.Add("clientId", currentGallery.ClientId);
-            }
+            
             if (contentDic.ContainsKey("channelID"))
             {
                 if (string.IsNullOrEmpty(currentGallery.ClientInfo.ChannelId))
@@ -108,9 +137,16 @@ namespace Victop.Frame.Connection
                 currentGallery.ClientInfo.SessionId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "sessionID");
                 currentGallery.ClientInfo.UserName = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userName");
                 currentGallery.ClientInfo.UserPwd = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userpw");
-                currentGallery.ClientInfo.UserCode = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "usercode");
+                currentGallery.ClientInfo.UserCode = replyMessage.ReplyContent.Contains("usercode") ? JsonHelper.ReadJsonString(replyMessage.ReplyContent, "usercode") : JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode");
                 messageInfo.MessageContent = replyMessage.ReplyContent;
-                replyMessage = ConnectLinkSubmit(adapter, messageInfo);
+                if (dataForm == DataFormEnum.DATASET)
+                {
+                    replyMessage = ConnectLinkSubmit(adapter, messageInfo);
+                }
+                else
+                {
+                    replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "msg");
+                }
             }
             return replyMessage;
         }

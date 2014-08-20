@@ -154,16 +154,27 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    string MessageType = "DataChannelService.loadDataByModelAsync";
+                    //string MessageType = "DataChannelService.loadDataByModelAsync";
+                    //MessageOperation messageOp = new MessageOperation();
+                    //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeCommonRequestMessageMaster());
+                    //if (returnDic.ContainsKey("DataChannelId") && returnDic["DataChannelId"] != null)
+                    //{
+                    //    newChannelId = returnDic["DataChannelId"].ToString();
+                    //    DataOperation operateData = new DataOperation();
+                    //    DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
+                    //    UpdateTableList(ds);
+                    //}
+                    string MessageType = "MongoDataChannelService.findBusiData";
                     MessageOperation messageOp = new MessageOperation();
-                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeCommonRequestMessageMaster());
-                    if (returnDic.ContainsKey("DataChannelId") && returnDic["DataChannelId"] != null)
-                    {
-                        newChannelId = returnDic["DataChannelId"].ToString();
-                        DataOperation operateData = new DataOperation();
-                        DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
-                        UpdateTableList(ds);
-                    }
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("systemid", "100");
+                    contentDic.Add("configsystemid", "101");
+                    contentDic.Add("spaceid", "ebc");
+                    contentDic.Add("modelid", "business_card_db_cardtemplate_0002");
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                    if (returnDic == null)
+                        return;
+                    string temp = returnDic["MessageId"].ToString();
                 });
             }
         }
@@ -275,9 +286,12 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    MessageOperation messageOp = new MessageOperation();
-                    Dictionary<string, object> result = messageOp.SendMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
-                    string temp = string.Empty;
+                    //MessageOperation messageOp = new MessageOperation();
+                    //Dictionary<string, object> result = messageOp.SendMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                    //string temp = string.Empty;
+
+                    CurdJSONDataOperation jsonOp = new CurdJSONDataOperation();
+                    
 
                 });
             }

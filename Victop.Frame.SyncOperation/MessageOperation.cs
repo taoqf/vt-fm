@@ -78,7 +78,7 @@ namespace Victop.Frame.SyncOperation
         /// <param name="dataForm"></param>
         /// <param name="waiteTime"></param>
         /// <returns></returns>
-        public Dictionary<string, object> SendMessage(string messageType, Dictionary<string, object> messageContent,DataFormEnum dataForm ,int waiteTime = 16)
+        public Dictionary<string, object> SendMessage(string messageType, Dictionary<string, object> messageContent,string dataForm,int waiteTime = 16)
         {
             Dictionary<string, object> returnDic;
             Dictionary<string, object> messageDic = new Dictionary<string, object>();
@@ -88,7 +88,7 @@ namespace Victop.Frame.SyncOperation
                 messageContent = new Dictionary<string, object>();
             }
             messageDic.Add("MessageContent", messageContent);
-            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(MessageBack),dataForm);
+            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(MessageBack), dataForm.Equals("JSON") ? DataFormEnum.JSON : DataFormEnum.DATASET);
             if (waiteTime > 0)
             {
                 bool flag = false;

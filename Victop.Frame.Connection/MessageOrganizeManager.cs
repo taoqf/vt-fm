@@ -102,6 +102,12 @@ namespace Victop.Frame.Connection
                         dicContent = GetSaveDataByModelMessage(dicContent);
                         replyIsToChannel = DataOperateEnum.COMMIT;
                         break;
+                    case "MongoDataChannelService.findBusiData":
+                        replyIsToChannel = DataOperateEnum.SAVE;
+                        break;
+                    case "MongoDataChannelService.saveBusiData":
+                        replyIsToChannel = DataOperateEnum.COMMIT;
+                        break;
                     default:
                         break;
                 }

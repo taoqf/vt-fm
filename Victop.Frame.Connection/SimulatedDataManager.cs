@@ -28,7 +28,7 @@ namespace Victop.Frame.Connection
         {
             ReplyMessage replyMessage = new ReplyMessage();
             replyMessage.MessageId = messageInfo.MessageId;
-            string modelId = JsonHelper.ReadJsonString(messageInfo.MessageContent, "modelId");
+            string modelId = JsonHelper.ReadJsonString(messageInfo.MessageContent, "modelid");
             if (!string.IsNullOrEmpty(modelId))
             {
                 Dictionary<string, object> returnContentDic = new Dictionary<string, object>();
