@@ -13,6 +13,7 @@ namespace Victop.Frame.MessageManager
     using System.Text;
     using System.Threading;
     using Victop.Frame.Connection;
+    using Victop.Frame.CoreLibrary.Enums;
     using Victop.Frame.CoreLibrary.Models;
 
 	/// <summary>
@@ -43,24 +44,28 @@ namespace Victop.Frame.MessageManager
 		/// <summary>
 		/// 线程工作
 		/// </summary>
-		public virtual void DoWork(RequestMessage messageInfo)
+		public virtual void DoWork(RequestMessage messageInfo,DataFormEnum dataForm)
 		{
-            ThreadPool.QueueUserWorkItem(new WaitCallback(SendMessage), messageInfo);
+            Dictionary<string, object> paramDic = new Dictionary<string, object>();
+            paramDic.Add("messageInfo", messageInfo);
+            paramDic.Add("dataForm", dataForm);
+            ThreadPool.QueueUserWorkItem(new WaitCallback(SendMessage), paramDic);
 		}
 
         /// <summary>
         /// 请求消息体发送
         /// </summary>
         /// <param name="messageInfo">请求消息体</param>
-        private void SendMessage(object messageInfo)
+        private void SendMessage(object paramDic)
         {
+            Dictionary<string, object> MessageDic = (Dictionary<string, object>)paramDic;
             RequestMessageSend messageSend = new RequestMessageSend();
-            RequestMessage message=(RequestMessage)messageInfo;
+            RequestMessage message = (RequestMessage)(MessageDic["messageInfo"]);
             if (string.IsNullOrEmpty(message.MessageType)||string.IsNullOrEmpty(message.MessageContent))
             {
                 return;
             }
-            messageSend.SendMessage((RequestMessage)messageInfo);
+            messageSend.SendMessage(message, (DataFormEnum)(MessageDic["dataForm"]));
         }
 	}
 }

@@ -15,6 +15,7 @@ namespace Victop.Frame.DataChannel
     using System.Text.RegularExpressions;
     using System.Xml;
     using System.Xml.Linq;
+    using Victop.Frame.CoreLibrary.Enums;
     using Victop.Frame.CoreLibrary.Models;
     using Victop.Frame.DataChannel.Enums;
     using Victop.Frame.PublicLib.Helpers;
@@ -28,30 +29,40 @@ namespace Victop.Frame.DataChannel
         /// <summary>
         /// 依据应答消息创建DataSet并存储到Hashtable
         /// </summary>
-        private Hashtable CreateDataSetByReplyMessage(ReplyMessage replyMessageInfo, RequestMessage messageInfo)
+        private Hashtable CreateDataSetByReplyMessage(ReplyMessage replyMessageInfo, RequestMessage messageInfo, DataFormEnum dataForm)
         {
             Hashtable hashData = new Hashtable();
             ChannelData channelData = new ChannelData();
             channelData.MessageInfo = messageInfo;
             Dictionary<string, string> contDic = JsonHelper.ToObject<Dictionary<string, string>>(replyMessageInfo.ReplyContent);
-            if (messageInfo.MessageType.Equals("DataChannelService.loadDataByModelAsync"))
+            switch (dataForm)
             {
-                channelData.DataInfo = CreateDataSetByJSON(replyMessageInfo.ReplyContent);
-            }
-            else if (messageInfo.MessageType.Equals("DataChannelService.getFormReferenceSpecial"))
-            {
-                channelData.DataInfo = CreateDataSet(replyMessageInfo.ReplyContent, SOADataTypeEnum.DATAREFERENCE);
-            }
-            else
-            {
-                if (contDic == null)
-                {
-                    channelData.DataInfo = CreateDataSet(replyMessageInfo.ReplyContent, SOADataTypeEnum.MASTERDATA);
-                }
-                else
-                {
-                    channelData.DataInfo = CreateDataSet(contDic["Result"], SOADataTypeEnum.MODELDATA);
-                }
+                case DataFormEnum.DATASET:
+                    if (messageInfo.MessageType.Equals("DataChannelService.loadDataByModelAsync"))
+                    {
+                        channelData.DataInfo = CreateDataSetByJSON(replyMessageInfo.ReplyContent);
+                    }
+                    else if (messageInfo.MessageType.Equals("DataChannelService.getFormReferenceSpecial"))
+                    {
+                        channelData.DataInfo = CreateDataSet(replyMessageInfo.ReplyContent, SOADataTypeEnum.DATAREFERENCE);
+                    }
+                    else
+                    {
+                        if (contDic == null)
+                        {
+                            channelData.DataInfo = CreateDataSet(replyMessageInfo.ReplyContent, SOADataTypeEnum.MASTERDATA);
+                        }
+                        else
+                        {
+                            channelData.DataInfo = CreateDataSet(contDic["Result"], SOADataTypeEnum.MODELDATA);
+                        }
+                    }
+                    break;
+                case DataFormEnum.JSON:
+                    channelData.JSONData = replyMessageInfo.ReplyContent;
+                    break;
+                default:
+                    break;
             }
             hashData.Add("Data", channelData);
             return hashData;
@@ -728,9 +739,9 @@ namespace Victop.Frame.DataChannel
         /// <summary>
         /// 发送应答消息(连接器使用)
         /// </summary>
-        public virtual ReplyMessage SendReplyMessage(ReplyMessage replyMessageInfo, RequestMessage messageInfo)
+        public virtual ReplyMessage SendReplyMessage(ReplyMessage replyMessageInfo, RequestMessage messageInfo, DataFormEnum dataForm)
         {
-            Hashtable replyHashtable = CreateDataSetByReplyMessage(replyMessageInfo, messageInfo);
+            Hashtable replyHashtable = CreateDataSetByReplyMessage(replyMessageInfo, messageInfo, dataForm);
             DataChannelManager dataManager = new DataChannelManager();
             string DataChannelId = string.Empty;
             if (!dataManager.CheckDataExist(messageInfo, out DataChannelId))

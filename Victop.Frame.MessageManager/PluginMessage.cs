@@ -7,12 +7,13 @@
 namespace Victop.Frame.MessageManager
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading;
-    using Victop.Frame.CoreLibrary.Interfaces;
-    using Victop.Frame.PublicLib.Helpers;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using Victop.Frame.CoreLibrary.Enums;
+using Victop.Frame.CoreLibrary.Interfaces;
+using Victop.Frame.PublicLib.Helpers;
 
 	/// <summary>
     /// 插件消息实现类【消息接收】
@@ -27,11 +28,24 @@ namespace Victop.Frame.MessageManager
         /// <param name="replyCallBack">应答回调</param>
         /// <param name="validTime">消息有效时间(秒)</param>
 		/// </summary>
-        public virtual void SendMessage(string objectId, string messageInfo, WaitCallback replyCallBack,long validTime=15)
-		{
+        public virtual void SendMessage(string objectId, string messageInfo, WaitCallback replyCallBack, long validTime = 15)
+        {
             PluginMessageFormManager pluginMessageFormManager = new PluginMessageFormManager();
-            pluginMessageFormManager.CheckMessageFormat(messageInfo,replyCallBack,validTime);
-		}
+            pluginMessageFormManager.CheckMessageFormat(messageInfo, replyCallBack, validTime,DataFormEnum.DATASET);
+        }
+        /// <summary>
+        /// 发送消息(JSON数据)
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="messageInfo"></param>
+        /// <param name="replyCallBack"></param>
+        /// <param name="validTime"></param>
+        /// <param name="dataForm"></param>
+        public virtual void SendMessage(string objectId, string messageInfo, WaitCallback replyCallBack, DataFormEnum dataForm, long validTime = 15)
+        {
+            PluginMessageFormManager pluginMessageFormManager = new PluginMessageFormManager();
+            pluginMessageFormManager.CheckMessageFormat(messageInfo, replyCallBack, validTime, dataForm);
+        }
         /// <summary>
         /// 执行插件回调
         /// </summary>

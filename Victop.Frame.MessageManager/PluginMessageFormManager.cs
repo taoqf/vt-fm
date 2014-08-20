@@ -7,14 +7,15 @@
 namespace Victop.Frame.MessageManager
 {
     using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using Victop.Frame.CoreLibrary;
-using Victop.Frame.CoreLibrary.Models;
-using Victop.Frame.MessageManager.Enums;
-using Victop.Frame.PublicLib.Helpers;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading;
+    using Victop.Frame.CoreLibrary;
+    using Victop.Frame.CoreLibrary.Enums;
+    using Victop.Frame.CoreLibrary.Models;
+    using Victop.Frame.MessageManager.Enums;
+    using Victop.Frame.PublicLib.Helpers;
 
     /// <summary>
     /// 插件消息格式管理 【消息格式验证】
@@ -28,7 +29,7 @@ using Victop.Frame.PublicLib.Helpers;
         /// <param name="callBack">消息回调方法</param>
         /// <param name="validTime">有效时间</param>
         /// </summary>
-        public virtual void CheckMessageFormat(string messageInfo, WaitCallback callBack, long validTime)
+        public virtual void CheckMessageFormat(string messageInfo, WaitCallback callBack, long validTime, DataFormEnum dataForm)
         {
             PluginMessageManager pluginMessageManager = new PluginMessageManager();
             if (CheckMessageValid(messageInfo))//验证成功
@@ -49,7 +50,7 @@ using Victop.Frame.PublicLib.Helpers;
                 });
                 if (result)//插入成功
                 {
-                    PluginMessageThreadManager.GetInstance().DoWork(message);
+                    PluginMessageThreadManager.GetInstance().DoWork(message,dataForm);
                 }
                 else
                 {

@@ -28,7 +28,7 @@ namespace Victop.Frame.Connection
         /// <summary>
         /// 发送消息
         /// </summary>
-        public virtual ReplyMessage SendRmoteMessage(RequestMessage messageInfo)
+        public virtual ReplyMessage SendRmoteMessage(RequestMessage messageInfo, DataFormEnum dataForm)
         {
             IAdapter adapter = new MessageManager();
             try
@@ -45,7 +45,7 @@ namespace Victop.Frame.Connection
                 }
                 else
                 {
-                    ReplyMessage replyMessage = MessageSubmit(adapter, messageInfo);
+                    ReplyMessage replyMessage = MessageSubmit(adapter, messageInfo,dataForm);
                     return replyMessage;
                 }
             }
@@ -185,7 +185,7 @@ namespace Victop.Frame.Connection
         /// <param name="adapter"></param>
         /// <param name="messageInfo"></param>
         /// <returns></returns>
-        private ReplyMessage MessageSubmit(IAdapter adapter, RequestMessage messageInfo)
+        private ReplyMessage MessageSubmit(IAdapter adapter, RequestMessage messageInfo, DataFormEnum dataForm)
         {
             MessageOrganizeManager organizeManager = new MessageOrganizeManager();
             DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
@@ -210,7 +210,7 @@ namespace Victop.Frame.Connection
                 switch (saveDataFlag)
                 {
                     case DataOperateEnum.SAVE:
-                        replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo);
+                        replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo,dataForm);
                         break;
                     case DataOperateEnum.COMMIT:
                         bool result = replyMessageResolver.CommitDataSetChange(DataChannelId);

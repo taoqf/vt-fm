@@ -42,7 +42,7 @@ namespace Victop.Frame.Connection
         /// <summary>
         /// 分解应答消息体的数据部分和状态部分
         /// </summary>
-        public virtual ReplyMessage ResolveReplyMessage(ReplyMessage replyMessageInfo, RequestMessage messageInfo)
+        public virtual ReplyMessage ResolveReplyMessage(ReplyMessage replyMessageInfo, RequestMessage messageInfo, DataFormEnum dataForm)
         {
             DataReplyMessage = new ReplyMessage()
             {
@@ -52,7 +52,7 @@ namespace Victop.Frame.Connection
             string channelId = string.Empty;
             try
             {
-                if (ReplyToDataChannel(DataReplyMessage, messageInfo, out channelId))
+                if (ReplyToDataChannel(DataReplyMessage, messageInfo, out channelId,dataForm))
                 {
                     MessageStatusReplyMessage = new ReplyMessage()
                     {
@@ -86,7 +86,7 @@ namespace Victop.Frame.Connection
         /// <summary>
         /// 应答消息数据部分保存到数据通道
         /// </summary>
-        private bool ReplyToDataChannel(ReplyMessage replyMessageInfo, RequestMessage messageInfo, out string channelId)
+        private bool ReplyToDataChannel(ReplyMessage replyMessageInfo, RequestMessage messageInfo, out string channelId,DataFormEnum dataForm)
         {
             channelId = string.Empty;
             //与数据通道连接，将MessageInfo中的数据部分存储到数据通道中，
@@ -94,7 +94,7 @@ namespace Victop.Frame.Connection
             ReplyMessage ReplyMessage = new ReplyMessage();
             DataCreateManager dataCreateManager = new DataCreateManager();
             bool result = false;
-            ReplyMessage = dataCreateManager.SendReplyMessage(replyMessageInfo, messageInfo);
+            ReplyMessage = dataCreateManager.SendReplyMessage(replyMessageInfo, messageInfo,dataForm);
             channelId = ReplyMessage.DataChannelId;
             if (string.IsNullOrEmpty(channelId))
             {

@@ -68,6 +68,10 @@
     <Compile Include="UserTimeThread.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Victop.Frame.CoreLibrary\Victop.Frame.CoreLibrary.csproj">
+      <Project>{9bf73423-7f54-4de6-bfbb-e179ba454f0e}</Project>
+      <Name>Victop.Frame.CoreLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.DataChannel\Victop.Frame.DataChannel.csproj">
       <Project>{ad1deb10-b0b3-44fb-8214-5e1cbbcf9147}</Project>
       <Name>Victop.Frame.DataChannel</Name>

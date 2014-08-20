@@ -7,7 +7,8 @@
 namespace Victop.Frame.MessageManager
 {
     using Victop.Frame.Connection;
-    using Victop.Frame.CoreLibrary.Models;
+using Victop.Frame.CoreLibrary.Enums;
+using Victop.Frame.CoreLibrary.Models;
     /// <summary>
     /// 请求消息发送【消息发送】
     /// </summary>
@@ -18,10 +19,10 @@ namespace Victop.Frame.MessageManager
         /// 请求消息体发送
         /// </summary>
         /// <param name="messageInfo">请求消息体</param>
-        public virtual void SendMessage(RequestMessage messageInfo)
+        public virtual void SendMessage(RequestMessage messageInfo,DataFormEnum dataForm)
         {
             MessageBodyManager messageBodyManager = new MessageBodyManager();
-            ReplyMessage replyMessage = messageBodyManager.SendMessage(messageInfo);
+            ReplyMessage replyMessage = messageBodyManager.SendMessage(messageInfo, dataForm);
             PluginMessageManager pluginMsgManager = new PluginMessageManager();
             //取得消息列表
             if ( pluginMsgManager.CheckMessageIsExist(messageInfo.MessageId))

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Victop.Frame.CoreLibrary.Enums;
 using Victop.Frame.MessageManager;
 using Victop.Frame.PublicLib.Helpers;
 
@@ -32,6 +33,62 @@ namespace Victop.Frame.SyncOperation
             }
             messageDic.Add("MessageContent", messageContent);
             new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(MessageBack));
+            if (waiteTime > 0)
+            {
+                bool flag = false;
+                UserTimeThread timeoutThread = new UserTimeThread((int)waiteTime);
+                Thread thread = new Thread(new ThreadStart(timeoutThread.Sleep));
+                thread.Start();
+                while (!timeoutThread.Done)
+                {
+                    if (replyMessageInfo != null)
+                    {
+                        returnDic = replyMessageInfo;
+                        lock (this)
+                        {
+                            timeoutThread.Stop();
+                        }
+                        flag = true;
+                        break;
+                    }
+                    try
+                    {
+                        Thread.Sleep(1);
+                    }
+                    catch (ThreadInterruptedException)
+                    {
+                        lock (this)
+                        {
+                            timeoutThread.Stop();
+                        }
+                    }
+                }
+                if (!flag)
+                {
+                }
+            }
+            return replyMessageInfo;
+        }
+
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="messageType"></param>
+        /// <param name="messageContent"></param>
+        /// <param name="dataForm"></param>
+        /// <param name="waiteTime"></param>
+        /// <returns></returns>
+        public Dictionary<string, object> SendMessage(string messageType, Dictionary<string, object> messageContent,DataFormEnum dataForm ,int waiteTime = 16)
+        {
+            Dictionary<string, object> returnDic;
+            Dictionary<string, object> messageDic = new Dictionary<string, object>();
+            messageDic.Add("MessageType", messageType);
+            if (messageContent == null)
+            {
+                messageContent = new Dictionary<string, object>();
+            }
+            messageDic.Add("MessageContent", messageContent);
+            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(MessageBack),dataForm);
             if (waiteTime > 0)
             {
                 bool flag = false;
