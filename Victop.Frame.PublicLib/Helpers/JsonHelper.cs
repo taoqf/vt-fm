@@ -97,5 +97,49 @@ namespace Victop.Frame.PublicLib.Helpers
 
             } return null;
         }
+        /// <summary>
+        /// 保存Json中的特定值
+        /// </summary>
+        /// <param name="jsonStr"></param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string SaveJsonString(string jsonStr, string key, object value,int opreateState)
+        {
+            try
+            {
+                string resultStr = string.Empty;
+                Dictionary<string, object> jsonDic = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonStr);
+                if (jsonDic != null)
+                {
+                    switch (opreateState)
+                    {
+                        case 2://删除
+                            if (jsonDic.ContainsKey(key))
+                            {
+                                jsonDic.Remove(key);
+                            }
+                            break;
+                        case 4://新增
+                            jsonDic.Add(key, value);
+                            break;
+                        case 8://修改
+                            if (jsonDic.ContainsKey(key))
+                            {
+                                jsonDic[key] = value;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                resultStr = JsonConvert.SerializeObject(jsonDic);
+                return resultStr;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

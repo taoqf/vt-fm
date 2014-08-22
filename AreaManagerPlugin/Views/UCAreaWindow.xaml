@@ -109,7 +109,44 @@
                 </StackPanel>
 
             </TabItem>
-
+            <TabItem Header="JSON数据操作">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0">
+                        <Button Width="100" Height="25" Name="btnSearchJson" Content="JSON检索">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding btnSearchJsonClickCommand}" ></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button Width="100" Height="25" Name="btnAddJson" Content="JSON添加">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding btnAddJsonClickCommand}" ></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button Width="100" Height="25" Name="btnUpdateJson" Content="JSON修改">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding btnUpdateJsonClickCommand}" ></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button Width="100" Height="25" Name="btnDeleteJson" Content="JSON删除">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding btnDeleteJsonClickCommand}" ></i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
         </TabControl>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">

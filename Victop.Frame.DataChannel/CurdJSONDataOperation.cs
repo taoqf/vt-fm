@@ -19,5 +19,15 @@ namespace Victop.Frame.DataChannel
         {
             return string.Empty;
         }
+        /// <summary>
+        /// 获取数据
+        /// </summary>
+        /// <param name="viewId"></param>
+        /// <param name="dataPath"></param>
+        /// <returns></returns>
+        public virtual string GetDataByPath(string viewId, string dataPath)
+        {
+            return DataTool.GetDataByPath(viewId, dataPath);
+        }
     }
 }

@@ -172,9 +172,12 @@ namespace AreaManagerPlugin.ViewModels
                     contentDic.Add("spaceid", "ebc");
                     contentDic.Add("modelid", "business_card_db_cardtemplate_0002");
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
-                    if (returnDic == null)
-                        return;
-                    string temp = returnDic["MessageId"].ToString();
+                    if (returnDic != null)
+                    {
+                        string viewId = returnDic["DataChannelId"].ToString();
+                        CurdJSONDataOperation jsonOp = new CurdJSONDataOperation();
+                        string data = jsonOp.GetDataByPath(viewId, "[\"area\",{\"key\":\"id\",\"value\":\"A0001\"}]");
+                    }
                 });
             }
         }
@@ -200,7 +203,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     string MessageType = "DataChannelService.saveDataByModelAsync";
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
@@ -291,13 +295,13 @@ namespace AreaManagerPlugin.ViewModels
                     //string temp = string.Empty;
 
                     CurdJSONDataOperation jsonOp = new CurdJSONDataOperation();
-                    
+
 
                 });
             }
         }
 
-      
+
         /// <summary>
         /// 下载
         /// </summary>
@@ -316,7 +320,7 @@ namespace AreaManagerPlugin.ViewModels
                     {
                         path = folderBrowserDialog.SelectedPath;
                     }
-                    if (path=="")
+                    if (path == "")
                     {
                         return;
                     }
@@ -367,7 +371,87 @@ namespace AreaManagerPlugin.ViewModels
                 });
             }
         }
-     
+
+        #region JSON操作命令
+
+        string viewId = string.Empty;
+        /// <summary>
+        /// 检索
+        /// </summary>
+        public ICommand btnSearchJsonClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    string MessageType = "MongoDataChannelService.findBusiData";
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("systemid", "100");
+                    contentDic.Add("configsystemid", "101");
+                    contentDic.Add("spaceid", "tbs");
+                    contentDic.Add("modelid", "business_card_db_cardtemplate_0002");
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                    if (returnDic != null)
+                    {
+                        viewId = returnDic["DataChannelId"].ToString();
+                        CurdJSONDataOperation jsonOp = new CurdJSONDataOperation();
+                        string data = jsonOp.GetDataByPath(viewId, "[\"area\",{\"key\":\"_id\",\"value\":\"A0001\"}]");
+                    }
+                });
+            }
+        }
+        /// <summary>
+        /// 添加
+        /// </summary>
+        public ICommand btnAddJsonClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    JSONDataOperation jsonOp = new JSONDataOperation();
+                    Dictionary<string, object> newDic = new Dictionary<string, object>();
+                    newDic.Add("_id", "A0002");
+                    newDic.Add("name", "法国");
+                    newDic.Add("englishName", "France");
+                    newDic.Add("region", null);
+                    newDic.Add("order", null);
+                    bool result = jsonOp.AddData(viewId, "[\"area\"]", JsonHelper.ToJson(newDic));
+                });
+            }
+        }
+        /// <summary>
+        /// 修改
+        /// </summary>
+        public ICommand btnUpdateJsonClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    JSONDataOperation jsonOp = new JSONDataOperation();
+                    jsonOp.ModifyData(viewId, "[\"area\",{\"key\":\"_id\",\"value\":\"A0001\"},\"order\",{\"key\":\"_id\",\"value\":\"ASDLFKJ-KJLSDJF\"}]", "{\"name\":\"商品订单\"}");
+                });
+            }
+        }
+        /// <summary>
+        /// 删除
+        /// </summary>
+        public ICommand btnDeleteJsonClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    JSONDataOperation jsonOp = new JSONDataOperation();
+                    jsonOp.DeleteData(viewId, "[\"area\"]", "{\"_id\":\"A0002\"}");
+                });
+            }
+        }
+        #endregion
+
+
         #region 私有方法
         /// <summary>
         /// 组织关闭消息

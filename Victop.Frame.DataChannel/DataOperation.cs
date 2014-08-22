@@ -42,6 +42,46 @@ namespace Victop.Frame.DataChannel
             return channelData.JSONData;
         }
         /// <summary>
+        /// 根据通道号获取curdJSON数据
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <returns></returns>
+        public virtual string GetCurdJSONData(string channelId)
+        {
+            DataChannelManager dataChannelManager = new DataChannelManager();
+            Hashtable hashData = dataChannelManager.GetData(channelId);
+            ChannelData channelData = hashData["Data"] as ChannelData;
+            return channelData.CrudJSONData;
+        }
+        /// <summary>
+        /// 保存JSON数据
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="saveData"></param>
+        /// <returns></returns>
+        internal bool SaveJSONData(string channelId,string saveData)
+        {
+            DataChannelManager dataChannelManager = new DataChannelManager();
+            Hashtable hashData = dataChannelManager.GetData(channelId);
+            ChannelData channelData = hashData["Data"] as ChannelData;
+            channelData.JSONData = saveData;
+            return dataChannelManager.UpdateData(channelId, hashData);
+        }
+        /// <summary>
+        /// 保存curdJSON数据
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="saveData"></param>
+        /// <returns></returns>
+        internal bool SaveCurdJSONData(string channelId, string saveData)
+        {
+            DataChannelManager dataChannelManager = new DataChannelManager();
+            Hashtable hashData = dataChannelManager.GetData(channelId);
+            ChannelData channelData = hashData["Data"] as ChannelData;
+            channelData.CrudJSONData = saveData;
+            return dataChannelManager.UpdateData(channelId, hashData);
+        }
+        /// <summary>
         /// 根据对象Id获取插件信息
         /// </summary>
         /// <param name="objectId">对象id</param>

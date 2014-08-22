@@ -71,6 +71,7 @@
     <Compile Include="DataCreateManager.cs" />
     <Compile Include="DataOperation.cs" />
     <Compile Include="DataTool.cs" />
+    <Compile Include="Enums\OpreateStateEnum.cs" />
     <Compile Include="Enums\SOADataTypeEnum.cs" />
     <Compile Include="JSONDataOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
