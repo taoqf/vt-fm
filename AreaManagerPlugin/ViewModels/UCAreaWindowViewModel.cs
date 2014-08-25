@@ -25,7 +25,6 @@ namespace AreaManagerPlugin.ViewModels
 {
     public class UCAreaWindowViewModel : ModelBase
     {
-        private bool IsLoaded = true;
         private string DataChannelId = string.Empty;
         private DataTable myDt;
         public DataTable MyDt
@@ -391,6 +390,7 @@ namespace AreaManagerPlugin.ViewModels
                     contentDic.Add("configsystemid", "101");
                     contentDic.Add("spaceid", "tbs");
                     contentDic.Add("modelid", "business_card_db_cardtemplate_0002");
+                    contentDic.Add("modeldefinition", null);
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                     if (returnDic != null)
                     {
