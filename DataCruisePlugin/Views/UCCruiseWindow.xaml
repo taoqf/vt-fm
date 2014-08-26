@@ -6,6 +6,28 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>  
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="0.3*"/>
+        </Grid.ColumnDefinitions>
+        <WebBrowser Name="webser" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"/>
+        <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="2"/>
+        <GroupBox Grid.Row="2" Grid.Column="0" Header="主Tab">
             
+        </GroupBox>
+        <GridSplitter Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
+        <DataGrid Grid.Row="2" Grid.Column="2"/>
+        <GridSplitter Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
+        <GroupBox Grid.Row="2" Grid.Column="4" Header="数据引用">
+            
+        </GroupBox>
     </Grid>
 </UserControl>

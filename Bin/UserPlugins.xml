@@ -3,6 +3,7 @@
 		<MainMenu title="公共基础管理" action="TradeContainerControl" auto="0" showtype="0" imageurl="25.png" displaymode="1" description="">
 			<SubMenu title="全部" action="" auto="0" showtype="0" imageurl="" displaymode="1" description="">
 				<Trade title="地区管理" action="AreaManagerPlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="用于地区信息维护"/>
+				<Trade title="数据巡航" action="DataCruisePlugin" auto="0" showtype="1" imageurl="4.png" displaymode="1" description="数据管理操作集中版"/>
 				<Trade title="需求分解" action="RequirementDecompositionPlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="用于区域信息维护"/>
 				<Trade title="公司管理" action="CompanyManagePlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="用于公司信息维护"/>
 				<Trade title="部门管理" action="DepatmentManagePlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="用于部门信息维护"/>
