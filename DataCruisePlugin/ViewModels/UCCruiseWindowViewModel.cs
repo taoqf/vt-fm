@@ -12,6 +12,8 @@ using DataCruisePlugin.Models;
 using Victop.Frame.PublicLib.Helpers;
 using System.Windows.Navigation;
 using System.Reflection;
+using System.Collections.ObjectModel;
+using Victop.Frame.SyncOperation;
 
 namespace DataCruisePlugin.ViewModels
 {
@@ -19,20 +21,53 @@ namespace DataCruisePlugin.ViewModels
     {
         #region 字段
         /// <summary>
-        /// 内置浏览器
+        /// 选定实体类对象
         /// </summary>
-        private WebBrowser myBrowser;
+        private EntityDefinitionModel currentEntityModel;
+        /// <summary>
+        /// 主实体类对象
+        /// </summary>
+        private EntityDefinitionModel masterEntityModel;
+        /// <summary>
+        /// 完整实体集合
+        /// </summary>
+        private ObservableCollection<EntityDefinitionModel> allEntityList;
 
-        private List<EntityDefinitionModel> enterEntityList;
-        private List<string> testList;
+        /// <summary>
+        /// 入口实体集合
+        /// </summary>
+        private ObservableCollection<EntityDefinitionModel> enterEntityList;
         #endregion
         #region 属性
-        public List<EntityDefinitionModel> EnterEntityList
+        /// <summary>
+        /// 完整实体集合
+        /// </summary>
+        public ObservableCollection<EntityDefinitionModel> AllEntityList
+        {
+            get
+            {
+                if (allEntityList == null)
+                    allEntityList = new ObservableCollection<EntityDefinitionModel>();
+                return allEntityList;
+            }
+            set
+            {
+                if (allEntityList != value)
+                {
+                    allEntityList = value;
+                    RaisePropertyChanged("AllEntityList");
+                }
+            }
+        }
+        /// <summary>
+        /// 入口实体集合
+        /// </summary>
+        public ObservableCollection<EntityDefinitionModel> EnterEntityList
         {
             get
             {
                 if (enterEntityList == null)
-                    enterEntityList = new List<EntityDefinitionModel>();
+                    enterEntityList = new ObservableCollection<EntityDefinitionModel>();
                 return enterEntityList;
             }
             set
@@ -44,18 +79,40 @@ namespace DataCruisePlugin.ViewModels
                 }
             }
         }
-        public List<string> TestList
+        /// <summary>
+        /// 选定实体类对象
+        /// </summary>
+        public EntityDefinitionModel CurrentEntityModel
         {
             get
             {
-                if (testList == null)
-                    testList = new List<string>();
-                return testList;
+                return currentEntityModel;
             }
             set
             {
-                testList = value;
-                RaisePropertyChanged("TestList");
+                if (currentEntityModel != value)
+                {
+                    currentEntityModel = value;
+                    RaisePropertyChanged("CurrentEntityModel");
+                }
+            }
+        }
+        /// <summary>
+        /// 主实体对象
+        /// </summary>
+        public EntityDefinitionModel MasterEntityModel
+        {
+            get
+            {
+                return masterEntityModel;
+            }
+            set
+            {
+                if (masterEntityModel != value)
+                {
+                    masterEntityModel = value;
+                    RaisePropertyChanged("MasterEntityModel");
+                }
             }
         }
         #endregion
@@ -66,12 +123,9 @@ namespace DataCruisePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    //myBrowser = (WebBrowser)x;
-                    //myBrowser.Navigating += browser_Navigating;
-                    //myBrowser.Source = new Uri("http://localhost/VictopPartner/aaa.html");
                     string entityRel = ReadRelationFile("rel");
-                    EnterEntityList = JsonHelper.ToObject<List<EntityDefinitionModel>>(entityRel);
-                    foreach (EntityDefinitionModel item in EnterEntityList)
+                    AllEntityList = JsonHelper.ToObject<ObservableCollection<EntityDefinitionModel>>(entityRel);
+                    foreach (EntityDefinitionModel item in AllEntityList)
                     {
                         if (item.Fields != null)
                         {
@@ -89,13 +143,33 @@ namespace DataCruisePlugin.ViewModels
                                 item.DataRef = JsonHelper.ToObject<List<RefEntityModel>>(relStr);
                             }
                         }
-
+                        if (item.Entrance)
+                        {
+                            EnterEntityList.Add(item);
+                        }
                     }
+                });
+            }
+        }
+        /// <summary>
+        /// 主Tab选择事件
+        /// </summary>
+        public ICommand lboxEnterSelectionChangedCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    string tableName = CurrentEntityModel.TableName;
                 });
             }
         }
         #endregion
         #region 私有方法
+        /// <summary>
+        /// 读取本地数据关系文件
+        /// </summary>
+        /// <param name="entityrelation"></param>
+        /// <returns></returns>
         private string ReadRelationFile(string entityrelation)
         {
             string returnStr = string.Empty;
@@ -114,11 +188,20 @@ namespace DataCruisePlugin.ViewModels
             }
             return returnStr;
         }
+        /// <summary>
+        ///浏览器转跳事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void browser_Navigating(object sender, NavigatingCancelEventArgs e)
         {
             SuppressScriptErrors((WebBrowser)sender, true);
         }
-
+        /// <summary>
+        /// 屏蔽脚本异常
+        /// </summary>
+        /// <param name="webBrowser"></param>
+        /// <param name="Hide"></param>
         private void SuppressScriptErrors(WebBrowser webBrowser, bool Hide)
         {
             FieldInfo fiComWebBrowser = typeof(WebBrowser).GetField("_axIWebBrowser2", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -128,6 +211,12 @@ namespace DataCruisePlugin.ViewModels
             if (objComWebBrowser == null) return;
 
             objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { Hide });
+        }
+
+        private Dictionary<string, object> SendMessage(string messageType, Dictionary<string, object> messageContent)
+        {
+            MessageOperation messageOp = new MessageOperation();
+            return messageOp.SendMessage(messageType, messageContent);
         }
         #endregion
     }
