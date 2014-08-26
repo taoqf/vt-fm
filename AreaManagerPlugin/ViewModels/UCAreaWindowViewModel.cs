@@ -153,29 +153,15 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    //string MessageType = "DataChannelService.loadDataByModelAsync";
-                    //MessageOperation messageOp = new MessageOperation();
-                    //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeCommonRequestMessageMaster());
-                    //if (returnDic.ContainsKey("DataChannelId") && returnDic["DataChannelId"] != null)
-                    //{
-                    //    newChannelId = returnDic["DataChannelId"].ToString();
-                    //    DataOperation operateData = new DataOperation();
-                    //    DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
-                    //    UpdateTableList(ds);
-                    //}
-                    string MessageType = "MongoDataChannelService.findBusiData";
+                    string MessageType = "DataChannelService.loadDataByModelAsync";
                     MessageOperation messageOp = new MessageOperation();
-                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    contentDic.Add("systemid", "100");
-                    contentDic.Add("configsystemid", "101");
-                    contentDic.Add("spaceid", "ebc");
-                    contentDic.Add("modelid", "business_card_db_cardtemplate_0002");
-                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
-                    if (returnDic != null)
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, OrganizeCommonRequestMessageMaster());
+                    if (returnDic.ContainsKey("DataChannelId") && returnDic["DataChannelId"] != null)
                     {
-                        string viewId = returnDic["DataChannelId"].ToString();
-                        CurdJSONDataOperation jsonOp = new CurdJSONDataOperation();
-                        string data = jsonOp.GetDataByPath(viewId, "[\"area\",{\"key\":\"id\",\"value\":\"A0001\"}]");
+                        newChannelId = returnDic["DataChannelId"].ToString();
+                        DataOperation operateData = new DataOperation();
+                        DataSet ds = operateData.GetData(returnDic["DataChannelId"].ToString());
+                        UpdateTableList(ds);
                     }
                 });
             }

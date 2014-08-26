@@ -3,9 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:DataCruisePlugin.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Name="ucMainView">
     <Grid>
+        <Grid.DataContext>
+            <vm:UCCruiseWindowViewModel/>
+        </Grid.DataContext>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="Auto"/>
@@ -18,10 +23,13 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
-        <WebBrowser Name="webser" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"/>
+        <WebBrowser Name="webser" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
+            
+        </WebBrowser>
         <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="2"/>
         <GroupBox Grid.Row="2" Grid.Column="0" Header="主Tab">
-            
+            <ListBox Name="lboxEnter" ItemsSource="{Binding TestList,UpdateSourceTrigger=PropertyChanged}" Height="300">
+            </ListBox>
         </GroupBox>
         <GridSplitter Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
         <DataGrid Grid.Row="2" Grid.Column="2"/>
@@ -29,5 +37,10 @@
         <GroupBox Grid.Row="2" Grid.Column="4" Header="数据引用">
             
         </GroupBox>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding ucMainViewLoadedCommand}" CommandParameter="{Binding ElementName=webser}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
     </Grid>
 </UserControl>

@@ -9,7 +9,7 @@ namespace DataCruisePlugin.Models
     /// <summary>
     /// 实体字段类
     /// </summary>
-    internal class EntityFieldModel
+    public class EntityFieldModel
     {
         /// <summary>
         /// 字段名

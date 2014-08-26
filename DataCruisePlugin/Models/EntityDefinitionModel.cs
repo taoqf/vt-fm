@@ -9,7 +9,7 @@ namespace DataCruisePlugin.Models
     /// <summary>
     /// 实体定义类
     /// </summary>
-    internal class EntityDefinitionModel
+    public class EntityDefinitionModel
     {
         /// <summary>
         /// 实体主键
@@ -42,7 +42,7 @@ namespace DataCruisePlugin.Models
         /// 是否为入口Tab
         /// </summary>
         [JsonProperty(PropertyName="entrance")]
-        public string Entrance
+        public bool Entrance
         {
             get;
             set;
@@ -69,7 +69,7 @@ namespace DataCruisePlugin.Models
         /// 表字段结构
         /// </summary>
         [JsonProperty(PropertyName = "fields")]
-        public List<EntityFieldModel> Fields
+        public object Fields
         {
             get;
             set;
