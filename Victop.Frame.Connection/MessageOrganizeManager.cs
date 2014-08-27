@@ -103,6 +103,7 @@ namespace Victop.Frame.Connection
                         replyIsToChannel = DataOperateEnum.COMMIT;
                         break;
                     case "MongoDataChannelService.findBusiData":
+                    case "MongoDataChannelService.findTableData":
                         replyIsToChannel = DataOperateEnum.SAVE;
                         break;
                     case "MongoDataChannelService.saveBusiData":

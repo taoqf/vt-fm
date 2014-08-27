@@ -12,9 +12,9 @@
             <vm:UCCruiseWindowViewModel/>
         </Grid.DataContext>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="0.4*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.6*"/>
         </Grid.RowDefinitions>  
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -23,21 +23,41 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Name="webser" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" ItemsSource="{Binding EnterEntityList}">
-            
-        </ListBox>
-        <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="2"/>
-        <GroupBox Grid.Row="2" Grid.Column="0" Header="主Tab">
-            <ListBox Name="lboxEnter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding AllEntityList,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="TabTitle" SelectedItem="{Binding CurrentEntityModel,UpdateSourceTrigger=PropertyChanged}">
+        <DockPanel HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
+            <Label>全部Tab</Label>
+            <ListBox Name="lboxAll" Width="400" Height="300" ItemsSource="{Binding AllEntityList}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <DockPanel HorizontalAlignment="Left">
+                            <ListBoxItem Content="{Binding Path=TabTitle}" IsEnabled="{Binding Path=Actived}"/>
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Label>入口Tab</Label>
+            <ListBox Name="lboxEnter" Width="400" Height="300" ItemsSource="{Binding EnterEntityList}" DisplayMemberPath="TabTitle" SelectedItem="{Binding CurrentEntityModel}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding lboxEnterSelectionChangedCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ListBox>
+            <Label>可用Tab</Label>
+            <ListBox Name="lboxEnable" Width="400" Height="300" ItemsSource="{Binding EnableEntityList}" DisplayMemberPath="TabTitle" SelectedItem="{Binding SelectedEnableEntityModel}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding lboxEnableSelectionChangedCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>
+        </DockPanel>
+        <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="2"/>
+        <GroupBox Header="主Tab" Name="gboxMaster" Grid.Row="2" Grid.Column="0" Content="{Binding MasterContent}">
         </GroupBox>
         <GridSplitter Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
-        <DataGrid Grid.Row="2" Grid.Column="2"/>
+        <Grid Name="gridCurrent" Grid.Row="2" Grid.Column="2">
+            
+        </Grid>
         <GridSplitter Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
         <GroupBox Grid.Row="2" Grid.Column="4" Header="数据引用">
             

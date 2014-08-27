@@ -369,14 +369,13 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    string MessageType = "MongoDataChannelService.findBusiData";
+                    string MessageType = "MongoDataChannelService.findTableData";
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                     contentDic.Add("systemid", "100");
                     contentDic.Add("configsystemid", "101");
                     contentDic.Add("spaceid", "tbs");
-                    contentDic.Add("modelid", "business_card_db_cardtemplate_0002");
-                    contentDic.Add("modeldefinition", null);
+                    contentDic.Add("tablename", "dict");
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                     if (returnDic != null)
                     {

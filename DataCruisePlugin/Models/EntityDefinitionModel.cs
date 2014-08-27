@@ -48,10 +48,28 @@ namespace DataCruisePlugin.Models
             set;
         }
         /// <summary>
+        /// 主表
+        /// </summary>
+        [JsonProperty(PropertyName = "hosttable")]
+        public string HostTable
+        {
+            get;
+            set;
+        }
+        /// <summary>
         /// 显示类型
         /// </summary>
         [JsonProperty(PropertyName = "viewtype")]
         public string ViewType
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 父级标识
+        /// </summary>
+        [JsonProperty(PropertyName = "parentid")]
+        public string ParentId
         {
             get;
             set;
@@ -88,6 +106,24 @@ namespace DataCruisePlugin.Models
         /// </summary>
         [JsonProperty(PropertyName = "dynatab")]
         public string DynaTab
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 数据路径
+        /// </summary>
+        [JsonIgnore]
+        public string DataPath
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 是否激活
+        /// </summary>
+        [JsonIgnore]
+        public bool Actived
         {
             get;
             set;
