@@ -27,6 +27,22 @@ namespace AreaManagerPlugin.ViewModels
     {
         private string DataChannelId = string.Empty;
         private DataTable myDt;
+        private DataTable jsonDataTable;
+
+        public DataTable JsonDataTable
+        {
+            get
+            {
+                if (jsonDataTable == null)
+                    jsonDataTable = new DataTable();
+                return jsonDataTable;
+            }
+            set
+            {
+                jsonDataTable = value;
+                RaisePropertyChanged("JsonDataTable");
+            }
+        }
         public DataTable MyDt
         {
             get
@@ -380,8 +396,10 @@ namespace AreaManagerPlugin.ViewModels
                     if (returnDic != null)
                     {
                         viewId = returnDic["DataChannelId"].ToString();
-                        CurdJSONDataOperation jsonOp = new CurdJSONDataOperation();
-                        string data = jsonOp.GetDataByPath(viewId, "[\"area\",{\"key\":\"_id\",\"value\":\"A0001\"}]");
+                        JSONDataOperation jsonOp = new JSONDataOperation();
+                        string temp = jsonOp.GetDataByPath(viewId, "[\"dict\"]");
+                        string dataArray = JsonHelper.ReadJsonString(temp, "dataArray");
+                        List<object> strList = JsonHelper.ToObject<List<object>>(dataArray);
                     }
                 });
             }

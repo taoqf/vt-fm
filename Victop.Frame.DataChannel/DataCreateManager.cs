@@ -59,7 +59,7 @@ namespace Victop.Frame.DataChannel
                     }
                     break;
                 case DataFormEnum.JSON:
-                    string JsonData = JsonHelper.ReadJsonString(replyMessageInfo.ReplyContent, "Result");
+                    string JsonData = replyMessageInfo.ReplyContent;
                     channelData.DataForm = DataFormEnum.JSON;
                     channelData.JSONData = JsonData;
                     break;

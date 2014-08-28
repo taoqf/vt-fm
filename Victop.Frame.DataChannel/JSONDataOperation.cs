@@ -57,5 +57,15 @@ namespace Victop.Frame.DataChannel
         {
             return DataTool.SaveCurdDataByPath(viewId, dataPath, delData, OpreateStateEnum.Deleted); ;
         }
+        /// <summary>
+        /// 获取数据
+        /// </summary>
+        /// <param name="viewId">页面标识</param>
+        /// <param name="dataPath">数据路径</param>
+        /// <returns></returns>
+        public virtual string GetDataByPath(string viewId, string dataPath)
+        {
+            return DataTool.GetDataByPath(viewId, dataPath);
+        }
     }
 }

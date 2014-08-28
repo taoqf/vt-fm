@@ -145,6 +145,7 @@
                             </i:Interaction.Triggers>
                         </Button>
                     </DockPanel>
+                    <DataGrid Grid.Row="1" ItemsSource="{Binding JsonDataTable}"></DataGrid>
                 </Grid>
             </TabItem>
         </TabControl>

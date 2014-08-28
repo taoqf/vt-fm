@@ -105,7 +105,7 @@ namespace DataCruisePlugin.Models
         /// 动态Tab
         /// </summary>
         [JsonProperty(PropertyName = "dynatab")]
-        public string DynaTab
+        public List<string> DynaTab
         {
             get;
             set;

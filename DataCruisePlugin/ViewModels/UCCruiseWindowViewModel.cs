@@ -222,6 +222,8 @@ namespace DataCruisePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    if (CurrentEntityModel == null)
+                        return;
                     EntityModelReConsitution(CurrentEntityModel);
                     //根据CurrentEntityModel.TableName去检索数据
                     //根据CurrentEntityModel.Fields,CurrentEntityModel.DynaColumn生成DataGrid列
@@ -299,12 +301,14 @@ namespace DataCruisePlugin.ViewModels
                 EntityDefinitionModel hostModel = AllEntityList.First(it => it.Id == EntityModel.HostTable);
                 if (hostModel != null)
                 {
+                    hostModel.Actived = true;
                     EnableEntityList.Add(hostModel);
                     //跟随可用
                     foreach (EntityDefinitionModel item in AllEntityList)
                     {
                         if (item.HostTable == hostModel.Id)
                         {
+                            item.Actived = true;
                             if (EnableEntityList.FirstOrDefault(it => it.Id == item.Id) == null)
                                 EnableEntityList.Add(item);
                         }
@@ -318,7 +322,10 @@ namespace DataCruisePlugin.ViewModels
                                     if (refitem.TableId == hostModel.Id && refitem.ForeRunner)
                                     {
                                         if (EnableEntityList.FirstOrDefault(it => it.Id == item.Id) == null)
+                                        {
+                                            item.Actived = true;
                                             EnableEntityList.Add(item);
+                                        }
                                     }
                                 }
                             }
@@ -328,6 +335,7 @@ namespace DataCruisePlugin.ViewModels
                 ///同级可用
                 foreach (EntityDefinitionModel item in AllEntityList.Where(it => it.HostTable == EntityModel.HostTable))
                 {
+                    item.Actived = true;
                     if (EnableEntityList.FirstOrDefault(it => it.Id == item.Id) == null)
                         EnableEntityList.Add(item);
                 }
@@ -335,6 +343,7 @@ namespace DataCruisePlugin.ViewModels
             //下级可用
             foreach (EntityDefinitionModel item in AllEntityList.Where(it => it.HostTable == EntityModel.Id))
             {
+                item.Actived = true;
                 if (EnableEntityList.FirstOrDefault(it => it.Id == item.Id) == null)
                     EnableEntityList.Add(item);
             }
@@ -347,7 +356,10 @@ namespace DataCruisePlugin.ViewModels
                     if (item.ForeRunner)
                     {
                         if (EnableEntityList.FirstOrDefault(it => it.Id == item.TableId) == null)
+                        {
+                            AllEntityList.First(it => it.Id == item.TableId).Actived = true;
                             EnableEntityList.Add(AllEntityList.First(it => it.Id == item.TableId));
+                        }
                     }
                 }
             }
@@ -362,7 +374,10 @@ namespace DataCruisePlugin.ViewModels
                         if (refitem.TableId == EntityModel.Id && refitem.ForeRunner)
                         {
                             if (EnableEntityList.FirstOrDefault(it => it.Id == item.Id) == null)
+                            {
                                 EnableEntityList.Add(item);
+                                item.Actived = true;
+                            }
                         }
                     }
                 }

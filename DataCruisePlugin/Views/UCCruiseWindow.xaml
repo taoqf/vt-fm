@@ -25,11 +25,11 @@
         </Grid.ColumnDefinitions>
         <DockPanel HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
             <Label>全部Tab</Label>
-            <ListBox Name="lboxAll" Width="400" Height="300" ItemsSource="{Binding AllEntityList}">
+            <ListBox Name="lboxAll" Width="400" Height="300" ItemsSource="{Binding AllEntityList,UpdateSourceTrigger=PropertyChanged}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <DockPanel HorizontalAlignment="Left">
-                            <ListBoxItem Content="{Binding Path=TabTitle}" IsEnabled="{Binding Path=Actived}"/>
+                            <ListBoxItem Content="{Binding Path=TabTitle}" IsEnabled="{Binding Path=Actived,UpdateSourceTrigger=PropertyChanged}"/>
                         </DockPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
