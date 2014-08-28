@@ -23,7 +23,7 @@ namespace Victop.Frame.CoreLibrary
         /// <param name="serverName">服务名称</param>
         /// <param name="serverPath">服务路径</param>
         /// </summary>
-        public static Assembly GetServerAssemblyByName(string serverName, string serverPath = "", bool userPathFlag = false)
+        public static Assembly GetServerAssemblyByName(string serverName, string serverPath = "", bool userPathFlag = true)
         {
             if (string.IsNullOrWhiteSpace(serverName))
             {
