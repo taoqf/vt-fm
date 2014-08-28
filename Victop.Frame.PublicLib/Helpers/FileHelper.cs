@@ -20,7 +20,7 @@ namespace Victop.Frame.PublicLib.Helpers
                 string filePath = AppDomain.CurrentDomain.BaseDirectory + "fitdata\\" + fitDataPath + ".json";
                 if (File.Exists(filePath))
                 {
-                    return File.ReadAllText(filePath);
+                    return File.ReadAllText(filePath, Encoding.GetEncoding("gb2312"));
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Victop.Frame.PublicLib.Helpers
             {
                 if (File.Exists(filePath))
                 {
-                    return File.ReadAllText(filePath);
+                    return File.ReadAllText(filePath, Encoding.GetEncoding("gb2312"));
                 }
                 else
                 {

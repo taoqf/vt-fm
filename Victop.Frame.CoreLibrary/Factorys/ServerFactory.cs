@@ -13,23 +13,23 @@ namespace Victop.Frame.CoreLibrary
     using System.Reflection;
     using System.Text;
 
-	/// <summary>
-	/// 插件工厂
-	/// </summary>
+    /// <summary>
+    /// 插件工厂
+    /// </summary>
     public class ServerFactory
-	{
-		/// <summary>
-		/// 反射启动插件
+    {
+        /// <summary>
+        /// 反射启动插件
         /// <param name="serverName">服务名称</param>
         /// <param name="serverPath">服务路径</param>
-		/// </summary>
-        public static Assembly GetServerAssemblyByName(string serverName, string serverPath = "")
-		{
+        /// </summary>
+        public static Assembly GetServerAssemblyByName(string serverName, string serverPath = "", bool userPathFlag = true)
+        {
             if (string.IsNullOrWhiteSpace(serverName))
             {
                 return null;
             }
-            if (string.IsNullOrWhiteSpace(serverPath))
+            if (string.IsNullOrWhiteSpace(serverPath) && userPathFlag)
             {
                 serverPath = "Plugin";
             }
@@ -45,14 +45,14 @@ namespace Victop.Frame.CoreLibrary
             {
                 throw new Exception("插件不存在");
             }
-		}
+        }
 
-		/// <summary>
-		/// 加载服务文件
+        /// <summary>
+        /// 加载服务文件
         /// <param name="fileName">文件名称</param>
-		/// </summary>
-		private static byte[] LoadServerFile(string fileName)
-		{
+        /// </summary>
+        private static byte[] LoadServerFile(string fileName)
+        {
             FileInfo info = new FileInfo(fileName);
             if (!info.Exists)
             {
@@ -63,8 +63,8 @@ namespace Victop.Frame.CoreLibrary
             fs.Read(buffer, 0, buffer.Length);
             fs.Close();
             return buffer;
-		}
+        }
 
-	}
+    }
 }
 
