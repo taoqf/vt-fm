@@ -30,6 +30,19 @@ namespace Victop.Frame.DataChannel
             return channelData.DataInfo;  
 		}
         /// <summary>
+        /// 获取数据集
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="dataPath"></param>
+        /// <param name="structDt"></param>
+        /// <returns></returns>
+        public virtual DataTable GetData(string channelId, string dataPath, DataTable structDt)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.GetDataTable(channelId, dataPath, structDt);
+        }
+
+        /// <summary>
         /// 根据通道号获取JSON数据
         /// </summary>
         /// <param name="channelId"></param>

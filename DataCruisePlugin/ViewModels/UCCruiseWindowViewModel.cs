@@ -18,6 +18,7 @@ using Victop.Wpf.Controls;
 using Victop.Frame.DataChannel;
 using System.Data;
 using System.Windows.Data;
+using System.Windows;
 
 namespace DataCruisePlugin.ViewModels
 {
@@ -27,6 +28,10 @@ namespace DataCruisePlugin.ViewModels
         private string viewId;
         private object masterContent;
         private object currentContent;
+        private string treeGroupHeader;
+        private string treeDataPath;
+        private string treeViewId;
+        private string gridGroupHeader;
         /// <summary>
         /// 选定实体类对象
         /// </summary>
@@ -52,8 +57,43 @@ namespace DataCruisePlugin.ViewModels
         /// 可用实体集合
         /// </summary>
         private ObservableCollection<EntityDefinitionModel> enableEntityList;
+
+        private DataTable gridDt;
+
+        private object gridSelectedItem;
+        private object treeSelectedItem;
         #endregion
         #region 属性
+        public string TreeGroupHeader
+        {
+            get
+            {
+                return treeGroupHeader;
+            }
+            set
+            {
+                treeGroupHeader = value;
+                RaisePropertyChanged("TreeGroupHeader");
+            }
+        }
+        public string TreeDataPath
+        {
+            get { return treeDataPath; }
+            set
+            {
+                treeDataPath = value;
+                RaisePropertyChanged("TreeDataPath");
+            }
+        }
+        public string GridGroupHeader
+        {
+            get { return gridGroupHeader; }
+            set
+            {
+                gridGroupHeader = value;
+                RaisePropertyChanged("GridGroupHeader");
+            }
+        }
         /// <summary>
         /// 完整实体集合
         /// </summary>
@@ -199,6 +239,33 @@ namespace DataCruisePlugin.ViewModels
                 }
             }
         }
+
+        public DataTable GridDt
+        {
+            get
+            {
+                if (gridDt == null)
+                    gridDt = new DataTable();
+                return gridDt;
+            }
+            set
+            {
+                gridDt = value;
+                RaisePropertyChanged("GridDt");
+            }
+        }
+        public object GridSelectedItem
+        {
+            get
+            {
+                return gridSelectedItem;
+            }
+            set
+            {
+                gridSelectedItem = value;
+                RaisePropertyChanged("GridSelectedItem");
+            }
+        }
         #endregion
         #region Command
         public ICommand ucMainViewLoadedCommand
@@ -259,7 +326,7 @@ namespace DataCruisePlugin.ViewModels
             try
             {
                 DataOperation dataOp = new DataOperation();
-                DataSet ds;
+                DataSet ds = new DataSet();
                 if (string.IsNullOrEmpty(entityModel.HostTable))
                 {
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
@@ -269,11 +336,24 @@ namespace DataCruisePlugin.ViewModels
                     contentDic.Add("tablename", entityModel.TableName);
                     Dictionary<string, object> returnDic = SendMessage("MongoDataChannelService.findTableData", contentDic);
                     viewId = returnDic["DataChannelId"].ToString();
-                    ds = dataOp.GetData(viewId);
+                    string dataPath = string.Format("[\"{0}\"]", entityModel.TableName);
+                    DataTable dt = dataOp.GetData(viewId, dataPath, CreateStructDataTable(entityModel));
+                    ds.Tables.Add(dt);
                 }
                 else
                 {
-                    ds = dataOp.GetData(viewId);
+                    string hostName = AllEntityList.First(it => it.Id == entityModel.HostTable).TableName;
+                    DataRowView temp = (DataRowView)GridSelectedItem;
+                    Dictionary<string, object> dic = new Dictionary<string, object>();
+                    dic.Add("key", "_id");
+                    dic.Add("value", temp["_id"].ToString());
+                    string dataPath = string.Format("[\"{0}\",{1},\"{2}\"]", hostName, JsonHelper.ToJson(dic), entityModel.TableName);
+                    DataTable dt = dataOp.GetData(viewId, dataPath, CreateStructDataTable(entityModel));
+                    if (ds.Tables.Contains(entityModel.TableName))
+                    {
+                        ds.Tables.Remove(entityModel.TableName);
+                    }
+                    ds.Tables.Add(dt);
                 }
                 switch (entityModel.ViewType)
                 {
@@ -283,14 +363,35 @@ namespace DataCruisePlugin.ViewModels
                         tv.FIDField = entityModel.ParentId;
                         tv.DisplayField = entityModel.TreeDisPlay;
                         tv.ItemsSource = ds.Tables[entityModel.TableName].DefaultView;
+                        tv.SelectedItemChanged += tv_SelectedItemChanged;
                         MasterContent = tv;
+                        TreeGroupHeader = entityModel.TabTitle;
+                        TreeDataPath = entityModel.Id;
+                        treeViewId = viewId;
                         break;
                     case "grid":
-                        VicDataGrid grid = new VicDataGrid();
-                        grid.AutoGenerateColumns = false;
-                        grid.CanUserAddRows = false;
-                        grid.ItemsSource = ds.Tables[entityModel.TableName].DefaultView;
-                        CurrentContent = grid;
+                        List<RefEntityModel> refList = entityModel.DataRef as List<RefEntityModel>;
+                        RefEntityModel refModel= refList.Find(it => it.TableId == TreeDataPath);
+                        if (refModel != null)
+                        {
+                            DataRowView drv = (DataRowView)treeSelectedItem;
+                            GridDt = ds.Tables[entityModel.TableName].Copy();
+                            DataRow[] drs=ds.Tables[entityModel.TableName].Select(string.Format("{0}='{1}'", refModel.SelfField, drv[refModel.SourceField].ToString()));
+                            if (drs != null && drs.Count() > 0)
+                            {
+                                GridDt.Clear();
+                                drs.CopyToDataTable(GridDt, LoadOption.OverwriteChanges);
+                            }
+                            else
+                            {
+                                GridDt = CreateStructDataTable(entityModel);
+                            }
+                        }
+                        else
+                        {
+                            GridDt = ds.Tables[entityModel.TableName];
+                        }
+                        GridGroupHeader = entityModel.TabTitle;
                         break;
                     default:
                         break;
@@ -300,6 +401,16 @@ namespace DataCruisePlugin.ViewModels
             catch (Exception)
             {
                 //throw;
+            }
+        }
+
+        void tv_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            treeSelectedItem = ((VicTreeView)sender).SelectedItem;
+            if (SelectedEnableEntityModel != null)
+            {
+                CreateContent(SelectedEnableEntityModel, CurrentContent);
+                EntityModelReConsitution(SelectedEnableEntityModel);
             }
         }
         /// <summary>
@@ -317,6 +428,7 @@ namespace DataCruisePlugin.ViewModels
                         {
                             CreateContent(SelectedEnableEntityModel, CurrentContent);
                             EntityModelReConsitution(SelectedEnableEntityModel);
+                            SelectedEnableEntityModel = EnableEntityList[0];
                         }
                     }
                     catch (Exception ex)
@@ -326,6 +438,17 @@ namespace DataCruisePlugin.ViewModels
                 });
             }
         }
+        public ICommand currentGridSelectionChangedCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                    GridSelectedItem = x;
+                });
+            }
+        }
+
         /// <summary>
         /// 实体Model重构
         /// </summary>
@@ -339,6 +462,7 @@ namespace DataCruisePlugin.ViewModels
              * 6、以当前实体为前导的实体可用(跟随可用)
              */
             EnableEntityList.Clear();
+            EnableEntityList.Add(EntityModel);
             if (!string.IsNullOrEmpty(EntityModel.HostTable))
             {
                 //上级可用
@@ -484,6 +608,108 @@ namespace DataCruisePlugin.ViewModels
             MessageOperation messageOp = new MessageOperation();
             return messageOp.SendMessage(messageType, messageContent, "JSON");
         }
+
+        /// <summary>
+        /// 创建结构表
+        /// </summary>
+        /// <param name="entityFields"></param>
+        /// <returns></returns>
+        private DataTable CreateStructDataTable(EntityDefinitionModel entityModel)
+        {
+            DataRowView drv = (DataRowView)treeSelectedItem;
+            List<EntityFieldModel> entityFields = entityModel.Fields as List<EntityFieldModel>;
+            List<EntityFieldModel> extandFields = new List<EntityFieldModel>();
+            if (entityModel.DynaColumn != null)
+            {
+                List<string> tempList = new List<string>();
+                foreach (string dynCol in entityModel.DynaColumn)
+                {
+                    EntityDefinitionModel dynModel = AllEntityList.FirstOrDefault(it => it.Id == dynCol);
+                    tempList.Add(dynModel.TableName);
+                    if (!string.IsNullOrEmpty(dynModel.HostTable) && dynModel.HostTable == TreeDataPath)
+                    {
+                        EntityDefinitionModel hostModel = AllEntityList.First(it => it.Id == TreeDataPath);
+                        Dictionary<string, object> dic = new Dictionary<string, object>();
+                        dic.Add("key", "_id");
+                        dic.Add("value", drv["_id"]);
+                        tempList.Add(JsonHelper.ToJson(dic));
+                        tempList.Add(hostModel.TableName);
+                        List<string> pathList = new List<string>();
+                        for (int i = tempList.Count - 1; i >= 0; i--)
+                        {
+                            pathList.Add(tempList[i]);
+                        }
+                        DataOperation dataOp = new DataOperation();
+                        DataTable dt = dataOp.GetData(treeViewId, JsonHelper.ToJson(pathList), CreateStructDataTable(dynModel));
+                        foreach (DataRow item in dt.Rows)
+                        {
+                            EntityFieldModel fieldModel = new EntityFieldModel()
+                            {
+                                Field = item["field"].ToString(),
+                                FieldType = item["fieldtype"].ToString(),
+                                FieldTitle = item["fieldtitle"].ToString()
+                            };
+                            extandFields.Add(fieldModel);
+                        }
+                    }
+                }
+            }
+            DataTable structDt = new DataTable(entityModel.TableName);
+            foreach (EntityFieldModel item in entityFields)
+            {
+                DataColumn dc = new DataColumn();
+                dc.ColumnName = item.Field;
+                dc.Caption = item.FieldTitle;
+                switch (item.FieldType)
+                {
+                    case "date":
+                        dc.DataType = typeof(DateTime);
+                        break;
+                    case "int":
+                        dc.DataType = typeof(Int32);
+                        break;
+                    case "long":
+                        dc.DataType = typeof(Int64);
+                        break;
+                    case "bool":
+                        dc.DataType = typeof(Boolean);
+                        break;
+                    case "string":
+                    default:
+                        dc.DataType = typeof(String);
+                        break;
+                }
+                structDt.Columns.Add(dc);
+            }
+            foreach (EntityFieldModel item in extandFields)
+            {
+                DataColumn dc = new DataColumn();
+                dc.ColumnName = item.Field;
+                dc.Caption = item.FieldTitle;
+                switch (item.FieldType)
+                {
+                    case "date":
+                        dc.DataType = typeof(DateTime);
+                        break;
+                    case "int":
+                        dc.DataType = typeof(Int32);
+                        break;
+                    case "long":
+                        dc.DataType = typeof(Int64);
+                        break;
+                    case "bool":
+                        dc.DataType = typeof(Boolean);
+                        break;
+                    case "string":
+                    default:
+                        dc.DataType = typeof(String);
+                        break;
+                }
+                structDt.Columns.Add(dc);
+            }
+            return structDt;
+        }
+
         #endregion
     }
 }

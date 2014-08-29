@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:DataCruisePlugin.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Name="ucMainView">
     <Grid>
@@ -52,11 +53,17 @@
             </ListBox>
         </DockPanel>
         <GridSplitter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="2"/>
-        <GroupBox Header="主Tab" Name="gboxMaster" Grid.Row="2" Grid.Column="0" Content="{Binding MasterContent}">
+        <GroupBox Header="{Binding TreeGroupHeader}" Name="gboxMaster" Grid.Row="2" Grid.Column="0" Content="{Binding MasterContent}">
         </GroupBox>
         <GridSplitter Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
-        <GroupBox Name="gridCurrent" Grid.Row="2" Grid.Column="2" Content="{Binding CurrentContent}">
-            
+        <GroupBox Header="{Binding GridGroupHeader}" Name="gridCurrent" Grid.Row="2" Grid.Column="2">
+            <ctrl:VicDataGrid Name="currentGrid" AutoGenerateColumns="True" CanUserAddRows="False" ItemsSource="{Binding GridDt}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding currentGridSelectionChangedCommand}" CommandParameter="{Binding ElementName=currentGrid, Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ctrl:VicDataGrid>
         </GroupBox>
         <GridSplitter Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
         <GroupBox Grid.Row="2" Grid.Column="4" Header="数据引用">
@@ -64,7 +71,7 @@
         </GroupBox>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">
-                <i:InvokeCommandAction Command="{Binding ucMainViewLoadedCommand}" CommandParameter="{Binding ElementName=webser}"/>
+                <i:InvokeCommandAction Command="{Binding ucMainViewLoadedCommand}" CommandParameter="{Binding ElementName=mastTree}"/>
             </i:EventTrigger>
         </i:Interaction.Triggers>
     </Grid>

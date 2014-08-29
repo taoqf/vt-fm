@@ -64,7 +64,7 @@ namespace Victop.Frame.DataChannel
                     channelData.JSONData = JsonData;
                     try
                     {
-                        channelData.DataInfo = CreateDataSetByMongoJSON(JsonData);
+                        //channelData.DataInfo = CreateDataSetByMongoJSON(JsonData);
                     }
                     catch (Exception ex)
                     {
