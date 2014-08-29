@@ -128,7 +128,6 @@ namespace Victop.Frame.MessageManager
                 {
                     return true;
                 }
-                
             }
             return false;
         }

@@ -74,6 +74,12 @@ namespace DataCruisePlugin.Models
             get;
             set;
         }
+        [JsonProperty(PropertyName = "treedisplay")]
+        public string TreeDisPlay
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// 数据引用
         /// </summary>

@@ -62,6 +62,14 @@ namespace Victop.Frame.DataChannel
                     string JsonData = replyMessageInfo.ReplyContent;
                     channelData.DataForm = DataFormEnum.JSON;
                     channelData.JSONData = JsonData;
+                    try
+                    {
+                        channelData.DataInfo = CreateDataSetByMongoJSON(JsonData);
+                    }
+                    catch (Exception ex)
+                    {
+ 
+                    }
                     break;
                 default:
                     break;
@@ -70,8 +78,146 @@ namespace Victop.Frame.DataChannel
             return hashData;
 
         }
+        /// <summary>
+        /// 根据mongo库数据返回的JSON构建DataSet
+        /// </summary>
+        /// <param name="replyContent"></param>
+        /// <returns></returns>
+        private DataSet CreateDataSetByMongoJSON(string replyContent)
+        {
+            DataSet mongoDs = new DataSet();
+            string storeStr = JsonHelper.ReadJsonString(replyContent, "docDataStore");
+            if (string.IsNullOrEmpty(storeStr))
+                return mongoDs;
+            Dictionary<string, object> storeDic = JsonHelper.ToObject<Dictionary<string, object>>(storeStr);
+            foreach (string tableKey in storeDic.Keys)
+            {
+                DataTable newDt = new DataTable(tableKey);
+                string dataArrayStr = JsonHelper.ReadJsonString(storeDic[tableKey].ToString(), "dataArray");
+                List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(dataArrayStr);
+                #region 构建DataTable列
+                List<string> colList = new List<string>();
+                List<string> childList = new List<string>();
+                for (int i = 0; i < arrayList.Count; i++)
+                {
+                    foreach (string item in arrayList[i].Keys)
+                    {
+                        if (!colList.Contains(item))
+                        {
+                            if (arrayList[i][item] != null && string.IsNullOrEmpty(JsonHelper.ReadJsonString(arrayList[i][item].ToString(), "dataArray")))
+                            {
+                                colList.Add(item);
+                            }
+                            else
+                            {
+                                childList.Add(item);
+                            }
+                        }
+                    }
+                }
+                if (colList.Count > 0)
+                {
+                    foreach (string item in colList)
+                    {
+                        newDt.Columns.Add(item);
+                    }
+                }
+                #endregion
+                foreach (Dictionary<string, object> item in arrayList)
+                {
+                    DataRow dr = newDt.NewRow();
+                    foreach (string keyItem in item.Keys)
+                    {
+                        if (!childList.Contains(keyItem))
+                        {
+                            dr[keyItem] = item[keyItem];
+                        }
+                        else
+                        {
+                            if (item[keyItem] != null && !string.IsNullOrEmpty(JsonHelper.ReadJsonString(item[keyItem].ToString(), "dataArray")))
+                                CreateDataSet(mongoDs, keyItem, item[keyItem].ToString(), newDt.TableName, item["_id"].ToString());
+                        }
+                    }
+                    newDt.Rows.Add(dr);
+                }
+                mongoDs.Tables.Add(newDt);
+            }
+            return mongoDs;
+        }
 
 
+        private void CreateDataSet(DataSet fullDs, string keyName, string arrayListStr, string parentTableName, string parentValue)
+        {
+            bool dtFlag = false;
+            DataTable newDt;
+            if (!fullDs.Tables.Contains(keyName))
+            {
+                newDt = new DataTable(keyName);
+                DataColumn dc = new DataColumn(parentTableName + "_id");
+                dc.ReadOnly = true;
+                newDt.Columns.Add(dc);
+            }
+            else
+            {
+                newDt = fullDs.Tables[keyName];
+                dtFlag = true;
+            }
+            List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(arrayListStr,"dataArray"));
+            if (arrayList == null)
+                return;
+            #region 构建DataTable列
+            List<string> colList = new List<string>();
+            List<string> childList = new List<string>();
+            for (int i = 0; i < arrayList.Count; i++)
+            {
+                foreach (string item in arrayList[i].Keys)
+                {
+                    if (!colList.Contains(item))
+                    {
+                        if (arrayList[i][item] != null && string.IsNullOrEmpty(JsonHelper.ReadJsonString(arrayList[i][item].ToString(), "dataArray")))
+                        {
+                            colList.Add(item);
+                        }
+                        else
+                        {
+                            childList.Add(item);
+                        }
+                    }
+                }
+            }
+            if (colList.Count > 0)
+            {
+                foreach (string item in colList)
+                {
+                    if (!newDt.Columns.Contains(item))
+                        newDt.Columns.Add(item);
+                }
+            }
+            #endregion
+            foreach (Dictionary<string, object> item in arrayList)
+            {
+                DataRow dr = newDt.NewRow();
+                dr[parentTableName + "_id"] = parentValue;
+                foreach (string keyItem in item.Keys)
+                {
+                    if (!childList.Contains(keyItem))
+                    {
+                        dr[keyItem] = item[keyItem];
+                    }
+                    else
+                    {
+                        if (item[keyItem] != null && string.IsNullOrEmpty(JsonHelper.ReadJsonString(item[keyItem].ToString(), "dataArray")))
+                            CreateDataSet(fullDs, keyItem, item[keyItem].ToString(), newDt.TableName, item["_id"].ToString());
+                    }
+                }
+                newDt.Rows.Add(dr);
+            }
+            if (dtFlag)
+            {
+                fullDs.Tables.Remove(keyName);
+            }
+            fullDs.Tables.Add(newDt);
+        }
 
         /// <summary>
         /// 根据Xml格式文本创建DataSet

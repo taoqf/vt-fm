@@ -14,6 +14,7 @@ namespace Victop.Frame.Connection
     using Victop.Frame.CoreLibrary.Enums;
     using Victop.Frame.CoreLibrary.Models;
     using Victop.Frame.PublicLib.Helpers;
+    using System.Configuration;
     /// <summary>
     /// 模拟数据管理器
     /// </summary>
@@ -29,15 +30,26 @@ namespace Victop.Frame.Connection
             ReplyMessage replyMessage = new ReplyMessage();
             replyMessage.MessageId = messageInfo.MessageId;
             string modelId = JsonHelper.ReadJsonString(messageInfo.MessageContent, "modelid");
+            if (string.IsNullOrEmpty(modelId))
+            {
+                modelId = JsonHelper.ReadJsonString(messageInfo.MessageContent, "tablename");
+            }
             if (!string.IsNullOrEmpty(modelId))
             {
                 Dictionary<string, object> returnContentDic = new Dictionary<string, object>();
                 int ReplyCode;
                 string dataStr = ReadLocalData(modelId, out ReplyCode);
-                returnContentDic.Add("Result", dataStr);
-                returnContentDic.Add("code", ReplyCode);
-                returnContentDic.Add("messageType", messageInfo.MessageType);
-                replyMessage.ReplyContent = JsonHelper.ToJson(returnContentDic);
+                if (ConfigurationManager.AppSettings["SystemType"].Equals("DATASET"))
+                {
+                    returnContentDic.Add("Result", dataStr);
+                    returnContentDic.Add("code", ReplyCode);
+                    returnContentDic.Add("messageType", messageInfo.MessageType);
+                    replyMessage.ReplyContent = JsonHelper.ToJson(returnContentDic);
+                }
+                else
+                {
+                    replyMessage.ReplyContent = dataStr;
+                }
                 replyMessage.ReplyMode = (ReplyModeEnum)ReplyCode;
                 if (ReplyCode.Equals(0))
                 {

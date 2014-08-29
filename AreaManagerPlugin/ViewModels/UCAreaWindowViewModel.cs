@@ -388,18 +388,23 @@ namespace AreaManagerPlugin.ViewModels
                     string MessageType = "MongoDataChannelService.findTableData";
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    contentDic.Add("systemid", "100");
+                    contentDic.Add("systemid", "800");
                     contentDic.Add("configsystemid", "101");
                     contentDic.Add("spaceid", "tbs");
-                    contentDic.Add("tablename", "dict");
+                    contentDic.Add("tablename", "dept");
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                     if (returnDic != null)
                     {
                         viewId = returnDic["DataChannelId"].ToString();
-                        JSONDataOperation jsonOp = new JSONDataOperation();
-                        string temp = jsonOp.GetDataByPath(viewId, "[\"dict\"]");
-                        string dataArray = JsonHelper.ReadJsonString(temp, "dataArray");
-                        List<object> strList = JsonHelper.ToObject<List<object>>(dataArray);
+                        DataOperation dataOp = new DataOperation();
+                        DataSet ds = dataOp.GetData(viewId);
+                        JsonDataTable = ds.Tables[1];
+                        //JSONDataOperation jsonOp = new JSONDataOperation();
+                        //string temp = jsonOp.GetDataByPath(viewId, "[\"dict\"]");
+                        //string dataArray = JsonHelper.ReadJsonString(temp, "dataArray");
+                        //List<object> strList = JsonHelper.ToObject<List<object>>(dataArray);
+
+                        //DataTable dt = new DataTable();
                     }
                 });
             }

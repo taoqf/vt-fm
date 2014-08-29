@@ -14,13 +14,19 @@ using System.Windows.Navigation;
 using System.Reflection;
 using System.Collections.ObjectModel;
 using Victop.Frame.SyncOperation;
+using Victop.Wpf.Controls;
+using Victop.Frame.DataChannel;
+using System.Data;
+using System.Windows.Data;
 
 namespace DataCruisePlugin.ViewModels
 {
     public class UCCruiseWindowViewModel : ModelBase
     {
         #region 字段
+        private string viewId;
         private object masterContent;
+        private object currentContent;
         /// <summary>
         /// 选定实体类对象
         /// </summary>
@@ -177,6 +183,22 @@ namespace DataCruisePlugin.ViewModels
                 }
             }
         }
+
+        public object CurrentContent
+        {
+            get
+            {
+                return currentContent;
+            }
+            set
+            {
+                if (currentContent != value)
+                {
+                    currentContent = value;
+                    RaisePropertyChanged("CurrentContent");
+                }
+            }
+        }
         #endregion
         #region Command
         public ICommand ucMainViewLoadedCommand
@@ -225,40 +247,59 @@ namespace DataCruisePlugin.ViewModels
                     if (CurrentEntityModel == null)
                         return;
                     EntityModelReConsitution(CurrentEntityModel);
-                    //根据CurrentEntityModel.TableName去检索数据
-                    //根据CurrentEntityModel.Fields,CurrentEntityModel.DynaColumn生成DataGrid列
-                    switch (CurrentEntityModel.ViewType)
-                    {
-                        case "tree":
-                            TreeView tv = new TreeView();
-                            if (CurrentEntityModel.Fields != null)
-                            {
-                                List<EntityFieldModel> FieldList = CurrentEntityModel.Fields as List<EntityFieldModel>;
-                                foreach (EntityFieldModel item in FieldList)
-                                {
-                                    tv.Items.Add(item.FieldTitle);
-                                }
-                            }
-                            MasterContent = tv;
-                            break;
-                        case "grid":
-                            DataGrid dgrid = new DataGrid();
-                            if (CurrentEntityModel.Fields != null)
-                            {
-                                List<EntityFieldModel> FieldList = CurrentEntityModel.Fields as List<EntityFieldModel>;
-                                foreach (EntityFieldModel item in FieldList)
-                                {
-                                    DataGridTextColumn dcolumn = new DataGridTextColumn();
-                                    dcolumn.Header = item.FieldTitle;
-                                    dgrid.Columns.Add(dcolumn);
-                                }
-                            }
-                            MasterContent = dgrid;
-                            break;
-                        default:
-                            break;
-                    }
+                    CreateContent(CurrentEntityModel, MasterContent);
                 });
+            }
+        }
+        /// <summary>
+        /// 创建树形Content
+        /// </summary>
+        private void CreateContent(EntityDefinitionModel entityModel, object ContentId)
+        {
+            try
+            {
+                DataOperation dataOp = new DataOperation();
+                DataSet ds;
+                if (string.IsNullOrEmpty(entityModel.HostTable))
+                {
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("systemid", "800");
+                    contentDic.Add("configsystemid", "101");
+                    contentDic.Add("spaceid", "tbs");
+                    contentDic.Add("tablename", entityModel.TableName);
+                    Dictionary<string, object> returnDic = SendMessage("MongoDataChannelService.findTableData", contentDic);
+                    viewId = returnDic["DataChannelId"].ToString();
+                    ds = dataOp.GetData(viewId);
+                }
+                else
+                {
+                    ds = dataOp.GetData(viewId);
+                }
+                switch (entityModel.ViewType)
+                {
+                    case "tree":
+                        VicTreeView tv = new VicTreeView();
+                        tv.IDField = "_id";
+                        tv.FIDField = entityModel.ParentId;
+                        tv.DisplayField = entityModel.TreeDisPlay;
+                        tv.ItemsSource = ds.Tables[entityModel.TableName].DefaultView;
+                        MasterContent = tv;
+                        break;
+                    case "grid":
+                        VicDataGrid grid = new VicDataGrid();
+                        grid.AutoGenerateColumns = false;
+                        grid.CanUserAddRows = false;
+                        grid.ItemsSource = ds.Tables[entityModel.TableName].DefaultView;
+                        CurrentContent = grid;
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            catch (Exception)
+            {
+                //throw;
             }
         }
         /// <summary>
@@ -273,7 +314,10 @@ namespace DataCruisePlugin.ViewModels
                     try
                     {
                         if (SelectedEnableEntityModel != null)
+                        {
+                            CreateContent(SelectedEnableEntityModel, CurrentContent);
                             EntityModelReConsitution(SelectedEnableEntityModel);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -438,7 +482,7 @@ namespace DataCruisePlugin.ViewModels
         private Dictionary<string, object> SendMessage(string messageType, Dictionary<string, object> messageContent)
         {
             MessageOperation messageOp = new MessageOperation();
-            return messageOp.SendMessage(messageType, messageContent);
+            return messageOp.SendMessage(messageType, messageContent, "JSON");
         }
         #endregion
     }

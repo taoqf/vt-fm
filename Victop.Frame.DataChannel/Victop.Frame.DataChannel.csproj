@@ -68,6 +68,7 @@
     <Compile Include="ChannelData.cs" />
     <Compile Include="CurdJSONDataOperation.cs" />
     <Compile Include="DataChannelManager.cs" />
+    <Compile Include="DataConvertManager.cs" />
     <Compile Include="DataCreateManager.cs" />
     <Compile Include="DataOperation.cs" />
     <Compile Include="DataTool.cs" />

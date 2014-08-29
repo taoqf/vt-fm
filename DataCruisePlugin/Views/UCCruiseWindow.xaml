@@ -55,9 +55,9 @@
         <GroupBox Header="主Tab" Name="gboxMaster" Grid.Row="2" Grid.Column="0" Content="{Binding MasterContent}">
         </GroupBox>
         <GridSplitter Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
-        <Grid Name="gridCurrent" Grid.Row="2" Grid.Column="2">
+        <GroupBox Name="gridCurrent" Grid.Row="2" Grid.Column="2" Content="{Binding CurrentContent}">
             
-        </Grid>
+        </GroupBox>
         <GridSplitter Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
         <GroupBox Grid.Row="2" Grid.Column="4" Header="数据引用">
             
