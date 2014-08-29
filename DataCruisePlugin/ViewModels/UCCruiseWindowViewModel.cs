@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -371,12 +371,12 @@ namespace DataCruisePlugin.ViewModels
                         break;
                     case "grid":
                         List<RefEntityModel> refList = entityModel.DataRef as List<RefEntityModel>;
-                        RefEntityModel refModel= refList.Find(it => it.TableId == TreeDataPath);
+                        RefEntityModel refModel = refList.Find(it => it.TableId == TreeDataPath);
                         if (refModel != null)
                         {
                             DataRowView drv = (DataRowView)treeSelectedItem;
                             GridDt = ds.Tables[entityModel.TableName].Copy();
-                            DataRow[] drs=ds.Tables[entityModel.TableName].Select(string.Format("{0}='{1}'", refModel.SelfField, drv[refModel.SourceField].ToString()));
+                            DataRow[] drs = ds.Tables[entityModel.TableName].Select(string.Format("{0}='{1}'", refModel.SelfField, drv[refModel.SourceField].ToString()));
                             if (drs != null && drs.Count() > 0)
                             {
                                 GridDt.Clear();
