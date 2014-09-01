@@ -1,0 +1,1348 @@
+{
+	"menu": [
+		{
+			"title": "公共基础数据",
+			"iconUrl": "25.png",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "组织结构",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "地区区域管理",
+							"actionType": 0,
+							"actionName": "UCTreeViewMaintenanceT",
+							"showType": 0,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": "",
+							"modelId": "",
+							"masterName": "地区区域表",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": "SpecialMaintenanceDataDemo"
+								}
+							]
+						}, {
+							"title": "区域管理",
+							"actionType": 1,
+							"actionName": "RegionManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "公司管理",
+							"actionType": 1,
+							"actionName": "ToolBarDataGridPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": "",
+							"modelId": "",
+							"masterName": "公司表",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": "ToolBarDataGridPlugin"
+								}
+							]
+						}, {
+							"title": "部门管理",
+							"actionType": 1,
+							"actionName": "DepatmentManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "店面管理",
+							"actionType": 1,
+							"actionName": "StoreManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "职位管理",
+							"actionType": 1,
+							"actionName": "PositionManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "员工管理",
+							"actionType": 1,
+							"actionName": "EmployeeManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "基础设置",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "税率设置",
+							"actionType": 1,
+							"actionName": "TaxRatePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "基本单位",
+							"actionType": 1,
+							"actionName": "BaseUnitPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "库区管理",
+							"actionType": 1,
+							"actionName": "StorageManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "服务套餐设置",
+							"actionType": 1,
+							"actionName": "PackageIsSetPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "会员级别设置",
+							"actionType": 1,
+							"actionName": "VipLevelSetPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "会员优惠政策",
+							"actionType": 1,
+							"actionName": "VipPreferentialPoliciesPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "结算方式设置",
+							"actionType": 1,
+							"actionName": "MethodOfPaymentIsSetPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "产品管理",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "产品类别管理",
+							"actionType": 1,
+							"actionName": "CategoryManagementPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "产品品牌管理",
+							"actionType": 1,
+							"actionName": "ProductBrandManPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "类别品牌管理",
+							"actionType": 1,
+							"actionName": "BrandManagementPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "产品树设置",
+							"actionType": 1,
+							"actionName": "ProductTreeSettingsPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "产品参数设置",
+							"actionType": 1,
+							"actionName": "ParameterSettingPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "产品信息管理",
+							"actionType": 1,
+							"actionName": "ProInfoManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "门店类别品牌关联",
+							"actionType": 1,
+							"actionName": "ShopcateBrandAssPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "门店产品型号关联",
+							"actionType": 1,
+							"actionName": "ShopProTypeAssPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "供应商管理",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "供应商管理",
+							"actionType": 1,
+							"actionName": "SupplierManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "供应商柜台管理",
+							"actionType": 1,
+							"actionName": "CounterManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "供应商类别品牌管理",
+							"actionType": 1,
+							"actionName": "BrandTypeManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "客户管理",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "奔宇客户信息管理",
+							"actionType": 1,
+							"actionName": "CustomerInfoManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "分销客户管理",
+							"actionType": 1,
+							"actionName": "DistributionCusInfoManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "电商账号",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "电商账号管理",
+							"actionType": 1,
+							"actionName": "ElecCommerceAccountManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "电商账号类型管理",
+							"actionType": 1,
+							"actionName": "ElecCommerceAccountTypeManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "dsf",
+							"systemId": 905,
+							"formId": 1001,
+							"modelId": "fds",
+							"masterName": "ds",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "进销存管理",
+			"iconUrl": "25.png",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "采购管理",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "采购入库",
+							"actionType": 0,
+							"actionName": "UCSearchListT",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 11101,
+							"modelId": "ERP11101",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": "SearchListFitDataDemo"
+								}
+							]
+						}, {
+							"title": "采购退货",
+							"actionType": 1,
+							"actionName": "ProcurementReturnPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "销售管理",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "订单待处理",
+							"actionType": 1,
+							"actionName": "OrdersStayProcessedPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "订单处理",
+							"actionType": 1,
+							"actionName": "OrderProcessedPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "销售出库",
+							"actionType": 1,
+							"actionName": "SalesOfOoutboundPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "销售退货",
+							"actionType": 1,
+							"actionName": "SalesReturnPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "销售换货",
+							"actionType": 1,
+							"actionName": "SalesExchangePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "库存管理",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "库存查询",
+							"actionType": 1,
+							"actionName": "InventoryQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "调拨出库",
+							"actionType": 1,
+							"actionName": "TransfersOutboundPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "调拨入库",
+							"actionType": 1,
+							"actionName": "TransfersWarehousingPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "库存盘点",
+							"actionType": 1,
+							"actionName": "StockTakingPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "摆样查询",
+							"actionType": 1,
+							"actionName": "PutSampleQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "报表分析",
+			"iconUrl": "25.png",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "报表分类",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "采购明细查询组件",
+							"actionType": 0,
+							"actionName": "UCReportSearchT",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": "",
+							"modelId": "ERP11103",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": "ReportFitDataDemo"
+								}
+							]
+						}, {
+							"title": "采购明细查询",
+							"actionType": 1,
+							"actionName": "ProcurementDetailedQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "fds",
+							"systemId": 905,
+							"formId": 1001,
+							"modelId": "fdsa",
+							"masterName": "dsa",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "销售明细查询",
+							"actionType": 1,
+							"actionName": "SalesDetailedQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "调拨明细查询",
+							"actionType": 1,
+							"actionName": "TransfersDetailedQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "盘点明细查询",
+							"actionType": 1,
+							"actionName": "InventoryDetailedQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "利润明细查询",
+							"actionType": 1,
+							"actionName": "ProfitInformationQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "谈单成功率查询",
+							"actionType": 1,
+							"actionName": "TalkSingleSuccessRateQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "新老客户查询",
+							"actionType": 1,
+							"actionName": "NewOldCustomersQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "主推比例查询",
+							"actionType": 1,
+							"actionName": "MainProportionQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "产品新增/停用查询",
+							"actionType": 1,
+							"actionName": "ProductNewDisableQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "调价差异表查询",
+							"actionType": 1,
+							"actionName": "PricingDifferencesBetweenTableQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "产品利润表查询",
+							"actionType": 1,
+							"actionName": "ProductProfitStatementQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "售后服务",
+			"iconUrl": "25.png",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "售后服务",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "客户合同",
+							"actionType": 1,
+							"actionName": "ContractQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": "",
+							"modelId": "ERP11103",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": "ReportFitDataDemo"
+								}
+							]
+						}, {
+							"title": "电话客服",
+							"actionType": 1,
+							"actionName": "PhoneServicePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "dsa",
+							"systemId": 905,
+							"formId": 1001,
+							"modelId": "dsa",
+							"masterName": "fds",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "上门服务",
+							"actionType": 1,
+							"actionName": "DoorServicePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "客户送修",
+							"actionType": 1,
+							"actionName": "CustomerSendPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "返厂维修",
+							"actionType": 1,
+							"actionName": "ReturnToFactoryMaintenancePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "客户信息查询",
+							"actionType": 1,
+							"actionName": "CustomerInformationQueryPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "生产管理",
+			"iconUrl": "25.png",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "生产管理",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "生产线调度",
+							"actionType": 1,
+							"actionName": "ProductionSchedulingPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": "",
+							"modelId": "ERP11103",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": "ReportFitDataDemo"
+								}
+							]
+						}, {
+							"title": "工作中心调度",
+							"actionType": 1,
+							"actionName": "WorkCenterSchedulingPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "fdsa",
+							"systemId": 905,
+							"formId": "fds",
+							"modelId": "ds",
+							"masterName": "ds",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "班组调度",
+							"actionType": 1,
+							"actionName": "ShiftSchedulingPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "工位看板",
+							"actionType": 1,
+							"actionName": "LocationKanbanPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "缺陷审批",
+							"actionType": 1,
+							"actionName": "DefectsPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "排班",
+							"actionType": 1,
+							"actionName": "SchedulingPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "故障列表",
+							"actionType": 1,
+							"actionName": "FaultListPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "批量故障",
+							"actionType": 1,
+							"actionName": "BatchFailurePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}
