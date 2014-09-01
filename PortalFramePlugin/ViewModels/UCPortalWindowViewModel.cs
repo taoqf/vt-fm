@@ -22,6 +22,8 @@ using System.Reflection;
 using PortalFramePlugin.Views;
 using Victop.Frame.SyncOperation;
 using System.Windows.Navigation;
+using System.IO;
+using System.Text;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -260,7 +262,8 @@ namespace PortalFramePlugin.ViewModels
                     mainWindow.MaxHeight = rect.Height;
                     mainWindow.WindowState = WindowState.Maximized;
                     ChangeFrameWorkTheme();
-                    LoadMenuListLocal();
+                    //LoadMenuListLocal();
+                    LoadJsonMenuListLocal();
                 });
             }
         }
@@ -387,7 +390,6 @@ namespace PortalFramePlugin.ViewModels
         }
         #endregion
 
-
         #region 本地按钮点击命令
         public ICommand localBtnClickCommand
         {
@@ -484,7 +486,8 @@ namespace PortalFramePlugin.ViewModels
                     if (x != null)
                     {
                         MenuModel menuModel = (MenuModel)x;
-                        LoadPlugin(menuModel);
+                        //LoadPlugin(menuModel);
+                        OpenJsonMenuPlugin(menuModel);
                     }
                 });
             }
@@ -501,7 +504,8 @@ namespace PortalFramePlugin.ViewModels
                     if (x != null)
                     {
                         MenuModel menuModel = (MenuModel)x;
-                        LoadPlugin(menuModel);
+                        //LoadPlugin(menuModel);
+                        OpenJsonMenuPlugin(menuModel);
                     }
                 });
             }
@@ -667,6 +671,139 @@ namespace PortalFramePlugin.ViewModels
         }
         #endregion
 
+        #region 加载本地Json菜单集合 (2014-08-29 新增)
+        /// <summary>加载本地Json菜单集合 </summary>
+        private void LoadJsonMenuListLocal()
+        {
+            SystemMenuListLocal.Clear();
+            string menuList = string.Empty;
+            string menuPath = AppDomain.CurrentDomain.BaseDirectory + "menu.json";
+            if (File.Exists(menuPath))
+            {
+                menuList = File.ReadAllText(menuPath, Encoding.GetEncoding("gb2312"));
+                menuList = JsonHelper.ReadJsonString(menuList, "menu");
+            }
+            SystemMenuListLocal = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
+
+            #region 手动解析树型Json(暂不使用)
+            //List<object> objList = JsonHelper.ToObject<List<object>>(menuList);
+            //foreach (object obj in objList)
+            //{
+            //    MenuModel model = CreateMenuModel(obj.ToString());
+            //    SystemMenuListLocal.Add(model);
+            //}
+            #endregion
+        }
+        #endregion
+
+        #region 手动解析树型Json(2014-08-29 暂不使用)
+        private ObservableCollection<MenuModel> CreateChildrenMenuList(string childStr)
+        {
+            ObservableCollection<MenuModel> childrenMenuList = new ObservableCollection<MenuModel>();
+            if (string.IsNullOrEmpty(childStr)) return childrenMenuList;
+            List<object> strList = JsonHelper.ToObject<List<object>>(childStr);
+            foreach (object obj in strList)
+            {
+                MenuModel model = CreateMenuModel(obj.ToString());
+                childrenMenuList.Add(model);
+            }
+            return childrenMenuList;
+        }
+        private MenuModel CreateMenuModel(string str)
+        {
+            MenuModel model = new MenuModel();
+            model.MenuName = JsonHelper.ReadJsonString(str, "title");
+            model.ActionType = JsonHelper.ReadJsonString(str, "actionType");
+            model.ResourceName = JsonHelper.ReadJsonString(str, "actionName");
+            model.ShowType = JsonHelper.ReadJsonString(str, "showType");
+            model.IconUrl = JsonHelper.ReadJsonString(str, "iconUrl");
+            model.BzSystemId = JsonHelper.ReadJsonString(str, "systemId");
+            model.FormId = JsonHelper.ReadJsonString(str, "formId");
+            model.ModelId = JsonHelper.ReadJsonString(str, "modelId");
+            model.MasterName = JsonHelper.ReadJsonString(str, "masterName");
+            model.FitDataPath = JsonHelper.ReadJsonObject<DataTable>(str, "fitDataPath");
+            model.SystemMenuList = CreateChildrenMenuList(JsonHelper.ReadJsonString(str, "children"));
+            return model;
+        }
+        #endregion
+
+        #region 打开Json菜单下的插件(2014-08-29 新增)
+        /// <summary>
+        /// 打开Json菜单下的插件
+        /// </summary>
+        private void OpenJsonMenuPlugin(MenuModel selectedFourthMenu)
+        {
+            if (selectedFourthMenu.ResourceName == null)
+                selectedFourthMenu.ResourceName = ConfigurationManager.AppSettings["runplugin"];
+            if (selectedFourthMenu.ResourceName != null)
+            {
+                if (selectedFourthMenu.ActionType == "1")//启动插件
+                {
+                    PluginOperation pluginOp = new PluginOperation();
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
+                    paramDic.Add("formid", selectedFourthMenu.FormId);
+                    paramDic.Add("modelid", selectedFourthMenu.ModelId);
+                    paramDic.Add("mastername", selectedFourthMenu.MasterName);
+                    paramDic.Add("fitdatapath", selectedFourthMenu.FitDataPath);
+                    PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
+                    if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
+                    {
+                        PluginShow(pluginModel);
+                    }
+                    else
+                    {
+                        VicMessageBoxNormal.Show(pluginModel.ErrorMsg);
+                        return;
+                    }
+                }
+                else if (selectedFourthMenu.ActionType == "0")//启动组件
+                {
+                    RunComponent(selectedFourthMenu);
+                }
+            }
+        }
+        /// <summary>
+        /// 启动组件
+        /// </summary>
+        /// <param name="selectedFourthMenu"></param>
+        private void RunComponent(MenuModel selectedFourthMenu)
+        {
+            Assembly assemblyLoad = ServerFactory.GetServerAssemblyByName("Victop.Frame.Templates", "", false);
+            string actionPath = string.Format("Victop.Frame.Templates.{0}", selectedFourthMenu.ResourceName);
+            TemplateControl control = (TemplateControl)assemblyLoad.CreateInstance(actionPath);
+            if (control == null)
+            {
+                VicMessageBoxNormal.Show("组件不存在");
+                return;
+            }
+            control.SystemId = selectedFourthMenu.BzSystemId;
+            control.FormId = selectedFourthMenu.FormId;
+            control.ModelId = selectedFourthMenu.ModelId;
+            control.MasterName = selectedFourthMenu.MasterName;
+            if (selectedFourthMenu.FitDataPath.Rows.Count != 0)
+            {
+                control.FitDataPath = selectedFourthMenu.FitDataPath.Rows[0]["value"].ToString();
+            }
+            if (selectedFourthMenu.ShowType == "1")//UserControl展示
+            {
+                VicTabItemNormal tabItem = new VicTabItemNormal();
+                tabItem.Header = selectedFourthMenu.MenuName;
+                tabItem.Content = control;
+                tabItem.AllowDelete = true;
+                tabItem.IsSelected = true;
+                TabItemList.Add(tabItem);
+            }
+            else if (selectedFourthMenu.ShowType == "0")//窗口展示
+            {
+                VicWindowNormal window = new VicWindowNormal();
+                window.Content = control;
+                window.Title = selectedFourthMenu.MenuName;
+                window.Show();
+            }
+        }
+        #endregion
+
         #region 转换为标准的四级菜单
         /// <summary>获取标准的菜单集合 </summary>
         private void GetStandardMenuList(ObservableCollection<MenuModel> disStandardMenuList)
@@ -822,7 +959,6 @@ namespace PortalFramePlugin.ViewModels
 
         #endregion
 
-
         #region 换肤
         private void ChangeTheme()
         {
@@ -837,63 +973,12 @@ namespace PortalFramePlugin.ViewModels
 
         #endregion
 
-        #region 将树型菜单模型转成DataTable
-        /// <summary>
-        /// 实体类转换成DataTable
-        /// </summary>
-        /// <param name="modelList">实体类列表</param>
-        /// <returns></returns>
-        private DataTable FillDataTable(ObservableCollection<MenuModel> modelList)
-        {
-            if (modelList == null || modelList.Count == 0)
-            {
-                return null;
-            }
-            DataTable dt = CreateData(modelList[0]);
-            foreach (MenuModel model in modelList)
-            {
-                dt = GetDataTable(dt, model);
-            }
-            return dt;
-        }
-        private DataTable GetDataTable(DataTable dt, MenuModel menuModel)
-        {
-            foreach (MenuModel item in menuModel.SystemMenuList)
-            {
-                dt = GetDataTable(dt, item);
-                DataRow dataRow = dt.NewRow();
-                foreach (PropertyInfo propertyInfo in typeof(MenuModel).GetProperties())
-                {
-                    dataRow[propertyInfo.Name] = propertyInfo.GetValue(item, null);
-                }
-                dt.Rows.Add(dataRow);
-            }
-            return dt;
-        }
-
-        /// <summary>
-        /// 根据实体类得到表结构
-        /// </summary>
-        /// <param name="model">实体类</param>
-        /// <returns></returns>
-        private DataTable CreateData(MenuModel model)
-        {
-            DataTable dataTable = new DataTable(typeof(MenuModel).Name);
-            foreach (PropertyInfo propertyInfo in typeof(MenuModel).GetProperties())
-            {
-                dataTable.Columns.Add(new DataColumn(propertyInfo.Name, propertyInfo.PropertyType));
-            }
-            return dataTable;
-        }
-        #endregion
-
         #region 获取活动插件信息
         private void GetActivePluginInfo()
         {
 
         }
         #endregion
-
 
         #region 设置当前通道信息
         /// <summary>
@@ -943,6 +1028,5 @@ namespace PortalFramePlugin.ViewModels
             objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { Hide });
         }
         #endregion
-
     }
 }
