@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using Victop.Server.Controls.Models;
 
 namespace PortalFramePlugin.Models
 {
     public class MenuModel:ModelBase
     {
+        #region 暂未使用
         private string id;
         /// <summary>
         /// 菜单标识
@@ -23,20 +26,6 @@ namespace PortalFramePlugin.Models
                     id = value;
                     RaisePropertyChanged("Id");
                 }
-            }
-        }
-
-        private string bzSystemId;
-        /// <summary>
-        /// SystemId
-        /// </summary>
-        public string BzSystemId
-        {
-            get { return bzSystemId; }
-            set
-            {
-                bzSystemId = value;
-                RaisePropertyChanged("BzSystemId");
             }
         }
 
@@ -64,38 +53,14 @@ namespace PortalFramePlugin.Models
         public string MenuId
         {
             get { return menuId; }
-            set 
+            set
             {
                 menuId = value;
                 RaisePropertyChanged("MenuId");
             }
         }
-        private string menuName;
-        /// <summary>
-        /// 菜单名称
-        /// </summary>
-        public string MenuName
-        {
-            get { return menuName; }
-            set 
-            {
-                menuName = value;
-                RaisePropertyChanged("MenuName");
-            }
-        }
-        private string formId;
-        /// <summary>
-        /// FormId
-        /// </summary>
-        public string FormId
-        {
-            get { return formId; }
-            set
-            {
-                formId = value;
-                RaisePropertyChanged("FormId");
-            }
-        }
+
+
         private string parentMenu;
         /// <summary>
         /// 父级菜单
@@ -103,7 +68,7 @@ namespace PortalFramePlugin.Models
         public string ParentMenu
         {
             get { return parentMenu; }
-            set 
+            set
             {
                 parentMenu = value;
                 RaisePropertyChanged("ParentMenu");
@@ -271,15 +236,6 @@ namespace PortalFramePlugin.Models
         }
 
         /// <summary>
-        /// 资源名称
-        /// </summary>
-        public string ResourceName
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// 资源树
         /// </summary>
         public string ResourceTree
@@ -305,10 +261,68 @@ namespace PortalFramePlugin.Models
             get;
             set;
         }
+        #endregion
+
+        private string menuName;
+        /// <summary>
+        /// 菜单名称
+        /// </summary>
+        [JsonProperty(PropertyName = "title")]
+        public string MenuName
+        {
+            get { return menuName; }
+            set
+            {
+                menuName = value;
+                RaisePropertyChanged("MenuName");
+            }
+        }
+
+        /// <summary>
+        /// 资源名称
+        /// </summary>
+        [JsonProperty(PropertyName = "actionName")]
+        public string ResourceName
+        {
+            get;
+            set;
+        }
+
+        private string formId;
+        /// <summary>
+        /// FormId
+        /// </summary>
+        [JsonProperty(PropertyName = "formId")]
+        public string FormId
+        {
+            get { return formId; }
+            set
+            {
+                formId = value;
+                RaisePropertyChanged("FormId");
+            }
+        }
+
+        private string bzSystemId;
+        /// <summary>
+        /// SystemId
+        /// </summary>
+        [JsonProperty(PropertyName = "systemId")]
+        public string BzSystemId
+        {
+            get { return bzSystemId; }
+            set
+            {
+                bzSystemId = value;
+                RaisePropertyChanged("BzSystemId");
+            }
+        }
+
         private ObservableCollection<MenuModel> systemMenuList;
         /// <summary>
         /// 子菜单集合
         /// </summary>
+        [JsonProperty(PropertyName = "children")]
         public ObservableCollection<MenuModel> SystemMenuList
         {
             get
@@ -320,11 +334,77 @@ namespace PortalFramePlugin.Models
             set
             {
                 if (systemMenuList != value)
-                {   
+                {
                     systemMenuList = value;
                     RaisePropertyChanged("SystemMenuList");
                 }
             }
         }
+
+        #region 2014-08-28 新增（读取Json格式菜单）
+        /// <summary>
+        /// 插件类型（0：组件||1：插件）
+        /// </summary>
+        [JsonProperty(PropertyName = "actionType")]
+        public string ActionType
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 展示方式（0：窗口||1：UserControl）
+        /// </summary>
+        [JsonProperty(PropertyName = "showType")]
+        public string ShowType
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 图标路径
+        /// </summary>
+        [JsonProperty(PropertyName = "iconUrl")]
+        public string IconUrl
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 插件描述
+        /// </summary>
+        [JsonProperty(PropertyName = "description")]
+        public string Description
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// ModelID
+        /// </summary>
+        [JsonProperty(PropertyName = "modelId")]
+        public string ModelId
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// MasterName
+        /// </summary>
+        [JsonProperty(PropertyName = "masterName")]
+        public string MasterName
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 装配数据路径
+        /// </summary>
+        [JsonProperty(PropertyName = "fitDataPath")]
+        public DataTable FitDataPath
+        {
+            get;
+            set;
+        }
+        #endregion
     }
 }
