@@ -39,6 +39,15 @@ namespace DataCruisePlugin.Models
             set;
         }
         /// <summary>
+        /// 源展示
+        /// </summary>
+        [JsonProperty(PropertyName = "sourcetxt")]
+        public string SourceText
+        {
+            get;
+            set;
+        }
+        /// <summary>
         /// 自有字段
         /// </summary>
         [JsonProperty(PropertyName = "selffield")]

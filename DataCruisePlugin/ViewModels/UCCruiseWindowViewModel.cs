@@ -274,6 +274,7 @@ namespace DataCruisePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                    EnterEntityList.Clear();
                     string entityRel = ReadRelationFile("rel2");
                     AllEntityList = JsonHelper.ToObject<ObservableCollection<EntityDefinitionModel>>(entityRel);
                     foreach (EntityDefinitionModel item in AllEntityList)
@@ -321,7 +322,7 @@ namespace DataCruisePlugin.ViewModels
         /// <summary>
         /// 创建树形Content
         /// </summary>
-        private void CreateContent(EntityDefinitionModel entityModel, object ContentId)
+        private void CreateContent(EntityDefinitionModel entityModel, object contentId, bool masterFlag = false)
         {
             try
             {
@@ -371,27 +372,38 @@ namespace DataCruisePlugin.ViewModels
                         break;
                     case "grid":
                         List<RefEntityModel> refList = entityModel.DataRef as List<RefEntityModel>;
-                        RefEntityModel refModel = refList.Find(it => it.TableId == TreeDataPath);
-                        if (refModel != null)
-                        {
-                            DataRowView drv = (DataRowView)treeSelectedItem;
-                            GridDt = ds.Tables[entityModel.TableName].Copy();
-                            DataRow[] drs = ds.Tables[entityModel.TableName].Select(string.Format("{0}='{1}'", refModel.SelfField, drv[refModel.SourceField].ToString()));
-                            if (drs != null && drs.Count() > 0)
+                            RefEntityModel refModel = refList.Find(it => it.TableId == TreeDataPath);
+                            if (refModel != null)
                             {
-                                GridDt.Clear();
-                                drs.CopyToDataTable(GridDt, LoadOption.OverwriteChanges);
+                                DataRowView drv = (DataRowView)treeSelectedItem;
+                                GridDt = ds.Tables[entityModel.TableName].Copy();
+                                DataRow[] drs = ds.Tables[entityModel.TableName].Select(string.Format("{0}='{1}'", refModel.SelfField, drv[refModel.SourceField].ToString()));
+                                if (drs != null && drs.Count() > 0)
+                                {
+                                    GridDt.Clear();
+                                    drs.CopyToDataTable(GridDt, LoadOption.OverwriteChanges);
+                                }
+                                else
+                                {
+                                    GridDt = CreateStructDataTable(entityModel);
+                                }
                             }
                             else
                             {
-                                GridDt = CreateStructDataTable(entityModel);
+                                GridDt = ds.Tables[entityModel.TableName];
                             }
+                        if (!masterFlag)
+                        {
+                            GridGroupHeader = entityModel.TabTitle;
                         }
                         else
                         {
-                            GridDt = ds.Tables[entityModel.TableName];
+                            VicDataGrid grid = new VicDataGrid();
+                            grid.CanUserAddRows = false;
+                            grid.AutoGenerateColumns = false;
+                            grid.ItemsSource = GridDt.DefaultView;
+                            MasterContent = grid;
                         }
-                        GridGroupHeader = entityModel.TabTitle;
                         break;
                     default:
                         break;
@@ -426,8 +438,11 @@ namespace DataCruisePlugin.ViewModels
                     {
                         if (SelectedEnableEntityModel != null)
                         {
+
+                            CreateContent(MasterEntityModel, MasterContent, true);
                             CreateContent(SelectedEnableEntityModel, CurrentContent);
                             EntityModelReConsitution(SelectedEnableEntityModel);
+                            MasterEntityModel = SelectedEnableEntityModel;
                             SelectedEnableEntityModel = EnableEntityList[0];
                         }
                     }

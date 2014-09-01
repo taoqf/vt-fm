@@ -9,7 +9,7 @@ namespace DataCruisePlugin.Models
     /// <summary>
     /// 实体定义类
     /// </summary>
-    public class EntityDefinitionModel
+    public class EntityDefinitionModel:ICloneable
     {
         /// <summary>
         /// 实体主键
@@ -126,6 +126,15 @@ namespace DataCruisePlugin.Models
             set;
         }
         /// <summary>
+        /// 视图标识
+        /// </summary>
+        [JsonIgnore]
+        public string ViewId
+        {
+            get;
+            set;
+        }
+        /// <summary>
         /// 是否激活
         /// </summary>
         [JsonIgnore]
@@ -133,6 +142,19 @@ namespace DataCruisePlugin.Models
         {
             get;
             set;
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+        /// <summary>
+        /// 实体克隆
+        /// </summary>
+        /// <returns></returns>
+        public EntityDefinitionModel Copy()
+        {
+            return this.Clone() as EntityDefinitionModel;
         }
     }
 }

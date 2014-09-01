@@ -65,7 +65,7 @@ namespace DataCruisePlugin
         /// </summary>
         public UserControl StartControl
         {
-            get { return new UCCruiseWindow(); }
+            get { return new UCCruiseWindowNew(); }
         }
         /// <summary>
         /// 初始化方法
@@ -87,13 +87,13 @@ namespace DataCruisePlugin
                 }
                 else
                 {
-                    return UCCruiseWindow.ParamDict;
+                    return UCCruiseWindowNew.ParamDict;
                 }
             }
             set
             {
                 UCCruiseWindow.ParamDict = value;
-                CruiseWindow.ParamDict = value;
+                UCCruiseWindowNew.ParamDict = value;
             }
         }
     }

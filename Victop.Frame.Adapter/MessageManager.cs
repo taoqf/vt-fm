@@ -194,6 +194,8 @@ namespace Victop.Frame.Adapter
                         }
                         if (!flag)
                         {
+                            replyMessage.MessageId = message.MessageId;
+                            replyMessage.ReplyMode = (ReplyModeEnum)0;
                         }
                     }
                     break;
