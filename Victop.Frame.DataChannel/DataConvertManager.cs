@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using Victop.Frame.DataChannel.Enums;
 using Victop.Frame.PublicLib.Helpers;
 
 namespace Victop.Frame.DataChannel
@@ -12,6 +14,22 @@ namespace Victop.Frame.DataChannel
     /// </summary>
     public class DataConvertManager
     {
+        private static Hashtable jsonTableMap;
+
+        internal static Hashtable JsonTableMap
+        {
+            get
+            {
+                if (jsonTableMap == null)
+                    jsonTableMap = new Hashtable();
+                return jsonTableMap;
+            }
+            set
+            {
+                jsonTableMap = value;
+            }
+        }
+
         /// <summary>
         /// 获取数据DataTable
         /// </summary>
@@ -20,6 +38,13 @@ namespace Victop.Frame.DataChannel
         /// <returns></returns>
         public DataTable GetDataTable(string viewId, string dataPath, DataTable structDt)
         {
+            //foreach (JsonMapKey item in JsonTableMap.Keys)
+            //{
+            //    if (item.ViewId == viewId && item.DataPath == dataPath)
+            //    {
+            //        return (DataTable)JsonTableMap[item];
+            //    }
+            //}
             if (string.IsNullOrEmpty(dataPath))
                 return null;
             string jsonData = string.Empty;
@@ -60,7 +85,72 @@ namespace Victop.Frame.DataChannel
                     newDt.Rows.Add(dr);
                 }
             }
+            newDt.AcceptChanges();
+            JsonMapKey mapKey = new JsonMapKey() { ViewId = viewId, DataPath = dataPath };
+            JsonTableMap.Add(mapKey, newDt);
             return newDt;
         }
+        /// <summary>
+        /// 保存数据DataTable
+        /// </summary>
+        /// <param name="viewId"></param>
+        /// <param name="dataPath"></param>
+        /// <returns></returns>
+        public bool SaveDataTable(string viewId, string dataPath)
+        {
+            DataTable dt = new DataTable();
+            foreach (JsonMapKey item in JsonTableMap.Keys)
+            {
+                if (item.ViewId.Equals(viewId) && item.DataPath.Equals(dataPath))
+                {
+                    dt = JsonTableMap[item] as DataTable;
+                    break;
+                }
+            }
+            foreach (DataRow dr in dt.Rows)
+            {
+                switch (dr.RowState)
+                {
+                    case DataRowState.Added:
+                        Dictionary<string, object> addDic = new Dictionary<string, object>();
+                        foreach (DataColumn dc in dt.Columns)
+                        {
+                            addDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                        }
+                        DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, OpreateStateEnum.Added);
+                        break;
+                    case DataRowState.Deleted:
+                        Dictionary<string, object> delDic = new Dictionary<string, object>();
+                        delDic.Add("_id", dr["_id"]);
+                        DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), delDic, OpreateStateEnum.Deleted);
+                        break;
+                    case DataRowState.Detached:
+                        break;
+                    case DataRowState.Modified:
+                        Dictionary<string, object> modDic = new Dictionary<string, object>();
+                        foreach (DataColumn dc in dt.Columns)
+                        {
+                            modDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                        }
+                        List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
+                        Dictionary<string, object> pathDic = new Dictionary<string, object>();
+                        pathDic.Add("key", "_id");
+                        pathDic.Add("value", dr["_id"]);
+                        pathList.Add(pathDic);
+                        DataTool.SaveCurdDataByPath(viewId, pathList, modDic, OpreateStateEnum.Modified);
+                        break;
+                    case DataRowState.Unchanged:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return true;
+        }
+    }
+    internal class JsonMapKey
+    {
+        internal string ViewId { get; set; }
+        internal string DataPath { get; set; }
     }
 }

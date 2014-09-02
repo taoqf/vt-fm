@@ -22,6 +22,7 @@ namespace DataCruisePlugin.ViewModels
     public class UCCruiseWindowViewModelNew : ModelBase
     {
         #region 独立变量
+        private DataSet ds = new DataSet();
         /// <summary>
         /// 所有实体集合
         /// </summary>
@@ -30,6 +31,14 @@ namespace DataCruisePlugin.ViewModels
         /// 主Tab中当前选择内容
         /// </summary>
         private DataRowView masterSelectedModel;
+        /// <summary>
+        /// 编辑区选择内容
+        /// </summary>
+        private DataRowView currentSeletecModel;
+        /// <summary>
+        /// 编辑标志
+        /// </summary>
+        private bool editFlag = true;
         #endregion
         #region 实体定义
         /// <summary>
@@ -309,7 +318,14 @@ namespace DataCruisePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    List<RefEntityModel> refList = CurrentEntity.DataRef as List<RefEntityModel>;
                     DataRow dr = GridDt.NewRow();
+                    dr["_id"] = Guid.NewGuid();
+                    if (refList != null && refList.Count > 0)
+                    {
+                        RefEntityModel refModel = refList.FirstOrDefault(it => it.TableId == MasterEntity.Id);
+                        dr[refModel.SelfField] = masterSelectedModel[refModel.SourceField];
+                    }
                     GridDt.Rows.Add(dr);
                 });
             }
@@ -322,8 +338,7 @@ namespace DataCruisePlugin.ViewModels
             get
             {
                 return new RelayCommand(() =>
-                {
-
+                {   
                 });
             }
         }
@@ -336,7 +351,37 @@ namespace DataCruisePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
+                    DataOperation dataOp = new DataOperation();
+                    bool result = dataOp.SaveData(CurrentEntity.ViewId, CurrentEntity.DataPath);
+                    if (result)
+                    {
+                        MessageOperation messageOp = new MessageOperation();
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        contentDic.Add("DataChannelId", CurrentEntity.ViewId);
+                        contentDic.Add("tablename", CurrentEntity.TableName);
+                        contentDic.Add("dbname", "test_cruiseDB");
+                        contentDic.Add("systemid", "800");
+                        contentDic.Add("configsystemid", "101");
+                        contentDic.Add("spaceid", "tbs");
+                        Dictionary<string, object> resultDic = messageOp.SendMessage("MongoDataChannelService.saveTableData", contentDic, "JSON");
+                        string temp1 = resultDic["ReplyMode"].ToString();
+                    }
+                    string json = dataOp.GetJSONData(CurrentEntity.ViewId);
+                    string curdjson = dataOp.GetCurdJSONData(CurrentEntity.ViewId);
+                    string temp = curdjson;
+                });
+            }
+        }
+        /// <summary>
+        /// 当前编辑区选择行改变
+        /// </summary>
+        public ICommand currentGridSelectionChangedCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) => {
+                    VicDataGrid grid = (VicDataGrid)x;
+                    currentSeletecModel = (DataRowView)grid.SelectedItem;
                 });
             }
         }
@@ -521,7 +566,6 @@ namespace DataCruisePlugin.ViewModels
         private void RefreshMasterContent()
         {
             DataOperation dataOp = new DataOperation();
-            DataSet ds = new DataSet();
             if (string.IsNullOrEmpty(MasterEntity.HostTable))
             {
                 MasterEntity.ViewId = SendFindDataMessage(MasterEntity.TableName);
@@ -529,13 +573,19 @@ namespace DataCruisePlugin.ViewModels
                 {
                     MasterEntity.DataPath = ConstructDataPath(MasterEntity, MasterEntity, masterSelectedModel);
                     DataTable dt = dataOp.GetData(MasterEntity.ViewId, MasterEntity.DataPath, CreateStructDataTable(MasterEntity));
-                    ds.Tables.Add(dt);
+                    if (!ds.Tables.Contains(dt.TableName))
+                    {
+                        ds.Tables.Add(dt);
+                    }
                 }
             }
             else
             {
                 DataTable dt = dataOp.GetData(MasterEntity.ViewId, MasterEntity.DataPath, CreateStructDataTable(MasterEntity));
-                ds.Tables.Add(dt);
+                if (!ds.Tables.Contains(dt.TableName))
+                {
+                    ds.Tables.Add(dt);
+                }
             }
             switch (MasterEntity.ViewType)
             {
@@ -568,7 +618,6 @@ namespace DataCruisePlugin.ViewModels
         private void RefreshCurrentContent()
         {
             DataOperation dataOp = new DataOperation();
-            DataSet ds = new DataSet();
             if (string.IsNullOrEmpty(CurrentEntity.HostTable))
             {
                 if (CurrentEntity.DataRef != null)
@@ -593,7 +642,10 @@ namespace DataCruisePlugin.ViewModels
                 }
                 CurrentEntity.DataPath = ConstructDataPath(CurrentEntity, MasterEntity, masterSelectedModel);
                 DataTable dt = dataOp.GetData(CurrentEntity.ViewId, CurrentEntity.DataPath, CreateStructDataTable(CurrentEntity));
-                ds.Tables.Add(dt);
+                if (!ds.Tables.Contains(dt.TableName))
+                {
+                    ds.Tables.Add(dt);
+                }
             }
             else
             {
@@ -608,7 +660,10 @@ namespace DataCruisePlugin.ViewModels
                     CurrentEntity.ViewId = MasterEntity.ViewId;
                     CurrentEntity.DataPath = JsonHelper.ToJson(pathList);
                     DataTable dt = dataOp.GetData(CurrentEntity.ViewId, CurrentEntity.DataPath, CreateStructDataTable(CurrentEntity));
-                    ds.Tables.Add(dt);
+                    if (!ds.Tables.Contains(dt.TableName))
+                    {
+                        ds.Tables.Add(dt);
+                    }
                 }
             }
 
@@ -645,6 +700,7 @@ namespace DataCruisePlugin.ViewModels
                                     vicTv.IDField = "_id";
                                     vicTv.FIDField = entityModel.ParentId;
                                     vicTv.DisplayField = item.SourceText;
+                                    vicTv.SelectedItemChanged += vicTv_SelectedItemChanged;
                                     vicTv.ItemsSource = dt.DefaultView;
                                 }
                             }
@@ -747,6 +803,11 @@ namespace DataCruisePlugin.ViewModels
             {
                 DataColumn dc = new DataColumn();
                 dc.ColumnName = item.Field;
+                if (item.Field.Equals("_id"))
+                {
+                    dc.ReadOnly = true;
+                    dc.DefaultValue = Guid.NewGuid();
+                }
                 dc.Caption = item.FieldTitle;
                 switch (item.FieldType)
                 {
@@ -830,6 +891,7 @@ namespace DataCruisePlugin.ViewModels
             try
             {
                 DataRefContent = null;
+                CurrentContent = null;
                 VicButtonNormal vicBtnEnter = (VicButtonNormal)sender;
                 MasterEntity = (EntityDefinitionModel)vicBtnEnter.Tag;
                 EntityModelReConsitution(MasterEntity);
@@ -910,13 +972,21 @@ namespace DataCruisePlugin.ViewModels
             }
         }
         /// <summary>
-        /// 当前编辑列表项目改变
+        /// 数据引用中树节点选择改变
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void currentGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void vicTv_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            VicDataGrid grid = (VicDataGrid)sender;
+            VicTreeView vicTv = (VicTreeView)sender;
+            EntityDefinitionModel entityModel = vicTv.Tag as EntityDefinitionModel;
+            if (editFlag && currentSeletecModel != null)
+            {
+                DataRow dr = GridDt.Select(string.Format("_id='{0}'", currentSeletecModel["_id"].ToString()))[0];
+                List<RefEntityModel> refList = CurrentEntity.DataRef as List<RefEntityModel>;
+                RefEntityModel refModel = refList.FirstOrDefault(it => it.TableId == entityModel.Id);
+                dr[refModel.SelfField] = ((DataRowView)vicTv.SelectedItem)[refModel.SourceField];
+            }
         }
         #endregion
     }

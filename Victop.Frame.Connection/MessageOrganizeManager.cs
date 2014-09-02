@@ -108,6 +108,7 @@ namespace Victop.Frame.Connection
                         break;
                     case "MongoDataChannelService.saveBusiData":
                     case "MongoDataChannelService.saveTableData":
+                        dicContent = GetSaveMongoTableDataMessage(dicContent);
                         replyIsToChannel = DataOperateEnum.COMMIT;
                         break;
                     default:
@@ -1484,6 +1485,27 @@ namespace Victop.Frame.Connection
                 dicContent.Remove("DataChannelId");
                 dicContent.Remove("modelType");
                 dicContent["deltaXml"] = deltaDic;
+            }
+            return dicContent;
+        }
+        /// <summary>
+        /// 保存mongo数据库表数据
+        /// </summary>
+        /// <param name="dicContent"></param>
+        /// <returns></returns>
+        private Dictionary<string, object> GetSaveMongoTableDataMessage(Dictionary<string, object> dicContent)
+        {
+            if (dicContent.ContainsKey("DataChannelId"))
+            {
+                string channelId = dicContent["DataChannelId"].ToString();
+                ReplyMessageResolver replyResolver = new ReplyMessageResolver();
+                string dataXml = replyResolver.GetDataXmlByDataChannelId(channelId, false);
+                dicContent.Remove("DataChannelId");
+                if (!dicContent.ContainsKey("crudlist"))
+                {
+                    dicContent.Add("crudlist", null);
+                }
+                dicContent["crudlist"] = JsonHelper.ToObject<List<object>>(dataXml);
             }
             return dicContent;
         }

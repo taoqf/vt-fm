@@ -349,7 +349,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="saveData"></param>
         /// <param name="rowState"></param>
         /// <returns></returns>
-        public static bool SaveCurdDataByPath(string viewId, string dataPath, string saveData, OpreateStateEnum rowState)
+        public static bool SaveCurdDataByPath(string viewId, List<object> dataPath, Dictionary<string,object> saveData, OpreateStateEnum rowState)
         {
             try
             {
@@ -429,7 +429,7 @@ namespace Victop.Frame.DataChannel
                             if (itemDic["flag"].ToString().Equals("4") && itemDic["path"].ToString().Equals(dataPath))
                             {
                                 string delKey = JsonHelper.ReadJsonString(itemDic["rowdata"].ToString(), "_id");
-                                if (JsonHelper.ReadJsonString(saveData, "_id").Equals(delKey))
+                                if (saveData["_id"].ToString().Equals(delKey))
                                 {
                                     delCurdList.Remove(item);
                                 }
@@ -442,7 +442,7 @@ namespace Victop.Frame.DataChannel
                             else if (itemDic["path"].ToString().Equals(dataPath))
                             {
                                 string delKey = JsonHelper.ReadJsonString(itemDic["rowdata"].ToString(), "_id");
-                                if (JsonHelper.ReadJsonString(saveData, "_id").Equals(delKey))
+                                if (saveData["_id"].ToString().Equals(delKey))
                                 {
                                     delCurdList.Remove(item);
                                     delCurdList.Add(curdDic);
@@ -472,7 +472,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="saveData"></param>
         /// <param name="rowState"></param>
         /// <returns></returns>
-        public static bool SaveDataByPath(string viewId, string dataPath, string saveData, OpreateStateEnum rowState)
+        public static bool SaveDataByPath(string viewId, List<object> dataPath, Dictionary<string,object> saveData, OpreateStateEnum rowState)
         {
             try
             {
@@ -480,7 +480,7 @@ namespace Victop.Frame.DataChannel
                 string jsonData = string.Empty;
                 Dictionary<string, object> fullDataDic = JsonHelper.ToObject<Dictionary<string, object>>(dataOp.GetJSONData(viewId));
                 List<Dictionary<string, object>> DataList = new List<Dictionary<string, object>>();
-                List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
+                List<object> pathList = dataPath;
                 if (pathList != null)
                 {
                     Dictionary<string, object> storeValueDic = JsonHelper.ToObject<Dictionary<string, object>>(fullDataDic["docDataStore"].ToString());
@@ -511,7 +511,7 @@ namespace Victop.Frame.DataChannel
                                         foreach (var item in arrayList)
                                         {
                                             Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(item.ToString());
-                                            if (itemDic.ContainsKey("_id") && itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(saveData, "_id")))
+                                            if (itemDic.ContainsKey("_id") && itemDic["_id"].ToString().Equals(saveData["_id"].ToString()))
                                             {
                                                 arrayList.Remove(item);
                                                 break;
@@ -549,7 +549,7 @@ namespace Victop.Frame.DataChannel
                                         case OpreateStateEnum.Modified:
                                             if (itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(pathList[i].ToString(), "value")))
                                             {
-                                                Dictionary<string, object> saveDic = JsonHelper.ToObject<Dictionary<string, object>>(saveData);
+                                                Dictionary<string, object> saveDic = saveData;
                                                 foreach (string savekey in saveDic.Keys)
                                                 {
                                                     if (itemDic.ContainsKey(savekey))

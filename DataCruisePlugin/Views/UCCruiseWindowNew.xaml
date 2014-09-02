@@ -59,6 +59,11 @@
             </DockPanel>
             <GroupBox Header="{Binding CurrentHeader}" Name="gridCurrent">
                 <ctrl:VicDataGrid Name="currentGrid" AutoGenerateColumns="True" CanUserAddRows="False" ItemsSource="{Binding GridDt}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding currentGridSelectionChangedCommand}" CommandParameter="{Binding ElementName=currentGrid}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </ctrl:VicDataGrid>
             </GroupBox>
         </StackPanel>

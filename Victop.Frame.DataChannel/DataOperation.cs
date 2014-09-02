@@ -41,7 +41,17 @@ namespace Victop.Frame.DataChannel
             DataConvertManager convertManager = new DataConvertManager();
             return convertManager.GetDataTable(channelId, dataPath, structDt);
         }
-
+        /// <summary>
+        /// 保存数据集
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="dataPath"></param>
+        /// <returns></returns>
+        public virtual bool SaveData(string channelId, string dataPath)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.SaveDataTable(channelId, dataPath);
+        }
         /// <summary>
         /// 根据通道号获取JSON数据
         /// </summary>

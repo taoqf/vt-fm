@@ -68,7 +68,7 @@ namespace Victop.Frame.DataChannel
                     }
                     catch (Exception ex)
                     {
- 
+
                     }
                     break;
                 default:
@@ -162,7 +162,7 @@ namespace Victop.Frame.DataChannel
                 newDt = fullDs.Tables[keyName];
                 dtFlag = true;
             }
-            List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(arrayListStr,"dataArray"));
+            List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(arrayListStr, "dataArray"));
             if (arrayList == null)
                 return;
             #region 构建DataTable列
@@ -649,90 +649,101 @@ namespace Victop.Frame.DataChannel
         /// </summary>
         public virtual string GetXmlData(string channelId, bool masterFlag = true)
         {
+            string curdStr = string.Empty;
             DataChannelManager dataManager = new DataChannelManager();
             Hashtable hashData = dataManager.GetData(channelId);
             ChannelData channelData = hashData["Data"] as ChannelData;
-            DataSet requestDs = channelData.DataInfo;
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("<?xml version=\"1.0\"  encoding=\"utf-8\"?>");
-            stringBuilder.Append("<DATA>");
-
-            foreach (DataTable mastDt in requestDs.Tables)
+            switch (channelData.DataForm)
             {
-                bool ValidTableFlag = false;
-                if (masterFlag)
-                {
-                    if (mastDt.TableName.Equals("masterdata"))
-                    {
-                        ValidTableFlag = true;
-                    }
-                }
-                else
-                {
-                    if (Regex.IsMatch(mastDt.TableName, @"^[1-9]\d*$"))
-                    {
-                        ValidTableFlag = true;
-                    }
-                }
+                case DataFormEnum.JSON:
+                    curdStr = channelData.CrudJSONData;
+                    break;
+                case DataFormEnum.DATASET:
+                default:
+                    DataSet requestDs = channelData.DataInfo;
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.Append("<?xml version=\"1.0\"  encoding=\"utf-8\"?>");
+                    stringBuilder.Append("<DATA>");
 
-                if (!ValidTableFlag)
-                    continue;
-                stringBuilder.Append("<DATASET id=\"").Append(mastDt.TableName).Append("\">");
-                stringBuilder.Append("<DATAPACKET Version=\"").Append("2.0").Append("\">");
-                stringBuilder.Append("<METADATA>");
-                stringBuilder.Append("<FIELDS>");
-                foreach (DataColumn mastDc in mastDt.Columns)
-                {
-                    string fieldType = "string";
-                    long fieldLength = 50;
-                    switch (mastDc.DataType.Name)
+                    foreach (DataTable mastDt in requestDs.Tables)
                     {
-                        case "Int32":
-                            fieldType = "i4";
-                            fieldLength = 11;
-                            break;
-                        case "Int64":
-                            fieldType = "i8";
-                            fieldLength = 20;
-                            break;
-                        case "DateTime":
-                            fieldType = "dateTime";
-                            fieldLength = 23;
-                            break;
-                        case "String":
-                            fieldLength = mastDc.MaxLength;
-                            break;
-                        default:
-                            fieldType = "string";
-                            break;
+                        bool ValidTableFlag = false;
+                        if (masterFlag)
+                        {
+                            if (mastDt.TableName.Equals("masterdata"))
+                            {
+                                ValidTableFlag = true;
+                            }
+                        }
+                        else
+                        {
+                            if (Regex.IsMatch(mastDt.TableName, @"^[1-9]\d*$"))
+                            {
+                                ValidTableFlag = true;
+                            }
+                        }
+
+                        if (!ValidTableFlag)
+                            continue;
+                        stringBuilder.Append("<DATASET id=\"").Append(mastDt.TableName).Append("\">");
+                        stringBuilder.Append("<DATAPACKET Version=\"").Append("2.0").Append("\">");
+                        stringBuilder.Append("<METADATA>");
+                        stringBuilder.Append("<FIELDS>");
+                        foreach (DataColumn mastDc in mastDt.Columns)
+                        {
+                            string fieldType = "string";
+                            long fieldLength = 50;
+                            switch (mastDc.DataType.Name)
+                            {
+                                case "Int32":
+                                    fieldType = "i4";
+                                    fieldLength = 11;
+                                    break;
+                                case "Int64":
+                                    fieldType = "i8";
+                                    fieldLength = 20;
+                                    break;
+                                case "DateTime":
+                                    fieldType = "dateTime";
+                                    fieldLength = 23;
+                                    break;
+                                case "String":
+                                    fieldLength = mastDc.MaxLength;
+                                    break;
+                                default:
+                                    fieldType = "string";
+                                    break;
+                            }
+                            stringBuilder.AppendFormat("<FIELD attrname='{0}' fieldtype='{1}' WIDTH='{2}' /> ", mastDc.ColumnName, fieldType, fieldLength);
+                        }
+                        stringBuilder.Append("</FIELDS>");
+                        stringBuilder.Append("</METADATA>");
+                        stringBuilder.Append("<ROWDATA>");
+                        foreach (DataRow mastDr in mastDt.Rows)
+                        {
+                            if (mastDr.RowState == DataRowState.Added)
+                            {
+                                GetDataRowXml(stringBuilder, mastDt, mastDr, "4");
+                            }
+                            else if (mastDr.RowState == DataRowState.Modified)
+                            {
+                                GetDataRowXml(stringBuilder, mastDt, mastDr, "8");
+                                GetDataRowXml(stringBuilder, mastDt, mastDr, "1", true);
+                            }
+                            else if (mastDr.RowState == DataRowState.Deleted)
+                            {
+                                GetDataRowXml(stringBuilder, mastDt, mastDr, "2", true);
+                            }
+                        }
+                        stringBuilder.Append("</ROWDATA>");
+                        stringBuilder.Append("</DATAPACKET>");
+                        stringBuilder.Append("</DATASET>");
                     }
-                    stringBuilder.AppendFormat("<FIELD attrname='{0}' fieldtype='{1}' WIDTH='{2}' /> ", mastDc.ColumnName, fieldType, fieldLength);
-                }
-                stringBuilder.Append("</FIELDS>");
-                stringBuilder.Append("</METADATA>");
-                stringBuilder.Append("<ROWDATA>");
-                foreach (DataRow mastDr in mastDt.Rows)
-                {
-                    if (mastDr.RowState == DataRowState.Added)
-                    {
-                        GetDataRowXml(stringBuilder, mastDt, mastDr, "4");
-                    }
-                    else if (mastDr.RowState == DataRowState.Modified)
-                    {
-                        GetDataRowXml(stringBuilder, mastDt, mastDr, "8");
-                        GetDataRowXml(stringBuilder, mastDt, mastDr, "1", true);
-                    }
-                    else if (mastDr.RowState == DataRowState.Deleted)
-                    {
-                        GetDataRowXml(stringBuilder, mastDt, mastDr, "2", true);
-                    }
-                }
-                stringBuilder.Append("</ROWDATA>");
-                stringBuilder.Append("</DATAPACKET>");
-                stringBuilder.Append("</DATASET>");
+                    stringBuilder.Append("</DATA>");
+                    curdStr = stringBuilder.ToString();
+                    break;
             }
-            stringBuilder.Append("</DATA>");
-            return stringBuilder.ToString();
+            return curdStr;
         }
         /// <summary>
         /// 获取JSON格式数据

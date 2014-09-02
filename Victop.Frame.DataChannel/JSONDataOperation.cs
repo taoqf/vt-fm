@@ -27,7 +27,7 @@ namespace Victop.Frame.DataChannel
                 string currentData = DataTool.GetDataByPath(viewId, dataPath);
                 List<object> dataList = JsonHelper.ToObject<List<object>>(JsonHelper.ReadJsonString(currentData, "dataArray"));
                 dataList.Add(newData);
-                falg = DataTool.SaveCurdDataByPath(viewId, dataPath, newData, OpreateStateEnum.Added);
+                falg = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), JsonHelper.ToObject<Dictionary<string,object>>(newData), OpreateStateEnum.Added);
             }
             catch (Exception ex)
             {
@@ -44,7 +44,7 @@ namespace Victop.Frame.DataChannel
         /// <returns></returns>
         public virtual bool ModifyData(string viewId, string dataPath, string modifyData)
         {
-            return DataTool.SaveCurdDataByPath(viewId, dataPath, modifyData, OpreateStateEnum.Modified); ;
+            return DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), JsonHelper.ToObject<Dictionary<string, object>>(modifyData), OpreateStateEnum.Modified); ;
         }
         /// <summary>
         /// 删除数据
@@ -55,7 +55,7 @@ namespace Victop.Frame.DataChannel
         /// <returns></returns>
         public virtual bool DeleteData(string viewId, string dataPath, string delData)
         {
-            return DataTool.SaveCurdDataByPath(viewId, dataPath, delData, OpreateStateEnum.Deleted); ;
+            return DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), JsonHelper.ToObject<Dictionary<string, object>>(delData), OpreateStateEnum.Deleted); ;
         }
         /// <summary>
         /// 获取数据
