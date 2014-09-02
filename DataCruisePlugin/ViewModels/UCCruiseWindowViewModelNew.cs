@@ -245,6 +245,22 @@ namespace DataCruisePlugin.ViewModels
                 }
             }
         }
+        /// <summary>
+        /// 编辑区列表绑定内容
+        /// </summary>
+        private DataTable gridDt;
+        /// <summary>
+        /// 编辑区列表绑定内容
+        /// </summary>
+        public DataTable GridDt
+        {
+            get { return gridDt; }
+            set
+            {
+                gridDt = value;
+                RaisePropertyChanged("GridDt");
+            }
+        }
 
         #endregion
         #region Command
@@ -284,6 +300,47 @@ namespace DataCruisePlugin.ViewModels
                 });
             }
         }
+        /// <summary>
+        /// 添加
+        /// </summary>
+        public ICommand btnAddClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    DataRow dr = GridDt.NewRow();
+                    GridDt.Rows.Add(dr);
+                });
+            }
+        }
+        /// <summary>
+        /// 删除
+        /// </summary>
+        public ICommand btnDelClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 保存
+        /// </summary>
+        public ICommand btnSaveClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+
         #endregion
         #region 私有方法
         /// <summary>
@@ -470,10 +527,7 @@ namespace DataCruisePlugin.ViewModels
                 MasterEntity.ViewId = SendFindDataMessage(MasterEntity.TableName);
                 if (!string.IsNullOrEmpty(MasterEntity.ViewId))
                 {
-                    if (string.IsNullOrEmpty(MasterEntity.DataPath))
-                    {
-                        MasterEntity.DataPath = ConstructDataPath(MasterEntity,MasterEntity,masterSelectedModel);
-                    }
+                    MasterEntity.DataPath = ConstructDataPath(MasterEntity, MasterEntity, masterSelectedModel);
                     DataTable dt = dataOp.GetData(MasterEntity.ViewId, MasterEntity.DataPath, CreateStructDataTable(MasterEntity));
                     ds.Tables.Add(dt);
                 }
@@ -497,7 +551,7 @@ namespace DataCruisePlugin.ViewModels
                 case "grid":
                 case "dict":
                     VicDataGrid masterGrid = new VicDataGrid();
-                    masterGrid.ItemsSource = ds.Tables[CurrentEntity.TableName].DefaultView;
+                    masterGrid.ItemsSource = ds.Tables[MasterEntity.TableName].DefaultView;
                     masterGrid.AutoGenerateColumns = false;
                     masterGrid.CanUserAddRows = false;
                     masterGrid.SelectionChanged += masterGrid_SelectionChanged;
@@ -557,12 +611,8 @@ namespace DataCruisePlugin.ViewModels
                     ds.Tables.Add(dt);
                 }
             }
-            VicDataGrid grid = new VicDataGrid();
-            grid.ItemsSource = ds.Tables[CurrentEntity.TableName].DefaultView;
-            grid.AutoGenerateColumns = false;
-            grid.CanUserAddRows = false;
-            grid.SelectionChanged+=currentGrid_SelectionChanged;
-            CurrentContent = grid;
+
+            GridDt = ds.Tables[CurrentEntity.TableName];
             CurrentHeader = CurrentEntity.TabTitle;
         }
         /// <summary>
@@ -572,6 +622,7 @@ namespace DataCruisePlugin.ViewModels
         {
             VicStackPanelNormal stackpanel = new VicStackPanelNormal();
             List<RefEntityModel> dataRefList = CurrentEntity.DataRef as List<RefEntityModel>;
+            DataOperation dataOp = new DataOperation();
             if (dataRefList != null)
             {
                 foreach (RefEntityModel item in dataRefList)
@@ -580,10 +631,51 @@ namespace DataCruisePlugin.ViewModels
                         continue;
                     VicGroupBoxNormal groupBox = new VicGroupBoxNormal();
                     EntityDefinitionModel entityModel = allEntityModels.FirstOrDefault(it => it.Id == item.TableId);
-                    ListBox listBox = new ListBox();
-                    listBox.Height = 200;
-                    groupBox.Content = listBox;
-                    groupBox.Header = entityModel.TabTitle;
+                    switch (entityModel.ViewType)
+                    {
+                        case "tree":
+                            VicTreeView vicTv = new VicTreeView();
+                            vicTv.Height = 200;
+                            if (string.IsNullOrEmpty(entityModel.HostTable))
+                            {
+                                entityModel.ViewId = SendFindDataMessage(entityModel.TableName);
+                                if (!string.IsNullOrEmpty(entityModel.ViewId))
+                                {
+                                    DataTable dt = dataOp.GetData(entityModel.ViewId, ConstructDataPath(entityModel, null, null), CreateStructDataTable(entityModel));
+                                    vicTv.IDField = "_id";
+                                    vicTv.FIDField = entityModel.ParentId;
+                                    vicTv.DisplayField = item.SourceText;
+                                    vicTv.ItemsSource = dt.DefaultView;
+                                }
+                            }
+                            entityModel.DataPath = entityModel.TableName;
+                            vicTv.Tag = entityModel;
+                            groupBox.Content = vicTv;
+                            groupBox.Header = entityModel.TabTitle;
+                            break;
+                        case "grid":
+                            VicListBoxNormal viclbox = new VicListBoxNormal();
+                            viclbox.Height = 200;
+                            if (string.IsNullOrEmpty(entityModel.HostTable))
+                            {
+                                entityModel.ViewId = SendFindDataMessage(entityModel.TableName);
+                                if (!string.IsNullOrEmpty(entityModel.ViewId))
+                                {
+                                    DataTable dt = dataOp.GetData(entityModel.ViewId, ConstructDataPath(entityModel, null, null), CreateStructDataTable(entityModel));
+                                    viclbox.DisplayMemberPath = item.SourceText;
+                                    viclbox.SelectedValuePath = item.SourceField;
+                                    viclbox.ItemsSource = dt.DefaultView;
+                                }
+                            }
+                            entityModel.DataPath = entityModel.TableName;
+                            viclbox.Tag = entityModel;
+                            groupBox.Content = viclbox;
+                            groupBox.Header = entityModel.TabTitle;
+                            break;
+                        default:
+                            break;
+                    }
+
                     stackpanel.Children.Add(groupBox);
                 }
             }
@@ -634,7 +726,7 @@ namespace DataCruisePlugin.ViewModels
 
                     if (dynModel.HostTable.Equals(MasterEntity.Id))
                     {
-                        ConstructDataPath(dynModel,MasterEntity,masterSelectedModel);
+                        ConstructDataPath(dynModel, MasterEntity, masterSelectedModel);
                         DataOperation dataOp = new DataOperation();
                         DataTable dt = dataOp.GetData(MasterEntity.ViewId, dynModel.DataPath, CreateStructDataTable(dynModel));
                         foreach (DataRow item in dt.Rows)
@@ -705,7 +797,7 @@ namespace DataCruisePlugin.ViewModels
             }
             return structDt;
         }
-        private string ConstructDataPath(EntityDefinitionModel entityModel,EntityDefinitionModel hostModel,DataRowView drv)
+        private string ConstructDataPath(EntityDefinitionModel entityModel, EntityDefinitionModel hostModel, DataRowView drv)
         {
             string dataPath = string.Empty;
             if (string.IsNullOrEmpty(entityModel.HostTable))
@@ -737,6 +829,7 @@ namespace DataCruisePlugin.ViewModels
         {
             try
             {
+                DataRefContent = null;
                 VicButtonNormal vicBtnEnter = (VicButtonNormal)sender;
                 MasterEntity = (EntityDefinitionModel)vicBtnEnter.Tag;
                 EntityModelReConsitution(MasterEntity);
@@ -765,7 +858,7 @@ namespace DataCruisePlugin.ViewModels
                 if (CurrentEntity.Id.Equals(vicBtnEntity.HostTable))
                 {
                     MasterEntity = CurrentEntity.Copy();
-                    CurrentEntity = vicBtnEntity;
+                    CurrentEntity = vicBtnEntity.Copy();
                     RefreshMasterContent();
                 }
                 else if (CurrentEntity.HostTable.Equals(vicBtnEntity.Id))
@@ -773,6 +866,10 @@ namespace DataCruisePlugin.ViewModels
                     CurrentEntity = MasterEntity.Copy();
                     MasterEntity = vicBtnEntity.Copy();
                     RefreshMasterContent();
+                }
+                else
+                {
+                    CurrentEntity = vicBtnEntity.Copy();
                 }
                 EntityModelReConsitution(CurrentEntity);
                 CreateEnableContent();

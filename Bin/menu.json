@@ -21,6 +21,24 @@
 					],
 					"children": [
 						{
+							"title": "数据巡航",
+							"actionType": 1,
+							"actionName": "DataCruisePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": "",
+							"modelId": "",
+							"masterName": "地区区域表",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						},
+						{
 							"title": "地区区域管理",
 							"actionType": 0,
 							"actionName": "UCTreeViewMaintenanceT",

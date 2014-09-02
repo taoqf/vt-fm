@@ -33,8 +33,35 @@
         <GroupBox Header="{Binding MasterHeader}" Name="gboxMaster" Grid.Row="3" Grid.Column="0" Content="{Binding MasterContent}">
         </GroupBox>
         <GridSplitter Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
-        <GroupBox Header="{Binding CurrentHeader}" Name="gridCurrent" Grid.Row="3" Grid.Column="2" Content="{Binding CurrentContent}">
-        </GroupBox>
+        <StackPanel Grid.Row="3" Grid.Column="2">
+            <DockPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Height="40">
+                <ctrl:VicButtonNormal Width="100" Height="24" Content="添加" Name="btnAdd">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnAddClickCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ctrl:VicButtonNormal>
+                <ctrl:VicButtonNormal Width="100" Height="24" Content="删除" Name="btnDel">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnDelClickCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ctrl:VicButtonNormal>
+                <ctrl:VicButtonNormal Width="100" Height="24" Content="保存" Name="btnSave">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnSaveClickCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ctrl:VicButtonNormal>
+            </DockPanel>
+            <GroupBox Header="{Binding CurrentHeader}" Name="gridCurrent">
+                <ctrl:VicDataGrid Name="currentGrid" AutoGenerateColumns="True" CanUserAddRows="False" ItemsSource="{Binding GridDt}">
+                </ctrl:VicDataGrid>
+            </GroupBox>
+        </StackPanel>
         <GridSplitter Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
         <GroupBox Grid.Row="3" Grid.Column="4" Header="数据引用" Content="{Binding DataRefContent}">
         </GroupBox>
