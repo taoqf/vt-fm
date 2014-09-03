@@ -22,7 +22,10 @@ namespace DataCruisePlugin.ViewModels
     public class UCCruiseWindowViewModelNew : ModelBase
     {
         #region 独立变量
-        private DataSet ds = new DataSet();
+        /// <summary>
+        /// 路径实体集合
+        /// </summary>
+        private List<EntityDefinitionModel> dataPathEntityList;
         /// <summary>
         /// 所有实体集合
         /// </summary>
@@ -338,7 +341,17 @@ namespace DataCruisePlugin.ViewModels
             get
             {
                 return new RelayCommand(() =>
-                {   
+                {
+                    string rowKey = currentSeletecModel["_id"].ToString();
+                    foreach (DataRow dr in GridDt.Rows)
+                    {
+                        if (dr["_id"].ToString().Equals(rowKey))
+                        {
+                            dr.Delete();
+                            break;
+                        }
+                    }
+
                 });
             }
         }
@@ -358,7 +371,7 @@ namespace DataCruisePlugin.ViewModels
                         MessageOperation messageOp = new MessageOperation();
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("DataChannelId", CurrentEntity.ViewId);
-                        contentDic.Add("tablename", CurrentEntity.TableName);
+                        contentDic.Add("tablename", GetEntityRootTableName(CurrentEntity));
                         contentDic.Add("dbname", "test_cruiseDB");
                         contentDic.Add("systemid", "800");
                         contentDic.Add("configsystemid", "101");
@@ -380,7 +393,7 @@ namespace DataCruisePlugin.ViewModels
             get
             {
                 return new RelayCommand<object>((x) => {
-                    VicDataGrid grid = (VicDataGrid)x;
+                    DataGrid grid = (DataGrid)x;
                     currentSeletecModel = (DataRowView)grid.SelectedItem;
                 });
             }
@@ -565,6 +578,7 @@ namespace DataCruisePlugin.ViewModels
         //更新MasterContent
         private void RefreshMasterContent()
         {
+            DataSet ds = new DataSet();
             DataOperation dataOp = new DataOperation();
             if (string.IsNullOrEmpty(MasterEntity.HostTable))
             {
@@ -617,6 +631,7 @@ namespace DataCruisePlugin.ViewModels
         /// </summary>
         private void RefreshCurrentContent()
         {
+            DataSet ds = new DataSet();
             DataOperation dataOp = new DataOperation();
             if (string.IsNullOrEmpty(CurrentEntity.HostTable))
             {
@@ -651,11 +666,11 @@ namespace DataCruisePlugin.ViewModels
             {
                 if (MasterEntity.Id == CurrentEntity.HostTable)
                 {
-                    List<string> pathList = JsonHelper.ToObject<List<string>>(MasterEntity.DataPath);
+                    List<object> pathList = JsonHelper.ToObject<List<object>>(MasterEntity.DataPath);
                     Dictionary<string, object> pathDic = new Dictionary<string, object>();
                     pathDic.Add("key", "_id");
                     pathDic.Add("value", masterSelectedModel["_id"]);
-                    pathList.Add(JsonHelper.ToJson(pathDic));
+                    pathList.Add(pathDic);
                     pathList.Add(CurrentEntity.TableName);
                     CurrentEntity.ViewId = MasterEntity.ViewId;
                     CurrentEntity.DataPath = JsonHelper.ToJson(pathList);
@@ -858,6 +873,13 @@ namespace DataCruisePlugin.ViewModels
             }
             return structDt;
         }
+        /// <summary>
+        /// 构建DataPath
+        /// </summary>
+        /// <param name="entityModel"></param>
+        /// <param name="hostModel"></param>
+        /// <param name="drv"></param>
+        /// <returns></returns>
         private string ConstructDataPath(EntityDefinitionModel entityModel, EntityDefinitionModel hostModel, DataRowView drv)
         {
             string dataPath = string.Empty;
@@ -879,6 +901,23 @@ namespace DataCruisePlugin.ViewModels
             }
             return dataPath;
         }
+        /// <summary>
+        /// 获取实体的RootTable
+        /// </summary>
+        /// <param name="entityModel"></param>
+        /// <returns></returns>
+        private string GetEntityRootTableName(EntityDefinitionModel entityModel)
+        {
+            if (string.IsNullOrEmpty(entityModel.HostTable))
+            {
+                return entityModel.TableName;
+            }
+            else
+            {
+                entityModel = allEntityModels.FirstOrDefault(it => it.Id == entityModel.HostTable);
+                return GetEntityRootTableName(entityModel);
+            }
+        }
         #endregion
         #region 附加事件
         /// <summary>
@@ -890,6 +929,7 @@ namespace DataCruisePlugin.ViewModels
         {
             try
             {
+                dataPathEntityList = new List<EntityDefinitionModel>();
                 DataRefContent = null;
                 CurrentContent = null;
                 VicButtonNormal vicBtnEnter = (VicButtonNormal)sender;
@@ -899,6 +939,7 @@ namespace DataCruisePlugin.ViewModels
                 RefreshMasterContent();
                 CurrentEntity = MasterEntity.Copy();
                 RefreshCurrentContent();
+                dataPathEntityList.Add(MasterEntity);
             }
             catch (Exception ex)
             {
@@ -921,12 +962,13 @@ namespace DataCruisePlugin.ViewModels
                 {
                     MasterEntity = CurrentEntity.Copy();
                     CurrentEntity = vicBtnEntity.Copy();
+                    dataPathEntityList.Add(MasterEntity);
                     RefreshMasterContent();
                 }
                 else if (CurrentEntity.HostTable.Equals(vicBtnEntity.Id))
                 {
-                    CurrentEntity = MasterEntity.Copy();
-                    MasterEntity = vicBtnEntity.Copy();
+                    CurrentEntity = dataPathEntityList[dataPathEntityList.Count - 1].Copy();
+                    MasterEntity = dataPathEntityList[dataPathEntityList.Count - 2].Copy();
                     RefreshMasterContent();
                 }
                 else

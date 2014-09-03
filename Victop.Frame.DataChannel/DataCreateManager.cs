@@ -881,13 +881,21 @@ namespace Victop.Frame.DataChannel
                 DataChannelManager dataManager = new DataChannelManager();
                 Hashtable hashData = dataManager.GetData(channelId);
                 ChannelData channelData = hashData["Data"] as ChannelData;
-                DataSet requestDs = channelData.DataInfo;
-                if (requestDs != null)
+                if (channelData.DataForm == DataFormEnum.DATASET)
                 {
-                    requestDs.AcceptChanges();
+                    DataSet requestDs = channelData.DataInfo;
+                    if (requestDs != null)
+                    {
+                        requestDs.AcceptChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                else
+                {
+                    channelData.CrudJSONData = string.Empty;
                     return true;
                 }
-                return false;
             }
             catch (Exception ex)
             {

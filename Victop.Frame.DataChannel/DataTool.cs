@@ -349,7 +349,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="saveData"></param>
         /// <param name="rowState"></param>
         /// <returns></returns>
-        public static bool SaveCurdDataByPath(string viewId, List<object> dataPath, Dictionary<string,object> saveData, OpreateStateEnum rowState)
+        public static bool SaveCurdDataByPath(string viewId, List<object> dataPath, Dictionary<string, object> saveData, OpreateStateEnum rowState)
         {
             try
             {
@@ -375,7 +375,20 @@ namespace Victop.Frame.DataChannel
                         else
                         {
                             addCurdList = JsonHelper.ToObject<List<object>>(addCurdJson);
-                            addCurdList.Add(curdDic);
+                            bool addFalg = true;
+                            foreach (var item in addCurdList)
+                            {
+                                Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(item.ToString());
+                                if (itemDic["flag"].ToString().Equals(curdDic["flag"].ToString()) && itemDic["path"].ToString().Equals(curdDic["path"].ToString()) && itemDic["rowdata"].ToString().Equals(curdDic["rowdata"].ToString()))
+                                {
+                                    addFalg = false;
+                                    break;
+                                }
+                            }
+                            if (addFalg)
+                            {
+                                addCurdList.Add(curdDic);
+                            }
                         }
                         dataOp.SaveCurdJSONData(viewId, JsonHelper.ToJson(addCurdList));
 
@@ -425,7 +438,7 @@ namespace Victop.Frame.DataChannel
                         }
                         foreach (var item in delCurdList)
                         {
-                            Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(item.ToString());
+                            Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(item));
                             if (itemDic["flag"].ToString().Equals("4") && itemDic["path"].ToString().Equals(dataPath))
                             {
                                 string delKey = JsonHelper.ReadJsonString(itemDic["rowdata"].ToString(), "_id");
@@ -460,7 +473,7 @@ namespace Victop.Frame.DataChannel
             }
             catch (Exception ex)
             {
-                throw;
+                LoggerHelper.InfoFormat("curd保存异常:{0}", ex.Message);
             }
             return true;
         }
@@ -472,7 +485,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="saveData"></param>
         /// <param name="rowState"></param>
         /// <returns></returns>
-        public static bool SaveDataByPath(string viewId, List<object> dataPath, Dictionary<string,object> saveData, OpreateStateEnum rowState)
+        public static bool SaveDataByPath(string viewId, List<object> dataPath, Dictionary<string, object> saveData, OpreateStateEnum rowState)
         {
             try
             {
@@ -483,8 +496,6 @@ namespace Victop.Frame.DataChannel
                 List<object> pathList = dataPath;
                 if (pathList != null)
                 {
-                    Dictionary<string, object> storeValueDic = JsonHelper.ToObject<Dictionary<string, object>>(fullDataDic["docDataStore"].ToString());
-                    DataList.Add(storeValueDic);
                     for (int i = 0; i < pathList.Count; i++)
                     {
                         if (string.IsNullOrEmpty(jsonData))
@@ -496,7 +507,18 @@ namespace Victop.Frame.DataChannel
                         {
                             if (i == pathList.Count - 1)
                             {
-                                jsonData = JsonHelper.ReadJsonString(jsonData, pathList[i].ToString());
+                                Dictionary<string, object> frontJsonDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
+                                if (frontJsonDic.ContainsKey(pathList[i].ToString()))
+                                {
+                                    jsonData = frontJsonDic[pathList[i].ToString()].ToString();
+                                }
+                                else
+                                {
+                                    Dictionary<string, object> dic = new Dictionary<string, object>();
+                                    dic.Add("dataArray", new List<object>());
+                                    frontJsonDic.Add(pathList[i].ToString(), dic);
+                                    jsonData = JsonHelper.ToJson(frontJsonDic[pathList[i].ToString()]);
+                                }
                                 Dictionary<string, object> arrayDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
                                 List<object> arrayList = JsonHelper.ToObject<List<object>>(arrayDic["dataArray"].ToString());
                                 switch (rowState)
@@ -524,10 +546,12 @@ namespace Victop.Frame.DataChannel
                                         break;
                                 }
                                 arrayDic["dataArray"] = arrayList;
-                                DataList[DataList.Count - 1][pathList[i].ToString()] = arrayDic;
+                                frontJsonDic[pathList[i].ToString()] = arrayDic;
+                                DataList.Add(frontJsonDic);
                             }
                             else
                             {
+                                DataList.Add(JsonHelper.ToObject<Dictionary<string, object>>(jsonData));
                                 jsonData = JsonHelper.ReadJsonString(jsonData, pathList[i].ToString());
                             }
                         }
@@ -547,7 +571,7 @@ namespace Victop.Frame.DataChannel
                                         case OpreateStateEnum.Added:
                                             break;
                                         case OpreateStateEnum.Modified:
-                                            if (itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(pathList[i].ToString(), "value")))
+                                            if (itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i]), "value")))
                                             {
                                                 Dictionary<string, object> saveDic = saveData;
                                                 foreach (string savekey in saveDic.Keys)
@@ -595,22 +619,29 @@ namespace Victop.Frame.DataChannel
                     //保存原始数据
                     for (int i = DataList.Count - 1; i > 0; i--)
                     {
-                        if (i % 2 == 0)
+                        if (i % 2 == 1)
                         {
-                            List<object> tempList = JsonHelper.ToObject<List<object>>(DataList[i - 1]["dataArray"].ToString());
-                            for (int j = 0; j < tempList.Count; j++)
+                            if (i - 1 == 0)
                             {
-                                Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(tempList[j].ToString());
-                                if (itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(pathList[i - 1].ToString(), "value")))
-                                {
-                                    tempList[j] = DataList[i];
-                                }
+                                DataList[i - 1][pathList[i - 1].ToString()] = DataList[i];
                             }
-                            DataList[i - 1]["dataArray"] = tempList;
+                            else
+                            {
+                                List<object> tempList = JsonHelper.ToObject<List<object>>(DataList[i - 1]["dataArray"].ToString());
+                                for (int j = 0; j < tempList.Count; j++)
+                                {
+                                    Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(tempList[j].ToString());
+                                    if (itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(pathList[i - 2].ToString(), "value")))
+                                    {
+                                        tempList[j] = DataList[i];
+                                        break;
+                                    }
+                                }
+                                DataList[i - 1]["dataArray"] = tempList;
+                            }
                         }
                         else
                         {
-                            Dictionary<string, object> pathDic = JsonHelper.ToObject<Dictionary<string, object>>(pathList[i].ToString());
                             if (i == 1)
                             {
                                 Dictionary<string, object> fullDic = new Dictionary<string, object>();
@@ -619,27 +650,51 @@ namespace Victop.Frame.DataChannel
                             }
                             else
                             {
-                                List<object> tempList = JsonHelper.ToObject<List<object>>(DataList[i - 1]["dataArray"].ToString());
-                                for (int j = 0; j < tempList.Count; j++)
+                                Dictionary<string, object> dataDic = new Dictionary<string, object>();
+                                List<object> tempList = new List<object>();
+                                if (DataList[i - 1].ContainsKey("dataArray"))
                                 {
-                                    Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(tempList[j].ToString());
-                                    if (itemDic.ContainsKey(pathList[i - 1].ToString()) && itemDic[pathList[i - 1].ToString()] != null)
+                                    if (i - 1 == 1)
                                     {
-
-                                        Dictionary<string, object> currentPathDic = JsonHelper.ToObject<Dictionary<string, object>>(itemDic[pathList[i - 1].ToString()].ToString());
-                                        if (itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(pathList[i - 2].ToString(), "value")))
+                                        DataList[i - 1]["dataArray"] = DataList[i]["dataArray"];
+                                    }
+                                    else
+                                    {
+                                        dataDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(DataList[i - 1]));
+                                        tempList = JsonHelper.ToObject<List<object>>(dataDic["dataArray"].ToString());
+                                        for (int j = 0; j < tempList.Count; j++)
                                         {
-                                            currentPathDic["dataArray"] = DataList[i];
-                                            itemDic[pathList[i - 1].ToString()] = currentPathDic;
-                                            DataList[i - 1] = itemDic;
+                                            Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(tempList[j].ToString());
+                                            if (itemDic.ContainsKey(JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i - 1]), "key")) && itemDic[JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i - 1]), "key")].ToString().Equals(JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i - 1]), "value")))
+                                            {
+                                                dataDic = DataList[i];
+                                                break;
+                                            }
                                         }
+                                        DataList[i - 1] = dataDic;
                                     }
                                 }
+                                else
+                                {
+                                    dataDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(DataList[i - 1][pathList[i - 2].ToString()]));
+                                    tempList = JsonHelper.ToObject<List<object>>(dataDic["dataArray"].ToString());
+                                    for (int j = 0; j < tempList.Count; j++)
+                                    {
+                                        Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(tempList[j].ToString());
+                                        if (itemDic.ContainsKey(JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i - 1]), "key")) && itemDic[JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i - 1]), "key")].ToString().Equals(JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i - 1]), "value")))
+                                        {
+                                            dataDic = DataList[i];
+                                            break;
+                                        }
+                                    }
+                                    DataList[i - 1][pathList[i - 2].ToString()] = dataDic;
+                                }
+
                             }
                         }
                     }
                     Dictionary<string, object> tempDic = new Dictionary<string, object>();
-                    tempDic.Add("docDataStore", JsonHelper.ToJson(DataList[0]));
+                    tempDic.Add("docDataStore", DataList[0]);
                     jsonData = JsonHelper.ToJson(tempDic);
                 }
                 return dataOp.SaveJSONData(viewId, jsonData);

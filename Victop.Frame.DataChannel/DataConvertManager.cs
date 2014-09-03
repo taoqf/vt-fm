@@ -38,13 +38,6 @@ namespace Victop.Frame.DataChannel
         /// <returns></returns>
         public DataTable GetDataTable(string viewId, string dataPath, DataTable structDt)
         {
-            //foreach (JsonMapKey item in JsonTableMap.Keys)
-            //{
-            //    if (item.ViewId == viewId && item.DataPath == dataPath)
-            //    {
-            //        return (DataTable)JsonTableMap[item];
-            //    }
-            //}
             if (string.IsNullOrEmpty(dataPath))
                 return null;
             string jsonData = string.Empty;
@@ -86,8 +79,21 @@ namespace Victop.Frame.DataChannel
                 }
             }
             newDt.AcceptChanges();
-            JsonMapKey mapKey = new JsonMapKey() { ViewId = viewId, DataPath = dataPath };
-            JsonTableMap.Add(mapKey, newDt);
+            bool existFlag = false;
+            foreach (JsonMapKey item in JsonTableMap.Keys)
+            {
+                if (item.ViewId == viewId && item.DataPath == dataPath)
+                {
+                    JsonTableMap[item] = newDt;
+                    existFlag = true;
+                    break;
+                }
+            }
+            if (!existFlag)
+            {
+                JsonMapKey mapKey = new JsonMapKey() { ViewId = viewId, DataPath = dataPath };
+                JsonTableMap.Add(mapKey, newDt);
+            }
             return newDt;
         }
         /// <summary>
@@ -98,6 +104,7 @@ namespace Victop.Frame.DataChannel
         /// <returns></returns>
         public bool SaveDataTable(string viewId, string dataPath)
         {
+            bool editFlag = true;
             DataTable dt = new DataTable();
             foreach (JsonMapKey item in JsonTableMap.Keys)
             {
@@ -109,43 +116,54 @@ namespace Victop.Frame.DataChannel
             }
             foreach (DataRow dr in dt.Rows)
             {
-                switch (dr.RowState)
+                if (editFlag)
                 {
-                    case DataRowState.Added:
-                        Dictionary<string, object> addDic = new Dictionary<string, object>();
-                        foreach (DataColumn dc in dt.Columns)
-                        {
-                            addDic.Add(dc.ColumnName, dr[dc.ColumnName]);
-                        }
-                        DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, OpreateStateEnum.Added);
-                        break;
-                    case DataRowState.Deleted:
-                        Dictionary<string, object> delDic = new Dictionary<string, object>();
-                        delDic.Add("_id", dr["_id"]);
-                        DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), delDic, OpreateStateEnum.Deleted);
-                        break;
-                    case DataRowState.Detached:
-                        break;
-                    case DataRowState.Modified:
-                        Dictionary<string, object> modDic = new Dictionary<string, object>();
-                        foreach (DataColumn dc in dt.Columns)
-                        {
-                            modDic.Add(dc.ColumnName, dr[dc.ColumnName]);
-                        }
-                        List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
-                        Dictionary<string, object> pathDic = new Dictionary<string, object>();
-                        pathDic.Add("key", "_id");
-                        pathDic.Add("value", dr["_id"]);
-                        pathList.Add(pathDic);
-                        DataTool.SaveCurdDataByPath(viewId, pathList, modDic, OpreateStateEnum.Modified);
-                        break;
-                    case DataRowState.Unchanged:
-                        break;
-                    default:
-                        break;
+                    switch (dr.RowState)
+                    {
+                        case DataRowState.Added:
+                            Dictionary<string, object> addDic = new Dictionary<string, object>();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                addDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                            }
+                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, OpreateStateEnum.Added);
+                            break;
+                        case DataRowState.Deleted:
+                            Dictionary<string, object> delDic = new Dictionary<string, object>();
+                            delDic.Add("_id", dr["_id",DataRowVersion.Original]);
+                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), delDic, OpreateStateEnum.Deleted);
+                            break;
+                        case DataRowState.Detached:
+                            break;
+                        case DataRowState.Modified:
+                            Dictionary<string, object> modDic = new Dictionary<string, object>();
+                            foreach (DataColumn dc in dt.Columns)
+                            {
+                                modDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                            }
+                            List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
+                            Dictionary<string, object> pathDic = new Dictionary<string, object>();
+                            pathDic.Add("key", "_id");
+                            pathDic.Add("value", dr["_id"]);
+                            pathList.Add(pathDic);
+                            editFlag = DataTool.SaveCurdDataByPath(viewId, pathList, modDic, OpreateStateEnum.Modified);
+                            break;
+                        case DataRowState.Unchanged:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    break;
                 }
             }
-            return true;
+            if (editFlag)
+            {
+                dt.AcceptChanges();
+            }
+            return editFlag;
         }
     }
     internal class JsonMapKey

@@ -58,13 +58,13 @@
                 </ctrl:VicButtonNormal>
             </DockPanel>
             <GroupBox Header="{Binding CurrentHeader}" Name="gridCurrent">
-                <ctrl:VicDataGrid Name="currentGrid" AutoGenerateColumns="True" CanUserAddRows="False" ItemsSource="{Binding GridDt}">
+                <DataGrid Name="currentGrid" AutoGenerateColumns="True" CanUserAddRows="False" ItemsSource="{Binding GridDt}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <i:InvokeCommandAction Command="{Binding currentGridSelectionChangedCommand}" CommandParameter="{Binding ElementName=currentGrid}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </ctrl:VicDataGrid>
+                </DataGrid>
             </GroupBox>
         </StackPanel>
         <GridSplitter Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
