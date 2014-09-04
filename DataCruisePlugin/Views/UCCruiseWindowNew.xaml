@@ -3,15 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converter="clr-namespace:DataCruisePlugin.Conververs"
              xmlns:vm="clr-namespace:DataCruisePlugin.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" x:Name="ucMainView">
-    <Grid>
-        <Grid.DataContext>
-            <vm:UCCruiseWindowViewModelNew/>
-        </Grid.DataContext>
+    <UserControl.Resources>
+        <converter:GridColumnDisplayConverter x:Key="colConverter"/>
+        <vm:UCCruiseWindowViewModelNew x:Key="cruisviewmodel"/>
+    </UserControl.Resources>
+    <Grid DataContext="{StaticResource ResourceKey=cruisviewmodel}">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="60"/>
@@ -57,14 +59,14 @@
                     </i:Interaction.Triggers>
                 </ctrl:VicButtonNormal>
             </DockPanel>
-            <GroupBox Header="{Binding CurrentHeader}" Name="gridCurrent">
-                <ctrl:VicDataGrid Name="currentGrid" AutoGenerateColumns="True" CanUserAddRows="False" ItemsSource="{Binding GridDt}">
+            <GroupBox Header="{Binding CurrentHeader}" Name="gridCurrent" Content="{Binding CurrentContent}">
+                <!--<ctrl:VicDataGrid Name="currentGrid" AutoGenerateColumns="True" CanUserAddRows="False" ItemsSource="{Binding GridDt}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
                             <i:InvokeCommandAction Command="{Binding currentGridSelectionChangedCommand}" CommandParameter="{Binding ElementName=currentGrid}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </ctrl:VicDataGrid>
+                </ctrl:VicDataGrid>-->
             </GroupBox>
         </StackPanel>
         <GridSplitter Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
@@ -72,7 +74,7 @@
         </GroupBox>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">
-                <i:InvokeCommandAction Command="{Binding ucMainViewLoadedCommand}"/>
+                <i:InvokeCommandAction Command="{Binding ucMainViewLoadedCommand}" CommandParameter="{Binding ElementName=ucMainView}"/>
             </i:EventTrigger>
         </i:Interaction.Triggers>
     </Grid>

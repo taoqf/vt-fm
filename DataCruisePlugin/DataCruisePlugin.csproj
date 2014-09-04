@@ -94,6 +94,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conververs\GridColumnDisplayConverter.cs" />
     <Compile Include="Models\EntityDefinitionModel.cs" />
     <Compile Include="Models\EntityFieldModel.cs" />
     <Compile Include="Models\RefEntityModel.cs" />
