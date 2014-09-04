@@ -143,14 +143,24 @@ namespace DataCruisePlugin.Models
             get;
             set;
         }
+        [JsonIgnore]
+        private Dictionary<string, object> refCondtions;
         /// <summary>
-        /// 引用信息
+        /// 数据引用带入的参数
         /// </summary>
         [JsonIgnore]
-        public RefEntityModel RefInfo
+        public Dictionary<string,object> RefCondtions
         {
-            get;
-            set;
+            get
+            {
+                if (refCondtions == null)
+                    refCondtions = new Dictionary<string, object>();
+                return refCondtions;
+            }
+            set
+            {
+                refCondtions = value;
+            }
         }
 
         public object Clone()

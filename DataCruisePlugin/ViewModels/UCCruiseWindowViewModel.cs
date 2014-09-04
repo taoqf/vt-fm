@@ -331,10 +331,18 @@ namespace DataCruisePlugin.ViewModels
                     List<RefEntityModel> refList = CurrentEntity.DataRef as List<RefEntityModel>;
                     DataRow dr = GridDt.NewRow();
                     dr["_id"] = Guid.NewGuid();
-                    if (refList != null && refList.Count > 0)
+                    //if (refList != null && refList.Count > 0)
+                    //{
+                    //    RefEntityModel refModel = refList.FirstOrDefault(it => it.TableId == MasterEntity.Id);
+                    //    dr[refModel.SelfField] = masterSelectedModel[refModel.SourceField];
+                    //}
+                    foreach (RefEntityModel item in refList)
                     {
-                        RefEntityModel refModel = refList.FirstOrDefault(it => it.TableId == MasterEntity.Id);
-                        dr[refModel.SelfField] = masterSelectedModel[refModel.SourceField];
+                        if (CurrentEntity.RefCondtions.ContainsKey(item.TableId))
+                        {
+                            Dictionary<string, object> conDic = CurrentEntity.RefCondtions[item.TableId] as Dictionary<string, object>;
+                            dr[item.SelfField] = conDic[item.SelfField];
+                        }
                     }
                     GridDt.Rows.Add(dr);
                 });
@@ -418,6 +426,7 @@ namespace DataCruisePlugin.ViewModels
             if (EntranceEntityModels.Count > 0)
             {
                 VicDockPanelNormal dockPanel = new VicDockPanelNormal();
+                dockPanel.HorizontalAlignment = HorizontalAlignment.Left;
                 foreach (EntityDefinitionModel item in EntranceEntityModels)
                 {
                     VicButtonNormal vicBtnEnter = new VicButtonNormal();
@@ -441,6 +450,7 @@ namespace DataCruisePlugin.ViewModels
             if (EnableEntityModels.Count > 0)
             {
                 VicDockPanelNormal dockPanel = new VicDockPanelNormal();
+                dockPanel.HorizontalAlignment = HorizontalAlignment.Left;
                 foreach (EntityDefinitionModel item in EnableEntityModels)
                 {
                     VicButtonNormal vicBtnEnable = new VicButtonNormal();
@@ -643,26 +653,7 @@ namespace DataCruisePlugin.ViewModels
             DataOperation dataOp = new DataOperation();
             if (string.IsNullOrEmpty(CurrentEntity.HostTable))
             {
-                if (CurrentEntity.DataRef != null)
-                {
-                    List<RefEntityModel> refEntityList = CurrentEntity.DataRef as List<RefEntityModel>;
-                    if (refEntityList != null)
-                    {
-                        RefEntityModel refModel = refEntityList.FirstOrDefault(it => it.TableId == MasterEntity.Id);
-                        if (refModel != null)
-                        {
-                            List<object> conList = new List<object>();
-                            Dictionary<string, object> conDic = new Dictionary<string, object>();
-                            conDic.Add(refModel.SelfField, masterSelectedModel[refModel.SourceField]);
-                            conList.Add(conDic);
-                            CurrentEntity.ViewId = SendFindDataMessage(CurrentEntity.TableName, conList);
-                        }
-                    }
-                }
-                else
-                {
-                    CurrentEntity.ViewId = SendFindDataMessage(CurrentEntity.TableName);
-                }
+                CurrentEntity.ViewId = SendFindDataMessage(CurrentEntity.TableName, CurrentEntity.RefCondtions);
                 CurrentEntity.DataPath = ConstructDataPath(CurrentEntity, MasterEntity, masterSelectedModel);
                 DataTable dt = dataOp.GetData(CurrentEntity.ViewId, CurrentEntity.DataPath, CreateStructDataTable(CurrentEntity));
                 if (!ds.Tables.Contains(dt.TableName))
@@ -807,16 +798,21 @@ namespace DataCruisePlugin.ViewModels
         /// </summary>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        private string SendFindDataMessage(string tableName, List<object> conditons = null)
+        private string SendFindDataMessage(string tableName, Dictionary<string, object> conditons = null)
         {
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("systemid", "800");
             contentDic.Add("configsystemid", "101");
             contentDic.Add("spaceid", "tbs");
             contentDic.Add("tablename", tableName);
-            if (conditons != null)
+            if (conditons != null && conditons.Keys.Count > 0)
             {
-                contentDic.Add("tablecondition", conditons);
+                List<object> conList = new List<object>();
+                foreach (string item in conditons.Keys)
+                {
+                    conList.Add(conditons[item]);
+                }
+                contentDic.Add("tablecondition", conList);
             }
             string messageType = "MongoDataChannelService.findTableData";
             MessageOperation messageOp = new MessageOperation();
@@ -1044,7 +1040,8 @@ namespace DataCruisePlugin.ViewModels
                         int index = stockpanel.Children.IndexOf(stockitem);
                         stockpanel.Children.Remove(stockitem);
                         stockpanel.Children.Insert(index, groupBox);
-
+                        DataRefContent = stockpanel;
+                        break;
                     }
                 }
             }
@@ -1145,6 +1142,11 @@ namespace DataCruisePlugin.ViewModels
             {
                 VicButtonNormal vicBtnEnable = (VicButtonNormal)sender;
                 EntityDefinitionModel vicBtnEntity = (EntityDefinitionModel)vicBtnEnable.Tag;
+                if (vicBtnEntity.Entrance)
+                {
+                    vicBtnEnter_Click(sender, e);
+                    return;
+                }
                 if (CurrentEntity.Id.Equals(vicBtnEntity.HostTable))//内联表处理
                 {
                     MasterEntity = CurrentEntity.Copy();
@@ -1158,26 +1160,10 @@ namespace DataCruisePlugin.ViewModels
                     MasterEntity = dataPathEntityList[dataPathEntityList.Count - 2].Copy();
                     RefreshMasterContent();
                 }
-                else if (CurrentEntity.HostTable.Equals(vicBtnEntity.HostTable))//同级切换
-                {
-                    CurrentEntity = vicBtnEntity.Copy();
-                }
                 else
                 {
-                    //List<RefEntityModel> refList = MasterEntity.DataRef as List<RefEntityModel>;
-                    //if (refList.FirstOrDefault(it => it.TableId.Equals(vicBtnEntity.Id)) != null)
-                    //{
-                    //    CurrentEntity = vicBtnEntity.Copy();
-                    //}
-                    //else if (MasterEntity.DynaTab.Contains(vicBtnEntity.Id))
-                    //{
-                    //    CurrentEntity = vicBtnEntity.Copy();
-                    //}
-                    //else
-                    //{
-                    //    CurrentEntity = vicBtnEntity.Copy();
-                    //}
                     CurrentEntity = vicBtnEntity.Copy();
+                    UpdateCurrentEntityCondtions(MasterEntity,masterSelectedModel);
                 }
                 EntityModelReConsitution(CurrentEntity);
                 CreateEnableContent();
@@ -1199,8 +1185,35 @@ namespace DataCruisePlugin.ViewModels
             masterSelectedModel = (DataRowView)((VicTreeView)sender).SelectedItem;
             if (masterSelectedModel == null)
                 return;
-            if (CurrentEntity != null)
-                RefreshCurrentContent();
+            UpdateCurrentEntityCondtions(MasterEntity,masterSelectedModel);
+            RefreshCurrentContent();
+        }
+        /// <summary>
+        /// 更新当前编辑区查询条件
+        /// </summary>
+        private void UpdateCurrentEntityCondtions(EntityDefinitionModel conditionModel,DataRowView drv)
+        {
+            if (CurrentEntity.DataRef != null)
+            {
+                List<RefEntityModel> refEntityList = CurrentEntity.DataRef as List<RefEntityModel>;
+                if (refEntityList != null)
+                {
+                    RefEntityModel refModel = refEntityList.FirstOrDefault(it => it.TableId == conditionModel.Id);
+                    if (refModel != null)
+                    {
+                        Dictionary<string, object> conDic = new Dictionary<string, object>();
+                        conDic.Add(refModel.SelfField, drv[refModel.SourceField]);
+                        if (CurrentEntity.RefCondtions.ContainsKey(refModel.TableId))
+                        {
+                            CurrentEntity.RefCondtions[refModel.TableId] = conDic;
+                        }
+                        else
+                        {
+                            CurrentEntity.RefCondtions.Add(refModel.TableId, conDic);
+                        }
+                    }
+                }
+            }
         }
         // <summary>
         /// 主档列表选择项目改变事件
@@ -1212,10 +1225,8 @@ namespace DataCruisePlugin.ViewModels
             masterSelectedModel = (DataRowView)((VicDataGrid)sender).SelectedItem;
             if (masterSelectedModel == null)
                 return;
-            if (CurrentEntity != null)
-            {
-                RefreshCurrentContent();
-            }
+            UpdateCurrentEntityCondtions(MasterEntity,masterSelectedModel);
+            RefreshCurrentContent();
         }
         /// <summary>
         /// 数据引用中树节点选择改变
@@ -1227,6 +1238,9 @@ namespace DataCruisePlugin.ViewModels
             try
             {
                 UpdateDataRefChildrenTreeContent(sender);
+                VicTreeView vicTv = (VicTreeView)sender;
+                UpdateCurrentEntityCondtions(vicTv.Tag as EntityDefinitionModel,vicTv.SelectedItem as DataRowView);
+                RefreshCurrentContent();
             }
             catch (Exception ex)
             {
@@ -1240,6 +1254,9 @@ namespace DataCruisePlugin.ViewModels
             try
             {
                 UpdateDataRefChildrenGridContent(sender);
+                VicDataGrid vicTv = (VicDataGrid)sender;
+                UpdateCurrentEntityCondtions(vicTv.Tag as EntityDefinitionModel, vicTv.SelectedItem as DataRowView);
+                RefreshCurrentContent();
             }
             catch (Exception ex)
             {

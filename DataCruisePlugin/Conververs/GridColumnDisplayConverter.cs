@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 
 namespace DataCruisePlugin.Conververs
 {
-    public class GridColumnDisplayConverter:IValueConverter
+    public class GridColumnDisplayConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -21,6 +21,8 @@ namespace DataCruisePlugin.Conververs
             }
             try
             {
+                DataOperation dataOp = new DataOperation();
+                DataTable dt = new DataTable();
                 Dictionary<string, object> paramDic = parameter as Dictionary<string, object>;
                 string colName = paramDic["columnname"].ToString();
                 EntityDefinitionModel entityModel = paramDic["tag"] as EntityDefinitionModel;
@@ -32,9 +34,13 @@ namespace DataCruisePlugin.Conververs
                 {
                     if (string.IsNullOrEmpty(refEntityModel.ViewId))
                         refEntityModel.ViewId = SendFindDataMessage(refEntityModel.TableName);
+                    dt = dataOp.GetData(refEntityModel.ViewId, string.IsNullOrEmpty(refEntityModel.DataPath) ? string.Format("[\"{0}\"]", refEntityModel.TableName) : refEntityModel.DataPath, CreateStructDataTable(refEntityModel));
+
                 }
-                DataOperation dataOp = new DataOperation();
-                DataTable dt = dataOp.GetData(refEntityModel.ViewId, refEntityModel.DataPath, CreateStructDataTable(refEntityModel));
+                else
+                {
+                    dt = dataOp.GetData(GetEntityRootTableViewId(refEntityModel, allModels), refEntityModel.DataPath, CreateStructDataTable(refEntityModel));
+                }
                 DataRow[] drs = dt.Select(string.Format("{0}='{1}'", refModel.SourceField, value));
                 if (drs != null && drs.Count() > 0)
                     return drs[0][refModel.SourceText];
@@ -117,6 +123,26 @@ namespace DataCruisePlugin.Conververs
             else
             {
                 return string.Empty;
+            }
+        }
+
+        private string GetEntityRootTableViewId(EntityDefinitionModel entityModel, ObservableCollection<EntityDefinitionModel> allModels)
+        {
+            if (string.IsNullOrEmpty(entityModel.HostTable))
+            {
+                return entityModel.ViewId;
+            }
+            else
+            {
+                entityModel = allModels.FirstOrDefault(it => it.Id == entityModel.HostTable);
+                if (string.IsNullOrEmpty(entityModel.ViewId))
+                {
+                    return GetEntityRootTableViewId(entityModel, allModels);
+                }
+                else
+                {
+                    return entityModel.ViewId;
+                }
             }
         }
     }
