@@ -17,9 +17,9 @@ namespace DataCruisePlugin.Views
     /// <summary>
     /// UCCruiseWindowNew.xaml 的交互逻辑
     /// </summary>
-    public partial class UCCruiseWindowNew : UserControl
+    public partial class UCCruiseWindow : UserControl
     {
-        public UCCruiseWindowNew()
+        public UCCruiseWindow()
         {
             InitializeComponent();
         }
@@ -27,8 +27,8 @@ namespace DataCruisePlugin.Views
 
         public static Dictionary<string, object> ParamDict
         {
-            get { return UCCruiseWindowNew.paramDict; }
-            set { UCCruiseWindowNew.paramDict = value; }
+            get { return UCCruiseWindow.paramDict; }
+            set { UCCruiseWindow.paramDict = value; }
         }
     }
 }

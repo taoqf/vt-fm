@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="DataCruisePlugin.Views.UCCruiseWindowNew"
+﻿<UserControl x:Class="DataCruisePlugin.Views.UCCruiseWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,7 +11,7 @@
              d:DesignHeight="300" d:DesignWidth="300" x:Name="ucMainView">
     <UserControl.Resources>
         <converter:GridColumnDisplayConverter x:Key="colConverter"/>
-        <vm:UCCruiseWindowViewModelNew x:Key="cruisviewmodel"/>
+        <vm:UCCruiseWindowViewModel x:Key="cruisviewmodel"/>
     </UserControl.Resources>
     <Grid DataContext="{StaticResource ResourceKey=cruisviewmodel}">
         <Grid.RowDefinitions>
@@ -27,9 +27,9 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Header="入口Tab" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Content="{Binding EnterContent}">
+        <GroupBox Header="入口Tab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Content="{Binding EnterContent}">
         </GroupBox>
-        <GroupBox Header="可用Tab" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Content="{Binding EnableContent}">
+        <GroupBox Header="可用Tab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Content="{Binding EnableContent}">
         </GroupBox>
         <GridSplitter Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="2"/>
         <GroupBox Header="{Binding MasterHeader}" Name="gboxMaster" Grid.Row="3" Grid.Column="0" Content="{Binding MasterContent}">

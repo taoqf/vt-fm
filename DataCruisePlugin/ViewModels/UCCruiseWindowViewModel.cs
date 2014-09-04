@@ -20,7 +20,7 @@ using DataCruisePlugin.Conververs;
 
 namespace DataCruisePlugin.ViewModels
 {
-    public class UCCruiseWindowViewModelNew : ModelBase
+    public class UCCruiseWindowViewModel : ModelBase
     {
         #region 独立变量
         private UserControl ucMainView;

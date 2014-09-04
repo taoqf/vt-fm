@@ -4,6 +4,6 @@
         xmlns:view="clr-namespace:DataCruisePlugin.Views"
         Title="CruiseWindow" Height="300" Width="300">
     <Grid>
-        <view:UCCruiseWindowNew/>
+        <view:UCCruiseWindow/>
     </Grid>
 </Window>
