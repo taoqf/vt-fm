@@ -143,6 +143,15 @@ namespace DataCruisePlugin.Models
             get;
             set;
         }
+        /// <summary>
+        /// 引用信息
+        /// </summary>
+        [JsonIgnore]
+        public RefEntityModel RefInfo
+        {
+            get;
+            set;
+        }
 
         public object Clone()
         {

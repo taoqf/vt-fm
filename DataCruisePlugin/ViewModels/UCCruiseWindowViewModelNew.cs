@@ -27,6 +27,10 @@ namespace DataCruisePlugin.ViewModels
         /// </summary>
         private List<EntityDefinitionModel> dataPathEntityList;
         /// <summary>
+        /// 数据引用实体集合
+        /// </summary>
+        private List<EntityDefinitionModel> dataRefEntityList;
+        /// <summary>
         /// 所有实体集合
         /// </summary>
         private ObservableCollection<EntityDefinitionModel> allEntityModels;
@@ -392,7 +396,8 @@ namespace DataCruisePlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) => {
+                return new RelayCommand<object>((x) =>
+                {
                     DataGrid grid = (DataGrid)x;
                     currentSeletecModel = (DataRowView)grid.SelectedItem;
                 });
@@ -699,54 +704,58 @@ namespace DataCruisePlugin.ViewModels
                 {
                     if (item.TableId.Equals(MasterEntity.Id))
                         continue;
-                    VicGroupBoxNormal groupBox = new VicGroupBoxNormal();
                     EntityDefinitionModel entityModel = allEntityModels.FirstOrDefault(it => it.Id == item.TableId);
-                    switch (entityModel.ViewType)
+                    GetDataRefRootTable(entityModel);
+                }
+                foreach (EntityDefinitionModel item in dataRefEntityList)
+                {
+                    VicGroupBoxNormal groupBox = new VicGroupBoxNormal();
+                    switch (item.ViewType)
                     {
                         case "tree":
                             VicTreeView vicTv = new VicTreeView();
                             vicTv.Height = 200;
-                            if (string.IsNullOrEmpty(entityModel.HostTable))
+                            if (string.IsNullOrEmpty(item.HostTable))
                             {
-                                entityModel.ViewId = SendFindDataMessage(entityModel.TableName);
-                                if (!string.IsNullOrEmpty(entityModel.ViewId))
+                                item.ViewId = SendFindDataMessage(item.TableName);
+                                if (!string.IsNullOrEmpty(item.ViewId))
                                 {
-                                    DataTable dt = dataOp.GetData(entityModel.ViewId, ConstructDataPath(entityModel, null, null), CreateStructDataTable(entityModel));
+                                    DataTable dt = dataOp.GetData(item.ViewId, ConstructDataPath(item, null, null), CreateStructDataTable(item));
                                     vicTv.IDField = "_id";
-                                    vicTv.FIDField = entityModel.ParentId;
-                                    vicTv.DisplayField = item.SourceText;
+                                    vicTv.FIDField = item.ParentId;
+                                    vicTv.DisplayField = item.TreeDisPlay;
                                     vicTv.SelectedItemChanged += vicTv_SelectedItemChanged;
                                     vicTv.ItemsSource = dt.DefaultView;
                                 }
                             }
-                            entityModel.DataPath = entityModel.TableName;
-                            vicTv.Tag = entityModel;
+                            item.DataPath = string.Format("[\"{0}\"]", item.TableName);
+                            vicTv.Tag = item;
                             groupBox.Content = vicTv;
-                            groupBox.Header = entityModel.TabTitle;
                             break;
                         case "grid":
                             VicListBoxNormal viclbox = new VicListBoxNormal();
                             viclbox.Height = 200;
-                            if (string.IsNullOrEmpty(entityModel.HostTable))
+                            if (string.IsNullOrEmpty(item.HostTable))
                             {
-                                entityModel.ViewId = SendFindDataMessage(entityModel.TableName);
-                                if (!string.IsNullOrEmpty(entityModel.ViewId))
+                                item.ViewId = SendFindDataMessage(item.TableName);
+                                if (!string.IsNullOrEmpty(item.ViewId))
                                 {
-                                    DataTable dt = dataOp.GetData(entityModel.ViewId, ConstructDataPath(entityModel, null, null), CreateStructDataTable(entityModel));
-                                    viclbox.DisplayMemberPath = item.SourceText;
-                                    viclbox.SelectedValuePath = item.SourceField;
+                                    DataTable dt = dataOp.GetData(item.ViewId, ConstructDataPath(item, null, null), CreateStructDataTable(item));
+                                    viclbox.DisplayMemberPath = item.TreeDisPlay;
+                                    viclbox.SelectedValuePath = "_id";
                                     viclbox.ItemsSource = dt.DefaultView;
                                 }
                             }
-                            entityModel.DataPath = entityModel.TableName;
-                            viclbox.Tag = entityModel;
+                            item.DataPath = string.Format("[\"{0}\"]", item.TableName);
+                            viclbox.Tag = item;
                             groupBox.Content = viclbox;
-                            groupBox.Header = entityModel.TabTitle;
                             break;
                         default:
                             break;
                     }
-
+                    groupBox.Tag = item;
+                    groupBox.Header = item.TabTitle;
+                    groupBox.Uid = item.Id;
                     stackpanel.Children.Add(groupBox);
                 }
             }
@@ -918,6 +927,141 @@ namespace DataCruisePlugin.ViewModels
                 return GetEntityRootTableName(entityModel);
             }
         }
+        /// <summary>
+        /// 获取数据引用Table
+        /// </summary>
+        /// <param name="entityModel"></param>
+        private void GetDataRefRootTable(EntityDefinitionModel entityModel)
+        {
+            if (dataRefEntityList == null)
+                dataRefEntityList = new List<EntityDefinitionModel>();
+            if (string.IsNullOrEmpty(entityModel.HostTable))
+            {
+                if (dataRefEntityList.FirstOrDefault(it => it.Id == entityModel.Id) == null)
+                {
+                    dataRefEntityList.Add(entityModel);
+                }
+            }
+            else
+            {
+                EntityDefinitionModel hostModel = allEntityModels.FirstOrDefault(it => it.Id == entityModel.HostTable);
+                GetDataRefRootTable(hostModel);
+                if (dataRefEntityList.FirstOrDefault(it => it.Id == entityModel.Id) == null)
+                {
+                    dataRefEntityList.Add(entityModel);
+                }
+            }
+        }
+        /// <summary>
+        /// 更新数据引用子实体树内容
+        /// </summary>
+        /// <param name="sender"></param>
+        private void UpdateDataRefChildrenTreeContent(object sender)
+        {
+            VicTreeView hostCtrl = (VicTreeView)sender;
+            DataOperation dataOp = new DataOperation();
+            EntityDefinitionModel entityModel = hostCtrl.Tag as EntityDefinitionModel;
+            if (editFlag && currentSeletecModel != null)
+            {
+                DataRow dr = GridDt.Select(string.Format("_id='{0}'", currentSeletecModel["_id"].ToString()))[0];
+                List<RefEntityModel> refList = CurrentEntity.DataRef as List<RefEntityModel>;
+                RefEntityModel refModel = refList.FirstOrDefault(it => it.TableId == entityModel.Id);
+                if (refModel != null)
+                {
+                    dr[refModel.SelfField] = ((DataRowView)hostCtrl.SelectedItem)[refModel.SourceField];
+                }
+            }
+            List<EntityDefinitionModel> defModels = dataRefEntityList.Where(it => it.HostTable == entityModel.Id).ToList();
+            foreach (EntityDefinitionModel item in defModels)
+            {
+                VicStackPanelNormal stockpanel = (VicStackPanelNormal)DataRefContent;
+                foreach (UIElement stockitem in stockpanel.Children)
+                {
+                    if (stockitem.Uid == item.Id)
+                    {
+                        VicGroupBoxNormal groupBox = (VicGroupBoxNormal)stockitem;
+                        EntityDefinitionModel groupboxTag = (EntityDefinitionModel)groupBox.Tag;
+                        groupboxTag.ViewId = entityModel.ViewId;
+                        groupboxTag.DataPath = ConstructDataPath(groupboxTag, entityModel, (DataRowView)hostCtrl.SelectedItem);
+                        switch (groupboxTag.ViewType)
+                        {
+                            case "tree":
+                                break;
+                            case "grid":
+                                VicDataGrid vicgrid = new VicDataGrid();
+                                vicgrid.IsReadOnly = true;
+                                vicgrid.AutoGenerateColumns = false;
+                                DataTable dt = dataOp.GetData(groupboxTag.ViewId, groupboxTag.DataPath, CreateStructDataTable(groupboxTag));
+                                vicgrid.ItemsSource = dt.DefaultView;
+                                vicgrid.SelectionChanged += vicgrid_SelectionChanged;
+                                vicgrid.Tag = groupboxTag;
+                                groupBox.Content = vicgrid;
+                                break;
+                            default:
+                                break;
+                        }
+                        stockpanel.Children.Remove(stockitem);
+                        stockpanel.Children.Add(groupBox);
+
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 更新数据引用子实体列表内容
+        /// </summary>
+        /// <param name="sender"></param>
+        private void UpdateDataRefChildrenGridContent(object sender)
+        {
+            VicDataGrid hostCtrl = (VicDataGrid)sender;
+            DataOperation dataOp = new DataOperation();
+            EntityDefinitionModel entityModel = hostCtrl.Tag as EntityDefinitionModel;
+            if (editFlag && currentSeletecModel != null)
+            {
+                DataRow dr = GridDt.Select(string.Format("_id='{0}'", currentSeletecModel["_id"].ToString()))[0];
+                List<RefEntityModel> refList = CurrentEntity.DataRef as List<RefEntityModel>;
+                RefEntityModel refModel = refList.FirstOrDefault(it => it.TableId == entityModel.Id);
+                if (refModel != null)
+                {
+                    dr[refModel.SelfField] = ((DataRowView)hostCtrl.SelectedItem)[refModel.SourceField];
+                }
+            }
+            List<EntityDefinitionModel> defModels = dataRefEntityList.Where(it => it.HostTable == entityModel.Id).ToList();
+            foreach (EntityDefinitionModel item in defModels)
+            {
+                VicStackPanelNormal stockpanel = (VicStackPanelNormal)DataRefContent;
+                foreach (UIElement stockitem in stockpanel.Children)
+                {
+                    if (stockitem.Uid == item.Id)
+                    {
+                        VicGroupBoxNormal groupBox = (VicGroupBoxNormal)stockitem;
+                        EntityDefinitionModel groupboxTag = (EntityDefinitionModel)groupBox.Tag;
+                        groupboxTag.ViewId = entityModel.ViewId;
+                        groupboxTag.DataPath = ConstructDataPath(groupboxTag, entityModel, (DataRowView)hostCtrl.SelectedItem);
+                        switch (groupboxTag.ViewType)
+                        {
+                            case "tree":
+                                break;
+                            case "grid":
+                                VicDataGrid vicgrid = new VicDataGrid();
+                                vicgrid.IsReadOnly = true;
+                                vicgrid.AutoGenerateColumns = false;
+                                DataTable dt = dataOp.GetData(groupboxTag.ViewId, groupboxTag.DataPath, CreateStructDataTable(groupboxTag));
+                                vicgrid.ItemsSource = dt.DefaultView;
+                                vicgrid.Tag = groupboxTag;
+                                vicgrid.SelectionChanged += vicgrid_SelectionChanged;
+                                groupBox.Content = vicgrid;
+                                break;
+                            default:
+                                break;
+                        }
+                        stockpanel.Children.Remove(stockitem);
+                        stockpanel.Children.Add(groupBox);
+
+                    }
+                }
+            }
+        }
         #endregion
         #region 附加事件
         /// <summary>
@@ -956,6 +1100,7 @@ namespace DataCruisePlugin.ViewModels
         {
             try
             {
+                //TODO:外联处理
                 VicButtonNormal vicBtnEnable = (VicButtonNormal)sender;
                 EntityDefinitionModel vicBtnEntity = (EntityDefinitionModel)vicBtnEnable.Tag;
                 if (CurrentEntity.Id.Equals(vicBtnEntity.HostTable))
@@ -1020,14 +1165,26 @@ namespace DataCruisePlugin.ViewModels
         /// <param name="e"></param>
         void vicTv_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            VicTreeView vicTv = (VicTreeView)sender;
-            EntityDefinitionModel entityModel = vicTv.Tag as EntityDefinitionModel;
-            if (editFlag && currentSeletecModel != null)
+            try
             {
-                DataRow dr = GridDt.Select(string.Format("_id='{0}'", currentSeletecModel["_id"].ToString()))[0];
-                List<RefEntityModel> refList = CurrentEntity.DataRef as List<RefEntityModel>;
-                RefEntityModel refModel = refList.FirstOrDefault(it => it.TableId == entityModel.Id);
-                dr[refModel.SelfField] = ((DataRowView)vicTv.SelectedItem)[refModel.SourceField];
+                UpdateDataRefChildrenTreeContent(sender);
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.InfoFormat("{0}", ex.Message);
+            }
+        }
+
+
+        void vicgrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                UpdateDataRefChildrenGridContent(sender);
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.InfoFormat("{0}", ex.Message);
             }
         }
         #endregion

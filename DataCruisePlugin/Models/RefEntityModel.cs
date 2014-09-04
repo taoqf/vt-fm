@@ -9,7 +9,7 @@ namespace DataCruisePlugin.Models
     /// <summary>
     /// 引用实体定义
     /// </summary>
-    internal class RefEntityModel
+    public class RefEntityModel
     {
         /// <summary>
         /// 表标识
