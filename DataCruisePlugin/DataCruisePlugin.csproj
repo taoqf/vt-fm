@@ -112,13 +112,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ViewModels\UCCruiseWindowViewModel.cs" />
     <Compile Include="ViewModels\UCCruiseWindowViewModelNew.cs" />
     <Compile Include="Views\CruiseWindow.xaml.cs">
       <DependentUpon>CruiseWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UCCruiseWindow.xaml.cs">
-      <DependentUpon>UCCruiseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UCCruiseWindowNew.xaml.cs">
       <DependentUpon>UCCruiseWindowNew.xaml</DependentUpon>
@@ -149,10 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\CruiseWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UCCruiseWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

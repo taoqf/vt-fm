@@ -92,7 +92,6 @@ namespace DataCruisePlugin
             }
             set
             {
-                UCCruiseWindow.ParamDict = value;
                 UCCruiseWindowNew.ParamDict = value;
             }
         }
