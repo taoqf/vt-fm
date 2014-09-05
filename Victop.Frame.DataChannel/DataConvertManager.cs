@@ -60,12 +60,15 @@ namespace Victop.Frame.DataChannel
                 {
                     jsonData = jsonDic["dataArray"].ToString();
                     List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
-                    foreach (string item in arrayList[0].Keys)
+                    if (structDt == null)
                     {
-                        if (!newDt.Columns.Contains(item))
+                        foreach (string item in arrayList[0].Keys)
                         {
-                            DataColumn dc = new DataColumn(item);
-                            newDt.Columns.Add(dc);
+                            if (!newDt.Columns.Contains(item))
+                            {
+                                DataColumn dc = new DataColumn(item);
+                                newDt.Columns.Add(dc);
+                            }
                         }
                     }
                     foreach (Dictionary<string, object> item in arrayList)

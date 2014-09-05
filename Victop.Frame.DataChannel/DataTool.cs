@@ -411,7 +411,7 @@ namespace Victop.Frame.DataChannel
                         {
                             string tt = JsonHelper.ToJson(item);
                             Dictionary<string, object> modDic = JsonHelper.ToObject<Dictionary<string, object>>(tt);
-                            if (modDic["path"].ToString().Equals(dataPath))
+                            if (JsonHelper.ToJson(modDic["path"]) == JsonHelper.ToJson(dataPath))
                             {
                                 modDic["rowdata"] = saveData;
                                 modFlag = false;

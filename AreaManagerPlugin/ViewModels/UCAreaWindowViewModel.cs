@@ -376,6 +376,7 @@ namespace AreaManagerPlugin.ViewModels
         #region JSON操作命令
 
         string viewId = string.Empty;
+        string dataPath = null;
         /// <summary>
         /// 检索
         /// </summary>
@@ -396,12 +397,9 @@ namespace AreaManagerPlugin.ViewModels
                     if (returnDic != null)
                     {
                         viewId = returnDic["DataChannelId"].ToString();
+                        dataPath = "[\"busi_point\"]";
                         DataOperation dataOp = new DataOperation();
-                        DataTable dt = dataOp.GetData(viewId, "[\"busi_point\"]", null);
-                        //string dataArray = JsonHelper.ReadJsonString(temp, "dataArray");
-                        //List<object> strList = JsonHelper.ToObject<List<object>>(dataArray);
-
-                        //DataTable dt = new DataTable();
+                        JsonDataTable = dataOp.GetData(viewId, dataPath, null);
                     }
                 });
             }
@@ -415,14 +413,25 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    JSONDataOperation jsonOp = new JSONDataOperation();
-                    Dictionary<string, object> newDic = new Dictionary<string, object>();
-                    newDic.Add("_id", "A0002");
-                    newDic.Add("name", "法国");
-                    newDic.Add("englishName", "France");
-                    newDic.Add("region", null);
-                    newDic.Add("order", null);
-                    bool result = jsonOp.AddData(viewId, "[\"area\"]", JsonHelper.ToJson(newDic));
+                    DataOperation dataOp = new DataOperation();
+                    bool result = dataOp.SaveData(viewId, dataPath);
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("DataChannelId", viewId);
+                    contentDic.Add("modelid", "victop_core_busi_point_0001");
+                    contentDic.Add("systemid", "100");
+                    contentDic.Add("configsystemid", "101");
+                    contentDic.Add("spaceid", "victop_core");
+                    Dictionary<string, object> resultDic = messageOp.SendMessage("MongoDataChannelService.saveBusiData", contentDic, "JSON");
+                    string temp1 = resultDic["ReplyMode"].ToString();
+                    //JSONDataOperation jsonOp = new JSONDataOperation();
+                    //Dictionary<string, object> newDic = new Dictionary<string, object>();
+                    //newDic.Add("_id", "A0002");
+                    //newDic.Add("name", "法国");
+                    //newDic.Add("englishName", "France");
+                    //newDic.Add("region", null);
+                    //newDic.Add("order", null);
+                    //bool result = jsonOp.AddData(viewId, "[\"area\"]", JsonHelper.ToJson(newDic));
                 });
             }
         }

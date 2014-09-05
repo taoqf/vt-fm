@@ -115,7 +115,7 @@
                         <RowDefinition Height="25"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <DockPanel Grid.Row="0">
+                    <DockPanel Grid.Row="0" HorizontalAlignment="Left">
                         <Button Width="100" Height="25" Name="btnSearchJson" Content="JSON检索">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
