@@ -386,12 +386,12 @@ namespace DataCruisePlugin.ViewModels
                         MessageOperation messageOp = new MessageOperation();
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("DataChannelId", CurrentEntity.ViewId);
-                        contentDic.Add("tablename", GetEntityRootTableName(CurrentEntity));
+                        contentDic.Add("modelid", string.Format("table::{0}", GetEntityRootTableName(CurrentEntity)));
                         contentDic.Add("dbname", "test_cruiseDB");
                         contentDic.Add("systemid", "800");
                         contentDic.Add("configsystemid", "101");
                         contentDic.Add("spaceid", "tbs");
-                        Dictionary<string, object> resultDic = messageOp.SendMessage("MongoDataChannelService.saveTableData", contentDic, "JSON");
+                        Dictionary<string, object> resultDic = messageOp.SendMessage("MongoDataChannelService.saveBusiData", contentDic, "JSON");
                         string temp1 = resultDic["ReplyMode"].ToString();
                     }
                     string json = dataOp.GetJSONData(CurrentEntity.ViewId);
@@ -804,7 +804,7 @@ namespace DataCruisePlugin.ViewModels
             contentDic.Add("systemid", "800");
             contentDic.Add("configsystemid", "101");
             contentDic.Add("spaceid", "tbs");
-            contentDic.Add("tablename", tableName);
+            contentDic.Add("modelid", string.Format("table::{0}", tableName));
             if (conditons != null && conditons.Keys.Count > 0)
             {
                 List<object> conList = new List<object>();
@@ -814,7 +814,7 @@ namespace DataCruisePlugin.ViewModels
                 }
                 contentDic.Add("tablecondition", conList);
             }
-            string messageType = "MongoDataChannelService.findTableData";
+            string messageType = "MongoDataChannelService.findBusiData";
             MessageOperation messageOp = new MessageOperation();
             Dictionary<string, object> returnDic = messageOp.SendMessage(messageType, contentDic, "JSON");
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))

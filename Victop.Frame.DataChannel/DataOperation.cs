@@ -13,22 +13,22 @@ namespace Victop.Frame.DataChannel
     using Victop.Frame.CoreLibrary.Models;
 
     /// <summary>
-	/// 数据操作
-	/// </summary>
-	/// <remarks>数据操作类</remarks>
-	public class DataOperation
-	{
-		/// <summary>
-		/// 根据通道号获取数据集
-		/// </summary>
-		/// <param name="channelId">通道号</param>
-		public virtual DataSet GetData(string channelId)
-		{
+    /// 数据操作
+    /// </summary>
+    /// <remarks>数据操作类</remarks>
+    public class DataOperation
+    {
+        /// <summary>
+        /// 根据通道号获取数据集
+        /// </summary>
+        /// <param name="channelId">通道号</param>
+        public virtual DataSet GetData(string channelId)
+        {
             DataChannelManager dataChannelManager = new DataChannelManager();
             Hashtable hashData = dataChannelManager.GetData(channelId);
             ChannelData channelData = hashData["Data"] as ChannelData;
-            return channelData.DataInfo;  
-		}
+            return channelData.DataInfo;
+        }
         /// <summary>
         /// 获取数据集
         /// </summary>
@@ -36,7 +36,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="dataPath"></param>
         /// <param name="structDt"></param>
         /// <returns></returns>
-        public virtual DataTable GetData(string channelId, string dataPath, DataTable structDt)
+        public virtual DataTable GetData(string channelId, string dataPath, DataTable structDt = null)
         {
             DataConvertManager convertManager = new DataConvertManager();
             return convertManager.GetDataTable(channelId, dataPath, structDt);
@@ -82,7 +82,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="channelId"></param>
         /// <param name="saveData"></param>
         /// <returns></returns>
-        internal bool SaveJSONData(string channelId,string saveData)
+        internal bool SaveJSONData(string channelId, string saveData)
         {
             DataChannelManager dataChannelManager = new DataChannelManager();
             Hashtable hashData = dataChannelManager.GetData(channelId);
@@ -113,7 +113,7 @@ namespace Victop.Frame.DataChannel
         {
             List<Dictionary<string, object>> pluginList = new List<Dictionary<string, object>>();
             ActivePluginManager pluginManager = new ActivePluginManager();
-            Dictionary<string,ActivePluginInfo> pluginInfoDic = pluginManager.GetActivePlugins();
+            Dictionary<string, ActivePluginInfo> pluginInfoDic = pluginManager.GetActivePlugins();
             foreach (string item in pluginInfoDic.Keys)
             {
                 ActivePluginInfo pluginInfo = pluginInfoDic[item];

@@ -36,13 +36,21 @@ namespace Victop.Frame.DataChannel
         /// <param name="viewId"></param>
         /// <param name="dataPath"></param>
         /// <returns></returns>
-        public DataTable GetDataTable(string viewId, string dataPath, DataTable structDt)
+        public DataTable GetDataTable(string viewId, string dataPath, DataTable structDt = null)
         {
             if (string.IsNullOrEmpty(dataPath))
                 return null;
             string jsonData = string.Empty;
             List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
-            DataTable newDt = structDt.Copy();
+            DataTable newDt;
+            if (structDt == null)
+            {
+                newDt = new DataTable(pathList[pathList.Count - 1].ToString());
+            }
+            else
+            {
+                newDt = structDt.Copy();
+            }
             newDt.Clear();
             jsonData = DataTool.GetDataByPath(viewId, dataPath);
             if (!string.IsNullOrEmpty(jsonData))
@@ -52,6 +60,14 @@ namespace Victop.Frame.DataChannel
                 {
                     jsonData = jsonDic["dataArray"].ToString();
                     List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
+                    foreach (string item in arrayList[0].Keys)
+                    {
+                        if (!newDt.Columns.Contains(item))
+                        {
+                            DataColumn dc = new DataColumn(item);
+                            newDt.Columns.Add(dc);
+                        }
+                    }
                     foreach (Dictionary<string, object> item in arrayList)
                     {
                         DataRow dr = newDt.NewRow();
@@ -130,7 +146,7 @@ namespace Victop.Frame.DataChannel
                             break;
                         case DataRowState.Deleted:
                             Dictionary<string, object> delDic = new Dictionary<string, object>();
-                            delDic.Add("_id", dr["_id",DataRowVersion.Original]);
+                            delDic.Add("_id", dr["_id", DataRowVersion.Original]);
                             editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), delDic, OpreateStateEnum.Deleted);
                             break;
                         case DataRowState.Detached:

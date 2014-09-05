@@ -108,12 +108,12 @@ namespace DataCruisePlugin.Conververs
             contentDic.Add("systemid", "800");
             contentDic.Add("configsystemid", "101");
             contentDic.Add("spaceid", "tbs");
-            contentDic.Add("tablename", tableName);
+            contentDic.Add("modelid", string.Format("table::{0}",tableName));
             if (conditons != null)
             {
                 contentDic.Add("tablecondition", conditons);
             }
-            string messageType = "MongoDataChannelService.findTableData";
+            string messageType = "MongoDataChannelService.findBusiData";
             MessageOperation messageOp = new MessageOperation();
             Dictionary<string, object> returnDic = messageOp.SendMessage(messageType, contentDic, "JSON");
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))

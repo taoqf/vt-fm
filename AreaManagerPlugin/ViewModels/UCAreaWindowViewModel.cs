@@ -385,22 +385,19 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    string MessageType = "MongoDataChannelService.findTableData";
+                    string MessageType = "MongoDataChannelService.findBusiData";
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    contentDic.Add("systemid", "800");
+                    contentDic.Add("systemid", "100");
                     contentDic.Add("configsystemid", "101");
-                    contentDic.Add("spaceid", "tbs");
-                    contentDic.Add("tablename", "dept");
+                    contentDic.Add("spaceid", "victop_core");
+                    contentDic.Add("modelid", "victop_core_busi_point_0001");
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                     if (returnDic != null)
                     {
                         viewId = returnDic["DataChannelId"].ToString();
                         DataOperation dataOp = new DataOperation();
-                        DataSet ds = dataOp.GetData(viewId);
-                        JsonDataTable = ds.Tables[1];
-                        //JSONDataOperation jsonOp = new JSONDataOperation();
-                        //string temp = jsonOp.GetDataByPath(viewId, "[\"dict\"]");
+                        DataTable dt = dataOp.GetData(viewId, "[\"busi_point\"]", null);
                         //string dataArray = JsonHelper.ReadJsonString(temp, "dataArray");
                         //List<object> strList = JsonHelper.ToObject<List<object>>(dataArray);
 

@@ -104,6 +104,7 @@ namespace Victop.Frame.Connection
                         break;
                     case "MongoDataChannelService.findBusiData":
                     case "MongoDataChannelService.findTableData":
+                        dicContent = GetFindMongoTableDataMessage(dicContent);
                         replyIsToChannel = DataOperateEnum.SAVE;
                         break;
                     case "MongoDataChannelService.saveBusiData":
@@ -1485,6 +1486,26 @@ namespace Victop.Frame.Connection
                 dicContent.Remove("DataChannelId");
                 dicContent.Remove("modelType");
                 dicContent["deltaXml"] = deltaDic;
+            }
+            return dicContent;
+        }
+        /// <summary>
+        /// 查询Mongo数据
+        /// </summary>
+        /// <param name="dicContent"></param>
+        /// <returns></returns>
+        private Dictionary<string, object> GetFindMongoTableDataMessage(Dictionary<string, object> dicContent)
+        {
+            List<object> definition = new List<object>();
+            definition.Add("tables");
+            definition.Add("relation");
+            if (dicContent.ContainsKey("modeldefinition"))
+            {
+                dicContent["modeldefinition"] = definition;
+            }
+            else
+            {
+                dicContent.Add("modeldefinition", definition);
             }
             return dicContent;
         }

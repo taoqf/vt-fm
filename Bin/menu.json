@@ -58,7 +58,7 @@
 						}, {
 							"title": "区域管理",
 							"actionType": 1,
-							"actionName": "RegionManagePlugin",
+							"actionName": "AreaManagerPlugin",
 							"showType": 1,
 							"iconUrl": "25.png",
 							"description": "阿东嘎达",
