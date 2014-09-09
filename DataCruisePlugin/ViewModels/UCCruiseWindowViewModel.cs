@@ -357,14 +357,21 @@ namespace DataCruisePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    string rowKey = currentSeletecModel["_id"].ToString();
-                    foreach (DataRow dr in GridDt.Rows)
+                    try
                     {
-                        if (dr["_id"].ToString().Equals(rowKey))
+                        string rowKey = currentSeletecModel["_id"].ToString();
+                        foreach (DataRow dr in GridDt.Rows)
                         {
-                            dr.Delete();
-                            break;
+                            if (dr["_id"].ToString().Equals(rowKey))
+                            {
+                                dr.Delete();
+                                break;
+                            }
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        string temp = ex.Message;
                     }
 
                 });
@@ -681,9 +688,9 @@ namespace DataCruisePlugin.ViewModels
                 }
             }
             GridDt = ds.Tables[CurrentEntity.TableName];
-            DataGrid vicgrid = new DataGrid();
-            vicgrid.AutoGenerateColumns = false;
-            vicgrid.CanUserAddRows = false;
+            DataGrid currentgrid = new DataGrid();
+            currentgrid.AutoGenerateColumns = false;
+            currentgrid.CanUserAddRows = false;
             List<RefEntityModel> refList = new List<RefEntityModel>();
             if (CurrentEntity.DataRef != null)
             {
@@ -713,14 +720,21 @@ namespace DataCruisePlugin.ViewModels
                     txtCol.IsReadOnly = true;
                 }
                 txtCol.Binding = colBinding;
-                vicgrid.Columns.Add(txtCol);
+                currentgrid.Columns.Add(txtCol);
             }
             Binding itemBinding = new Binding("GridDt");
             itemBinding.Mode = BindingMode.TwoWay;
             itemBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-            BindingOperations.SetBinding(vicgrid, DataGrid.ItemsSourceProperty, itemBinding);
-            CurrentContent = vicgrid;
+            BindingOperations.SetBinding(currentgrid, DataGrid.ItemsSourceProperty, itemBinding);
+            currentgrid.SelectionChanged += currentgrid_SelectionChanged;
+            CurrentContent = currentgrid;
             CurrentHeader = CurrentEntity.TabTitle;
+        }
+
+        void currentgrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid grid = (DataGrid)sender;
+            currentSeletecModel = (DataRowView)grid.SelectedItem;
         }
         /// <summary>
         /// 刷新数据引用区域
