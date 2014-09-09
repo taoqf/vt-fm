@@ -36,7 +36,22 @@ namespace DataCruisePlugin.ViewModels
         /// <summary>
         /// 可用Block集合
         /// </summary>
-        private ObservableCollection<BlockModel> EnableBlockModels = new ObservableCollection<BlockModel>();
+        private ObservableCollection<BlockModel> enableBlockModels;
+
+        public ObservableCollection<BlockModel> EnableBlockModels
+        {
+            get
+            {
+                if (enableBlockModels == null)
+                    enableBlockModels = new ObservableCollection<BlockModel>();
+                return enableBlockModels;
+            }
+            set
+            {
+                enableBlockModels = value;
+                RaisePropertyChanged("EnableBlockModels");
+            }
+        }
 
         /// <summary>
         /// 所有实体集合
@@ -56,6 +71,20 @@ namespace DataCruisePlugin.ViewModels
         private bool editFlag = true;
         #endregion
         #region 实体定义
+
+
+        private BlockModel currentBlock;
+
+        public BlockModel CurrentBlock
+        {
+            get { return currentBlock; }
+            set
+            {
+                currentBlock = value;
+                RaisePropertyChanged("CurrentBlock");
+            }
+        }
+
         private BlockModel masterBlock;
         /// <summary>
         /// 
@@ -487,13 +516,15 @@ namespace DataCruisePlugin.ViewModels
                         if (block.ParentBlock == null)
                         {
                             EntityDefinitionModel hostModel = allEntityModels.FirstOrDefault(it => it.Id == item.HostTable);
-                            block.ParentBlock = new BlockModel()
+                            BlockModel hostBlock = new BlockModel()
                             {
                                 ViewId = hostModel.ViewId,
                                 TableName = hostModel.TableName,
                                 TableId = hostModel.Id,
                                 EntityDefModel = hostModel
                             };
+                            EnableBlockModels.Add(hostBlock);
+                            block.ParentBlock = hostBlock;
                         }
                     }
                     EnableBlockModels.Add(block);
@@ -640,120 +671,12 @@ namespace DataCruisePlugin.ViewModels
         //更新MasterContent
         private void RefreshMasterContent()
         {
-            #region Block操作
             MasterBlock = EnableBlockModels.FirstOrDefault(it => it.TableId == MasterEntity.Id);
-            MasterBlock.RebuildDataPath(EnableBlockModels);
-            #endregion
-            #region OldCode
-            //DataSet ds = new DataSet();
-            //DataOperation dataOp = new DataOperation();
-            //if (string.IsNullOrEmpty(MasterEntity.HostTable))
-            //{
-            //    MasterEntity.ViewId = SendFindDataMessage(MasterEntity.TableName);
-            //    if (!string.IsNullOrEmpty(MasterEntity.ViewId))
-            //    {
-            //        MasterEntity.DataPath = ConstructDataPath(MasterEntity, MasterEntity, masterSelectedModel);
-            //        DataTable dt = dataOp.GetData(MasterEntity.ViewId, MasterEntity.DataPath, CreateStructDataTable(MasterEntity));
-            //        if (!ds.Tables.Contains(dt.TableName))
-            //        {
-            //            ds.Tables.Add(dt);
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    DataTable dt = dataOp.GetData(MasterEntity.ViewId, MasterEntity.DataPath, CreateStructDataTable(MasterEntity));
-            //    if (!ds.Tables.Contains(dt.TableName))
-            //    {
-            //        ds.Tables.Add(dt);
-            //    }
-            //}
-            //switch (MasterEntity.ViewType)
-            //{
-            //    case "tree":
-            //        VicTreeView tv = new VicTreeView();
-            //        tv.IDField = "_id";
-            //        tv.FIDField = MasterEntity.ParentId;
-            //        tv.DisplayField = MasterEntity.TreeDisPlay;
-            //        tv.ItemsSource = ds.Tables[MasterEntity.TableName].DefaultView;
-            //        tv.SelectedItemChanged += tv_SelectedItemChanged;
-            //        MasterContent = tv;
-            //        break;
-            //    case "grid":
-            //    case "dict":
-            //        VicDataGrid masterGrid = new VicDataGrid();
-            //        masterGrid.ItemsSource = ds.Tables[MasterEntity.TableName].DefaultView;
-            //        masterGrid.AutoGenerateColumns = false;
-            //        masterGrid.CanUserAddRows = false;
-            //        masterGrid.SelectionChanged += masterGrid_SelectionChanged;
-            //        MasterContent = masterGrid;
-            //        break;
-            //    default:
-            //        break;
-            //} 
-            #endregion
-            DataGrid grid = new DataGrid();
-            grid.AutoGenerateColumns = false;
-            grid.CanUserAddRows = false;
+            MasterBlock.RebuildDataPath(EnableBlockModels, allEntityModels);
+            DataGrid mastergrid = new DataGrid();
+            mastergrid.AutoGenerateColumns = false;
+            mastergrid.CanUserAddRows = false;
             foreach (DataColumn dc in MasterBlock.BlockDt.Columns)
-            {
-                DataGridTextColumn txtCol = new DataGridTextColumn();
-                txtCol.Header = dc.Caption;
-                Binding colBinding = new Binding(dc.ColumnName);
-            }
-            Binding masterBinding = new Binding("MasterBlock.BlockDt");
-            masterBinding.Mode = BindingMode.TwoWay;
-            masterBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-            BindingOperations.SetBinding(grid, DataGrid.ItemsSourceProperty, masterBinding);
-            MasterContent = grid;
-            MasterHeader = MasterEntity.TabTitle;
-        }
-        /// <summary>
-        /// 更新CurrentContent
-        /// </summary>
-        private void RefreshCurrentContent()
-        {
-            DataSet ds = new DataSet();
-            DataOperation dataOp = new DataOperation();
-            if (string.IsNullOrEmpty(CurrentEntity.HostTable))
-            {
-                CurrentEntity.ViewId = SendFindDataMessage(CurrentEntity.TableName, CurrentEntity.RefCondtions);
-                CurrentEntity.DataPath = ConstructDataPath(CurrentEntity, MasterEntity, masterSelectedModel);
-                DataTable dt = dataOp.GetData(CurrentEntity.ViewId, CurrentEntity.DataPath, CreateStructDataTable(CurrentEntity));
-                if (!ds.Tables.Contains(dt.TableName))
-                {
-                    ds.Tables.Add(dt);
-                }
-            }
-            else
-            {
-                if (MasterEntity.Id == CurrentEntity.HostTable)
-                {
-                    List<object> pathList = JsonHelper.ToObject<List<object>>(MasterEntity.DataPath);
-                    Dictionary<string, object> pathDic = new Dictionary<string, object>();
-                    pathDic.Add("key", "_id");
-                    pathDic.Add("value", masterSelectedModel["_id"]);
-                    pathList.Add(pathDic);
-                    pathList.Add(CurrentEntity.TableName);
-                    CurrentEntity.ViewId = MasterEntity.ViewId;
-                    CurrentEntity.DataPath = JsonHelper.ToJson(pathList);
-                    DataTable dt = dataOp.GetData(CurrentEntity.ViewId, CurrentEntity.DataPath, CreateStructDataTable(CurrentEntity));
-                    if (!ds.Tables.Contains(dt.TableName))
-                    {
-                        ds.Tables.Add(dt);
-                    }
-                }
-            }
-            GridDt = ds.Tables[CurrentEntity.TableName];
-            DataGrid vicgrid = new DataGrid();
-            vicgrid.AutoGenerateColumns = false;
-            vicgrid.CanUserAddRows = false;
-            List<RefEntityModel> refList = new List<RefEntityModel>();
-            if (CurrentEntity.DataRef != null)
-            {
-                refList = CurrentEntity.DataRef as List<RefEntityModel>;
-            }
-            foreach (DataColumn dc in GridDt.Columns)
             {
                 DataGridTextColumn txtCol = new DataGridTextColumn();
                 txtCol.Header = dc.Caption;
@@ -762,29 +685,65 @@ namespace DataCruisePlugin.ViewModels
                 {
                     colBinding.Mode = BindingMode.TwoWay;
                     colBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                    if (refList != null && refList.Exists(it => it.SelfField == dc.ColumnName))
-                    {
-                        colBinding.Converter = ucMainView.FindResource("colConverter") as IValueConverter;
-                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                        paramDic.Add("columnname", dc.ColumnName);
-                        paramDic.Add("tag", CurrentEntity);
-                        paramDic.Add("fullentity", allEntityModels);
-                        colBinding.ConverterParameter = paramDic;
-                    }
                 }
                 else
                 {
                     txtCol.IsReadOnly = true;
                 }
                 txtCol.Binding = colBinding;
-                vicgrid.Columns.Add(txtCol);
+                mastergrid.Columns.Add(txtCol);
             }
-            Binding itemBinding = new Binding("GridDt");
-            itemBinding.Mode = BindingMode.TwoWay;
-            itemBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-            BindingOperations.SetBinding(vicgrid, DataGrid.ItemsSourceProperty, itemBinding);
-            CurrentContent = vicgrid;
+            Binding masterBinding = new Binding("MasterBlock.BlockDt");
+            masterBinding.Mode = BindingMode.TwoWay;
+            masterBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            BindingOperations.SetBinding(mastergrid, DataGrid.ItemsSourceProperty, masterBinding);
+            mastergrid.SelectionChanged += mastergrid_SelectionChanged;
+            MasterContent = mastergrid;
+            MasterHeader = MasterEntity.TabTitle;
+        }
+        /// <summary>
+        /// 更新CurrentContent
+        /// </summary>
+        private void RefreshCurrentContent()
+        {
+            EntityModelReConsitution(CurrentEntity);
+            CurrentBlock = EnableBlockModels.FirstOrDefault(it => it.TableId == CurrentEntity.Id);
+            CurrentBlock.EntityDefModel = CurrentEntity;
+            CurrentBlock.RebuildDataPath(EnableBlockModels, allEntityModels);
+            DataGrid grid = new DataGrid();
+            grid.AutoGenerateColumns = false;
+            grid.CanUserAddRows = false;
+            foreach (DataColumn dc in CurrentBlock.BlockDt.Columns)
+            {
+                DataGridTextColumn txtCol = new DataGridTextColumn();
+                txtCol.Header = dc.Caption;
+                Binding colBinding = new Binding(dc.ColumnName);
+                if (!dc.ReadOnly)
+                {
+                    colBinding.Mode = BindingMode.TwoWay;
+                    colBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                }
+                else
+                {
+                    txtCol.IsReadOnly = true;
+                }
+                txtCol.Binding = colBinding;
+                grid.Columns.Add(txtCol);
+            }
+            Binding currentBinding = new Binding("CurrentBlock.BlockDt");
+            currentBinding.Mode = BindingMode.TwoWay;
+            currentBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            BindingOperations.SetBinding(grid, DataGrid.ItemsSourceProperty, currentBinding);
+            CurrentContent = grid;
             CurrentHeader = CurrentEntity.TabTitle;
+            try
+            {
+                RefreshDataRefContent();
+            }
+            catch (Exception ex)
+            {
+                string temp = ex.Message;
+            }
         }
         /// <summary>
         /// 刷新数据引用区域
@@ -801,62 +760,39 @@ namespace DataCruisePlugin.ViewModels
                 {
                     if (item.TableId.Equals(MasterEntity.Id))
                         continue;
-                    EntityDefinitionModel entityModel = allEntityModels.FirstOrDefault(it => it.Id == item.TableId);
-                    GetDataRefRootTable(entityModel);
-                }
-                foreach (EntityDefinitionModel item in dataRefEntityList)
-                {
-                    if (item.Id == MasterEntity.Id)
-                    {
+                    GroupBox gbox = new GroupBox();
+                    BlockModel refBlock = EnableBlockModels.FirstOrDefault(it => it.TableId == item.TableId);
+                    if (refBlock == null)
                         continue;
-                    }
-                    VicGroupBoxNormal groupBox = new VicGroupBoxNormal();
-                    switch (item.ViewType)
+                    refBlock.EntityDefModel = allEntityModels.FirstOrDefault(it => it.Id == item.TableId);
+                    refBlock.RebuildDataPath(EnableBlockModels, allEntityModels);
+                    int i = EnableBlockModels.IndexOf(refBlock);
+                    DataGrid grid = new DataGrid();
+                    grid.AutoGenerateColumns = false;
+                    grid.CanUserAddRows = false;
+                    foreach (DataColumn dc in refBlock.BlockDt.Columns)
                     {
-                        case "tree":
-                            VicTreeView vicTv = new VicTreeView();
-                            vicTv.Height = 200;
-                            if (string.IsNullOrEmpty(item.HostTable))
-                            {
-                                item.ViewId = SendFindDataMessage(item.TableName);
-                                if (!string.IsNullOrEmpty(item.ViewId))
-                                {
-                                    DataTable dt = dataOp.GetData(item.ViewId, ConstructDataPath(item, null, null), CreateStructDataTable(item));
-                                    vicTv.IDField = "_id";
-                                    vicTv.FIDField = item.ParentId;
-                                    vicTv.DisplayField = item.TreeDisPlay;
-                                    vicTv.SelectedItemChanged += vicTv_SelectedItemChanged;
-                                    vicTv.ItemsSource = dt.DefaultView;
-                                }
-                            }
-                            item.DataPath = string.Format("[\"{0}\"]", item.TableName);
-                            vicTv.Tag = item;
-                            groupBox.Content = vicTv;
-                            break;
-                        case "grid":
-                            VicDataGrid vicgrid = new VicDataGrid();
-                            vicgrid.IsReadOnly = true;
-                            vicgrid.AutoGenerateColumns = false;
-                            if (string.IsNullOrEmpty(item.HostTable))
-                            {
-                                item.ViewId = SendFindDataMessage(item.TableName);
-                                if (!string.IsNullOrEmpty(item.ViewId))
-                                {
-                                    DataTable dt = dataOp.GetData(item.ViewId, ConstructDataPath(item, null, null), CreateStructDataTable(item));
-                                    vicgrid.ItemsSource = dt.DefaultView;
-                                }
-                            }
-                            item.DataPath = string.Format("[\"{0}\"]", item.TableName);
-                            vicgrid.Tag = item;
-                            groupBox.Content = vicgrid;
-                            break;
-                        default:
-                            break;
+                        DataGridTextColumn txtCol = new DataGridTextColumn();
+                        txtCol.Header = dc.Caption;
+                        Binding colBinding = new Binding(dc.ColumnName);
+                        if (!dc.ReadOnly)
+                        {
+                            colBinding.Mode = BindingMode.TwoWay;
+                            colBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                        }
+                        else
+                        {
+                            txtCol.IsReadOnly = true;
+                        }
+                        txtCol.Binding = colBinding;
+                        grid.Columns.Add(txtCol);
                     }
-                    groupBox.Tag = item;
-                    groupBox.Header = item.TabTitle;
-                    groupBox.Uid = item.Id;
-                    stackpanel.Children.Add(groupBox);
+                    Binding currentBinding = new Binding("CurrentBlock[" + i + "].BlockDt");
+                    currentBinding.Mode = BindingMode.TwoWay;
+                    currentBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                    BindingOperations.SetBinding(grid, DataGrid.ItemsSourceProperty, currentBinding);
+                    gbox.Header = refBlock.TableName;
+                    stackpanel.Children.Add(gbox);
                 }
             }
             DataRefContent = stackpanel;
@@ -1192,6 +1128,7 @@ namespace DataCruisePlugin.ViewModels
                 CurrentContent = null;
                 VicButtonNormal vicBtnEnter = (VicButtonNormal)sender;
                 MasterEntity = (EntityDefinitionModel)vicBtnEnter.Tag;
+                CurrentEntity = MasterEntity.Copy();
                 EntityModelReConsitution(MasterEntity);
                 CreateEnableContent();
                 RefreshMasterContent();
@@ -1239,7 +1176,6 @@ namespace DataCruisePlugin.ViewModels
                     CurrentEntity = vicBtnEntity.Copy();
                     UpdateCurrentEntityCondtions(MasterEntity, masterSelectedModel);
                 }
-                EntityModelReConsitution(CurrentEntity);
                 CreateEnableContent();
                 RefreshCurrentContent();
                 RefreshDataRefContent();
@@ -1294,9 +1230,9 @@ namespace DataCruisePlugin.ViewModels
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void masterGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void mastergrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            masterSelectedModel = (DataRowView)((VicDataGrid)sender).SelectedItem;
+            masterSelectedModel = (DataRowView)((DataGrid)sender).SelectedItem;
             if (masterSelectedModel == null)
                 return;
             UpdateCurrentEntityCondtions(MasterEntity, masterSelectedModel);
