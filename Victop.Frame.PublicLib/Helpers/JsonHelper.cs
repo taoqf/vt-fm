@@ -34,6 +34,24 @@ namespace Victop.Frame.PublicLib.Helpers
             }
 
         }
+        /// <summary>
+        /// Json反序列化
+        /// </summary>
+        /// <param name="jsonStr"></param>
+        /// <returns></returns>
+        public static dynamic DeserializeObject(string jsonStr)
+        {
+            try
+            {
+                dynamic obj = JsonConvert.DeserializeObject(jsonStr);
+                return obj;
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
         //查找特定的值
         public static string ReadJsonString(string jsonStr, string key)
         {

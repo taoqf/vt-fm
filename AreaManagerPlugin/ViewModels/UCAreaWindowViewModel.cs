@@ -399,7 +399,12 @@ namespace AreaManagerPlugin.ViewModels
                         viewId = returnDic["DataChannelId"].ToString();
                         dataPath = "[\"busi_point\"]";
                         DataOperation dataOp = new DataOperation();
-                        JsonDataTable = dataOp.GetData(viewId, dataPath, null);
+                        //JsonDataTable = dataOp.GetData(viewId, dataPath, null);
+                        string temp = dataOp.GetJSONData(viewId);
+                        dynamic dyc = JsonHelper.DeserializeObject(temp);
+                        dyc.docDataStore.busi_point.summary.totalRow = 3;
+                        string temp1 = JsonHelper.ToJson(dyc);
+                        string temp2 = dataOp.GetJSONData(viewId);
                     }
                 });
             }

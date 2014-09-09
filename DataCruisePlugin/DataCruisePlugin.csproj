@@ -95,8 +95,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Conververs\GridColumnDisplayConverter.cs" />
+    <Compile Include="Models\BlockModel.cs" />
     <Compile Include="Models\EntityDefinitionModel.cs" />
     <Compile Include="Models\EntityFieldModel.cs" />
+    <Compile Include="Models\PartModel.cs" />
     <Compile Include="Models\RefEntityModel.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
