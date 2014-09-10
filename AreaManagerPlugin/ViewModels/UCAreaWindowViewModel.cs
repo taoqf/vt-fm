@@ -392,19 +392,19 @@ namespace AreaManagerPlugin.ViewModels
                     contentDic.Add("systemid", "100");
                     contentDic.Add("configsystemid", "101");
                     contentDic.Add("spaceid", "victop_core");
-                    contentDic.Add("modelid", "victop_core_busi_point_0001");
+                    contentDic.Add("modelid", "table::industry");
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                     if (returnDic != null)
                     {
                         viewId = returnDic["DataChannelId"].ToString();
-                        dataPath = "[\"busi_point\"]";
+                        dataPath = "[\"industry\"]";
                         DataOperation dataOp = new DataOperation();
-                        //JsonDataTable = dataOp.GetData(viewId, dataPath, null);
-                        string temp = dataOp.GetJSONData(viewId);
-                        dynamic dyc = JsonHelper.DeserializeObject(temp);
-                        dyc.docDataStore.busi_point.summary.totalRow = 3;
-                        string temp1 = JsonHelper.ToJson(dyc);
-                        string temp2 = dataOp.GetJSONData(viewId);
+                        JsonDataTable = dataOp.GetData(viewId, dataPath, null);
+                        //string temp = dataOp.GetJSONData(viewId);
+                        //dynamic dyc = JsonHelper.DeserializeObject(temp);
+                        //dyc.docDataStore.busi_point.summary.totalRow = 3;
+                        //string temp1 = JsonHelper.ToJson(dyc);
+                        //string temp2 = dataOp.GetJSONData(viewId);
                     }
                 });
             }
@@ -423,7 +423,7 @@ namespace AreaManagerPlugin.ViewModels
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                     contentDic.Add("DataChannelId", viewId);
-                    contentDic.Add("modelid", "victop_core_busi_point_0001");
+                    contentDic.Add("modelid", "table::industry");
                     contentDic.Add("systemid", "100");
                     contentDic.Add("configsystemid", "101");
                     contentDic.Add("spaceid", "victop_core");

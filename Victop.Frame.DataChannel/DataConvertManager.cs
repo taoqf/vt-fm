@@ -60,28 +60,31 @@ namespace Victop.Frame.DataChannel
                 {
                     jsonData = jsonDic["dataArray"].ToString();
                     List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
-                    if (structDt == null)
+                    if (arrayList != null&&arrayList.Count>0)
                     {
-                        foreach (string item in arrayList[0].Keys)
+                        if (structDt == null)
                         {
-                            if (!newDt.Columns.Contains(item))
+                            foreach (string item in arrayList[0].Keys)
                             {
-                                DataColumn dc = new DataColumn(item);
-                                newDt.Columns.Add(dc);
+                                if (!newDt.Columns.Contains(item))
+                                {
+                                    DataColumn dc = new DataColumn(item);
+                                    newDt.Columns.Add(dc);
+                                }
                             }
                         }
-                    }
-                    foreach (Dictionary<string, object> item in arrayList)
-                    {
-                        DataRow dr = newDt.NewRow();
-                        foreach (DataColumn dtCol in newDt.Columns)
+                        foreach (Dictionary<string, object> item in arrayList)
                         {
-                            if (item.ContainsKey(dtCol.ColumnName))
+                            DataRow dr = newDt.NewRow();
+                            foreach (DataColumn dtCol in newDt.Columns)
                             {
-                                dr[dtCol.ColumnName] = item[dtCol.ColumnName];
+                                if (item.ContainsKey(dtCol.ColumnName))
+                                {
+                                    dr[dtCol.ColumnName] = item[dtCol.ColumnName];
+                                }
                             }
+                            newDt.Rows.Add(dr);
                         }
-                        newDt.Rows.Add(dr);
                     }
                 }
                 else

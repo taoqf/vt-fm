@@ -92,7 +92,14 @@
     <Compile Include="Models\PluginModel.cs" />
     <Compile Include="Models\TemplateControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runtime\CompntDefinModel.cs" />
+    <Compile Include="Runtime\ComponentModel.cs" />
+    <Compile Include="Runtime\DefinParamMapModel.cs" />
+    <Compile Include="Runtime\DefinPluginsModel.cs" />
+    <Compile Include="Runtime\DefinViewsModel.cs" />
+    <Compile Include="Runtime\ViewsBlockModel.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

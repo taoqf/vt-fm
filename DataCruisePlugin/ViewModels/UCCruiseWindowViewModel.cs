@@ -405,14 +405,21 @@ namespace DataCruisePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    string rowKey = currentSeletecModel["_id"].ToString();
-                    foreach (DataRow dr in GridDt.Rows)
+                    try
                     {
-                        if (dr["_id"].ToString().Equals(rowKey))
+                        string rowKey = currentSeletecModel["_id"].ToString();
+                        foreach (DataRow dr in GridDt.Rows)
                         {
-                            dr.Delete();
-                            break;
+                            if (dr["_id"].ToString().Equals(rowKey))
+                            {
+                                dr.Delete();
+                                break;
+                            }
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        string temp = ex.Message;
                     }
 
                 });
@@ -733,10 +740,9 @@ namespace DataCruisePlugin.ViewModels
             Binding currentBinding = new Binding("CurrentBlock.BlockDt");
             currentBinding.Mode = BindingMode.TwoWay;
             currentBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-            BindingOperations.SetBinding(grid, DataGrid.ItemsSourceProperty, currentBinding);
             CurrentContent = grid;
             CurrentHeader = CurrentEntity.TabTitle;
-            try
+	    try
             {
                 RefreshDataRefContent();
             }
