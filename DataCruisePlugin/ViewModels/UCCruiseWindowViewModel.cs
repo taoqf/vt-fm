@@ -336,12 +336,15 @@ namespace DataCruisePlugin.ViewModels
                     //    RefEntityModel refModel = refList.FirstOrDefault(it => it.TableId == MasterEntity.Id);
                     //    dr[refModel.SelfField] = masterSelectedModel[refModel.SourceField];
                     //}
-                    foreach (RefEntityModel item in refList)
+                    if (refList != null)
                     {
-                        if (CurrentEntity.RefCondtions.ContainsKey(item.TableId))
+                        foreach (RefEntityModel item in refList)
                         {
-                            Dictionary<string, object> conDic = CurrentEntity.RefCondtions[item.TableId] as Dictionary<string, object>;
-                            dr[item.SelfField] = conDic[item.SelfField];
+                            if (CurrentEntity.RefCondtions.ContainsKey(item.TableId))
+                            {
+                                Dictionary<string, object> conDic = CurrentEntity.RefCondtions[item.TableId] as Dictionary<string, object>;
+                                dr[item.SelfField] = conDic[item.SelfField];
+                            }
                         }
                     }
                     GridDt.Rows.Add(dr);
