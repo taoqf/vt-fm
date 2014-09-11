@@ -11,7 +11,7 @@ using Victop.Server.Controls.Models;
 
 namespace DataCruisePlugin.Models
 {
-    public class BlockModel : ModelBase
+    public class BlockModel : ModelBase, ICloneable
     {
         /// <summary>
         /// 实体定义
@@ -207,7 +207,7 @@ namespace DataCruisePlugin.Models
         /// <summary>
         /// 重建DataPath
         /// </summary>
-        public void RebuildDataPath(ObservableCollection<BlockModel> fullBlocks,ObservableCollection<EntityDefinitionModel> fullEntityModels)
+        public void RebuildDataPath(List<BlockModel> fullBlocks, List<EntityDefinitionModel> fullEntityModels)
         {
             if (this.dataPath == null || this.dataPath.Count == 0||string.IsNullOrEmpty(fullEntityModels.First(it => it.TableName == this.TableName).HostTable))
             {
@@ -335,5 +335,17 @@ namespace DataCruisePlugin.Models
             return structDt;
         }
         #endregion
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+        /// <summary>
+        /// 实体克隆
+        /// </summary>
+        /// <returns></returns>
+        public BlockModel Copy()
+        {
+            return this.Clone() as BlockModel;
+        }
     }
 }

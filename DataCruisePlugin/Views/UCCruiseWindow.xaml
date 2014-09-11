@@ -27,12 +27,12 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Header="入口Tab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Content="{Binding EnterContent}">
+        <GroupBox Header="入口Tab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Content="{Binding EntranceContent}">
         </GroupBox>
         <GroupBox Header="可用Tab" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Content="{Binding EnableContent}">
         </GroupBox>
         <GridSplitter Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="2"/>
-        <GroupBox Header="{Binding MasterHeader}" Name="gboxMaster" Grid.Row="3" Grid.Column="0" Content="{Binding MasterContent}">
+        <GroupBox Name="gboxMaster" Grid.Row="3" Grid.Column="0" Header="{Binding MasterHeader}" Content="{Binding MasterContent}">
         </GroupBox>
         <GridSplitter Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
         <StackPanel Grid.Row="3" Grid.Column="2">
@@ -59,18 +59,11 @@
                     </i:Interaction.Triggers>
                 </ctrl:VicButtonNormal>
             </DockPanel>
-            <GroupBox Header="{Binding CurrentHeader}" Name="gridCurrent" Content="{Binding CurrentContent}">
-                <!--<ctrl:VicDataGrid Name="currentGrid" AutoGenerateColumns="True" CanUserAddRows="False" ItemsSource="{Binding GridDt}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding currentGridSelectionChangedCommand}" CommandParameter="{Binding ElementName=currentGrid}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </ctrl:VicDataGrid>-->
+            <GroupBox Header="编辑区" Name="gridCurrent">
             </GroupBox>
         </StackPanel>
         <GridSplitter Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="2"/>
-        <GroupBox Grid.Row="3" Grid.Column="4" Header="数据引用" Content="{Binding DataRefContent}">
+        <GroupBox Grid.Row="3" Grid.Column="4" Header="数据引用">
         </GroupBox>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">

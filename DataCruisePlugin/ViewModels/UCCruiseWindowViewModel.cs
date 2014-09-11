@@ -22,82 +22,34 @@ namespace DataCruisePlugin.ViewModels
 {
     public class UCCruiseWindowViewModel : ModelBase
     {
-        #region 独立变量
+        #region 私有变量定义
+        /// <summary>
+        /// 编辑tab
+        /// </summary>
+        private BlockModel currentBlock;
+
+        /// <summary>
+        /// 主窗体实例
+        /// </summary>
         private UserControl ucMainView;
         /// <summary>
-        /// 路径实体集合
+        /// 实体定义集合
         /// </summary>
-        private List<EntityDefinitionModel> dataPathEntityList;
+        private List<EntityDefinitionModel> allEntityDefList = new List<EntityDefinitionModel>();
         /// <summary>
-        /// 数据引用实体集合
+        /// 入口Block集合
         /// </summary>
-        private List<EntityDefinitionModel> dataRefEntityList = new List<EntityDefinitionModel>();
-
+        private List<BlockModel> entranceBlockList = new List<BlockModel>();
         /// <summary>
         /// 可用Block集合
         /// </summary>
-        private ObservableCollection<BlockModel> enableBlockModels;
-
-        public ObservableCollection<BlockModel> EnableBlockModels
-        {
-            get
-            {
-                if (enableBlockModels == null)
-                    enableBlockModels = new ObservableCollection<BlockModel>();
-                return enableBlockModels;
-            }
-            set
-            {
-                enableBlockModels = value;
-                RaisePropertyChanged("EnableBlockModels");
-            }
-        }
-
+        private List<BlockModel> enableBlockList = new List<BlockModel>();
         /// <summary>
-        /// 所有实体集合
+        /// 块路径集合
         /// </summary>
-        private ObservableCollection<EntityDefinitionModel> allEntityModels;
-        /// <summary>
-        /// 主Tab中当前选择内容
-        /// </summary>
-        private DataRowView masterSelectedModel;
-        /// <summary>
-        /// 编辑区选择内容
-        /// </summary>
-        private DataRowView currentSeletecModel;
-        /// <summary>
-        /// 编辑标志
-        /// </summary>
-        private bool editFlag = true;
+        private List<BlockModel> blockPathList = new List<BlockModel>();
         #endregion
         #region 实体定义
-
-
-        private BlockModel currentBlock;
-
-        public BlockModel CurrentBlock
-        {
-            get { return currentBlock; }
-            set
-            {
-                currentBlock = value;
-                RaisePropertyChanged("CurrentBlock");
-            }
-        }
-
-        private BlockModel masterBlock;
-        /// <summary>
-        /// 
-        /// </summary>
-        public BlockModel MasterBlock
-        {
-            get { return masterBlock; }
-            set
-            {
-                masterBlock = value;
-                RaisePropertyChanged("MasterBlock");
-            }
-        }
         /// <summary>
         /// 主TabHeader
         /// </summary>
@@ -137,103 +89,49 @@ namespace DataCruisePlugin.ViewModels
             }
         }
         /// <summary>
-        /// 主Tab实体
+        /// 主Tab
         /// </summary>
-        private EntityDefinitionModel masterEntity;
+        private BlockModel masterBlock;
         /// <summary>
-        /// 主Tab实体
+        /// 主Tab数据集合
         /// </summary>
-        public EntityDefinitionModel MasterEntity
+        public BlockModel MasterBlock
         {
             get
             {
-                return masterEntity;
+                return masterBlock;
             }
             set
             {
-                masterEntity = value;
-                RaisePropertyChanged("MasterEntity");
+                if (masterBlock != value)
+                {
+                    masterBlock = value;
+                    RaisePropertyChanged("MasterBlock");
+                }
             }
         }
+        private object entranceContent;
         /// <summary>
-        /// 当前TabHeader
+        /// 入口区域
         /// </summary>
-        private string currentHeader;
-        /// <summary>
-        /// 当前TabHeader
-        /// </summary>
-        public string CurrentHeader
+        public object EntranceContent
         {
             get
             {
-                return currentHeader;
+                return entranceContent;
             }
             set
             {
-                currentHeader = value;
-                RaisePropertyChanged("CurrentHeader");
+                if (entranceContent != value)
+                {
+                    entranceContent = value;
+                    RaisePropertyChanged("EntranceContent");
+                }
             }
         }
-        /// <summary>
-        /// 当前展示内容
-        /// </summary>
-        private object currentContent;
-        /// <summary>
-        /// 当前展示内容
-        /// </summary>
-        public object CurrentContent
-        {
-            get
-            {
-                return currentContent;
-            }
-            set
-            {
-                currentContent = value;
-                RaisePropertyChanged("CurrentContent");
-            }
-        }
-        /// <summary>
-        /// 当前编辑实体
-        /// </summary>
-        private EntityDefinitionModel currentEntity;
-        /// <summary>
-        /// 当前编辑实体
-        /// </summary>
-        public EntityDefinitionModel CurrentEntity
-        {
-            get { return currentEntity; }
-            set
-            {
-                currentEntity = value;
-                RaisePropertyChanged("CurrentEntity");
-            }
-        }
-        /// <summary>
-        /// 入口展示内容
-        /// </summary>
-        private object enterContent;
-        /// <summary>
-        /// 入口展示内容
-        /// </summary>
-        public object EnterContent
-        {
-            get
-            {
-                return enterContent;
-            }
-            set
-            {
-                enterContent = value;
-                RaisePropertyChanged("EnterContent");
-            }
-        }
-        /// <summary>
-        /// 可用展示内容
-        /// </summary>
         private object enableContent;
         /// <summary>
-        /// 可用展示内容
+        /// 可用区域
         /// </summary>
         public object EnableContent
         {
@@ -243,93 +141,19 @@ namespace DataCruisePlugin.ViewModels
             }
             set
             {
-                enableContent = value;
-                RaisePropertyChanged("EnableContent");
-            }
-        }
-        /// <summary>
-        /// 引用区域
-        /// </summary>
-        private object dataRefContent;
-        public object DataRefContent
-        {
-            get
-            {
-                return dataRefContent;
-            }
-            set
-            {
-                dataRefContent = value;
-                RaisePropertyChanged("DataRefContent");
-            }
-        }
-        /// <summary>
-        /// 入口实体集合
-        /// </summary>
-        private ObservableCollection<EntityDefinitionModel> entranceEntityModels;
-        /// <summary>
-        /// 入口实体集合
-        /// </summary>
-        public ObservableCollection<EntityDefinitionModel> EntranceEntityModels
-        {
-            get
-            {
-                if (entranceEntityModels == null)
-                    entranceEntityModels = new ObservableCollection<EntityDefinitionModel>();
-                return entranceEntityModels;
-            }
-            set
-            {
-                if (entranceEntityModels != value)
+                if (enableContent != value)
                 {
-                    entranceEntityModels = value;
-                    RaisePropertyChanged("EntranceEntityModels");
+                    enableContent = value;
+                    RaisePropertyChanged("EnableContent");
                 }
-            }
-        }
-        /// <summary>
-        /// 可用实体集合
-        /// </summary>
-        private ObservableCollection<EntityDefinitionModel> enableEntityModels;
-        /// <summary>
-        /// 可用实体集合
-        /// </summary>
-        public ObservableCollection<EntityDefinitionModel> EnableEntityModels
-        {
-            get
-            {
-                if (enableEntityModels == null)
-                    enableEntityModels = new ObservableCollection<EntityDefinitionModel>();
-                return enableEntityModels;
-            }
-            set
-            {
-                if (enableEntityModels != value)
-                {
-                    enableEntityModels = value;
-                    RaisePropertyChanged("EnableEntityModels");
-                }
-            }
-        }
-        /// <summary>
-        /// 编辑区列表绑定内容
-        /// </summary>
-        private DataTable gridDt;
-        /// <summary>
-        /// 编辑区列表绑定内容
-        /// </summary>
-        public DataTable GridDt
-        {
-            get { return gridDt; }
-            set
-            {
-                gridDt = value;
-                RaisePropertyChanged("GridDt");
             }
         }
 
         #endregion
-        #region Command
+        #region Command定义
+        /// <summary>
+        /// 窗体加载
+        /// </summary>
         public ICommand ucMainViewLoadedCommand
         {
             get
@@ -338,9 +162,9 @@ namespace DataCruisePlugin.ViewModels
                 {
                     ucMainView = (UserControl)x;
                     string entityRel = ReadRelationFile("rel2");
-                    EntranceEntityModels.Clear();
-                    allEntityModels = JsonHelper.ToObject<ObservableCollection<EntityDefinitionModel>>(entityRel);
-                    foreach (EntityDefinitionModel item in allEntityModels)
+                    entranceBlockList.Clear();
+                    allEntityDefList = JsonHelper.ToObject<List<EntityDefinitionModel>>(entityRel);
+                    foreach (EntityDefinitionModel item in allEntityDefList)
                     {
                         if (item.Fields != null)
                         {
@@ -360,7 +184,13 @@ namespace DataCruisePlugin.ViewModels
                         }
                         if (item.Entrance)
                         {
-                            EntranceEntityModels.Add(item);
+                            BlockModel block = new BlockModel()
+                            {
+                                EntityDefModel = item,
+                                TableId = item.Id,
+                                TableName = item.TableName
+                            };
+                            entranceBlockList.Add(block);
                         }
                     }
                     CreateEnterContent();
@@ -368,7 +198,7 @@ namespace DataCruisePlugin.ViewModels
             }
         }
         /// <summary>
-        /// 添加
+        /// 编辑区添加
         /// </summary>
         public ICommand btnAddClickCommand
         {
@@ -376,28 +206,12 @@ namespace DataCruisePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    List<RefEntityModel> refList = CurrentEntity.DataRef as List<RefEntityModel>;
-                    DataRow dr = GridDt.NewRow();
-                    dr["_id"] = Guid.NewGuid();
-                    //if (refList != null && refList.Count > 0)
-                    //{
-                    //    RefEntityModel refModel = refList.FirstOrDefault(it => it.TableId == MasterEntity.Id);
-                    //    dr[refModel.SelfField] = masterSelectedModel[refModel.SourceField];
-                    //}
-                    foreach (RefEntityModel item in refList)
-                    {
-                        if (CurrentEntity.RefCondtions.ContainsKey(item.TableId))
-                        {
-                            Dictionary<string, object> conDic = CurrentEntity.RefCondtions[item.TableId] as Dictionary<string, object>;
-                            dr[item.SelfField] = conDic[item.SelfField];
-                        }
-                    }
-                    GridDt.Rows.Add(dr);
+
                 });
             }
         }
         /// <summary>
-        /// 删除
+        /// 编辑区删除
         /// </summary>
         public ICommand btnDelClickCommand
         {
@@ -405,28 +219,12 @@ namespace DataCruisePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    try
-                    {
-                        string rowKey = currentSeletecModel["_id"].ToString();
-                        foreach (DataRow dr in GridDt.Rows)
-                        {
-                            if (dr["_id"].ToString().Equals(rowKey))
-                            {
-                                dr.Delete();
-                                break;
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        string temp = ex.Message;
-                    }
 
                 });
             }
         }
         /// <summary>
-        /// 保存
+        /// 编辑区保存
         /// </summary>
         public ICommand btnSaveClickCommand
         {
@@ -434,95 +232,31 @@ namespace DataCruisePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    DataOperation dataOp = new DataOperation();
-                    bool result = dataOp.SaveData(CurrentEntity.ViewId, CurrentEntity.DataPath);
-                    if (result)
-                    {
-                        MessageOperation messageOp = new MessageOperation();
-                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                        contentDic.Add("DataChannelId", CurrentEntity.ViewId);
-                        contentDic.Add("modelid", string.Format("table::{0}", GetEntityRootTableName(CurrentEntity)));
-                        contentDic.Add("dbname", "test_cruiseDB");
-                        contentDic.Add("systemid", "800");
-                        contentDic.Add("configsystemid", "101");
-                        contentDic.Add("spaceid", "tbs");
-                        Dictionary<string, object> resultDic = messageOp.SendMessage("MongoDataChannelService.saveBusiData", contentDic, "JSON");
-                        string temp1 = resultDic["ReplyMode"].ToString();
-                    }
-                    string json = dataOp.GetJSONData(CurrentEntity.ViewId);
-                    string curdjson = dataOp.GetCurdJSONData(CurrentEntity.ViewId);
-                    string temp = curdjson;
-                });
-            }
-        }
-        /// <summary>
-        /// 当前编辑区选择行改变
-        /// </summary>
-        public ICommand currentGridSelectionChangedCommand
-        {
-            get
-            {
-                return new RelayCommand<object>((x) =>
-                {
-                    DataGrid grid = (DataGrid)x;
-                    currentSeletecModel = (DataRowView)grid.SelectedItem;
-                });
-            }
-        }
 
+                });
+            }
+        }
         #endregion
         #region 私有方法
-        /// <summary>
-        /// 创建入口展示内容
-        /// </summary>
-        /// <returns></returns>
-        private void CreateEnterContent()
-        {
-            if (EntranceEntityModels.Count > 0)
-            {
-                VicDockPanelNormal dockPanel = new VicDockPanelNormal();
-                dockPanel.HorizontalAlignment = HorizontalAlignment.Left;
-                foreach (EntityDefinitionModel item in EntranceEntityModels)
-                {
-                    VicButtonNormal vicBtnEnter = new VicButtonNormal();
-                    vicBtnEnter.Name = item.TableName;
-                    vicBtnEnter.Tag = item;
-                    vicBtnEnter.Width = 100;
-                    vicBtnEnter.Height = 24;
-                    vicBtnEnter.Content = item.TabTitle;
-                    vicBtnEnter.Margin = new Thickness(0, 0, 5, 0);
-                    vicBtnEnter.Click += vicBtnEnter_Click;
-                    dockPanel.Children.Add(vicBtnEnter);
-                }
-                EnterContent = dockPanel;
-            }
-        }
+
         /// <summary>
         /// 创建可用展示内容
         /// </summary>
         private void CreateEnableContent()
         {
-            if (EnableEntityModels.Count > 0)
+            if (enableBlockList.Count > 0)
             {
                 VicDockPanelNormal dockPanel = new VicDockPanelNormal();
                 dockPanel.HorizontalAlignment = HorizontalAlignment.Left;
-                EnableBlockModels.Clear();
-                foreach (EntityDefinitionModel item in EnableEntityModels)
-                {
-                    BlockModel block = new BlockModel()
-                    {
-                        ViewId = item.ViewId,
-                        TableName = item.TableName,
-                        TableId = item.Id,
-                        EntityDefModel = item
 
-                    };
-                    if (!string.IsNullOrEmpty(item.HostTable))
+                foreach (BlockModel item in enableBlockList)
+                {
+                    if (!string.IsNullOrEmpty(item.EntityDefModel.HostTable))
                     {
-                        block.ParentBlock = EnableBlockModels.FirstOrDefault(it => it.TableId == item.HostTable);
-                        if (block.ParentBlock == null)
+                        item.ParentBlock = enableBlockList.FirstOrDefault(it => it.TableId == item.EntityDefModel.Id);
+                        if (item.ParentBlock == null)
                         {
-                            EntityDefinitionModel hostModel = allEntityModels.FirstOrDefault(it => it.Id == item.HostTable);
+                            EntityDefinitionModel hostModel = allEntityDefList.FirstOrDefault(it => it.Id == item.EntityDefModel.HostTable);
                             BlockModel hostBlock = new BlockModel()
                             {
                                 ViewId = hostModel.ViewId,
@@ -530,22 +264,180 @@ namespace DataCruisePlugin.ViewModels
                                 TableId = hostModel.Id,
                                 EntityDefModel = hostModel
                             };
-                            EnableBlockModels.Add(hostBlock);
-                            block.ParentBlock = hostBlock;
+                            item.ParentBlock = hostBlock;
                         }
                     }
-                    EnableBlockModels.Add(block);
                     VicButtonNormal vicBtnEnable = new VicButtonNormal();
                     vicBtnEnable.Name = item.TableName;
                     vicBtnEnable.Tag = item;
                     vicBtnEnable.Width = 100;
                     vicBtnEnable.Height = 24;
-                    vicBtnEnable.Content = item.TabTitle;
+                    vicBtnEnable.Content = item.EntityDefModel.TabTitle;
                     vicBtnEnable.Margin = new Thickness(0, 0, 5, 0);
                     vicBtnEnable.Click += vicBtnEnable_Click;
                     dockPanel.Children.Add(vicBtnEnable);
                 }
                 EnableContent = dockPanel;
+            }
+        }
+
+        /// <summary>
+        /// 实体Model重构
+        /// </summary>
+        private void EntityModelReConsitution(BlockModel blockModel)
+        {
+            /* 1、选定实体的hostTable对应的实体可用(上级可用)
+             * 2、hostTable与选定实体的hostTable相同的实体可用(同级可用)
+             * 3、以选定实体为hostTable的实体可用(下级可用)
+             * 4、当前实体的dataRef中前导实体可用(前导可用)
+             * 5、入口实体一致可用
+             * 6、以当前实体为前导的实体可用(跟随可用)
+             */
+            enableBlockList.Clear();
+            enableBlockList.Add(blockModel);
+            if (!string.IsNullOrEmpty(blockModel.EntityDefModel.HostTable))
+            {
+                //上级可用
+                EntityDefinitionModel hostModel = allEntityDefList.First(it => it.Id == blockModel.EntityDefModel.HostTable);
+                if (hostModel != null)
+                {
+                    BlockModel hostBlock = enableBlockList.FirstOrDefault(it => it.EntityDefModel.Id == hostModel.Id);
+                    if (hostBlock == null)
+                    {
+                        enableBlockList.Add(new BlockModel()
+                        {
+                            EntityDefModel = hostModel,
+                            TableId = hostModel.Id,
+                            TableName = hostModel.TableName
+                        });
+                    }
+                    //跟随可用
+                    foreach (EntityDefinitionModel item in allEntityDefList)
+                    {
+                        if (item.HostTable == hostModel.Id)
+                        {
+                            item.Actived = true;
+                            if (enableBlockList.FirstOrDefault(it => it.EntityDefModel.Id == item.Id) == null)
+                                enableBlockList.Add(new BlockModel()
+                                {
+                                    EntityDefModel = item,
+                                    TableId = item.Id,
+                                    TableName = item.TableName
+                                });
+                        }
+                        else
+                        {
+                            List<RefEntityModel> itemRefList = item.DataRef as List<RefEntityModel>;
+                            if (itemRefList != null)
+                            {
+                                foreach (RefEntityModel refitem in itemRefList)
+                                {
+                                    if (refitem.TableId == hostModel.Id && refitem.ForeRunner)
+                                    {
+                                        if (enableBlockList.FirstOrDefault(it => it.EntityDefModel.Id == item.Id) == null)
+                                            enableBlockList.Add(new BlockModel()
+                                            {
+                                                EntityDefModel = item,
+                                                TableId = item.Id,
+                                                TableName = item.TableName
+                                            });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                ///同级可用
+                foreach (EntityDefinitionModel item in allEntityDefList.Where(it => it.HostTable == blockModel.EntityDefModel.HostTable))
+                {
+                    if (enableBlockList.FirstOrDefault(it => it.EntityDefModel.Id == item.Id) == null)
+                        enableBlockList.Add(new BlockModel()
+                        {
+                            EntityDefModel = item,
+                            TableId = item.Id,
+                            TableName = item.TableName
+                        });
+                }
+            }
+            //下级可用
+            foreach (EntityDefinitionModel item in allEntityDefList.Where(it => it.HostTable == blockModel.EntityDefModel.Id))
+            {
+                if (enableBlockList.FirstOrDefault(it => it.EntityDefModel.Id == item.Id) == null)
+                    enableBlockList.Add(new BlockModel()
+                    {
+                        EntityDefModel = item,
+                        TableId = item.Id,
+                        TableName = item.TableName
+                    });
+            }
+            //前导可用
+            List<RefEntityModel> refEntityList = blockModel.EntityDefModel.DataRef as List<RefEntityModel>;
+            if (refEntityList != null)
+            {
+                foreach (RefEntityModel item in refEntityList)
+                {
+                    if (item.ForeRunner)
+                    {
+                        if (enableBlockList.FirstOrDefault(it => it.EntityDefModel.Id == item.TableId) == null)
+                        {
+                            EntityDefinitionModel refModel = allEntityDefList.First(it => it.Id == item.TableId);
+                            enableBlockList.Add(new BlockModel()
+                            {
+                                EntityDefModel = refModel,
+                                TableId = refModel.Id,
+                                TableName = refModel.TableName
+                            });
+                        }
+                    }
+                }
+            }
+            //跟随可用
+            foreach (EntityDefinitionModel item in allEntityDefList)
+            {
+                List<RefEntityModel> itemRefList = item.DataRef as List<RefEntityModel>;
+                if (itemRefList != null)
+                {
+                    foreach (RefEntityModel refitem in itemRefList)
+                    {
+                        if (refitem.TableId == blockModel.EntityDefModel.Id && refitem.ForeRunner)
+                        {
+                            if (enableBlockList.FirstOrDefault(it => it.TableId == item.Id) == null)
+                            {
+                                enableBlockList.Add(new BlockModel() {
+                                    EntityDefModel = item,
+                                    TableId = item.Id,
+                                    TableName = item.TableName
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 创建入口展示内容
+        /// </summary>
+        /// <returns></returns>
+        private void CreateEnterContent()
+        {
+            if (entranceBlockList.Count > 0)
+            {
+                VicDockPanelNormal dockPanel = new VicDockPanelNormal();
+                dockPanel.HorizontalAlignment = HorizontalAlignment.Left;
+                foreach (BlockModel item in entranceBlockList)
+                {
+                    VicButtonNormal vicBtnEnter = new VicButtonNormal();
+                    vicBtnEnter.Name = item.TableName;
+                    vicBtnEnter.Tag = item;
+                    vicBtnEnter.Width = 100;
+                    vicBtnEnter.Height = 24;
+                    vicBtnEnter.Content = item.EntityDefModel.TabTitle;
+                    vicBtnEnter.Margin = new Thickness(0, 0, 5, 0);
+                    vicBtnEnter.Click += vicBtnEnter_Click;
+                    dockPanel.Children.Add(vicBtnEnter);
+                }
+                EntranceContent = dockPanel;
             }
         }
         /// <summary>
@@ -573,117 +465,18 @@ namespace DataCruisePlugin.ViewModels
             returnStr = JsonHelper.ReadJsonString(fileDic["setting"].ToString(), "dataArray");
             return returnStr;
         }
-
         /// <summary>
-        /// 实体Model重构
+        /// 刷新主Tab内容
         /// </summary>
-        private void EntityModelReConsitution(EntityDefinitionModel EntityModel)
-        {
-            /* 1、选定实体的hostTable对应的实体可用(上级可用)
-             * 2、hostTable与选定实体的hostTable相同的实体可用(同级可用)
-             * 3、以选定实体为hostTable的实体可用(下级可用)
-             * 4、当前实体的dataRef中前导实体可用(前导可用)
-             * 5、入口实体一致可用
-             * 6、以当前实体为前导的实体可用(跟随可用)
-             */
-            EnableEntityModels.Clear();
-            EnableEntityModels.Add(EntityModel);
-            if (!string.IsNullOrEmpty(EntityModel.HostTable))
-            {
-                //上级可用
-                EntityDefinitionModel hostModel = allEntityModels.First(it => it.Id == EntityModel.HostTable);
-                if (hostModel != null)
-                {
-                    hostModel.Actived = true;
-                    EnableEntityModels.Add(hostModel);
-                    //跟随可用
-                    foreach (EntityDefinitionModel item in allEntityModels)
-                    {
-                        if (item.HostTable == hostModel.Id)
-                        {
-                            item.Actived = true;
-                            if (EnableEntityModels.FirstOrDefault(it => it.Id == item.Id) == null)
-                                EnableEntityModels.Add(item);
-                        }
-                        else
-                        {
-                            List<RefEntityModel> itemRefList = item.DataRef as List<RefEntityModel>;
-                            if (itemRefList != null)
-                            {
-                                foreach (RefEntityModel refitem in itemRefList)
-                                {
-                                    if (refitem.TableId == hostModel.Id && refitem.ForeRunner)
-                                    {
-                                        if (EnableEntityModels.FirstOrDefault(it => it.Id == item.Id) == null)
-                                        {
-                                            item.Actived = true;
-                                            EnableEntityModels.Add(item);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                ///同级可用
-                foreach (EntityDefinitionModel item in allEntityModels.Where(it => it.HostTable == EntityModel.HostTable))
-                {
-                    item.Actived = true;
-                    if (EnableEntityModels.FirstOrDefault(it => it.Id == item.Id) == null)
-                        EnableEntityModels.Add(item);
-                }
-            }
-            //下级可用
-            foreach (EntityDefinitionModel item in allEntityModels.Where(it => it.HostTable == EntityModel.Id))
-            {
-                item.Actived = true;
-                if (EnableEntityModels.FirstOrDefault(it => it.Id == item.Id) == null)
-                    EnableEntityModels.Add(item);
-            }
-            //前导可用
-            List<RefEntityModel> refEntityList = EntityModel.DataRef as List<RefEntityModel>;
-            if (refEntityList != null)
-            {
-                foreach (RefEntityModel item in refEntityList)
-                {
-                    if (item.ForeRunner)
-                    {
-                        if (EnableEntityModels.FirstOrDefault(it => it.Id == item.TableId) == null)
-                        {
-                            allEntityModels.First(it => it.Id == item.TableId).Actived = true;
-                            EnableEntityModels.Add(allEntityModels.First(it => it.Id == item.TableId));
-                        }
-                    }
-                }
-            }
-            //跟随可用
-            foreach (EntityDefinitionModel item in allEntityModels)
-            {
-                List<RefEntityModel> itemRefList = item.DataRef as List<RefEntityModel>;
-                if (itemRefList != null)
-                {
-                    foreach (RefEntityModel refitem in itemRefList)
-                    {
-                        if (refitem.TableId == EntityModel.Id && refitem.ForeRunner)
-                        {
-                            if (EnableEntityModels.FirstOrDefault(it => it.Id == item.Id) == null)
-                            {
-                                EnableEntityModels.Add(item);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        //更新MasterContent
         private void RefreshMasterContent()
         {
-            MasterBlock = EnableBlockModels.FirstOrDefault(it => it.TableId == MasterEntity.Id);
-            MasterBlock.RebuildDataPath(EnableBlockModels, allEntityModels);
-            DataGrid mastergrid = new DataGrid();
+            MasterBlock.BlockDt = CreateStructDataTable(masterBlock);
+            MasterBlock.RebuildDataPath(enableBlockList, allEntityDefList);
+            VicDataGrid mastergrid = new VicDataGrid();
             mastergrid.AutoGenerateColumns = false;
             mastergrid.CanUserAddRows = false;
-            foreach (DataColumn dc in MasterBlock.BlockDt.Columns)
+            mastergrid.IsUserSetColumn = true;
+            foreach (DataColumn dc in masterBlock.BlockDt.Columns)
             {
                 DataGridTextColumn txtCol = new DataGridTextColumn();
                 txtCol.Header = dc.Caption;
@@ -704,169 +497,41 @@ namespace DataCruisePlugin.ViewModels
             masterBinding.Mode = BindingMode.TwoWay;
             masterBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             BindingOperations.SetBinding(mastergrid, DataGrid.ItemsSourceProperty, masterBinding);
-            mastergrid.SelectionChanged += mastergrid_SelectionChanged;
             MasterContent = mastergrid;
-            MasterHeader = MasterEntity.TabTitle;
+            MasterHeader = masterBlock.EntityDefModel.TabTitle;
         }
-        /// <summary>
-        /// 更新CurrentContent
-        /// </summary>
-        private void RefreshCurrentContent()
-        {
-            EntityModelReConsitution(CurrentEntity);
-            CurrentBlock = EnableBlockModels.FirstOrDefault(it => it.TableId == CurrentEntity.Id);
-            CurrentBlock.EntityDefModel = CurrentEntity;
-            CurrentBlock.RebuildDataPath(EnableBlockModels, allEntityModels);
-            DataGrid grid = new DataGrid();
-            grid.AutoGenerateColumns = false;
-            grid.CanUserAddRows = false;
-            foreach (DataColumn dc in CurrentBlock.BlockDt.Columns)
-            {
-                DataGridTextColumn txtCol = new DataGridTextColumn();
-                txtCol.Header = dc.Caption;
-                Binding colBinding = new Binding(dc.ColumnName);
-                if (!dc.ReadOnly)
-                {
-                    colBinding.Mode = BindingMode.TwoWay;
-                    colBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                }
-                else
-                {
-                    txtCol.IsReadOnly = true;
-                }
-                txtCol.Binding = colBinding;
-                grid.Columns.Add(txtCol);
-            }
-            Binding currentBinding = new Binding("CurrentBlock.BlockDt");
-            currentBinding.Mode = BindingMode.TwoWay;
-            currentBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-            CurrentContent = grid;
-            CurrentHeader = CurrentEntity.TabTitle;
-	    try
-            {
-                RefreshDataRefContent();
-            }
-            catch (Exception ex)
-            {
-                string temp = ex.Message;
-            }
-        }
-        /// <summary>
-        /// 刷新数据引用区域
-        /// </summary>
-        private void RefreshDataRefContent()
-        {
-            VicStackPanelNormal stackpanel = new VicStackPanelNormal();
-            List<RefEntityModel> dataRefList = CurrentEntity.DataRef as List<RefEntityModel>;
-            DataOperation dataOp = new DataOperation();
-            dataRefEntityList.Clear();
-            if (dataRefList != null)
-            {
-                foreach (RefEntityModel item in dataRefList)
-                {
-                    if (item.TableId.Equals(MasterEntity.Id))
-                        continue;
-                    GroupBox gbox = new GroupBox();
-                    BlockModel refBlock = EnableBlockModels.FirstOrDefault(it => it.TableId == item.TableId);
-                    if (refBlock == null)
-                        continue;
-                    refBlock.EntityDefModel = allEntityModels.FirstOrDefault(it => it.Id == item.TableId);
-                    refBlock.RebuildDataPath(EnableBlockModels, allEntityModels);
-                    int i = EnableBlockModels.IndexOf(refBlock);
-                    DataGrid grid = new DataGrid();
-                    grid.AutoGenerateColumns = false;
-                    grid.CanUserAddRows = false;
-                    foreach (DataColumn dc in refBlock.BlockDt.Columns)
-                    {
-                        DataGridTextColumn txtCol = new DataGridTextColumn();
-                        txtCol.Header = dc.Caption;
-                        Binding colBinding = new Binding(dc.ColumnName);
-                        if (!dc.ReadOnly)
-                        {
-                            colBinding.Mode = BindingMode.TwoWay;
-                            colBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                        }
-                        else
-                        {
-                            txtCol.IsReadOnly = true;
-                        }
-                        txtCol.Binding = colBinding;
-                        grid.Columns.Add(txtCol);
-                    }
-                    Binding currentBinding = new Binding("CurrentBlock[" + i + "].BlockDt");
-                    currentBinding.Mode = BindingMode.TwoWay;
-                    currentBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-                    BindingOperations.SetBinding(grid, DataGrid.ItemsSourceProperty, currentBinding);
-                    gbox.Header = refBlock.TableName;
-                    stackpanel.Children.Add(gbox);
-                }
-            }
-            DataRefContent = stackpanel;
-        }
-        /// <summary>
-        /// 发送检索数据消息
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <returns></returns>
-        private string SendFindDataMessage(string tableName, Dictionary<string, object> conditons = null)
-        {
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "800");
-            contentDic.Add("configsystemid", "101");
-            contentDic.Add("spaceid", "tbs");
-            contentDic.Add("modelid", string.Format("table::{0}", tableName));
-            if (conditons != null && conditons.Keys.Count > 0)
-            {
-                List<object> conList = new List<object>();
-                foreach (string item in conditons.Keys)
-                {
-                    conList.Add(conditons[item]);
-                }
-                contentDic.Add("tablecondition", conList);
-            }
-            string messageType = "MongoDataChannelService.findBusiData";
-            MessageOperation messageOp = new MessageOperation();
-            Dictionary<string, object> returnDic = messageOp.SendMessage(messageType, contentDic, "JSON");
-            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
-            {
-                return returnDic["DataChannelId"].ToString();
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
+
         /// <summary>
         /// 创建结构表
         /// </summary>
         /// <param name="entityFields"></param>
         /// <returns></returns>
-        private DataTable CreateStructDataTable(EntityDefinitionModel entityModel)
+        private DataTable CreateStructDataTable(BlockModel entityModel)
         {
-            List<EntityFieldModel> entityFields = entityModel.Fields as List<EntityFieldModel>;
+            List<EntityFieldModel> entityFields = entityModel.EntityDefModel.Fields as List<EntityFieldModel>;
             List<EntityFieldModel> extandFields = new List<EntityFieldModel>();
-            if (entityModel.DynaColumn != null)
+            if (entityModel.EntityDefModel.DynaColumn != null)
             {
-                foreach (string dynCol in entityModel.DynaColumn)
+                foreach (string dynCol in entityModel.EntityDefModel.DynaColumn)
                 {
-                    EntityDefinitionModel dynModel = allEntityModels.First(it => it.Id == dynCol);
+                    EntityDefinitionModel dynModel = allEntityDefList.First(it => it.Id == dynCol);
 
-                    if (dynModel.HostTable.Equals(MasterEntity.Id))
-                    {
-                        ConstructDataPath(dynModel, MasterEntity, masterSelectedModel);
-                        DataOperation dataOp = new DataOperation();
-                        DataTable dt = dataOp.GetData(MasterEntity.ViewId, dynModel.DataPath, CreateStructDataTable(dynModel));
-                        foreach (DataRow item in dt.Rows)
-                        {
-                            EntityFieldModel fieldModel = new EntityFieldModel()
-                            {
-                                Field = item["field"].ToString(),
-                                FieldType = item["fieldtype"].ToString(),
-                                FieldTitle = item["fieldtitle"].ToString()
-                            };
-                            extandFields.Add(fieldModel);
-                        }
-                    }
+                    //if (dynModel.HostTable.Equals(MasterEntity.Id))
+                    //{
+                    //    ConstructDataPath(dynModel, MasterEntity, masterSelectedModel);
+                    //    DataOperation dataOp = new DataOperation();
+                    //    DataTable dt = dataOp.GetData(MasterEntity.ViewId, dynModel.DataPath, CreateStructDataTable(dynModel));
+                    //    foreach (DataRow item in dt.Rows)
+                    //    {
+                    //        EntityFieldModel fieldModel = new EntityFieldModel()
+                    //        {
+                    //            Field = item["field"].ToString(),
+                    //            FieldType = item["fieldtype"].ToString(),
+                    //            FieldTitle = item["fieldtitle"].ToString()
+                    //        };
+                    //        extandFields.Add(fieldModel);
+                    //    }
+                    //}
                 }
             }
             DataTable structDt = new DataTable(entityModel.TableName);
@@ -929,224 +594,22 @@ namespace DataCruisePlugin.ViewModels
             }
             return structDt;
         }
-        /// <summary>
-        /// 构建DataPath
-        /// </summary>
-        /// <param name="entityModel"></param>
-        /// <param name="hostModel"></param>
-        /// <param name="drv"></param>
-        /// <returns></returns>
-        private string ConstructDataPath(EntityDefinitionModel entityModel, EntityDefinitionModel hostModel, DataRowView drv)
-        {
-            string dataPath = string.Empty;
-            if (string.IsNullOrEmpty(entityModel.HostTable))
-            {
-                dataPath = string.Format("[\"{0}\"]", entityModel.TableName);
-                entityModel.DataPath = dataPath;
-            }
-            else
-            {
-                List<object> pathList = JsonHelper.ToObject<List<object>>(hostModel.DataPath);
-                Dictionary<string, object> pathDic = new Dictionary<string, object>();
-                pathDic.Add("key", "_id");
-                pathDic.Add("value", drv["_id"]);
-                pathList.Add(pathDic);
-                pathList.Add(entityModel.TableName);
-                dataPath = JsonHelper.ToJson(pathList);
-                entityModel.DataPath = dataPath;
-            }
-            return dataPath;
-        }
-        /// <summary>
-        /// 获取实体的RootTable
-        /// </summary>
-        /// <param name="entityModel"></param>
-        /// <returns></returns>
-        private string GetEntityRootTableName(EntityDefinitionModel entityModel)
-        {
-            if (string.IsNullOrEmpty(entityModel.HostTable))
-            {
-                return entityModel.TableName;
-            }
-            else
-            {
-                entityModel = allEntityModels.FirstOrDefault(it => it.Id == entityModel.HostTable);
-                return GetEntityRootTableName(entityModel);
-            }
-        }
-        /// <summary>
-        /// 获取数据引用Table
-        /// </summary>
-        /// <param name="entityModel"></param>
-        private void GetDataRefRootTable(EntityDefinitionModel entityModel)
-        {
-            if (string.IsNullOrEmpty(entityModel.HostTable))
-            {
-                if (dataRefEntityList.FirstOrDefault(it => it.Id == entityModel.Id) == null)
-                {
-                    if (!dataRefEntityList.Exists(it => it.Id == entityModel.Id))
-                    {
-                        dataRefEntityList.Add(entityModel);
-                    }
-                }
-            }
-            else
-            {
-                EntityDefinitionModel hostModel = allEntityModels.FirstOrDefault(it => it.Id == entityModel.HostTable);
-                GetDataRefRootTable(hostModel);
-                if (dataRefEntityList.FirstOrDefault(it => it.Id == entityModel.Id) == null)
-                {
-                    if (!dataRefEntityList.Exists(it => it.Id == entityModel.Id))
-                    {
-                        dataRefEntityList.Add(entityModel);
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// 更新数据引用子实体树内容
-        /// </summary>
-        /// <param name="sender"></param>
-        private void UpdateDataRefChildrenTreeContent(object sender)
-        {
-            VicTreeView hostCtrl = (VicTreeView)sender;
-            DataOperation dataOp = new DataOperation();
-            EntityDefinitionModel entityModel = hostCtrl.Tag as EntityDefinitionModel;
-            if (editFlag && currentSeletecModel != null)
-            {
-                DataRow dr = GridDt.Select(string.Format("_id='{0}'", currentSeletecModel["_id"].ToString()))[0];
-                List<RefEntityModel> refList = CurrentEntity.DataRef as List<RefEntityModel>;
-                RefEntityModel refModel = refList.FirstOrDefault(it => it.TableId == entityModel.Id);
-                if (refModel != null)
-                {
-                    dr[refModel.SelfField] = ((DataRowView)hostCtrl.SelectedItem)[refModel.SourceField];
-                }
-            }
-            List<EntityDefinitionModel> defModels = dataRefEntityList.Where(it => it.HostTable == entityModel.Id).ToList();
-            foreach (EntityDefinitionModel item in defModels)
-            {
-                VicStackPanelNormal stockpanel = (VicStackPanelNormal)DataRefContent;
-                foreach (UIElement stockitem in stockpanel.Children)
-                {
-                    if (stockitem.Uid == item.Id)
-                    {
-                        VicGroupBoxNormal groupBox = (VicGroupBoxNormal)stockitem;
-                        EntityDefinitionModel groupboxTag = (EntityDefinitionModel)groupBox.Tag;
-                        groupboxTag.ViewId = entityModel.ViewId;
-                        groupboxTag.DataPath = ConstructDataPath(groupboxTag, entityModel, (DataRowView)hostCtrl.SelectedItem);
-                        switch (groupboxTag.ViewType)
-                        {
-                            case "tree":
-                                break;
-                            case "grid":
-                                VicDataGrid vicgrid = new VicDataGrid();
-                                vicgrid.IsReadOnly = true;
-                                vicgrid.AutoGenerateColumns = false;
-                                DataTable dt = dataOp.GetData(groupboxTag.ViewId, groupboxTag.DataPath, CreateStructDataTable(groupboxTag));
-                                vicgrid.ItemsSource = dt.DefaultView;
-                                vicgrid.SelectedIndex = 0;
-                                vicgrid.SelectionChanged += vicgrid_SelectionChanged;
-                                vicgrid_SelectionChanged(vicgrid, null);
-                                vicgrid.Tag = groupboxTag;
-                                groupBox.Content = vicgrid;
-                                break;
-                            default:
-                                break;
-                        }
-                        int index = stockpanel.Children.IndexOf(stockitem);
-                        stockpanel.Children.Remove(stockitem);
-                        stockpanel.Children.Insert(index, groupBox);
-                        DataRefContent = stockpanel;
-                        break;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// 更新数据引用子实体列表内容
-        /// </summary>
-        /// <param name="sender"></param>
-        private void UpdateDataRefChildrenGridContent(object sender)
-        {
-            VicDataGrid hostCtrl = (VicDataGrid)sender;
-            DataOperation dataOp = new DataOperation();
-            EntityDefinitionModel entityModel = hostCtrl.Tag as EntityDefinitionModel;
-            if (editFlag && currentSeletecModel != null)
-            {
-                DataRow dr = GridDt.Select(string.Format("_id='{0}'", currentSeletecModel["_id"].ToString()))[0];
-                List<RefEntityModel> refList = CurrentEntity.DataRef as List<RefEntityModel>;
-                RefEntityModel refModel = refList.FirstOrDefault(it => it.TableId == entityModel.Id);
-                if (refModel != null)
-                {
-                    dr[refModel.SelfField] = ((DataRowView)hostCtrl.SelectedItem)[refModel.SourceField];
-                }
-            }
-            List<EntityDefinitionModel> defModels = dataRefEntityList.Where(it => it.HostTable == entityModel.Id).ToList();
-            foreach (EntityDefinitionModel item in defModels)
-            {
-                VicStackPanelNormal stockpanel = (VicStackPanelNormal)DataRefContent;
-                foreach (UIElement stockitem in stockpanel.Children)
-                {
-                    if (stockitem.Uid == item.Id)
-                    {
-                        VicGroupBoxNormal groupBox = (VicGroupBoxNormal)stockitem;
-                        EntityDefinitionModel groupboxTag = (EntityDefinitionModel)groupBox.Tag;
-                        groupboxTag.ViewId = entityModel.ViewId;
-                        groupboxTag.DataPath = ConstructDataPath(groupboxTag, entityModel, (DataRowView)hostCtrl.SelectedItem);
-                        switch (groupboxTag.ViewType)
-                        {
-                            case "tree":
-                                break;
-                            case "grid":
-                                VicDataGrid vicgrid = new VicDataGrid();
-                                vicgrid.IsReadOnly = true;
-                                vicgrid.AutoGenerateColumns = false;
-                                DataTable dt = dataOp.GetData(groupboxTag.ViewId, groupboxTag.DataPath, CreateStructDataTable(groupboxTag));
-                                vicgrid.ItemsSource = dt.DefaultView;
-                                vicgrid.Tag = groupboxTag;
-                                vicgrid.SelectionChanged += vicgrid_SelectionChanged;
-                                groupBox.Content = vicgrid;
-                                break;
-                            default:
-                                break;
-                        }
-                        int index = stockpanel.Children.IndexOf(stockitem);
-                        stockpanel.Children.Remove(stockitem);
-                        stockpanel.Children.Insert(index, groupBox);
-
-                    }
-                }
-            }
-        }
         #endregion
-        #region 附加事件
+
+        #region 附件事件
         /// <summary>
-        /// 入口按钮点击事件
+        /// 入口Block按钮事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void vicBtnEnter_Click(object sender, RoutedEventArgs e)
+        private void vicBtnEnter_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                dataPathEntityList = new List<EntityDefinitionModel>();
-                DataRefContent = null;
-                CurrentContent = null;
-                VicButtonNormal vicBtnEnter = (VicButtonNormal)sender;
-                MasterEntity = (EntityDefinitionModel)vicBtnEnter.Tag;
-                CurrentEntity = MasterEntity.Copy();
-                EntityModelReConsitution(MasterEntity);
-                CreateEnableContent();
-                RefreshMasterContent();
-                //CurrentEntity = MasterEntity.Copy();
-                //RefreshCurrentContent();
-                dataPathEntityList.Add(MasterEntity);
-            }
-            catch (Exception ex)
-            {
-                LoggerHelper.InfoFormat("入口按钮点击异常：{0}", ex.Message);
-            }
-
+            VicButtonNormal vicBtn = (VicButtonNormal)sender;
+            BlockModel btnTag = (BlockModel)vicBtn.Tag;
+            EntityModelReConsitution(btnTag);
+            masterBlock = btnTag;
+            CreateEnableContent();
+            RefreshMasterContent();
         }
         /// <summary>
         /// 可用按钮点击事件
@@ -1158,125 +621,22 @@ namespace DataCruisePlugin.ViewModels
             try
             {
                 VicButtonNormal vicBtnEnable = (VicButtonNormal)sender;
-                EntityDefinitionModel vicBtnEntity = (EntityDefinitionModel)vicBtnEnable.Tag;
-                if (vicBtnEntity.Entrance)
+                BlockModel vicBtnEntity = (BlockModel)vicBtnEnable.Tag;
+                if (vicBtnEntity.EntityDefModel.Entrance)
                 {
                     vicBtnEnter_Click(sender, e);
                     return;
                 }
-                if (CurrentEntity.Id.Equals(vicBtnEntity.HostTable))//内联表处理
-                {
-                    MasterEntity = CurrentEntity.Copy();
-                    CurrentEntity = vicBtnEntity.Copy();
-                    dataPathEntityList.Add(MasterEntity);
-                    RefreshMasterContent();
-                }
-                else if (CurrentEntity.HostTable.Equals(vicBtnEntity.Id))//主表
-                {
-                    CurrentEntity = dataPathEntityList[dataPathEntityList.Count - 1].Copy();
-                    MasterEntity = dataPathEntityList[dataPathEntityList.Count - 2].Copy();
-                    RefreshMasterContent();
-                }
                 else
                 {
-                    CurrentEntity = vicBtnEntity.Copy();
-                    UpdateCurrentEntityCondtions(MasterEntity, masterSelectedModel);
-                }
-                CreateEnableContent();
-                RefreshCurrentContent();
-                RefreshDataRefContent();
-            }
-            catch (Exception ex)
-            {
-                LoggerHelper.InfoFormat("可用按钮点击异常：{0}", ex.Message);
-            }
-        }
-        /// <summary>
-        /// 主档树选择项目改变事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tv_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            masterSelectedModel = (DataRowView)((VicTreeView)sender).SelectedItem;
-            if (masterSelectedModel == null)
-                return;
-            UpdateCurrentEntityCondtions(MasterEntity, masterSelectedModel);
-            RefreshCurrentContent();
-        }
-        /// <summary>
-        /// 更新当前编辑区查询条件
-        /// </summary>
-        private void UpdateCurrentEntityCondtions(EntityDefinitionModel conditionModel, DataRowView drv)
-        {
-            if (CurrentEntity.DataRef != null)
-            {
-                List<RefEntityModel> refEntityList = CurrentEntity.DataRef as List<RefEntityModel>;
-                if (refEntityList != null)
-                {
-                    RefEntityModel refModel = refEntityList.FirstOrDefault(it => it.TableId == conditionModel.Id);
-                    if (refModel != null)
-                    {
-                        Dictionary<string, object> conDic = new Dictionary<string, object>();
-                        conDic.Add(refModel.SelfField, drv[refModel.SourceField]);
-                        if (CurrentEntity.RefCondtions.ContainsKey(refModel.TableId))
-                        {
-                            CurrentEntity.RefCondtions[refModel.TableId] = conDic;
-                        }
-                        else
-                        {
-                            CurrentEntity.RefCondtions.Add(refModel.TableId, conDic);
-                        }
-                    }
+                    currentBlock = vicBtnEntity;
+                    EntityModelReConsitution(vicBtnEntity);
+                    CreateEnableContent();
                 }
             }
-        }
-        // <summary>
-        /// 主档列表选择项目改变事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void mastergrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            masterSelectedModel = (DataRowView)((DataGrid)sender).SelectedItem;
-            if (masterSelectedModel == null)
-                return;
-            UpdateCurrentEntityCondtions(MasterEntity, masterSelectedModel);
-            RefreshCurrentContent();
-        }
-        /// <summary>
-        /// 数据引用中树节点选择改变
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void vicTv_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            try
-            {
-                UpdateDataRefChildrenTreeContent(sender);
-                VicTreeView vicTv = (VicTreeView)sender;
-                UpdateCurrentEntityCondtions(vicTv.Tag as EntityDefinitionModel, vicTv.SelectedItem as DataRowView);
-                RefreshCurrentContent();
-            }
             catch (Exception ex)
             {
-                LoggerHelper.InfoFormat("{0}", ex.Message);
-            }
-        }
-
-
-        void vicgrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                UpdateDataRefChildrenGridContent(sender);
-                VicDataGrid vicTv = (VicDataGrid)sender;
-                UpdateCurrentEntityCondtions(vicTv.Tag as EntityDefinitionModel, vicTv.SelectedItem as DataRowView);
-                RefreshCurrentContent();
-            }
-            catch (Exception ex)
-            {
-                LoggerHelper.InfoFormat("{0}", ex.Message);
+                LoggerHelper.InfoFormat("可用异常：{0}", ex.Message);
             }
         }
         #endregion
