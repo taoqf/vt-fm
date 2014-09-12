@@ -20,6 +20,7 @@ using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.Models;
 using System.IO;
 using System.Net;
+using Victop.Frame.Component;
 
 namespace AreaManagerPlugin.ViewModels
 {
@@ -470,6 +471,18 @@ namespace AreaManagerPlugin.ViewModels
         }
         #endregion
 
+        #region 组件测试
+        public ICommand btnCpntClickCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) => {
+                    CompntDataGrid grid = (CompntDataGrid)x;
+                    grid.GetData();
+                });
+            }
+        }
+        #endregion
 
         #region 私有方法
         /// <summary>

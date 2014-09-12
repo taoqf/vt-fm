@@ -17,7 +17,7 @@ namespace Victop.Frame.PublicLib.Helpers
         {
             try
             {
-                string filePath = AppDomain.CurrentDomain.BaseDirectory + "fitdata\\" + fitDataPath + ".json";
+                string filePath = AppDomain.CurrentDomain.BaseDirectory + "data\\" + fitDataPath + ".json";
                 if (File.Exists(filePath))
                 {
                     return File.ReadAllText(filePath, Encoding.GetEncoding("gb2312"));

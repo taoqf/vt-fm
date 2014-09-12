@@ -30,7 +30,7 @@ namespace Victop.Server.Controls.Runtime
             set;
         }
         /// <summary>
-        /// 组件设置
+        /// 组件参数设置
         /// </summary>
         [JsonProperty(PropertyName = "compoSetting")]
         public List<object> CompoSetting

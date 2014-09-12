@@ -84,5 +84,14 @@ namespace Victop.Server.Controls.Runtime
             get;
             set;
         }
+        /// <summary>
+        /// 当前选择行
+        /// </summary>
+        [JsonIgnore]
+        public Dictionary<string, object> CurrentRow
+        {
+            get;
+            set;
+        }
     }
 }

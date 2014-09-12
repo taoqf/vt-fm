@@ -47,5 +47,23 @@ namespace Victop.Server.Controls.Runtime
             get;
             set;
         }
+        /// <summary>
+        /// 组件设置
+        /// </summary>
+        [JsonIgnore]
+        public CompntSettingModel CompntSettings
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 组件总参表
+        /// </summary>
+        [JsonIgnore]
+        public Dictionary<string, Dictionary<string, object>> RuntimeParams
+        {
+            get;
+            set;
+        }
     }
 }

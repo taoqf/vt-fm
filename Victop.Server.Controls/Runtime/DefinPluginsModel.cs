@@ -15,7 +15,7 @@ namespace Victop.Server.Controls.Runtime
         /// 插件名称
         /// </summary>
         [JsonProperty(PropertyName = "pluginName")]
-        private string PluginName
+        public string PluginName
         {
             get;
             set;

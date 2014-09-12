@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cpt="clr-namespace:Victop.Frame.Component"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -12,5 +13,6 @@
         </Grid.RowDefinitions>     
         <DockPanel Grid.Row="0" HorizontalAlignment="Left">
         </DockPanel>
+        <cpt:UnitDataGrid x:Name="firstplugin" Grid.Row="1"/>
     </Grid>
 </UserControl>
