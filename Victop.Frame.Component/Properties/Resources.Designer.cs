@@ -73,6 +73,11 @@ namespace Victop.Frame.Component.Properties {
         ///						&quot;blocktype&quot;: &quot;block&quot;,
         ///						&quot;dataSetType&quot;: &quot;table&quot;,
         ///						&quot;superiors&quot;: &quot;root&quot;
+        ///					}, {
+        ///						&quot;blockName&quot;: &quot;jerry&quot;,
+        ///						&quot;blocktype&quot;: &quot;block&quot;,
+        ///						&quot;dataSetType&quot;: &quot;row&quot;,
+        ///						&quot;superiors&quot;: &quot;tom&quot;
         ///					}
         ///				]
         ///			}
@@ -82,54 +87,11 @@ namespace Victop.Frame.Component.Properties {
         ///				&quot;pluginName&quot;: &quot;firstplugin&quot;,
         ///				&quot;pluginType&quot;: &quot;grid&quot;,
         ///				&quot;dataBlock&quot;: &quot;tom&quot;,
-        ///				&quot;Params&quot;: [
-        ///					&quot;param1&quot;, &quot;param2&quot;, &quot;param3&quot;
-        ///				]
-        ///			}
-        ///		],
-        ///		&quot;compoSetting&quot;: [
-        ///			&quot;param7&quot;, &quot;param8&quot;, &quot;param9&quot;
-        ///		],
-        ///		&quot;paramM [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///				&quot;Params&quot;: [        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string CompntDataGrid_Def {
             get {
                 return ResourceManager.GetString("CompntDataGrid_Def", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 {
-        ///		&quot;compoSetting&quot;: {
-        ///			&quot;param7&quot;: &quot;el&quot;,
-        ///			&quot;param8&quot;: &quot;assembly&quot;,
-        ///			&quot;param9&quot;: &quot;jsonData&quot;
-        ///		},
-        ///		&quot;pluginsSetting&quot;: {
-        ///			&quot;firstplugin&quot;: {
-        ///				&quot;param1&quot;: &quot;每一个插件需要若干个参数,这里为每一个参数提供设置模版&quot;,
-        ///				&quot;param2&quot;: &quot;每一个,一个&quot;,
-        ///				&quot;param3&quot;: &quot;天佑中华&quot;
-        ///			}
-        ///		},
-        ///		&quot;viewSetting&quot;: {
-        ///			&quot;views&quot;: {
-        ///				&quot;firstview&quot;: {
-        ///					&quot;modelid&quot;: &quot;victop_core_requirement_pool_0001&quot;,
-        ///					&quot;datafilename&quot;: &quot;data.json&quot;,
-        ///					&quot;blocks&quot;: {
-        ///						&quot;tom&quot;: {
-        ///							&quot;tablename&quot;: &quot;iteration&quot;
-        ///						}
-        ///					}
-        ///				}
-        ///			}
-        ///		}
-        ///	} 的本地化字符串。
-        /// </summary>
-        internal static string CompntDataGrid_Setting {
-            get {
-                return ResourceManager.GetString("CompntDataGrid_Setting", resourceCulture);
             }
         }
     }

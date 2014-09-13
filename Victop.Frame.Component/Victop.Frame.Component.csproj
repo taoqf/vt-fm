@@ -90,6 +90,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Units\UnitRowDataPanel.xaml.cs">
+      <DependentUpon>UnitRowDataPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Units\UnitDataGrid.xaml.cs">
       <DependentUpon>UnitDataGrid.xaml</DependentUpon>
     </Compile>
@@ -123,6 +126,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Components\CompntDataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\UnitRowDataPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

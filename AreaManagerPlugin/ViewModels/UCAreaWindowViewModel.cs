@@ -21,6 +21,7 @@ using Victop.Server.Controls.Models;
 using System.IO;
 using System.Net;
 using Victop.Frame.Component;
+using Victop.Server.Controls.Runtime;
 
 namespace AreaManagerPlugin.ViewModels
 {
@@ -478,7 +479,8 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) => {
                     CompntDataGrid grid = (CompntDataGrid)x;
-                    grid.GetData();
+                    CompntSettingModel settingModel = JsonHelper.ToObject<CompntSettingModel>(FileHelper.ReadFitData("testsetting"));
+                    grid.DoRender(settingModel);
                 });
             }
         }

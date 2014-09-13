@@ -8,12 +8,19 @@ namespace Victop.Server.Controls.Runtime
 {
     public class OrgnizeRuntime
     {
+        /// <summary>
+        /// 初始化组件运行时
+        /// </summary>
+        /// <param name="runtime"></param>
         public static void InitCompnt(ComponentModel runtime)
         {
             RebulidViews(runtime);
             RebuildPlugins(runtime);
         }
-
+        /// <summary>
+        /// 重建Views
+        /// </summary>
+        /// <param name="runtime"></param>
         private static void RebulidViews(ComponentModel runtime)
         {
             foreach (DefinViewsModel item in runtime.CompntDefin.Views)
@@ -34,7 +41,10 @@ namespace Victop.Server.Controls.Runtime
                 }
             }
         }
-
+        /// <summary>
+        /// 重建插件
+        /// </summary>
+        /// <param name="runtime"></param>
         private static void RebuildPlugins(ComponentModel runtime)
         {
             runtime.RuntimeParams = new Dictionary<string, Dictionary<string, object>>();
@@ -67,6 +77,68 @@ namespace Victop.Server.Controls.Runtime
                 }
             }
             runtime.RuntimeParams.Add("root", compntDic);
+        }
+        /// <summary>
+        /// 绑定插件
+        /// </summary>
+        /// <param name="runtime"></param>
+        /// <param name="pluginName"></param>
+        public static void BindingPlugin(ComponentModel runtime, string pluginName)
+        {
+            DefinPluginsModel pluginModel = runtime.CompntDefin.Plugins.FirstOrDefault(it=>it.PluginName.Equals(pluginName));
+            if (pluginModel != null)
+            {
+                foreach (DefinViewsModel item in runtime.CompntDefin.Views)
+                {
+                    foreach (ViewsBlockModel blockitem in item.Blocks)
+                    {
+                        if (blockitem.BlockName.Equals(pluginModel.DataBlock))
+                        {
+                            pluginModel.PluginBlock = blockitem;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 重建Block的DataPath
+        /// </summary>
+        /// <param name="runtime"></param>
+        public static void RebuildAllDataPath(ComponentModel runtime)
+        {
+            foreach (DefinViewsModel item in runtime.CompntDefin.Views)
+            {
+                ViewsBlockModel blockmodel = item.Blocks.Find(it => it.Superiors.Equals("root"));
+                blockmodel.BlockDataPath.Clear();
+                blockmodel.BlockDataPath.Add(blockmodel.TableName);
+                if (blockmodel != null)
+                {
+                    RebuildDataPath(item, blockmodel);
+                }
+            }
+        }
+        private static void RebuildDataPath(DefinViewsModel definView, ViewsBlockModel blockModel)
+        {
+            for (int i = 0; i < definView.Blocks.Count; i++)
+            {
+                ViewsBlockModel block = definView.Blocks[i];
+                if (block.Superiors.Equals(blockModel.BlockName))
+                {
+                    Dictionary<string, object> pathDic = new Dictionary<string, object>();
+                    pathDic.Add("key", "_id");
+                    pathDic.Add("value", blockModel.CurrentRow["_id"]);
+                    block.BlockDataPath = blockModel.BlockDataPath;
+                    block.BlockDataPath.Add(pathDic);
+                    block.ViewId = blockModel.ViewId;
+                    if (block.DataSetType.Equals("table"))
+                    {
+                        block.BlockDataPath.Add(block.TableName);
+                    }
+                    RebuildDataPath(definView, block);
+                }
+            }
         }
     }
 }

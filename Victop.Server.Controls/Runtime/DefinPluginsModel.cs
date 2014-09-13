@@ -47,5 +47,14 @@ namespace Victop.Server.Controls.Runtime
             get;
             set;
         }
+        /// <summary>
+        /// 插件Block
+        /// </summary>
+        [JsonIgnore]
+        public ViewsBlockModel PluginBlock
+        {
+            get;
+            set;
+        }
     }
 }

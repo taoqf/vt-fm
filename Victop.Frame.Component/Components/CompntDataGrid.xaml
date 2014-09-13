@@ -8,11 +8,17 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="0"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>     
-        <DockPanel Grid.Row="0" HorizontalAlignment="Left">
-        </DockPanel>
-        <cpt:UnitDataGrid x:Name="firstplugin" Grid.Row="1"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+        <cpt:UnitDataGrid x:Name="firstplugin" Grid.Row="1" Grid.Column="0"/>
+        <GroupBox Header="选定记录信息" Grid.Row="1" Grid.Column="1">
+            <cpt:UnitRowDataPanel x:Name="secondplugin"/>
+            <!--<cpt:UnitDataGrid x:Name="secondplugin"/>-->
+        </GroupBox>
     </Grid>
 </UserControl>

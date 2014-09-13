@@ -29,16 +29,42 @@ namespace Victop.Frame.Component
         /// 组件运行时
         /// </summary>
         private ComponentModel comRunTime = new ComponentModel();
+        DataOperation dataOp = new DataOperation();
         #endregion
         public CompntDataGrid()
         {
             InitializeComponent();
             comRunTime.CompntDefin = JsonHelper.ToObject<CompntDefinModel>(Properties.Resources.CompntDataGrid_Def);
-            comRunTime.CompntSettings = JsonHelper.ToObject<CompntSettingModel>(Properties.Resources.CompntDataGrid_Setting);
-            OrgnizeRuntime.InitCompnt(comRunTime);
+            this.Loaded += CompntDataGrid_Loaded;
         }
-        public void GetData()
+
+        void CompntDataGrid_Loaded(object sender, RoutedEventArgs e)
         {
+            firstplugin.SelectedItemChanged += firstplugin_SelectedItemChanged;
+        }
+
+        void firstplugin_SelectedItemChanged(object sender, DataRow dr)
+        {
+            DefinPluginsModel pluginModel = (DefinPluginsModel)firstplugin.Tag;
+            pluginModel.PluginBlock.CurrentRow.Clear();
+            foreach (DataColumn item in dr.Table.Columns)
+            {
+                pluginModel.PluginBlock.CurrentRow.Add(item.ColumnName, dr[item.ColumnName]);
+            }
+            OrgnizeRuntime.RebuildAllDataPath(comRunTime);
+            DefinPluginsModel spluginModel = (DefinPluginsModel)secondplugin.Tag;
+            spluginModel.PluginBlock.BlockDt = dataOp.GetData(spluginModel.PluginBlock.ViewId, JsonHelper.ToJson(spluginModel.PluginBlock.BlockDataPath));
+            //secondplugin.DataSource = spluginModel.PluginBlock.BlockDt;
+            secondplugin.DoRender();
+        }
+        /// <summary>
+        /// 组件执行
+        /// </summary>
+        /// <param name="setttingModel"></param>
+        public void DoRender(CompntSettingModel setttingModel)
+        {
+            comRunTime.CompntSettings = setttingModel;
+            OrgnizeRuntime.InitCompnt(comRunTime);
             foreach (DefinViewsModel item in comRunTime.CompntDefin.Views)
             {
                 string viewId = SendMessage(item.ModelId);
@@ -47,7 +73,6 @@ namespace Victop.Frame.Component
                     ViewsBlockModel rootBlock = item.Blocks.Find(it => it.Superiors.Equals("root"));
                     rootBlock.ViewId = viewId;
                     rootBlock.BlockDataPath = new List<object>() { rootBlock.TableName };
-                    DataOperation dataOp = new DataOperation();
                     rootBlock.BlockDt = dataOp.GetData(rootBlock.ViewId, JsonHelper.ToJson(rootBlock.BlockDataPath));
                     if(rootBlock.BlockDt!=null&&rootBlock.BlockDt.Rows.Count>0)
                     {
@@ -59,7 +84,22 @@ namespace Victop.Frame.Component
                     }
                 }
             }
-            firstplugin.DataSource = comRunTime.CompntDefin.Views.Find(it=>it.ViewName.Equals("firstview")).Blocks.Find(it => it.BlockName.Equals("tom")).BlockDt;
+            foreach (DefinPluginsModel item in comRunTime.CompntDefin.Plugins)
+            {
+                OrgnizeRuntime.BindingPlugin(comRunTime, item.PluginName);
+                if (this.FindName(item.PluginName).GetType().Name.Equals(typeof(UnitDataGrid).Name))
+                {
+                    UnitDataGrid unitgrid = this.FindName(item.PluginName) as UnitDataGrid;
+                    unitgrid.Tag = item;
+                    unitgrid.DataSource = item.PluginBlock.BlockDt;
+                }
+                if (this.FindName(item.PluginName).GetType().Name.Equals(typeof(UnitRowDataPanel).Name))
+                {
+                    UnitRowDataPanel unitpanel = this.FindName(item.PluginName) as UnitRowDataPanel;
+                    unitpanel.Tag = item;
+                    //unitpanel.DoRender();
+                }
+            }
         }
         private string SendMessage(string modelId)
         {

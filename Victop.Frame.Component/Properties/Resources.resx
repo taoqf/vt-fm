@@ -130,6 +130,11 @@
 						"blocktype": "block",
 						"dataSetType": "table",
 						"superiors": "root"
+					}, {
+						"blockName": "jerry",
+						"blocktype": "block",
+						"dataSetType": "row",
+						"superiors": "tom"
 					}
 				]
 			}
@@ -141,6 +146,13 @@
 				"dataBlock": "tom",
 				"Params": [
 					"param1", "param2", "param3"
+				]
+			}, {
+				"pluginName": "secondplugin",
+				"pluginType": "tab",
+				"dataBlock": "jerry",
+				"Params": [
+					"param4", "param5", "param6"
 				]
 			}
 		],
@@ -156,35 +168,5 @@
 		]
 	}</value>
     <comment>列表组件定义</comment>
-  </data>
-  <data name="CompntDataGrid_Setting" xml:space="preserve">
-    <value>{
-		"compoSetting": {
-			"param7": "el",
-			"param8": "assembly",
-			"param9": "jsonData"
-		},
-		"pluginsSetting": {
-			"firstplugin": {
-				"param1": "每一个插件需要若干个参数,这里为每一个参数提供设置模版",
-				"param2": "每一个,一个",
-				"param3": "天佑中华"
-			}
-		},
-		"viewSetting": {
-			"views": {
-				"firstview": {
-					"modelid": "victop_core_requirement_pool_0001",
-					"datafilename": "data.json",
-					"blocks": {
-						"tom": {
-							"tablename": "iteration"
-						}
-					}
-				}
-			}
-		}
-	}</value>
-    <comment>列表组件设置</comment>
   </data>
 </root>

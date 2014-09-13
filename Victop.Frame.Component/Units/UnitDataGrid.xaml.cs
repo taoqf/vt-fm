@@ -22,6 +22,9 @@ namespace Victop.Frame.Component
     /// </summary>
     public partial class UnitDataGrid : UserControl
     {
+        public delegate void UnitDelegate(object sender, DataRow dr);
+
+        public event UnitDelegate SelectedItemChanged;
         /// <summary>
         /// 模型Id
         /// </summary>
@@ -34,7 +37,10 @@ namespace Victop.Frame.Component
             set
             {
                 SetValue(ModelIdProperty, value);
-                vicgrid.ItemsSource = DataSource.DefaultView;
+                if (DataSource != null)
+                {
+                    vicgrid.ItemsSource = DataSource.DefaultView;
+                }
             }
         }
         #region 依赖属性
@@ -43,6 +49,15 @@ namespace Victop.Frame.Component
         public UnitDataGrid()
         {
             InitializeComponent();
+            vicgrid.SelectionChanged += vicgrid_SelectionChanged;
+        }
+
+        void vicgrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SelectedItemChanged != null)
+            {
+                SelectedItemChanged(sender, (vicgrid.SelectedItem as DataRowView).Row);
+            }
         }
     }
 }

@@ -47,5 +47,12 @@ namespace Victop.Server.Controls.Runtime
             get;
             set;
         }
+        /// <summary>
+        /// 重构View下所有Block
+        /// </summary>
+        public void RebuildAllDataPath()
+        {
+ 
+        }
     }
 }
