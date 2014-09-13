@@ -76,7 +76,7 @@ namespace Victop.Frame.Component.Properties {
         ///					}, {
         ///						&quot;blockName&quot;: &quot;jerry&quot;,
         ///						&quot;blocktype&quot;: &quot;block&quot;,
-        ///						&quot;dataSetType&quot;: &quot;row&quot;,
+        ///						&quot;dataSetType&quot;: &quot;table&quot;,
         ///						&quot;superiors&quot;: &quot;tom&quot;
         ///					}
         ///				]
@@ -87,7 +87,7 @@ namespace Victop.Frame.Component.Properties {
         ///				&quot;pluginName&quot;: &quot;firstplugin&quot;,
         ///				&quot;pluginType&quot;: &quot;grid&quot;,
         ///				&quot;dataBlock&quot;: &quot;tom&quot;,
-        ///				&quot;Params&quot;: [        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///				&quot;Params&quot;:  [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string CompntDataGrid_Def {
             get {

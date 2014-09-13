@@ -54,7 +54,7 @@ namespace Victop.Frame.Component
 
         void vicgrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (SelectedItemChanged != null)
+            if (SelectedItemChanged != null && vicgrid.SelectedItem != null)
             {
                 SelectedItemChanged(sender, (vicgrid.SelectedItem as DataRowView).Row);
             }

@@ -133,7 +133,7 @@
 					}, {
 						"blockName": "jerry",
 						"blocktype": "block",
-						"dataSetType": "row",
+						"dataSetType": "table",
 						"superiors": "tom"
 					}
 				]

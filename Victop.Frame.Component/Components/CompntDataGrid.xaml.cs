@@ -54,8 +54,8 @@ namespace Victop.Frame.Component
             OrgnizeRuntime.RebuildAllDataPath(comRunTime);
             DefinPluginsModel spluginModel = (DefinPluginsModel)secondplugin.Tag;
             spluginModel.PluginBlock.BlockDt = dataOp.GetData(spluginModel.PluginBlock.ViewId, JsonHelper.ToJson(spluginModel.PluginBlock.BlockDataPath));
-            //secondplugin.DataSource = spluginModel.PluginBlock.BlockDt;
-            secondplugin.DoRender();
+            secondplugin.DataSource = spluginModel.PluginBlock.BlockDt;
+            //secondplugin.DoRender();
         }
         /// <summary>
         /// 组件执行

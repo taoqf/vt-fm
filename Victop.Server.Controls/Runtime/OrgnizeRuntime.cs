@@ -101,7 +101,6 @@ namespace Victop.Server.Controls.Runtime
                 }
             }
         }
-
         /// <summary>
         /// 重建Block的DataPath
         /// </summary>
@@ -119,6 +118,11 @@ namespace Victop.Server.Controls.Runtime
                 }
             }
         }
+        /// <summary>
+        /// 重建Block的DataPath
+        /// </summary>
+        /// <param name="definView"></param>
+        /// <param name="blockModel"></param>
         private static void RebuildDataPath(DefinViewsModel definView, ViewsBlockModel blockModel)
         {
             for (int i = 0; i < definView.Blocks.Count; i++)
