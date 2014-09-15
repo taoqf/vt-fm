@@ -198,7 +198,7 @@ namespace DocumentManagerService
             sb.Append("--" + boundary + "\r\n");
             sb.Append("Content-Disposition: form-data; name=\"media\"; filename=\"" + iUploadFromPath + "\"; filelength=\"" + fileStream.Length + "\"");
             sb.Append("\r\n");
-            sb.Append("Content-Type: " + iSuffname);
+            sb.Append("Content-Type: " + string.Format("image/{0}", iSuffname));
             sb.Append("\r\n\r\n");
             string head = sb.ToString();
             byte[] form_data = Encoding.UTF8.GetBytes(head);
