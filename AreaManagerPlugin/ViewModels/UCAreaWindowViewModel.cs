@@ -395,6 +395,11 @@ namespace AreaManagerPlugin.ViewModels
                     contentDic.Add("configsystemid", "101");
                     contentDic.Add("spaceid", "victop_core");
                     contentDic.Add("modelid", "table::industry");
+                    List<object> conlist = new List<object>();
+                    Dictionary<string, object> conDic = new Dictionary<string, object>();
+                    conDic.Add("depart_id", "1213");
+                    conlist.Add(conDic);
+                    contentDic.Add("tablecondition", conlist);
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                     if (returnDic != null)
                     {
@@ -479,8 +484,7 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) => {
                     CompntDataGrid grid = (CompntDataGrid)x;
-                    CompntSettingModel settingModel = JsonHelper.ToObject<CompntSettingModel>(FileHelper.ReadFitData("testsetting"));
-                    grid.DoRender(settingModel);
+                    grid.SettingModel = JsonHelper.ToObject<CompntSettingModel>(FileHelper.ReadFitData("testsetting"));
                 });
             }
         }

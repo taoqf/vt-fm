@@ -133,7 +133,19 @@ namespace Victop.Server.Controls.Runtime
                     Dictionary<string, object> pathDic = new Dictionary<string, object>();
                     pathDic.Add("key", "_id");
                     pathDic.Add("value", blockModel.CurrentRow["_id"]);
-                    block.BlockDataPath = blockModel.BlockDataPath;
+                    if (block.BlockDataPath == null)
+                    {
+                        block.BlockDataPath = new List<object>();
+                    }
+                    else
+                    {
+                        block.BlockDataPath.Clear();
+                    }
+                    foreach (var item in blockModel.BlockDataPath)
+                    {
+                        block.BlockDataPath.Add(item);
+                    }
+                    //block.BlockDataPath = blockModel.BlockDataPath;
                     block.BlockDataPath.Add(pathDic);
                     block.ViewId = blockModel.ViewId;
                     if (block.DataSetType.Equals("table"))

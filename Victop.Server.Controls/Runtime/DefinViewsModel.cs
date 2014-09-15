@@ -48,6 +48,15 @@ namespace Victop.Server.Controls.Runtime
             set;
         }
         /// <summary>
+        /// 数据通道标识
+        /// </summary>
+        [JsonIgnore]
+        public string ViewId
+        {
+            get;
+            set;
+        }
+        /// <summary>
         /// 重构View下所有Block
         /// </summary>
         public void RebuildAllDataPath()

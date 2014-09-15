@@ -18,7 +18,7 @@
             <RowDefinition Height="24"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+        <DockPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed">
             <ComboBox Margin="0,0,5,0" Name="cboxtable" ItemsSource="{Binding TableShowList,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="TableName" SelectedValuePath="TableId" SelectedItem="{Binding SelectedTable}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
@@ -156,7 +156,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-                        <Button Width="100" Name="btnCpntClickCommand" Height="24" Content="查询">
+                        <Button Width="100" Name="btnCpntClickCommand" Height="24" Content="附加组件配置">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction Command="{Binding btnCpntClickCommand}" CommandParameter="{Binding ElementName=cpntGrid}"/>

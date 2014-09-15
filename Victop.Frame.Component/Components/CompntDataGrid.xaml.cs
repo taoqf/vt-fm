@@ -29,6 +29,10 @@ namespace Victop.Frame.Component
         /// 组件运行时
         /// </summary>
         private ComponentModel comRunTime = new ComponentModel();
+        /// <summary>
+        /// 组件设置
+        /// </summary>
+        public CompntSettingModel SettingModel;
         DataOperation dataOp = new DataOperation();
         #endregion
         public CompntDataGrid()
@@ -40,6 +44,7 @@ namespace Victop.Frame.Component
 
         void CompntDataGrid_Loaded(object sender, RoutedEventArgs e)
         {
+            comRunTime.CompntSettings = SettingModel;
             firstplugin.SelectedItemChanged += firstplugin_SelectedItemChanged;
         }
 
@@ -61,20 +66,28 @@ namespace Victop.Frame.Component
         /// 组件执行
         /// </summary>
         /// <param name="setttingModel"></param>
-        public void DoRender(CompntSettingModel setttingModel)
+        private void DoRender(CompntSettingModel setttingModel)
         {
-            comRunTime.CompntSettings = setttingModel;
+            if (setttingModel == null)
+            {
+                comRunTime.CompntSettings = SettingModel;
+            }
+            else
+            {
+                comRunTime.CompntSettings = setttingModel;
+            }
             OrgnizeRuntime.InitCompnt(comRunTime);
             foreach (DefinViewsModel item in comRunTime.CompntDefin.Views)
             {
-                string viewId = SendMessage(item.ModelId);
+                string viewId = SendFindMessage(item.ModelId);
                 if (!string.IsNullOrEmpty(viewId))
                 {
+                    item.ViewId = viewId;
                     ViewsBlockModel rootBlock = item.Blocks.Find(it => it.Superiors.Equals("root"));
                     rootBlock.ViewId = viewId;
                     rootBlock.BlockDataPath = new List<object>() { rootBlock.TableName };
                     rootBlock.BlockDt = dataOp.GetData(rootBlock.ViewId, JsonHelper.ToJson(rootBlock.BlockDataPath));
-                    if(rootBlock.BlockDt!=null&&rootBlock.BlockDt.Rows.Count>0)
+                    if (rootBlock.BlockDt != null && rootBlock.BlockDt.Rows.Count > 0)
                     {
                         rootBlock.CurrentRow = new Dictionary<string, object>();
                         foreach (DataColumn col in rootBlock.BlockDt.Columns)
@@ -97,11 +110,15 @@ namespace Victop.Frame.Component
                 {
                     UnitRowDataPanel unitpanel = this.FindName(item.PluginName) as UnitRowDataPanel;
                     unitpanel.Tag = item;
-                    //unitpanel.DoRender();
                 }
             }
         }
-        private string SendMessage(string modelId)
+        /// <summary>
+        /// 发送查询消息
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <returns></returns>
+        private string SendFindMessage(string modelId)
         {
             try
             {
@@ -123,6 +140,47 @@ namespace Victop.Frame.Component
             {
                 string temp = ex.Message;
                 return null;
+            }
+        }
+        /// <summary>
+        /// 发送保存消息
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        private Dictionary<string, object> SendSaveMessage(DefinViewsModel viewModel)
+        {
+            DataOperation dataOp = new DataOperation();
+            foreach (ViewsBlockModel item in viewModel.Blocks)
+            {
+                dataOp.SaveData(item.ViewId, JsonHelper.ToJson(item.BlockDataPath));
+            }
+            string MessageType = "MongoDataChannelService.saveBusiData";
+            MessageOperation messageOp = new MessageOperation();
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", "100");
+            contentDic.Add("configsystemid", "101");
+            contentDic.Add("spaceid", "victop_core");
+            contentDic.Add("modelid", "table::iteration");
+            contentDic.Add("DataChannelId", viewModel.ViewId);
+            Dictionary<string, object> resultDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+            return resultDic;
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            DoRender(null);
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            Dictionary<string, object> resultDic = SendSaveMessage(comRunTime.CompntDefin.Views[0]);
+            if (resultDic != null)
+            {
+                MessageBox.Show(JsonHelper.ReadJsonString(resultDic["ReplyContent"].ToString(), "msg"));
+            }
+            else
+            {
+                MessageBox.Show("保存失败");
             }
         }
     }
