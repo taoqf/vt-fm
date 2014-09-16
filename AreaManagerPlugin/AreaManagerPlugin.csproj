@@ -90,9 +90,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
-    <Reference Include="Victop.Frame.Components">
-      <HintPath>..\..\..\VictopComponentDeveloper\victopComponents\Bin\Victop.Frame.Components.dll</HintPath>
-    </Reference>
     <Reference Include="Victop.Wpf.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Bin\Victop.Wpf.Controls.dll</HintPath>
