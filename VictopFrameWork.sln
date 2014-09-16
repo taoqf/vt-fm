@@ -25,8 +25,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.PublicLib", "V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.ServerManagerCenter", "Victop.Frame.ServerManagerCenter\Victop.Frame.ServerManagerCenter.csproj", "{0887043C-772E-4332-AF28-77FE847AB515}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VictopComponents", "VictopComponents", "{A8811646-2089-4EE2-9C01-7116E47C6206}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VictopPartner", "VictopPartner\VictopPartner.csproj", "{332943C0-716F-47B0-800D-A38CCA0DAA74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.StandaloneAdapter", "Victop.Frame.StandaloneAdapter\Victop.Frame.StandaloneAdapter.csproj", "{18B49FFA-D5B5-424A-BA1A-47563DAEE75F}"
@@ -54,8 +52,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagerService", "UserManagerService\UserManagerService.csproj", "{EBAF8D96-74A8-4D05-A2AA-C9F420DA6D0A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataCruisePlugin", "DataCruisePlugin\DataCruisePlugin.csproj", "{149E5C7F-CEC9-4836-AE77-58F1A4E0081D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.Component", "Victop.Frame.Component\Victop.Frame.Component.csproj", "{2FF9BBDB-D092-4086-93EF-372F8111686D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -308,17 +304,6 @@ Global
 		{149E5C7F-CEC9-4836-AE77-58F1A4E0081D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{149E5C7F-CEC9-4836-AE77-58F1A4E0081D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{149E5C7F-CEC9-4836-AE77-58F1A4E0081D}.Release|x86.ActiveCfg = Release|Any CPU
-		{2FF9BBDB-D092-4086-93EF-372F8111686D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2FF9BBDB-D092-4086-93EF-372F8111686D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FF9BBDB-D092-4086-93EF-372F8111686D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{2FF9BBDB-D092-4086-93EF-372F8111686D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{2FF9BBDB-D092-4086-93EF-372F8111686D}.Debug|x86.ActiveCfg = Debug|x86
-		{2FF9BBDB-D092-4086-93EF-372F8111686D}.Debug|x86.Build.0 = Debug|x86
-		{2FF9BBDB-D092-4086-93EF-372F8111686D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FF9BBDB-D092-4086-93EF-372F8111686D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2FF9BBDB-D092-4086-93EF-372F8111686D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{2FF9BBDB-D092-4086-93EF-372F8111686D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{2FF9BBDB-D092-4086-93EF-372F8111686D}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -344,6 +329,5 @@ Global
 		{2352CC85-8DC7-482E-B864-B96E1F7DC18C} = {64ACB22B-54AA-431C-A4D9-5A0DC0BF0759}
 		{EBAF8D96-74A8-4D05-A2AA-C9F420DA6D0A} = {64ACB22B-54AA-431C-A4D9-5A0DC0BF0759}
 		{149E5C7F-CEC9-4836-AE77-58F1A4E0081D} = {9F897C3B-E34A-43F9-972E-1DE4BBE833AA}
-		{2FF9BBDB-D092-4086-93EF-372F8111686D} = {A8811646-2089-4EE2-9C01-7116E47C6206}
 	EndGlobalSection
 EndGlobal

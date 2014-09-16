@@ -90,6 +90,9 @@
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
+    <Reference Include="Victop.Frame.Components">
+      <HintPath>..\..\..\VictopComponentDeveloper\victopComponents\Bin\Victop.Frame.Components.dll</HintPath>
+    </Reference>
     <Reference Include="Victop.Wpf.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Bin\Victop.Wpf.Controls.dll</HintPath>
@@ -110,10 +113,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Victop.Frame.Component\Victop.Frame.Component.csproj">
-      <Project>{2ff9bbdb-d092-4086-93ef-372f8111686d}</Project>
-      <Name>Victop.Frame.Component</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.DataChannel\Victop.Frame.DataChannel.csproj">
       <Project>{ad1deb10-b0b3-44fb-8214-5e1cbbcf9147}</Project>
       <Name>Victop.Frame.DataChannel</Name>

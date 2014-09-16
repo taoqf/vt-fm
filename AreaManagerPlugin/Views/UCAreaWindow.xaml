@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:AreaManagerPlugin.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
-             xmlns:com="clr-namespace:Victop.Frame.Component;assembly=Victop.Frame.Component"
+             xmlns:com="clr-namespace:Victop.Frame.Components;assembly=Victop.Frame.Components"
              xmlns:local="clr-namespace:AreaManagerPlugin.Views"
              mc:Ignorable="d" 
              d:DesignHeight="645" d:DesignWidth="876" Name="UCMain">

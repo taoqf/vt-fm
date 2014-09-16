@@ -66,7 +66,7 @@ namespace Victop.Frame.Component
         /// 组件执行
         /// </summary>
         /// <param name="setttingModel"></param>
-        private void DoRender(CompntSettingModel setttingModel)
+        public void DoRender(CompntSettingModel setttingModel)
         {
             if (setttingModel == null)
             {
@@ -184,4 +184,24 @@ namespace Victop.Frame.Component
             }
         }
     }
+
+
+    //public class CompntParamModel
+    //{
+    //    public string Param1
+    //    {
+    //        get;
+    //        set;
+    //    }
+    //    public string Param2
+    //    {
+    //        get;
+    //        set;
+    //    }
+    //    public string Param2
+    //    {
+    //        get;
+    //        set;
+    //    }
+    //}
 }

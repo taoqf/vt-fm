@@ -119,6 +119,21 @@ namespace Victop.Server.Controls.Runtime
             }
         }
         /// <summary>
+        /// 重构 View下的Block的DataPath
+        /// </summary>
+        /// <param name="runtime"></param>
+        /// <param name="view"></param>
+        public static void RebuildViewDataPath(ComponentModel runtime, DefinViewsModel view)
+        {
+            ViewsBlockModel blockmodel = view.Blocks.Find(it => it.Superiors.Equals("root"));
+            blockmodel.BlockDataPath.Clear();
+            blockmodel.BlockDataPath.Add(blockmodel.TableName);
+            if (blockmodel != null)
+            {
+                RebuildDataPath(view, blockmodel);
+            }
+        }
+        /// <summary>
         /// 重建Block的DataPath
         /// </summary>
         /// <param name="definView"></param>
