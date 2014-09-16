@@ -1,9 +1,0 @@
-﻿<Window x:Class="DataCruisePlugin.Views.CruiseWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:view="clr-namespace:DataCruisePlugin.Views"
-        Title="CruiseWindow" Height="300" Width="300">
-    <Grid>
-        <view:UCCruiseWindow/>
-    </Grid>
-</Window>

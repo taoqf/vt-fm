@@ -106,6 +106,21 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
+
+                    <Button Width="100" Height="24" Content="测试上传">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding btnUploadFile1ClickCommand}" ></i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button Width="100" Height="24" Content="测试下载">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding btnDownloadFile1ClickCommand}" ></i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
                     <ProgressBar  Width="100" Height="24" Name="progressBar"></ProgressBar>
                 </StackPanel>
 

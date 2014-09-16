@@ -304,6 +304,75 @@ namespace AreaManagerPlugin.ViewModels
             }
         }
 
+        string fileId = string.Empty;
+        string fileSuffix = string.Empty;
+
+        public ICommand btnUploadFile1ClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    string uploadFromPath = "";
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Title = "选择上传的文件";
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        uploadFromPath = openFileDialog.FileName;
+                    }
+
+                    Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                    Dictionary<string, string> address = new Dictionary<string, string>();
+                    address.Add("UploadFromPath", uploadFromPath);
+                    address.Add("UploadUrl", "http://192.168.40.191:8080/fsweb/upload?mode_id=1");
+                    messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+                    Dictionary<string, object> result = new MessageOperation().SendMessage("ServerCenterService.UploadDocument", messageContent);
+                    System.Windows.Forms.MessageBox.Show(JsonHelper.ToJson(result));
+
+                    Dictionary<string, object> replyContent = JsonHelper.ToObject<Dictionary<string, object>>(result["ReplyContent"].ToString());
+                    this.fileId = replyContent["fileId"].ToString();
+                    this.fileSuffix = replyContent["fileSuffix"].ToString();
+                });
+            }
+        }
+
+        public ICommand btnDownloadFile1ClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    if (this.fileId.Length > 0)
+                    {
+                        SaveFileDialog saveFileDialog = new SaveFileDialog();
+                        saveFileDialog.Title = "下载到";
+                        saveFileDialog.Filter = string.Format("{0}文件|*{0}", this.fileSuffix);
+                        string path = "";
+                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            path = saveFileDialog.FileName;
+                        }
+                        if (path == "")
+                        {
+                            return;
+                        }
+
+                        MessageOperation messageOperation = new MessageOperation();
+                        Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                        Dictionary<string, string> address = new Dictionary<string, string>();
+                        address.Add("DownloadUrl", @"http://192.168.40.191:8080/fsweb/getfile?id=" + this.fileId);
+                        address.Add("DownloadToPath", path);
+                        messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+                        Dictionary<string, object> result = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
+                        System.Windows.MessageBox.Show(JsonHelper.ToJson(result));
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("文件不存在");
+                    }
+                });
+            }
+        }
 
         /// <summary>
         /// 下载
