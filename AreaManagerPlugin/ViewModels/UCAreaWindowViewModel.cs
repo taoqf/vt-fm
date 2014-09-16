@@ -302,7 +302,7 @@ namespace AreaManagerPlugin.ViewModels
             }
         }
 
-        string fileId = string.Empty;
+        string fileId = "95714ce8-1df8-4534-9f89-0c5a25a30aa9";
         string fileSuffix = string.Empty;
 
         public ICommand btnUploadFile1ClickCommand
