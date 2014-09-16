@@ -92,6 +92,20 @@
     <Compile Include="Models\PluginModel.cs" />
     <Compile Include="Models\TemplateControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runtime\CompntDefinModel.cs" />
+    <Compile Include="Runtime\CompntSettingModel.cs" />
+    <Compile Include="Runtime\ComponentModel.cs" />
+    <Compile Include="Runtime\DefinParamMapModel.cs" />
+    <Compile Include="Runtime\DefinPluginsModel.cs" />
+    <Compile Include="Runtime\DefinViewsModel.cs" />
+    <Compile Include="Runtime\OrgnizeRuntime.cs" />
+    <Compile Include="Runtime\ViewsBlockModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Victop.Frame.PublicLib\Victop.Frame.PublicLib.csproj">
+      <Project>{90c4d04f-f952-4c63-8a69-0c9d12e050fb}</Project>
+      <Name>Victop.Frame.PublicLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

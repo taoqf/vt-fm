@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:AreaManagerPlugin.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+             xmlns:com="clr-namespace:Victop.Frame.Components;assembly=Victop.Frame.Components"
              xmlns:local="clr-namespace:AreaManagerPlugin.Views"
              mc:Ignorable="d" 
              d:DesignHeight="645" d:DesignWidth="876" Name="UCMain">
@@ -17,7 +18,7 @@
             <RowDefinition Height="24"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+        <DockPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed">
             <ComboBox Margin="0,0,5,0" Name="cboxtable" ItemsSource="{Binding TableShowList,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="TableName" SelectedValuePath="TableId" SelectedItem="{Binding SelectedTable}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
@@ -76,11 +77,11 @@
             </Button>
         </DockPanel>
         <TabControl Grid.Row="1">
-            <TabItem Header="数据集合">
+            <TabItem Header="数据集合" Visibility="Collapsed">
                 <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding MyDt, UpdateSourceTrigger=PropertyChanged}">
                 </ctrl:VicDataGrid>
             </TabItem>
-            <TabItem Header="其他测试">
+            <TabItem Header="其他测试" Visibility="Collapsed">
                 <Button Width="100" Height="24" Content="用户服务" Name="btnGetUserInfo" Margin="3,0,187,0">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
@@ -89,7 +90,7 @@
                     </i:Interaction.Triggers>
                 </Button>
             </TabItem>
-            <TabItem Header="文件服务">
+            <TabItem Header="文件服务" Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
                     <Button Width="100" Height="24" Content="文件下载">
                         <i:Interaction.Triggers>
@@ -124,7 +125,7 @@
                 </StackPanel>
 
             </TabItem>
-            <TabItem Header="JSON数据操作">
+            <TabItem Header="JSON数据操作" Visibility="Collapsed">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
@@ -161,6 +162,24 @@
                         </Button>
                     </DockPanel>
                     <DataGrid Grid.Row="1" ItemsSource="{Binding JsonDataTable}"></DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="组件测试" IsSelected="True">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <Button Width="100" Name="btnCpntClickCommand" Height="24" Content="附加组件配置">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding btnCpntClickCommand}" CommandParameter="{Binding ElementName=cpntGrid}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                    </DockPanel>
+                    <com:CompntDataGrid Grid.Row="1" x:Name="cpntGrid"/>
                 </Grid>
             </TabItem>
         </TabControl>

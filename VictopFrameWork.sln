@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.PublicLib", "V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.ServerManagerCenter", "Victop.Frame.ServerManagerCenter\Victop.Frame.ServerManagerCenter.csproj", "{0887043C-772E-4332-AF28-77FE847AB515}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VictopControls", "VictopControls", "{A8811646-2089-4EE2-9C01-7116E47C6206}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VictopPartner", "VictopPartner\VictopPartner.csproj", "{332943C0-716F-47B0-800D-A38CCA0DAA74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.StandaloneAdapter", "Victop.Frame.StandaloneAdapter\Victop.Frame.StandaloneAdapter.csproj", "{18B49FFA-D5B5-424A-BA1A-47563DAEE75F}"

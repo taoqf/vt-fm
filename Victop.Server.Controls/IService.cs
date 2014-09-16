@@ -12,7 +12,7 @@ namespace Victop.Server.Controls
 	using System.Text;
 
 	/// <summary>
-	/// 服务接口
+	/// 服务接口(与核心接口类中的同命名接口保持一致)
 	/// </summary>
 	public interface IService 
 	{

@@ -45,7 +45,12 @@ namespace Victop.Frame.DataChannel
             DataTable newDt;
             if (structDt == null)
             {
-                newDt = new DataTable(pathList[pathList.Count - 1].ToString());
+                string tableName = pathList[pathList.Count - 1].ToString();
+                if (!string.IsNullOrEmpty(JsonHelper.ReadJsonString(pathList[pathList.Count - 1].ToString(), "key")))
+                {
+                    tableName = pathList[pathList.Count - 2].ToString() + "_row";
+                }
+                newDt = new DataTable(tableName);
             }
             else
             {
@@ -89,15 +94,35 @@ namespace Victop.Frame.DataChannel
                 }
                 else
                 {
-                    DataRow dr = newDt.NewRow();
-                    foreach (DataColumn dtCol in newDt.Columns)
+                    if (structDt != null)
                     {
-                        if (jsonDic.ContainsKey(dtCol.ColumnName))
+                        DataRow dr = newDt.NewRow();
+                        foreach (DataColumn dtCol in newDt.Columns)
                         {
-                            dr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
+                            if (jsonDic.ContainsKey(dtCol.ColumnName))
+                            {
+                                dr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
+                            }
                         }
+                        newDt.Rows.Add(dr);
                     }
-                    newDt.Rows.Add(dr);
+                    else
+                    {
+                        foreach (string item in jsonDic.Keys)
+                        {
+                            if (!newDt.Columns.Contains(item))
+                            {
+                                DataColumn dc = new DataColumn(item);
+                                newDt.Columns.Add(dc);
+                            }
+                        }
+                        DataRow dr = newDt.NewRow();
+                        foreach (string item in jsonDic.Keys)
+                        {
+                            dr[item] = jsonDic[item];
+                        }
+                        newDt.Rows.Add(dr);
+                    }
                 }
             }
             newDt.AcceptChanges();

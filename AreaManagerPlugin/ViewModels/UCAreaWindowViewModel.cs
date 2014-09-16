@@ -20,6 +20,8 @@ using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.Models;
 using System.IO;
 using System.Net;
+using Victop.Frame.Components;
+using Victop.Server.Controls.Runtime;
 
 namespace AreaManagerPlugin.ViewModels
 {
@@ -461,14 +463,24 @@ namespace AreaManagerPlugin.ViewModels
                     contentDic.Add("systemid", "100");
                     contentDic.Add("configsystemid", "101");
                     contentDic.Add("spaceid", "victop_core");
-                    contentDic.Add("modelid", "victop_core_busi_point_0001");
+                    contentDic.Add("modelid", "table::industry");
+                    List<object> conlist = new List<object>();
+                    Dictionary<string, object> conDic = new Dictionary<string, object>();
+                    conDic.Add("depart_id", "1213");
+                    conlist.Add(conDic);
+                    contentDic.Add("tablecondition", conlist);
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                     if (returnDic != null)
                     {
                         viewId = returnDic["DataChannelId"].ToString();
-                        dataPath = "[\"busi_point\"]";
+                        dataPath = "[\"industry\"]";
                         DataOperation dataOp = new DataOperation();
                         JsonDataTable = dataOp.GetData(viewId, dataPath, null);
+                        //string temp = dataOp.GetJSONData(viewId);
+                        //dynamic dyc = JsonHelper.DeserializeObject(temp);
+                        //dyc.docDataStore.busi_point.summary.totalRow = 3;
+                        //string temp1 = JsonHelper.ToJson(dyc);
+                        //string temp2 = dataOp.GetJSONData(viewId);
                     }
                 });
             }
@@ -487,7 +499,7 @@ namespace AreaManagerPlugin.ViewModels
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                     contentDic.Add("DataChannelId", viewId);
-                    contentDic.Add("modelid", "victop_core_busi_point_0001");
+                    contentDic.Add("modelid", "table::industry");
                     contentDic.Add("systemid", "100");
                     contentDic.Add("configsystemid", "101");
                     contentDic.Add("spaceid", "victop_core");
@@ -534,6 +546,19 @@ namespace AreaManagerPlugin.ViewModels
         }
         #endregion
 
+        #region 组件测试
+        public ICommand btnCpntClickCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) => {
+                    CompntDataGrid grid = (CompntDataGrid)x;
+                    grid.SettingModel = JsonHelper.ToObject<CompntSettingModel>(FileHelper.ReadFitData("testsetting"));
+                    
+                });
+            }
+        }
+        #endregion
 
         #region 私有方法
         /// <summary>
