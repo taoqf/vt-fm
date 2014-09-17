@@ -465,7 +465,7 @@ namespace AreaManagerPlugin.ViewModels
                     contentDic.Add("modelid", "table::industry");
                     List<object> conlist = new List<object>();
                     Dictionary<string, object> conDic = new Dictionary<string, object>();
-                    conDic.Add("depart_id", "1213");
+                    conDic.Add("name",RegexHelper.Contains("商"));
                     conlist.Add(conDic);
                     contentDic.Add("tablecondition", conlist);
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");

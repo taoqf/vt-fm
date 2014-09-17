@@ -124,7 +124,7 @@
                 </StackPanel>
 
             </TabItem>
-            <TabItem Header="JSON数据操作" Visibility="Collapsed">
+            <TabItem Header="JSON数据操作">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
