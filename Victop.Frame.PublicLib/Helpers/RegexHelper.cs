@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Victop.Frame.PublicLib.Helpers
 {
+    /// <summary>
+    /// 正则表达式辅助类
+    /// </summary>
     public static class RegexHelper
     {
         /// <summary>
