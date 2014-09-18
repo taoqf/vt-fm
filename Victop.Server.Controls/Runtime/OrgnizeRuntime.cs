@@ -12,10 +12,25 @@ namespace Victop.Server.Controls.Runtime
         /// 初始化组件运行时
         /// </summary>
         /// <param name="runtime"></param>
-        public static void InitCompnt(ComponentModel runtime)
+        public static bool InitCompnt(ComponentModel runtime)
         {
-            RebulidViews(runtime);
-            RebuildPlugins(runtime);
+            try
+            {
+                if (runtime.CompntSettings != null)
+                {
+                    RebulidViews(runtime);
+                    RebuildPlugins(runtime);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
         /// <summary>
         /// 重建Views
