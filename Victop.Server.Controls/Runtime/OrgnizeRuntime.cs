@@ -85,7 +85,7 @@ namespace Victop.Server.Controls.Runtime
         /// <param name="pluginName"></param>
         public static void BindingPlugin(ComponentModel runtime, string pluginName)
         {
-            DefinPluginsModel pluginModel = runtime.CompntDefin.Plugins.FirstOrDefault(it=>it.PluginName.Equals(pluginName));
+            DefinPluginsModel pluginModel = runtime.CompntDefin.Plugins.FirstOrDefault(it => it.PluginName.Equals(pluginName));
             if (pluginModel != null)
             {
                 foreach (DefinViewsModel item in runtime.CompntDefin.Views)
@@ -126,6 +126,8 @@ namespace Victop.Server.Controls.Runtime
         public static void RebuildViewDataPath(ComponentModel runtime, DefinViewsModel view)
         {
             ViewsBlockModel blockmodel = view.Blocks.Find(it => it.Superiors.Equals("root"));
+            if (blockmodel.BlockDataPath == null)
+                blockmodel.BlockDataPath = new List<object>();
             blockmodel.BlockDataPath.Clear();
             blockmodel.BlockDataPath.Add(blockmodel.TableName);
             if (blockmodel != null)
