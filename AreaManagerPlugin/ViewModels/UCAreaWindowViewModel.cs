@@ -465,9 +465,15 @@ namespace AreaManagerPlugin.ViewModels
                     contentDic.Add("modelid", "table::industry");
                     List<object> conlist = new List<object>();
                     Dictionary<string, object> conDic = new Dictionary<string, object>();
-                    conDic.Add("name",RegexHelper.Contains("商"));
+                    conDic.Add("name", "industry");
+                    List<object> tableConList = new List<object>();
+                    Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+                    tableConDic.Add("name", RegexHelper.StartWith("电"));
+                    tableConList.Add(tableConDic);
+                    conDic.Add("tablecondition", tableConList);
                     conlist.Add(conDic);
-                    contentDic.Add("tablecondition", conlist);
+                    contentDic.Add("conditions", conlist);
+
                     Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                     if (returnDic != null)
                     {
@@ -493,8 +499,9 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    DataOperation dataOp = new DataOperation();
-                    bool result = dataOp.SaveData(viewId, dataPath);
+                    //DataOperation dataOp = new DataOperation();
+                    //bool result = dataOp.SaveData(viewId, dataPath);
+                    //return;
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                     contentDic.Add("DataChannelId", viewId);
@@ -524,8 +531,10 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    JSONDataOperation jsonOp = new JSONDataOperation();
-                    jsonOp.ModifyData(viewId, "[\"area\",{\"key\":\"_id\",\"value\":\"A0001\"},\"order\",{\"key\":\"_id\",\"value\":\"ASDLFKJ-KJLSDJF\"}]", "{\"name\":\"商品订单\"}");
+                    DataRow dr = JsonDataTable.NewRow();
+                    JsonDataTable.Rows.Add(dr);
+                    //JSONDataOperation jsonOp = new JSONDataOperation();
+                    //jsonOp.ModifyData(viewId, "[\"area\",{\"key\":\"_id\",\"value\":\"A0001\"},\"order\",{\"key\":\"_id\",\"value\":\"ASDLFKJ-KJLSDJF\"}]", "{\"name\":\"商品订单\"}");
                 });
             }
         }
