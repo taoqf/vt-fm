@@ -21,6 +21,7 @@ using Victop.Server.Controls.Models;
 using System.IO;
 using System.Net;
 using Victop.Server.Controls.Runtime;
+using System.Collections;
 
 namespace AreaManagerPlugin.ViewModels
 {
@@ -465,7 +466,7 @@ namespace AreaManagerPlugin.ViewModels
                         contentDic.Add("systemid", "100");
                         contentDic.Add("configsystemid", "101");
                         ///contentDic.Add("spaceid", "victop_core");
-                        contentDic.Add("modelid", "victop_core_compnt_0001");
+                        contentDic.Add("modelid", "victop_core_task_pool_0001");
                         //List<object> conlist = new List<object>();
                         //Dictionary<string, object> conDic = new Dictionary<string, object>();
                         //conDic.Add("name", "industry");
@@ -481,10 +482,18 @@ namespace AreaManagerPlugin.ViewModels
                         if (returnDic != null)
                         {
                             viewId = returnDic["DataChannelId"].ToString();
-                            //dataPath = "[\"industry\"]";
+                            List<object> pathList = new List<object>();
+                            pathList.Add("task_pool");
+                            Dictionary<string, object> pathDic = new Dictionary<string, object>();
+                            pathDic.Add("key", "_id");
+                            pathDic.Add("value", "c7ded84f-da7f-4e7b-930d-3a9e0a28276e");
+                            pathList.Add(pathDic);
+                            pathList.Add("page");
+                            dataPath = JsonHelper.ToJson(pathList);
                             DataOperation dataOp = new DataOperation();
-                            string temp = dataOp.GetJSONData(viewId);
-                            //JsonDataTable = dataOp.GetData(viewId, dataPath, null);
+                            DataSet ds = new DataSet();
+                            ds = dataOp.GetData(viewId, dataPath,ds);
+                            JsonDataTable = ds.Tables["dataArray"];
                         }
                         #endregion
                         #region tianlong库
@@ -538,16 +547,15 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    //DataOperation dataOp = new DataOperation();
-                    //bool result = dataOp.SaveData(viewId, dataPath);
-                    //return;
+                    DataOperation dataOp = new DataOperation();
+                    bool result = dataOp.SaveData(viewId, dataPath);
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                     contentDic.Add("DataChannelId", viewId);
-                    contentDic.Add("modelid", "table::industry");
+                    contentDic.Add("modelid", "victop_core_task_pool_0001");
                     contentDic.Add("systemid", "100");
                     contentDic.Add("configsystemid", "101");
-                    contentDic.Add("spaceid", "victop_core");
+                    contentDic.Add("spaceId", "victop_core");
                     Dictionary<string, object> resultDic = messageOp.SendMessage("MongoDataChannelService.saveBusiData", contentDic, "JSON");
                     string temp1 = resultDic["ReplyMode"].ToString();
                     //JSONDataOperation jsonOp = new JSONDataOperation();
@@ -598,10 +606,11 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) => {
+                return new RelayCommand<object>((x) =>
+                {
                     //CompntDataGrid grid = (CompntDataGrid)x;
                     //grid.SettingModel = JsonHelper.ToObject<CompntSettingModel>(FileHelper.ReadFitData("testsetting"));
-                    
+
                 });
             }
         }

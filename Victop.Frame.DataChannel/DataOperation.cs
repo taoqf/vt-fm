@@ -34,12 +34,12 @@ namespace Victop.Frame.DataChannel
         /// </summary>
         /// <param name="channelId"></param>
         /// <param name="dataPath"></param>
-        /// <param name="structDt"></param>
+        /// <param name="structDs"></param>
         /// <returns></returns>
-        public virtual DataTable GetData(string channelId, string dataPath, DataTable structDt = null)
+        public virtual DataSet GetData(string channelId, string dataPath, DataSet structDs = null)
         {
             DataConvertManager convertManager = new DataConvertManager();
-            return convertManager.GetDataTable(channelId, dataPath, structDt);
+            return convertManager.GetDataSet(channelId, dataPath, structDs);
         }
         /// <summary>
         /// 保存数据集
@@ -50,7 +50,7 @@ namespace Victop.Frame.DataChannel
         public virtual bool SaveData(string channelId, string dataPath)
         {
             DataConvertManager convertManager = new DataConvertManager();
-            return convertManager.SaveDataTable(channelId, dataPath);
+            return convertManager.SaveData(channelId, dataPath);
         }
         /// <summary>
         /// 根据通道号获取JSON数据

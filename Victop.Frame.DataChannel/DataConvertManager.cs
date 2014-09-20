@@ -65,7 +65,7 @@ namespace Victop.Frame.DataChannel
                 {
                     jsonData = jsonDic["dataArray"].ToString();
                     List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
-                    if (arrayList != null&&arrayList.Count>0)
+                    if (arrayList != null && arrayList.Count > 0)
                     {
                         if (structDt == null)
                         {
@@ -143,13 +143,180 @@ namespace Victop.Frame.DataChannel
             }
             return newDt;
         }
+
         /// <summary>
-        /// 保存数据DataTable
+        /// 获取数据集
+        /// </summary>
+        /// <param name="viewId"></param>
+        /// <param name="dataPath"></param>
+        /// <param name="structDs"></param>
+        /// <returns></returns>
+        public DataSet GetDataSet(string viewId, string dataPath, DataSet structDs = null)
+        {
+            if (string.IsNullOrEmpty(dataPath))
+                return null;
+            DataSet newDs = structDs == null ? new DataSet() : structDs.Copy();
+            newDs.Clear();
+            List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
+            string jsonData = DataTool.GetDataByPath(viewId, dataPath);
+            if (!string.IsNullOrEmpty(jsonData))
+            {
+                Dictionary<string, object> jsonDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
+                if (pathList.Count % 2 == 1)//获取表数据
+                {
+                    #region 组织表数据
+                    foreach (string item in jsonDic.Keys)
+                    {
+                        List<string> delColList = new List<string>();
+                        DataTable itemDt = new DataTable();
+                        bool existFlag = false;
+                        switch (jsonDic[item].GetType().Name)
+                        {
+                            case "JArray":
+                                List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonDic[item].ToString());
+                                if (arrayList == null || arrayList.Count == 0)
+                                    continue;
+                                itemDt = GetDataTableStruct(item, arrayList[0], newDs, out existFlag);
+                                foreach (Dictionary<string, object> rowItem in arrayList)
+                                {
+                                    DataRow arrayDr = itemDt.NewRow();
+                                    foreach (DataColumn dtCol in itemDt.Columns)
+                                    {
+                                        if (rowItem.ContainsKey(dtCol.ColumnName))
+                                        {
+                                            if (rowItem[dtCol.ColumnName] != null && !rowItem[dtCol.ColumnName].GetType().Name.Equals("String"))
+                                            {
+                                                if (!delColList.Contains(dtCol.ColumnName))
+                                                    delColList.Add(dtCol.ColumnName);
+                                            }
+                                            arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                        }
+                                    }
+                                    itemDt.Rows.Add(arrayDr);
+                                }
+                                break;
+                            case "JObject":
+                                Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
+                                itemDt = GetDataTableStruct(item, itemDic, newDs, out existFlag);
+                                DataRow objectDr = itemDt.NewRow();
+                                foreach (DataColumn dtCol in itemDt.Columns)
+                                {
+                                    if (itemDic.ContainsKey(dtCol.ColumnName))
+                                    {
+                                        if (itemDic[dtCol.ColumnName] != null && !itemDic[dtCol.ColumnName].GetType().Name.Equals("String"))
+                                        {
+                                            if (!delColList.Contains(dtCol.ColumnName))
+                                                delColList.Add(dtCol.ColumnName);
+                                        }
+                                        objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
+                                    }
+                                }
+                                itemDt.Rows.Add(objectDr);
+                                break;
+                            default:
+                                break;
+                        }
+                        if (delColList.Count > 0)
+                        {
+                            foreach (string delColItem in delColList)
+                            {
+                                if (itemDt.Columns.Contains(delColItem))
+                                {
+                                    itemDt.Columns.Remove(delColItem);
+                                }
+                            }
+                        }
+                        itemDt.AcceptChanges();
+                        if (existFlag)
+                        {
+                            newDs.Tables.Remove(item);
+                        }
+                        newDs.Tables.Add(itemDt);
+                    }
+                    #endregion
+                }
+                else//获取行数据
+                {
+                    #region 组织行数据
+                    DataTable itemDt = new DataTable();
+                    bool existFlag = false;
+                    itemDt = GetDataTableStruct("dataArray", jsonDic, newDs, out existFlag);
+                    DataRow objectDr = itemDt.NewRow();
+                    foreach (DataColumn dtCol in itemDt.Columns)
+                    {
+                        if (jsonDic.ContainsKey(dtCol.ColumnName))
+                        {
+                            objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
+                        }
+                    }
+                    itemDt.Rows.Add(objectDr);
+                    itemDt.AcceptChanges();
+                    if (existFlag)
+                    {
+                        newDs.Tables.Remove("dataArray");
+                    }
+                    newDs.Tables.Add(itemDt);
+                    #endregion
+                }
+            }
+            else
+            {
+                DataTable itemDt = new DataTable("dataArray");
+                //TODO:构建表结构
+                itemDt.AcceptChanges();
+                newDs.Tables.Add(itemDt);
+            }
+            bool checkFlag = false;
+            foreach (JsonMapKey item in JsonTableMap.Keys)
+            {
+                if (item.ViewId == viewId && item.DataPath == dataPath)
+                {
+                    JsonTableMap[item] = newDs;
+                    checkFlag = true;
+                    break;
+                }
+            }
+            if (!checkFlag)
+            {
+                JsonMapKey mapKey = new JsonMapKey() { ViewId = viewId, DataPath = dataPath };
+                JsonTableMap.Add(mapKey, newDs);
+            }
+            return newDs;
+        }
+        /// <summary>
+        /// 构建Datatable结构
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="Keys"></param>
+        /// <param name="newDs"></param>
+        /// <returns></returns>
+        private DataTable GetDataTableStruct(string item, Dictionary<string, object> rowData, DataSet newDs, out bool existFlag)
+        {
+            DataTable itemDt = new DataTable();
+            if (newDs.Tables.Contains(item))
+            {
+                itemDt = newDs.Tables[item];
+                existFlag = true;
+            }
+            else
+            {
+                itemDt.TableName = item;
+                foreach (string colItem in rowData.Keys)
+                {
+                    DataColumn dc = new DataColumn(colItem);
+                        itemDt.Columns.Add(dc);
+                }
+                existFlag = false;
+            }
+            return itemDt;
+        }
+        /// <summary>
+        /// 保存数据集
         /// </summary>
         /// <param name="viewId"></param>
         /// <param name="dataPath"></param>
         /// <returns></returns>
-        public bool SaveDataTable(string viewId, string dataPath)
+        public bool SaveData(string viewId, string dataPath)
         {
             bool editFlag = true;
             DataTable dt = new DataTable();
@@ -157,7 +324,7 @@ namespace Victop.Frame.DataChannel
             {
                 if (item.ViewId.Equals(viewId) && item.DataPath.Equals(dataPath))
                 {
-                    dt = JsonTableMap[item] as DataTable;
+                    dt = ((DataSet)JsonTableMap[item]).Tables["dataArray"];
                     break;
                 }
             }
@@ -171,6 +338,8 @@ namespace Victop.Frame.DataChannel
                             Dictionary<string, object> addDic = new Dictionary<string, object>();
                             foreach (DataColumn dc in dt.Columns)
                             {
+                                if (dr[dc.ColumnName].GetType().Name.Equals("JObject"))
+                                    continue;
                                 addDic.Add(dc.ColumnName, dr[dc.ColumnName]);
                             }
                             editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, OpreateStateEnum.Added);
@@ -189,10 +358,13 @@ namespace Victop.Frame.DataChannel
                                 modDic.Add(dc.ColumnName, dr[dc.ColumnName]);
                             }
                             List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
-                            Dictionary<string, object> pathDic = new Dictionary<string, object>();
-                            pathDic.Add("key", "_id");
-                            pathDic.Add("value", dr["_id"]);
-                            pathList.Add(pathDic);
+                            if (pathList[pathList.Count - 1].GetType().Name.Equals("String"))
+                            {
+                                Dictionary<string, object> pathDic = new Dictionary<string, object>();
+                                pathDic.Add("key", "_id");
+                                pathDic.Add("value", dr["_id"]);
+                                pathList.Add(pathDic);
+                            }
                             editFlag = DataTool.SaveCurdDataByPath(viewId, pathList, modDic, OpreateStateEnum.Modified);
                             break;
                         case DataRowState.Unchanged:
