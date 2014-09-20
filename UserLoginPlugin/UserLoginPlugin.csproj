@@ -136,10 +136,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Victop.Frame.CoreLibrary\Victop.Frame.CoreLibrary.csproj">
-      <Project>{9bf73423-7f54-4de6-bfbb-e179ba454f0e}</Project>
-      <Name>Victop.Frame.CoreLibrary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.MessageManager\Victop.Frame.MessageManager.csproj">
       <Project>{e2066a80-e481-488d-a260-5c0ac9b7eff0}</Project>
       <Name>Victop.Frame.MessageManager</Name>
