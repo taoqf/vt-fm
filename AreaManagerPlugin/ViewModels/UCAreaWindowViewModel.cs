@@ -456,69 +456,76 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    string MessageType = "MongoDataChannelService.findBusiData";
-                    MessageOperation messageOp = new MessageOperation();
-                    #region victop_core库
-                    //Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    //contentDic.Add("systemid", "100");
-                    //contentDic.Add("configsystemid", "101");
-                    //contentDic.Add("spaceid", "victop_core");
-                    //contentDic.Add("modelid", "table::industry");
-                    //List<object> conlist = new List<object>();
-                    //Dictionary<string, object> conDic = new Dictionary<string, object>();
-                    //conDic.Add("name", "industry");
-                    //List<object> tableConList = new List<object>();
-                    //Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-                    //tableConDic.Add("name", RegexHelper.StartWith("电"));
-                    //tableConList.Add(tableConDic);
-                    //conDic.Add("tablecondition", tableConList);
-                    //conlist.Add(conDic);
-                    //contentDic.Add("conditions", conlist);
-
-                    //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
-                    //if (returnDic != null)
-                    //{
-                    //    viewId = returnDic["DataChannelId"].ToString();
-                    //    dataPath = "[\"industry\"]";
-                    //    DataOperation dataOp = new DataOperation();
-                    //    JsonDataTable = dataOp.GetData(viewId, dataPath, null);
-                    //}
-                    #endregion
-                    #region tianlong库
-                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    contentDic.Add("systemid", "906");
-                    contentDic.Add("configsystemid", "905");
-                    contentDic.Add("spaceid", "tianlong");
-                    contentDic.Add("modelid", "tl_customer_in_0001");
-                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
-                    if (returnDic != null)
+                    try
                     {
-                        viewId = returnDic["DataChannelId"].ToString();
-                        DataOperation dataOp = new DataOperation();
-                        string temp = dataOp.GetJSONData(viewId);
-                        List<object> tempList = new List<object>();
-                        tempList.Add("simpleRef");
-                        JsonDataTable = dataOp.GetData(viewId, JsonHelper.ToJson(tempList), null);
-                    }
-                    #endregion
+                        string MessageType = "MongoDataChannelService.findBusiData";
+                        MessageOperation messageOp = new MessageOperation();
+                        #region victop_core库
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        contentDic.Add("systemid", "100");
+                        contentDic.Add("configsystemid", "101");
+                        ///contentDic.Add("spaceid", "victop_core");
+                        contentDic.Add("modelid", "victop_core_compnt_0001");
+                        //List<object> conlist = new List<object>();
+                        //Dictionary<string, object> conDic = new Dictionary<string, object>();
+                        //conDic.Add("name", "industry");
+                        //List<object> tableConList = new List<object>();
+                        //Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+                        //tableConDic.Add("name", RegexHelper.StartWith("电"));
+                        //tableConList.Add(tableConDic);
+                        //conDic.Add("tablecondition", tableConList);
+                        //conlist.Add(conDic);
+                        //contentDic.Add("conditions", conlist);
 
-                    #region 获取编号
-                    //Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    //contentDic.Add("configsystemid", "101");
-                    //contentDic.Add("spaceid", "tbs");
-                    //contentDic.Add("pname", "BH005");
-                    //contentDic.Add("setinfo", "ltab,1");
-                    //Dictionary<string, object> returnDic = messageOp.SendMessage("MongoDataChannelService.findDocCode", contentDic, "JSON");
-                    //if (returnDic != null)
-                    //{
-                    //    viewId = returnDic["DataChannelId"].ToString();
-                    //    DataOperation dataOp = new DataOperation();
-                    //    string temp = dataOp.GetJSONData(viewId);
-                    //    List<object> tempList = new List<object>();
-                    //    tempList.Add("simpleRef");
-                    //    JsonDataTable = dataOp.GetData(viewId, JsonHelper.ToJson(tempList), null);
-                    //}
-                    #endregion
+                        Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        if (returnDic != null)
+                        {
+                            viewId = returnDic["DataChannelId"].ToString();
+                            //dataPath = "[\"industry\"]";
+                            DataOperation dataOp = new DataOperation();
+                            string temp = dataOp.GetJSONData(viewId);
+                            //JsonDataTable = dataOp.GetData(viewId, dataPath, null);
+                        }
+                        #endregion
+                        #region tianlong库
+                        //Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        //contentDic.Add("systemid", "906");
+                        //contentDic.Add("configsystemid", "905");
+                        ////contentDic.Add("spaceid", "tianlong");
+                        //contentDic.Add("modelid", "tl_customer_in_0001");
+                        //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        //if (returnDic != null)
+                        //{
+                        //    viewId = returnDic["DataChannelId"].ToString();
+                        //    DataOperation dataOp = new DataOperation();
+                        //    string temp = dataOp.GetJSONData(viewId);
+                        //    List<object> tempList = new List<object>();
+                        //    tempList.Add("simpleRef");
+                        //    JsonDataTable = dataOp.GetData(viewId, JsonHelper.ToJson(tempList), null);
+                        //}
+                        #endregion
+                        #region 获取编号
+                        //Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        //contentDic.Add("configsystemid", "101");
+                        //contentDic.Add("spaceid", "tbs");
+                        //contentDic.Add("pname", "BH005");
+                        //contentDic.Add("setinfo", "ltab,1");
+                        //Dictionary<string, object> returnDic = messageOp.SendMessage("MongoDataChannelService.findDocCode", contentDic, "JSON");
+                        //if (returnDic != null)
+                        //{
+                        //    viewId = returnDic["DataChannelId"].ToString();
+                        //    DataOperation dataOp = new DataOperation();
+                        //    string temp = dataOp.GetJSONData(viewId);
+                        //    List<object> tempList = new List<object>();
+                        //    tempList.Add("simpleRef");
+                        //    JsonDataTable = dataOp.GetData(viewId, JsonHelper.ToJson(tempList), null);
+                        //}
+                        #endregion
+                    }
+                    catch (Exception ex)
+                    {
+                        string temp = ex.Message;
+                    }
                 });
             }
         }
