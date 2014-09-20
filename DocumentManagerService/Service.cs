@@ -132,11 +132,6 @@ namespace DocumentManagerService
                     string suffname = iUploadFromPath.Substring(i + 1);
                     string myrequest = UploadFile(iUploadUrl, iUploadFromPath, suffname);//返回的Jason字符串 
 
-                    //string myrequest = "{\"1\":\"" + "1=1" + "\",\"2\":\"" + "1=0" + "1080"+",'thumbnail"; 
-                    ////[{"filename":"95714ce8-1df8-4534-9f89-0c5a25a30aa9.jpg","width":1920,"height":1080,"thumbnail":[{"filename":"95714ce8-1df8-4534-9f89-0c5a25a30aa9_1.jpg","standardId":"1","width":80,"height":80},{"filename":"95714ce8-1df8-4534-9f89-0c5a25a30aa9_2.jpg","standardId":"2","width":120,"height":120},{"filename":"95714ce8-1df8-4534-9f89-0c5a25a30aa9_3.jpg","standardId":"3","width":200,"height":200}]}] 
-                    //string kickString = JsonHelper.ReadJsonString(myrequest, "filename"); 
-                    //string[] file = JsonHelper.ReadJsonObject<string[]>(myrequest, "filename"); 
-                    //Dictionary<string, string> rqobj = JsonHelper.ToObject<Dictionary<string, string>>(split[0]); 
                     myrequest = myrequest.Replace("[", "");
                     myrequest = myrequest.Replace("]", "");
                     Match m = Regex.Match(myrequest, @"([\s\S]*?)thumbnail");
@@ -189,6 +184,7 @@ namespace DocumentManagerService
             byte[] buffer = br.ReadBytes(Convert.ToInt32(fileStream.Length));
 
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
+            string contentType = FileContentType.GetMimeType(iSuffname);
 
             // mode_id=1,1,,1此处的字符串表示共上传4个文件，其中第1、2、4个文件需要按模式1做缩略图处理
             WebRequest req = WebRequest.Create(iUploadUrl);
@@ -198,7 +194,7 @@ namespace DocumentManagerService
             sb.Append("--" + boundary + "\r\n");
             sb.Append("Content-Disposition: form-data; name=\"media\"; filename=\"" + iUploadFromPath + "\"; filelength=\"" + fileStream.Length + "\"");
             sb.Append("\r\n");
-            sb.Append("Content-Type: " + string.Format("image/{0}", iSuffname));
+            sb.Append("Content-Type: " + contentType);
             sb.Append("\r\n\r\n");
             string head = sb.ToString();
             byte[] form_data = Encoding.UTF8.GetBytes(head);

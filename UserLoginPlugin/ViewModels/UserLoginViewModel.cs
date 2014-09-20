@@ -15,7 +15,6 @@ using System.Windows.Controls;
 using Victop.Server.Controls.Models;
 using Victop.Frame.PublicLib.Managers;
 using Victop.Frame.MessageManager;
-using Victop.Frame.CoreLibrary;
 using Victop.Frame.PublicLib.Helpers;
 using System.Threading;
 using System.Data;

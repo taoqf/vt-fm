@@ -6,7 +6,6 @@
              xmlns:vm="clr-namespace:AreaManagerPlugin.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
-             xmlns:com="clr-namespace:Victop.Frame.Components;assembly=Victop.Frame.Components"
              xmlns:local="clr-namespace:AreaManagerPlugin.Views"
              mc:Ignorable="d" 
              d:DesignHeight="645" d:DesignWidth="876" Name="UCMain">
@@ -125,7 +124,7 @@
                 </StackPanel>
 
             </TabItem>
-            <TabItem Header="JSON数据操作" Visibility="Collapsed">
+            <TabItem Header="JSON数据操作">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
@@ -179,7 +178,7 @@
                             </i:Interaction.Triggers>
                         </Button>
                     </DockPanel>
-                    <com:CompntDataGrid Grid.Row="1" x:Name="cpntGrid"/>
+                    <!--<com:CompntDataGrid Grid.Row="1" x:Name="cpntGrid"/>-->
                 </Grid>
             </TabItem>
         </TabControl>

@@ -6,43 +6,43 @@
         <Storyboard x:Key="mainstory" Completed="mainstory_Completed">
             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.OpacityMask).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="image">
                 <EasingColorKeyFrame KeyTime="0" Value="Transparent"/>
-                <EasingColorKeyFrame KeyTime="0:0:4" Value="Transparent"/>
-                <EasingColorKeyFrame KeyTime="0:0:6" Value="White"/>
-                <EasingColorKeyFrame KeyTime="0:0:7" Value="White"/>
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="Transparent"/>
+                <EasingColorKeyFrame KeyTime="0:0:2" Value="White"/>
+                <EasingColorKeyFrame KeyTime="0:0:3" Value="White"/>
             </ColorAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.OpacityMask).(GradientBrush.GradientStops)[2].(GradientStop.Offset)" Storyboard.TargetName="image">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.465"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="0.465"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:6" Value="0.465"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:7" Value="0.465"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0.465"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="0.465"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="0.465"/>
             </DoubleAnimationUsingKeyFrames>
             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.OpacityMask).(GradientBrush.GradientStops)[2].(GradientStop.Color)" Storyboard.TargetName="image">
                 <EasingColorKeyFrame KeyTime="0" Value="#FFD0D0D0"/>
-                <EasingColorKeyFrame KeyTime="0:0:4" Value="#FFD0D0D0"/>
-                <EasingColorKeyFrame KeyTime="0:0:6" Value="#FFD0D0D0"/>
-                <EasingColorKeyFrame KeyTime="0:0:7" Value="#FFD0D0D0"/>
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#FFD0D0D0"/>
+                <EasingColorKeyFrame KeyTime="0:0:2" Value="#FFD0D0D0"/>
+                <EasingColorKeyFrame KeyTime="0:0:3" Value="#FFD0D0D0"/>
             </ColorAnimationUsingKeyFrames>
             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.OpacityMask).(GradientBrush.GradientStops)[3].(GradientStop.Color)" Storyboard.TargetName="image">
                 <EasingColorKeyFrame KeyTime="0" Value="#00DBDBDB"/>
-                <EasingColorKeyFrame KeyTime="0:0:4" Value="#00DBDBDB"/>
-                <EasingColorKeyFrame KeyTime="0:0:6" Value="#FFDBDBDB"/>
-                <EasingColorKeyFrame KeyTime="0:0:7" Value="#FFDBDBDB"/>
+                <EasingColorKeyFrame KeyTime="0:0:1" Value="#00DBDBDB"/>
+                <EasingColorKeyFrame KeyTime="0:0:2" Value="#FFDBDBDB"/>
+                <EasingColorKeyFrame KeyTime="0:0:3" Value="#FFDBDBDB"/>
             </ColorAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="image">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.2"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:6" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:7" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="image">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0.2"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:6" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:7" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="image">
-                <EasingDoubleKeyFrame KeyTime="0:0:6" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:7" Value="0.1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="0.1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>

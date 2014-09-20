@@ -226,7 +226,7 @@ namespace Victop.Frame.Connection
             MessageOrganizeManager organizeManager = new MessageOrganizeManager();
             DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
             string DataChannelId = JsonHelper.ReadJsonString(messageInfo.MessageContent, "DataChannelId");
-            messageInfo = organizeManager.OrganizeMessage(messageInfo, out saveDataFlag);
+            messageInfo = organizeManager.OrganizeMessage(messageInfo, dataForm,out saveDataFlag);
             string DataSource = ConfigurationManager.AppSettings.Get("DataSource").ToLower();
             ReplyMessage replyMessage = new ReplyMessage();
             switch (DataSource)

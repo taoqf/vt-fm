@@ -26,7 +26,7 @@ namespace Victop.Frame.Connection
         /// </summary>
         /// <param name="messageInfo"></param>
         /// <returns></returns>
-        public virtual RequestMessage OrganizeMessage(RequestMessage messageInfo, out DataOperateEnum replyIsToChannel)
+        public virtual RequestMessage OrganizeMessage(RequestMessage messageInfo, DataFormEnum dataForm, out DataOperateEnum replyIsToChannel)
         {
             replyIsToChannel = DataOperateEnum.NONE;
             #region 通道及用户相关
@@ -119,10 +119,35 @@ namespace Victop.Frame.Connection
                 {
                     dicContent["runUser"] = loginUserInfo.UserCode;
                 }
-                if (dicContent.ContainsKey("clientId"))
+                switch (dataForm)
                 {
-                    string clientId = cloudGallyInfo.ClientId;
-                    dicContent["clientId"] = clientId;
+                    case DataFormEnum.DATASET:
+                        if (dicContent.ContainsKey("clientId"))
+                        {
+                            dicContent["clientId"] = cloudGallyInfo.ClientId;
+                        }
+                        else
+                        {
+                            dicContent.Add("clientId", cloudGallyInfo.ClientId);
+                        }
+                        break;
+                    case DataFormEnum.JSON:
+                        if (dicContent.ContainsKey("clientId"))
+                        {
+                            dicContent.Remove("clientId");
+                            dicContent.Add("spaceId", cloudGallyInfo.ClientId);
+                        }
+                        if (dicContent.ContainsKey("spaceId"))
+                        {
+                            dicContent["spaceId"] = cloudGallyInfo.ClientId;
+                        }
+                        else
+                        {
+                            dicContent.Add("spaceId", cloudGallyInfo.ClientId);
+                        }
+                        break;
+                    default:
+                        break;
                 }
 
                 messageInfo.MessageContent = JsonHelper.ToJson(dicContent);
@@ -1499,6 +1524,7 @@ namespace Victop.Frame.Connection
             List<object> definition = new List<object>();
             definition.Add("tables");
             definition.Add("relation");
+            definition.Add("setting.fieldSetting");
             if (dicContent.ContainsKey("modeldefinition"))
             {
                 dicContent["modeldefinition"] = definition;
