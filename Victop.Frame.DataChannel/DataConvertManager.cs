@@ -448,6 +448,10 @@ namespace Victop.Frame.DataChannel
                                     {
                                         modDic.Add(dc.ColumnName, JsonHelper.ToObject<List<object>>(dr[dc.ColumnName].ToString()));
                                     }
+                                    else
+                                    {
+                                        modDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                                    }
                                 }
                                 else
                                 {
