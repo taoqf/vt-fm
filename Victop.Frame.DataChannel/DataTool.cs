@@ -374,13 +374,16 @@ namespace Victop.Frame.DataChannel
                         else
                         {
                             bool addFalg = true;
-                            foreach (var item in addCurdList)
+                            foreach (Dictionary<string,object> item in addCurdList)
                             {
-                                Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(item.ToString());
-                                if (itemDic["flag"].ToString().Equals(curdDic["flag"].ToString()) && itemDic["path"].ToString().Equals(curdDic["path"].ToString()) && itemDic["rowdata"].ToString().Equals(curdDic["rowdata"].ToString()))
+                                if (item["flag"].ToString().Equals(curdDic["flag"].ToString()) && item["path"].ToString().Equals(curdDic["path"].ToString()))
                                 {
-                                    addFalg = false;
-                                    break;
+                                    Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
+                                    if (rowDataDic["_id"].ToString().Equals(saveData["_id"].ToString()))
+                                    {
+                                        addFalg = false;
+                                        break;
+                                    }
                                 }
                             }
                             if (addFalg)
@@ -400,15 +403,17 @@ namespace Victop.Frame.DataChannel
                         }
                         bool modFlag = true;
                         //TODO:修改是增加对修改内总键值的判断，若cud池中已经存在键，则将新的值存入其中，若没有，则将新的键值加入对应的rowdata中
-                        foreach (var item in modCurdList)
+                        foreach (Dictionary<string,object> item in modCurdList)
                         {
-                            string tt = JsonHelper.ToJson(item);
-                            Dictionary<string, object> modDic = JsonHelper.ToObject<Dictionary<string, object>>(tt);
-                            if (JsonHelper.ToJson(modDic["path"]) == JsonHelper.ToJson(dataPath))
+                            if (JsonHelper.ToJson(item["path"]) == JsonHelper.ToJson(dataPath))
                             {
-                                modDic["rowdata"] = saveData;
-                                modFlag = false;
-                                break;
+                                Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
+                                if (rowDataDic["_id"].ToString().Equals(saveData["_id"].ToString()))
+                                {
+                                    item["rowdata"] = saveData;
+                                    modFlag = false;
+                                    break;
+                                }
                             }
                         }
                         if (modFlag)
@@ -424,12 +429,11 @@ namespace Victop.Frame.DataChannel
                             delCurdList = new List<object>();
                             delCurdList.Add(curdDic);
                         }
-                        foreach (var item in delCurdList)
+                        foreach (Dictionary<string,object> item in delCurdList)
                         {
-                            Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(item));
-                            if (itemDic["flag"].ToString().Equals("4") && itemDic["path"].ToString().Equals(dataPath))
+                            if (item["flag"].ToString().Equals("4") && item["path"].ToString().Equals(dataPath))
                             {
-                                string delKey = JsonHelper.ReadJsonString(itemDic["rowdata"].ToString(), "_id");
+                                string delKey = JsonHelper.ReadJsonString(item["rowdata"].ToString(), "_id");
                                 if (saveData["_id"].ToString().Equals(delKey))
                                 {
                                     delCurdList.Remove(item);
@@ -440,9 +444,9 @@ namespace Victop.Frame.DataChannel
                                 }
                                 break;
                             }
-                            else if (itemDic["path"].ToString().Equals(dataPath))
+                            else if (item["path"].ToString().Equals(dataPath))
                             {
-                                string delKey = JsonHelper.ReadJsonString(itemDic["rowdata"].ToString(), "_id");
+                                string delKey = JsonHelper.ReadJsonString(item["rowdata"].ToString(), "_id");
                                 if (saveData["_id"].ToString().Equals(delKey))
                                 {
                                     delCurdList.Remove(item);

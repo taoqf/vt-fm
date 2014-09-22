@@ -1,0 +1,224 @@
+﻿{
+	"docDataStore": {
+		"dict": {
+			"conditionCurrent": [
+				{}
+			],
+			"summary": {
+				"totalRow": 15,
+				"totalPage": 1
+			},
+			"pagingCurrent": {
+				"size": 0,
+				"index": 1
+			},
+			"dataArray": [
+				{
+					"_id": "4EDBB9DADEAF41E39FD50A342899481B",
+					"keyword": null,
+					"no": "30400001",
+					"name": "框架",
+					"actived": true,
+					"options": {
+						"dataArray": [
+							{
+								"a": "a",
+								"b": "b"
+							}, {
+								"a": "1",
+								"b": "2"
+							}
+						]
+					},
+					"remark": "6666666",
+					"creater": null,
+					"create_time": null,
+					"modifier": "22211110000",
+					"modify_time": null
+				}, {
+					"_id": "ED00E44BB5714E98BE1A9C07CBEE783B",
+					"keyword": null,
+					"no": "111",
+					"name": "111",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "2ceshi",
+					"creater": null,
+					"create_time": null,
+					"modifier": "24000000000",
+					"modify_time": null
+				}, {
+					"_id": "F3B4F74A07334B6F8AB0C58BFF837014",
+					"keyword": null,
+					"no": "ee",
+					"name": "ee",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "ee",
+					"creater": null,
+					"create_time": null,
+					"modifier": "ee",
+					"modify_time": null
+				}, {
+					"_id": "8DCC3F33F3564464BF46D950F8261A6F",
+					"keyword": null,
+					"no": "30400001",
+					"name": "框架",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "00",
+					"creater": null,
+					"create_time": null,
+					"modifier": "999",
+					"modify_time": null
+				}, {
+					"_id": "D84AA9AA9752469AB52772F6AD0165D6",
+					"keyword": null,
+					"no": "321",
+					"name": "321",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "dddddd",
+					"creater": null,
+					"create_time": null,
+					"modifier": "",
+					"modify_time": null
+				}, {
+					"_id": "11D96254153B47FC9C7A8B921730C2B5",
+					"keyword": null,
+					"no": "30400001",
+					"name": "框架",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "6666",
+					"creater": null,
+					"create_time": null,
+					"modifier": "66666",
+					"modify_time": null
+				}, {
+					"_id": "664CAF38C7434919B045DD7AE9468F50",
+					"keyword": null,
+					"no": "30400002",
+					"name": "背景",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "3",
+					"creater": null,
+					"create_time": null,
+					"modifier": "3",
+					"modify_time": null
+				}, {
+					"_id": "AF31AC13BCB947B1892D1D8478B5EEFE",
+					"keyword": null,
+					"no": "321",
+					"name": "321",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "sad",
+					"creater": null,
+					"create_time": null,
+					"modifier": "adsa",
+					"modify_time": null
+				}, {
+					"_id": "1D09477E53E84A099DA7D9083996ACAA",
+					"keyword": null,
+					"no": "30400002",
+					"name": "背景",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "1111",
+					"creater": null,
+					"create_time": null,
+					"modifier": "",
+					"modify_time": null
+				}, {
+					"_id": "68B5820D9F2642D581972D2CEBC03E65",
+					"keyword": null,
+					"no": "34434434",
+					"name": "sda",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "dsf",
+					"creater": null,
+					"create_time": null,
+					"modifier": "sadf",
+					"modify_time": null
+				}, {
+					"_id": "0E6B5AFA1C4045A3AAC170FD61D09C1C",
+					"keyword": null,
+					"no": "30400002",
+					"name": "背景",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "333",
+					"creater": null,
+					"create_time": null,
+					"modifier": "",
+					"modify_time": null
+				}, {
+					"_id": "CFDAD462EA924D7F9B4C2A0EAEE67655",
+					"keyword": null,
+					"no": "11024",
+					"name": "11024",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "11024",
+					"creater": null,
+					"create_time": null,
+					"modifier": "11024",
+					"modify_time": null
+				}, {
+					"_id": "CD3030A23ECD476AA13C724D0EF19838",
+					"keyword": null,
+					"no": "123456",
+					"name": "000000",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "000000",
+					"creater": null,
+					"create_time": null,
+					"modifier": "000000",
+					"modify_time": null
+				}, {
+					"_id": "55E5C03B2114463BA8071EA3B9FB8431",
+					"keyword": null,
+					"no": "30400001",
+					"name": "框架",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "132",
+					"creater": null,
+					"create_time": null,
+					"modifier": "",
+					"modify_time": null
+				}, {
+					"_id": "E4CAD16D37FB46EA93A10C47BAAE0B73",
+					"keyword": null,
+					"no": "99",
+					"name": "99",
+					"options": {
+						"dataArray": []
+					},
+					"remark": "99",
+					"creater": null,
+					"create_time": null,
+					"modifier": "99",
+					"modify_time": null
+				}
+			]
+		}
+	}
+}

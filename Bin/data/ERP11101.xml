@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DATAROOT Version="2.0">
+	<datasetlist/>
+	<modelid value="ERP11101"/>
+	<datasetlist>
+		<DATAPACKET Version="2.0">
+			<METADATA>
+				<FIELDS>
+					<FIELD attrname="datasetid" fieldtype="i4" WIDTH="11"/>
+					<FIELD attrname="datasetname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="fdatasetid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="fdatasetname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="masterdatasetid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="masterfields" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="detailfields" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="wheresql" fieldtype="string" WIDTH="500"/>
+				</FIELDS>
+			</METADATA>
+			<ROWDATA>
+				<ROW datasetid="1" datasetname="采购入库表头" fdatasetid="" fdatasetname="采购入库表头" masterdatasetid="" masterfields="" detailfields="" wheresql=""/>
+				<ROW datasetid="2" datasetname="采购入库从表" fdatasetid="" fdatasetname="采购入库从表" masterdatasetid="1" masterfields="doccode" detailfields="doccode" wheresql=""/>
+				<ROW datasetid="3" datasetname="产品调价表" fdatasetid="" fdatasetname="产品调价表" masterdatasetid="" masterfields="" detailfields="" wheresql=""/>
+			</ROWDATA>
+		</DATAPACKET>
+	</datasetlist>
+	<DATASET datasetid="1" tablename="stpurinhd">
+		<script/>
+		<fieldinfo>
+			<DATAPACKET Version="2.0">
+				<METADATA>
+					<FIELDS>
+						<FIELD attrname="dtsid" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="columncaption" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="columnid" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="datatype" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="iskey" fieldtype="i4" WIDTH="11"/>
+						<FIELD attrname="h2str" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="notspace" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="no" fieldtype="i4" WIDTH="11"/>
+						<FIELD attrname="listshow" fieldtype="i4" WIDTH="11"/>
+						<FIELD attrname="listlength" fieldtype="i4" WIDTH="11"/>
+						<FIELD attrname="viewplugtype" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="mastername" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="propname" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="defaultvalue" fieldtype="i4" WIDTH="11"/>
+					</FIELDS>
+				</METADATA>
+				<ROWDATA>
+					<ROW dtsid="采购入库表头" columncaption="仓库GUID" columnid="stguid" datatype="GUID" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="采购入库表头" columncaption="供应商GUID" columnid="vndguid" datatype="GUID" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="采购入库表头" columncaption="供应商名称" columnid="vndname" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库表头" columncaption="供应商编号" columnid="vndcode" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库表头" columncaption="修改人" columnid="modifyname" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库表头" columncaption="修改日期" columnid="modifydate" datatype="日期" h2str="datetime" notspace="1"/>
+					<ROW dtsid="采购入库表头" columncaption="公司GUID" columnid="companyguid" datatype="GUID" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="采购入库表头" columncaption="公司名称" columnid="companyname" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库表头" columncaption="公司编号" columnid="companyid" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库表头" columncaption="冲销原单号" columnid="cleardoccode" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库表头" columncaption="冲销状态" columnid="blclosed" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库表头" columncaption="制单人" columnid="entername" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库表头" columncaption="制单日期" columnid="enterdate" datatype="日期" h2str="datetime" notspace="1"/>
+					<ROW dtsid="采购入库表头" columncaption="单号" columnid="doccode" datatype="字符" iskey="1" h2str="varchar(50)" notspace="" mastername="单据表头" propname="单号"/>
+					<ROW dtsid="采购入库表头" columncaption="单据日期" columnid="docdate" datatype="日期" h2str="datetime" notspace="1" mastername="单据表头" propname="单据日期"/>
+					<ROW dtsid="采购入库表头" columncaption="单据状态" columnid="docstatus" datatype="整型" h2str="int" notspace="1" mastername="单据表头" propname="单据状态"/>
+					<ROW dtsid="采购入库表头" columncaption="备注" columnid="remark" datatype="长字符" h2str="varchar(500)" notspace=""/>
+					<ROW dtsid="采购入库表头" columncaption="是否付款" columnid="ispay" datatype="整型" h2str="int" notspace="1"/>
+					<ROW dtsid="采购入库表头" columncaption="最后打印次数" columnid="lastprintnum" datatype="整型" h2str="int" notspace="1"/>
+					<ROW dtsid="采购入库表头" columncaption="相关单号" columnid="refcode" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库表头" columncaption="确单人" columnid="postname" datatype="字符" h2str="varchar(50)" notspace="" mastername="单据表头" propname="确单人"/>
+					<ROW dtsid="采购入库表头" columncaption="确单日期" columnid="postdate" datatype="日期" h2str="datetime" notspace="1" mastername="单据表头" propname="确单日期"/>
+					<ROW dtsid="采购入库表头" columncaption="金额" columnid="money" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库表头" columncaption="门店名称" columnid="stname" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库表头" columncaption="门店编号" columnid="stcode" datatype="字符" h2str="varchar(50)" notspace=""/>
+				</ROWDATA>
+			</DATAPACKET>
+		</fieldinfo>
+		<DATAPACKET Version="2.0">
+			<METADATA>
+				<FIELDS>
+					<FIELD attrname="stguid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="vndguid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="vndname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="vndcode" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="modifyname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="modifydate" fieldtype="dateTime" WIDTH="23"/>
+					<FIELD attrname="companyguid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="companyname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="companyid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="cleardoccode" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="blclosed" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="entername" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="enterdate" fieldtype="dateTime" WIDTH="23"/>
+					<FIELD attrname="doccode" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="docdate" fieldtype="dateTime" WIDTH="23"/>
+					<FIELD attrname="docstatus" fieldtype="i4" WIDTH="11"/>
+					<FIELD attrname="remark" fieldtype="string" WIDTH="500"/>
+					<FIELD attrname="ispay" fieldtype="i4" WIDTH="11"/>
+					<FIELD attrname="lastprintnum" fieldtype="i4" WIDTH="11"/>
+					<FIELD attrname="refcode" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="postname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="postdate" fieldtype="dateTime" WIDTH="23"/>
+					<FIELD attrname="money" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="stname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="stcode" fieldtype="string" WIDTH="50"/>
+				</FIELDS>
+			</METADATA>
+			<ROWDATA>
+				<ROW stguid="61B8CD99-E55B-4B4C-ACE9-8EF0CAEF5507" vndguid="a3cf2f1b-5ce1-4cbf-83a6-64e013b60763" vndname="联想专柜" vndcode="3b9b61f9-5ec7-4273-965f-aa3fbd6a14d9" modifyname="" companyguid="4ecb1ecf-3de3-4772-a4d1-03baa042e4f1" companyname="" companyid="" cleardoccode="" blclosed="" entername="张志强" enterdate="2014-06-11T17:10:20000" doccode="CGRK14061100010" docdate="2014-06-11T17:08:14000" docstatus="100" remark="第一次采购入库，过账测试使用，勿动！" ispay="0" refcode="" postname="张志强" postdate="2014-06-11T17:18:03000" money="200000.0000" stname="联想专卖店" stcode="8D47C3CC-D2C0-4304-BD84-84AC2AC67F6E"/>
+				<ROW stguid="338628DA-32F1-4902-A1CE-741D28AC9731" vndguid="1caac1b8-1c6f-415b-b0af-5cbfd2b4d60e" vndname="戴尔专柜" vndcode="bdcde4df-07fd-4971-b8a8-c7ef0bcc061e" modifyname="" companyguid="41d7fdd0-70d9-474d-a92c-c7f133b7e921" companyname="" companyid="" cleardoccode="" blclosed="" entername="张志强" enterdate="2014-06-11T19:28:43000" doccode="CGRK14061100011" docdate="2014-06-11T19:26:00000" docstatus="100" remark="戴尔和惠普电脑采购" ispay="0" refcode="" postname="张志强" postdate="2014-06-11T19:37:24000" money="1220000.0000" stname="亿兴数码专卖店" stcode="64B1B4AF-376A-4B9F-941C-CDAE4C448FC6"/>
+				<ROW stguid="61B8CD99-E55B-4B4C-ACE9-8EF0CAEF5507" vndguid="a3cf2f1b-5ce1-4cbf-83a6-64e013b60763" vndname="联想专柜" vndcode="3b9b61f9-5ec7-4273-965f-aa3fbd6a14d9" modifyname="" companyguid="aa3db43a-17eb-4877-ac6c-d120fbd87629" companyname="" companyid="" cleardoccode="" blclosed="" entername="张志强" enterdate="2014-06-12T09:04:59000" doccode="CGRK14061200013" docdate="2014-06-12T08:55:11000" docstatus="100" remark="" ispay="0" refcode="" postname="张志强" postdate="2014-06-12T09:06:16000" money="60000.0000" stname="联想专卖店" stcode="8D47C3CC-D2C0-4304-BD84-84AC2AC67F6E"/>
+				<ROW stguid="61B8CD99-E55B-4B4C-ACE9-8EF0CAEF5507" vndguid="a3cf2f1b-5ce1-4cbf-83a6-64e013b60763" vndname="联想专柜" vndcode="3b9b61f9-5ec7-4273-965f-aa3fbd6a14d9" modifyname="" companyguid="e797b369-7ba7-4b34-b33a-47c31be94ee6" companyname="" companyid="" cleardoccode="" blclosed="" entername="测试人1" enterdate="2014-06-12T16:02:34000" doccode="CGRK14061200014" docdate="2014-06-12T16:00:56000" docstatus="100" remark="" ispay="0" refcode="" postname="测试人1" postdate="2014-06-12T16:03:04000" money="80000.0000" stname="联想专卖店" stcode="8D47C3CC-D2C0-4304-BD84-84AC2AC67F6E"/>
+				<ROW stguid="61B8CD99-E55B-4B4C-ACE9-8EF0CAEF5507" vndguid="a3cf2f1b-5ce1-4cbf-83a6-64e013b60763" vndname="联想专柜" vndcode="3b9b61f9-5ec7-4273-965f-aa3fbd6a14d9" modifyname="" companyguid="587500e5-5036-4584-b2fa-5c81bcd5000e" companyname="" companyid="" cleardoccode="" blclosed="" entername="测试人1" enterdate="2014-06-12T16:12:57000" doccode="CGRK14061200015" docdate="2014-06-12T16:12:39000" docstatus="100" remark="" ispay="0" refcode="" postname="测试人1" postdate="2014-06-12T16:13:18000" money="4000.0000" stname="联想专卖店" stcode="8D47C3CC-D2C0-4304-BD84-84AC2AC67F6E"/>
+				<ROW stguid="338628DA-32F1-4902-A1CE-741D28AC9731" vndguid="49124a4b-c0fc-4263-81ca-bd4e2ae609c2" vndname="惠普专柜" vndcode="0e39e79e-9f0c-41b7-99bf-f5ccb31a49e9" modifyname="" companyguid="46ce3f06-6086-4741-979d-c211e55e4220" companyname="" companyid="" cleardoccode="" blclosed="" entername="张志强" enterdate="2014-06-12T16:21:50000" doccode="CGRK14061200016" docdate="2014-06-12T16:20:15000" docstatus="100" remark="testsssss" ispay="0" refcode="" postname="张志强" postdate="2014-06-12T16:24:36000" money="480000.0000" stname="亿兴数码专卖店" stcode="64B1B4AF-376A-4B9F-941C-CDAE4C448FC6"/>
+				<ROW stguid="5FDEE8F8-932F-448A-BE8F-A611A4E8D045" vndguid="88f6798c-c6f6-41fb-b2c0-bfc8ef2dd189" vndname="赛博专柜" vndcode="15981225-bc89-4e3a-984d-7fca6b9c72be" modifyname="" companyguid="ec7b4e6e-35fd-4295-8cde-76b494af2666" companyname="" companyid="" cleardoccode="" blclosed="" entername="张志强" enterdate="2014-06-12T17:24:15000" doccode="CGRK14061200017" docdate="2014-06-12T17:23:27000" docstatus="100" remark="" ispay="0" refcode="" postname="张志强" postdate="2014-06-12T17:24:29000" money="820000.0000" stname="赛博数码" stcode="530D2213-DACE-4FC6-9AB7-2D10B580761C"/>
+			</ROWDATA>
+		</DATAPACKET>
+	</DATASET>
+	<DATASET datasetid="2" tablename="stpurinitem">
+		<script/>
+		<fieldinfo>
+			<DATAPACKET Version="2.0">
+				<METADATA>
+					<FIELDS>
+						<FIELD attrname="dtsid" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="columncaption" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="columnid" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="datatype" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="iskey" fieldtype="i4" WIDTH="11"/>
+						<FIELD attrname="h2str" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="notspace" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="no" fieldtype="i4" WIDTH="11"/>
+						<FIELD attrname="listshow" fieldtype="i4" WIDTH="11"/>
+						<FIELD attrname="listlength" fieldtype="i4" WIDTH="11"/>
+						<FIELD attrname="viewplugtype" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="mastername" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="propname" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="defaultvalue" fieldtype="i4" WIDTH="11"/>
+					</FIELDS>
+				</METADATA>
+				<ROWDATA>
+					<ROW dtsid="采购入库从表" columncaption="产品GUID" columnid="matguid" datatype="GUID" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="采购入库从表" columncaption="产品名称" columnid="matname" datatype="字符" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="采购入库从表" columncaption="产品型号" columnid="matmodel" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库从表" columncaption="产品类别GUID" columnid="matgroupguid" datatype="GUID" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="采购入库从表" columncaption="产品类别名称" columnid="matgroupname" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库从表" columncaption="产品类别编号" columnid="matgroupcode" datatype="字符" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="采购入库从表" columncaption="产品编号" columnid="matcode" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库从表" columncaption="单价" columnid="saleprice" datatype="金额" h2str="decimal" notspace="1"/>
+					<ROW dtsid="采购入库从表" columncaption="单号" columnid="doccode" datatype="字符" iskey="0" h2str="varchar(50)" notspace="" mastername="单据明细" propname="单号"/>
+					<ROW dtsid="采购入库从表" columncaption="后台唯一号" columnid="vp_rowid" datatype="字符" iskey="1" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库从表" columncaption="品牌GUID" columnid="brandguid" datatype="GUID" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="采购入库从表" columncaption="品牌名称" columnid="brandname" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库从表" columncaption="品牌编号" columnid="brandcode" datatype="字符" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="采购入库从表" columncaption="商品总价" columnid="summomey" datatype="金额" h2str="decimal" notspace="1"/>
+					<ROW dtsid="采购入库从表" columncaption="序号" columnid="docitem" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库从表" columncaption="库存唯一号" columnid="stockrowid" datatype="字符" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="采购入库从表" columncaption="引用后台唯一号" columnid="refrowid" datatype="字符" h2str="varchar(50)" notspace=""/>
+					<ROW dtsid="采购入库从表" columncaption="数量" columnid="num" datatype="整型" h2str="int" notspace="1"/>
+				</ROWDATA>
+			</DATAPACKET>
+		</fieldinfo>
+		<DATAPACKET Version="2.0">
+			<METADATA>
+				<FIELDS>
+					<FIELD attrname="matguid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="matname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="matmodel" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="matgroupguid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="matgroupname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="matgroupcode" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="matcode" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="saleprice" fieldtype="fixed" DECIMALS="4" WIDTH="21"/>
+					<FIELD attrname="doccode" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="vp_rowid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="brandguid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="brandname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="brandcode" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="summomey" fieldtype="fixed" DECIMALS="4" WIDTH="21"/>
+					<FIELD attrname="docitem" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="stockrowid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="refrowid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="num" fieldtype="i4" WIDTH="11"/>
+				</FIELDS>
+			</METADATA>
+			<ROWDATA>
+				<ROW matguid="185313FA-6CBD-4649-8848-1E685FDABA6B" matname="联想电脑" matmodel="lennvo310" matgroupguid="c0d39b9a-4eaf-468d-9ed4-86da1fd73974" matgroupname="品牌整机" matgroupcode="bab70965-f0f7-40be-8ac4-a95a6730605c" matcode="D8B0A441-B9C1-4C28-96F3-597F4F8814B4" saleprice="4000.0000" doccode="CGRK14061100010" vp_rowid="159c2435-6a19-4724-8db0-25e6566c4d51" brandguid="E7097081-9BDE-4AA3-A77D-598780CA04F8" brandname="联想" brandcode="F148DF2C-1AEC-415A-A52D-D63013FC2169" summomey="200000.0000" docitem="1" stockrowid="f1d7ff7a-7ddd-4e35-ba89-2f468fc2d088" refrowid="a4e61da5-80c6-4c7d-a4d7-5ed62278568b" num="50"/>
+				<ROW matguid="185313FA-6CBD-4649-8848-1E685FDABA6B" matname="联想电脑" matmodel="lennvo310" matgroupguid="c0d39b9a-4eaf-468d-9ed4-86da1fd73974" matgroupname="品牌整机" matgroupcode="bab70965-f0f7-40be-8ac4-a95a6730605c" matcode="D8B0A441-B9C1-4C28-96F3-597F4F8814B4" saleprice="4000.0000" doccode="CGRK14061200013" vp_rowid="2197219f-bc8e-4f89-82c9-d0a8d7a06659" brandguid="E7097081-9BDE-4AA3-A77D-598780CA04F8" brandname="联想" brandcode="F148DF2C-1AEC-415A-A52D-D63013FC2169" summomey="60000.0000" docitem="1" stockrowid="65e445bd-97da-4c41-a9f0-539bf15778d0" refrowid="6e136147-345f-4042-baac-52de0f4ae1dd" num="15"/>
+				<ROW matguid="185313FA-6CBD-4649-8848-1E685FDABA6B" matname="联想电脑" matmodel="lennvo310" matgroupguid="c0d39b9a-4eaf-468d-9ed4-86da1fd73974" matgroupname="品牌整机" matgroupcode="bab70965-f0f7-40be-8ac4-a95a6730605c" matcode="D8B0A441-B9C1-4C28-96F3-597F4F8814B4" saleprice="4000.0000" doccode="CGRK14061200015" vp_rowid="2e06815c-e6d4-4ba2-8d81-5efc85c54a94" brandguid="E7097081-9BDE-4AA3-A77D-598780CA04F8" brandname="联想" brandcode="F148DF2C-1AEC-415A-A52D-D63013FC2169" summomey="4000.0000" docitem="1" stockrowid="8ca7b30d-9fc4-435a-888d-b7921178e57f" refrowid="cb6b782a-bb6b-4300-b90a-e0dde54a0542" num="1"/>
+				<ROW matguid="185313FA-6CBD-4649-8848-1E685FDABA6B" matname="联想电脑" matmodel="lennvo310" matgroupguid="c0d39b9a-4eaf-468d-9ed4-86da1fd73974" matgroupname="品牌整机" matgroupcode="bab70965-f0f7-40be-8ac4-a95a6730605c" matcode="D8B0A441-B9C1-4C28-96F3-597F4F8814B4" saleprice="4000.0000" doccode="CGRK14061200014" vp_rowid="61c52364-95ca-41a9-8fba-4701539983d1" brandguid="E7097081-9BDE-4AA3-A77D-598780CA04F8" brandname="联想" brandcode="F148DF2C-1AEC-415A-A52D-D63013FC2169" summomey="80000.0000" docitem="1" stockrowid="9566bea8-66b6-474d-b4d5-37586e730be2" refrowid="069f3ea4-b36c-4cd6-a987-86c97d63bbd0" num="20"/>
+				<ROW matguid="6CAEE0AA-606B-4276-AF76-9F84B4A709E5" matname="飞利浦电脑（开发专用）" matmodel="feilipu123" matgroupguid="5eb13aab-d31e-46bf-a9da-640f6ce60c3b" matgroupname="DIY分类" matgroupcode="be0adf86-754c-4080-97e6-b908f25beccf" matcode="D2CC7DDF-437E-4C8D-9130-680A06EAAB79" saleprice="4100.0000" doccode="CGRK14061200017" vp_rowid="984ddfef-371f-416f-ab7a-c198e4966372" brandguid="4B62E196-DCE2-492B-BFE8-98B43165D5F5" brandname="飞利浦" brandcode="CB218AA6-D7C2-402C-8569-C02E516D5714" summomey="820000.0000" docitem="1" stockrowid="3af40b5f-9fcb-4f3d-b295-668328b185b7" refrowid="f04fb6c0-cf8d-4a2f-9d57-af22bb727a50" num="200"/>
+				<ROW matguid="4FDBEF00-4769-4814-94B5-C9FAF6F78E8E" matname="惠普电脑" matmodel="g4" matgroupguid="c0d39b9a-4eaf-468d-9ed4-86da1fd73974" matgroupname="品牌整机" matgroupcode="bab70965-f0f7-40be-8ac4-a95a6730605c" matcode="66788BD0-7658-4B78-8013-14EFFAD572A5" saleprice="4800.0000" doccode="CGRK14061100011" vp_rowid="b2c5f0f6-6de6-45f8-81c7-2031577e0ef2" brandguid="E56D0F34-2EF5-4AB3-94B0-DABAFD27A984" brandname="惠普" brandcode="0955A684-9CEA-4CC9-B4FD-EC576F8E89E9" summomey="720000.0000" docitem="2" stockrowid="938d9470-5604-4ce0-8a59-7912423eaa5d" refrowid="cf525914-68db-4816-af67-eedee396df36" num="150"/>
+				<ROW matguid="4FDBEF00-4769-4814-94B5-C9FAF6F78E8E" matname="惠普电脑" matmodel="g4" matgroupguid="c0d39b9a-4eaf-468d-9ed4-86da1fd73974" matgroupname="品牌整机" matgroupcode="bab70965-f0f7-40be-8ac4-a95a6730605c" matcode="66788BD0-7658-4B78-8013-14EFFAD572A5" saleprice="4800.0000" doccode="CGRK14061200016" vp_rowid="d24e897f-3326-4443-9e76-e6214a9fedbd" brandguid="E56D0F34-2EF5-4AB3-94B0-DABAFD27A984" brandname="惠普" brandcode="0955A684-9CEA-4CC9-B4FD-EC576F8E89E9" summomey="480000.0000" docitem="1" stockrowid="81efc52e-7865-4d1d-9952-7037fefbae95" refrowid="b2b6799f-236e-46de-ba7a-9f3bbc1b2a6d" num="100"/>
+				<ROW matguid="46FC7998-A417-4111-81DD-F3D0BDD87600" matname="戴尔电脑" matmodel="daier101" matgroupguid="c0d39b9a-4eaf-468d-9ed4-86da1fd73974" matgroupname="品牌整机" matgroupcode="bab70965-f0f7-40be-8ac4-a95a6730605c" matcode="644F5129-BB90-44C1-A6D8-0B853BBBD184" saleprice="5000.0000" doccode="CGRK14061100011" vp_rowid="db33d58d-1247-4279-98a0-74bf7104b3af" brandguid="1D9DB5A5-01CC-46D0-9FC3-C4917C915176" brandname="戴尔" brandcode="4ECD3C6B-76E5-48B5-B66E-4F105C7EA55E" summomey="500000.0000" docitem="1" stockrowid="ca358119-13f5-42bd-a136-c7d193428706" refrowid="04ebea81-1ba6-4ef1-a920-05928e6d5fa4" num="100"/>
+			</ROWDATA>
+		</DATAPACKET>
+	</DATASET>
+	<DATASET datasetid="3" tablename="imatpricetj">
+		<script/>
+		<fieldinfo>
+			<DATAPACKET Version="2.0">
+				<METADATA>
+					<FIELDS>
+						<FIELD attrname="dtsid" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="columncaption" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="columnid" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="datatype" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="iskey" fieldtype="i4" WIDTH="11"/>
+						<FIELD attrname="h2str" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="notspace" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="no" fieldtype="i4" WIDTH="11"/>
+						<FIELD attrname="listshow" fieldtype="i4" WIDTH="11"/>
+						<FIELD attrname="listlength" fieldtype="i4" WIDTH="11"/>
+						<FIELD attrname="viewplugtype" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="mastername" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="propname" fieldtype="string" WIDTH="50"/>
+						<FIELD attrname="defaultvalue" fieldtype="i4" WIDTH="11"/>
+					</FIELDS>
+				</METADATA>
+				<ROWDATA>
+					<ROW dtsid="产品调价表" columncaption="产品GUID" columnid="matguid" datatype="GUID" iskey="1" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="产品调价表" columncaption="产品名称" columnid="matname" datatype="字符" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="产品调价表" columncaption="产品新价" columnid="newprice" datatype="金额" h2str="decimal" notspace="1" mastername="" propname=""/>
+					<ROW dtsid="产品调价表" columncaption="产品类别GUID" columnid="matgroupguid" datatype="GUID" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="产品调价表" columncaption="产品类别名称" columnid="matgroupname" datatype="字符" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="产品调价表" columncaption="产品类别编号" columnid="matgroupcode" datatype="字符" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="产品调价表" columncaption="产品编号" columnid="matcode" datatype="字符" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="产品调价表" columncaption="单号" columnid="doccode" datatype="字符" h2str="varchar(50)" notspace="" mastername="单据明细" propname="单号"/>
+					<ROW dtsid="产品调价表" columncaption="原价" columnid="inprice" datatype="金额" h2str="decimal" notspace="1" mastername="" propname=""/>
+					<ROW dtsid="产品调价表" columncaption="品牌GUID" columnid="brandguid" datatype="GUID" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="产品调价表" columncaption="品牌名称" columnid="brandname" datatype="字符" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="产品调价表" columncaption="品牌编号" columnid="brandcode" datatype="字符" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="产品调价表" columncaption="商品型号" columnid="matmodel" datatype="字符" h2str="varchar(50)" notspace="" mastername="" propname=""/>
+					<ROW dtsid="产品调价表" columncaption="日期" columnid="nowdate" datatype="日期" h2str="datetime" notspace="1" mastername="" propname=""/>
+				</ROWDATA>
+			</DATAPACKET>
+		</fieldinfo>
+		<DATAPACKET Version="2.0">
+			<METADATA>
+				<FIELDS>
+					<FIELD attrname="matguid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="matname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="newprice" fieldtype="fixed" DECIMALS="4" WIDTH="21"/>
+					<FIELD attrname="matgroupguid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="matgroupname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="matgroupcode" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="matcode" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="doccode" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="inprice" fieldtype="fixed" DECIMALS="4" WIDTH="21"/>
+					<FIELD attrname="brandguid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="brandname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="brandcode" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="matmodel" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="nowdate" fieldtype="dateTime" WIDTH="23"/>
+				</FIELDS>
+			</METADATA>
+			<ROWDATA/>
+		</DATAPACKET>
+	</DATASET>
+	<DATASET datasetid="batchproplist">
+		<DATAPACKET Version="2.0">
+			<METADATA>
+				<FIELDS>
+					<FIELD attrname="fieldname" fieldtype="string" WIDTH="100"/>
+					<FIELD attrname="value" fieldtype="string" WIDTH="500"/>
+				</FIELDS>
+			</METADATA>
+			<ROWDATA/>
+		</DATAPACKET>
+	</DATASET>
+	<DATASET datasetid="proplist">
+		<DATAPACKET Version="2.0">
+			<METADATA>
+				<FIELDS>
+					<FIELD attrname="fieldname" fieldtype="string" WIDTH="100"/>
+					<FIELD attrname="value" fieldtype="string" WIDTH="500"/>
+				</FIELDS>
+			</METADATA>
+			<ROWDATA/>
+		</DATAPACKET>
+	</DATASET>
+	<DATASET datasetid="gmDatareference">
+		<DATAPACKET Version="2.0">
+			<METADATA>
+				<FIELDS>
+					<FIELD attrname="name" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="columnid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="datasourcetype" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="datasourcename" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="fieldreturn" fieldtype="string" WIDTH="2147483647"/>
+					<FIELD attrname="operation" fieldtype="string" WIDTH="12000"/>
+					<FIELD attrname="openclass" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="ispropclass" fieldtype="i4" WIDTH="11"/>
+					<FIELD attrname="serachfields" fieldtype="string" WIDTH="8000"/>
+					<FIELD attrname="bsname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="bsgroupname" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="casetype" fieldtype="string" WIDTH="255"/>
+					<FIELD attrname="fieldparam" fieldtype="string" WIDTH="12000"/>
+				</FIELDS>
+			</METADATA>
+			<ROWDATA>
+				<ROW name="2" columnid="matgroupname" datasourcetype="" datasourcename="" fieldreturn="[{;top;datacaption;top;:;top;产品类别名称;top;,;top;linkdata;top;:;top;MATGROUPMIDNAME;top;,;top;linkdatacaption;top;:;top;产品中类名称;top;,;top;data;top;:;top;matgroupname;top;}]" operation="{;top;defaultdata;top;:[],;top;operation;top;:;top;1;top;,;top;isdata;top;:;top;1;top;}" openclass="" serachfields="" bsname="产品信息管理查询" bsgroupname="" casetype="" fieldparam="[[{;top;linkdata;top;:;top;MATGROUPMIDNAME;top;,;top;logiccaption;top;:;top;模糊匹配;top;,;top;data;top;:;top;matgroupname;top;,;top;datacaption;top;:;top;产品类别名称;top;,;top;linkdatacaption;top;:;top;产品中类名称;top;,;top;logic;top;:;top;like;top;,;top;dataid;top;:;top;2;top;}]]"/>
+				<ROW name="2" columnid="brandname" datasourcetype="" datasourcename="" fieldreturn="[{;top;datacaption;top;:;top;品牌名称;top;,;top;linkdata;top;:;top;BRANDNAME;top;,;top;linkdatacaption;top;:;top;品牌名称;top;,;top;data;top;:;top;brandname;top;}]" operation="{;top;defaultdata;top;:[],;top;operation;top;:;top;1;top;,;top;isdata;top;:;top;1;top;}" openclass="" serachfields="" bsname="产品信息管理查询" bsgroupname="" casetype="" fieldparam="[[{;top;linkdata;top;:;top;BRANDNAME;top;,;top;logiccaption;top;:;top;模糊匹配;top;,;top;data;top;:;top;brandname;top;,;top;datacaption;top;:;top;品牌名称;top;,;top;linkdatacaption;top;:;top;品牌名称;top;,;top;logic;top;:;top;like;top;,;top;dataid;top;:;top;2;top;}]]"/>
+				<ROW name="1" columnid="stname" datasourcetype="" datasourcename="" fieldreturn="[{;top;datacaption;top;:;top;门店名称;top;,;top;linkdatacaption;top;:;top;仓库名称;top;,;top;linkdata;top;:;top;STNAME;top;,;top;data;top;:;top;stname;top;},{;top;datacaption;top;:;top;门店编号;top;,;top;linkdatacaption;top;:;top;仓库编号;top;,;top;linkdata;top;:;top;STCODE;top;,;top;data;top;:;top;stcode;top;},{;top;datacaption;top;:;top;仓库GUID;top;,;top;linkdatacaption;top;:;top;仓库GUID;top;,;top;linkdata;top;:;top;STGUID;top;,;top;data;top;:;top;stguid;top;}]" operation="{;top;defaultdata;top;:[],;top;operation;top;:;top;1;top;,;top;isdata;top;:;top;1;top;}" openclass="" serachfields="" bsname="店面管理查询" bsgroupname="" casetype="" fieldparam="[[{;top;linkdata;top;:;top;STNAME;top;,;top;logiccaption;top;:;top;模糊匹配;top;,;top;data;top;:;top;stname;top;,;top;datacaption;top;:;top;门店名称;top;,;top;linkdatacaption;top;:;top;仓库名称;top;,;top;logic;top;:;top;like;top;,;top;dataid;top;:;top;1;top;}]]"/>
+				<ROW name="1" columnid="stcode" datasourcetype="" datasourcename="" fieldreturn="[{;top;datacaption;top;:;top;门店编号;top;,;top;linkdatacaption;top;:;top;仓库编号;top;,;top;linkdata;top;:;top;STCODE;top;,;top;data;top;:;top;stcode;top;},{;top;datacaption;top;:;top;仓库GUID;top;,;top;linkdatacaption;top;:;top;仓库GUID;top;,;top;linkdata;top;:;top;STGUID;top;,;top;data;top;:;top;stguid;top;},{;top;datacaption;top;:;top;门店名称;top;,;top;linkdatacaption;top;:;top;仓库名称;top;,;top;linkdata;top;:;top;STNAME;top;,;top;data;top;:;top;stname;top;}]" operation="{;top;defaultdata;top;:[],;top;operation;top;:;top;1;top;,;top;isdata;top;:;top;1;top;}" openclass="" serachfields="" bsname="店面管理查询" bsgroupname="" casetype="" fieldparam="[[{;top;linkdata;top;:;top;STCODE;top;,;top;logiccaption;top;:;top;模糊匹配;top;,;top;data;top;:;top;stcode;top;,;top;datacaption;top;:;top;门店编号;top;,;top;linkdatacaption;top;:;top;仓库编号;top;,;top;logic;top;:;top;like;top;,;top;dataid;top;:;top;1;top;}]]"/>
+				<ROW name="1" columnid="vndname" datasourcetype="" datasourcename="" fieldreturn="[{;top;datacaption;top;:;top;供应商名称;top;,;top;linkdatacaption;top;:;top;柜台名称;top;,;top;linkdata;top;:;top;CNTNAME;top;,;top;data;top;:;top;vndname;top;},{;top;datacaption;top;:;top;供应商GUID;top;,;top;linkdatacaption;top;:;top;供应商柜台管理GUID;top;,;top;linkdata;top;:;top;VNDCNTGUID;top;,;top;data;top;:;top;vndguid;top;},{;top;datacaption;top;:;top;供应商编号;top;,;top;linkdatacaption;top;:;top;柜台编号;top;,;top;linkdata;top;:;top;CNTCODE;top;,;top;data;top;:;top;vndcode;top;}]" operation="{;top;defaultdata;top;:[],;top;operation;top;:;top;1;top;,;top;isdata;top;:;top;1;top;}" openclass="" serachfields="" bsname="供应商柜台管理查询" bsgroupname="" casetype="" fieldparam="[[{;top;linkdata;top;:;top;CNTNAME;top;,;top;logiccaption;top;:;top;模糊匹配;top;,;top;data;top;:;top;vndname;top;,;top;datacaption;top;:;top;供应商名称;top;,;top;linkdatacaption;top;:;top;柜台名称;top;,;top;logic;top;:;top;like;top;,;top;dataid;top;:;top;1;top;}]]"/>
+				<ROW name="1" columnid="vndcode" datasourcetype="" datasourcename="" fieldreturn="[{;top;datacaption;top;:;top;供应商编号;top;,;top;linkdatacaption;top;:;top;柜台编号;top;,;top;linkdata;top;:;top;CNTCODE;top;,;top;data;top;:;top;vndcode;top;},{;top;datacaption;top;:;top;供应商GUID;top;,;top;linkdatacaption;top;:;top;供应商柜台管理GUID;top;,;top;linkdata;top;:;top;VNDCNTGUID;top;,;top;data;top;:;top;vndguid;top;},{;top;datacaption;top;:;top;供应商名称;top;,;top;linkdatacaption;top;:;top;柜台名称;top;,;top;linkdata;top;:;top;CNTNAME;top;,;top;data;top;:;top;vndname;top;}]" operation="{;top;defaultdata;top;:[],;top;operation;top;:;top;1;top;,;top;isdata;top;:;top;1;top;}" openclass="" serachfields="" bsname="供应商柜台管理查询" bsgroupname="" casetype="" fieldparam="[[{;top;linkdata;top;:;top;CNTCODE;top;,;top;logiccaption;top;:;top;模糊匹配;top;,;top;data;top;:;top;vndcode;top;,;top;datacaption;top;:;top;供应商编号;top;,;top;linkdatacaption;top;:;top;柜台编号;top;,;top;logic;top;:;top;like;top;,;top;dataid;top;:;top;1;top;}]]"/>
+				<ROW name="2" columnid="matcode" datasourcetype="" datasourcename="" fieldreturn="[{;top;linkdata;top;:;top;matcode;top;,;top;linkdatacaption;top;:;top;商品编号;top;,;top;datacaption;top;:;top;产品编号;top;,;top;data;top;:;top;matcode;top;},{;top;linkdata;top;:;top;MATGROUPMDNAME;top;,;top;linkdatacaption;top;:;top;商品类别;top;,;top;datacaption;top;:;top;产品类别名称;top;,;top;data;top;:;top;matgroupname;top;},{;top;linkdata;top;:;top;brandcode;top;,;top;linkdatacaption;top;:;top;品牌编号;top;,;top;datacaption;top;:;top;品牌编号;top;,;top;data;top;:;top;brandcode;top;},{;top;linkdata;top;:;top;MATGROUPGUID;top;,;top;linkdatacaption;top;:;top;类别guid;top;,;top;datacaption;top;:;top;产品类别GUID;top;,;top;data;top;:;top;matgroupguid;top;},{;top;linkdata;top;:;top;MATGROUPMDCODE;top;,;top;linkdatacaption;top;:;top;类别编号;top;,;top;datacaption;top;:;top;产品类别编号;top;,;top;data;top;:;top;matgroupcode;top;},{;top;linkdata;top;:;top;brandname;top;,;top;linkdatacaption;top;:;top;商品品牌;top;,;top;datacaption;top;:;top;品牌名称;top;,;top;data;top;:;top;brandname;top;},{;top;linkdata;top;:;top;brandguid;top;,;top;linkdatacaption;top;:;top;品牌guid;top;,;top;datacaption;top;:;top;品牌GUID;top;,;top;data;top;:;top;brandguid;top;},{;top;linkdata;top;:;top;matname;top;,;top;linkdatacaption;top;:;top;商品名称;top;,;top;datacaption;top;:;top;产品名称;top;,;top;data;top;:;top;matname;top;},{;top;linkdata;top;:;top;matguid;top;,;top;linkdatacaption;top;:;top;商品guid;top;,;top;datacaption;top;:;top;产品GUID;top;,;top;data;top;:;top;matguid;top;},{;top;linkdata;top;:;top;matmodel;top;,;top;linkdatacaption;top;:;top;商品型号;top;,;top;datacaption;top;:;top;产品型号;top;,;top;data;top;:;top;matmodel;top;},{;top;linkdatacaption;top;:;top;进价;top;,;top;linkdata;top;:;top;INPRICE;top;,;top;datacaption;top;:;top;单价;top;,;top;data;top;:;top;saleprice;top;}]" operation="{;top;defaultdata;top;:[],;top;operation;top;:;top;1;top;,;top;isdata;top;:;top;1;top;}" openclass="" serachfields="" bsname="产品信息价格查询" bsgroupname="" casetype="" fieldparam="[[{;top;linkdata;top;:;top;MATCODE;top;,;top;logiccaption;top;:;top;模糊匹配;top;,;top;data;top;:;top;matcode;top;,;top;datacaption;top;:;top;产品编号;top;,;top;linkdatacaption;top;:;top;产品编号;top;,;top;logic;top;:;top;like;top;,;top;dataid;top;:;top;2;top;}]]"/>
+			</ROWDATA>
+		</DATAPACKET>
+	</DATASET>
+	<DATASET datasetid="gmformdefaultvalue">
+		<DATAPACKET Version="2.0">
+			<METADATA>
+				<FIELDS>
+					<FIELD attrname="datasetid" fieldtype="string" WIDTH="100"/>
+					<FIELD attrname="columnid" fieldtype="string" WIDTH="50"/>
+					<FIELD attrname="defaultvalue" fieldtype="string" WIDTH="500"/>
+				</FIELDS>
+			</METADATA>
+			<ROWDATA/>
+		</DATAPACKET>
+	</DATASET>
+</DATAROOT>
