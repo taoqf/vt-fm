@@ -283,6 +283,38 @@ namespace Victop.Frame.DataChannel
             }
             return newDs;
         }
+
+        /// <summary>
+        /// 获取简单引用数据
+        /// </summary>
+        /// <param name="viewId"></param>
+        private void GetSimpleRef(string viewId, string columnPath)
+        {
+            string jsonData = DataTool.GetDataByPath(viewId, "simpleRef");
+            jsonData = JsonHelper.ReadJsonString(jsonData, "dataArray");
+            List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
+            if (arrayList != null)
+            {
+                string columnValue = string.Empty;
+                foreach (Dictionary<string,object> item in arrayList)
+                {
+                    if (item.ContainsKey("property"))
+                    {
+                        List<Dictionary<string, object>> propertyList = JsonHelper.ToObject<List<Dictionary<string, object>>>(item["property"].ToString());
+                        if (propertyList != null)
+                        {
+                            foreach (Dictionary<string,object> propertyDic in propertyList)
+                            {
+                                if (propertyDic["key"].ToString().Equals(columnPath))
+                                {
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         /// <summary>
         /// 构建Datatable结构
         /// </summary>
@@ -304,7 +336,7 @@ namespace Victop.Frame.DataChannel
                 foreach (string colItem in rowData.Keys)
                 {
                     DataColumn dc = new DataColumn(colItem);
-                        itemDt.Columns.Add(dc);
+                    itemDt.Columns.Add(dc);
                 }
                 existFlag = false;
             }

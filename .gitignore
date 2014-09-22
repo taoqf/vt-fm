@@ -18,6 +18,7 @@ Bin/*.dll
 Bin/*.pdb
 Bin/Plugin/*.dll
 Bin/Plugin/*.pdb
+!Bin/form/
 !Bin/ice.cfg
 !Bin/PartnerConfig.xml
 !Bin/UserPlugins.xml

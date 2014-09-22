@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ <!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/json2form.css">
+    <script type="text/javascript" src="js/json2form.js"></script>
+</head>
+<body >
+<div id="jForm"></div>
+<div>
+    <button onclick="getJfData()">提交</button>
+</div>
+</body>
+<script type="text/javascript">
+    var jf;
+    function ExcuteWPF(params){
+        var temp= eval('('+params+')');
+        jf = new JsonForm("jForm");
+        jf.render(temp);
+    }
+    function getJfData()
+   {
+    var data = jf.getJsonString(); 
+   window.external.SendMessage(data);
+    }
+</script>
+</html>
