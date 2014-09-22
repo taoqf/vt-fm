@@ -186,8 +186,27 @@ namespace Victop.Frame.DataChannel
                                         {
                                             if (rowItem[dtCol.ColumnName] != null && !rowItem[dtCol.ColumnName].GetType().Name.Equals("String"))
                                             {
-                                                if (!delColList.Contains(dtCol.ColumnName))
-                                                    delColList.Add(dtCol.ColumnName);
+                                                //if (!delColList.Contains(dtCol.ColumnName))
+                                                //    delColList.Add(dtCol.ColumnName);
+                                                if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
+                                                {
+                                                    dtCol.ExtendedProperties.Add("ColType", rowItem[dtCol.ColumnName].GetType().Name);
+                                                }
+                                                else
+                                                {
+                                                    dtCol.ExtendedProperties["ColType"] = rowItem[dtCol.ColumnName].GetType().Name;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
+                                                {
+                                                    dtCol.ExtendedProperties.Add("ColType", "String");
+                                                }
+                                                else
+                                                {
+                                                    dtCol.ExtendedProperties["ColType"] = "String";
+                                                }
                                             }
                                             arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
                                         }
@@ -205,8 +224,27 @@ namespace Victop.Frame.DataChannel
                                     {
                                         if (itemDic[dtCol.ColumnName] != null && !itemDic[dtCol.ColumnName].GetType().Name.Equals("String"))
                                         {
-                                            if (!delColList.Contains(dtCol.ColumnName))
-                                                delColList.Add(dtCol.ColumnName);
+                                            //if (!delColList.Contains(dtCol.ColumnName))
+                                            //    delColList.Add(dtCol.ColumnName);
+                                            if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
+                                            {
+                                                dtCol.ExtendedProperties.Add("ColType", itemDic[dtCol.ColumnName].GetType().Name);
+                                            }
+                                            else
+                                            {
+                                                dtCol.ExtendedProperties["ColType"] = itemDic[dtCol.ColumnName].GetType().Name;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
+                                            {
+                                                dtCol.ExtendedProperties.Add("ColType", "String");
+                                            }
+                                            else
+                                            {
+                                                dtCol.ExtendedProperties["ColType"] = "String";
+                                            }
                                         }
                                         objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
                                     }
@@ -296,14 +334,14 @@ namespace Victop.Frame.DataChannel
             if (arrayList != null)
             {
                 string columnValue = string.Empty;
-                foreach (Dictionary<string,object> item in arrayList)
+                foreach (Dictionary<string, object> item in arrayList)
                 {
                     if (item.ContainsKey("property"))
                     {
                         List<Dictionary<string, object>> propertyList = JsonHelper.ToObject<List<Dictionary<string, object>>>(item["property"].ToString());
                         if (propertyList != null)
                         {
-                            foreach (Dictionary<string,object> propertyDic in propertyList)
+                            foreach (Dictionary<string, object> propertyDic in propertyList)
                             {
                                 if (propertyDic["key"].ToString().Equals(columnPath))
                                 {
@@ -370,9 +408,22 @@ namespace Victop.Frame.DataChannel
                             Dictionary<string, object> addDic = new Dictionary<string, object>();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                if (dr[dc.ColumnName].GetType().Name.Equals("JObject"))
-                                    continue;
-                                addDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                                if (dc.ExtendedProperties.ContainsKey("ColType"))
+                                {
+                                    if (dc.ExtendedProperties["ColType"].ToString().Equals("JObject"))
+                                    {
+                                        addDic.Add(dc.ColumnName, JsonHelper.ToObject<Dictionary<string, object>>(dr[dc.ColumnName].ToString()));
+                                    }
+                                    else if (dc.ExtendedProperties["ColType"].ToString().Equals("JArray"))
+                                    {
+                                        addDic.Add(dc.ColumnName, JsonHelper.ToObject<List<object>>(dr[dc.ColumnName].ToString()));
+                                    }
+                                    else
+                                    {
+                                        addDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                                    }
+                                }
+
                             }
                             editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, OpreateStateEnum.Added);
                             break;
@@ -387,7 +438,21 @@ namespace Victop.Frame.DataChannel
                             Dictionary<string, object> modDic = new Dictionary<string, object>();
                             foreach (DataColumn dc in dt.Columns)
                             {
-                                modDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                                if (dc.ExtendedProperties.ContainsKey("ColType"))
+                                {
+                                    if (dc.ExtendedProperties["ColType"].ToString().Equals("JObject"))
+                                    {
+                                        modDic.Add(dc.ColumnName, JsonHelper.ToObject<Dictionary<string, object>>(dr[dc.ColumnName].ToString()));
+                                    }
+                                    else if (dc.ExtendedProperties["ColType"].ToString().Equals("JArray"))
+                                    {
+                                        modDic.Add(dc.ColumnName, JsonHelper.ToObject<List<object>>(dr[dc.ColumnName].ToString()));
+                                    }
+                                }
+                                else
+                                {
+                                    modDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                                }
                             }
                             List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
                             if (pathList[pathList.Count - 1].GetType().Name.Equals("String"))

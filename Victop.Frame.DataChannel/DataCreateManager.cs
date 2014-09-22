@@ -656,7 +656,7 @@ namespace Victop.Frame.DataChannel
             switch (channelData.DataForm)
             {
                 case DataFormEnum.JSON:
-                    curdStr = channelData.CrudJSONData;
+                    curdStr = JsonHelper.ToJson(channelData.CrudJSONData);
                     break;
                 case DataFormEnum.DATASET:
                 default:
@@ -893,7 +893,7 @@ namespace Victop.Frame.DataChannel
                 }
                 else
                 {
-                    channelData.CrudJSONData = string.Empty;
+                    channelData.CrudJSONData = new List<object>();
                     return true;
                 }
             }

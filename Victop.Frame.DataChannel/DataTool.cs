@@ -365,16 +365,14 @@ namespace Victop.Frame.DataChannel
                 switch (rowState)
                 {
                     case OpreateStateEnum.Added:
-                        string addCurdJson = dataOp.GetCurdJSONData(viewId);
-                        List<object> addCurdList;
-                        if (string.IsNullOrEmpty(addCurdJson))
+                        List<object> addCurdList = dataOp.GetCurdJSONData(viewId);
+                        if (addCurdList==null)
                         {
                             addCurdList = new List<object>();
                             addCurdList.Add(curdDic);
                         }
                         else
                         {
-                            addCurdList = JsonHelper.ToObject<List<object>>(addCurdJson);
                             bool addFalg = true;
                             foreach (var item in addCurdList)
                             {
@@ -390,20 +388,15 @@ namespace Victop.Frame.DataChannel
                                 addCurdList.Add(curdDic);
                             }
                         }
-                        dataOp.SaveCurdJSONData(viewId, JsonHelper.ToJson(addCurdList));
+                        dataOp.SaveCurdJSONData(viewId, addCurdList);
 
                         break;
                     case OpreateStateEnum.Modified:
-                        string modCurdJson = dataOp.GetCurdJSONData(viewId);
-                        List<object> modCurdList;
-                        if (string.IsNullOrEmpty(modCurdJson))
+                        List<object> modCurdList = dataOp.GetCurdJSONData(viewId);
+                        if (modCurdList == null)
                         {
                             modCurdList = new List<object>();
                             modCurdList.Add(curdDic);
-                        }
-                        else
-                        {
-                            modCurdList = JsonHelper.ToObject<List<object>>(modCurdJson);
                         }
                         bool modFlag = true;
                         //TODO:修改是增加对修改内总键值的判断，若cud池中已经存在键，则将新的值存入其中，若没有，则将新的键值加入对应的rowdata中
@@ -422,19 +415,14 @@ namespace Victop.Frame.DataChannel
                         {
                             modCurdList.Add(curdDic);
                         }
-                        dataOp.SaveCurdJSONData(viewId, JsonHelper.ToJson(modCurdList));
+                        dataOp.SaveCurdJSONData(viewId, modCurdList);
                         break;
                     case OpreateStateEnum.Deleted:
-                        string delCurdJson = dataOp.GetCurdJSONData(viewId);
-                        List<object> delCurdList;
-                        if (delCurdJson == null)
+                        List<object> delCurdList = dataOp.GetCurdJSONData(viewId);
+                        if (delCurdList == null)
                         {
                             delCurdList = new List<object>();
                             delCurdList.Add(curdDic);
-                        }
-                        else
-                        {
-                            delCurdList = JsonHelper.ToObject<List<object>>(delCurdJson);
                         }
                         foreach (var item in delCurdList)
                         {
@@ -463,7 +451,7 @@ namespace Victop.Frame.DataChannel
                                 }
                             }
                         }
-                        dataOp.SaveCurdJSONData(viewId, JsonHelper.ToJson(delCurdList));
+                        dataOp.SaveCurdJSONData(viewId, delCurdList);
                         break;
                     case OpreateStateEnum.None:
                         break;

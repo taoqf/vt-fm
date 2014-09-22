@@ -484,15 +484,16 @@ namespace AreaManagerPlugin.ViewModels
                             viewId = returnDic["DataChannelId"].ToString();
                             List<object> pathList = new List<object>();
                             pathList.Add("task_pool");
-                            Dictionary<string, object> pathDic = new Dictionary<string, object>();
-                            pathDic.Add("key", "_id");
-                            pathDic.Add("value", "c7ded84f-da7f-4e7b-930d-3a9e0a28276e");
-                            pathList.Add(pathDic);
-                            pathList.Add("page");
+                            //Dictionary<string, object> pathDic = new Dictionary<string, object>();
+                            //pathDic.Add("key", "_id");
+                            //pathDic.Add("value", "d7d1fca1-91c0-40a4-9aab-9af4eaa6b0fc");
+                            //pathList.Add(pathDic);
+                            //pathList.Add("page");
                             dataPath = JsonHelper.ToJson(pathList);
                             DataOperation dataOp = new DataOperation();
                             DataSet ds = new DataSet();
-                            ds = dataOp.GetData(viewId, dataPath,ds);
+                            string temp = dataOp.GetJSONData(viewId);
+                            ds = dataOp.GetData(viewId, dataPath);
                             JsonDataTable = ds.Tables["dataArray"];
                         }
                         #endregion
@@ -558,14 +559,6 @@ namespace AreaManagerPlugin.ViewModels
                     contentDic.Add("spaceId", "victop_core");
                     Dictionary<string, object> resultDic = messageOp.SendMessage("MongoDataChannelService.saveBusiData", contentDic, "JSON");
                     string temp1 = resultDic["ReplyMode"].ToString();
-                    //JSONDataOperation jsonOp = new JSONDataOperation();
-                    //Dictionary<string, object> newDic = new Dictionary<string, object>();
-                    //newDic.Add("_id", "A0002");
-                    //newDic.Add("name", "法国");
-                    //newDic.Add("englishName", "France");
-                    //newDic.Add("region", null);
-                    //newDic.Add("order", null);
-                    //bool result = jsonOp.AddData(viewId, "[\"area\"]", JsonHelper.ToJson(newDic));
                 });
             }
         }

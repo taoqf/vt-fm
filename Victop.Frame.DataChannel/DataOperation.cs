@@ -69,7 +69,7 @@ namespace Victop.Frame.DataChannel
         /// </summary>
         /// <param name="channelId"></param>
         /// <returns></returns>
-        public virtual string GetCurdJSONData(string channelId)
+        public virtual List<object> GetCurdJSONData(string channelId)
         {
             DataChannelManager dataChannelManager = new DataChannelManager();
             Hashtable hashData = dataChannelManager.GetData(channelId);
@@ -96,7 +96,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="channelId"></param>
         /// <param name="saveData"></param>
         /// <returns></returns>
-        internal bool SaveCurdJSONData(string channelId, string saveData)
+        internal bool SaveCurdJSONData(string channelId, List<object> saveData)
         {
             DataChannelManager dataChannelManager = new DataChannelManager();
             Hashtable hashData = dataChannelManager.GetData(channelId);
