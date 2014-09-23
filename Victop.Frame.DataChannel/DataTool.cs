@@ -433,7 +433,8 @@ namespace Victop.Frame.DataChannel
                         {
                             if (item["flag"].ToString().Equals("4") && item["path"].ToString().Equals(dataPath))
                             {
-                                string delKey = JsonHelper.ReadJsonString(item["rowdata"].ToString(), "_id");
+                                Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
+                                string delKey = rowDataDic["_id"].ToString();
                                 if (saveData["_id"].ToString().Equals(delKey))
                                 {
                                     delCurdList.Remove(item);
@@ -446,13 +447,14 @@ namespace Victop.Frame.DataChannel
                             }
                             else if (item["path"].ToString().Equals(dataPath))
                             {
-                                string delKey = JsonHelper.ReadJsonString(item["rowdata"].ToString(), "_id");
+                                Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
+                                string delKey = rowDataDic["_id"].ToString();
                                 if (saveData["_id"].ToString().Equals(delKey))
                                 {
                                     delCurdList.Remove(item);
-                                    delCurdList.Add(curdDic);
                                     break;
                                 }
+                                delCurdList.Add(curdDic);
                             }
                         }
                         dataOp.SaveCurdJSONData(viewId, delCurdList);
