@@ -177,7 +177,7 @@ namespace Victop.Server.Controls.Runtime
                     {
                         block.BlockDataPath.Add(item);
                     }
-                    if (!blockModel.BlockType.Equals("row"))
+                    if (!blockModel.DataSetType.Equals("row"))
                     {
                         block.BlockDataPath.Add(pathDic);
                     }
