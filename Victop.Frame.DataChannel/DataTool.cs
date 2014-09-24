@@ -429,6 +429,11 @@ namespace Victop.Frame.DataChannel
                             delCurdList = new List<object>();
                             delCurdList.Add(curdDic);
                         }
+                        List<object> newCurdList = new List<object>();
+                        foreach (var item in delCurdList)
+                        {
+                            newCurdList.Add(item);
+                        }
                         foreach (Dictionary<string,object> item in delCurdList)
                         {
                             if (item["flag"].ToString().Equals("4") && JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
@@ -437,13 +442,12 @@ namespace Victop.Frame.DataChannel
                                 string delKey = rowDataDic["_id"].ToString();
                                 if (saveData["_id"].ToString().Equals(delKey))
                                 {
-                                    delCurdList.Remove(item);
+                                    newCurdList.Remove(item);
                                 }
                                 else
                                 {
-                                    delCurdList.Add(curdDic);
+                                    newCurdList.Add(curdDic);
                                 }
-                                break;
                             }
                             else if (JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
                             {
@@ -451,13 +455,18 @@ namespace Victop.Frame.DataChannel
                                 string delKey = rowDataDic["_id"].ToString();
                                 if (saveData["_id"].ToString().Equals(delKey))
                                 {
-                                    delCurdList.Remove(item);
+                                    newCurdList.Remove(item);
+                                    newCurdList.Add(curdDic);
                                     break;
                                 }
-                                delCurdList.Add(curdDic);
+                                else
+                                {
+                                    newCurdList.Add(curdDic);
+                                    break;
+                                }
                             }
                         }
-                        dataOp.SaveCurdJSONData(viewId, delCurdList);
+                        dataOp.SaveCurdJSONData(viewId, newCurdList);
                         break;
                     case OpreateStateEnum.None:
                         break;
