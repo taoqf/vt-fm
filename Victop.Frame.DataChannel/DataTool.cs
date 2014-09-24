@@ -376,7 +376,7 @@ namespace Victop.Frame.DataChannel
                             bool addFalg = true;
                             foreach (Dictionary<string,object> item in addCurdList)
                             {
-                                if (item["flag"].ToString().Equals(curdDic["flag"].ToString()) && item["path"].ToString().Equals(curdDic["path"].ToString()))
+                                if (item["flag"].ToString().Equals(curdDic["flag"].ToString()) && JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
                                 {
                                     Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
                                     if (rowDataDic["_id"].ToString().Equals(saveData["_id"].ToString()))
@@ -431,7 +431,7 @@ namespace Victop.Frame.DataChannel
                         }
                         foreach (Dictionary<string,object> item in delCurdList)
                         {
-                            if (item["flag"].ToString().Equals("4") && item["path"].ToString().Equals(dataPath))
+                            if (item["flag"].ToString().Equals("4") && JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
                             {
                                 Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
                                 string delKey = rowDataDic["_id"].ToString();
@@ -445,7 +445,7 @@ namespace Victop.Frame.DataChannel
                                 }
                                 break;
                             }
-                            else if (item["path"].ToString().Equals(dataPath))
+                            else if (JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
                             {
                                 Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
                                 string delKey = rowDataDic["_id"].ToString();
