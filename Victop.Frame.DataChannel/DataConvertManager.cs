@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using Victop.Frame.DataChannel.Enums;
+using Victop.Frame.DataChannel.MongoModel;
 using Victop.Frame.PublicLib.Helpers;
 
 namespace Victop.Frame.DataChannel
@@ -326,32 +327,97 @@ namespace Victop.Frame.DataChannel
         /// 获取简单引用数据
         /// </summary>
         /// <param name="viewId"></param>
-        private void GetSimpleRef(string viewId, string columnPath)
+        public DataSet GetSimpleRef(string viewId, string dataPath, string columnPath, string dependValue)
         {
-            string jsonData = DataTool.GetDataByPath(viewId, "simpleRef");
-            jsonData = JsonHelper.ReadJsonString(jsonData, "dataArray");
-            List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
-            if (arrayList != null)
+            DataSet ds = new DataSet();
+            string constructPath = string.Empty;
+            #region 构建结构Path
+            List<object> pathList = JsonHelper.ToObject<List<Object>>(dataPath);
+            for (int i = 0; i < pathList.Count; i++)
             {
-                string columnValue = string.Empty;
-                foreach (Dictionary<string, object> item in arrayList)
+                if (pathList[i].GetType().Name.Equals("String"))
                 {
-                    if (item.ContainsKey("property"))
+                    constructPath += pathList[i].ToString() + ".";
+                    if (i == pathList.Count - 1)
                     {
-                        List<Dictionary<string, object>> propertyList = JsonHelper.ToObject<List<Dictionary<string, object>>>(item["property"].ToString());
-                        if (propertyList != null)
+                        constructPath += "dataArray.";
+                    }
+                }
+                else
+                {
+                    constructPath += "dataArray.";
+                }
+            }
+            constructPath += columnPath;
+            #endregion
+            #region 获取简单引用定义
+            string jsonData = DataTool.GetDataByPath(viewId, "[\"simpleRef\"]");
+            if (!string.IsNullOrEmpty(jsonData))
+            {
+                string dataArrayJson = JsonHelper.ReadJsonString(jsonData, "dataArray");
+                foreach (Dictionary<string, object> item in JsonHelper.ToObject<List<Dictionary<string, object>>>(dataArrayJson))
+                {
+                    List<SimRefPropertyModel> propertyModelList = JsonHelper.ToObject<List<SimRefPropertyModel>>(item["property"].ToString());
+                    SimRefPropertyModel propertyModel = propertyModelList.FirstOrDefault(it => it.key.Equals(constructPath));
+                    string dependPath = string.Empty;
+                    if (propertyModel != null)
+                    {
+                        if (propertyModel.depend != null)
                         {
-                            foreach (Dictionary<string, object> propertyDic in propertyList)
-                            {
-                                if (propertyDic["key"].ToString().Equals(columnPath))
-                                {
-
-                                }
-                            }
+                            dependPath = propertyModelList.Find(it => it.key.Equals(propertyModel.depend)).value;
                         }
+                        DataTable dt = GetDataByConsturctPath(propertyModel.value, dependPath, item["valueList"].ToString(), dependValue);
+                        ds.Tables.Add(dt);
+                        break;
                     }
                 }
             }
+            #endregion
+            return ds;
+        }
+
+        private DataTable GetDataByConsturctPath(string constructPath, string dependPath, string jsonData, string dependValue)
+        {
+            DataTable dt = new DataTable("dataArray");
+            dt.Columns.Add("txt");
+            dt.Columns.Add("val");
+            string[] pathList = constructPath.Split('.');
+            string[] dependList = null;
+            if (!string.IsNullOrEmpty(dependPath))
+            {
+                dependList = dependPath.Split('.');
+            }
+            jsonData = JsonHelper.ReadJsonString(jsonData, "dataArray");
+            List<Dictionary<string, object>> valueList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
+            for (int i = 0; i < pathList.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    if (valueList[0].ContainsKey(pathList[i]))
+                    {
+                        valueList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(valueList[0][pathList[i]].ToString(), "dataArray"));
+                        if (dependList != null && i <= dependList.Length - 1 && pathList[i].ToString().Equals(dependList[i].ToString()))
+                        {
+                            valueList = valueList.FindAll(it => it[dependList[dependList.Length - 1]].ToString().Equals(dependValue));
+                        }
+                        if (i == pathList.Length - 3)
+                        {
+                            foreach (Dictionary<string, object> item in valueList)
+                            {
+                                DataRow dr = dt.NewRow();
+                                dr["txt"] = item["txt"];
+                                dr["val"] = item["val"];
+                                dt.Rows.Add(dr);
+                            }
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            return dt;
         }
         /// <summary>
         /// 构建Datatable结构

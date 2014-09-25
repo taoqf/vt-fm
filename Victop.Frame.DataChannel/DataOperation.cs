@@ -64,6 +64,12 @@ namespace Victop.Frame.DataChannel
             ChannelData channelData = hashData["Data"] as ChannelData;
             return channelData.JSONData;
         }
+
+        public virtual DataSet GetSimpDefData(string channelId, string dataPath, string columnName, string dependValue = null)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.GetSimpleRef(channelId, dataPath, columnName, dependValue);
+        }
         /// <summary>
         /// 根据通道号获取curdJSON数据
         /// </summary>

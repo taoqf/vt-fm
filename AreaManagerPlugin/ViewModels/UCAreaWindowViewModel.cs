@@ -293,13 +293,9 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    //MessageOperation messageOp = new MessageOperation();
-                    //Dictionary<string, object> result = messageOp.SendMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
-                    //string temp = string.Empty;
-
-                    CurdJSONDataOperation jsonOp = new CurdJSONDataOperation();
-
-
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> result = messageOp.SendMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                    string temp = string.Empty;
                 });
             }
         }
@@ -463,20 +459,20 @@ namespace AreaManagerPlugin.ViewModels
                         MessageOperation messageOp = new MessageOperation();
                         #region victop_core库
                         //Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                        //contentDic.Add("systemid", "100");
+                        //contentDic.Add("systemid", "906");
                         //contentDic.Add("configsystemid", "101");
                         /////contentDic.Add("spaceid", "victop_core");
                         //contentDic.Add("modelid", "victop_core_task_pool_0001");
-                        ////List<object> conlist = new List<object>();
-                        ////Dictionary<string, object> conDic = new Dictionary<string, object>();
-                        ////conDic.Add("name", "industry");
-                        ////List<object> tableConList = new List<object>();
-                        ////Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-                        ////tableConDic.Add("name", RegexHelper.StartWith("电"));
-                        ////tableConList.Add(tableConDic);
-                        ////conDic.Add("tablecondition", tableConList);
-                        ////conlist.Add(conDic);
-                        ////contentDic.Add("conditions", conlist);
+                        //////List<object> conlist = new List<object>();
+                        //////Dictionary<string, object> conDic = new Dictionary<string, object>();
+                        //////conDic.Add("name", "industry");
+                        //////List<object> tableConList = new List<object>();
+                        //////Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+                        //////tableConDic.Add("name", RegexHelper.StartWith("电"));
+                        //////tableConList.Add(tableConDic);
+                        //////conDic.Add("tablecondition", tableConList);
+                        //////conlist.Add(conDic);
+                        //////contentDic.Add("conditions", conlist);
 
                         //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                         //if (returnDic != null)
@@ -498,12 +494,26 @@ namespace AreaManagerPlugin.ViewModels
                         //}
                         #endregion
                         #region tianlong库
-                        //Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                        //contentDic.Add("systemid", "906");
-                        //contentDic.Add("configsystemid", "905");
-                        ////contentDic.Add("spaceid", "tianlong");
-                        //contentDic.Add("modelid", "tl_customer_in_0001");
-                        //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        contentDic.Add("systemid", "906");
+                        contentDic.Add("configsystemid", "905");
+                        //contentDic.Add("spaceid", "tianlong");
+                        contentDic.Add("modelid", "tl_customer_in_0001");
+                        Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        if (returnDic != null)
+                        {
+                            viewId = returnDic["DataChannelId"].ToString();
+                            DataOperation dataOp = new DataOperation();
+                            DataSet ds = dataOp.GetSimpDefData(viewId, "[\"customer\"]", "id_area_id");
+                        }
+                        #endregion
+                        #region 获取编号
+                        ////Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        //contentDic.Add("configsystemid", "101");
+                        ////contentDic.Add("spaceid", "tbs");
+                        //contentDic.Add("pname", "BH005");
+                        //contentDic.Add("setinfo", "ltab,1");
+                        //Dictionary<string, object> returnDic = messageOp.SendMessage("MongoDataChannelService.findDocCode", contentDic, "JSON");
                         //if (returnDic != null)
                         //{
                         //    viewId = returnDic["DataChannelId"].ToString();
@@ -511,25 +521,8 @@ namespace AreaManagerPlugin.ViewModels
                         //    string temp = dataOp.GetJSONData(viewId);
                         //    List<object> tempList = new List<object>();
                         //    tempList.Add("simpleRef");
-                        //    JsonDataTable = dataOp.GetData(viewId, JsonHelper.ToJson(tempList), null);
+                        //    //JsonDataTable = dataOp.GetData(viewId, JsonHelper.ToJson(tempList), null);
                         //}
-                        #endregion
-                        #region 获取编号
-                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                        contentDic.Add("configsystemid", "101");
-                        //contentDic.Add("spaceid", "tbs");
-                        contentDic.Add("pname", "BH005");
-                        contentDic.Add("setinfo", "ltab,1");
-                        Dictionary<string, object> returnDic = messageOp.SendMessage("MongoDataChannelService.findDocCode", contentDic, "JSON");
-                        if (returnDic != null)
-                        {
-                            viewId = returnDic["DataChannelId"].ToString();
-                            DataOperation dataOp = new DataOperation();
-                            string temp = dataOp.GetJSONData(viewId);
-                            List<object> tempList = new List<object>();
-                            tempList.Add("simpleRef");
-                            //JsonDataTable = dataOp.GetData(viewId, JsonHelper.ToJson(tempList), null);
-                        }
                         #endregion
                     }
                     catch (Exception ex)
@@ -587,8 +580,6 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    JSONDataOperation jsonOp = new JSONDataOperation();
-                    jsonOp.DeleteData(viewId, "[\"area\"]", "{\"_id\":\"A0002\"}");
                 });
             }
         }
@@ -601,9 +592,69 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    //CompntDataGrid grid = (CompntDataGrid)x;
-                    //grid.SettingModel = JsonHelper.ToObject<CompntSettingModel>(FileHelper.ReadFitData("testsetting"));
+                    string MessageType = "MongoDataChannelService.findBusiData";
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("systemid", "906");
+                    contentDic.Add("configsystemid", "905");
+                    //contentDic.Add("spaceid", "tianlong");
+                    contentDic.Add("modelid", "tl_customer_in_0001");
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                    if (returnDic != null)
+                    {
+                        viewId = returnDic["DataChannelId"].ToString();
+                    }
+                });
+            }
+        }
+        #endregion
 
+        #region Combobox处理
+
+        string comboxSelectedValue = string.Empty;
+        public ICommand testCboxDropDownOpenedCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) => {
+                    DataSet ds = new DataSet();
+                    System.Windows.Controls.ComboBox cBox = (System.Windows.Controls.ComboBox)x;
+                    if (cBox.ItemsSource == null)
+                    {
+                        DataOperation dataOp = new DataOperation();
+                        ds = dataOp.GetSimpDefData(viewId, "[\"customer\"]", "id_area_id");
+                        //ds = dataOp.GetSimpDefData(viewId, "[\"id_area\",{\"key\":\"_id\",\"value\":\"afdsa\"},\"id_city\"]", "id_area_id");
+                        cBox.DisplayMemberPath = "txt";
+                        cBox.SelectedValuePath = "val";
+                        cBox.ItemsSource = ds.Tables["dataArray"].DefaultView;
+                    }
+                });
+            }
+        }
+        public ICommand testCboxSelectionChanged
+        {
+            get
+            {
+                return new RelayCommand<object>((x) => { 
+                System.Windows.Controls.ComboBox cBox = (System.Windows.Controls.ComboBox)x;
+                comboxSelectedValue = cBox.SelectedValue.ToString();
+                });
+            }
+        }
+
+        public ICommand testCbox1DropDownOpenedCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) => {
+                    DataSet ds = new DataSet();
+                    System.Windows.Controls.ComboBox cBox = (System.Windows.Controls.ComboBox)x;
+                    DataOperation dataOp = new DataOperation();
+                    ds = dataOp.GetSimpDefData(viewId, "[\"customer\"]", "id_city_id", comboxSelectedValue);
+                    //ds = dataOp.GetSimpDefData(viewId, "[\"id_area\",{\"key\":\"_id\",\"value\":\"afdsa\"},\"id_city\"]", "id_area_id");
+                    cBox.DisplayMemberPath = "txt";
+                    cBox.SelectedValuePath = "val";
+                    cBox.ItemsSource = ds.Tables["dataArray"].DefaultView;
                 });
             }
         }

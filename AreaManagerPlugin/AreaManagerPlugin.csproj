@@ -108,6 +108,9 @@
     <Compile Include="Views\UCAreaWindow.xaml.cs">
       <DependentUpon>UCAreaWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UCSimpleDefWindow.xaml.cs">
+      <DependentUpon>UCSimpleDefWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Victop.Frame.DataChannel\Victop.Frame.DataChannel.csproj">
@@ -137,6 +140,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UCAreaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UCSimpleDefWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

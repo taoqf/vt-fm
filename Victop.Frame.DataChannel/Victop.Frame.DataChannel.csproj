@@ -66,7 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChannelData.cs" />
-    <Compile Include="CurdJSONDataOperation.cs" />
     <Compile Include="DataChannelManager.cs" />
     <Compile Include="DataConvertManager.cs" />
     <Compile Include="DataCreateManager.cs" />
@@ -74,7 +73,7 @@
     <Compile Include="DataTool.cs" />
     <Compile Include="Enums\OpreateStateEnum.cs" />
     <Compile Include="Enums\SOADataTypeEnum.cs" />
-    <Compile Include="JSONDataOperation.cs" />
+    <Compile Include="MongoModel\SimRefPropertyModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
