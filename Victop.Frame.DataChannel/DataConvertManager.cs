@@ -176,7 +176,13 @@ namespace Victop.Frame.DataChannel
                             case "JArray":
                                 List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonDic[item].ToString());
                                 if (arrayList == null || arrayList.Count == 0)
+                                {
+                                    DataTable jArrayDt = new DataTable("item");
+                                    //TODO:构建表结构
+                                    jArrayDt.AcceptChanges();
+                                    newDs.Tables.Add(jArrayDt);
                                     continue;
+                                }
                                 itemDt = GetDataTableStruct(item, arrayList[0], newDs, out existFlag);
                                 foreach (Dictionary<string, object> rowItem in arrayList)
                                 {
