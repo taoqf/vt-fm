@@ -366,7 +366,7 @@ namespace Victop.Frame.DataChannel
                 {
                     case OpreateStateEnum.Added:
                         List<object> addCurdList = dataOp.GetCurdJSONData(viewId);
-                        if (addCurdList==null)
+                        if (addCurdList == null)
                         {
                             addCurdList = new List<object>();
                             addCurdList.Add(curdDic);
@@ -374,7 +374,7 @@ namespace Victop.Frame.DataChannel
                         else
                         {
                             bool addFalg = true;
-                            foreach (Dictionary<string,object> item in addCurdList)
+                            foreach (Dictionary<string, object> item in addCurdList)
                             {
                                 if (item["flag"].ToString().Equals(curdDic["flag"].ToString()) && JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
                                 {
@@ -403,7 +403,7 @@ namespace Victop.Frame.DataChannel
                         }
                         bool modFlag = true;
                         //TODO:修改是增加对修改内总键值的判断，若cud池中已经存在键，则将新的值存入其中，若没有，则将新的键值加入对应的rowdata中
-                        foreach (Dictionary<string,object> item in modCurdList)
+                        foreach (Dictionary<string, object> item in modCurdList)
                         {
                             if (JsonHelper.ToJson(item["path"]) == JsonHelper.ToJson(dataPath))
                             {
@@ -424,7 +424,7 @@ namespace Victop.Frame.DataChannel
                         break;
                     case OpreateStateEnum.Deleted:
                         List<object> delCurdList = dataOp.GetCurdJSONData(viewId);
-                        if (delCurdList == null)
+                        if (delCurdList == null || delCurdList.Count <= 0)
                         {
                             delCurdList = new List<object>();
                             delCurdList.Add(curdDic);
@@ -434,7 +434,7 @@ namespace Victop.Frame.DataChannel
                         {
                             newCurdList.Add(item);
                         }
-                        foreach (Dictionary<string,object> item in delCurdList)
+                        foreach (Dictionary<string, object> item in delCurdList)
                         {
                             if (item["flag"].ToString().Equals("4") && JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
                             {
