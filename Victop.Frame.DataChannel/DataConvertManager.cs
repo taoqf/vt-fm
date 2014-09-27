@@ -312,7 +312,10 @@ namespace Victop.Frame.DataChannel
                 DataTable itemDt = new DataTable("dataArray");
                 //TODO:构建表结构
                 itemDt.AcceptChanges();
-                newDs.Tables.Add(itemDt);
+                if (!newDs.Tables.Contains("dataArray"))
+                {
+                    newDs.Tables.Add(itemDt);
+                }
             }
             bool checkFlag = false;
             foreach (JsonMapKey item in JsonTableMap.Keys)
