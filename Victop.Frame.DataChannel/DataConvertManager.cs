@@ -180,7 +180,10 @@ namespace Victop.Frame.DataChannel
                                     DataTable jArrayDt = new DataTable(item);
                                     //TODO:构建表结构
                                     jArrayDt.AcceptChanges();
-                                    newDs.Tables.Add(jArrayDt);
+                                    if (!newDs.Tables.Contains(item))
+                                    {
+                                        newDs.Tables.Add(jArrayDt);
+                                    }
                                     continue;
                                 }
                                 itemDt = GetDataTableStruct(item, arrayList[0], newDs, out existFlag);
