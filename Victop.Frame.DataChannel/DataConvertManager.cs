@@ -159,6 +159,7 @@ namespace Victop.Frame.DataChannel
             DataSet newDs = structDs == null ? new DataSet() : structDs.Copy();
             newDs.Clear();
             List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
+            string modelData = DataTool.GetDataByPath(viewId, "[\"model\"]");
             string jsonData = DataTool.GetDataByPath(viewId, dataPath);
             if (!string.IsNullOrEmpty(jsonData))
             {
@@ -170,23 +171,24 @@ namespace Victop.Frame.DataChannel
                     {
                         List<string> delColList = new List<string>();
                         DataTable itemDt = new DataTable();
-                        bool existFlag = false;
                         switch (jsonDic[item].GetType().Name)
                         {
                             case "JArray":
                                 List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonDic[item].ToString());
-                                if (arrayList == null || arrayList.Count == 0)
+                                itemDt = new DataTable(item);
+                                if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
                                 {
-                                    DataTable jArrayDt = new DataTable(item);
-                                    //TODO:构建表结构
-                                    jArrayDt.AcceptChanges();
-                                    if (!newDs.Tables.Contains(item))
-                                    {
-                                        newDs.Tables.Add(jArrayDt);
-                                    }
-                                    continue;
+                                    itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
                                 }
-                                itemDt = GetDataTableStruct(item, arrayList[0], newDs, out existFlag);
+                                if (itemDt.Columns.Count <= 0)
+                                {
+                                    itemDt = GetDataTableStruct(item, arrayList.Count > 0 ? arrayList[0] : null, newDs);
+                                }
+                                itemDt.AcceptChanges();
+                                if (!newDs.Tables.Contains(item))
+                                {
+                                    newDs.Tables.Add(itemDt);
+                                }
                                 foreach (Dictionary<string, object> rowItem in arrayList)
                                 {
                                     DataRow arrayDr = itemDt.NewRow();
@@ -196,8 +198,6 @@ namespace Victop.Frame.DataChannel
                                         {
                                             if (rowItem[dtCol.ColumnName] != null && !rowItem[dtCol.ColumnName].GetType().Name.Equals("String"))
                                             {
-                                                //if (!delColList.Contains(dtCol.ColumnName))
-                                                //    delColList.Add(dtCol.ColumnName);
                                                 if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
                                                 {
                                                     dtCol.ExtendedProperties.Add("ColType", rowItem[dtCol.ColumnName].GetType().Name);
@@ -226,7 +226,19 @@ namespace Victop.Frame.DataChannel
                                 break;
                             case "JObject":
                                 Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
-                                itemDt = GetDataTableStruct(item, itemDic, newDs, out existFlag);
+                                if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
+                                {
+                                    itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
+                                }
+                                if (itemDt.Columns.Count <= 0)
+                                {
+                                    itemDt = GetDataTableStruct(item, itemDic != null ? itemDic : null, newDs);
+                                }
+                                itemDt.AcceptChanges();
+                                if (!newDs.Tables.Contains(item))
+                                {
+                                    newDs.Tables.Add(itemDt);
+                                }
                                 DataRow objectDr = itemDt.NewRow();
                                 foreach (DataColumn dtCol in itemDt.Columns)
                                 {
@@ -234,8 +246,6 @@ namespace Victop.Frame.DataChannel
                                     {
                                         if (itemDic[dtCol.ColumnName] != null && !itemDic[dtCol.ColumnName].GetType().Name.Equals("String"))
                                         {
-                                            //if (!delColList.Contains(dtCol.ColumnName))
-                                            //    delColList.Add(dtCol.ColumnName);
                                             if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
                                             {
                                                 dtCol.ExtendedProperties.Add("ColType", itemDic[dtCol.ColumnName].GetType().Name);
@@ -264,20 +274,10 @@ namespace Victop.Frame.DataChannel
                             default:
                                 break;
                         }
-                        if (delColList.Count > 0)
-                        {
-                            foreach (string delColItem in delColList)
-                            {
-                                if (itemDt.Columns.Contains(delColItem))
-                                {
-                                    itemDt.Columns.Remove(delColItem);
-                                }
-                            }
-                        }
                         itemDt.AcceptChanges();
-                        if (existFlag)
+                        if (newDs.Tables.Contains(itemDt.TableName))
                         {
-                            newDs.Tables.Remove(item);
+                            newDs.Tables.Remove(itemDt.TableName);
                         }
                         newDs.Tables.Add(itemDt);
                     }
@@ -286,9 +286,20 @@ namespace Victop.Frame.DataChannel
                 else//获取行数据
                 {
                     #region 组织行数据
-                    DataTable itemDt = new DataTable();
-                    bool existFlag = false;
-                    itemDt = GetDataTableStruct("dataArray", jsonDic, newDs, out existFlag);
+                    DataTable itemDt = new DataTable("dataArray");
+                    if (!string.IsNullOrEmpty(modelData))
+                    {
+                        itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
+                    }
+                    if (itemDt.Columns.Count <= 0)
+                    {
+                        itemDt = GetDataTableStruct("dataArray", jsonDic, newDs);
+                    }
+                    itemDt.AcceptChanges();
+                    if (!newDs.Tables.Contains("dataArray"))
+                    {
+                        newDs.Tables.Add(itemDt);
+                    }
                     DataRow objectDr = itemDt.NewRow();
                     foreach (DataColumn dtCol in itemDt.Columns)
                     {
@@ -299,7 +310,8 @@ namespace Victop.Frame.DataChannel
                     }
                     itemDt.Rows.Add(objectDr);
                     itemDt.AcceptChanges();
-                    if (existFlag)
+
+                    if (newDs.Tables.Contains(itemDt.TableName))
                     {
                         newDs.Tables.Remove("dataArray");
                     }
@@ -333,6 +345,58 @@ namespace Victop.Frame.DataChannel
                 JsonTableMap.Add(mapKey, newDs);
             }
             return newDs;
+        }
+
+        /// <summary>
+        /// 根据模型定义生成表结构
+        /// </summary>
+        /// <param name="modelJson"></param>
+        /// <param name="tableName"></param>
+        /// <returns></returns>
+        private DataTable GetDataTableStructByModel(string modelJson, string tableName)
+        {
+            DataTable newDt = new DataTable("dataArray");
+            if (!string.IsNullOrEmpty(modelJson))
+            {
+                List<Dictionary<string, object>> tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "tables"));
+                if (tableList != null && tableList.Count > 0)
+                {
+                    tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(tableList.Find(it => it["name"].ToString().Equals(tableName))["structure"].ToString());
+                    foreach (Dictionary<string, object> item in tableList)
+                    {
+                        if (item.ContainsKey("value"))
+                        {
+                            string selectFlag = JsonHelper.ReadJsonString(item["value"].ToString(), "selectFlag");
+                            if (selectFlag.Equals("0") || selectFlag == null)
+                            {
+
+                            }
+                            else
+                            {
+                                DataColumn dc = new DataColumn(item["key"].ToString());
+                                switch (JsonHelper.ReadJsonString(item["value"].ToString(), "type"))
+                                {
+                                    case "int":
+                                        dc.DataType = typeof(Int32);
+                                        break;
+                                    case "long":
+                                        dc.DataType = typeof(Int64);
+                                        break;
+                                    case "date":
+                                        dc.DataType = typeof(DateTime);
+                                        break;
+                                    case "string":
+                                    default:
+                                        dc.DataType = typeof(String);
+                                        break;
+                                }
+                                newDt.Columns.Add(dc);
+                            }
+                        }
+                    }
+                }
+            }
+            return newDt;
         }
 
         /// <summary>
@@ -438,23 +502,24 @@ namespace Victop.Frame.DataChannel
         /// <param name="Keys"></param>
         /// <param name="newDs"></param>
         /// <returns></returns>
-        private DataTable GetDataTableStruct(string item, Dictionary<string, object> rowData, DataSet newDs, out bool existFlag)
+        private DataTable GetDataTableStruct(string item, Dictionary<string, object> rowData, DataSet newDs)
         {
             DataTable itemDt = new DataTable();
             if (newDs.Tables.Contains(item))
             {
                 itemDt = newDs.Tables[item];
-                existFlag = true;
             }
             else
             {
                 itemDt.TableName = item;
-                foreach (string colItem in rowData.Keys)
+                if (rowData != null)
                 {
-                    DataColumn dc = new DataColumn(colItem);
-                    itemDt.Columns.Add(dc);
+                    foreach (string colItem in rowData.Keys)
+                    {
+                        DataColumn dc = new DataColumn(colItem);
+                        itemDt.Columns.Add(dc);
+                    }
                 }
-                existFlag = false;
             }
             return itemDt;
         }

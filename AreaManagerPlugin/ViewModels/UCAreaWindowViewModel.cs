@@ -459,53 +459,39 @@ namespace AreaManagerPlugin.ViewModels
                         MessageOperation messageOp = new MessageOperation();
                         #region victop_core库
                         //Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                        //contentDic.Add("systemid", "906");
+                        //contentDic.Add("systemid", "100");
                         //contentDic.Add("configsystemid", "101");
-                        /////contentDic.Add("spaceid", "victop_core");
-                        //contentDic.Add("modelid", "victop_core_task_pool_0001");
-                        //////List<object> conlist = new List<object>();
-                        //////Dictionary<string, object> conDic = new Dictionary<string, object>();
-                        //////conDic.Add("name", "industry");
-                        //////List<object> tableConList = new List<object>();
-                        //////Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-                        //////tableConDic.Add("name", RegexHelper.StartWith("电"));
-                        //////tableConList.Add(tableConDic);
-                        //////conDic.Add("tablecondition", tableConList);
-                        //////conlist.Add(conDic);
-                        //////contentDic.Add("conditions", conlist);
-
+                        //contentDic.Add("modelid", "victop_core_userstory_0001");
                         //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                         //if (returnDic != null)
                         //{
                         //    viewId = returnDic["DataChannelId"].ToString();
                         //    List<object> pathList = new List<object>();
-                        //    pathList.Add("task_pool");
+                        //    pathList.Add("userstory");
                         //    //Dictionary<string, object> pathDic = new Dictionary<string, object>();
                         //    //pathDic.Add("key", "_id");
-                        //    //pathDic.Add("value", "d7d1fca1-91c0-40a4-9aab-9af4eaa6b0fc");
+                        //    //pathDic.Add("value", "77abe5db-2851-4799-bf2a-802c5aa7f8ab");
                         //    //pathList.Add(pathDic);
-                        //    //pathList.Add("page");
                         //    dataPath = JsonHelper.ToJson(pathList);
                         //    DataOperation dataOp = new DataOperation();
                         //    DataSet ds = new DataSet();
-                        //    string temp = dataOp.GetJSONData(viewId);
                         //    ds = dataOp.GetData(viewId, dataPath);
                         //    JsonDataTable = ds.Tables["dataArray"];
                         //}
                         #endregion
                         #region tianlong库
-                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                        contentDic.Add("systemid", "906");
-                        contentDic.Add("configsystemid", "905");
-                        //contentDic.Add("spaceid", "tianlong");
-                        contentDic.Add("modelid", "tl_customer_in_0001");
-                        Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
-                        if (returnDic != null)
-                        {
-                            viewId = returnDic["DataChannelId"].ToString();
-                            DataOperation dataOp = new DataOperation();
-                            DataSet ds = dataOp.GetSimpDefData(viewId, "[\"customer\"]", "id_area_id");
-                        }
+                        //Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        //contentDic.Add("systemid", "906");
+                        //contentDic.Add("configsystemid", "905");
+                        ////contentDic.Add("spaceid", "tianlong");
+                        //contentDic.Add("modelid", "tl_customer_in_0001");
+                        //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        //if (returnDic != null)
+                        //{
+                        //    viewId = returnDic["DataChannelId"].ToString();
+                        //    DataOperation dataOp = new DataOperation();
+                        //    DataSet ds = dataOp.GetSimpDefData(viewId, "[\"customer\"]", "id_area_id");
+                        //}
                         #endregion
                         #region 获取编号
                         ////Dictionary<string, object> contentDic = new Dictionary<string, object>();
@@ -523,6 +509,23 @@ namespace AreaManagerPlugin.ViewModels
                         //    tempList.Add("simpleRef");
                         //    //JsonDataTable = dataOp.GetData(viewId, JsonHelper.ToJson(tempList), null);
                         //}
+                        #endregion
+                        #region TinyServer测试
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        contentDic.Add("systemid", "906");
+                        contentDic.Add("configsystemid", "905");
+                        //contentDic.Add("spaceid", "tianlong");
+                        contentDic.Add("modelid", "ak00048");
+                        Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        if (returnDic != null)
+                        {
+                            List<Object> pathList = new List<object>();
+                            pathList.Add("area");
+                            dataPath = JsonHelper.ToJson(pathList);
+                            viewId = returnDic["DataChannelId"].ToString();
+                            DataOperation dataOp = new DataOperation();
+                            JsonDataTable = dataOp.GetData(viewId, dataPath).Tables["dataArray"];
+                        }
                         #endregion
                     }
                     catch (Exception ex)
@@ -546,12 +549,12 @@ namespace AreaManagerPlugin.ViewModels
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                     contentDic.Add("DataChannelId", viewId);
-                    contentDic.Add("modelid", "victop_core_task_pool_0001");
-                    contentDic.Add("systemid", "100");
-                    contentDic.Add("configsystemid", "101");
-                    contentDic.Add("spaceId", "victop_core");
+                    contentDic.Add("modelid", "ak00048");
                     Dictionary<string, object> resultDic = messageOp.SendMessage("MongoDataChannelService.saveBusiData", contentDic, "JSON");
-                    string temp1 = resultDic["ReplyMode"].ToString();
+                    if (!resultDic["ReplyMode"].ToString().Equals("0"))
+                    {
+                        System.Windows.MessageBox.Show("保存成功");
+                    }
                 });
             }
         }
@@ -580,6 +583,12 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    string MessageType = "MysqlManagerService.FindBusiData";
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("modelid", "ak00048");
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                    string temp = "test";
                 });
             }
         }

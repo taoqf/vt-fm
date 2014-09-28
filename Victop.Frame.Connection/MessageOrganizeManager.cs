@@ -137,11 +137,13 @@ namespace Victop.Frame.Connection
                             dicContent.Remove("clientId");
                             dicContent.Add("spaceId", cloudGallyInfo.ClientId);
                         }
-                        if (dicContent.ContainsKey("spaceId"))
-                        {
-                            dicContent["spaceId"] = cloudGallyInfo.ClientId;
-                        }
-                        else
+                        #region 暂时支持以请求消息中的SpaceId为准，没有时则使用配置文件中的SpaceId
+                        //if (dicContent.ContainsKey("spaceId"))
+                        //{
+                        //    dicContent["spaceId"] = cloudGallyInfo.ClientId;
+                        //} 
+                        #endregion
+                        if (!dicContent.ContainsKey("spaceId"))
                         {
                             dicContent.Add("spaceId", cloudGallyInfo.ClientId);
                         }
