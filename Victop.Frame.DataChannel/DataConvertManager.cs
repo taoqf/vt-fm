@@ -218,7 +218,26 @@ namespace Victop.Frame.DataChannel
                                                     dtCol.ExtendedProperties["ColType"] = "String";
                                                 }
                                             }
-                                            arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                            if (dtCol.DataType == typeof(DateTime) && rowItem[dtCol.ColumnName] == null)
+                                            {
+                                                arrayDr[dtCol.ColumnName] = DBNull.Value;
+                                            }
+                                            else
+                                            {
+                                                switch (rowItem[dtCol.ColumnName].GetType().Name)
+                                                {
+                                                    case "Int64":
+                                                        TimeSpan ts = new TimeSpan(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString().PadRight(13, '0')));
+                                                        DateTime dt = new DateTime(1970, 1, 1);
+                                                        dt = dt.Add(ts);
+                                                        arrayDr[dtCol.ColumnName] = dt;
+                                                        break;
+                                                    case "String":
+                                                    default:
+                                                        arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                                        break;
+                                                }
+                                            }
                                         }
                                     }
                                     itemDt.Rows.Add(arrayDr);
@@ -266,7 +285,26 @@ namespace Victop.Frame.DataChannel
                                                 dtCol.ExtendedProperties["ColType"] = "String";
                                             }
                                         }
-                                        objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
+                                        if (dtCol.DataType == typeof(DateTime) && itemDic[dtCol.ColumnName] == null)
+                                        {
+                                            objectDr[dtCol.ColumnName] = DBNull.Value;
+                                        }
+                                        else
+                                        {
+                                            switch (itemDic[dtCol.ColumnName].GetType().Name)
+                                            {
+                                                case "Int64":
+                                                    TimeSpan ts = new TimeSpan(Convert.ToInt64(itemDic[dtCol.ColumnName].ToString().PadRight(13, '0')));
+                                                    DateTime dt = new DateTime(1970, 1, 1);
+                                                    dt = dt.Add(ts);
+                                                    objectDr[dtCol.ColumnName] = dt;
+                                                    break;
+                                                case "String":
+                                                default:
+                                                    objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
+                                                    break;
+                                            }
+                                        }
                                     }
                                 }
                                 itemDt.Rows.Add(objectDr);
