@@ -658,7 +658,26 @@ namespace Victop.Frame.DataChannel
                                     }
                                     else
                                     {
-                                        addDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                                        if (dr[dc.ColumnName] == null)
+                                        {
+                                            switch (dc.ExtendedProperties["ColType"].ToString())
+                                            {
+                                                case "int":
+                                                    addDic.Add(dc.ColumnName, 0);
+                                                    break;
+                                                case "date":
+                                                    addDic.Add(dc.ColumnName, DateTime.Now);
+                                                    break;
+                                                case "string":
+                                                default:
+                                                    addDic.Add(dc.ColumnName,string.Empty);
+                                                    break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            addDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                                        }
                                     }
                                 }
 
