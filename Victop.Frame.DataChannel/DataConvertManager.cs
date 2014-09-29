@@ -167,224 +167,13 @@ namespace Victop.Frame.DataChannel
                 if (pathList.Count % 2 == 1)//获取表数据
                 {
                     #region 组织表数据
-                    foreach (string item in jsonDic.Keys)
-                    {
-                        List<string> delColList = new List<string>();
-                        DataTable itemDt = new DataTable();
-                        switch (jsonDic[item].GetType().Name)
-                        {
-                            case "JArray":
-                                List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonDic[item].ToString());
-                                itemDt = new DataTable(item);
-                                if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
-                                {
-                                    itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
-                                }
-                                if (itemDt.Columns.Count <= 0)
-                                {
-                                    itemDt = GetDataTableStruct(item, arrayList.Count > 0 ? arrayList[0] : null, newDs);
-                                }
-                                itemDt.AcceptChanges();
-                                if (!newDs.Tables.Contains(item))
-                                {
-                                    newDs.Tables.Add(itemDt);
-                                }
-                                foreach (Dictionary<string, object> rowItem in arrayList)
-                                {
-                                    DataRow arrayDr = itemDt.NewRow();
-                                    foreach (DataColumn dtCol in itemDt.Columns)
-                                    {
-                                        if (rowItem.ContainsKey(dtCol.ColumnName))
-                                        {
-                                            if (rowItem[dtCol.ColumnName] != null && !rowItem[dtCol.ColumnName].GetType().Name.Equals("String"))
-                                            {
-                                                if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
-                                                {
-                                                    dtCol.ExtendedProperties.Add("ColType", rowItem[dtCol.ColumnName].GetType().Name);
-                                                }
-                                                else
-                                                {
-                                                    dtCol.ExtendedProperties["ColType"] = rowItem[dtCol.ColumnName].GetType().Name;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
-                                                {
-                                                    dtCol.ExtendedProperties.Add("ColType", "String");
-                                                }
-                                                else
-                                                {
-                                                    dtCol.ExtendedProperties["ColType"] = "String";
-                                                }
-                                            }
-                                            if (rowItem[dtCol.ColumnName] == null)
-                                            {
-                                                arrayDr[dtCol.ColumnName] = DBNull.Value;
-                                            }
-                                            else if (dtCol.DataType == typeof(DateTime))
-                                            {
-                                                switch (rowItem[dtCol.ColumnName].GetType().Name)
-                                                {
-                                                    case "Int64":
-                                                        TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) * 100);
-                                                        DateTime dt = new DateTime(1970, 1, 1);
-                                                        dt = dt.Add(ts);
-                                                        arrayDr[dtCol.ColumnName] = dt;
-                                                        break;
-                                                    case "String":
-                                                    default:
-                                                        arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
-                                                        break;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
-                                            }
-                                        }
-                                    }
-                                    itemDt.Rows.Add(arrayDr);
-                                }
-                                break;
-                            case "JObject":
-                                Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
-                                if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
-                                {
-                                    itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
-                                }
-                                if (itemDt.Columns.Count <= 0)
-                                {
-                                    itemDt = GetDataTableStruct(item, itemDic != null ? itemDic : null, newDs);
-                                }
-                                itemDt.AcceptChanges();
-                                if (!newDs.Tables.Contains(item))
-                                {
-                                    newDs.Tables.Add(itemDt);
-                                }
-                                DataRow objectDr = itemDt.NewRow();
-                                foreach (DataColumn dtCol in itemDt.Columns)
-                                {
-                                    if (itemDic.ContainsKey(dtCol.ColumnName))
-                                    {
-                                        if (itemDic[dtCol.ColumnName] != null && !itemDic[dtCol.ColumnName].GetType().Name.Equals("String"))
-                                        {
-                                            if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
-                                            {
-                                                dtCol.ExtendedProperties.Add("ColType", itemDic[dtCol.ColumnName].GetType().Name);
-                                            }
-                                            else
-                                            {
-                                                dtCol.ExtendedProperties["ColType"] = itemDic[dtCol.ColumnName].GetType().Name;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
-                                            {
-                                                dtCol.ExtendedProperties.Add("ColType", "String");
-                                            }
-                                            else
-                                            {
-                                                dtCol.ExtendedProperties["ColType"] = "String";
-                                            }
-                                        }
-                                        if (itemDic[dtCol.ColumnName] == null)
-                                        {
-                                            objectDr[dtCol.ColumnName] = DBNull.Value;
-                                        }
-                                        else if (dtCol.DataType == typeof(DateTime))
-                                        {
-                                            switch (itemDic[dtCol.ColumnName].GetType().Name)
-                                            {
-                                                case "Int64":
-                                                    TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) * 100);
-                                                    DateTime dt = new DateTime(1970, 1, 1);
-                                                    dt = dt.Add(ts);
-                                                    objectDr[dtCol.ColumnName] = dt;
-                                                    break;
-                                                case "String":
-                                                default:
-                                                    objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
-                                                    break;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
-                                        }
-                                    }
-                                }
-                                itemDt.Rows.Add(objectDr);
-                                break;
-                            default:
-                                break;
-                        }
-                        itemDt.AcceptChanges();
-                        if (newDs.Tables.Contains(itemDt.TableName))
-                        {
-                            newDs.Tables.Remove(itemDt.TableName);
-                        }
-                        newDs.Tables.Add(itemDt);
-                    }
+                    OriginzeDataOfTable(newDs, pathList, modelData, jsonDic);
                     #endregion
                 }
                 else//获取行数据
                 {
                     #region 组织行数据
-                    DataTable itemDt = new DataTable("dataArray");
-                    if (!string.IsNullOrEmpty(modelData))
-                    {
-                        itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
-                    }
-                    if (itemDt.Columns.Count <= 0)
-                    {
-                        itemDt = GetDataTableStruct("dataArray", jsonDic, newDs);
-                    }
-                    itemDt.AcceptChanges();
-                    if (!newDs.Tables.Contains("dataArray"))
-                    {
-                        newDs.Tables.Add(itemDt);
-                    }
-                    DataRow objectDr = itemDt.NewRow();
-                    foreach (DataColumn dtCol in itemDt.Columns)
-                    {
-                        if (jsonDic.ContainsKey(dtCol.ColumnName))
-                        {
-                            if (jsonDic[dtCol.ColumnName] == null)
-                            {
-                                objectDr[dtCol.ColumnName] = DBNull.Value;
-                            }
-                            else if (dtCol.DataType == typeof(DateTime))
-                            {
-                                switch (jsonDic[dtCol.ColumnName].GetType().Name)
-                                {
-                                    case "Int64":
-                                        TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) * 100);
-                                        DateTime dt = new DateTime(1970, 1, 1);
-                                        dt = dt.Add(ts);
-                                        objectDr[dtCol.ColumnName] = dt;
-                                        break;
-                                    case "String":
-                                    default:
-                                        objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
-                            }
-                        }
-                    }
-                    itemDt.Rows.Add(objectDr);
-                    itemDt.AcceptChanges();
-
-                    if (newDs.Tables.Contains(itemDt.TableName))
-                    {
-                        newDs.Tables.Remove("dataArray");
-                    }
-                    newDs.Tables.Add(itemDt);
+                    OriginzieDataOfRow(newDs, pathList, modelData, jsonDic);
                     #endregion
                 }
             }
@@ -414,6 +203,239 @@ namespace Victop.Frame.DataChannel
                 JsonTableMap.Add(mapKey, newDs);
             }
             return newDs;
+        }
+        /// <summary>
+        /// 组织行数据
+        /// </summary>
+        /// <param name="newDs"></param>
+        /// <param name="pathList"></param>
+        /// <param name="modelData"></param>
+        /// <param name="jsonDic"></param>
+        private void OriginzieDataOfRow(DataSet newDs, List<object> pathList, string modelData, Dictionary<string, object> jsonDic)
+        {
+            DataTable itemDt = new DataTable("dataArray");
+            if (!string.IsNullOrEmpty(modelData))
+            {
+                itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
+            }
+            if (itemDt.Columns.Count <= 0)
+            {
+                itemDt = GetDataTableStruct("dataArray", jsonDic, newDs);
+            }
+            itemDt.AcceptChanges();
+            if (!newDs.Tables.Contains("dataArray"))
+            {
+                newDs.Tables.Add(itemDt);
+            }
+            DataRow objectDr = itemDt.NewRow();
+            foreach (DataColumn dtCol in itemDt.Columns)
+            {
+                if (jsonDic.ContainsKey(dtCol.ColumnName))
+                {
+                    if (jsonDic[dtCol.ColumnName] == null)
+                    {
+                        objectDr[dtCol.ColumnName] = DBNull.Value;
+                    }
+                    else if (dtCol.DataType == typeof(DateTime))
+                    {
+                        switch (jsonDic[dtCol.ColumnName].GetType().Name)
+                        {
+                            case "Int64":
+                                TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) * 100);
+                                DateTime dt = new DateTime(1970, 1, 1);
+                                dt = dt.Add(ts);
+                                objectDr[dtCol.ColumnName] = dt;
+                                break;
+                            case "String":
+                            default:
+                                objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
+                    }
+                }
+            }
+            itemDt.Rows.Add(objectDr);
+            itemDt.AcceptChanges();
+
+            if (newDs.Tables.Contains(itemDt.TableName))
+            {
+                newDs.Tables.Remove("dataArray");
+            }
+            newDs.Tables.Add(itemDt);
+        }
+        /// <summary>
+        /// 构建表的数据
+        /// </summary>
+        /// <param name="newDs"></param>
+        /// <param name="pathList"></param>
+        /// <param name="modelData"></param>
+        /// <param name="jsonDic"></param>
+        private void OriginzeDataOfTable(DataSet newDs, List<object> pathList, string modelData, Dictionary<string, object> jsonDic)
+        {
+            foreach (string item in jsonDic.Keys)
+            {
+                List<string> delColList = new List<string>();
+                DataTable itemDt = new DataTable();
+                switch (jsonDic[item].GetType().Name)
+                {
+                    case "JArray":
+                        List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonDic[item].ToString());
+                        itemDt = new DataTable(item);
+                        if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
+                        {
+                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
+                        }
+                        if (itemDt.Columns.Count <= 0)
+                        {
+                            itemDt = GetDataTableStruct(item, arrayList.Count > 0 ? arrayList[0] : null, newDs);
+                        }
+                        itemDt.AcceptChanges();
+                        if (!newDs.Tables.Contains(item))
+                        {
+                            newDs.Tables.Add(itemDt);
+                        }
+                        foreach (Dictionary<string, object> rowItem in arrayList)
+                        {
+                            DataRow arrayDr = itemDt.NewRow();
+                            foreach (DataColumn dtCol in itemDt.Columns)
+                            {
+                                if (rowItem.ContainsKey(dtCol.ColumnName))
+                                {
+                                    if (rowItem[dtCol.ColumnName] != null && !rowItem[dtCol.ColumnName].GetType().Name.Equals("String"))
+                                    {
+                                        if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
+                                        {
+                                            dtCol.ExtendedProperties.Add("ColType", rowItem[dtCol.ColumnName].GetType().Name);
+                                        }
+                                        else
+                                        {
+                                            dtCol.ExtendedProperties["ColType"] = rowItem[dtCol.ColumnName].GetType().Name;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
+                                        {
+                                            dtCol.ExtendedProperties.Add("ColType", "String");
+                                        }
+                                        else
+                                        {
+                                            dtCol.ExtendedProperties["ColType"] = "String";
+                                        }
+                                    }
+                                    if (rowItem[dtCol.ColumnName] == null)
+                                    {
+                                        arrayDr[dtCol.ColumnName] = DBNull.Value;
+                                    }
+                                    else if (dtCol.DataType == typeof(DateTime))
+                                    {
+                                        switch (rowItem[dtCol.ColumnName].GetType().Name)
+                                        {
+                                            case "Int64":
+                                                TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) * 100);
+                                                DateTime dt = new DateTime(1970, 1, 1);
+                                                dt = dt.Add(ts);
+                                                arrayDr[dtCol.ColumnName] = dt;
+                                                break;
+                                            case "String":
+                                            default:
+                                                arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                                break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                    }
+                                }
+                            }
+                            itemDt.Rows.Add(arrayDr);
+                        }
+                        break;
+                    case "JObject":
+                        Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
+                        if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
+                        {
+                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
+                        }
+                        if (itemDt.Columns.Count <= 0)
+                        {
+                            itemDt = GetDataTableStruct(item, itemDic != null ? itemDic : null, newDs);
+                        }
+                        itemDt.AcceptChanges();
+                        if (!newDs.Tables.Contains(item))
+                        {
+                            newDs.Tables.Add(itemDt);
+                        }
+                        DataRow objectDr = itemDt.NewRow();
+                        foreach (DataColumn dtCol in itemDt.Columns)
+                        {
+                            if (itemDic.ContainsKey(dtCol.ColumnName))
+                            {
+                                if (itemDic[dtCol.ColumnName] != null && !itemDic[dtCol.ColumnName].GetType().Name.Equals("String"))
+                                {
+                                    if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
+                                    {
+                                        dtCol.ExtendedProperties.Add("ColType", itemDic[dtCol.ColumnName].GetType().Name);
+                                    }
+                                    else
+                                    {
+                                        dtCol.ExtendedProperties["ColType"] = itemDic[dtCol.ColumnName].GetType().Name;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
+                                    {
+                                        dtCol.ExtendedProperties.Add("ColType", "String");
+                                    }
+                                    else
+                                    {
+                                        dtCol.ExtendedProperties["ColType"] = "String";
+                                    }
+                                }
+                                if (itemDic[dtCol.ColumnName] == null)
+                                {
+                                    objectDr[dtCol.ColumnName] = DBNull.Value;
+                                }
+                                else if (dtCol.DataType == typeof(DateTime))
+                                {
+                                    switch (itemDic[dtCol.ColumnName].GetType().Name)
+                                    {
+                                        case "Int64":
+                                            TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) * 100);
+                                            DateTime dt = new DateTime(1970, 1, 1);
+                                            dt = dt.Add(ts);
+                                            objectDr[dtCol.ColumnName] = dt;
+                                            break;
+                                        case "String":
+                                        default:
+                                            objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
+                                }
+                            }
+                        }
+                        itemDt.Rows.Add(objectDr);
+                        break;
+                    default:
+                        break;
+                }
+                itemDt.AcceptChanges();
+                if (newDs.Tables.Contains(itemDt.TableName))
+                {
+                    newDs.Tables.Remove(itemDt.TableName);
+                }
+                newDs.Tables.Add(itemDt);
+            }
         }
 
         /// <summary>
@@ -447,16 +469,20 @@ namespace Victop.Frame.DataChannel
                                 {
                                     case "int":
                                         dc.DataType = typeof(Int32);
+                                        dc.ExtendedProperties.Add("ColType", "int");
                                         break;
                                     case "long":
                                         dc.DataType = typeof(Int64);
+                                        dc.ExtendedProperties.Add("ColType", "long");
                                         break;
                                     case "date":
                                         dc.DataType = typeof(DateTime);
+                                        dc.ExtendedProperties.Add("ColType", "date");
                                         break;
                                     case "string":
                                     default:
                                         dc.DataType = typeof(String);
+                                        dc.ExtendedProperties.Add("ColType", "string");
                                         break;
                                 }
                                 newDt.Columns.Add(dc);
