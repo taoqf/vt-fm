@@ -227,7 +227,7 @@ namespace Victop.Frame.DataChannel
                                                 switch (rowItem[dtCol.ColumnName].GetType().Name)
                                                 {
                                                     case "Int64":
-                                                        TimeSpan ts = new TimeSpan(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString().PadRight(13, '0')));
+                                                        TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) * 100);
                                                         DateTime dt = new DateTime(1970, 1, 1);
                                                         dt = dt.Add(ts);
                                                         arrayDr[dtCol.ColumnName] = dt;
@@ -285,16 +285,16 @@ namespace Victop.Frame.DataChannel
                                                 dtCol.ExtendedProperties["ColType"] = "String";
                                             }
                                         }
-                                        if (dtCol.DataType == typeof(DateTime) && itemDic[dtCol.ColumnName] == null)
+                                        if (itemDic[dtCol.ColumnName] == null)
                                         {
                                             objectDr[dtCol.ColumnName] = DBNull.Value;
                                         }
-                                        else
+                                        else if (dtCol.DataType == typeof(DateTime))
                                         {
                                             switch (itemDic[dtCol.ColumnName].GetType().Name)
                                             {
                                                 case "Int64":
-                                                    TimeSpan ts = new TimeSpan(Convert.ToInt64(itemDic[dtCol.ColumnName].ToString().PadRight(13, '0')));
+                                                    TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) * 100);
                                                     DateTime dt = new DateTime(1970, 1, 1);
                                                     dt = dt.Add(ts);
                                                     objectDr[dtCol.ColumnName] = dt;
@@ -304,6 +304,10 @@ namespace Victop.Frame.DataChannel
                                                     objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
                                                     break;
                                             }
+                                        }
+                                        else
+                                        {
+                                            objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
                                         }
                                     }
                                 }
@@ -352,7 +356,7 @@ namespace Victop.Frame.DataChannel
                                 switch (jsonDic[dtCol.ColumnName].GetType().Name)
                                 {
                                     case "Int64":
-                                        TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString().PadRight(13, '0')));
+                                        TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString())*100);
                                         DateTime dt = new DateTime(1970, 1, 1);
                                         dt = dt.Add(ts);
                                         objectDr[dtCol.ColumnName] = dt;
