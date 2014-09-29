@@ -343,7 +343,26 @@ namespace Victop.Frame.DataChannel
                     {
                         if (jsonDic.ContainsKey(dtCol.ColumnName))
                         {
-                            objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
+                            if (dtCol.DataType == typeof(DateTime) && jsonDic[dtCol.ColumnName] == null)
+                            {
+                                objectDr[dtCol.ColumnName] = DBNull.Value;
+                            }
+                            else
+                            {
+                                switch (jsonDic[dtCol.ColumnName].GetType().Name)
+                                {
+                                    case "Int64":
+                                        TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString().PadRight(13, '0')));
+                                        DateTime dt = new DateTime(1970, 1, 1);
+                                        dt = dt.Add(ts);
+                                        objectDr[dtCol.ColumnName] = dt;
+                                        break;
+                                    case "String":
+                                    default:
+                                        objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
+                                        break;
+                                }
+                            }
                         }
                     }
                     itemDt.Rows.Add(objectDr);
