@@ -41,6 +41,12 @@ namespace Victop.Frame.DataChannel
             DataConvertManager convertManager = new DataConvertManager();
             return convertManager.GetDataSet(channelId, dataPath, structDs);
         }
+
+        public virtual DataSet GetDataEx(string channelId, string dataPath, DataSet structDs = null)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.GetDataSetEx(channelId, dataPath, structDs);
+        }
         /// <summary>
         /// 保存数据集
         /// </summary>

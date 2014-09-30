@@ -204,6 +204,145 @@ namespace Victop.Frame.DataChannel
             }
             return newDs;
         }
+        public DataSet GetDataSetEx(string viewId, string dataPath, DataSet structDs = null)
+        {
+            DataSet newDs = new DataSet();
+            if (!string.IsNullOrEmpty(dataPath))
+            {
+                newDs = structDs == null ? new DataSet() : structDs.Copy();
+                List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
+                string modelData = DataTool.GetDataByPath(viewId, "[\"model\"]");
+                string jsonData = DataTool.GetDataByPath(viewId, dataPath);
+                if (!string.IsNullOrEmpty(jsonData))
+                {
+                    Dictionary<string, object> jsonDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
+                    if (pathList.Count % 2 == 1)
+                    {
+                        foreach (string item in jsonDic.Keys)
+                        {
+                            DataTable itemDt = new DataTable(item);
+                            if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
+                            {
+                                string tableName = pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString();
+                                itemDt = GetDataTableStructByModel(modelData, tableName);
+                            }
+                            switch (jsonDic[item].GetType().Name)
+                            {
+                                case "JArray":
+                                    List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonDic[item].ToString());
+                                    if (itemDt.Columns.Count <= 0)
+                                    {
+                                        itemDt = GetDataTableStruct(item, arrayList.Count > 0 ? arrayList[0] : null, newDs);
+                                    }
+                                    foreach (Dictionary<string, object> rowItem in arrayList)
+                                    {
+                                        UpdateDataTableRow(itemDt, rowItem);
+                                    }
+                                    break;
+                                case "JObject":
+                                    Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
+                                    if (itemDt.Columns.Count <= 0)
+                                    {
+                                        itemDt = GetDataTableStruct(item, itemDic, newDs);
+                                    }
+                                    UpdateDataTableRow(itemDt, itemDic);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            itemDt.AcceptChanges();
+                            newDs.Tables.Add(itemDt);
+                        }
+                    }
+                    else//获取行数据
+                    {
+                        DataTable itemDt = new DataTable("dataArray");
+                        if (!string.IsNullOrEmpty(modelData))
+                        {
+                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
+                        }
+                        if (itemDt.Columns.Count <= 0)
+                        {
+                            itemDt = GetDataTableStruct("dataArray", jsonDic, newDs);
+                        }
+                        UpdateDataTableRow(itemDt, jsonDic);
+                        itemDt.AcceptChanges();
+                        newDs.Tables.Add(itemDt);
+                    }
+                }
+            }
+            bool checkFlag = false;
+            foreach (JsonMapKey item in JsonTableMap.Keys)
+            {
+                if (item.ViewId == viewId && item.DataPath == dataPath)
+                {
+                    JsonTableMap[item] = newDs;
+                    checkFlag = true;
+                    break;
+                }
+            }
+            if (!checkFlag)
+            {
+                JsonMapKey mapKey = new JsonMapKey() { ViewId = viewId, DataPath = dataPath };
+                JsonTableMap.Add(mapKey, newDs);
+            }
+            return newDs;
+        }
+
+        private static void UpdateDataTableRow(DataTable itemDt, Dictionary<string, object> rowItem)
+        {
+            DataRow arrayDr = itemDt.NewRow();
+            foreach (DataColumn dtCol in itemDt.Columns)
+            {
+                if (rowItem.ContainsKey(dtCol.ColumnName))
+                {
+                    if (rowItem[dtCol.ColumnName] != null)
+                    {
+                        if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
+                        {
+                            dtCol.ExtendedProperties.Add("ColType", rowItem[dtCol.ColumnName].GetType().Name);
+                        }
+                        else
+                        {
+                            dtCol.ExtendedProperties["ColType"] = rowItem[dtCol.ColumnName].GetType().Name;
+                        }
+                        if (dtCol.DataType == typeof(DateTime))
+                        {
+                            switch (rowItem[dtCol.ColumnName].GetType().Name)
+                            {
+                                case "Int64":
+                                    TimeSpan ts = new TimeSpan(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()) * 100);
+                                    DateTime dt = new DateTime(1970, 1, 1);
+                                    dt = dt.Add(ts);
+                                    arrayDr[dtCol.ColumnName] = dt;
+                                    break;
+                                case "String":
+                                default:
+                                    arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                        }
+                    }
+                    else
+                    {
+                        if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
+                        {
+                            dtCol.ExtendedProperties.Add("ColType", "String");
+                        }
+                        else
+                        {
+                            dtCol.ExtendedProperties["ColType"] = "String";
+                        }
+                        arrayDr[dtCol.ColumnName] = DBNull.Value;
+                    }
+                }
+            }
+            itemDt.Rows.Add(arrayDr);
+        }
 
         /// <summary>
         /// 组织行数据
@@ -455,47 +594,48 @@ namespace Victop.Frame.DataChannel
                 if (tableList != null && tableList.Count > 0)
                 {
                     tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(tableList.Find(it => it["name"].ToString().Equals(tableName))["structure"].ToString());
+                    LoggerHelper.InfoFormat("tableList.count:{0}", tableList.Count);
                     foreach (Dictionary<string, object> item in tableList)
                     {
+                        if (item["key"].ToString().Contains("."))
+                            continue;
                         if (item.ContainsKey("value"))
                         {
                             string selectFlag = JsonHelper.ReadJsonString(item["value"].ToString(), "selectFlag");
-                            if (selectFlag.Equals("0") || selectFlag == null)
-                            {
-
-                            }
-                            else
+                            if(!string.IsNullOrEmpty(selectFlag)&&!selectFlag.Equals("0"))
                             {
                                 DataColumn dc = new DataColumn(item["key"].ToString());
-                                #region 数据引用设置
                                 if (clientrefList != null)
                                 {
-                                    Dictionary<string, object> refDic = clientrefList.FirstOrDefault(it => it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, item["key"].ToString())));
+                                    Dictionary<string, object> refDic = clientrefList.Find(it => it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, item["key"].ToString())));
                                     if (refDic != null)
                                     {
                                         dc.ExtendedProperties.Add("DataReference", refDic);
                                     }
                                 }
-                                #endregion
                                 switch (JsonHelper.ReadJsonString(item["value"].ToString(), "type"))
                                 {
                                     case "int":
                                         dc.DataType = typeof(Int32);
-                                        dc.ExtendedProperties.Add("ColType", "int");
+                                        dc.ExtendedProperties.Add("ColType", "Int32");
                                         break;
                                     case "long":
                                         dc.DataType = typeof(Int64);
-                                        dc.ExtendedProperties.Add("ColType", "long");
+                                        dc.ExtendedProperties.Add("ColType", "Int64");
                                         break;
                                     case "date":
                                         dc.DataType = typeof(DateTime);
-                                        dc.ExtendedProperties.Add("ColType", "date");
+                                        dc.ExtendedProperties.Add("ColType", "DateTime");
                                         break;
                                     case "string":
                                     default:
                                         dc.DataType = typeof(String);
-                                        dc.ExtendedProperties.Add("ColType", "string");
+                                        dc.ExtendedProperties.Add("ColType", "DateTime");
                                         break;
+                                }
+                                if (!string.IsNullOrEmpty(JsonHelper.ReadJsonString(item["value"].ToString(), "label")))
+                                {
+                                    dc.Caption = JsonHelper.ReadJsonString(item["value"].ToString(), "label");
                                 }
                                 newDt.Columns.Add(dc);
                             }
@@ -682,7 +822,7 @@ namespace Victop.Frame.DataChannel
                                                     break;
                                                 case "string":
                                                 default:
-                                                    addDic.Add(dc.ColumnName,string.Empty);
+                                                    addDic.Add(dc.ColumnName, string.Empty);
                                                     break;
                                             }
                                         }

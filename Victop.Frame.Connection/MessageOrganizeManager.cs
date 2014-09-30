@@ -1526,6 +1526,7 @@ namespace Victop.Frame.Connection
             List<object> definition = new List<object>();
             definition.Add("tables");
             definition.Add("relation");
+            definition.Add("clientRef");
             //definition.Add("setting.fieldSetting");
             if (dicContent.ContainsKey("modeldefinition"))
             {
