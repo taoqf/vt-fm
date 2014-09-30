@@ -204,6 +204,7 @@ namespace Victop.Frame.DataChannel
             }
             return newDs;
         }
+
         /// <summary>
         /// 组织行数据
         /// </summary>
@@ -336,7 +337,7 @@ namespace Victop.Frame.DataChannel
                                         switch (rowItem[dtCol.ColumnName].GetType().Name)
                                         {
                                             case "Int64":
-                                                TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) * 100);
+                                                TimeSpan ts = new TimeSpan(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()) * 100);
                                                 DateTime dt = new DateTime(1970, 1, 1);
                                                 dt = dt.Add(ts);
                                                 arrayDr[dtCol.ColumnName] = dt;
@@ -450,6 +451,7 @@ namespace Victop.Frame.DataChannel
             if (!string.IsNullOrEmpty(modelJson))
             {
                 List<Dictionary<string, object>> tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "tables"));
+                List<Dictionary<string, object>> clientrefList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "clientRef"));
                 if (tableList != null && tableList.Count > 0)
                 {
                     tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(tableList.Find(it => it["name"].ToString().Equals(tableName))["structure"].ToString());
@@ -465,6 +467,16 @@ namespace Victop.Frame.DataChannel
                             else
                             {
                                 DataColumn dc = new DataColumn(item["key"].ToString());
+                                #region 数据引用设置
+                                if (clientrefList != null)
+                                {
+                                    Dictionary<string, object> refDic = clientrefList.FirstOrDefault(it => it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, item["key"].ToString())));
+                                    if (refDic != null)
+                                    {
+                                        dc.ExtendedProperties.Add("DataReference", refDic);
+                                    }
+                                }
+                                #endregion
                                 switch (JsonHelper.ReadJsonString(item["value"].ToString(), "type"))
                                 {
                                     case "int":
