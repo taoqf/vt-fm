@@ -180,7 +180,7 @@ namespace Victop.Frame.DataChannel
             else
             {
                 DataTable itemDt = new DataTable("dataArray");
-                //TODO:构建表结构
+                itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
                 itemDt.AcceptChanges();
                 if (!newDs.Tables.Contains("dataArray"))
                 {
