@@ -589,61 +589,121 @@ namespace Victop.Frame.DataChannel
             DataTable newDt = new DataTable("dataArray");
             if (!string.IsNullOrEmpty(modelJson))
             {
+                List<Dictionary<string, object>> newtableList = new List<Dictionary<string, object>>();
                 List<Dictionary<string, object>> tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "tables"));
                 List<Dictionary<string, object>> clientrefList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "clientRef"));
                 if (tableList != null && tableList.Count > 0)
                 {
-                    tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(tableList.Find(it => it["name"].ToString().Equals(tableName))["structure"].ToString());
-                    LoggerHelper.InfoFormat("tableList.count:{0}", tableList.Count);
-                    foreach (Dictionary<string, object> item in tableList)
+                    Dictionary<string, object> tableListDic = tableList.Find(it => it["name"].ToString().Equals(tableName));
+                    if (tableListDic != null)
                     {
-                        if (item["key"].ToString().Contains("."))
-                            continue;
-                        if (item.ContainsKey("value"))
+                        tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(tableList.Find(it => it["name"].ToString().Equals(tableName))["structure"].ToString());
+                        BuildColumnsOfDataTable(tableName, newDt, tableList, clientrefList);
+                    }
+                    else
+                    {
+                        foreach (Dictionary<string, object> item in tableList)
                         {
-                            string selectFlag = JsonHelper.ReadJsonString(item["value"].ToString(), "selectFlag");
-                            if(!string.IsNullOrEmpty(selectFlag)&&!selectFlag.Equals("0"))
+                            newtableList.Clear();
+                            newtableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(item["structure"].ToString());
+                            BuildColumnsOfDataTable(tableName, newDt, newtableList, clientrefList, false);
+                        }
+                    }
+
+                }
+            }
+            return newDt;
+        }
+
+        private static void BuildColumnsOfDataTable(string tableName, DataTable newDt, List<Dictionary<string, object>> tableList, List<Dictionary<string, object>> clientrefList, bool masterFlag = true)
+        {
+            foreach (Dictionary<string, object> item in tableList)
+            {
+                if (item["key"].ToString().Contains(string.Format("{0}.dataArray.", tableName)))
+                {
+                    int keyIndex = item["key"].ToString().LastIndexOf('.');
+                    string keyStr = item["key"].ToString().Substring(keyIndex + 1);
+                    if (item.ContainsKey("value"))
+                    {
+                        string selectFlag = JsonHelper.ReadJsonString(item["value"].ToString(), "selectFlag");
+                        if (string.IsNullOrEmpty(selectFlag) || (!string.IsNullOrEmpty(selectFlag) && selectFlag.Equals("0")))
+                        {
+                            DataColumn dc = new DataColumn(keyStr);
+                            switch (JsonHelper.ReadJsonString(item["value"].ToString(), "type"))
                             {
-                                DataColumn dc = new DataColumn(item["key"].ToString());
-                                if (clientrefList != null)
-                                {
-                                    Dictionary<string, object> refDic = clientrefList.Find(it => it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, item["key"].ToString())));
-                                    if (refDic != null)
-                                    {
-                                        dc.ExtendedProperties.Add("DataReference", refDic);
-                                    }
-                                }
-                                switch (JsonHelper.ReadJsonString(item["value"].ToString(), "type"))
-                                {
-                                    case "int":
-                                        dc.DataType = typeof(Int32);
-                                        dc.ExtendedProperties.Add("ColType", "Int32");
-                                        break;
-                                    case "long":
-                                        dc.DataType = typeof(Int64);
-                                        dc.ExtendedProperties.Add("ColType", "Int64");
-                                        break;
-                                    case "date":
-                                        dc.DataType = typeof(DateTime);
-                                        dc.ExtendedProperties.Add("ColType", "DateTime");
-                                        break;
-                                    case "string":
-                                    default:
-                                        dc.DataType = typeof(String);
-                                        dc.ExtendedProperties.Add("ColType", "DateTime");
-                                        break;
-                                }
-                                if (!string.IsNullOrEmpty(JsonHelper.ReadJsonString(item["value"].ToString(), "label")))
-                                {
-                                    dc.Caption = JsonHelper.ReadJsonString(item["value"].ToString(), "label");
-                                }
-                                newDt.Columns.Add(dc);
+                                case "int":
+                                    dc.DataType = typeof(Int32);
+                                    dc.ExtendedProperties.Add("ColType", "Int32");
+                                    break;
+                                case "long":
+                                    dc.DataType = typeof(Int64);
+                                    dc.ExtendedProperties.Add("ColType", "Int64");
+                                    break;
+                                case "date":
+                                    dc.DataType = typeof(DateTime);
+                                    dc.ExtendedProperties.Add("ColType", "DateTime");
+                                    break;
+                                case "string":
+                                default:
+                                    dc.DataType = typeof(String);
+                                    dc.ExtendedProperties.Add("ColType", "DateTime");
+                                    break;
                             }
+                            if (!string.IsNullOrEmpty(JsonHelper.ReadJsonString(item["value"].ToString(), "label")))
+                            {
+                                dc.Caption = JsonHelper.ReadJsonString(item["value"].ToString(), "label");
+                            }
+                            newDt.Columns.Add(dc);
+                        }
+                    }
+                }
+                else
+                {
+                    if (!masterFlag || item["key"].ToString().Contains('.'))
+                        continue;
+                    if (item.ContainsKey("value"))
+                    {
+                        string selectFlag = JsonHelper.ReadJsonString(item["value"].ToString(), "selectFlag");
+                        if (string.IsNullOrEmpty(selectFlag) || (!string.IsNullOrEmpty(selectFlag) && selectFlag.Equals("0")))
+                        {
+                            DataColumn dc = new DataColumn(item["key"].ToString());
+                            if (clientrefList != null)
+                            {
+                                Dictionary<string, object> refDic = clientrefList.Find(it => it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, item["key"].ToString())));
+                                if (refDic != null)
+                                {
+                                    dc.ExtendedProperties.Add("DataReference", refDic);
+                                }
+                            }
+                            switch (JsonHelper.ReadJsonString(item["value"].ToString(), "type"))
+                            {
+                                case "int":
+                                    dc.DataType = typeof(Int32);
+                                    dc.ExtendedProperties.Add("ColType", "Int32");
+                                    break;
+                                case "long":
+                                    dc.DataType = typeof(Int64);
+                                    dc.ExtendedProperties.Add("ColType", "Int64");
+                                    break;
+                                case "date":
+                                    dc.DataType = typeof(DateTime);
+                                    dc.ExtendedProperties.Add("ColType", "DateTime");
+                                    break;
+                                case "string":
+                                default:
+                                    dc.DataType = typeof(String);
+                                    dc.ExtendedProperties.Add("ColType", "DateTime");
+                                    break;
+                            }
+                            if (!string.IsNullOrEmpty(JsonHelper.ReadJsonString(item["value"].ToString(), "label")))
+                            {
+                                dc.Caption = JsonHelper.ReadJsonString(item["value"].ToString(), "label");
+                            }
+                            newDt.Columns.Add(dc);
                         }
                     }
                 }
             }
-            return newDt;
         }
 
         /// <summary>
