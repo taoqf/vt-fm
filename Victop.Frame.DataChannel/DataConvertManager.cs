@@ -710,7 +710,7 @@ namespace Victop.Frame.DataChannel
         /// 获取简单引用数据
         /// </summary>
         /// <param name="viewId"></param>
-        public DataSet GetSimpleRef(string viewId, string dataPath, string columnPath, string dependValue)
+        public DataSet GetSimpleRef(string viewId, string dataPath, string columnPath, Dictionary<string, object> dependDic)
         {
             DataSet ds = new DataSet();
             string constructPath = string.Empty;
@@ -742,33 +742,32 @@ namespace Victop.Frame.DataChannel
                 {
                     List<SimRefPropertyModel> propertyModelList = JsonHelper.ToObject<List<SimRefPropertyModel>>(item["property"].ToString());
                     SimRefPropertyModel propertyModel = propertyModelList.FirstOrDefault(it => it.key.Equals(constructPath));
-                    string dependPath = string.Empty;
-                    if (propertyModel != null)
-                    {
-                        if (propertyModel.depend != null)
-                        {
-                            dependPath = propertyModelList.Find(it => it.key.Equals(propertyModel.depend)).value;
-                        }
-                        DataTable dt = GetDataByConsturctPath(propertyModel.value, dependPath, item["valueList"].ToString(), dependValue);
-                        ds.Tables.Add(dt);
-                        break;
-                    }
+                    DataTable dt = GetDataByConsturctPathEx(propertyModel.value, propertyModel.value, item["valueList"].ToString(), dependDic);
+                    ds.Tables.Add(dt);
+                    break;
                 }
             }
             #endregion
             return ds;
         }
-
-        private DataTable GetDataByConsturctPath(string constructPath, string dependPath, string jsonData, string dependValue)
+        /// <summary>
+        /// 根据结构Path获取数据Table
+        /// </summary>
+        /// <param name="constructPath"></param>
+        /// <param name="dependPath"></param>
+        /// <param name="jsonData"></param>
+        /// <param name="dependDic"></param>
+        /// <returns></returns>
+        private DataTable GetDataByConsturctPath(string constructPath, string valuePath, string jsonData, string dependValue)
         {
             DataTable dt = new DataTable("dataArray");
             dt.Columns.Add("txt");
             dt.Columns.Add("val");
             string[] pathList = constructPath.Split('.');
             string[] dependList = null;
-            if (!string.IsNullOrEmpty(dependPath))
+            if (!string.IsNullOrEmpty(valuePath))
             {
-                dependList = dependPath.Split('.');
+                dependList = valuePath.Split('.');
             }
             jsonData = JsonHelper.ReadJsonString(jsonData, "dataArray");
             List<Dictionary<string, object>> valueList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
@@ -781,7 +780,7 @@ namespace Victop.Frame.DataChannel
                         valueList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(valueList[0][pathList[i]].ToString(), "dataArray"));
                         if (dependList != null && i <= dependList.Length - 1 && pathList[i].ToString().Equals(dependList[i].ToString()))
                         {
-                            valueList = valueList.FindAll(it => it[dependList[dependList.Length - 1]].ToString().Equals(dependValue));
+                            valueList = valueList.FindAll(it => it["val"].ToString().Equals(dependValue));
                         }
                         if (i == pathList.Length - 3)
                         {
@@ -802,6 +801,109 @@ namespace Victop.Frame.DataChannel
             }
             return dt;
         }
+
+        private DataTable GetDataByConsturctPathEx(string constructPath, string valuePath, string jsonData, Dictionary<string, object> dependDic)
+        {
+            DataTable dt = new DataTable("dataArray");
+            dt.Columns.Add("txt");
+            dt.Columns.Add("val");
+            if (dependDic != null)
+            {
+                foreach (string item in dependDic.Keys)
+                {
+                    string replaceStr = valuePath.Substring(0, valuePath.IndexOf("dataArray") + 9);
+                    Dictionary<string, object> itemValueDic = new Dictionary<string, object>();
+                    itemValueDic.Add("key", "val");
+                    itemValueDic.Add("value", dependDic[item].ToString());
+                    valuePath = valuePath.Replace(replaceStr, string.Format("{0}.{1}", replaceStr.Substring(0, replaceStr.LastIndexOf(".")), JsonHelper.ToJson(itemValueDic)));
+                }
+            }
+            valuePath = valuePath.Substring(0, valuePath.LastIndexOf('.'));
+            jsonData = GetSimpeRefJsonData(jsonData, valuePath);
+            List<Dictionary<string, object>> valueList = new List<Dictionary<string, object>>();
+            valueList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(jsonData, "dataArray"));
+            if (valueList == null)
+            {
+                valueList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
+            }
+            foreach (Dictionary<string, object> item in valueList)
+            {
+                DataRow dr = dt.NewRow();
+                dr["txt"] = item["txt"];
+                dr["val"] = item["val"];
+                dt.Rows.Add(dr);
+            }
+            return dt;
+        }
+
+        private string GetSimpeRefJsonData(string jsonData, string dataPath)
+        {
+            try
+            {
+                if (dataPath.EndsWith("dataArray"))
+                {
+                    dataPath = dataPath.Remove(dataPath.LastIndexOf("dataArray") - 1);
+                }
+                jsonData = JsonHelper.ReadJsonString(jsonData, "dataArray");
+                List<Dictionary<string, object>> valueList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
+                string[] pathList = dataPath.Split('.');
+                if (pathList != null)
+                {
+                    for (int i = 0; i < pathList.Length; i++)
+                    {
+                        if (i % 2 == 0)
+                        {
+                            foreach (Dictionary<string, object> item in valueList)
+                            {
+                                if (item.ContainsKey(pathList[i]))
+                                {
+                                    jsonData = item[pathList[i]].ToString();
+                                }
+                            }
+                            if (i == pathList.Length - 1)
+                            {
+                                return jsonData;
+                            }
+                            jsonData = JsonHelper.ReadJsonString(jsonData, "dataArray");
+                        }
+                        else if (i % 2 == 1)
+                        {
+                            Dictionary<string, string> pathDic = JsonHelper.ToObject<Dictionary<string, string>>(pathList[i].ToString());
+                            if (pathDic != null)
+                            {
+                                List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
+                                if (arrayList != null)
+                                {
+                                    for (int j = 0; j < arrayList.Count; j++)
+                                    {
+                                        if (arrayList[j].ContainsKey(pathDic["key"]) && arrayList[j][pathDic["key"]].ToString().Equals(pathDic["value"]))
+                                        {
+                                            jsonData = JsonHelper.ToJson(arrayList[j]);
+                                            if (i == pathList.Length - 1)
+                                            {
+                                                return jsonData;
+                                            }
+                                            else
+                                            {
+                                                valueList.Clear();
+                                                valueList.Add(JsonHelper.ToObject<Dictionary<string, object>>(jsonData));
+                                                continue;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return jsonData;
+            }
+            catch (Exception ex)
+            {
+                return jsonData;
+            }
+        }
+
         /// <summary>
         /// 构建Datatable结构
         /// </summary>
