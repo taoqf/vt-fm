@@ -167,20 +167,20 @@ namespace Victop.Frame.DataChannel
                 if (pathList.Count % 2 == 1)//获取表数据
                 {
                     #region 组织表数据
-                    OriginzeDataOfTable(newDs, pathList, modelData, jsonDic);
+                    OriginzeDataOfTable(newDs, pathList, modelData, jsonDic, viewId, dataPath);
                     #endregion
                 }
                 else//获取行数据
                 {
                     #region 组织行数据
-                    OriginzieDataOfRow(newDs, pathList, modelData, jsonDic);
+                    OriginzieDataOfRow(newDs, pathList, modelData, jsonDic, viewId);
                     #endregion
                 }
             }
             else
             {
                 DataTable itemDt = new DataTable("dataArray");
-                itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
+                itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                 itemDt.AcceptChanges();
                 if (!newDs.Tables.Contains("dataArray"))
                 {
@@ -224,7 +224,7 @@ namespace Victop.Frame.DataChannel
                             if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
                             {
                                 string tableName = pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString();
-                                itemDt = GetDataTableStructByModel(modelData, tableName);
+                                itemDt = GetDataTableStructByModel(modelData, tableName, viewId, dataPath);
                             }
                             switch (jsonDic[item].GetType().Name)
                             {
@@ -259,7 +259,7 @@ namespace Victop.Frame.DataChannel
                         DataTable itemDt = new DataTable("dataArray");
                         if (!string.IsNullOrEmpty(modelData))
                         {
-                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
+                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                         }
                         if (itemDt.Columns.Count <= 0)
                         {
@@ -351,12 +351,12 @@ namespace Victop.Frame.DataChannel
         /// <param name="pathList"></param>
         /// <param name="modelData"></param>
         /// <param name="jsonDic"></param>
-        private void OriginzieDataOfRow(DataSet newDs, List<object> pathList, string modelData, Dictionary<string, object> jsonDic)
+        private void OriginzieDataOfRow(DataSet newDs, List<object> pathList, string modelData, Dictionary<string, object> jsonDic, string viewId)
         {
             DataTable itemDt = new DataTable("dataArray");
             if (!string.IsNullOrEmpty(modelData))
             {
-                itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
+                itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, JsonHelper.ToJson(pathList));
             }
             if (itemDt.Columns.Count <= 0)
             {
@@ -414,7 +414,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="pathList"></param>
         /// <param name="modelData"></param>
         /// <param name="jsonDic"></param>
-        private void OriginzeDataOfTable(DataSet newDs, List<object> pathList, string modelData, Dictionary<string, object> jsonDic)
+        private void OriginzeDataOfTable(DataSet newDs, List<object> pathList, string modelData, Dictionary<string, object> jsonDic, string viewId, string dataPath)
         {
             foreach (string item in jsonDic.Keys)
             {
@@ -427,7 +427,7 @@ namespace Victop.Frame.DataChannel
                         itemDt = new DataTable(item);
                         if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
                         {
-                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
+                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                         }
                         if (itemDt.Columns.Count <= 0)
                         {
@@ -500,7 +500,7 @@ namespace Victop.Frame.DataChannel
                         Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
                         if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
                         {
-                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString());
+                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                         }
                         if (itemDt.Columns.Count <= 0)
                         {
@@ -584,7 +584,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="modelJson"></param>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        private DataTable GetDataTableStructByModel(string modelJson, string tableName)
+        private DataTable GetDataTableStructByModel(string modelJson, string tableName, string viewId, string dataPath)
         {
             DataTable newDt = new DataTable("dataArray");
             if (!string.IsNullOrEmpty(modelJson))
@@ -598,7 +598,7 @@ namespace Victop.Frame.DataChannel
                     if (tableListDic != null)
                     {
                         tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(tableList.Find(it => it["name"].ToString().Equals(tableName))["structure"].ToString());
-                        BuildColumnsOfDataTable(tableName, newDt, tableList, clientrefList);
+                        BuildColumnsOfDataTable(tableName, newDt, tableList, clientrefList, viewId, dataPath);
                     }
                     else
                     {
@@ -606,7 +606,7 @@ namespace Victop.Frame.DataChannel
                         {
                             newtableList.Clear();
                             newtableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(item["structure"].ToString());
-                            BuildColumnsOfDataTable(tableName, newDt, newtableList, clientrefList, false);
+                            BuildColumnsOfDataTable(tableName, newDt, newtableList, clientrefList, viewId, dataPath, false);
                         }
                     }
 
@@ -615,7 +615,7 @@ namespace Victop.Frame.DataChannel
             return newDt;
         }
 
-        private static void BuildColumnsOfDataTable(string tableName, DataTable newDt, List<Dictionary<string, object>> tableList, List<Dictionary<string, object>> clientrefList, bool masterFlag = true)
+        private void BuildColumnsOfDataTable(string tableName, DataTable newDt, List<Dictionary<string, object>> tableList, List<Dictionary<string, object>> clientrefList, string viewId, string dataPath, bool masterFlag = true)
         {
             foreach (Dictionary<string, object> item in tableList)
             {
@@ -699,6 +699,11 @@ namespace Victop.Frame.DataChannel
                             {
                                 dc.Caption = JsonHelper.ReadJsonString(item["value"].ToString(), "label");
                             }
+                            DataSet ds = GetSimpleRef(viewId, dataPath, item["key"].ToString(), null);
+                            if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
+                            {
+                                dc.ExtendedProperties.Add("ComboBox", ds.Tables["dataArray"]);
+                            }
                             newDt.Columns.Add(dc);
                         }
                     }
@@ -740,11 +745,16 @@ namespace Victop.Frame.DataChannel
                 string dataArrayJson = JsonHelper.ReadJsonString(jsonData, "dataArray");
                 foreach (Dictionary<string, object> item in JsonHelper.ToObject<List<Dictionary<string, object>>>(dataArrayJson))
                 {
-                    List<SimRefPropertyModel> propertyModelList = JsonHelper.ToObject<List<SimRefPropertyModel>>(item["property"].ToString());
-                    SimRefPropertyModel propertyModel = propertyModelList.FirstOrDefault(it => it.key.Equals(constructPath));
-                    DataTable dt = GetDataByConsturctPathEx(propertyModel.value, propertyModel.value, item["valueList"].ToString(), dependDic);
-                    ds.Tables.Add(dt);
-                    break;
+                    if (item.ContainsKey("property") && item.ContainsKey("valueList"))
+                    {
+                        List<SimRefPropertyModel> propertyModelList = JsonHelper.ToObject<List<SimRefPropertyModel>>(item["property"].ToString());
+                        SimRefPropertyModel propertyModel = propertyModelList.FirstOrDefault(it => it.key.Equals(constructPath));
+                        if (propertyModel == null)
+                            break;
+                        DataTable dt = GetDataByConsturctPathEx(propertyModel.value, propertyModel.value, item["valueList"].ToString(), dependDic);
+                        ds.Tables.Add(dt);
+                        break;
+                    }
                 }
             }
             #endregion
