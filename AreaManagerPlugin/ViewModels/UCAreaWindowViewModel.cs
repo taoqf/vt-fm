@@ -678,7 +678,7 @@ namespace AreaManagerPlugin.ViewModels
                     DataSet ds = new DataSet();
                     System.Windows.Controls.ComboBox cBox = (System.Windows.Controls.ComboBox)x;
                     DataOperation dataOp = new DataOperation();
-                    ds = dataOp.GetSimpDefData(viewId, "[\"customer\"]", "id_city_id", comboxSelectedValue);
+                    ds = dataOp.GetSimpDefData(viewId, "[\"customer\"]", "id_city_id");
                     //ds = dataOp.GetSimpDefData(viewId, "[\"id_area\",{\"key\":\"_id\",\"value\":\"afdsa\"},\"id_city\"]", "id_area_id");
                     cBox.DisplayMemberPath = "txt";
                     cBox.SelectedValuePath = "val";
