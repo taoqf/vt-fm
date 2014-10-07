@@ -646,7 +646,7 @@ namespace Victop.Frame.DataChannel
                                 case "string":
                                 default:
                                     dc.DataType = typeof(String);
-                                    dc.ExtendedProperties.Add("ColType", "DateTime");
+                                    dc.ExtendedProperties.Add("ColType", "String");
                                     break;
                             }
                             if (!string.IsNullOrEmpty(JsonHelper.ReadJsonString(item["value"].ToString(), "label")))
