@@ -836,12 +836,15 @@ namespace Victop.Frame.DataChannel
             {
                 valueList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
             }
-            foreach (Dictionary<string, object> item in valueList)
+            if (valueList != null)
             {
-                DataRow dr = dt.NewRow();
-                dr["txt"] = item["txt"];
-                dr["val"] = item["val"];
-                dt.Rows.Add(dr);
+                foreach (Dictionary<string, object> item in valueList)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["txt"] = item["txt"];
+                    dr["val"] = item["val"];
+                    dt.Rows.Add(dr);
+                }
             }
             return dt;
         }
