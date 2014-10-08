@@ -30,121 +30,6 @@ namespace Victop.Frame.DataChannel
                 jsonTableMap = value;
             }
         }
-
-        /// <summary>
-        /// 获取数据DataTable
-        /// </summary>
-        /// <param name="viewId"></param>
-        /// <param name="dataPath"></param>
-        /// <returns></returns>
-        public DataTable GetDataTable(string viewId, string dataPath, DataTable structDt = null)
-        {
-            if (string.IsNullOrEmpty(dataPath))
-                return null;
-            string jsonData = string.Empty;
-            List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
-            DataTable newDt;
-            if (structDt == null)
-            {
-                string tableName = pathList[pathList.Count - 1].ToString();
-                if (!string.IsNullOrEmpty(JsonHelper.ReadJsonString(pathList[pathList.Count - 1].ToString(), "key")))
-                {
-                    tableName = pathList[pathList.Count - 2].ToString() + "_row";
-                }
-                newDt = new DataTable(tableName);
-            }
-            else
-            {
-                newDt = structDt.Copy();
-            }
-            newDt.Clear();
-            jsonData = DataTool.GetDataByPath(viewId, dataPath);
-            if (!string.IsNullOrEmpty(jsonData))
-            {
-                Dictionary<string, object> jsonDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
-                if (pathList.Count % 2 == 1)
-                {
-                    jsonData = jsonDic["dataArray"].ToString();
-                    List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
-                    if (arrayList != null && arrayList.Count > 0)
-                    {
-                        if (structDt == null)
-                        {
-                            foreach (string item in arrayList[0].Keys)
-                            {
-                                if (!newDt.Columns.Contains(item))
-                                {
-                                    DataColumn dc = new DataColumn(item);
-                                    newDt.Columns.Add(dc);
-                                }
-                            }
-                        }
-                        foreach (Dictionary<string, object> item in arrayList)
-                        {
-                            DataRow dr = newDt.NewRow();
-                            foreach (DataColumn dtCol in newDt.Columns)
-                            {
-                                if (item.ContainsKey(dtCol.ColumnName))
-                                {
-                                    dr[dtCol.ColumnName] = item[dtCol.ColumnName];
-                                }
-                            }
-                            newDt.Rows.Add(dr);
-                        }
-                    }
-                }
-                else
-                {
-                    if (structDt != null)
-                    {
-                        DataRow dr = newDt.NewRow();
-                        foreach (DataColumn dtCol in newDt.Columns)
-                        {
-                            if (jsonDic.ContainsKey(dtCol.ColumnName))
-                            {
-                                dr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
-                            }
-                        }
-                        newDt.Rows.Add(dr);
-                    }
-                    else
-                    {
-                        foreach (string item in jsonDic.Keys)
-                        {
-                            if (!newDt.Columns.Contains(item))
-                            {
-                                DataColumn dc = new DataColumn(item);
-                                newDt.Columns.Add(dc);
-                            }
-                        }
-                        DataRow dr = newDt.NewRow();
-                        foreach (string item in jsonDic.Keys)
-                        {
-                            dr[item] = jsonDic[item];
-                        }
-                        newDt.Rows.Add(dr);
-                    }
-                }
-            }
-            newDt.AcceptChanges();
-            bool existFlag = false;
-            foreach (JsonMapKey item in JsonTableMap.Keys)
-            {
-                if (item.ViewId == viewId && item.DataPath == dataPath)
-                {
-                    JsonTableMap[item] = newDt;
-                    existFlag = true;
-                    break;
-                }
-            }
-            if (!existFlag)
-            {
-                JsonMapKey mapKey = new JsonMapKey() { ViewId = viewId, DataPath = dataPath };
-                JsonTableMap.Add(mapKey, newDt);
-            }
-            return newDt;
-        }
-
         /// <summary>
         /// 获取数据集
         /// </summary>
@@ -614,7 +499,16 @@ namespace Victop.Frame.DataChannel
             }
             return newDt;
         }
-
+        /// <summary>
+        /// 构建DataTable的列信息
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="newDt"></param>
+        /// <param name="tableList"></param>
+        /// <param name="clientrefList"></param>
+        /// <param name="viewId"></param>
+        /// <param name="dataPath"></param>
+        /// <param name="masterFlag"></param>
         private void BuildColumnsOfDataTable(string tableName, DataTable newDt, List<Dictionary<string, object>> tableList, List<Dictionary<string, object>> clientrefList, string viewId, string dataPath, bool masterFlag = true)
         {
             foreach (Dictionary<string, object> item in tableList)
@@ -751,7 +645,7 @@ namespace Victop.Frame.DataChannel
                         SimRefPropertyModel propertyModel = propertyModelList.FirstOrDefault(it => it.key.Equals(constructPath));
                         if (propertyModel == null)
                             break;
-                        DataTable dt = GetDataByConsturctPathEx(propertyModel.value, propertyModel.value, item["valueList"].ToString(), dependDic);
+                        DataTable dt = GetDataByConsturctPath(propertyModel.value, propertyModel.value, item["valueList"].ToString(), dependDic);
                         ds.Tables.Add(dt);
                         break;
                     }
@@ -768,51 +662,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="jsonData"></param>
         /// <param name="dependDic"></param>
         /// <returns></returns>
-        private DataTable GetDataByConsturctPath(string constructPath, string valuePath, string jsonData, string dependValue)
-        {
-            DataTable dt = new DataTable("dataArray");
-            dt.Columns.Add("txt");
-            dt.Columns.Add("val");
-            string[] pathList = constructPath.Split('.');
-            string[] dependList = null;
-            if (!string.IsNullOrEmpty(valuePath))
-            {
-                dependList = valuePath.Split('.');
-            }
-            jsonData = JsonHelper.ReadJsonString(jsonData, "dataArray");
-            List<Dictionary<string, object>> valueList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
-            for (int i = 0; i < pathList.Length; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    if (valueList[0].ContainsKey(pathList[i]))
-                    {
-                        valueList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(valueList[0][pathList[i]].ToString(), "dataArray"));
-                        if (dependList != null && i <= dependList.Length - 1 && pathList[i].ToString().Equals(dependList[i].ToString()))
-                        {
-                            valueList = valueList.FindAll(it => it["val"].ToString().Equals(dependValue));
-                        }
-                        if (i == pathList.Length - 3)
-                        {
-                            foreach (Dictionary<string, object> item in valueList)
-                            {
-                                DataRow dr = dt.NewRow();
-                                dr["txt"] = item["txt"];
-                                dr["val"] = item["val"];
-                                dt.Rows.Add(dr);
-                            }
-                        }
-                    }
-                    else
-                    {
-
-                    }
-                }
-            }
-            return dt;
-        }
-
-        private DataTable GetDataByConsturctPathEx(string constructPath, string valuePath, string jsonData, Dictionary<string, object> dependDic)
+        private DataTable GetDataByConsturctPath(string constructPath, string valuePath, string jsonData, Dictionary<string, object> dependDic)
         {
             DataTable dt = new DataTable("dataArray");
             dt.Columns.Add("txt");
@@ -848,7 +698,12 @@ namespace Victop.Frame.DataChannel
             }
             return dt;
         }
-
+        /// <summary>
+        /// 获取简单引用的Json数据
+        /// </summary>
+        /// <param name="jsonData"></param>
+        /// <param name="dataPath"></param>
+        /// <returns></returns>
         private string GetSimpeRefJsonData(string jsonData, string dataPath)
         {
             try
@@ -945,7 +800,7 @@ namespace Victop.Frame.DataChannel
             }
             return itemDt;
         }
-        /// <summary>
+        /// <summary> 
         /// 保存数据集
         /// </summary>
         /// <param name="viewId"></param>
