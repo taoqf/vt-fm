@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace DocumentManagerService
+namespace Victop.Frame.PublicLib.Helpers
 {
-    public class FileContentType
+    /// <summary>
+    /// 文件类型辅助类
+    /// </summary>
+    public static class FileTypeHelper
     {
-        #region Big freaking list of mime types
-
-        // combination of values from Windows 7 Registry and
-        // from C:\Windows\System32\inetsrv\config\applicationHost.config
-        // some added, including .7z and .dat
+        #region MiMe类型定义
         private static IDictionary<string, string> _mappings = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
      {".323", "text/h323"},
      {".3g2", "video/3gpp2"},
@@ -571,8 +572,12 @@ namespace DocumentManagerService
      {".z", "application/x-compress"},
      {".zip", "application/x-zip-compressed"},
      };
-        #endregion Big freaking list of mime types
-
+        #endregion
+        /// <summary>
+        /// 获取MIME(多用途互联网邮件扩展类型)类型
+        /// </summary>
+        /// <param name="extension"></param>
+        /// <returns></returns>
         public static string GetMimeType(string extension)
         {
             if (extension == null)
