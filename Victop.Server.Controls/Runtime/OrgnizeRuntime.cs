@@ -164,7 +164,7 @@ namespace Victop.Server.Controls.Runtime
                 {
                     Dictionary<string, object> pathDic = new Dictionary<string, object>();
                     pathDic.Add("key", "_id");
-                    pathDic.Add("value", blockModel.CurrentRow == null ? Guid.NewGuid().ToString() : blockModel.CurrentRow["_id"]);
+                    pathDic.Add("value", (blockModel.CurrentRow == null || !blockModel.CurrentRow.ContainsKey("_id")) ? Guid.NewGuid().ToString() : blockModel.CurrentRow["_id"]);
                     if (block.BlockDataPath == null)
                     {
                         block.BlockDataPath = new List<object>();
