@@ -187,21 +187,17 @@ namespace Victop.Frame.DataChannel
                         {
                             dtCol.ExtendedProperties.Add("ColType", rowItem[dtCol.ColumnName].GetType().Name);
                         }
-                        else
+                        if (dtCol.DataType == typeof(DateTime) && dtCol.ExtendedProperties["ColType"] != null)
                         {
-                            dtCol.ExtendedProperties["ColType"] = rowItem[dtCol.ColumnName].GetType().Name;
-                        }
-                        if (dtCol.DataType == typeof(DateTime))
-                        {
-                            switch (rowItem[dtCol.ColumnName].GetType().Name)
+                            switch (dtCol.ExtendedProperties["ColType"].ToString())
                             {
-                                case "Int64":
+                                case "timestamp":
                                     TimeSpan ts = new TimeSpan(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()) * 100);
                                     DateTime dt = new DateTime(1970, 1, 1);
                                     dt = dt.Add(ts);
                                     arrayDr[dtCol.ColumnName] = dt;
                                     break;
-                                case "String":
+                                case "date":
                                 default:
                                     arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
                                     break;
@@ -261,17 +257,17 @@ namespace Victop.Frame.DataChannel
                     {
                         objectDr[dtCol.ColumnName] = DBNull.Value;
                     }
-                    else if (dtCol.DataType == typeof(DateTime))
+                    else if (dtCol.DataType == typeof(DateTime) && dtCol.ExtendedProperties["ColType"] != null)
                     {
-                        switch (jsonDic[dtCol.ColumnName].GetType().Name)
+                        switch (dtCol.ExtendedProperties["ColType"].ToString())
                         {
-                            case "Int64":
+                            case "timestamp":
                                 TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) * 100);
                                 DateTime dt = new DateTime(1970, 1, 1);
                                 dt = dt.Add(ts);
                                 objectDr[dtCol.ColumnName] = dt;
                                 break;
-                            case "String":
+                            case "date":
                             default:
                                 objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
                                 break;
@@ -356,17 +352,17 @@ namespace Victop.Frame.DataChannel
                                     {
                                         arrayDr[dtCol.ColumnName] = DBNull.Value;
                                     }
-                                    else if (dtCol.DataType == typeof(DateTime))
+                                    else if (dtCol.DataType == typeof(DateTime) && dtCol.ExtendedProperties["ColType"] != null)
                                     {
-                                        switch (rowItem[dtCol.ColumnName].GetType().Name)
+                                        switch (dtCol.ExtendedProperties["ColType"].ToString())
                                         {
-                                            case "Int64":
+                                            case "timestamp":
                                                 TimeSpan ts = new TimeSpan(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()) * 100);
                                                 DateTime dt = new DateTime(1970, 1, 1);
                                                 dt = dt.Add(ts);
                                                 arrayDr[dtCol.ColumnName] = dt;
                                                 break;
-                                            case "String":
+                                            case "date":
                                             default:
                                                 arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
                                                 break;
@@ -427,17 +423,17 @@ namespace Victop.Frame.DataChannel
                                 {
                                     objectDr[dtCol.ColumnName] = DBNull.Value;
                                 }
-                                else if (dtCol.DataType == typeof(DateTime))
+                                else if (dtCol.DataType == typeof(DateTime) && dtCol.ExtendedProperties["ColType"] != null)
                                 {
-                                    switch (itemDic[dtCol.ColumnName].GetType().Name)
+                                    switch (dtCol.ExtendedProperties["ColType"].ToString())
                                     {
-                                        case "Int64":
-                                            TimeSpan ts = new TimeSpan(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) * 100);
+                                        case "timestamp":
+                                            TimeSpan ts = new TimeSpan(Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()) * 100);
                                             DateTime dt = new DateTime(1970, 1, 1);
                                             dt = dt.Add(ts);
                                             objectDr[dtCol.ColumnName] = dt;
                                             break;
-                                        case "String":
+                                        case "date":
                                         default:
                                             objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
                                             break;
@@ -527,20 +523,24 @@ namespace Victop.Frame.DataChannel
                             {
                                 case "int":
                                     dc.DataType = typeof(Int32);
-                                    dc.ExtendedProperties.Add("ColType", "Int32");
+                                    dc.ExtendedProperties.Add("ColType", "int");
                                     break;
                                 case "long":
                                     dc.DataType = typeof(Int64);
-                                    dc.ExtendedProperties.Add("ColType", "Int64");
+                                    dc.ExtendedProperties.Add("ColType", "long");
                                     break;
                                 case "date":
                                     dc.DataType = typeof(DateTime);
-                                    dc.ExtendedProperties.Add("ColType", "DateTime");
+                                    dc.ExtendedProperties.Add("ColType", "date");
+                                    break;
+                                case "timestamp":
+                                    dc.DataType = typeof(DateTime);
+                                    dc.ExtendedProperties.Add("ColType", "timestamp");
                                     break;
                                 case "string":
                                 default:
                                     dc.DataType = typeof(String);
-                                    dc.ExtendedProperties.Add("ColType", "String");
+                                    dc.ExtendedProperties.Add("ColType", "string");
                                     break;
                             }
                             if (!string.IsNullOrEmpty(JsonHelper.ReadJsonString(item["value"].ToString(), "label")))
@@ -573,20 +573,24 @@ namespace Victop.Frame.DataChannel
                             {
                                 case "int":
                                     dc.DataType = typeof(Int32);
-                                    dc.ExtendedProperties.Add("ColType", "Int32");
+                                    dc.ExtendedProperties.Add("ColType", "int");
                                     break;
                                 case "long":
                                     dc.DataType = typeof(Int64);
-                                    dc.ExtendedProperties.Add("ColType", "Int64");
+                                    dc.ExtendedProperties.Add("ColType", "long");
                                     break;
                                 case "date":
                                     dc.DataType = typeof(DateTime);
-                                    dc.ExtendedProperties.Add("ColType", "DateTime");
+                                    dc.ExtendedProperties.Add("ColType", "date");
+                                    break;
+                                case "timestamp":
+                                    dc.DataType = typeof(DateTime);
+                                    dc.ExtendedProperties.Add("ColType", "timestamp");
                                     break;
                                 case "string":
                                 default:
                                     dc.DataType = typeof(String);
-                                    dc.ExtendedProperties.Add("ColType", "DateTime");
+                                    dc.ExtendedProperties.Add("ColType", "string");
                                     break;
                             }
                             if (!string.IsNullOrEmpty(JsonHelper.ReadJsonString(item["value"].ToString(), "label")))
@@ -840,25 +844,30 @@ namespace Victop.Frame.DataChannel
                                     }
                                     else
                                     {
-                                        if (dr[dc.ColumnName] == null)
+                                        switch (dc.ExtendedProperties["ColType"].ToString())
                                         {
-                                            switch (dc.ExtendedProperties["ColType"].ToString())
-                                            {
-                                                case "int":
-                                                    addDic.Add(dc.ColumnName, 0);
-                                                    break;
-                                                case "date":
-                                                    addDic.Add(dc.ColumnName, DateTime.Now);
-                                                    break;
-                                                case "string":
-                                                default:
-                                                    addDic.Add(dc.ColumnName, string.Empty);
-                                                    break;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            addDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                                            case "int":
+                                                addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? 0 : dr[dc.ColumnName]);
+                                                break;
+                                            case "date":
+                                                addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? DateTime.Now : dr[dc.ColumnName]);
+                                                break;
+                                            case "timestamp":
+                                                DateTime startTime = new DateTime(1970, 1, 1);
+                                                if (dr[dc.ColumnName] != null)
+                                                {
+                                                    DateTime currentTime = (DateTime)dr[dc.ColumnName];
+                                                    addDic.Add(dc.ColumnName, (long)(currentTime - startTime).TotalSeconds);
+                                                }
+                                                else
+                                                {
+                                                    addDic.Add(dc.ColumnName, (long)(DateTime.Now - startTime).TotalSeconds);
+                                                }
+                                                break;
+                                            case "string":
+                                            default:
+                                                addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? string.Empty : dr[dc.ColumnName]);
+                                                break;
                                         }
                                     }
                                 }
@@ -889,7 +898,31 @@ namespace Victop.Frame.DataChannel
                                     }
                                     else
                                     {
-                                        modDic.Add(dc.ColumnName, dr[dc.ColumnName]);
+                                        switch (dc.ExtendedProperties["ColType"].ToString())
+                                        {
+                                            case "int":
+                                                modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? 0 : dr[dc.ColumnName]);
+                                                break;
+                                            case "date":
+                                                modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? DateTime.Now : dr[dc.ColumnName]);
+                                                break;
+                                            case "timestamp":
+                                                DateTime startTime = new DateTime(1970, 1, 1);
+                                                if (dr[dc.ColumnName] != null)
+                                                {
+                                                    DateTime currentTime = (DateTime)dr[dc.ColumnName];
+                                                    modDic.Add(dc.ColumnName, (long)(currentTime - startTime).TotalSeconds);
+                                                }
+                                                else
+                                                {
+                                                    modDic.Add(dc.ColumnName, (long)(DateTime.Now - startTime).TotalSeconds);
+                                                }
+                                                break;
+                                            case "string":
+                                            default:
+                                                modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? string.Empty : dr[dc.ColumnName]);
+                                                break;
+                                        }
                                     }
                                 }
                                 else

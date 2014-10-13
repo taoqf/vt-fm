@@ -603,18 +603,21 @@ namespace Victop.Frame.DataChannel
                             }
                             else
                             {
-                                Dictionary<string, object> tmpDic = new Dictionary<string, object>();
-                                tmpDic.Add("dataArray", jsonData);
-                                DataList.Add(tmpDic);
-                                List<object> arrayList = JsonHelper.ToObject<List<object>>(jsonData);
-                                foreach (var item in arrayList)
+                                if (tableDic.Keys.Count > 1)
                                 {
-                                    Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(item.ToString());
-                                    if (itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(pathList[i].ToString(), "value")))
-                                    {
-                                        jsonData = item.ToString();
-                                        break;
-                                    }
+                                    Dictionary<string, object> tmpDic = new Dictionary<string, object>();
+                                    tmpDic.Add("dataArray", jsonData);
+                                    DataList.Add(tmpDic);
+                                }
+                                List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
+                                Dictionary<string, object> itemDic = arrayList.FirstOrDefault(it => it["_id"].ToString().Equals(JsonHelper.ReadJsonString(pathList[i].ToString(), "value")));
+                                if (itemDic != null)
+                                {
+                                    jsonData = JsonHelper.ToJson(itemDic);
+                                }
+                                else
+                                {
+                                    jsonData = JsonHelper.ToJson(arrayList[0]);
                                 }
                             }
                         }
