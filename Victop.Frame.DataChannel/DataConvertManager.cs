@@ -857,11 +857,11 @@ namespace Victop.Frame.DataChannel
                                                 if (dr[dc.ColumnName] != null)
                                                 {
                                                     DateTime currentTime = (DateTime)dr[dc.ColumnName];
-                                                    addDic.Add(dc.ColumnName, (long)(currentTime - startTime).TotalSeconds);
+                                                    addDic.Add(dc.ColumnName, (long)(currentTime - startTime).TotalMilliseconds);
                                                 }
                                                 else
                                                 {
-                                                    addDic.Add(dc.ColumnName, (long)(DateTime.Now - startTime).TotalSeconds);
+                                                    addDic.Add(dc.ColumnName, (long)(DateTime.Now - startTime).TotalMilliseconds);
                                                 }
                                                 break;
                                             case "string":
