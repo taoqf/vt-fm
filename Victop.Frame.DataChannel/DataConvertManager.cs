@@ -343,10 +343,10 @@ namespace Victop.Frame.DataChannel
                                         {
                                             dtCol.ExtendedProperties.Add("ColType", "String");
                                         }
-                                        else
-                                        {
-                                            dtCol.ExtendedProperties["ColType"] = "String";
-                                        }
+                                        //else
+                                        //{
+                                        //    dtCol.ExtendedProperties["ColType"] = "String";
+                                        //}
                                     }
                                     if (rowItem[dtCol.ColumnName] == null)
                                     {
