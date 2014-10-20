@@ -328,14 +328,15 @@ namespace Victop.Frame.DataChannel
                                 {
                                     if (rowItem[dtCol.ColumnName] != null && !rowItem[dtCol.ColumnName].GetType().Name.Equals("String"))
                                     {
+                                        /// 修改时间：2014-10-18 修改人：訾甲兴
                                         if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
                                         {
                                             dtCol.ExtendedProperties.Add("ColType", rowItem[dtCol.ColumnName].GetType().Name);
                                         }
-                                        else
-                                        {
-                                            dtCol.ExtendedProperties["ColType"] = rowItem[dtCol.ColumnName].GetType().Name;
-                                        }
+                                        //else
+                                        //{
+                                        //    dtCol.ExtendedProperties["ColType"] = rowItem[dtCol.ColumnName].GetType().Name;
+                                        //}
                                     }
                                     else
                                     {
@@ -343,10 +344,10 @@ namespace Victop.Frame.DataChannel
                                         {
                                             dtCol.ExtendedProperties.Add("ColType", "String");
                                         }
-                                        //else
-                                        //{
-                                        //    dtCol.ExtendedProperties["ColType"] = "String";
-                                        //}
+                                        else
+                                        {
+                                            dtCol.ExtendedProperties["ColType"] = "String";
+                                        }
                                     }
                                     if (rowItem[dtCol.ColumnName] == null)
                                     {
@@ -354,18 +355,29 @@ namespace Victop.Frame.DataChannel
                                     }
                                     else if (dtCol.DataType == typeof(DateTime) && dtCol.ExtendedProperties["ColType"] != null)
                                     {
-                                        switch (dtCol.ExtendedProperties["ColType"].ToString())
+                                        /// 修改时间：2014-10-18 修改人：訾甲兴
+                                        if (rowItem[dtCol.ColumnName].ToString() == "0")
                                         {
-                                            case "timestamp":
-                                                TimeSpan ts = new TimeSpan(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()) * 100);
-                                                DateTime dt = new DateTime(1970, 1, 1);
-                                                dt = dt.Add(ts);
-                                                arrayDr[dtCol.ColumnName] = dt;
-                                                break;
-                                            case "date":
-                                            default:
-                                                arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
-                                                break;
+                                            arrayDr[dtCol.ColumnName] = DBNull.Value;
+                                        }
+                                        else
+                                        {
+                                            switch (dtCol.ExtendedProperties["ColType"].ToString())
+                                            {
+                                                case "timestamp":
+                                                    /// 修改时间：2014-10-18 修改人：訾甲兴
+                                                    //TimeSpan ts = new TimeSpan(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()));
+                                                    //DateTime dt = new DateTime(1970, 1, 1);
+                                                    //dt = dt.Add(ts);
+                                                    DateTime dt = new DateTime(1970, 1, 1);
+                                                    dt = dt.AddSeconds(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()));
+                                                    arrayDr[dtCol.ColumnName] = dt;
+                                                    break;
+                                                case "date":
+                                                default:
+                                                    arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                                    break;
+                                            }
                                         }
                                     }
                                     else
@@ -854,14 +866,17 @@ namespace Victop.Frame.DataChannel
                                                 break;
                                             case "timestamp":
                                                 DateTime startTime = new DateTime(1970, 1, 1);
-                                                if (dr[dc.ColumnName] != null)
+
+                                                /// 修改时间：2014-10-18 修改人：訾甲兴 
+                                                if (dr[dc.ColumnName] != null && !string.IsNullOrWhiteSpace(dr[dc.ColumnName].ToString()))
                                                 {
                                                     DateTime currentTime = (DateTime)dr[dc.ColumnName];
-                                                    addDic.Add(dc.ColumnName, (long)(currentTime - startTime).TotalMilliseconds);
+                                                    addDic.Add(dc.ColumnName, (long)(currentTime - startTime).TotalSeconds);
                                                 }
                                                 else
                                                 {
-                                                    addDic.Add(dc.ColumnName, (long)(DateTime.Now - startTime).TotalMilliseconds);
+                                                    /// 修改时间：2014-10-18 修改人：訾甲兴
+                                                    addDic.Add(dc.ColumnName, 0);
                                                 }
                                                 break;
                                             case "string":
@@ -908,14 +923,17 @@ namespace Victop.Frame.DataChannel
                                                 break;
                                             case "timestamp":
                                                 DateTime startTime = new DateTime(1970, 1, 1);
-                                                if (dr[dc.ColumnName] != null)
+
+                                                /// 修改时间：2014-10-18 修改人：訾甲兴 
+                                                if (dr[dc.ColumnName] != null && !string.IsNullOrWhiteSpace(dr[dc.ColumnName].ToString()))
                                                 {
                                                     DateTime currentTime = (DateTime)dr[dc.ColumnName];
                                                     modDic.Add(dc.ColumnName, (long)(currentTime - startTime).TotalSeconds);
                                                 }
                                                 else
                                                 {
-                                                    modDic.Add(dc.ColumnName, (long)(DateTime.Now - startTime).TotalSeconds);
+                                                    /// 修改时间：2014-10-18 修改人：訾甲兴
+                                                    modDic.Add(dc.ColumnName, 0);
                                                 }
                                                 break;
                                             case "string":
