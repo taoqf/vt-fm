@@ -334,20 +334,6 @@ namespace Victop.Frame.DataChannel
                             {
                                 if (rowItem.ContainsKey(dtCol.ColumnName))
                                 {
-                                    if (rowItem[dtCol.ColumnName] != null && !rowItem[dtCol.ColumnName].GetType().Name.Equals("string"))
-                                    {
-                                        if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
-                                        {
-                                            dtCol.ExtendedProperties.Add("ColType", rowItem[dtCol.ColumnName].GetType().Name);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
-                                        {
-                                            dtCol.ExtendedProperties.Add("ColType", "string");
-                                        }
-                                    }
                                     if (rowItem[dtCol.ColumnName] == null)
                                     {
                                         arrayDr[dtCol.ColumnName] = DBNull.Value;
@@ -543,6 +529,14 @@ namespace Victop.Frame.DataChannel
                                     dc.DataType = typeof(DateTime);
                                     dc.ExtendedProperties.Add("ColType", "timestamp");
                                     break;
+                                case "array":
+                                    dc.DataType = typeof(String);
+                                    dc.ExtendedProperties.Add("ColType", "array");
+                                    break;
+                                case "document":
+                                    dc.DataType = typeof(String);
+                                    dc.ExtendedProperties.Add("ColType", "document");
+                                    break;
                                 case "string":
                                 default:
                                     dc.DataType = typeof(String);
@@ -592,6 +586,14 @@ namespace Victop.Frame.DataChannel
                                 case "timestamp":
                                     dc.DataType = typeof(DateTime);
                                     dc.ExtendedProperties.Add("ColType", "timestamp");
+                                    break;
+                                case "array":
+                                    dc.DataType = typeof(String);
+                                    dc.ExtendedProperties.Add("ColType", "array");
+                                    break;
+                                case "document":
+                                    dc.DataType = typeof(String);
+                                    dc.ExtendedProperties.Add("ColType", "document");
                                     break;
                                 case "string":
                                 default:
@@ -848,6 +850,7 @@ namespace Victop.Frame.DataChannel
                     foreach (string colItem in rowData.Keys)
                     {
                         DataColumn dc = new DataColumn(colItem);
+                        dc.ExtendedProperties.Add("ColType", "string");
                         itemDt.Columns.Add(dc);
                     }
                 }
@@ -884,11 +887,11 @@ namespace Victop.Frame.DataChannel
                             {
                                 if (dc.ExtendedProperties.ContainsKey("ColType") && !dc.ExtendedProperties["ColType"].ToString().Equals("ref"))
                                 {
-                                    if (dc.ExtendedProperties["ColType"].ToString().Equals("JObject"))
+                                    if (dc.ExtendedProperties["ColType"].ToString().Equals("document"))
                                     {
                                         addDic.Add(dc.ColumnName, JsonHelper.ToObject<Dictionary<string, object>>(dr[dc.ColumnName].ToString()));
                                     }
-                                    else if (dc.ExtendedProperties["ColType"].ToString().Equals("JArray"))
+                                    else if (dc.ExtendedProperties["ColType"].ToString().Equals("array"))
                                     {
                                         addDic.Add(dc.ColumnName, JsonHelper.ToObject<List<object>>(dr[dc.ColumnName].ToString()));
                                     }
@@ -914,6 +917,12 @@ namespace Victop.Frame.DataChannel
                                                     addDic.Add(dc.ColumnName, 0);
                                                 }
                                                 break;
+                                            case "array":
+                                                addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? new List<object>() : dr[dc.ColumnName]);
+                                                break;
+                                            case "document":
+                                                addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? new Dictionary<string, object>() : dr[dc.ColumnName]);
+                                                break;
                                             case "string":
                                             default:
                                                 addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? string.Empty : dr[dc.ColumnName]);
@@ -938,11 +947,11 @@ namespace Victop.Frame.DataChannel
                             {
                                 if (dc.ExtendedProperties.ContainsKey("ColType") && !dc.ExtendedProperties["ColType"].ToString().Equals("ref"))
                                 {
-                                    if (dc.ExtendedProperties["ColType"].ToString().Equals("JObject"))
+                                    if (dc.ExtendedProperties["ColType"].ToString().Equals("document"))
                                     {
                                         modDic.Add(dc.ColumnName, JsonHelper.ToObject<Dictionary<string, object>>(dr[dc.ColumnName].ToString()));
                                     }
-                                    else if (dc.ExtendedProperties["ColType"].ToString().Equals("JArray"))
+                                    else if (dc.ExtendedProperties["ColType"].ToString().Equals("array"))
                                     {
                                         modDic.Add(dc.ColumnName, JsonHelper.ToObject<List<object>>(dr[dc.ColumnName].ToString()));
                                     }
@@ -968,6 +977,12 @@ namespace Victop.Frame.DataChannel
                                                 {
                                                     modDic.Add(dc.ColumnName, 0);
                                                 }
+                                                break;
+                                            case "array":
+                                                modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? new List<object>() : dr[dc.ColumnName]);
+                                                break;
+                                            case "document":
+                                                modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? new Dictionary<string, object>() : dr[dc.ColumnName]);
                                                 break;
                                             case "string":
                                             default:
