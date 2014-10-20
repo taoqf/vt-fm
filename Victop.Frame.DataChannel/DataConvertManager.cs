@@ -316,7 +316,7 @@ namespace Victop.Frame.DataChannel
                         itemDt = new DataTable(item);
                         if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
                         {
-                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("string") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
+                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                         }
                         if (itemDt.Columns.Count <= 0)
                         {
@@ -587,6 +587,14 @@ namespace Victop.Frame.DataChannel
                                     dc.DataType = typeof(DateTime);
                                     dc.ExtendedProperties.Add("ColType", "timestamp");
                                     break;
+                                case "array":
+                                    dc.DataType = typeof(String);
+                                    dc.ExtendedProperties.Add("ColType", "array");
+                                    break;
+                                case "document":
+                                    dc.DataType = typeof(String);
+                                    dc.ExtendedProperties.Add("ColType", "document");
+                                    break;
                                 case "string":
                                 default:
                                     dc.DataType = typeof(String);
@@ -842,6 +850,7 @@ namespace Victop.Frame.DataChannel
                     foreach (string colItem in rowData.Keys)
                     {
                         DataColumn dc = new DataColumn(colItem);
+                        dc.ExtendedProperties.Add("ColType", "string");
                         itemDt.Columns.Add(dc);
                     }
                 }
@@ -938,11 +947,11 @@ namespace Victop.Frame.DataChannel
                             {
                                 if (dc.ExtendedProperties.ContainsKey("ColType") && !dc.ExtendedProperties["ColType"].ToString().Equals("ref"))
                                 {
-                                    if (dc.ExtendedProperties["ColType"].ToString().Equals("JObject"))
+                                    if (dc.ExtendedProperties["ColType"].ToString().Equals("document"))
                                     {
                                         modDic.Add(dc.ColumnName, JsonHelper.ToObject<Dictionary<string, object>>(dr[dc.ColumnName].ToString()));
                                     }
-                                    else if (dc.ExtendedProperties["ColType"].ToString().Equals("JArray"))
+                                    else if (dc.ExtendedProperties["ColType"].ToString().Equals("array"))
                                     {
                                         modDic.Add(dc.ColumnName, JsonHelper.ToObject<List<object>>(dr[dc.ColumnName].ToString()));
                                     }
