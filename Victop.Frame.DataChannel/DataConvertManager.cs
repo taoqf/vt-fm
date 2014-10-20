@@ -630,6 +630,14 @@ namespace Victop.Frame.DataChannel
                             if (newDt.Columns.Contains(leftStr))
                                 continue;
                             DataColumn dc = new DataColumn(leftStr);
+                            if (clientrefList != null)
+                            {
+                                Dictionary<string, object> refDic = clientrefList.Find(it => it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, leftStr)));
+                                if (refDic != null)
+                                {
+                                    dc.ExtendedProperties.Add("DataReference", refDic);
+                                }
+                            }
                             dc.ExtendedProperties.Add("ColType", "ref");
                             if (!string.IsNullOrEmpty(refitem.type))
                             {
@@ -652,6 +660,11 @@ namespace Victop.Frame.DataChannel
                                         dc.DataType = typeof(String);
                                         break;
                                 }
+                            }
+                            DataSet ds = GetSimpleRef(viewId, dataPath, leftStr, null);
+                            if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
+                            {
+                                dc.ExtendedProperties.Add("ComboBox", ds.Tables["dataArray"]);
                             }
                             newDt.Columns.Add(dc);
                         }
