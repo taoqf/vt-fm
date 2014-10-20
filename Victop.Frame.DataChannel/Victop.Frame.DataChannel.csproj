@@ -73,6 +73,7 @@
     <Compile Include="DataTool.cs" />
     <Compile Include="Enums\OpreateStateEnum.cs" />
     <Compile Include="Enums\SOADataTypeEnum.cs" />
+    <Compile Include="MongoModel\RefViewModel.cs" />
     <Compile Include="MongoModel\SimRefPropertyModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

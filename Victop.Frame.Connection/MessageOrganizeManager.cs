@@ -91,7 +91,7 @@ namespace Victop.Frame.Connection
                     case "BizDataService.executeAsyn":
                         dicContent = GetExecuteAsynMessage(dicContent);
                         break;
-                    case "LinkBaseService.getServerDateTime":
+                    case "MongoDataChannelService.fetchSystime":
                         dicContent = GetServerDateTimeMessage(dicContent);
                         break;
                     case "DataChannelService.loadDataByModelAsync":
@@ -1527,6 +1527,7 @@ namespace Victop.Frame.Connection
             definition.Add("tables");
             definition.Add("relation");
             definition.Add("clientRef");
+            definition.Add("ref");
             //definition.Add("setting.fieldSetting");
             if (dicContent.ContainsKey("modeldefinition"))
             {
