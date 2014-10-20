@@ -364,7 +364,7 @@ namespace Victop.Frame.DataChannel
                                                 else
                                                 {
                                                     DateTime dt = new DateTime(1970, 1, 1);
-                                                    dt = dt.AddSeconds(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()));
+                                                    dt = dt.AddMilliseconds(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()));
                                                     arrayDr[dtCol.ColumnName] = dt;
                                                 }
                                                 break;
