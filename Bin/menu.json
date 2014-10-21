@@ -37,8 +37,7 @@
 									"value": ""
 								}
 							]
-						},
-						{
+						}, {
 							"title": "地区区域管理",
 							"actionType": 0,
 							"actionName": "UCTreeViewMaintenanceT",
@@ -1344,6 +1343,81 @@
 							"title": "批量故障",
 							"actionType": 1,
 							"actionName": "BatchFailurePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": 10001,
+							"modelId": "erp10001",
+							"masterName": "店面管理",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "分销系统",
+			"iconUrl": "25.png",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "系统管理",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "角色管理",
+							"actionType": 1,
+							"actionName": "ProductionSchedulingPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "阿东嘎达",
+							"systemId": 905,
+							"formId": "",
+							"modelId": "ERP11103",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": "ReportFitDataDemo"
+								}
+							]
+						}, {
+							"title": "用户管理",
+							"actionType": 1,
+							"actionName": "WorkCenterSchedulingPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "fdsa",
+							"systemId": 905,
+							"formId": "fds",
+							"modelId": "ds",
+							"masterName": "ds",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "策划机台",
+							"actionType": 1,
+							"actionName": "ShiftSchedulingPlugin",
 							"showType": 1,
 							"iconUrl": "25.png",
 							"description": "阿东嘎达",

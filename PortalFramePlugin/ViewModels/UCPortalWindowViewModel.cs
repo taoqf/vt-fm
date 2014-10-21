@@ -55,6 +55,8 @@ namespace PortalFramePlugin.ViewModels
         /// 本地插件集合
         /// </summary>
         private List<MenuModel> localMenuList = new List<MenuModel>();
+
+        private ObservableCollection<MenuModel> localMenuListEx = new ObservableCollection<MenuModel>();
         #endregion
 
         #region 属性
@@ -324,10 +326,11 @@ namespace PortalFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (isFirstLogin)
-                    {
-                        UserLogin();
-                    }
+                    //if (isFirstLogin)
+                    //{
+                    //    UserLogin();
+                    //}
+                    UserLogin();
                 });
             }
         }
@@ -616,12 +619,29 @@ namespace PortalFramePlugin.ViewModels
             menuModel.SaveProject = item.SaveProject;
             menuModel.Sequence = item.Sequence;
             menuModel.Stamp = item.Stamp;
-            MenuModel localModel = localMenuList.Find(it => it.MenuName.Equals(item.MenuName));
+            menuModel.MenuCode = item.menuCode;
+            MenuModel localModel = GetLocalMenuResoureName(item.menu_name, localMenuListEx);
             if (localModel != null)
+            {
                 menuModel.ResourceName = localModel.ResourceName;
+                menuModel.ActionType = localModel.ActionType;
+            }
             return menuModel;
         }
         #endregion
+
+        private MenuModel GetLocalMenuResoureName(string MenuName,ObservableCollection<MenuModel> MenuList)
+        {
+            MenuModel menuModel = MenuList.FirstOrDefault(it => it.MenuName.Equals(MenuName));
+            if (menuModel == null)
+            {
+                foreach (MenuModel item in MenuList)
+                {
+                    menuModel = GetLocalMenuResoureName(MenuName, item.SystemMenuList);
+                }
+            }
+            return menuModel;
+        }
 
         #region 加载本地菜单集合
         /// <summary>加载本地菜单集合 </summary>
@@ -685,7 +705,11 @@ namespace PortalFramePlugin.ViewModels
                 menuList = JsonHelper.ReadJsonString(menuList, "menu");
             }
             SystemMenuListLocal = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
-
+            localMenuListEx = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
+            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+            {
+                SystemMenuListLocal.Clear();
+            }
             #region 手动解析树型Json(暂不使用)
             //List<object> objList = JsonHelper.ToObject<List<object>>(menuList);
             //foreach (object obj in objList)
@@ -745,8 +769,8 @@ namespace PortalFramePlugin.ViewModels
                     paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
                     paramDic.Add("formid", selectedFourthMenu.FormId);
                     paramDic.Add("modelid", selectedFourthMenu.ModelId);
-                    paramDic.Add("mastername", selectedFourthMenu.MasterName);
-                    paramDic.Add("fitdatapath", selectedFourthMenu.FitDataPath);
+                    paramDic.Add("menuCode", selectedFourthMenu.MenuCode);
+                    paramDic.Add("authorityCode", selectedFourthMenu.HomeId);
                     PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
                     if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                     {

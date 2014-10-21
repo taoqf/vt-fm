@@ -37,7 +37,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="dataPath"></param>
         /// <param name="structDs"></param>
         /// <returns></returns>
-        public DataSet GetDataSet(string viewId, string dataPath, DataSet structDs = null)
+        public DataSet GetDataSetEx(string viewId, string dataPath, DataSet structDs = null)
         {
             if (string.IsNullOrEmpty(dataPath))
                 return null;
@@ -89,7 +89,7 @@ namespace Victop.Frame.DataChannel
             }
             return newDs;
         }
-        public DataSet GetDataSetEx(string viewId, string dataPath, DataSet structDs = null)
+        public DataSet GetDataSet(string viewId, string dataPath, DataSet structDs = null)
         {
             DataSet newDs = new DataSet();
             if (!string.IsNullOrEmpty(dataPath))

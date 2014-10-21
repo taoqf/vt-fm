@@ -278,6 +278,21 @@ namespace PortalFramePlugin.Models
             }
         }
 
+        private string menuCode;
+        [JsonIgnore]
+        public string MenuCode
+        {
+            get
+            {
+                return menuCode;
+            }
+            set
+            {
+                menuCode = value;
+                RaisePropertyChanged("MenuCode");
+            }
+        }
+
         /// <summary>
         /// 资源名称
         /// </summary>

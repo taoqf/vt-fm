@@ -275,11 +275,13 @@ namespace Victop.Frame.Connection
         /// <returns></returns>
         private ReplyMessage GetLoginUserMenuSubmit(IAdapter adapter, RequestMessage messageInfo)
         {
-            messageInfo.MessageType = "MongoDataChannelService.findBusiData";
+            messageInfo.MessageType = "MongoDataChannelService.menu";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("modelid", "victop_core_authority_user_group_0001");
-            contentDic.Add("systemid", 906);
-            contentDic.Add("configsystemid", 101);
+            contentDic.Add("systemid", "906");
+            contentDic.Add("client_type", "1");
+            contentDic.Add("configsystemid", "906");
+            string userCode = messageInfo.MessageContent.Contains("usercode") ? JsonHelper.ReadJsonString(messageInfo.MessageContent, "usercode") : JsonHelper.ReadJsonString(messageInfo.MessageContent, "userCode");
+            contentDic.Add("userCode", userCode);
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
             DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
             MessageOrganizeManager organizeManager = new MessageOrganizeManager();
@@ -293,8 +295,29 @@ namespace Victop.Frame.Connection
             {
                 if (!string.IsNullOrEmpty(replyMessage.ReplyContent))
                 {
-                    dynamic menuInfo = JsonHelper.DeserializeObject(replyMessage.ReplyContent);
-
+                    BaseResourceInfo baseResourceInfo = new BaseResourceInfo();
+                    baseResourceInfo.GalleryId = GalleryManager.GetCurrentGalleryId();
+                    baseResourceInfo.ResourceXml = replyMessage.ReplyContent;
+                    List<MenuInfo> menuInfo = JsonHelper.ToObject<List<MenuInfo>>(replyMessage.ReplyContent);
+                    foreach (MenuInfo item in menuInfo)
+                    {
+                        if (string.IsNullOrEmpty(item.parent_id))
+                        {
+                            item.ParentMenu = "0";
+                        }
+                        else
+                        {
+                            item.ParentMenu = item.parent_id;
+                        }
+                        item.Id = item._id;
+                        item.MenuId = item._id;
+                        item.MenuName = item.menu_name;
+                        item.BzSystemId = item.systemid;
+                        item.HomeId = item.authority_code;
+                    }
+                    baseResourceInfo.ResourceMnenus = menuInfo;
+                    BaseResourceManager baseResourceManager = new BaseResourceManager();
+                    bool result = baseResourceManager.AddResouce(baseResourceInfo);
                 }
             }
             return replyMessage;
