@@ -1417,14 +1417,14 @@
 						}, {
 							"title": "策划机台",
 							"actionType": 1,
-							"actionName": "ShiftSchedulingPlugin",
+							"actionName": "PlanDemandMachinePlatformPlugin",
 							"showType": 1,
 							"iconUrl": "25.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"formId": 10001,
-							"modelId": "erp10001",
-							"masterName": "店面管理",
+							"description": "用于策划机台维护",
+							"systemId": 906,
+							"formId": "",
+							"modelId": "",
+							"masterName": "",
 							"fitDataPath": [
 								{
 									"key": "",

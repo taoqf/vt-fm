@@ -625,6 +625,7 @@ namespace PortalFramePlugin.ViewModels
             {
                 menuModel.ResourceName = localModel.ResourceName;
                 menuModel.ActionType = localModel.ActionType;
+                menuModel.BzSystemId = localModel.BzSystemId;
             }
             return menuModel;
         }
