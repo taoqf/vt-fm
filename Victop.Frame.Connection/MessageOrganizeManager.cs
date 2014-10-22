@@ -1554,7 +1554,7 @@ namespace Victop.Frame.Connection
                 dicContent.Remove("DataChannelId");
                 if (!dicContent.ContainsKey("crudlist"))
                 {
-                    dicContent.Add("crudlist", null);
+                    dicContent.Add("crudlist", new List<object>());
                 }
                 dicContent["crudlist"] = JsonHelper.ToObject<List<object>>(dataXml);
             }

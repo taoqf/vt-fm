@@ -160,7 +160,8 @@
                             </i:Interaction.Triggers>
                         </Button>
                     </DockPanel>
-                    <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding JsonDataTable}"></ctrl:VicDataGrid>
+                    <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding JsonDataTable}">
+                    </ctrl:VicDataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="组件测试" IsSelected="True">

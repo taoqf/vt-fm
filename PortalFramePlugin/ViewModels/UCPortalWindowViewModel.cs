@@ -639,6 +639,8 @@ namespace PortalFramePlugin.ViewModels
                 foreach (MenuModel item in MenuList)
                 {
                     menuModel = GetLocalMenuResoureName(MenuName, item.SystemMenuList);
+                    if (menuModel != null)
+                        break;
                 }
             }
             return menuModel;
