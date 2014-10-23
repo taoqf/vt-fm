@@ -21,7 +21,7 @@
         <Setter Property="MinWidth" Value="30"></Setter>
         <Setter Property="Height" Value="37"></Setter>
         <Setter Property="Margin" Value="0"></Setter>
-        <Setter Property="Padding" Value="18,0,0,0"/>
+        <Setter Property="Padding" Value="2,0,0,0"/>
         <Setter Property="IsEnabled" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
