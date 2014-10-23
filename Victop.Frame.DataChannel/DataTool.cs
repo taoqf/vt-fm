@@ -365,24 +365,25 @@ namespace Victop.Frame.DataChannel
                 switch (rowState)
                 {
                     case OpreateStateEnum.Added:
-                        string addCurdJson = dataOp.GetCurdJSONData(viewId);
-                        List<object> addCurdList;
-                        if (string.IsNullOrEmpty(addCurdJson))
+                        List<object> addCurdList = dataOp.GetCurdJSONData(viewId);
+                        if (addCurdList == null)
                         {
                             addCurdList = new List<object>();
                             addCurdList.Add(curdDic);
                         }
                         else
                         {
-                            addCurdList = JsonHelper.ToObject<List<object>>(addCurdJson);
                             bool addFalg = true;
-                            foreach (var item in addCurdList)
+                            foreach (Dictionary<string, object> item in addCurdList)
                             {
-                                Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(item.ToString());
-                                if (itemDic["flag"].ToString().Equals(curdDic["flag"].ToString()) && itemDic["path"].ToString().Equals(curdDic["path"].ToString()) && itemDic["rowdata"].ToString().Equals(curdDic["rowdata"].ToString()))
+                                if (item["flag"].ToString().Equals(curdDic["flag"].ToString()) && JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
                                 {
-                                    addFalg = false;
-                                    break;
+                                    Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
+                                    if (rowDataDic["_id"].ToString().Equals(saveData["_id"].ToString()))
+                                    {
+                                        addFalg = false;
+                                        break;
+                                    }
                                 }
                             }
                             if (addFalg)
@@ -390,80 +391,82 @@ namespace Victop.Frame.DataChannel
                                 addCurdList.Add(curdDic);
                             }
                         }
-                        dataOp.SaveCurdJSONData(viewId, JsonHelper.ToJson(addCurdList));
+                        dataOp.SaveCurdJSONData(viewId, addCurdList);
 
                         break;
                     case OpreateStateEnum.Modified:
-                        string modCurdJson = dataOp.GetCurdJSONData(viewId);
-                        List<object> modCurdList;
-                        if (string.IsNullOrEmpty(modCurdJson))
+                        List<object> modCurdList = dataOp.GetCurdJSONData(viewId);
+                        if (modCurdList == null)
                         {
                             modCurdList = new List<object>();
                             modCurdList.Add(curdDic);
                         }
-                        else
-                        {
-                            modCurdList = JsonHelper.ToObject<List<object>>(modCurdJson);
-                        }
                         bool modFlag = true;
                         //TODO:修改是增加对修改内总键值的判断，若cud池中已经存在键，则将新的值存入其中，若没有，则将新的键值加入对应的rowdata中
-                        foreach (var item in modCurdList)
+                        foreach (Dictionary<string, object> item in modCurdList)
                         {
-                            string tt = JsonHelper.ToJson(item);
-                            Dictionary<string, object> modDic = JsonHelper.ToObject<Dictionary<string, object>>(tt);
-                            if (JsonHelper.ToJson(modDic["path"]) == JsonHelper.ToJson(dataPath))
+                            if (JsonHelper.ToJson(item["path"]) == JsonHelper.ToJson(dataPath))
                             {
-                                modDic["rowdata"] = saveData;
-                                modFlag = false;
-                                break;
+                                Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
+                                if (rowDataDic["_id"].ToString().Equals(saveData["_id"].ToString()))
+                                {
+                                    item["rowdata"] = saveData;
+                                    modFlag = false;
+                                    break;
+                                }
                             }
                         }
                         if (modFlag)
                         {
                             modCurdList.Add(curdDic);
                         }
-                        dataOp.SaveCurdJSONData(viewId, JsonHelper.ToJson(modCurdList));
+                        dataOp.SaveCurdJSONData(viewId, modCurdList);
                         break;
                     case OpreateStateEnum.Deleted:
-                        string delCurdJson = dataOp.GetCurdJSONData(viewId);
-                        List<object> delCurdList;
-                        if (delCurdJson == null)
+                        List<object> delCurdList = dataOp.GetCurdJSONData(viewId);
+                        if (delCurdList == null || delCurdList.Count <= 0)
                         {
                             delCurdList = new List<object>();
                             delCurdList.Add(curdDic);
                         }
-                        else
-                        {
-                            delCurdList = JsonHelper.ToObject<List<object>>(delCurdJson);
-                        }
+                        List<object> newCurdList = new List<object>();
                         foreach (var item in delCurdList)
                         {
-                            Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(item));
-                            if (itemDic["flag"].ToString().Equals("4") && itemDic["path"].ToString().Equals(dataPath))
+                            newCurdList.Add(item);
+                        }
+                        foreach (Dictionary<string, object> item in delCurdList)
+                        {
+                            if (item["flag"].ToString().Equals("4") && JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
                             {
-                                string delKey = JsonHelper.ReadJsonString(itemDic["rowdata"].ToString(), "_id");
+                                Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
+                                string delKey = rowDataDic["_id"].ToString();
                                 if (saveData["_id"].ToString().Equals(delKey))
                                 {
-                                    delCurdList.Remove(item);
+                                    newCurdList.Remove(item);
                                 }
                                 else
                                 {
-                                    delCurdList.Add(curdDic);
+                                    newCurdList.Add(curdDic);
                                 }
-                                break;
                             }
-                            else if (itemDic["path"].ToString().Equals(dataPath))
+                            else if (JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
                             {
-                                string delKey = JsonHelper.ReadJsonString(itemDic["rowdata"].ToString(), "_id");
+                                Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
+                                string delKey = rowDataDic["_id"].ToString();
                                 if (saveData["_id"].ToString().Equals(delKey))
                                 {
-                                    delCurdList.Remove(item);
-                                    delCurdList.Add(curdDic);
+                                    newCurdList.Remove(item);
+                                    newCurdList.Add(curdDic);
+                                    break;
+                                }
+                                else
+                                {
+                                    newCurdList.Add(curdDic);
                                     break;
                                 }
                             }
                         }
-                        dataOp.SaveCurdJSONData(viewId, JsonHelper.ToJson(delCurdList));
+                        dataOp.SaveCurdJSONData(viewId, newCurdList);
                         break;
                     case OpreateStateEnum.None:
                         break;
@@ -600,18 +603,21 @@ namespace Victop.Frame.DataChannel
                             }
                             else
                             {
-                                Dictionary<string, object> tmpDic = new Dictionary<string, object>();
-                                tmpDic.Add("dataArray", jsonData);
-                                DataList.Add(tmpDic);
-                                List<object> arrayList = JsonHelper.ToObject<List<object>>(jsonData);
-                                foreach (var item in arrayList)
+                                if (tableDic.Keys.Count > 1)
                                 {
-                                    Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(item.ToString());
-                                    if (itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(pathList[i].ToString(), "value")))
-                                    {
-                                        jsonData = item.ToString();
-                                        break;
-                                    }
+                                    Dictionary<string, object> tmpDic = new Dictionary<string, object>();
+                                    tmpDic.Add("dataArray", jsonData);
+                                    DataList.Add(tmpDic);
+                                }
+                                List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
+                                Dictionary<string, object> itemDic = arrayList.FirstOrDefault(it => it["_id"].ToString().Equals(JsonHelper.ReadJsonString(pathList[i].ToString(), "value")));
+                                if (itemDic != null)
+                                {
+                                    jsonData = JsonHelper.ToJson(itemDic);
+                                }
+                                else
+                                {
+                                    jsonData = JsonHelper.ToJson(arrayList[0]);
                                 }
                             }
                         }

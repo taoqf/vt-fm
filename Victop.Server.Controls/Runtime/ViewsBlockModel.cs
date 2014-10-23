@@ -70,7 +70,7 @@ namespace Victop.Server.Controls.Runtime
         /// 块数据集
         /// </summary>
         [JsonIgnore]
-        public DataTable BlockDt
+        public DataSet BlockDt
         {
             get;
             set;

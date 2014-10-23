@@ -1,16 +1,12 @@
 ﻿using AreaManagerPlugin.Models;
 using GalaSoft.MvvmLight.Command;
-using System.Windows.Forms;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
+using System.IO;
 using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Victop.Frame.DataChannel;
@@ -18,9 +14,6 @@ using Victop.Frame.MessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.Models;
-using System.IO;
-using System.Net;
-using Victop.Server.Controls.Runtime;
 
 namespace AreaManagerPlugin.ViewModels
 {
@@ -292,13 +285,9 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    //MessageOperation messageOp = new MessageOperation();
-                    //Dictionary<string, object> result = messageOp.SendMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
-                    //string temp = string.Empty;
-
-                    CurdJSONDataOperation jsonOp = new CurdJSONDataOperation();
-
-
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> result = messageOp.SendMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                    string temp = string.Empty;
                 });
             }
         }
@@ -462,54 +451,58 @@ namespace AreaManagerPlugin.ViewModels
                         MessageOperation messageOp = new MessageOperation();
                         #region victop_core库
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                        contentDic.Add("systemid", "100");
-                        contentDic.Add("configsystemid", "101");
-                        ///contentDic.Add("spaceid", "victop_core");
-                        contentDic.Add("modelid", "victop_core_compnt_0001");
-                        //List<object> conlist = new List<object>();
-                        //Dictionary<string, object> conDic = new Dictionary<string, object>();
-                        //conDic.Add("name", "industry");
-                        //List<object> tableConList = new List<object>();
-                        //Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-                        //tableConDic.Add("name", RegexHelper.StartWith("电"));
-                        //tableConList.Add(tableConDic);
-                        //conDic.Add("tablecondition", tableConList);
-                        //conlist.Add(conDic);
-                        //contentDic.Add("conditions", conlist);
-
+                        contentDic.Add("systemid", "906");
+                        contentDic.Add("configsystemid", "906");
+                        contentDic.Add("modelid", "victop_model_scheme_0001");
+                        List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+                        Dictionary<string, object> conDic = new Dictionary<string, object>();
+                        conDic.Add("name", "scheme");
+                        Dictionary<string, object> pageDic = new Dictionary<string, object>();
+                        pageDic.Add("size", 2);
+                        pageDic.Add("index", 1);
+                        conDic.Add("paging", pageDic);
+                        conDic.Add("tablecondition", "[{\"current_state\":100}]");
+                        conList.Add(conDic);
+                        contentDic.Add("conditions", conList);
                         Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                         if (returnDic != null)
                         {
                             viewId = returnDic["DataChannelId"].ToString();
-                            //dataPath = "[\"industry\"]";
+                            List<object> pathList = new List<object>();
+                            pathList.Add("scheme");
+                            dataPath = JsonHelper.ToJson(pathList);
                             DataOperation dataOp = new DataOperation();
-                            string temp = dataOp.GetJSONData(viewId);
-                            //JsonDataTable = dataOp.GetData(viewId, dataPath, null);
+                            DataSet ds = new DataSet();
+                            ds = dataOp.GetData(viewId, dataPath);
+                            JsonDataTable = ds.Tables["dataArray"];
                         }
                         #endregion
                         #region tianlong库
                         //Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         //contentDic.Add("systemid", "906");
                         //contentDic.Add("configsystemid", "905");
-                        ////contentDic.Add("spaceid", "tianlong");
-                        //contentDic.Add("modelid", "tl_customer_in_0001");
+                        //contentDic.Add("spaceId", "tianlong");
+                        //contentDic.Add("modelid", "tbsdb_dict_0001");
                         //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                         //if (returnDic != null)
                         //{
                         //    viewId = returnDic["DataChannelId"].ToString();
                         //    DataOperation dataOp = new DataOperation();
-                        //    string temp = dataOp.GetJSONData(viewId);
-                        //    List<object> tempList = new List<object>();
-                        //    tempList.Add("simpleRef");
-                        //    JsonDataTable = dataOp.GetData(viewId, JsonHelper.ToJson(tempList), null);
+                        //    //DataSet ds = dataOp.GetSimpDefData(viewId, "[\"customer\"]", "id_area_id");
+                        //    Stopwatch sw = new Stopwatch();
+                        //    sw.Start();
+                        //    DataSet ds = dataOp.GetData(viewId, "[\"dict\"]");
+                        //    sw.Stop();
+                        //    JsonDataTable = ds.Tables["dataArray"];
+                        //    LoggerHelper.InfoFormat("GetDataEx:{0}", sw.ElapsedMilliseconds);
                         //}
                         #endregion
                         #region 获取编号
                         //Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         //contentDic.Add("configsystemid", "101");
-                        //contentDic.Add("spaceid", "tbs");
-                        //contentDic.Add("pname", "BH005");
-                        //contentDic.Add("setinfo", "ltab,1");
+                        ////contentDic.Add("spaceid", "tbs");
+                        //contentDic.Add("pname", "BH009");
+                        //contentDic.Add("setinfo", "B04,1");
                         //Dictionary<string, object> returnDic = messageOp.SendMessage("MongoDataChannelService.findDocCode", contentDic, "JSON");
                         //if (returnDic != null)
                         //{
@@ -518,8 +511,44 @@ namespace AreaManagerPlugin.ViewModels
                         //    string temp = dataOp.GetJSONData(viewId);
                         //    List<object> tempList = new List<object>();
                         //    tempList.Add("simpleRef");
-                        //    JsonDataTable = dataOp.GetData(viewId, JsonHelper.ToJson(tempList), null);
+                        //    //JsonDataTable = dataOp.GetData(viewId, JsonHelper.ToJson(tempList), null);
                         //}
+                        #endregion
+                        #region TinyServer测试
+                        //Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        //contentDic.Add("systemid", "906");
+                        //contentDic.Add("configsystemid", "905");
+                        ////contentDic.Add("spaceid", "tianlong");
+                        //contentDic.Add("modelid", "ak00048");
+                        //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        //if (returnDic != null)
+                        //{
+                        //    List<Object> pathList = new List<object>();
+                        //    pathList.Add("area");
+                        //    dataPath = JsonHelper.ToJson(pathList);
+                        //    viewId = returnDic["DataChannelId"].ToString();
+                        //    DataOperation dataOp = new DataOperation();
+                        //    JsonDataTable = dataOp.GetData(viewId, dataPath).Tables["dataArray"];
+                        //}
+                        #endregion
+                        #region 获取系统时间
+                        //MessageType = "MongoDataChannelService.fetchSystime";
+                        //Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        //if (returnDic != null)
+                        //{
+ 
+                        //}
+                        #endregion
+
+                        #region 获取菜单
+                        //MessageType = "MongoDataChannelService.menu";
+                        //Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        //contentDic.Add("userCode", "wangzhaoguang");
+                        //contentDic.Add("systemid", "906");
+                        //contentDic.Add("client_type", "1");
+                        //contentDic.Add("configsystemid", "906");
+                        //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                         #endregion
                     }
                     catch (Exception ex)
@@ -538,26 +567,30 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    //DataOperation dataOp = new DataOperation();
-                    //bool result = dataOp.SaveData(viewId, dataPath);
-                    //return;
                     MessageOperation messageOp = new MessageOperation();
+
+                    //string MessageType = "MongoDataChannelService.fetchSystime";
+                    //Dictionary<string, object> contentDic1 = new Dictionary<string, object>();
+                    //Dictionary<string, object> returnDic1 = messageOp.SendMessage(MessageType, contentDic1, "JSON");
+                    //if (returnDic1 != null)
+                    //{
+                    //    string time = JsonHelper.ReadJsonString(returnDic1["ReplyContent"].ToString(), "simpleDate");
+                    //    JsonDataTable.Rows[0]["startwork_time"] = Convert.ToDateTime(time);
+                    //}
+
+                    DataOperation dataOp = new DataOperation();
+                    bool result = dataOp.SaveData(viewId, dataPath);
+                    //MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                     contentDic.Add("DataChannelId", viewId);
-                    contentDic.Add("modelid", "table::industry");
-                    contentDic.Add("systemid", "100");
-                    contentDic.Add("configsystemid", "101");
-                    contentDic.Add("spaceid", "victop_core");
+                    contentDic.Add("modelid", "victop_model_scheme_0001");
+                    contentDic.Add("systemid", "906");
+                    contentDic.Add("configsystemid", "906");
                     Dictionary<string, object> resultDic = messageOp.SendMessage("MongoDataChannelService.saveBusiData", contentDic, "JSON");
-                    string temp1 = resultDic["ReplyMode"].ToString();
-                    //JSONDataOperation jsonOp = new JSONDataOperation();
-                    //Dictionary<string, object> newDic = new Dictionary<string, object>();
-                    //newDic.Add("_id", "A0002");
-                    //newDic.Add("name", "法国");
-                    //newDic.Add("englishName", "France");
-                    //newDic.Add("region", null);
-                    //newDic.Add("order", null);
-                    //bool result = jsonOp.AddData(viewId, "[\"area\"]", JsonHelper.ToJson(newDic));
+                    if (!resultDic["ReplyMode"].ToString().Equals("0"))
+                    {
+                        System.Windows.MessageBox.Show("保存成功");
+                    }
                 });
             }
         }
@@ -570,10 +603,17 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    try
+                    {
+
+                        List<Dictionary<string, object>> tempList = JsonHelper.ToObject<List<Dictionary<string, object>>>(null);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
                     DataRow dr = JsonDataTable.NewRow();
                     JsonDataTable.Rows.Add(dr);
-                    //JSONDataOperation jsonOp = new JSONDataOperation();
-                    //jsonOp.ModifyData(viewId, "[\"area\",{\"key\":\"_id\",\"value\":\"A0001\"},\"order\",{\"key\":\"_id\",\"value\":\"ASDLFKJ-KJLSDJF\"}]", "{\"name\":\"商品订单\"}");
                 });
             }
         }
@@ -586,8 +626,12 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    JSONDataOperation jsonOp = new JSONDataOperation();
-                    jsonOp.DeleteData(viewId, "[\"area\"]", "{\"_id\":\"A0002\"}");
+                    string MessageType = "MysqlManagerService.FindBusiData";
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("modelid", "ak00048");
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                    string temp = "test";
                 });
             }
         }
@@ -598,10 +642,72 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
+                return new RelayCommand<object>((x) =>
+                {
+                    string MessageType = "MongoDataChannelService.findBusiData";
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("systemid", "100");
+                    contentDic.Add("configsystemid", "101");
+                    contentDic.Add("modelid", "ak10002");
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                    if (returnDic != null)
+                    {
+                        viewId = returnDic["DataChannelId"].ToString();
+                        DataOperation dataOp = new DataOperation();
+                        string temp = dataOp.GetJSONData(viewId);
+                    }
+                });
+            }
+        }
+        #endregion
+
+        #region Combobox处理
+
+        string comboxSelectedValue = string.Empty;
+        public ICommand testCboxDropDownOpenedCommand
+        {
+            get
+            {
                 return new RelayCommand<object>((x) => {
-                    //CompntDataGrid grid = (CompntDataGrid)x;
-                    //grid.SettingModel = JsonHelper.ToObject<CompntSettingModel>(FileHelper.ReadFitData("testsetting"));
-                    
+                    DataSet ds = new DataSet();
+                    System.Windows.Controls.ComboBox cBox = (System.Windows.Controls.ComboBox)x;
+                    if (cBox.ItemsSource == null)
+                    {
+                        DataOperation dataOp = new DataOperation();
+                        ds = dataOp.GetSimpDefData(viewId, "[\"customer\"]", "id_area_id");
+                        //ds = dataOp.GetSimpDefData(viewId, "[\"id_area\",{\"key\":\"_id\",\"value\":\"afdsa\"},\"id_city\"]", "id_area_id");
+                        cBox.DisplayMemberPath = "txt";
+                        cBox.SelectedValuePath = "val";
+                        cBox.ItemsSource = ds.Tables["dataArray"].DefaultView;
+                    }
+                });
+            }
+        }
+        public ICommand testCboxSelectionChanged
+        {
+            get
+            {
+                return new RelayCommand<object>((x) => { 
+                System.Windows.Controls.ComboBox cBox = (System.Windows.Controls.ComboBox)x;
+                comboxSelectedValue = cBox.SelectedValue.ToString();
+                });
+            }
+        }
+
+        public ICommand testCbox1DropDownOpenedCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) => {
+                    DataSet ds = new DataSet();
+                    System.Windows.Controls.ComboBox cBox = (System.Windows.Controls.ComboBox)x;
+                    DataOperation dataOp = new DataOperation();
+                    ds = dataOp.GetSimpDefData(viewId, "[\"customer\"]", "id_city_id");
+                    //ds = dataOp.GetSimpDefData(viewId, "[\"id_area\",{\"key\":\"_id\",\"value\":\"afdsa\"},\"id_city\"]", "id_area_id");
+                    cBox.DisplayMemberPath = "txt";
+                    cBox.SelectedValuePath = "val";
+                    cBox.ItemsSource = ds.Tables["dataArray"].DefaultView;
                 });
             }
         }

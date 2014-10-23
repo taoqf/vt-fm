@@ -91,7 +91,7 @@ namespace Victop.Frame.Connection
                     case "BizDataService.executeAsyn":
                         dicContent = GetExecuteAsynMessage(dicContent);
                         break;
-                    case "LinkBaseService.getServerDateTime":
+                    case "MongoDataChannelService.fetchSystime":
                         dicContent = GetServerDateTimeMessage(dicContent);
                         break;
                     case "DataChannelService.loadDataByModelAsync":
@@ -137,11 +137,13 @@ namespace Victop.Frame.Connection
                             dicContent.Remove("clientId");
                             dicContent.Add("spaceId", cloudGallyInfo.ClientId);
                         }
-                        if (dicContent.ContainsKey("spaceId"))
-                        {
-                            dicContent["spaceId"] = cloudGallyInfo.ClientId;
-                        }
-                        else
+                        #region 暂时支持以请求消息中的SpaceId为准，没有时则使用配置文件中的SpaceId
+                        //if (dicContent.ContainsKey("spaceId"))
+                        //{
+                        //    dicContent["spaceId"] = cloudGallyInfo.ClientId;
+                        //} 
+                        #endregion
+                        if (!dicContent.ContainsKey("spaceId"))
                         {
                             dicContent.Add("spaceId", cloudGallyInfo.ClientId);
                         }
@@ -1524,7 +1526,9 @@ namespace Victop.Frame.Connection
             List<object> definition = new List<object>();
             definition.Add("tables");
             definition.Add("relation");
-            definition.Add("setting.fieldSetting");
+            definition.Add("clientRef");
+            definition.Add("ref");
+            //definition.Add("setting.fieldSetting");
             if (dicContent.ContainsKey("modeldefinition"))
             {
                 dicContent["modeldefinition"] = definition;
@@ -1550,7 +1554,7 @@ namespace Victop.Frame.Connection
                 dicContent.Remove("DataChannelId");
                 if (!dicContent.ContainsKey("crudlist"))
                 {
-                    dicContent.Add("crudlist", null);
+                    dicContent.Add("crudlist", new List<object>());
                 }
                 dicContent["crudlist"] = JsonHelper.ToObject<List<object>>(dataXml);
             }

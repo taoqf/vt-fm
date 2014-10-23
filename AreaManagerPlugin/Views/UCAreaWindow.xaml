@@ -160,7 +160,8 @@
                             </i:Interaction.Triggers>
                         </Button>
                     </DockPanel>
-                    <DataGrid Grid.Row="1" ItemsSource="{Binding JsonDataTable}"></DataGrid>
+                    <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding JsonDataTable}">
+                    </ctrl:VicDataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="组件测试" IsSelected="True">
@@ -178,7 +179,27 @@
                             </i:Interaction.Triggers>
                         </Button>
                     </DockPanel>
-                    <!--<com:CompntDataGrid Grid.Row="1" x:Name="cpntGrid"/>-->
+                    <Grid Grid.Row="1">
+                        <DockPanel HorizontalAlignment="Left">
+                        <ComboBox Height="24" Width="100" Name="testCbox" Margin="0,0,5,0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="DropDownOpened">
+                                    <i:InvokeCommandAction Command="{Binding testCboxDropDownOpenedCommand}" CommandParameter="{Binding ElementName=testCbox}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding testCboxSelectionChanged}" CommandParameter="{Binding ElementName=testCbox}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                            <ComboBox Height="24" Width="100" Name="testCbox1" Margin="0,0,5,0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="DropDownOpened">
+                                    <i:InvokeCommandAction Command="{Binding testCbox1DropDownOpenedCommand}" CommandParameter="{Binding ElementName=testCbox1}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                        </DockPanel>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>

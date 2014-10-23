@@ -1,0 +1,51 @@
+{
+	"treePlugin": {
+	},
+	"gridPlugin": {
+		"gridColumn": [
+			{
+				"name": "主键",
+				"field": "_id",
+				"width": 300,
+				"readOnly": true,
+				"visibility": "Visible",
+				"defaultValue": "guid",
+				"columnType": "string"
+			}, {
+				"name": "组件编号",
+				"field": "compnt_no",
+				"width": 300,
+				"readOnly": true,
+				"visibility": "Visible",
+				"defaultValue": 1,
+				"columnType": "string"
+			}, {
+				"name": "组件名称",
+				"field": "compnt_name",
+				"width": 300,
+				"readOnly": false,
+				"visibility": "Visible",
+				"defaultValue": 1,
+				"columnType": "string"
+			}, {
+				"name": "组件定义",
+				"field": "compnt_define",
+				"width": 50,
+				"readOnly": true,
+				"visibility": "Visible",
+				"defaultValue": 1,
+				"columnType": "EventTemplate"
+			}, {
+				"name": "组件Setting",
+				"field": "compnt_settings",
+				"width": 50,
+				"readOnly": true,
+				"visibility": "Visible",
+				"defaultValue": 1,
+				"columnType": "EventTemplate"
+			}
+		]
+	},
+	"jformPlugin":{
+	}
+}

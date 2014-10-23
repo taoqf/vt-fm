@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -184,7 +184,7 @@ namespace DocumentManagerService
             byte[] buffer = br.ReadBytes(Convert.ToInt32(fileStream.Length));
 
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
-            string contentType = FileContentType.GetMimeType(iSuffname);
+            string contentType = FileTypeHelper.GetMimeType(iSuffname);
 
             // mode_id=1,1,,1此处的字符串表示共上传4个文件，其中第1、2、4个文件需要按模式1做缩略图处理
             WebRequest req = WebRequest.Create(iUploadUrl);

@@ -1,0 +1,872 @@
+﻿{
+	"systemid": "901",
+	"setting": {
+		"dataArray": [
+			{
+				"_id": "staff_category_guid",
+				"tablename": "staff_category",
+				"tabtitle": "人员类别",
+				"entrance": true,
+				"hosttable": "",
+				"viewtype": "tree",
+				"parentid": "parent_category_id",
+				"treedisplay": "staff_category_name",
+				"dataref": {},
+				"fields": {
+					"dataArray": [
+						{
+							"field": "_id",
+							"fieldtitle": "rowid",
+							"fieldtype": "string"
+						}, {
+							"field": "parent_category_id",
+							"fieldtitle": "父类别rowid",
+							"fieldtype": "string"
+						}, {
+							"field": "staff_category_no",
+							"fieldtitle": "人员类别编号",
+							"fieldtype": "string"
+						}, {
+							"field": "staff_category_name",
+							"fieldtitle": "人员类别名称",
+							"fieldtype": "string"
+						}
+					]
+				},
+				"dynacolumn": [],
+			"dynatab": []
+	}, {
+		"_id": "staff_property_guid",
+		"tablename": "staff_property",
+		"tabtitle": "人员属性",
+		"entrance": false,
+		"hosttable": "staff_category_guid",
+		"viewtype": "grid",
+		"treedisplay": "field",
+		"dataref": {},
+		"fields": {
+			"dataArray": [
+				{
+					"field": "_id",
+					"fieldtitle": "rowid",
+					"fieldtype": "string"
+				}, {
+					"field": "field",
+					"fieldtitle": "字段名",
+					"fieldtype": "string"
+				}, {
+					"field": "fieldtitle",
+					"fieldtitle": "字段标题",
+					"fieldtype": "string"
+				}, {
+					"field": "fieldtype",
+					"fieldtitle": "字段类型",
+					"fieldtype": "string"
+				}
+			]
+		},
+		"dynacolumn": [],
+	"dynatab": []
+}, {
+	"_id": "staff_element_guid",
+	"tablename": "staff_element",
+	"tabtitle": "人员档案要素",
+	"entrance": false,
+	"hosttable": "staff_category_guid",
+	"viewtype": "grid",
+	"treedisplay": "tablename",
+	"dataref": {},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "tablename",
+				"fieldtitle": "表名",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "job_title_guid",
+	"tablename": "job_title",
+	"tabtitle": "职称",
+	"entrance": false,
+	"hosttable": "",
+	"viewtype": "grid",
+	"treedisplay": "job_title_name",
+	"dataref": {
+		"dataArray": [
+			{
+				"table_id": "staff_category_guid",
+				"forerunner": true,
+				"sourcefield": "_id",
+				"sourcetxt": "staff_category_name",
+				"selffield": "staff_category_id"
+			}
+		]
+	},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "staff_category_id",
+				"fieldtitle": "人员类别",
+				"fieldtype": "string"
+			}, {
+				"field": "job_title_no",
+				"fieldtitle": "职称编号",
+				"fieldtype": "string"
+			}, {
+				"field": "job_title_name",
+				"fieldtitle": "职称名称",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "staff_guid",
+	"tablename": "staff",
+	"tabtitle": "人员",
+	"entrance": false,
+	"hosttable": "",
+	"viewtype": "grid",
+	"treedisplay": "staff_name",
+	"dataref": {
+		"dataArray": [
+			{
+				"table_id": "staff_category_guid",
+				"forerunner": true,
+				"sourcefield": "_id",
+				"sourcetxt": "staff_category_name",
+				"selffield": "staff_category_id"
+			}, {
+				"table_id": "dept_guid",
+				"forerunner": true,
+				"sourcefield": "_id",
+				"sourcetxt": "dept_name",
+				"selffield": "dept_id"
+			}, {
+				"table_id": "job_grade_guid",
+				"forerunner": false,
+				"sourcefield": "_id",
+				"sourcetxt": "job_grade_name",
+				"selffield": "job_grade_id"
+			}
+		]
+	},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "staff_category_id",
+				"fieldtitle": "人员类别",
+				"fieldtype": "string"
+			}, {
+				"field": "dept_id",
+				"fieldtitle": "部门",
+				"fieldtype": "string"
+			}, {
+				"field": "job_grade_id",
+				"fieldtitle": "职级",
+				"fieldtype": "string"
+			}, {
+				"field": "staff_no",
+				"fieldtitle": "人员编号",
+				"fieldtype": "string"
+			}, {
+				"field": "staff_name",
+				"fieldtitle": "人员名称",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [
+		"staff_property_guid"
+	],
+	"dynatab": []
+}, {
+	"_id": "crime_record_guid",
+	"tablename": "crime_record",
+	"tabtitle": "犯罪记录",
+	"entrance": false,
+	"hosttable": "",
+	"viewtype": "grid",
+	"treedisplay": "crime_name",
+	"dataref": {
+		"dataArray": [
+			{
+				"table_id": "staff_guid",
+				"forerunner": true,
+				"sourcefield": "_id",
+				"sourcetxt": "staff_name",
+				"selffield": "staff_id"
+			}
+		]
+	},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "staff_id",
+				"fieldtitle": "人员",
+				"fieldtype": "string"
+			}, {
+				"field": "crime_name",
+				"fieldtitle": "罪名",
+				"fieldtype": "string"
+			}, {
+				"field": "prison_name",
+				"fieldtitle": "监狱名称",
+				"fieldtype": "string"
+			}, {
+				"field": "begin_time",
+				"fieldtitle": "开始时间",
+				"fieldtype": "string"
+			}, {
+				"field": "end_time",
+				"fieldtitle": "结束时间",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": [
+	"staff_element_guid"
+]
+}, {
+	"_id": "levy_record_guid",
+	"tablename": "levy_record",
+	"tabtitle": "兵役记录",
+	"entrance": false,
+	"hosttable": "",
+	"viewtype": "grid",
+	"treedisplay": "army_name",
+	"dataref": {
+		"dataArray": [
+			{
+				"table_id": "staff_guid",
+				"forerunner": true,
+				"sourcefield": "_id",
+				"sourcetxt": "staff_name",
+				"selffield": "staff_id"
+			}
+		]
+	},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "staff_id",
+				"fieldtitle": "人员",
+				"fieldtype": "string"
+			}, {
+				"field": "army_name",
+				"fieldtitle": "部队名称",
+				"fieldtype": "string"
+			}, {
+				"field": "begin_time",
+				"fieldtitle": "开始时间",
+				"fieldtype": "date"
+			}, {
+				"field": "end_time",
+				"fieldtitle": "结束时间",
+				"fieldtype": "date"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": [
+	"staff_element_guid"
+]
+}, {
+	"_id": "assist_staff_guid",
+	"tablename": "assist_staff",
+	"tabtitle": "协助人员",
+	"entrance": false,
+	"hosttable": "staff_guid",
+	"viewtype": "grid",
+	"treedisplay": "assist_staff_id",
+	"dataref": {
+		"dataArray": [
+			{
+				"table_id": "staff_guid",
+				"forerunner": true,
+				"sourcefield": "_id",
+				"sourcetxt": "staff_name",
+				"selffield": "assist_staff_id"
+			}
+		]
+	},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "assist_staff_id",
+				"fieldtitle": "协作人员",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [
+		"assist_staff_property_guid"
+	],
+	"dynatab": [
+		"staff_element_guid2"
+	]
+}, {
+	"_id": "family_guid",
+	"tablename": "family",
+	"tabtitle": "家庭成员",
+	"entrance": false,
+	"hosttable": "staff_guid",
+	"viewtype": "grid",
+	"treedisplay": "name",
+	"dataref": {},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "name",
+				"fieldtitle": "姓名",
+				"fieldtype": "string"
+			}, {
+				"field": "relation",
+				"fieldtitle": "关系",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "edu_experience_guid",
+	"tablename": "edu_experience",
+	"tabtitle": "教育经历",
+	"entrance": false,
+	"hosttable": "staff_guid",
+	"viewtype": "grid",
+	"treedisplay": "school",
+	"dataref": {},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "school",
+				"fieldtitle": "学校",
+				"fieldtype": "string"
+			}, {
+				"field": "begin_date",
+				"fieldtitle": "开始时间",
+				"fieldtype": "date"
+			}, {
+				"field": "end_date",
+				"fieldtitle": "结束时间",
+				"fieldtype": "date"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "job_resume_guid",
+	"tablename": "job_resume",
+	"tabtitle": "工作简历",
+	"entrance": false,
+	"hosttable": "staff_guid",
+	"viewtype": "grid",
+	"treedisplay": "company",
+	"dataref": {},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "company",
+				"fieldtitle": "公司名称",
+				"fieldtype": "string"
+			}, {
+				"field": "work_cont",
+				"fieldtitle": "工作内容",
+				"fieldtype": "string"
+			}, {
+				"field": "begin_date",
+				"fieldtitle": "开始时间",
+				"fieldtype": "date"
+			}, {
+				"field": "end_date",
+				"fieldtitle": "结束时间",
+				"fieldtype": "date"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "dept_category_guid",
+	"tablename": "dept_category",
+	"tabtitle": "部门类型",
+	"entrance": false,
+	"hosttable": "",
+	"viewtype": "dict",
+	"dataref": {},
+	"fields": {},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "dept_guid",
+	"tablename": "dept",
+	"tabtitle": "部门",
+	"entrance": true,
+	"hosttable": "",
+	"viewtype": "tree",
+	"parentid": "parent_dept_id",
+	"treedisplay": "dept_name",
+	"dataref": {
+		"dataArray": [
+			{
+				"table_id": "dept_category_guid",
+				"forerunner": false,
+				"sourcefield": "val",
+				"sourcetxt": "txt",
+				"selffield": "dept_category"
+			}
+		]
+	},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "parent_dept_id",
+				"fieldtitle": "父部门rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "dept_category",
+				"fieldtitle": "部门类型",
+				"fieldtype": "string"
+			}, {
+				"field": "dept_no",
+				"fieldtitle": "部门编号",
+				"fieldtype": "string"
+			}, {
+				"field": "dept_name",
+				"fieldtitle": "部门名称",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "staff_element_guid2",
+	"tablename": "staff_element",
+	"tabtitle": "人员档案要素",
+	"entrance": false,
+	"hosttable": "dept_guid",
+	"viewtype": "grid",
+	"treedisplay": "tablename",
+	"dataref": {},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "tablename",
+				"fieldtitle": "表名",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "assist_staff_property_guid",
+	"tablename": "assist_staff_property",
+	"tabtitle": "协作人员属性",
+	"entrance": false,
+	"hosttable": "staff_element_guid2",
+	"viewtype": "grid",
+	"treedisplay": "field",
+	"dataref": {},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "field",
+				"fieldtitle": "字段名",
+				"fieldtype": "string"
+			}, {
+				"field": "fieldtitle",
+				"fieldtitle": "字段标题",
+				"fieldtype": "string"
+			}, {
+				"field": "fieldtype",
+				"fieldtitle": "字段类型",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "dept_asset_guid",
+	"tablename": "dept_asset",
+	"tabtitle": "部门资产",
+	"entrance": false,
+	"hosttable": "",
+	"viewtype": "grid",
+	"treedisplay": "dept_id",
+	"dataref": {
+		"dataArray": [
+			{
+				"table_id": "dept_guid",
+				"forerunner": true,
+				"sourcefield": "_id",
+				"sourcetxt": "dept_name",
+				"selffield": "dept_id"
+			}
+		]
+	},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "dept_id",
+				"fieldtitle": "部门",
+				"fieldtype": "string"
+			}, {
+				"field": "money",
+				"fieldtitle": "剩余金额",
+				"fieldtype": "double"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "dept_func_guid",
+	"tablename": "dept_func",
+	"tabtitle": "部门职能",
+	"entrance": false,
+	"hosttable": "dept_guid",
+	"viewtype": "grid",
+	"treedisplay": "dept_cont",
+	"dataref": {},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "dept_func_no",
+				"fieldtitle": "部门职能编号",
+				"fieldtype": "string"
+			}, {
+				"field": "dept_cont",
+				"fieldtitle": "部门职能",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "job_grade_guid",
+	"tablename": "job_grade",
+	"tabtitle": "职级",
+	"entrance": false,
+	"hosttable": "dept_func_guid",
+	"viewtype": "grid",
+	"treedisplay": "job_grade_name",
+	"dataref": {},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "job_grade_no",
+				"fieldtitle": "职级编号",
+				"fieldtype": "string"
+			}, {
+				"field": "job_grade_name",
+				"fieldtitle": "职级名称",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "equipment_category_guid",
+	"tablename": "equipment_category",
+	"tabtitle": "设备类型",
+	"entrance": true,
+	"hosttable": "",
+	"viewtype": "tree",
+	"parentid": "parent_category_id",
+	"treedisplay": "equipment_category_name",
+	"dataref": {},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "parent_category_id",
+				"fieldtitle": "父类型rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "equipment_category_no",
+				"fieldtitle": "设备类型编号",
+				"fieldtype": "string"
+			}, {
+				"field": "equipment_category_name",
+				"fieldtitle": "设备类型名称",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "equipment_guid",
+	"tablename": "equipment",
+	"tabtitle": "设备",
+	"entrance": false,
+	"hosttable": "",
+	"viewtype": "grid",
+	"treedisplay": "equipment_name",
+	"dataref": {
+		"dataArray": [
+			{
+				"table_id": "equipment_category_guid",
+				"forerunner": true,
+				"sourcefield": "_id",
+				"sourcetxt": "equipment_category_name",
+				"selffield": "equipment_category_id"
+			}, {
+				"table_id": "dept_guid",
+				"forerunner": true,
+				"sourcefield": "_id",
+				"sourcetxt": "dept_name",
+				"selffield": "dept_id"
+			}
+		]
+	},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "equipment_category_id",
+				"fieldtitle": "设备类型",
+				"fieldtype": "string"
+			}, {
+				"field": "dept_id",
+				"fieldtitle": "部门",
+				"fieldtype": "string"
+			}, {
+				"field": "equipment_no",
+				"fieldtitle": "设备编号",
+				"fieldtype": "string"
+			}, {
+				"field": "equipment_name",
+				"fieldtitle": "设备名称",
+				"fieldtype": "string"
+			}, {
+				"field": "amount",
+				"fieldtitle": "设备数量",
+				"fieldtype": "int"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "equipment_record_guid",
+	"tablename": "equipment_record",
+	"tabtitle": "设备档案",
+	"entrance": false,
+	"hosttable": "",
+	"viewtype": "grid",
+	"treedisplay": "buyer",
+	"dataref": {
+		"dataArray": [
+			{
+				"table_id": "equipment_guid",
+				"forerunner": true,
+				"sourcefield": "_id",
+				"sourcetxt": "equipment_name",
+				"selffield": "equipment_id"
+			}
+		]
+	},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "equipment_id",
+				"fieldtitle": "设备",
+				"fieldtype": "string"
+			}, {
+				"field": "buyer",
+				"fieldtitle": "采购人",
+				"fieldtype": "string"
+			}, {
+				"field": "buy_time",
+				"fieldtitle": "购买时间",
+				"fieldtype": "date"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "inspection_record_guid",
+	"tablename": "inspection_record",
+	"tabtitle": "检修记录",
+	"entrance": false,
+	"hosttable": "",
+	"viewtype": "grid",
+	"treedisplay": "result",
+	"dataref": {
+		"dataArray": [
+			{
+				"table_id": "equipment_guid",
+				"forerunner": true,
+				"sourcefield": "_id",
+				"sourcetxt": "equipment_name",
+				"selffield": "equipment_id"
+			}, {
+				"table_id": "staff_guid",
+				"forerunner": false,
+				"sourcefield": "_id",
+				"sourcetxt": "staff_name",
+				"selffield": "staff_id"
+			}
+		]
+	},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "equipment_id",
+				"fieldtitle": "检修设备",
+				"fieldtype": "string"
+			}, {
+				"field": "staff_id",
+				"fieldtitle": "检修人员",
+				"fieldtype": "string"
+			}, {
+				"field": "result",
+				"fieldtitle": "检修结果",
+				"fieldtype": "string"
+			}, {
+				"field": "inspection_time",
+				"fieldtitle": "检修时间",
+				"fieldtype": "date"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}, {
+	"_id": "service_responsible_guid",
+	"tablename": "service_responsible",
+	"tabtitle": "维修责任人",
+	"entrance": false,
+	"hosttable": "",
+	"viewtype": "grid",
+	"treedisplay": "staff_id",
+	"dataref": {
+		"dataArray": [
+			{
+				"table_id": "equipment_guid",
+				"forerunner": true,
+				"sourcefield": "_id",
+				"sourcetxt": "equipment_name",
+				"selffield": "equipment_id"
+			}, {
+				"table_id": "staff_guid",
+				"forerunner": false,
+				"sourcefield": "_id",
+				"sourcetxt": "staff_name",
+				"selffield": "staff_id"
+			}
+		]
+	},
+	"fields": {
+		"dataArray": [
+			{
+				"field": "_id",
+				"fieldtitle": "rowid",
+				"fieldtype": "string"
+			}, {
+				"field": "equipment_id",
+				"fieldtitle": "检修设备",
+				"fieldtype": "string"
+			}, {
+				"field": "staff_id",
+				"fieldtitle": "责任人",
+				"fieldtype": "string"
+			}
+		]
+	},
+	"dynacolumn": [],
+"dynatab": []
+}
+]
+}
+}

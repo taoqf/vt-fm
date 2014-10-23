@@ -34,12 +34,18 @@ namespace Victop.Frame.DataChannel
         /// </summary>
         /// <param name="channelId"></param>
         /// <param name="dataPath"></param>
-        /// <param name="structDt"></param>
+        /// <param name="structDs"></param>
         /// <returns></returns>
-        public virtual DataTable GetData(string channelId, string dataPath, DataTable structDt = null)
+        public virtual DataSet GetData(string channelId, string dataPath, DataSet structDs = null)
         {
             DataConvertManager convertManager = new DataConvertManager();
-            return convertManager.GetDataTable(channelId, dataPath, structDt);
+            return convertManager.GetDataSet(channelId, dataPath, structDs);
+        }
+
+        public virtual DataSet GetDataEx(string channelId, string dataPath, DataSet structDs = null)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.GetDataSetEx(channelId, dataPath, structDs);
         }
         /// <summary>
         /// 保存数据集
@@ -50,7 +56,7 @@ namespace Victop.Frame.DataChannel
         public virtual bool SaveData(string channelId, string dataPath)
         {
             DataConvertManager convertManager = new DataConvertManager();
-            return convertManager.SaveDataTable(channelId, dataPath);
+            return convertManager.SaveData(channelId, dataPath);
         }
         /// <summary>
         /// 根据通道号获取JSON数据
@@ -65,11 +71,24 @@ namespace Victop.Frame.DataChannel
             return channelData.JSONData;
         }
         /// <summary>
+        /// 获取简单引用数据
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="dataPath"></param>
+        /// <param name="columnName"></param>
+        /// <param name="dependValue"></param>
+        /// <returns></returns>
+        public virtual DataSet GetSimpDefData(string channelId, string dataPath, string columnName, Dictionary<string, object> dependDic = null)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.GetSimpleRef(channelId, dataPath, columnName, dependDic);
+        }
+        /// <summary>
         /// 根据通道号获取curdJSON数据
         /// </summary>
         /// <param name="channelId"></param>
         /// <returns></returns>
-        public virtual string GetCurdJSONData(string channelId)
+        public virtual List<object> GetCurdJSONData(string channelId)
         {
             DataChannelManager dataChannelManager = new DataChannelManager();
             Hashtable hashData = dataChannelManager.GetData(channelId);
@@ -96,7 +115,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="channelId"></param>
         /// <param name="saveData"></param>
         /// <returns></returns>
-        internal bool SaveCurdJSONData(string channelId, string saveData)
+        internal bool SaveCurdJSONData(string channelId, List<object> saveData)
         {
             DataChannelManager dataChannelManager = new DataChannelManager();
             Hashtable hashData = dataChannelManager.GetData(channelId);

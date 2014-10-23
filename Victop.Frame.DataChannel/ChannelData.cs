@@ -56,7 +56,7 @@ namespace Victop.Frame.DataChannel
         /// <summary>
         /// 调整的JSON数据信息
         /// </summary>
-        public virtual string CrudJSONData
+        public virtual List<object> CrudJSONData
         {
             get;
             set;

@@ -45,7 +45,7 @@ namespace Victop.Frame.Connection
                 }
                 else
                 {
-                    ReplyMessage replyMessage = MessageSubmit(adapter, messageInfo,dataForm);
+                    ReplyMessage replyMessage = MessageSubmit(adapter, messageInfo, dataForm);
                     return replyMessage;
                 }
             }
@@ -106,7 +106,7 @@ namespace Victop.Frame.Connection
                 default:
                     break;
             }
-            
+
             if (contentDic.ContainsKey("channelID"))
             {
                 if (string.IsNullOrEmpty(currentGallery.ClientInfo.ChannelId))
@@ -145,12 +145,18 @@ namespace Victop.Frame.Connection
                 }
                 else
                 {
-                    replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "msg");
+                    replyMessage = GetLoginUserMenuSubmit(adapter, messageInfo);
+                    //replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "msg");
                 }
             }
             return replyMessage;
         }
-
+        /// <summary>
+        /// 匿名登陆
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <param name="messageInfo"></param>
+        /// <returns></returns>
         private ReplyMessage AnonymousLoginSubmit(IAdapter adapter, RequestMessage messageInfo)
         {
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
@@ -226,7 +232,7 @@ namespace Victop.Frame.Connection
             MessageOrganizeManager organizeManager = new MessageOrganizeManager();
             DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
             string DataChannelId = JsonHelper.ReadJsonString(messageInfo.MessageContent, "DataChannelId");
-            messageInfo = organizeManager.OrganizeMessage(messageInfo, dataForm,out saveDataFlag);
+            messageInfo = organizeManager.OrganizeMessage(messageInfo, dataForm, out saveDataFlag);
             string DataSource = ConfigurationManager.AppSettings.Get("DataSource").ToLower();
             ReplyMessage replyMessage = new ReplyMessage();
             switch (DataSource)
@@ -246,7 +252,7 @@ namespace Victop.Frame.Connection
                 switch (saveDataFlag)
                 {
                     case DataOperateEnum.SAVE:
-                        replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo,dataForm);
+                        replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo, dataForm);
                         break;
                     case DataOperateEnum.COMMIT:
                         bool result = replyMessageResolver.CommitDataSetChange(DataChannelId);
@@ -260,9 +266,61 @@ namespace Victop.Frame.Connection
             replyMessage.MessageId = messageInfo.MessageId;
             return replyMessage;
         }
-        private bool UpdateBaseResourceByGalleryId(BaseResourceInfo resourceInfo)
+
+        /// <summary>
+        /// 获取登陆用户信息的菜单
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <param name="messageInfo"></param>
+        /// <returns></returns>
+        private ReplyMessage GetLoginUserMenuSubmit(IAdapter adapter, RequestMessage messageInfo)
         {
-            return true;
+            messageInfo.MessageType = "MongoDataChannelService.menu";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", "906");
+            contentDic.Add("client_type", "1");
+            contentDic.Add("configsystemid", "906");
+            string userCode = messageInfo.MessageContent.Contains("usercode") ? JsonHelper.ReadJsonString(messageInfo.MessageContent, "usercode") : JsonHelper.ReadJsonString(messageInfo.MessageContent, "userCode");
+            contentDic.Add("userCode", userCode);
+            messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
+            DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
+            MessageOrganizeManager organizeManager = new MessageOrganizeManager();
+            messageInfo = organizeManager.OrganizeMessage(messageInfo, DataFormEnum.JSON, out saveDataFlag);
+            ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
+            if (replyMessage.ReplyMode == (ReplyModeEnum)0)
+            {
+                replyMessage.ReplyAlertMessage = "获取当前登录用户菜单失败";
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(replyMessage.ReplyContent))
+                {
+                    BaseResourceInfo baseResourceInfo = new BaseResourceInfo();
+                    baseResourceInfo.GalleryId = GalleryManager.GetCurrentGalleryId();
+                    baseResourceInfo.ResourceXml = replyMessage.ReplyContent;
+                    List<MenuInfo> menuInfo = JsonHelper.ToObject<List<MenuInfo>>(replyMessage.ReplyContent);
+                    foreach (MenuInfo item in menuInfo)
+                    {
+                        if (string.IsNullOrEmpty(item.parent_id))
+                        {
+                            item.ParentMenu = "0";
+                        }
+                        else
+                        {
+                            item.ParentMenu = item.parent_id;
+                        }
+                        item.Id = item._id;
+                        item.MenuId = item._id;
+                        item.MenuName = item.menu_name;
+                        item.BzSystemId = item.systemid;
+                        item.HomeId = item.authority_code;
+                    }
+                    baseResourceInfo.ResourceMnenus = menuInfo;
+                    BaseResourceManager baseResourceManager = new BaseResourceManager();
+                    bool result = baseResourceManager.AddResouce(baseResourceInfo);
+                }
+            }
+            return replyMessage;
         }
     }
 }
