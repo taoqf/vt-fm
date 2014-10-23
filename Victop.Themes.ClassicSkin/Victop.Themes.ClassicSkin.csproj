@@ -57,24 +57,49 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\background.png" />
-    <Content Include="Images\btnMainFeedBack.png" />
-    <Content Include="Images\btnMOMainFeedBack.png" />
-    <Content Include="Images\ChangeSkin.png" />
-    <Content Include="Images\ChangeSkinMouseOver.png" />
-    <Content Include="Images\Close.png" />
-    <Content Include="Images\CloseMouseOver.png" />
-    <Content Include="Images\Grid.png" />
-    <Content Include="Images\in.png" />
-    <Content Include="Images\index.png" />
-    <Content Include="Images\indexSelected.png" />
-    <Content Include="Images\Maxi.png" />
-    <Content Include="Images\MaxiMouseOver.png" />
-    <Content Include="Images\Mini.png" />
-    <Content Include="Images\MiniMouseOver.png" />
-    <Content Include="Images\out.png" />
-    <Content Include="Images\Set.png" />
-    <Content Include="Images\SetMouseOver.png" />
+    <Resource Include="Images\background.png" />
+    <Resource Include="Images\btnMainFeedBack.png" />
+    <Resource Include="Images\btnMOMainFeedBack.png" />
+    <Resource Include="Images\ChangeSkin.png" />
+    <Resource Include="Images\ChangeSkinMouseOver.png" />
+    <Resource Include="Images\Close.png" />
+    <Resource Include="Images\CloseMouseOver.png" />
+    <Resource Include="Images\Grid.png" />
+    <Resource Include="Images\in.png" />
+    <Resource Include="Images\index.png" />
+    <Resource Include="Images\indexSelected.png" />
+    <Resource Include="Images\Maxi.png" />
+    <Resource Include="Images\MaxiMouseOver.png" />
+    <Resource Include="Images\Mini.png" />
+    <Resource Include="Images\MiniMouseOver.png" />
+    <Resource Include="Images\out.png" />
+    <Resource Include="Images\Set.png" />
+    <Resource Include="Images\SetMouseOver.png" />
+    <Resource Include="Images\Stretch.png" />
+    <Resource Include="Images\UserPictrue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\loginMain.png" />
+    <Resource Include="Images\loginTitle.png" />
+    <Resource Include="Images\loginWindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\loginBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginTopLeftGrid2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginTopLeftGrid1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\UserPhoto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginSet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LoginSetMouseOver.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

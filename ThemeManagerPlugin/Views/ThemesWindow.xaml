@@ -27,12 +27,12 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-                                        <Grid Name="grid" MinHeight="122" MinWidth="203" Style="{DynamicResource GridImage}"/>
+                                        <Grid Name="grid" MinHeight="122" MinWidth="203" Style="{DynamicResource FaceImage}"/>
                                         <TextBlock Text="{Binding SkinName}" MinWidth="60" MinHeight="30" TextAlignment="Center"/>
                                     </StackPanel>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsSelected" Value="true" >
-                                            <Setter Property="Style" TargetName="grid"  Value="{DynamicResource SelectedGridImage}"/>
+                                            <Setter Property="Style" TargetName="grid"  Value="{DynamicResource SelectedFaceImage}"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>

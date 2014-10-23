@@ -10,12 +10,12 @@ namespace Victop.Themes.WaterSkin
         /// <summary>
         /// 皮肤路径
         /// </summary>
-        public int SkinOrder = 0;
+        public int SkinOrder = 1;
 
         /// <summary>
         /// 皮肤名称
         /// </summary>
-        public string SkinName = "默认皮肤";
+        public string SkinName = "水滴";
 
         /// <summary>
         /// 皮肤xaml文件
