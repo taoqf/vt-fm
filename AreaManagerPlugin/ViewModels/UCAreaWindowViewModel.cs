@@ -454,7 +454,6 @@ namespace AreaManagerPlugin.ViewModels
                         contentDic.Add("systemid", "906");
                         contentDic.Add("configsystemid", "906");
                         contentDic.Add("modelid", "victop_model_scheme_0001");
-
                         List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
                         Dictionary<string, object> conDic = new Dictionary<string, object>();
                         conDic.Add("name", "scheme");
@@ -471,10 +470,6 @@ namespace AreaManagerPlugin.ViewModels
                             viewId = returnDic["DataChannelId"].ToString();
                             List<object> pathList = new List<object>();
                             pathList.Add("scheme");
-                            //Dictionary<string, object> pathDic = new Dictionary<string, object>();
-                            //pathDic.Add("key", "_id");
-                            //pathDic.Add("value", "dc27cd6d-21fc-456c-aea2-1a94u6944b14a");
-                            //pathList.Add(pathDic);
                             dataPath = JsonHelper.ToJson(pathList);
                             DataOperation dataOp = new DataOperation();
                             DataSet ds = new DataSet();
@@ -520,7 +515,7 @@ namespace AreaManagerPlugin.ViewModels
                         //}
                         #endregion
                         #region TinyServer测试
-                        //Dgictionary<string, object> contentDic = new Dictionary<string, object>();
+                        //Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         //contentDic.Add("systemid", "906");
                         //contentDic.Add("configsystemid", "905");
                         ////contentDic.Add("spaceid", "tianlong");
