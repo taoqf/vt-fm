@@ -214,7 +214,7 @@ namespace PortalFramePlugin.ViewModels
                 if (string.IsNullOrEmpty(userName))
                 {
                     Random rd = new Random();
-                    userName = "游客" + rd.Next();
+                    userName = "User " + rd.Next() + "，欢迎登录系统";
                 }
                 return userName;
             }

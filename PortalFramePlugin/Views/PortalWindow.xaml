@@ -14,27 +14,26 @@
         <Grid.RowDefinitions>
             <RowDefinition RowDefinition.Height="96"/>
             <RowDefinition RowDefinition.Height="*"/>
-            <RowDefinition RowDefinition.Height="27"/>
         </Grid.RowDefinitions>
-        <Grid Name="gridTitle" Style="{DynamicResource MainFrmTopGridStyle}"  Grid.Row="0" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="74"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.Column="0" Background="Black"></Border>
+        <Grid Name="gridTitle" Style="{DynamicResource MainFrmTopGridStyle}"  Grid.Row="0"  Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="380"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="74"></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <controls:VicButtonImage Grid.Column="0" Name="btnUserLogin" HorizontalAlignment="Left" Height="57" Margin="15,19,0,0" VerticalAlignment="Top" Width="59" 
+            <controls:VicButtonImage Grid.Column="0" Name="btnUserLogin" HorizontalAlignment="Right" Height="57" Margin="15,10,0,0" VerticalAlignment="Top" Width="59" 
                                          Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}">
-                    
-                </controls:VicButtonImage>
-                <TextBlock Grid.Column="1" Visibility="Collapsed" HorizontalAlignment="Left" Margin="13,19,0,0" TextWrapping="Wrap" Text="{Binding UserName}" FontFamily="SimSun" VerticalAlignment="Top" Foreground="#dbf3fa" FontSize="12" FontWeight="Bold" Focusable="True"/>
-                <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="13,40,0,0" TextWrapping="Wrap" Text="{Binding UserName}" FontFamily="SimSun" VerticalAlignment="Top" Foreground="#dbf3fa" FontSize="12" FontWeight="Bold" Focusable="True"/>
-                <Image Grid.Column="1" Visibility="Collapsed" Height="15" Margin="13,60,0,0" Width="100" Style="{DynamicResource MainBtnDaysStyle}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-            </Grid>
-            <Grid Grid.Column="1">
+
+            </controls:VicButtonImage>
+            <TextBlock Grid.Column="1" Visibility="Collapsed" HorizontalAlignment="Left" Margin="13,10,0,0" TextWrapping="Wrap" Text="{Binding UserName}" FontFamily="SimSun" VerticalAlignment="Top" Foreground="#dbf3fa" FontSize="12" FontWeight="Bold" Focusable="True"/>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="13,20,0,0" TextWrapping="Wrap" Text="{Binding UserName}" FontFamily="SimSun" VerticalAlignment="Top" Foreground="#dbf3fa" FontSize="12" FontWeight="Bold" Focusable="True"/>
+            <Image Grid.Column="1" Visibility="Collapsed" Height="15" Margin="13,40,0,0" Width="100" Style="{DynamicResource MainBtnDaysStyle}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+            <Grid Grid.Column="1" Margin="10,15,-10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="34"></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -51,11 +50,11 @@
                 </controls:VicComboBoxNormal>
                 <controls:VicButtonImage Name="btnFeedBack" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,166,0" VerticalAlignment="Top" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>
                 <Button Name="btnChangeSkin" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,132,0" VerticalAlignment="Top" Width="34"  Style="{DynamicResource btnChangeSkinStyle}" Height="34" BorderThickness="0">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding btnChangeSkinClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </Button>
                 <Button Name="btnSet" Grid.Row="0" HorizontalAlignment="Right" Margin="0,0,99,0" VerticalAlignment="Top" Width="34" Style="{DynamicResource btnSetStyle}" Height="34">
                     <i:Interaction.Triggers>
@@ -100,16 +99,16 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Grid>
-        <Grid Name="gridMid" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" Grid.Row="1" >
+        <Grid Name="gridMid" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" Grid.Row="1"  >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition ColumnDefinition.Width="191"/>
+                <ColumnDefinition ColumnDefinition.Width="74"/>
                 <ColumnDefinition ColumnDefinition.Width="0" />
                 <ColumnDefinition ColumnDefinition.Width="*" />
             </Grid.ColumnDefinitions>
             <ScrollViewer Grid.Column="0" Style="{DynamicResource MenuScrollViewer}">
-                <Grid Name="groupboxMenu" Width="182">
+                <Grid Name="groupboxMenu" Width="74">
                     <StackPanel Name="MenuStackPanel" Orientation="Vertical">
-                        <local:VicRadioButtonFirstLevelMenu Content="飞道云"></local:VicRadioButtonFirstLevelMenu>
+                        <local:VicRadioButtonFirstLevelMenu Content="飞道云" HorizontalContentAlignment="Left"></local:VicRadioButtonFirstLevelMenu>
                         <local:VicRadioButtonFirstLevelMenu Content="本地">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
@@ -154,7 +153,7 @@
                 </controls:VicTabControlNormal>
             </Grid>
         </Grid>
-        <Label Name="tb" Grid.Row="2" Content="当前软件已是最新版本（2014-04-23）" Style="{DynamicResource MainFrmBottomGridStyle}"/>
+        <!--<Label Name="tb" Grid.Row="2" Content="当前软件已是最新版本（2014-04-23）" Style="{DynamicResource MainFrmBottomGridStyle}"/>-->
     </Grid>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
