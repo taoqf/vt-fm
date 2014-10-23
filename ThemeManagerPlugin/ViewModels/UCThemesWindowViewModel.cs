@@ -13,13 +13,14 @@ using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
+using System.Reflection;
+using System.Windows;
 
 namespace ThemeManagerPlugin.ViewModels
 {
     public class UCThemesWindowViewModel : ModelBase
     {
         #region 字段&属性
-        string ThemePath;//当前主题路径
         /// <summary>皮肤列表 </summary>
         private ObservableCollection<ThemeModel> _systemThemeList;
         public ObservableCollection<ThemeModel> SystemThemeList
@@ -39,6 +40,7 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
+
         /// <summary>当前选中主题 </summary>
         private ThemeModel _selectedItem;
         public ThemeModel SelectedListBoxItem
@@ -70,6 +72,7 @@ namespace ThemeManagerPlugin.ViewModels
         }
        
         #endregion
+
         #region 窗体加载命令
         /// <summary>窗体加载命令 </summary>
         public ICommand gridMainLoadedCommand
@@ -78,55 +81,62 @@ namespace ThemeManagerPlugin.ViewModels
             {
                 return new RelayCommand(( ) =>
                 {
-
-                    GetThemeSkinNum();/*获取主题文件夹中皮肤个数和皮肤列表*/
-                    GetDefaultThemeSkinPath();/*获取主题文件夹中默认皮肤路径*/
+                    GetThemeSkinNum();
+                    GetDefaultThemeSkin();
                 });
             }
         }
-        private void GetDefaultThemeSkinPath() /*获取主题文件夹中默认皮肤路径*/
+
+        /// <summary>
+        /// 获取主题文件夹中默认皮肤路径
+        /// </summary>
+        private void GetDefaultThemeSkin()
         {
-            ThemePath = ConfigurationManager.AppSettings.Get("skinurl"); /*读取配置文件中的路径值theme/SkinDefault/Resources.xaml*/
-            foreach (ThemeModel model in SystemThemeList)
+            /*读取配置文件中的默认皮肤名称*/
+            string skinDefaultName = ConfigurationManager.AppSettings.Get("skinurl");
+            if (this.SystemThemeList.Count > 0)
             {
-                if (model.ThemeName == ThemePath)
+                foreach (ThemeModel model in SystemThemeList)
                 {
-                    SelectedListBoxItem = model;
+                    if (model.SkinName == skinDefaultName)
+                    {
+                        SelectedListBoxItem = model;
+                        break;
+                    }
                 }
             }
         }
       
-        private void GetThemeSkinNum()/*获取主题文件夹中皮肤个数和皮肤列表*/
+        /// <summary>
+        /// 获取主题文件夹中皮肤个数和皮肤列表
+        /// </summary>
+        private void GetThemeSkinNum()
         {
-            string[] directories = Directory.GetDirectories(AppDomain.CurrentDomain.BaseDirectory + "theme");
-            SkinNum = directories.Count();
-            for (int i = 0; i < directories.Count(); i++)
+            string[] files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "theme", "*.dll");
+            SkinNum = files.Count();
+            for (int j = 0; j < files.Count(); j++)
             {
-                string[] ThemePathpart = directories[i].Split("\\".ToCharArray());
-                string Themename = ThemePathpart[ThemePathpart.Length -1].ToString();//得到皮肤名字
-                ThemeModel skin = new ThemeModel();
-                skin.SkinName = Themename;
-                skin.ThemeName = "theme/" + Themename + "/Resources.xaml";
-                SystemThemeList.Add(skin);
+                string skinNamespace = Path.GetFileNameWithoutExtension(files[j]);//得到皮肤命名空间
+                ThemeModel model = new ThemeModel();
+                this.ReflectorInfo(files[j], skinNamespace + ".Skin", model);
+                model.SkinPath = @"theme\" + skinNamespace + ".dll";
+                SystemThemeList.Add(model);
+            }
+
+            if (this.SystemThemeList.Count > 0)
+            {
+                List<ThemeModel> list = this.SystemThemeList.ToList();
+                list.Sort();
+                this.SystemThemeList = new ObservableCollection<ThemeModel>(list);
             }
         }
         #endregion
-        #region
-        // 在主题列表选中主题皮肤触发命令 
-        public ICommand listBoxSystemThemeListSelectionChangedCommand
-        {
-            get
-            {
-                return new RelayCommand(() =>
-                {
-                    if (SelectedListBoxItem != null)
-                    {
-                        ChangeFrameWorkTheme(SelectedListBoxItem);
-                    }
-                });
-            }
-        }
-        // 主题皮肤改变发送消息
+
+        #region 私有方法
+        /// <summary>
+        /// 主题皮肤改变发送消息
+        /// </summary>
+        /// <param name="model"></param>
         private void ChangeFrameWorkTheme(ThemeModel model)
         {
             string messageType = "ServerCenterService.ChangeTheme";
@@ -137,6 +147,65 @@ namespace ThemeManagerPlugin.ViewModels
             MessageOperation messageOp = new MessageOperation();
             messageOp.SendMessage(messageType, contentDic);
 
+        }
+
+        /// <summary> 
+        /// 利用反射获取程序集中类
+        /// </summary> 
+        private void ReflectorInfo(string dllPath, string skinNamespace, ThemeModel model)
+        {
+            Assembly ass = Assembly.LoadFrom(dllPath); // 加载程序集 
+            Type type = ass.GetType(skinNamespace); // 获取该程序集所包含的类型 
+            object obj = Activator.CreateInstance(type);
+            model.SkinOrder = (int)type.GetField("SkinOrder").GetValue(obj);
+            model.SkinName = type.GetField("SkinName").GetValue(obj).ToString();
+            model.ThemeName = type.GetField("ThemeName").GetValue(obj).ToString();
+        }
+
+        /// <summary>
+        /// 加载皮肤
+        /// </summary>
+        private void LoadSkin()
+        {
+            Assembly assembly = Assembly.LoadFrom(this.SelectedListBoxItem.SkinPath);
+            ResourceDictionary myResourceDictionary = Application.LoadComponent(new Uri(this.SelectedListBoxItem.ThemeName, UriKind.Relative)) as ResourceDictionary;
+            Application.Current.Resources.MergedDictionaries.Add(myResourceDictionary);
+        }
+
+        /// <summary>
+        /// 修改默认皮肤
+        /// </summary>
+        private void UpdateDefaultSkin()
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings["skinurl"].Value = this.SelectedListBoxItem.SkinName;
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+        #endregion
+
+        #region 在主题列表选中主题皮肤触发命令
+        public ICommand listBoxSystemThemeListSelectionChangedCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    if (SelectedListBoxItem != null)
+                    {
+                        try
+                        {
+                            this.LoadSkin();
+                            this.UpdateDefaultSkin();
+                            //ChangeFrameWorkTheme(SelectedListBoxItem);
+                        }
+                        catch (Exception ex)
+                        {
+                            VicMessageBoxNormal.Show("Change error: " + ex.Message);
+                        }
+                    }
+                });
+            }
         }
         #endregion
     }
