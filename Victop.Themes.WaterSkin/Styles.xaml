@@ -560,11 +560,22 @@
     </Style>
 
     <Style x:Key="MainFrmUserPictrueGridStyle" TargetType="{x:Type controls:VicButtonImage}">
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="Background">
             <Setter.Value>
                 <ImageBrush ImageSource="Images\UserPictrue.png"/>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="MainFrmUserName" TargetType="{x:Type TextBlock}">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
     </Style>
 
     <!--滚动条样式开始-->
