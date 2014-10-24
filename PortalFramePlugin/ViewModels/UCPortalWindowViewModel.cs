@@ -264,7 +264,7 @@ namespace PortalFramePlugin.ViewModels
                     mainWindow.MaxHeight = rect.Height;
                     mainWindow.WindowState = WindowState.Maximized;
                     ChangeFrameWorkTheme();
-                    //LoadMenuListLocal();
+                    LoadMenuListLocal();
                     LoadJsonMenuListLocal();
                     UserLogin();
                 });
@@ -650,7 +650,7 @@ namespace PortalFramePlugin.ViewModels
         /// <summary>加载本地菜单集合 </summary>
         private void LoadMenuListLocal()
         {
-            SystemMenuListLocal.Clear();
+            this.SystemMenuListLocal.Clear();
             string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
             ReadLocalMenuListFromXml(FilePath);
         }
@@ -663,11 +663,11 @@ namespace PortalFramePlugin.ViewModels
             {
                 MenuModel menuModel = GetPluginInfoModel(item);
                 menuModel = CreatLocalMenuModel(item, menuModel);
-                SystemMenuListLocal.Add(menuModel);
+                this.SystemMenuListLocal.Add(menuModel);
             }
             if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             {
-                SystemMenuListLocal.Clear();
+                this.SystemMenuListLocal.Clear();
             }
         }
         private MenuModel CreatLocalMenuModel(XElement element, MenuModel menuModel)
@@ -699,7 +699,7 @@ namespace PortalFramePlugin.ViewModels
         /// <summary>加载本地Json菜单集合 </summary>
         private void LoadJsonMenuListLocal()
         {
-            SystemMenuListLocal.Clear();
+            this.SystemMenuListLocal.Clear();
             string menuList = string.Empty;
             string menuPath = AppDomain.CurrentDomain.BaseDirectory + "menu.json";
             if (File.Exists(menuPath))
@@ -707,11 +707,11 @@ namespace PortalFramePlugin.ViewModels
                 menuList = File.ReadAllText(menuPath, Encoding.GetEncoding("gb2312"));
                 menuList = JsonHelper.ReadJsonString(menuList, "menu");
             }
-            SystemMenuListLocal = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
+            this.SystemMenuListLocal = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             localMenuListEx = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             {
-                SystemMenuListLocal.Clear();
+                this.SystemMenuListLocal.Clear();
             }
             #region 手动解析树型Json(暂不使用)
             //List<object> objList = JsonHelper.ToObject<List<object>>(menuList);

@@ -19,12 +19,16 @@
             <ColumnDefinition Width="70"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0" Style="{DynamicResource LeftGrid}">
-            <Image Style="{DynamicResource logoImage}"></Image>
-        </Grid>
-        <Grid Grid.Row="1" Grid.Column="0" Style="{DynamicResource LeftGrid}">
-            <ScrollViewer Style="{DynamicResource MenuScrollViewer}">
-                <StackPanel Name="MenuStackPanel" Orientation="Vertical">
+        <ScrollViewer Grid.RowSpan="2" Style="{DynamicResource MenuScrollViewer}">
+            <Grid Style="{DynamicResource LeftGrid}">
+                <Grid.RowDefinitions>
+                    <RowDefinition RowDefinition.Height="70"/>
+                    <RowDefinition RowDefinition.Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Style="{DynamicResource LeftGrid}">
+                    <Image Style="{DynamicResource logoImage}"></Image>
+                </Grid>
+                <StackPanel Grid.Row="1" Name="MenuStackPanel" Orientation="Vertical">
                     <local:VicRadioButtonFirstLevelMenu Content="飞道云" HorizontalContentAlignment="Left"></local:VicRadioButtonFirstLevelMenu>
                     <local:VicRadioButtonFirstLevelMenu Content="本地">
                         <i:Interaction.Triggers>
@@ -55,8 +59,8 @@
                         </i:Interaction.Triggers>
                     </local:VicListBoxSecondLevelMenu>
                 </StackPanel>
-            </ScrollViewer>
-        </Grid>
+            </Grid>
+        </ScrollViewer>
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
             <controls:VicButtonImage Name="btnUserLogin" HorizontalAlignment="Right" Height="57" Margin="15,10,0,0" VerticalAlignment="Top" Width="59" 
                                          Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}">
@@ -108,7 +112,6 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="1" Style="{DynamicResource MainGrid}"></Grid>
         <Grid Name="gridMid" Grid.Column="1" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition ColumnDefinition.Width="0" />
@@ -117,8 +120,8 @@
             <StackPanel Width="10" Grid.Column="0" VerticalAlignment="Center">
                 <Button Name="btnStretch" Height="70" Width="10" Style="{DynamicResource btnStretchStyle}" Margin="-3,0,-4,0"></Button>
             </StackPanel>
-            <Grid Grid.Column="1" >
-                <controls:VicTabControlNormal Name="MainTabControl" Style="{DynamicResource VicTabControlNormalStyle}" ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
+            <Grid Grid.Column="1">
+                <controls:VicTabControlNormal Name="MainTabControl" ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="TabItemClosing">
                             <i:InvokeCommandAction Command="{Binding tbctrlTabItemClosingCommand}"/>

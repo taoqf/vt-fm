@@ -21,6 +21,7 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -159,6 +160,10 @@
     <ProjectReference Include="..\Victop.Server.Controls\Victop.Server.Controls.csproj">
       <Project>{d609f0a2-27e1-4855-a5b6-942e580d0d8a}</Project>
       <Name>Victop.Server.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Victop.Themes.ClassicSkin\Victop.Themes.ClassicSkin.csproj">
+      <Project>{5134BA03-EE73-49D3-9B9E-7ED21D7FC86C}</Project>
+      <Name>Victop.Themes.ClassicSkin</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

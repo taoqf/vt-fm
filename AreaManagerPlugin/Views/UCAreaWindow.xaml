@@ -5,208 +5,73 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:AreaManagerPlugin.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
-             xmlns:local="clr-namespace:AreaManagerPlugin.Views"
-             mc:Ignorable="d" 
+             xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+             mc:Ignorable="d" Background="Transparent"
              d:DesignHeight="645" d:DesignWidth="876" Name="UCMain">
-    <UserControl.Resources>
-        <vm:UCAreaWindowViewModel x:Key="areaViewModel"/>
-    </UserControl.Resources>
-    <Grid DataContext="{StaticResource ResourceKey=areaViewModel}" Name="gridmain">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed">
-            <ComboBox Margin="0,0,5,0" Name="cboxtable" ItemsSource="{Binding TableShowList,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="TableName" SelectedValuePath="TableId" SelectedItem="{Binding SelectedTable}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding cboxtableSelectionChangedCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ComboBox>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnGetMaster" Content="主档取数">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnGetMasterClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnGetMasterNew" Content="主档取数(新)">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnGetMasterNewClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnSave" Content="主档保存">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnSaveClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnSaveNew" Content="主档保存(新)">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnSaveNewClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnGetModel" Content="模型取数">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnGetModelClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnSaveModel" Content="模型保存">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnSaveModelClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnDataReference" Content="数据引用">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnDataReferenceClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-        </DockPanel>
-        <TabControl Grid.Row="1">
-            <TabItem Header="数据集合" Visibility="Collapsed">
-                <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding MyDt, UpdateSourceTrigger=PropertyChanged}">
-                </ctrl:VicDataGrid>
-            </TabItem>
-            <TabItem Header="其他测试" Visibility="Collapsed">
-                <Button Width="100" Height="24" Content="用户服务" Name="btnGetUserInfo" Margin="3,0,187,0">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding btnGetUserInfoClickCommand}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-            </TabItem>
-            <TabItem Header="文件服务" Visibility="Collapsed">
+    <Border Style="{DynamicResource SubBorder}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,10,20" Style="{DynamicResource RightGrid}"/>
+            <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,10,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" HorizontalAlignment="Left" Style="{DynamicResource Line1}"/>
                 <StackPanel Orientation="Horizontal">
-                    <Button Width="100" Height="24" Content="文件下载">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnDownloadFileClickCommand}" ></i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                    <Button Width="100" Height="24" Content="文件上传">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnUploadFileClickCommand}" ></i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-
-                    <Button Width="100" Height="24" Content="测试上传">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnUploadFile1ClickCommand}" ></i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                    <Button Width="100" Height="24" Content="测试下载">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnDownloadFile1ClickCommand}" ></i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                    <ProgressBar  Width="100" Height="24" Name="progressBar"></ProgressBar>
+                    <Image Style="{DynamicResource Image1}"></Image>
+                    <TextBlock Text="工作接收区" Style="{DynamicResource GridTitle}"></TextBlock>
                 </StackPanel>
-
-            </TabItem>
-            <TabItem Header="JSON数据操作">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="25"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <DockPanel Grid.Row="0" HorizontalAlignment="Left">
-                        <Button Width="100" Height="25" Name="btnSearchJson" Content="JSON检索">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnSearchJsonClickCommand}" ></i:InvokeCommandAction>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button Width="100" Height="25" Name="btnAddJson" Content="JSON添加">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnAddJsonClickCommand}" ></i:InvokeCommandAction>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button Width="100" Height="25" Name="btnUpdateJson" Content="JSON修改">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnUpdateJsonClickCommand}" ></i:InvokeCommandAction>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button Width="100" Height="25" Name="btnDeleteJson" Content="JSON删除">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnDeleteJsonClickCommand}" ></i:InvokeCommandAction>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                    </DockPanel>
-                    <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding JsonDataTable}">
-                    </ctrl:VicDataGrid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="组件测试" IsSelected="True">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-                        <Button Width="100" Name="btnCpntClickCommand" Height="24" Content="附加组件配置">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnCpntClickCommand}" CommandParameter="{Binding ElementName=cpntGrid}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                    </DockPanel>
-                    <Grid Grid.Row="1">
-                        <DockPanel HorizontalAlignment="Left">
-                        <ComboBox Height="24" Width="100" Name="testCbox" Margin="0,0,5,0">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="DropDownOpened">
-                                    <i:InvokeCommandAction Command="{Binding testCboxDropDownOpenedCommand}" CommandParameter="{Binding ElementName=testCbox}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding testCboxSelectionChanged}" CommandParameter="{Binding ElementName=testCbox}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </ComboBox>
-                            <ComboBox Height="24" Width="100" Name="testCbox1" Margin="0,0,5,0">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="DropDownOpened">
-                                    <i:InvokeCommandAction Command="{Binding testCbox1DropDownOpenedCommand}" CommandParameter="{Binding ElementName=testCbox1}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </ComboBox>
-                        </DockPanel>
-                    </Grid>
-                </Grid>
-            </TabItem>
-        </TabControl>
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="Loaded">
-                <i:InvokeCommandAction Command="{Binding gridLoadedCommand}"/>
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
-    </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
+                    <Button Content="下载文件"></Button>
+                    <Button Content="打开文件"></Button>
+                </StackPanel>
+                <controls:VicDataGrid x:Name="testGrid1" Grid.Row="1" AutoGenerateColumns="False" SelectionUnit="FullRow"></controls:VicDataGrid>
+            </Grid>
+            <Grid Grid.Row="0" Grid.Column="1" Margin="10,0,0,20" Style="{DynamicResource RightGrid}"/>
+            <Grid Grid.Row="0" Grid.Column="1" Margin="10,0,0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" HorizontalAlignment="Left" Style="{DynamicResource Line2}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Image Style="{DynamicResource Image2}"></Image>
+                    <TextBlock Text="工作上传区" Style="{DynamicResource GridTitle}"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
+                    <Button Content="新建"></Button>
+                    <Button Content="编辑"></Button>
+                    <Button Content="删除"></Button>
+                </StackPanel>
+                <controls:VicDataGrid x:Name="testGrid2" Grid.Row="1" AutoGenerateColumns="False"></controls:VicDataGrid>
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" Style="{DynamicResource RightGrid}"/>
+            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" HorizontalAlignment="Left" Style="{DynamicResource Line3}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Image Style="{DynamicResource Image3}"></Image>
+                    <TextBlock Text="工序任务列表" Style="{DynamicResource GridTitle}"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
+                    <Button Content="派发任务"></Button>
+                    <Button Content="问题反馈"></Button>
+                    <Button Content="开工"></Button>
+                    <Button Content="完工"></Button>
+                </StackPanel>
+                <controls:VicDataGrid x:Name="testGrid3" Grid.Row="1" AutoGenerateColumns="False"></controls:VicDataGrid>
+            </Grid>
+        </Grid>
+    </Border>
 </UserControl>
