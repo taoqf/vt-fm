@@ -104,6 +104,50 @@
   <ItemGroup>
     <Resource Include="Images\logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\1-1.png" />
+    <Resource Include="Images\1-2.png" />
+    <Resource Include="Images\10-1.png" />
+    <Resource Include="Images\10-2.png" />
+    <Resource Include="Images\11-1.png" />
+    <Resource Include="Images\11-2.png" />
+    <Resource Include="Images\12-1.png" />
+    <Resource Include="Images\12-2.png" />
+    <Resource Include="Images\13-1.png" />
+    <Resource Include="Images\13-2.png" />
+    <Resource Include="Images\14-1.png" />
+    <Resource Include="Images\14-2.png" />
+    <Resource Include="Images\15-1.png" />
+    <Resource Include="Images\15-2.png" />
+    <Resource Include="Images\16-1.png" />
+    <Resource Include="Images\16-2.png" />
+    <Resource Include="Images\17-1.png" />
+    <Resource Include="Images\17-2.png" />
+    <Resource Include="Images\18-1.png" />
+    <Resource Include="Images\18-2.png" />
+    <Resource Include="Images\19-1.png" />
+    <Resource Include="Images\19-2.png" />
+    <Resource Include="Images\2-1.png" />
+    <Resource Include="Images\2-2.png" />
+    <Resource Include="Images\20-1.png" />
+    <Resource Include="Images\20-2.png" />
+    <Resource Include="Images\21-1.png" />
+    <Resource Include="Images\21-2.png" />
+    <Resource Include="Images\3-1.png" />
+    <Resource Include="Images\3-2.png" />
+    <Resource Include="Images\4-1.png" />
+    <Resource Include="Images\4-2.png" />
+    <Resource Include="Images\5-1.png" />
+    <Resource Include="Images\5-2.png" />
+    <Resource Include="Images\6-1.png" />
+    <Resource Include="Images\6-2.png" />
+    <Resource Include="Images\7-1.png" />
+    <Resource Include="Images\7-2.png" />
+    <Resource Include="Images\8-1.png" />
+    <Resource Include="Images\8-2.png" />
+    <Resource Include="Images\9-1.png" />
+    <Resource Include="Images\9-2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

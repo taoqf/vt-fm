@@ -8,15 +8,14 @@
 
     <Style TargetType="{x:Type local:VicRadioButtonFirstLevelMenu}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Background" Value="#F1F3F5"/>
-        <Setter Property="BorderBrush" Value="#CCD2D9"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#435058"></Setter>
         <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="FontWeight"  Value="Bold"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="BorderThickness" Value="0,0,0,1"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="MinWidth" Value="30"></Setter>
         <Setter Property="Height" Value="37"></Setter>
@@ -42,12 +41,12 @@
     </Style>
 
     <Style TargetType="{x:Type local:VicListBoxSecondLevelMenu}">
-        <Setter Property="Background" Value="#F1F3F5"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
@@ -56,7 +55,7 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <local:VicRadioButtonSecondLevelMenu GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
-                                    Content="{Binding MenuName}" ImgName="25.png"/>
+                                    Content="{Binding MenuName}" ImgName="{Binding IconUrl}"/>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -91,19 +90,17 @@
     
     <Style TargetType="{x:Type local:VicRadioButtonSecondLevelMenu}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Background" Value="#F1F3F5"/>
-        <Setter Property="BorderBrush" Value="#CCD2D9"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#435058"></Setter>
         <Setter Property="FontFamily" Value="SimSun"></Setter>
         <Setter Property="FontSize" Value="12"></Setter>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="BorderThickness" Value="0,0,0,1"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-        <Setter Property="MinWidth" Value="90"></Setter>
+        <Setter Property="MinWidth" Value="30"></Setter>
         <Setter Property="MinHeight" Value="30"></Setter>
         <Setter Property="Margin" Value="0"></Setter>
-        <Setter Property="Padding" Value="18,0,0,0"/>
         <Setter Property="IsEnabled" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -113,17 +110,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="43"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="30"/>
-                                </Grid.RowDefinitions>
-                                <Image Width="14" Height="14" VerticalAlignment="Center" HorizontalAlignment="Right" Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ImgName,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Image>
-                                <ContentPresenter Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                            </Grid>
+                            <Image Width="14" Height="14" VerticalAlignment="Center" HorizontalAlignment="Center" Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ImgName,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Image>
                         </Border>
                     </BulletDecorator>
                 </ControlTemplate>

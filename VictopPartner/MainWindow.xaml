@@ -46,11 +46,11 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
-    <Window.Triggers>
+    <!--<Window.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
             <BeginStoryboard Storyboard="{StaticResource mainstory}"/>
         </EventTrigger>
-    </Window.Triggers>
+    </Window.Triggers>-->
     <Grid x:Name="LayoutRoot" Background="{x:Null}">
         <Image x:Name="image" Margin="170,44,179,30" Source="FeiD.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
             <Image.RenderTransform>

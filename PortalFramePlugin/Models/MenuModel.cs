@@ -375,14 +375,21 @@ namespace PortalFramePlugin.Models
             get;
             set;
         }
+
+        private string _iconUrl;
+
         /// <summary>
         /// 图标路径
         /// </summary>
         [JsonProperty(PropertyName = "iconUrl")]
         public string IconUrl
         {
-            get;
-            set;
+            get { return _iconUrl; }
+            set
+            {
+                _iconUrl = value;
+                RaisePropertyChanged("IconUrl");
+            }
         }
         /// <summary>
         /// 插件描述

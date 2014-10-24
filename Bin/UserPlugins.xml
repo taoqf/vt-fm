@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MenuInfo version="1.0">
-		<MainMenu title="公共基础管理" action="TradeContainerControl" auto="0" showtype="0" imageurl="25.png" displaymode="1" description="">
+		<MainMenu title="公共基础管理" action="TradeContainerControl" auto="0" showtype="0" imageurl="1-1.png" displaymode="1" description="">
 			<SubMenu title="全部" action="" auto="0" showtype="0" imageurl="" displaymode="1" description="">
 				<Trade title="地区管理" action="AreaManagerPlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="用于地区信息维护"/>
 				<Trade title="数据巡航" action="DataCruisePlugin" auto="0" showtype="1" imageurl="4.png" displaymode="1" description="数据管理操作集中版"/>
@@ -74,7 +74,7 @@
 				<Trade title="电商账号类型管理" action="ElecCommerceAccountTypeManagePlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="用于电商账号类型信息维护"/>
 			</SubMenu>
 		</MainMenu>
-		<MainMenu title="进销存管理" action="TradeContainerControl" auto="0" showtype="0" imageurl="22.png" displaymode="1" description="">
+		<MainMenu title="进销存管理" action="TradeContainerControl" auto="0" showtype="0" imageurl="2-1.png" displaymode="1" description="">
 			<SubMenu title="采购管理" action="" auto="0" showtype="1" imageurl="" displaymode="1" description="">
 				<Trade title="采购入库" action="ProcurementWarehousingPlugin" auto="0" showtype="0" imageurl="3.png" displaymode="1" description="用于采购入库信息维护"/>
 				<Trade title="采购退货" action="ProcurementReturnPlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="用于采购退货信息维护"/>
@@ -94,7 +94,7 @@
 				<Trade title="摆样查询" action="PutSampleQueryPlugin" auto="0" showtype="0" imageurl="3.png" displaymode="1" description="用于摆样查询信息维护"/>
 			</SubMenu>
 		</MainMenu>
-    <MainMenu title="报表分析" action="TradeContainerControl" auto="0" showtype="0" imageurl="22.png" displaymode="1" description="">
+    <MainMenu title="报表分析" action="TradeContainerControl" auto="0" showtype="0" imageurl="3-1.png" displaymode="1" description="">
 			<SubMenu title="报表分类" action="" auto="0" showtype="1" imageurl="" displaymode="1" description="">
         <Trade title="采购明细查询" action="ProcurementDetailedQueryPlugin" auto="0" showtype="0" imageurl="3.png" displaymode="1" description="用于采购明细查询"/>
         <Trade title="销售明细查询" action="SalesDetailedQueryPlugin" auto="0" showtype="0" imageurl="3.png" displaymode="1" description="用于销售明细查询"/>
@@ -109,7 +109,7 @@
         <Trade title="产品利润查询" action="ProductProfitStatementQueryPlugin" auto="0" showtype="0" imageurl="3.png" displaymode="1" description="用于产品利润查询"/>
 			</SubMenu>
 		</MainMenu>
-    <MainMenu title="售后服务" action="TradeContainerControl" auto="0" showtype="0" imageurl="22.png" displaymode="1" description="">
+    <MainMenu title="售后服务" action="TradeContainerControl" auto="0" showtype="0" imageurl="4-1.png" displaymode="1" description="">
       <SubMenu title="售后服务" action="" auto="0" showtype="0" imageurl="" displaymode="2" description="">
         <Trade title="合同查询" action="ContractQueryPlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="售后服务"/>
         <Trade title="电话服务" action="PhoneServicePlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="售后服务"/>
@@ -119,7 +119,7 @@
         <Trade title="客户信息查询" action="CustomerInformationQueryPlugin" auto="0" showtype="0" imageurl="4.png" displaymode="1" description="售后服务"/>
       </SubMenu >
     </MainMenu>
-		<MainMenu title="财务管理" action="TradeContainerControl" auto="0" showtype="0" imageurl="23.png" displaymode="2" description="">
+		<MainMenu title="财务管理" action="TradeContainerControl" auto="0" showtype="0" imageurl="5-1.png" displaymode="2" description="">
 			<SubMenu title="热门1" action="" auto="0" showtype="1" imageurl="" displaymode="1" description="郑州飞道科技有限公司郑州飞道科技有限公司郑州飞道科技有限公司郑州飞道科技有限公司郑州飞道科技有限公司郑州飞道科技有限公司郑州飞道科技有限公司">
 				<Trade title="库存查询" action="StockSearchPlugin" auto="0" showtype="1" imageurl="3.png" displaymode="1" description="郑州飞道科技有限公司郑州飞道科技有限公司郑州飞道科技有限公司郑州飞道科技有限公司"/>
 				<Trade title="Pos客户端" action="MarketPostPlugin" auto="0" showtype="1" imageurl="4.png" displaymode="1" description="郑州飞道科技有限公司郑州飞道科技有限公司郑州飞道科技有限公司"/>

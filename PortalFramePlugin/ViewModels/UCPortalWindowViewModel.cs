@@ -689,7 +689,7 @@ namespace PortalFramePlugin.ViewModels
         {
             MenuModel plugin = new MenuModel();
             plugin.MenuName = element.Attribute("title").Value;
-            //plugin.MenuId = element.Attribute("action").Value;
+            plugin.IconUrl = element.Attribute("imageurl").Value;
             plugin.ResourceName = element.Attribute("action").Value;
             return plugin;
         }

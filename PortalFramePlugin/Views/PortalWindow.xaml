@@ -28,8 +28,8 @@
                 <Grid Grid.Row="0" Style="{DynamicResource LeftGrid}">
                     <Image Style="{DynamicResource logoImage}"></Image>
                 </Grid>
-                <StackPanel Grid.Row="1" Name="MenuStackPanel" Orientation="Vertical">
-                    <local:VicRadioButtonFirstLevelMenu Content="飞道云" HorizontalContentAlignment="Left"></local:VicRadioButtonFirstLevelMenu>
+                <StackPanel Grid.Row="1" Name="MenuStackPanel" Orientation="Vertical" Margin="0,50,0,0">
+                    <local:VicRadioButtonFirstLevelMenu Content="飞道云"></local:VicRadioButtonFirstLevelMenu>
                     <local:VicRadioButtonFirstLevelMenu Content="本地">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">

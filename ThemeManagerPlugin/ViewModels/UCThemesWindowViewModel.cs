@@ -92,13 +92,13 @@ namespace ThemeManagerPlugin.ViewModels
         /// </summary>
         private void GetDefaultThemeSkin()
         {
-            /*读取配置文件中的默认皮肤名称*/
+            /*读取配置文件中的默认皮肤路径*/
             string skinDefaultName = ConfigurationManager.AppSettings.Get("skinurl");
             if (this.SystemThemeList.Count > 0)
             {
                 foreach (ThemeModel model in SystemThemeList)
                 {
-                    if (model.SkinName == skinDefaultName)
+                    if (model.SkinPath == skinDefaultName)
                     {
                         SelectedListBoxItem = model;
                         break;
