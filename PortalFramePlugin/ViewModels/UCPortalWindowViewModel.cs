@@ -174,9 +174,9 @@ namespace PortalFramePlugin.ViewModels
                     homeItem.AllowDelete = false;
                     homeItem.Height = 40;
                     homeItem.Header = "飞道科技";
-                    //WebBrowser browser = new WebBrowser();
-                    //browser.Source = new Uri("http://www.victop.com");
-                    //homeItem.Content = browser;
+                    WebBrowser browser = new WebBrowser();
+                    browser.Source = new Uri("http://www.victop.com");
+                    homeItem.Content = browser;
                     tabItemList.Add(homeItem);
                 }
                 return tabItemList;

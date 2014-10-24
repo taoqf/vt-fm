@@ -16,7 +16,8 @@
     <Style x:Key="ShadowWindow" TargetType="{x:Type Window}">
         <Setter Property="ResizeMode" Value="NoResize"/>
         <Setter Property="WindowStyle" Value="None"/>
-        <Setter Property="WindowState" Value="Maximized"/>
+        <Setter Property="Width" Value="965"/>
+        <Setter Property="Height" Value="670"/>
         <Setter Property="Background">
             <Setter.Value>
                 <ImageBrush ImageSource="Images/background.png" Stretch="UniformToFill"/>
@@ -48,6 +49,14 @@
 
     <Style x:Key="LeftGrid" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="Black"/>
+    </Style>
+
+    <Style x:Key="logoImage" TargetType="{x:Type Image}">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Source" Value="Images\logo.png"/>
     </Style>
 
     <Style x:Key="MainGrid" TargetType="{x:Type Grid}">
@@ -1055,7 +1064,7 @@
                             </ToggleButton.Visibility>
                         </ToggleButton>
                         <TabPanel x:Name="HeaderPanel" Background="White" Grid.Column="1" IsItemsHost="True" Margin="0" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
-                        <Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="1" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" Padding="80,50,60,80">
+                        <Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="1" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
                             <ContentPresenter x:Name="PART_SelectedContentHost" ContentTemplate="{TemplateBinding SelectedContentTemplate}" Content="{TemplateBinding SelectedContent}" ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>
                     </Grid>
