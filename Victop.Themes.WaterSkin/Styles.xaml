@@ -575,7 +575,7 @@
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Focusable" Value="True"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Margin" Value="10,0,20,0"/>
     </Style>
 
     <!--滚动条样式开始-->

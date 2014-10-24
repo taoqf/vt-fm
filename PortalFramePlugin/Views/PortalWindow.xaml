@@ -69,9 +69,8 @@
                 </controls:VicButtonImage>
                 <TextBlock Visibility="Collapsed" Text="{Binding UserName}" Style="{DynamicResource MainFrmUserName}"/>
                 <TextBlock Text="{Binding UserName}" Style="{DynamicResource MainFrmUserName}"/>
-
             </StackPanel>
-            <Button Name="btnFeedBack" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>
+            <!--<Button Name="btnFeedBack" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>-->
             <Button Name="btnChangeSkin" Width="34" Style="{DynamicResource btnChangeSkinStyle}" Height="34" BorderThickness="0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
