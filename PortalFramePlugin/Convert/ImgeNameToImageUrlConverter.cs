@@ -24,9 +24,9 @@ namespace PortalFramePlugin
             }
 
             skinNameSpace = skinNameSpace.Replace("/", "\\");
+            skinNameSpace = skinNameSpace.Substring(skinNameSpace.LastIndexOf("\\") + 1, skinNameSpace.LastIndexOf(".") - skinNameSpace.LastIndexOf("\\") - 1);
+            return new BitmapImage(new Uri(@"/" + skinNameSpace + ";component/Images/" + value.ToString(), UriKind.Relative));
 
-            return new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"images/"+value.ToString()));
-           
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

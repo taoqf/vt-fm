@@ -2,7 +2,7 @@
 	"menu": [
 		{
 			"title": "公共基础数据",
-			"iconUrl": "25.png",
+			"iconUrl": "1-1.png",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -12,7 +12,7 @@
 			"children": [
 				{
 					"title": "组织结构",
-					"iconUrl": "25.png",
+					"iconUrl": "1-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -25,7 +25,7 @@
 							"actionType": 1,
 							"actionName": "DataCruisePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": "",
@@ -42,7 +42,7 @@
 							"actionType": 0,
 							"actionName": "UCTreeViewMaintenanceT",
 							"showType": 0,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": "",
@@ -59,7 +59,7 @@
 							"actionType": 1,
 							"actionName": "AreaManagerPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -76,7 +76,7 @@
 							"actionType": 1,
 							"actionName": "ToolBarDataGridPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": "",
@@ -93,7 +93,7 @@
 							"actionType": 1,
 							"actionName": "DepatmentManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -110,7 +110,7 @@
 							"actionType": 1,
 							"actionName": "StoreManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -127,7 +127,7 @@
 							"actionType": 1,
 							"actionName": "PositionManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -144,7 +144,7 @@
 							"actionType": 1,
 							"actionName": "EmployeeManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -160,7 +160,7 @@
 					]
 				}, {
 					"title": "基础设置",
-					"iconUrl": "25.png",
+					"iconUrl": "1-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -173,7 +173,7 @@
 							"actionType": 1,
 							"actionName": "TaxRatePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -190,7 +190,7 @@
 							"actionType": 1,
 							"actionName": "BaseUnitPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -207,7 +207,7 @@
 							"actionType": 1,
 							"actionName": "StorageManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -224,7 +224,7 @@
 							"actionType": 1,
 							"actionName": "PackageIsSetPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -241,7 +241,7 @@
 							"actionType": 1,
 							"actionName": "VipLevelSetPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -258,7 +258,7 @@
 							"actionType": 1,
 							"actionName": "VipPreferentialPoliciesPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -275,7 +275,7 @@
 							"actionType": 1,
 							"actionName": "MethodOfPaymentIsSetPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -291,7 +291,7 @@
 					]
 				}, {
 					"title": "产品管理",
-					"iconUrl": "25.png",
+					"iconUrl": "1-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -304,7 +304,7 @@
 							"actionType": 1,
 							"actionName": "CategoryManagementPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -321,7 +321,7 @@
 							"actionType": 1,
 							"actionName": "ProductBrandManPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -338,7 +338,7 @@
 							"actionType": 1,
 							"actionName": "BrandManagementPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -355,7 +355,7 @@
 							"actionType": 1,
 							"actionName": "ProductTreeSettingsPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -372,7 +372,7 @@
 							"actionType": 1,
 							"actionName": "ParameterSettingPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -389,7 +389,7 @@
 							"actionType": 1,
 							"actionName": "ProInfoManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -406,7 +406,7 @@
 							"actionType": 1,
 							"actionName": "ShopcateBrandAssPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -423,7 +423,7 @@
 							"actionType": 1,
 							"actionName": "ShopProTypeAssPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -439,7 +439,7 @@
 					]
 				}, {
 					"title": "供应商管理",
-					"iconUrl": "25.png",
+					"iconUrl": "1-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -452,7 +452,7 @@
 							"actionType": 1,
 							"actionName": "SupplierManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -469,7 +469,7 @@
 							"actionType": 1,
 							"actionName": "CounterManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -486,7 +486,7 @@
 							"actionType": 1,
 							"actionName": "BrandTypeManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -502,7 +502,7 @@
 					]
 				}, {
 					"title": "客户管理",
-					"iconUrl": "25.png",
+					"iconUrl": "1-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -515,7 +515,7 @@
 							"actionType": 1,
 							"actionName": "CustomerInfoManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -532,7 +532,7 @@
 							"actionType": 1,
 							"actionName": "DistributionCusInfoManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -548,7 +548,7 @@
 					]
 				}, {
 					"title": "电商账号",
-					"iconUrl": "25.png",
+					"iconUrl": "1-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -561,7 +561,7 @@
 							"actionType": 1,
 							"actionName": "ElecCommerceAccountManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -578,7 +578,7 @@
 							"actionType": 1,
 							"actionName": "ElecCommerceAccountTypeManagePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "1-1.png",
 							"description": "dsf",
 							"systemId": 905,
 							"formId": 1001,
@@ -596,7 +596,7 @@
 			]
 		}, {
 			"title": "进销存管理",
-			"iconUrl": "25.png",
+			"iconUrl": "2-1.png",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -606,7 +606,7 @@
 			"children": [
 				{
 					"title": "采购管理",
-					"iconUrl": "25.png",
+					"iconUrl": "2-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -619,7 +619,7 @@
 							"actionType": 0,
 							"actionName": "UCSearchListT",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 11101,
@@ -636,7 +636,7 @@
 							"actionType": 1,
 							"actionName": "ProcurementReturnPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -652,7 +652,7 @@
 					]
 				}, {
 					"title": "销售管理",
-					"iconUrl": "25.png",
+					"iconUrl": "2-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -665,7 +665,7 @@
 							"actionType": 1,
 							"actionName": "OrdersStayProcessedPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -682,7 +682,7 @@
 							"actionType": 1,
 							"actionName": "OrderProcessedPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -699,7 +699,7 @@
 							"actionType": 1,
 							"actionName": "SalesOfOoutboundPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -716,7 +716,7 @@
 							"actionType": 1,
 							"actionName": "SalesReturnPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -733,7 +733,7 @@
 							"actionType": 1,
 							"actionName": "SalesExchangePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -749,7 +749,7 @@
 					]
 				}, {
 					"title": "库存管理",
-					"iconUrl": "25.png",
+					"iconUrl": "2-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -762,7 +762,7 @@
 							"actionType": 1,
 							"actionName": "InventoryQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -779,7 +779,7 @@
 							"actionType": 1,
 							"actionName": "TransfersOutboundPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -796,7 +796,7 @@
 							"actionType": 1,
 							"actionName": "TransfersWarehousingPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -813,7 +813,7 @@
 							"actionType": 1,
 							"actionName": "StockTakingPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -830,7 +830,7 @@
 							"actionType": 1,
 							"actionName": "PutSampleQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -848,7 +848,7 @@
 			]
 		}, {
 			"title": "报表分析",
-			"iconUrl": "25.png",
+			"iconUrl": "3-1.png",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -858,7 +858,7 @@
 			"children": [
 				{
 					"title": "报表分类",
-					"iconUrl": "25.png",
+					"iconUrl": "3-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -871,7 +871,7 @@
 							"actionType": 0,
 							"actionName": "UCReportSearchT",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": "",
@@ -888,7 +888,7 @@
 							"actionType": 1,
 							"actionName": "ProcurementDetailedQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "3-1.png",
 							"description": "fds",
 							"systemId": 905,
 							"formId": 1001,
@@ -905,7 +905,7 @@
 							"actionType": 1,
 							"actionName": "SalesDetailedQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -922,7 +922,7 @@
 							"actionType": 1,
 							"actionName": "TransfersDetailedQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -939,7 +939,7 @@
 							"actionType": 1,
 							"actionName": "InventoryDetailedQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -956,7 +956,7 @@
 							"actionType": 1,
 							"actionName": "ProfitInformationQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -973,7 +973,7 @@
 							"actionType": 1,
 							"actionName": "TalkSingleSuccessRateQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -990,7 +990,7 @@
 							"actionType": 1,
 							"actionName": "NewOldCustomersQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1007,7 +1007,7 @@
 							"actionType": 1,
 							"actionName": "MainProportionQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1024,7 +1024,7 @@
 							"actionType": 1,
 							"actionName": "ProductNewDisableQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1041,7 +1041,7 @@
 							"actionType": 1,
 							"actionName": "PricingDifferencesBetweenTableQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1058,7 +1058,7 @@
 							"actionType": 1,
 							"actionName": "ProductProfitStatementQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1076,7 +1076,7 @@
 			]
 		}, {
 			"title": "售后服务",
-			"iconUrl": "25.png",
+			"iconUrl": "4-1.png",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1086,7 +1086,7 @@
 			"children": [
 				{
 					"title": "售后服务",
-					"iconUrl": "25.png",
+					"iconUrl": "4-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1099,7 +1099,7 @@
 							"actionType": 1,
 							"actionName": "ContractQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "4-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": "",
@@ -1116,7 +1116,7 @@
 							"actionType": 1,
 							"actionName": "PhoneServicePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "4-1.png",
 							"description": "dsa",
 							"systemId": 905,
 							"formId": 1001,
@@ -1133,7 +1133,7 @@
 							"actionType": 1,
 							"actionName": "DoorServicePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "4-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1150,7 +1150,7 @@
 							"actionType": 1,
 							"actionName": "CustomerSendPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "4-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1167,7 +1167,7 @@
 							"actionType": 1,
 							"actionName": "ReturnToFactoryMaintenancePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "4-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1184,7 +1184,7 @@
 							"actionType": 1,
 							"actionName": "CustomerInformationQueryPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "4-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1202,7 +1202,7 @@
 			]
 		}, {
 			"title": "生产管理",
-			"iconUrl": "25.png",
+			"iconUrl": "5-1.png",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1212,7 +1212,7 @@
 			"children": [
 				{
 					"title": "生产管理",
-					"iconUrl": "25.png",
+					"iconUrl": "5-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1225,7 +1225,7 @@
 							"actionType": 1,
 							"actionName": "ProductionSchedulingPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": "",
@@ -1242,7 +1242,7 @@
 							"actionType": 1,
 							"actionName": "WorkCenterSchedulingPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "5-1.png",
 							"description": "fdsa",
 							"systemId": 905,
 							"formId": "fds",
@@ -1259,7 +1259,7 @@
 							"actionType": 1,
 							"actionName": "ShiftSchedulingPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1276,7 +1276,7 @@
 							"actionType": 1,
 							"actionName": "LocationKanbanPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1293,7 +1293,7 @@
 							"actionType": 1,
 							"actionName": "DefectsPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1310,7 +1310,7 @@
 							"actionType": 1,
 							"actionName": "SchedulingPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1327,7 +1327,7 @@
 							"actionType": 1,
 							"actionName": "FaultListPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1344,7 +1344,7 @@
 							"actionType": 1,
 							"actionName": "BatchFailurePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": 10001,
@@ -1362,7 +1362,7 @@
 			]
 		}, {
 			"title": "分销系统",
-			"iconUrl": "25.png",
+			"iconUrl": "6-1.png",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1372,7 +1372,7 @@
 			"children": [
 				{
 					"title": "系统管理",
-					"iconUrl": "25.png",
+					"iconUrl": "6-1.png",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1385,7 +1385,7 @@
 							"actionType": 1,
 							"actionName": "ProductionSchedulingPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "6-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": "",
@@ -1402,7 +1402,7 @@
 							"actionType": 1,
 							"actionName": "WorkCenterSchedulingPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "6-1.png",
 							"description": "fdsa",
 							"systemId": 905,
 							"formId": "fds",
@@ -1419,7 +1419,7 @@
 							"actionType": 1,
 							"actionName": "PlanDemandMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
+							"iconUrl": "6-1.png",
 							"description": "用于策划机台维护",
 							"systemId": 906,
 							"formId": "",

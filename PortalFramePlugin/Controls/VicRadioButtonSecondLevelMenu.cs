@@ -51,6 +51,7 @@ namespace PortalFramePlugin
     {
 
         public static readonly DependencyProperty ImgNameProperty = DependencyProperty.Register("ImgName", typeof(string), typeof(VicRadioButtonSecondLevelMenu), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty CheckedImgNameProperty = DependencyProperty.Register("CheckedImgName", typeof(string), typeof(VicRadioButtonSecondLevelMenu), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty ChildMenuSourceProperty = DependencyProperty.Register("ChildMenuSource", typeof(IEnumerable), typeof(VicRadioButtonSecondLevelMenu), new FrameworkPropertyMetadata(OnChildMenuSourcePropertyChanged));
         public static readonly DependencyProperty DisplayMemberPathProperty = DependencyProperty.Register("DisplayMemberPath", typeof(string), typeof(VicRadioButtonSecondLevelMenu), new PropertyMetadata(default(string)));
 
@@ -61,6 +62,13 @@ namespace PortalFramePlugin
         {
             get { return (string)GetValue(ImgNameProperty); }
             set { SetValue(ImgNameProperty, value); }
+        }
+
+        [Category("Appearance")]
+        public string CheckedImgName
+        {
+            get { return (string)GetValue(CheckedImgNameProperty); }
+            set { SetValue(CheckedImgNameProperty, value); }
         }
 
         [Category("Appearance")]

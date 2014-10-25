@@ -264,7 +264,7 @@ namespace PortalFramePlugin.ViewModels
                     mainWindow.MaxHeight = rect.Height;
                     mainWindow.WindowState = WindowState.Maximized;
                     ChangeFrameWorkTheme();
-                    LoadMenuListLocal();
+                    //LoadMenuListLocal();
                     LoadJsonMenuListLocal();
                     UserLogin();
                 });
@@ -399,8 +399,9 @@ namespace PortalFramePlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
-                    CreateBrowser("www.baidu.com","百度搜索");
+                return new RelayCommand(() =>
+                {
+                    CreateBrowser("www.baidu.com", "百度搜索");
                 });
             }
         }
@@ -631,7 +632,7 @@ namespace PortalFramePlugin.ViewModels
         }
         #endregion
 
-        private MenuModel GetLocalMenuResoureName(string MenuName,ObservableCollection<MenuModel> MenuList)
+        private MenuModel GetLocalMenuResoureName(string MenuName, ObservableCollection<MenuModel> MenuList)
         {
             MenuModel menuModel = MenuList.FirstOrDefault(it => it.MenuName.Equals(MenuName));
             if (menuModel == null)
@@ -1022,7 +1023,7 @@ namespace PortalFramePlugin.ViewModels
             contentDic.Add("GalleryKey", GaleryKey);
             MessageOperation messageOp = new MessageOperation();
             messageOp.SendMessage(messageType, contentDic);
-        } 
+        }
         #endregion
 
         #endregion

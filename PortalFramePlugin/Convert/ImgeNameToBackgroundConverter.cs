@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -20,7 +21,6 @@ namespace PortalFramePlugin
             ImageBrush image = new ImageBrush();
             image.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"images/" + parameter.ToString()));
             return image;
-           
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

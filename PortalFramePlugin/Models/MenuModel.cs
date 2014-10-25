@@ -387,10 +387,36 @@ namespace PortalFramePlugin.Models
             get { return _iconUrl; }
             set
             {
-                _iconUrl = value;
-                RaisePropertyChanged("IconUrl");
+                if (string.IsNullOrWhiteSpace(value) == false &&
+                    value.Contains("-"))
+                {
+                    _iconUrl = value;
+                    RaisePropertyChanged("IconUrl");
+                    string[] strs = _iconUrl.Split("-".ToCharArray());
+                    if (strs.Length > 0)
+                    {
+                        this.CheckedIconUrl = strs[0] + "-2.png";
+                    }
+                }
             }
         }
+
+        private string _checkedIconUrl;
+
+        /// <summary>
+        /// 选中图标路径
+        /// </summary>
+        [JsonProperty(PropertyName = "checkedIconUrl")]
+        public string CheckedIconUrl
+        {
+            get { return _checkedIconUrl; }
+            set
+            {
+                _checkedIconUrl = value;
+                RaisePropertyChanged("CheckedIconUrl");
+            }
+        }
+
         /// <summary>
         /// 插件描述
         /// </summary>
