@@ -97,12 +97,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\VicListBoxSecondLevelMenu.cs" />
-    <Compile Include="Controls\VicRadioButtonFirstLevelMenu.cs" />
-    <Compile Include="Controls\VicRadioButtonSecondLevelMenu.cs" />
-    <Compile Include="Convert\DataSourceToNullOrSelfConvert.cs" />
-    <Compile Include="Convert\ImgeNameToBackgroundConverter.cs" />
-    <Compile Include="Convert\ImgeNameToImageUrlConverter.cs" />
+    <Compile Include="Convert\ImgeNameToBackgroundConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\TableModel.cs" />
     <Compile Include="Plugin.cs" />
@@ -168,10 +165,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\PortalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

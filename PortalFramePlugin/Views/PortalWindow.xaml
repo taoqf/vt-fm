@@ -16,8 +16,8 @@
             <RowDefinition RowDefinition.Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.RowSpan="2" Style="{DynamicResource MenuScrollViewer}">
             <Grid Style="{DynamicResource LeftGrid}">
@@ -29,35 +29,40 @@
                     <Image Style="{DynamicResource logoImage}"></Image>
                 </Grid>
                 <StackPanel Grid.Row="1" Name="MenuStackPanel" Orientation="Vertical" Margin="0,50,0,0">
-                    <local:VicRadioButtonFirstLevelMenu Content="飞道云"></local:VicRadioButtonFirstLevelMenu>
-                    <local:VicRadioButtonFirstLevelMenu Content="本地">
+                    <RadioButton Content="飞道云" Style="{DynamicResource RadioButtonFirstLevelMenu}"></RadioButton>
+                    <RadioButton Content="本地" Style="{DynamicResource RadioButtonFirstLevelMenu}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding localBtnClickCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </local:VicRadioButtonFirstLevelMenu>
-                    <local:VicListBoxSecondLevelMenu x:Name="listSecondMenuLocal" SelectedItem="{Binding SelectedSecondMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
+                    </RadioButton>
+                    <ListBox x:Name="listSecondMenuLocal" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding listSecondMenuLocalSelectionChangedCommand}" CommandParameter="{Binding ElementName=listSecondMenuLocal,Path=SelectedItem}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </local:VicListBoxSecondLevelMenu>
-                    <local:VicRadioButtonFirstLevelMenu Content="企业云">
+                        <ListBox.Triggers>
+                            <EventTrigger RoutedEvent="ListBox.SelectionChanged">
+                                <BeginStoryboard Storyboard="{DynamicResource ThirdLevelMenuStoryboard}"/>
+                            </EventTrigger>
+                        </ListBox.Triggers>
+                    </ListBox>
+                    <RadioButton Content="企业云" Style="{DynamicResource RadioButtonFirstLevelMenu}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding enterPriseBtnClickCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </local:VicRadioButtonFirstLevelMenu>
-                    <local:VicListBoxSecondLevelMenu x:Name="listSecondMenuEnterprise" SelectedItem="{Binding SelectedSecondMenuModel}" BorderBrush="#F1F3F5" BorderThickness="0" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListEnterprise,UpdateSourceTrigger=PropertyChanged}">
+                    </RadioButton>
+                    <ListBox x:Name="listSecondMenuEnterprise" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" BorderBrush="#F1F3F5" BorderThickness="0" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListEnterprise,UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding listSecondMenuEnterpriseSelectionChangedCommand}" CommandParameter="{Binding ElementName=listSecondMenuEnterprise,Path=SelectedItem}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </local:VicListBoxSecondLevelMenu>
+                    </ListBox>
                 </StackPanel>
             </Grid>
         </ScrollViewer>
@@ -132,7 +137,31 @@
                 </controls:VicTabControlNormal>
             </Grid>
         </Grid>
-        <!--<Label Name="tb" Grid.Row="2" Content="当前软件已是最新版本（2014-04-23）" Style="{DynamicResource MainFrmBottomGridStyle}"/>-->
+        <StackPanel Orientation="Horizontal" Grid.RowSpan="2" Grid.Column="1" Panel.ZIndex="10000">
+            <ScrollViewer x:Name="scrollViewerThirdMenu" Width="0" Style="{DynamicResource MenuScrollViewer}">
+                <Grid Style="{DynamicResource LeftGrid}">
+                    <ListBox x:Name="listThirdMenuLocal" Style="{DynamicResource ListBoxThirdLevelMenu}" SelectedItem="{Binding SelectedThirdMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemThirdLevelMenuList,UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding listBoxThirdMenuListSelectionChangedCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListBox.Triggers>
+                            <EventTrigger RoutedEvent="ListBox.SelectionChanged">
+                                <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuStoryboard}"/>
+                            </EventTrigger>
+                        </ListBox.Triggers>
+                    </ListBox>
+                </Grid>
+            </ScrollViewer>
+            <ScrollViewer x:Name="scrollViewerFourMenu" Width="0" Style="{DynamicResource MenuScrollViewer}">
+                <Grid Style="{DynamicResource LeftGrid}">
+                    <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}">
+                    </ListBox>
+                </Grid>
+            </ScrollViewer>
+        </StackPanel>
+        <!--<Label Name="tb"  Content="当前软件已是最新版本（2014-04-23）" Style="{DynamicResource MainFrmBottomGridStyle}"/>-->
     </Grid>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">

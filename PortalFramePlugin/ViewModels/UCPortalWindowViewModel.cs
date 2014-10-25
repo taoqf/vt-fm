@@ -109,9 +109,9 @@ namespace PortalFramePlugin.ViewModels
             }
             set
             {
-                SelectedThirdMenuModel = null;
+                //SelectedThirdMenuModel = null;
                 systemThirdLevelMenuList = value;
-                SelectedThirdMenuModel = systemThirdLevelMenuList.First();
+                //SelectedThirdMenuModel = systemThirdLevelMenuList.First();
                 RaisePropertyChanged("SystemThirdLevelMenuList");
             }
         }
@@ -174,9 +174,9 @@ namespace PortalFramePlugin.ViewModels
                     homeItem.AllowDelete = false;
                     homeItem.Height = 40;
                     homeItem.Header = "飞道科技";
-                    WebBrowser browser = new WebBrowser();
-                    browser.Source = new Uri("http://www.victop.com");
-                    homeItem.Content = browser;
+                    //WebBrowser browser = new WebBrowser();
+                    //browser.Source = new Uri("http://www.victop.com");
+                    //homeItem.Content = browser;
                     tabItemList.Add(homeItem);
                 }
                 return tabItemList;
@@ -429,21 +429,16 @@ namespace PortalFramePlugin.ViewModels
         /// <param name="x"></param>
         private void BuildPluginContainer(object x)
         {
-            if (TabItemList[0].Content.GetType().Name.Equals("WebBrowser"))
-            {
-                ScrollViewer scroll = new ScrollViewer();
-                scroll.Content = new UCPluginContainer();
-                TabItemList[0].Content = scroll;
-                TabItemList[0].Header = "功能列表";
-            }
+            //if (TabItemList[0].Content.GetType().Name.Equals("WebBrowser"))
+            //{
+            //    ScrollViewer scroll = new ScrollViewer();
+            //    scroll.Content = new UCPluginContainer();
+            //    TabItemList[0].Content = scroll;
+            //    TabItemList[0].Header = "功能列表";
+            //}
             MenuModel menuModel = (MenuModel)x;
             SystemThirdLevelMenuList = menuModel.SystemMenuList;
-            if (SystemThirdLevelMenuList.Count > 0)
-            {
-                SelectedThirdMenuModel = SystemThirdLevelMenuList[0];
-                SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
-            }
-            SelectedTabItem = TabItemList[0];
+            //SelectedTabItem = TabItemList[0];
         }
         #endregion
 
