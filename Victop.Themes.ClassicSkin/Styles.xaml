@@ -1506,6 +1506,9 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                         <Trigger  Property="IsSelected" Value="true">
                             <Setter Property="Background" Value="#46B2E7"></Setter>
                         </Trigger>
+                        <Trigger  Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="#46B2E7"></Setter>
+                        </Trigger>
                     </Style.Triggers>
                 </Style>
             </Setter.Value>

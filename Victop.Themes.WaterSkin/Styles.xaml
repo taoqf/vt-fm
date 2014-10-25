@@ -169,6 +169,137 @@
     </Style>
 
     <!--DataGrid样式开始-->
+    <Style x:Key="scroll_thumb_style" TargetType="Thumb">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Margin" Value="1"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Rectangle Width="18" Fill="White" >
+                    </Rectangle>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="Ver_ScrollBar_style" TargetType="ScrollBar">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollBar">
+                    <Grid Width="22" Opacity="0.6">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="22" />
+                            <RowDefinition />
+                            <RowDefinition Height="22" />
+                        </Grid.RowDefinitions>
+
+
+                        <!--上按钮-->
+                        <RepeatButton OverridesDefaultStyle ="True" BorderThickness="0" FocusVisualStyle="{x:Null}" Command="ScrollBar.LineUpCommand" Themes:ScrollChrome.ScrollGlyph="UpArrow" >
+                            <RepeatButton.Template>
+                                <ControlTemplate TargetType="RepeatButton">
+                                    <Themes:ScrollChrome Name="Chrome" SnapsToDevicePixels="True" Themes:ScrollChrome.ScrollGlyph="{TemplateBinding Themes:ScrollChrome.ScrollGlyph}" />
+                                </ControlTemplate>
+                            </RepeatButton.Template>
+                        </RepeatButton>
+                        <Border Grid.Row="1" Margin="0,1,0,1" Background="#33555555">
+                            <Track HorizontalAlignment="Left" Name="PART_Track" Width="{TemplateBinding Width}" Maximum="{TemplateBinding Maximum}" Minimum="{TemplateBinding Minimum}" 
+Value="{TemplateBinding Value}" IsDirectionReversed="true">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton OverridesDefaultStyle="True" Background="Transparent" Command="ScrollBar.PageUpCommand" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton OverridesDefaultStyle="True" Background="Transparent" Command="ScrollBar.PageDownCommand" />
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource scroll_thumb_style}" >
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Border>
+                        <!--下按钮-->
+                        <RepeatButton Grid.Row="2" FocusVisualStyle="{x:Null}" BorderThickness="0" Command="ScrollBar.LineDownCommand" OverridesDefaultStyle ="True" Themes:ScrollChrome.ScrollGlyph="DownArrow" >
+                            <RepeatButton.Template>
+                                <ControlTemplate TargetType="RepeatButton">
+                                    <Themes:ScrollChrome Name="Chrome" SnapsToDevicePixels="True" Themes:ScrollChrome.ScrollGlyph="{TemplateBinding Themes:ScrollChrome.ScrollGlyph}" />
+                                </ControlTemplate>
+                            </RepeatButton.Template>
+                        </RepeatButton>
+
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="hori_scroll_thumb_style" TargetType="Thumb">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Margin" Value="1"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Rectangle Height="18" Fill="White" >
+                    </Rectangle>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="Hori_ScrollBar_style" TargetType="ScrollBar">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollBar">
+                    <Grid Height="22" Opacity="0.6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="21" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="21" />
+                        </Grid.ColumnDefinitions>
+
+
+                        <!--左按钮-->
+                        <RepeatButton OverridesDefaultStyle ="True" BorderThickness="0" FocusVisualStyle="{x:Null}" Command="ScrollBar.LineLeftCommand" Themes:ScrollChrome.ScrollGlyph="LeftArrow" >
+                            <RepeatButton.Template>
+                                <ControlTemplate TargetType="RepeatButton">
+                                    <Themes:ScrollChrome Name="Chrome" SnapsToDevicePixels="True" Themes:ScrollChrome.ScrollGlyph="{TemplateBinding Themes:ScrollChrome.ScrollGlyph}" />
+                                </ControlTemplate>
+                            </RepeatButton.Template>
+                        </RepeatButton>
+                        <Border Grid.Column="1" Margin="1,0,1,0" Background="#33555555">
+                            <Track VerticalAlignment="Top" Name="PART_Track" Height="{TemplateBinding Height}" Maximum="{TemplateBinding Maximum}" Minimum="{TemplateBinding Minimum}" 
+Value="{TemplateBinding Value}" IsDirectionReversed="true">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton OverridesDefaultStyle="True" Background="Transparent" Command="ScrollBar.PageLeftCommand" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton OverridesDefaultStyle="True" Background="Transparent" Command="ScrollBar.PageRightCommand" />
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource hori_scroll_thumb_style}" >
+                                    </Thumb>
+                                </Track.Thumb>
+                            </Track>
+                        </Border>
+                        <!--右按钮-->
+                        <RepeatButton Grid.Column="2" FocusVisualStyle="{x:Null}" BorderThickness="0" Command="ScrollBar.LineRightCommand" OverridesDefaultStyle ="True" Themes:ScrollChrome.ScrollGlyph="RightArrow" >
+                            <RepeatButton.Template>
+                                <ControlTemplate TargetType="RepeatButton">
+                                    <Themes:ScrollChrome Name="Chrome" SnapsToDevicePixels="True" Themes:ScrollChrome.ScrollGlyph="{TemplateBinding Themes:ScrollChrome.ScrollGlyph}" />
+                                </ControlTemplate>
+                            </RepeatButton.Template>
+                        </RepeatButton>
+
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="DataGridRowStyle"  TargetType="DataGridRow">
         <Setter Property="Background" Value="#F2F2F2" />
         <Setter Property="Height" Value="25"/>
@@ -286,13 +417,13 @@
                                             </DataGridColumnHeadersPresenter.Visibility>
                                         </DataGridColumnHeadersPresenter>
                                         <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"  CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" Grid.ColumnSpan="2" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Grid.Row="1"/>
-                                        <ScrollBar x:Name="PART_VerticalScrollBar"  Grid.Column="2" Maximum="{TemplateBinding ScrollableHeight}" Orientation="Vertical" Grid.Row="1" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}"/>
+                                        <ScrollBar x:Name="PART_VerticalScrollBar" Style="{DynamicResource Ver_ScrollBar_style}" Grid.Column="2" Maximum="{TemplateBinding ScrollableHeight}" Orientation="Vertical" Grid.Row="1" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}"/>
                                         <Grid Grid.Column="1" Grid.Row="2">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="{Binding NonFrozenColumnsViewportHorizontalOffset, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type DataGrid}}}"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <ScrollBar x:Name="PART_HorizontalScrollBar"  Grid.Column="1" Maximum="{TemplateBinding ScrollableWidth}" Orientation="Horizontal" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"/>
+                                            <ScrollBar x:Name="PART_HorizontalScrollBar" Style="{DynamicResource Hori_ScrollBar_style}" Grid.Column="1" Maximum="{TemplateBinding ScrollableWidth}" Orientation="Horizontal" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"/>
                                         </Grid>
                                     </Grid>
                                 </ControlTemplate>
@@ -1264,6 +1395,40 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ButtonFirstLevelMenu" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#435058"></Setter>
+        <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
+        <Setter Property="FontSize" Value="14"></Setter>
+        <Setter Property="FontWeight"  Value="Bold"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="MinWidth" Value="30"></Setter>
+        <Setter Property="Height" Value="37"></Setter>
+        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="Padding" Value="2,0,0,0"/>
+        <Setter Property="IsEnabled" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <BulletDecorator Background="Transparent">
+                        <Border x:Name="border"  
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}">
+                            <Grid>
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
+                        </Border>
+                    </BulletDecorator>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ListBoxSecondLevelMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -1338,6 +1503,9 @@
                         <Trigger  Property="IsSelected" Value="true">
                             <Setter Property="Background" Value="#46B2E7"></Setter>
                         </Trigger>
+                        <Trigger  Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="#46B2E7"></Setter>
+                        </Trigger>
                     </Style.Triggers>
                 </Style>
             </Setter.Value>
@@ -1362,5 +1530,69 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="ListBoxFourthMenu" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Margin" Value="5"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Button Name="btnPluginIco" Content="{Binding MenuName}"
+                                         Background="{TemplateBinding Background}"
+                                        Style="{DynamicResource ButtonFirstLevelMenu}"
+                                        Focusable="True"
+                                            Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}">
+                                </Button>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger  Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="#46B2E7"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="1" SnapsToDevicePixels="true">
+                        <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Storyboard x:Key="ThirdLevelMenuStoryboard">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewerThirdMenu">
+            <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="100"/>
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Storyboard x:Key="FourthLevelMenuStoryboard">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewerFourMenu">
+            <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="100"/>
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
     <!--主窗体左侧工具栏结束-->
 </ResourceDictionary>
