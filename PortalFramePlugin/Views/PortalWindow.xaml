@@ -10,16 +10,8 @@
     <Window.DataContext>
         <vm:UCPortalWindowViewModel/>
     </Window.DataContext>
-    <Grid Name="gridMain">
-        <Grid.RowDefinitions>
-            <RowDefinition RowDefinition.Height="70"/>
-            <RowDefinition RowDefinition.Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <ScrollViewer Grid.RowSpan="2" Style="{DynamicResource MenuScrollViewer}">
+    <DockPanel LastChildFill="True">
+        <ScrollViewer Width="50" Style="{DynamicResource MenuScrollViewer}">
             <Grid Style="{DynamicResource LeftGrid}">
                 <Grid.RowDefinitions>
                     <RowDefinition RowDefinition.Height="70"/>
@@ -49,6 +41,15 @@
                             </EventTrigger>
                         </ListBox.Triggers>
                     </ListBox>
+                    <Menu ItemsSource="{Binding SystemMenuListLocal}">
+                        <Menu.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding SystemMenuList}">
+                                <Button Style="{DynamicResource ButtonFirstLevelMenu}" Focusable="True" 
+                                    Content="{Binding MenuName}" 
+                                        Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
+                            </HierarchicalDataTemplate>
+                        </Menu.ItemTemplate>
+                    </Menu>
                     <RadioButton Content="企业云" Style="{DynamicResource RadioButtonFirstLevelMenu}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
@@ -66,112 +67,118 @@
                 </StackPanel>
             </Grid>
         </ScrollViewer>
-        <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <!--Width="260"-->
-            <StackPanel Orientation="Horizontal">
-                <controls:VicButtonImage Name="btnUserLogin"
+        <Grid Name="gridMain">
+            <Grid.RowDefinitions>
+                <RowDefinition RowDefinition.Height="70"/>
+                <RowDefinition RowDefinition.Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <!--Width="260"-->
+                <StackPanel Orientation="Horizontal">
+                    <controls:VicButtonImage Name="btnUserLogin"
                                          Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}">
-                </controls:VicButtonImage>
-                <TextBlock Visibility="Collapsed" Text="{Binding UserName}" Style="{DynamicResource MainFrmUserName}"/>
-                <TextBlock Text="{Binding UserName}" Style="{DynamicResource MainFrmUserName}"/>
-            </StackPanel>
-            <!--<Button Name="btnFeedBack" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>-->
-            <Button Name="btnChangeSkin" Width="34" Style="{DynamicResource btnChangeSkinStyle}" Height="34" BorderThickness="0">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnChangeSkinClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Name="btnSet" Width="34" Style="{DynamicResource btnSetStyle}" Height="34">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnSetClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Name="btnMini" Width="34" Style="{DynamicResource btnMiniStyle}" Height="34">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnMiniClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Name="btnMax" Width="34" Style="{DynamicResource btnMaxiStyle}" Height="34">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnMaxClickCommand}" CommandParameter="{Binding ElementName=btnMax}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Name="btnClose" Width="34" Style="{DynamicResource btnCloseStyle}" Height="34" >
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnCloseClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-        </StackPanel>
-        <Grid Name="gridTitle" Grid.Row="0"  Grid.Column="1">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseMove">
-                    <i:InvokeCommandAction Command="{Binding gridTitleMouseMoveCommand}" CommandParameter="{Binding ElementName=gridTitle}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Grid>
-        <Grid Name="gridMid" Grid.Column="1" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition ColumnDefinition.Width="0" />
-                <ColumnDefinition ColumnDefinition.Width="*" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Width="10" Grid.Column="0" VerticalAlignment="Center">
-                <Button Name="btnStretch" Height="70" Width="10" Style="{DynamicResource btnStretchStyle}" Margin="-3,0,-4,0"></Button>
-            </StackPanel>
-            <Grid Grid.Column="1">
-                <controls:VicTabControlNormal Name="MainTabControl" ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
+                    </controls:VicButtonImage>
+                    <TextBlock Visibility="Collapsed" Text="{Binding UserName}" Style="{DynamicResource MainFrmUserName}"/>
+                    <TextBlock Text="{Binding UserName}" Style="{DynamicResource MainFrmUserName}"/>
+                </StackPanel>
+                <!--<Button Name="btnFeedBack" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>-->
+                <Button Name="btnChangeSkin" Width="34" Style="{DynamicResource btnChangeSkinStyle}" Height="34" BorderThickness="0">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="TabItemClosing">
-                            <i:InvokeCommandAction Command="{Binding tbctrlTabItemClosingCommand}"/>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnChangeSkinClickCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </controls:VicTabControlNormal>
+                </Button>
+                <Button Name="btnSet" Width="34" Style="{DynamicResource btnSetStyle}" Height="34">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnSetClickCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Name="btnMini" Width="34" Style="{DynamicResource btnMiniStyle}" Height="34">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnMiniClickCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Name="btnMax" Width="34" Style="{DynamicResource btnMaxiStyle}" Height="34">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnMaxClickCommand}" CommandParameter="{Binding ElementName=btnMax}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Name="btnClose" Width="34" Style="{DynamicResource btnCloseStyle}" Height="34" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnCloseClickCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+            <Grid Name="gridTitle" Grid.Row="0"  Grid.Column="1">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseMove">
+                        <i:InvokeCommandAction Command="{Binding gridTitleMouseMoveCommand}" CommandParameter="{Binding ElementName=gridTitle}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </Grid>
-        </Grid>
-        <StackPanel Orientation="Horizontal" Grid.RowSpan="2" Grid.Column="1">
-            <ScrollViewer x:Name="scrollViewerThirdMenu" Width="0" Visibility="Hidden" Style="{DynamicResource MenuScrollViewer}">
-                <Grid Style="{DynamicResource LeftGrid}">
-                    <ListBox x:Name="listThirdMenuLocal" Style="{DynamicResource ListBoxThirdLevelMenu}" SelectedItem="{Binding SelectedThirdMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemThirdLevelMenuList,UpdateSourceTrigger=PropertyChanged}">
+            <Grid Name="gridMid" Grid.Column="1" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition ColumnDefinition.Width="0" />
+                    <ColumnDefinition ColumnDefinition.Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Width="10" Grid.Column="0" VerticalAlignment="Center">
+                    <Button Name="btnStretch" Height="70" Width="10" Style="{DynamicResource btnStretchStyle}" Margin="-3,0,-4,0"></Button>
+                </StackPanel>
+                <Grid Grid.Column="1">
+                    <controls:VicTabControlNormal Name="MainTabControl" ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
                         <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding listBoxThirdMenuListSelectionChangedCommand}" CommandParameter="{Binding ElementName=listThirdMenuLocal,Path=SelectedItem}"/>
+                            <i:EventTrigger EventName="TabItemClosing">
+                                <i:InvokeCommandAction Command="{Binding tbctrlTabItemClosingCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                        <ListBox.Triggers>
-                            <EventTrigger RoutedEvent="ListBox.SelectionChanged">
-                                <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuExpandStoryboard}"/>
-                            </EventTrigger>
-                        </ListBox.Triggers>
-                    </ListBox>
+                    </controls:VicTabControlNormal>
                 </Grid>
-            </ScrollViewer>
-            <ScrollViewer x:Name="scrollViewerFourMenu" Width="0" Visibility="Hidden" Style="{DynamicResource MenuScrollViewer}">
-                <Grid Style="{DynamicResource LeftGrid}">
-                    <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}">
-                        <ListBox.Triggers>
-                            <EventTrigger RoutedEvent="ListBox.MouseLeave">
-                                <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuCollapseStoryboard}"/>
-                            </EventTrigger>
-                            <EventTrigger RoutedEvent="ListBox.SelectionChanged">
-                                <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuCollapseStoryboard}"/>
-                                <BeginStoryboard Storyboard="{DynamicResource ThirdLevelMenuCollapseStoryboard}"/>
-                            </EventTrigger>
-                        </ListBox.Triggers>
-                    </ListBox>
-                </Grid>
-            </ScrollViewer>
-        </StackPanel>
-        <!--<Label Name="tb"  Content="当前软件已是最新版本（2014-04-23）" Style="{DynamicResource MainFrmBottomGridStyle}"/>-->
-    </Grid>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Grid.RowSpan="2" Grid.Column="1">
+                <ScrollViewer x:Name="scrollViewerThirdMenu" Width="0" Visibility="Hidden" Style="{DynamicResource MenuScrollViewer}">
+                    <Grid Style="{DynamicResource LeftGrid}">
+                        <ListBox x:Name="listThirdMenuLocal" Style="{DynamicResource ListBoxThirdLevelMenu}" SelectedItem="{Binding SelectedThirdMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemThirdLevelMenuList,UpdateSourceTrigger=PropertyChanged}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding listBoxThirdMenuListSelectionChangedCommand}" CommandParameter="{Binding ElementName=listThirdMenuLocal,Path=SelectedItem}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListBox.Triggers>
+                                <EventTrigger RoutedEvent="ListBox.SelectionChanged">
+                                    <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuExpandStoryboard}"/>
+                                </EventTrigger>
+                            </ListBox.Triggers>
+                        </ListBox>
+                    </Grid>
+                </ScrollViewer>
+                <ScrollViewer x:Name="scrollViewerFourMenu" Width="0" Visibility="Hidden" Style="{DynamicResource MenuScrollViewer}">
+                    <Grid Style="{DynamicResource LeftGrid}">
+                        <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}">
+                            <ListBox.Triggers>
+                                <EventTrigger RoutedEvent="ListBox.MouseLeave">
+                                    <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuCollapseStoryboard}"/>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="ListBox.SelectionChanged">
+                                    <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuCollapseStoryboard}"/>
+                                    <BeginStoryboard Storyboard="{DynamicResource ThirdLevelMenuCollapseStoryboard}"/>
+                                </EventTrigger>
+                            </ListBox.Triggers>
+                        </ListBox>
+                    </Grid>
+                </ScrollViewer>
+            </StackPanel>
+            <!--<Label Name="tb"  Content="当前软件已是最新版本（2014-04-23）" Style="{DynamicResource MainFrmBottomGridStyle}"/>-->
+        </Grid>
+    </DockPanel>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding gridMainLoadedCommand}"  CommandParameter="{Binding ElementName=mainWindow}"/>
