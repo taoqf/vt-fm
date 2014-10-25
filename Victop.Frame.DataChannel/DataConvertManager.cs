@@ -136,7 +136,10 @@ namespace Victop.Frame.DataChannel
                                     break;
                             }
                             itemDt.AcceptChanges();
-                            newDs.Tables.Add(itemDt);
+                            if (!newDs.Tables.Contains(itemDt.TableName))
+                            {
+                                newDs.Tables.Add(itemDt);
+                            }
                         }
                     }
                     else//获取行数据
@@ -152,7 +155,10 @@ namespace Victop.Frame.DataChannel
                         }
                         UpdateDataTableRow(itemDt, jsonDic);
                         itemDt.AcceptChanges();
-                        newDs.Tables.Add(itemDt);
+                        if (!newDs.Tables.Contains(itemDt.TableName))
+                        {
+                            newDs.Tables.Add(itemDt);
+                        }
                     }
                 }
             }
