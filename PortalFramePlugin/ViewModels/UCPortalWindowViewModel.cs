@@ -127,11 +127,8 @@ namespace PortalFramePlugin.ViewModels
             }
             set
             {
-                if (systemFourthLevelMenuList != value)
-                {
-                    systemFourthLevelMenuList = value;
-                    RaisePropertyChanged("SystemFourthLevelMenuList");
-                }
+                systemFourthLevelMenuList = value;
+                RaisePropertyChanged("SystemFourthLevelMenuList");
             }
         }
 
@@ -464,13 +461,12 @@ namespace PortalFramePlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand<object>((x) =>
                 {
-                    if (SelectedThirdMenuModel == null)
+                    if (x != null)
                     {
-                        SelectedThirdMenuModel = SystemThirdLevelMenuList[0];
+                        SystemFourthLevelMenuList = ((MenuModel)x).SystemMenuList;
                     }
-                    SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
                 });
             }
         }

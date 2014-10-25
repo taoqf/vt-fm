@@ -45,7 +45,7 @@
                         </i:Interaction.Triggers>
                         <ListBox.Triggers>
                             <EventTrigger RoutedEvent="ListBox.SelectionChanged">
-                                <BeginStoryboard Storyboard="{DynamicResource ThirdLevelMenuStoryboard}"/>
+                                <BeginStoryboard Storyboard="{DynamicResource ThirdLevelMenuExpandStoryboard}"/>
                             </EventTrigger>
                         </ListBox.Triggers>
                     </ListBox>
@@ -137,26 +137,35 @@
                 </controls:VicTabControlNormal>
             </Grid>
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.RowSpan="2" Grid.Column="1" Panel.ZIndex="10000">
-            <ScrollViewer x:Name="scrollViewerThirdMenu" Width="0" Style="{DynamicResource MenuScrollViewer}">
+        <StackPanel Orientation="Horizontal" Grid.RowSpan="2" Grid.Column="1">
+            <ScrollViewer x:Name="scrollViewerThirdMenu" Width="0" Visibility="Hidden" Style="{DynamicResource MenuScrollViewer}">
                 <Grid Style="{DynamicResource LeftGrid}">
                     <ListBox x:Name="listThirdMenuLocal" Style="{DynamicResource ListBoxThirdLevelMenu}" SelectedItem="{Binding SelectedThirdMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemThirdLevelMenuList,UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding listBoxThirdMenuListSelectionChangedCommand}"/>
+                                <i:InvokeCommandAction Command="{Binding listBoxThirdMenuListSelectionChangedCommand}" CommandParameter="{Binding ElementName=listThirdMenuLocal,Path=SelectedItem}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                         <ListBox.Triggers>
                             <EventTrigger RoutedEvent="ListBox.SelectionChanged">
-                                <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuStoryboard}"/>
+                                <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuExpandStoryboard}"/>
                             </EventTrigger>
                         </ListBox.Triggers>
                     </ListBox>
                 </Grid>
             </ScrollViewer>
-            <ScrollViewer x:Name="scrollViewerFourMenu" Width="0" Style="{DynamicResource MenuScrollViewer}">
+            <ScrollViewer x:Name="scrollViewerFourMenu" Width="0" Visibility="Hidden" Style="{DynamicResource MenuScrollViewer}">
                 <Grid Style="{DynamicResource LeftGrid}">
                     <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}">
+                        <ListBox.Triggers>
+                            <EventTrigger RoutedEvent="ListBox.MouseLeave">
+                                <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuCollapseStoryboard}"/>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="ListBox.SelectionChanged">
+                                <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuCollapseStoryboard}"/>
+                                <BeginStoryboard Storyboard="{DynamicResource ThirdLevelMenuCollapseStoryboard}"/>
+                            </EventTrigger>
+                        </ListBox.Triggers>
                     </ListBox>
                 </Grid>
             </ScrollViewer>
