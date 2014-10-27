@@ -15,12 +15,12 @@
     <UserControl.DataContext>
         <vm:SystemConfigViewModel/>
     </UserControl.DataContext>
-    <controls:VicGridNormal Background="#DCEFF9" Name="gridSysConfig">
+    <controls:VicGridNormal Name="gridSysConfig">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <controls:VicTabControlNormal Grid.Row="0">
+        <controls:VicTabControlNormal Style="{DynamicResource LoginVicTabControlStyle}" Grid.Row="0">
             <controls:VicTabItemNormal Header="系统和日志" Height="30" AllowDelete="False" >
                 <controls:VicGridNormal>
                     <Grid.RowDefinitions>
@@ -55,7 +55,7 @@
                             <controls:VicNumericUpDown Grid.Row="2" Grid.Column="3" Value="{Binding SysConfigModel.EndPoint}"/>
                             <TextBlock VerticalAlignment="Center" Grid.Row="3" Text="广播次数"/>
                             <controls:VicNumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding SysConfigModel.BroadCastTime}"/>
-                </controls:VicGridNormal>
+                        </controls:VicGridNormal>
                     </controls:VicGroupBoxNormal>
                     <controls:VicGroupBoxNormal Grid.Row="1" Header="日志配置" Margin="5,0,5,0">
                         <controls:VicGridNormal>
@@ -77,9 +77,9 @@
                             <controls:VicComboBoxNormal Grid.Row="1" Grid.Column="1" ItemsSource="{Binding CleanUnitList}" SelectedItem="{Binding SysConfigModel.Unit}"/>
                             <TextBlock VerticalAlignment="Center"  Margin="15,0,0,0" Grid.Row="1" Grid.Column="2" Text="文件个数"/>
                             <controls:VicNumericUpDown Grid.Row="1" Grid.Column="3" Value="{Binding SysConfigModel.Num}"/>
+                        </controls:VicGridNormal>
+                    </controls:VicGroupBoxNormal>
                 </controls:VicGridNormal>
-                        </controls:VicGroupBoxNormal>
-    </controls:VicGridNormal>
             </controls:VicTabItemNormal>
             <controls:VicTabItemNormal Header="接入平台" Height="30" AllowDelete="False">
                 <controls:VicGridNormal>
@@ -112,16 +112,16 @@
                             <controls:VicTextBoxNormal Grid.Row="2" Grid.Column="1" Text="{Binding SysConfigModel.CloudHostIP}"/>
                             <TextBlock VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" Margin="10,0,0,0" Text="端口"/>
                             <controls:VicNumericUpDown Grid.Row="2" Grid.Column="3" Value="{Binding SysConfigModel.CloudHostPort}"/>
-                </controls:VicGridNormal>
+                        </controls:VicGridNormal>
                     </controls:VicGroupBoxNormal>
                     <controls:VicGroupBoxNormal Header="企业SOA和P2P" Grid.Row="1" Margin="5,0,5,0">
-                    <controls:VicGridNormal>
+                        <controls:VicGridNormal>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
-                                </Grid.RowDefinitions>
+                            </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="2*"/>
@@ -144,14 +144,14 @@
                             <controls:VicTextBoxNormal Grid.Row="3" Grid.Column="1" Text="{Binding SysConfigModel.P2PServerIP}"/>
                             <TextBlock VerticalAlignment="Center" Grid.Row="3" Grid.Column="2" Margin="10,0,0,0" Text="端口"/>
                             <controls:VicNumericUpDown Grid.Row="3" Grid.Column="3" Value="{Binding SysConfigModel.P2PServerPort}"/>
-                    </controls:VicGridNormal>
+                        </controls:VicGridNormal>
                     </controls:VicGroupBoxNormal>
-    </controls:VicGridNormal>
+                </controls:VicGridNormal>
             </controls:VicTabItemNormal>
             <controls:VicTabItemNormal Header="用户信息" Height="30" AllowDelete="False" >
                 <controls:VicGridNormal>
                     <controls:VicGroupBoxNormal Header="用户信息" Margin="5,0,5,0" Height="80" VerticalAlignment="Top">
-                <controls:VicGridNormal>
+                        <controls:VicGridNormal>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
@@ -168,16 +168,16 @@
                             <controls:VicTextBoxNormal Grid.Column="3" Text="{Binding SysConfigModel.PassWord}"/>
                             <TextBlock VerticalAlignment="Center" Grid.Row="1" Text="客户端ID"/>
                             <controls:VicTextBoxNormal Grid.Row="1" Grid.Column="1" Text="{Binding SysConfigModel.ClientId}"/>
-                </controls:VicGridNormal>
+                        </controls:VicGridNormal>
                     </controls:VicGroupBoxNormal>
                 </controls:VicGridNormal>
             </controls:VicTabItemNormal>
         </controls:VicTabControlNormal>
         <Border Grid.Row="1" BorderBrush="#024672" BorderThickness="0,1,0,0">
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-            <controls:VicButtonNormal Margin="200,0,0,0" Width="70" Height="25" Content="确定"  Command="{Binding btnConfirmClickCommand}" />
-            <controls:VicButtonNormal Margin="20,0,0,0" Width="70" Height="25" Content="取消"  Command="{Binding btnCancelClickCommand}"/>
-        </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Style="{DynamicResource LoginButtonStyle}" Content="确定"  Command="{Binding btnConfirmClickCommand}" />
+                <Button Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消"  Command="{Binding btnCancelClickCommand}"/>
+            </StackPanel>
         </Border>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">

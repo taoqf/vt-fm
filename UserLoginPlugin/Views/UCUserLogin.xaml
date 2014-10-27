@@ -35,7 +35,7 @@
             </Grid>
             <Grid  Grid.Row="1" HorizontalAlignment="Right" Height="41" Margin="0,8,8,0" VerticalAlignment="Top" Width="133" Style="{DynamicResource LoginTopRightGridStyle}" />
         </Grid>
-        <Grid Grid.Row="1"  Style="{DynamicResource loginMainGridStyle}">
+        <Grid Grid.Row="1" Style="{DynamicResource loginMainGridStyle}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="117"/>
@@ -75,7 +75,7 @@
                 </ComboBox>
             </Grid>
             <TextBlock Grid.Row="2" Grid.Column="0" Padding="5,0,0,0" HorizontalAlignment="Left" Name="ErrLabel"  Text="{Binding ErrMsg}" Foreground="Red" Height="22"/>
-            <Button Grid.Row="2" Grid.Column="1" Margin="0,0,0,15"  Name="btnLogin" Width="100" Content="{DynamicResource L_R_89}" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Command="{Binding btnLoginClickCommand}" TabIndex="5" />
+            <Button Grid.Row="2" Grid.Column="1" x:Name="btnLogin" Style="{DynamicResource LoginButtonStyle}" Content="{DynamicResource L_R_89}" Command="{Binding btnLoginClickCommand}" TabIndex="5" />
         </Grid>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">

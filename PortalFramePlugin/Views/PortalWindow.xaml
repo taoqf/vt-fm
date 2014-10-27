@@ -123,7 +123,7 @@
                     <Button Name="btnStretch" Height="70" Width="10" Style="{DynamicResource btnStretchStyle}" Margin="-3,0,-4,0"></Button>
                 </StackPanel>
                 <Grid Grid.Column="1">
-                    <controls:VicTabControlNormal Name="MainTabControl" ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
+                    <controls:VicTabControlNormal Name="MainTabControl" Style="{DynamicResource MainVicTabControlStyle}" ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="TabItemClosing">
                                 <i:InvokeCommandAction Command="{Binding tbctrlTabItemClosingCommand}"/>
