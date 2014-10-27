@@ -1274,6 +1274,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
+                                        <Setter Property="Foreground" Value="#24806F"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

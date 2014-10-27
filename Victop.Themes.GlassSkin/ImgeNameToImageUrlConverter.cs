@@ -17,7 +17,7 @@ namespace Victop.Themes.GlassSkin
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value == null || value.ToString() == string.Empty) return string.Empty;
-            return new BitmapImage(new Uri(@"/Victop.Themes.GlassicSkin;component/Images/" + value.ToString(), UriKind.Relative));
+            return new BitmapImage(new Uri(@"/Victop.Themes.GlassSkin;component/Images/" + value.ToString(), UriKind.Relative));
 
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
