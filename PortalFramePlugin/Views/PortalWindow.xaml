@@ -96,17 +96,17 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button Name="btnMini" Width="34" Style="{DynamicResource btnMiniStyle}" Height="34">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding btnMiniClickCommand}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
                 <Button Name="btnMax" Width="34" Style="{DynamicResource btnMaxiStyle}" Height="34">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding btnMaxClickCommand}" CommandParameter="{Binding ElementName=btnMax}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Name="btnMini" Width="34" Style="{DynamicResource btnMiniStyle}" Height="34">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnMiniClickCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>

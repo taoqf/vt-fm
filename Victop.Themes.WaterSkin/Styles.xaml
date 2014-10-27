@@ -528,7 +528,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
 
-    <Style x:Key="btnMiniStyle" TargetType="{x:Type Button}">
+    <!--<Style x:Key="btnMiniStyle" TargetType="{x:Type Button}">
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="Template">
@@ -648,7 +648,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
 
     <Style x:Key="btnSetStyle" TargetType="{x:Type Button}">
         <Setter Property="Padding" Value="0"/>
@@ -1625,4 +1625,108 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
     <!--主窗体左侧工具栏结束-->
+    <!--主窗体右侧按钮样式开始-->
+    <Style x:Key="btnMaxiStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
+                        <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Line x:Name="PART_Path1" X1="2"  X2="10" Y1="1" Y2="1" Stroke="Gray"  StrokeThickness="2"  />
+                            <Line x:Name="PART_Path2" X1="2"  X2="10" Y1="2" Y2="2" Stroke="Gray"  StrokeThickness="2"  />
+                            <Line x:Name="PART_Path3" X1="2"  X2="10" Y1="3" Y2="3" Stroke="Gray"  StrokeThickness="2"  />
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="PART_Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                        <GradientStop Color="White" Offset="0.5" />
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Stroke" TargetName="PART_Path1" Value="#FFBA3232" />
+                            <Setter Property="Stroke" TargetName="PART_Path2" Value="#FFBA3232" />
+                            <Setter Property="Stroke" TargetName="PART_Path3" Value="#FFBA3232" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="UIElement.Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="btnMiniStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
+                        <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="Gray"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="PART_Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                        <GradientStop Color="White" Offset="0.5" />
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Stroke" TargetName="PART_Path" Value="#FFBA3232" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="UIElement.Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="btnCloseStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
+                        <Path x:Name="PART_Path" Data="M2,2 L2,2 10,10 M10,2 L10,2 2,10" Fill="Gray"  Stroke="Gray" Stretch="None" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="PART_Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                        <GradientStop Color="White" Offset="0.5" />
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Stroke" TargetName="PART_Path" Value="#FFBA3232" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="UIElement.Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--主窗体右侧按钮样式结束-->
 </ResourceDictionary>
