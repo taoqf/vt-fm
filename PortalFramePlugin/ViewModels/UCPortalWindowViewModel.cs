@@ -358,7 +358,7 @@ namespace PortalFramePlugin.ViewModels
                     Button btnMax = (Button)x;
                     if (mainWindow.WindowState == WindowState.Normal)
                     {
-                        btnMax.SetResourceReference(Button.StyleProperty, "btnRenewStyle");
+                        btnMax.SetResourceReference(Button.StyleProperty, "btnMaxiStyle");
                         mainWindow.WindowState = WindowState.Maximized;
                     }
                     else
