@@ -109,6 +109,10 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Victop.Frame.SyncOperation, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Bin\Victop.Frame.SyncOperation.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -174,10 +178,6 @@
     <ProjectReference Include="..\Victop.Server.Controls\Victop.Server.Controls.csproj">
       <Project>{d609f0a2-27e1-4855-a5b6-942e580d0d8a}</Project>
       <Name>Victop.Server.Controls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Victop.Themes.ClassicSkin\Victop.Themes.ClassicSkin.csproj">
-      <Project>{5134ba03-ee73-49d3-9b9e-7ed21d7fc86c}</Project>
-      <Name>Victop.Themes.ClassicSkin</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

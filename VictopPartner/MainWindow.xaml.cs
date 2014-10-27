@@ -20,6 +20,8 @@ using Victop.Frame.CoreLibrary.Models;
 using Victop.Server.Controls;
 using System.Windows.Media.Animation;
 using System.Configuration;
+using Victop.Frame.SyncOperation;
+using System.IO;
 
 namespace VictopPartner
 {
@@ -49,6 +51,7 @@ namespace VictopPartner
             {
                 try
                 {
+                    this.GetCurrentSkin();
                     string mainPlugin = ConfigurationManager.AppSettings["portalWindow"];
                     Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName(mainPlugin, "");
                     Type[] types = pluginAssembly.GetTypes();
@@ -81,6 +84,7 @@ namespace VictopPartner
             {
                 try
                 {
+                    this.GetCurrentSkin();
                     string mainPlugin = ConfigurationManager.AppSettings["portalWindow"];
                     Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName(mainPlugin, "");
                     Type[] types = pluginAssembly.GetTypes();
@@ -100,7 +104,7 @@ namespace VictopPartner
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("门户"+ex.Message);
+                    MessageBox.Show("门户" + ex.Message);
                     FrameInit.GetInstance().FrameUnload();
                     Environment.Exit(0);
                 }
@@ -126,5 +130,35 @@ namespace VictopPartner
             }
             return ret;
         }
+
+        #region 换肤
+
+        /// <summary>
+        /// 获取当前皮肤
+        /// </summary>
+        private void GetCurrentSkin()
+        {
+            if (ConfigurationManager.AppSettings.AllKeys.Contains("skinurl") && string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings.Get("skinurl")) == false)
+            {
+                string skinNamespace = System.IO.Path.GetFileNameWithoutExtension(ConfigurationManager.AppSettings.Get("skinurl"));//得到皮肤命名空间
+                this.ChangeFrameWorkTheme("/" + skinNamespace + ";component/Styles.xaml", ConfigurationManager.AppSettings.Get("skinurl"));
+            }
+        }
+
+        /// <summary>
+        /// 主题皮肤改变发送消息
+        /// </summary>
+        private void ChangeFrameWorkTheme(string ThemeName, string SkinPath)
+        {
+            string messageType = "ServerCenterService.ChangeThemeByDll";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
+            ServiceParams.Add("SourceName", ThemeName);
+            ServiceParams.Add("SkinPath", SkinPath);
+            contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
+            MessageOperation messageOp = new MessageOperation();
+            messageOp.SendMessage(messageType, contentDic);
+        }
+        #endregion
     }
 }

@@ -1366,10 +1366,10 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
 
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsSelected" Value="true">
-                                        <Setter Property="Foreground" Value="#557C88"></Setter>
+                                        <Setter Property="Foreground" Value="Yellow"></Setter>
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Foreground" Value="#557C88"></Setter>
+                                        <Setter Property="Foreground" Value="Yellow"></Setter>
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -1422,7 +1422,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                     </Setter>
                     <Style.Triggers>
                         <Trigger  Property="IsMouseOver" Value="true">
-                            <Setter Property="Foreground" Value="#557C88"></Setter>
+                            <Setter Property="Foreground" Value="Yellow"></Setter>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
