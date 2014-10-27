@@ -169,7 +169,7 @@ namespace ThemeManagerPlugin.ViewModels
         private void UpdateDefaultSkin()
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["skinurl"].Value = this.SelectedListBoxItem.SkinName;
+            config.AppSettings.Settings["skinurl"].Value = this.SelectedListBoxItem.SkinPath;
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
         }
