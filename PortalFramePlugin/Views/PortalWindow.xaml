@@ -63,35 +63,35 @@
                     <TextBlock Text="{Binding UserName}" Style="{DynamicResource MainFrmUserName}"/>
                 </StackPanel>
                 <!--<Button Name="btnFeedBack" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>-->
-                <Button Name="btnChangeSkin" Width="34" Style="{DynamicResource btnChangeSkinStyle}" Height="34" BorderThickness="0">
+                <Button Name="btnChangeSkin" Style="{DynamicResource btnChangeSkinStyle}" >
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding btnChangeSkinClickCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button Name="btnSet" Width="34" Visibility="Collapsed" Style="{DynamicResource btnSetStyle}" Height="34">
+                <Button Name="btnSet" Visibility="Collapsed" Style="{DynamicResource btnSetStyle}" >
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding btnSetClickCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button Name="btnMax" Width="34" Style="{DynamicResource btnMaxiStyle}" Height="34">
+                <Button Name="btnMax" Style="{DynamicResource btnMaxiStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding btnMaxClickCommand}" CommandParameter="{Binding ElementName=btnMax}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button Name="btnMini" Width="34" Style="{DynamicResource btnMiniStyle}" Height="34">
+                <Button Name="btnMini" Style="{DynamicResource btnMiniStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding btnMiniClickCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button Name="btnClose" Width="34" Style="{DynamicResource btnCloseStyle}" Height="34" >
+                <Button Name="btnClose" Style="{DynamicResource btnCloseStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding btnCloseClickCommand}"/>

@@ -509,168 +509,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
 
-    <Style x:Key="btnChangeSkinStyle" TargetType="{x:Type Button}">
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="IsTabStop" Value="False"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Themes:ButtonChrome x:Name="Chrome"  >
-                        <Themes:ButtonChrome.OpacityMask>
-                            <ImageBrush  ImageSource="Images/ChangeSkin.png"/>
-                        </Themes:ButtonChrome.OpacityMask>
-                        <Themes:ButtonChrome.Background>
-                            <ImageBrush ImageSource="Images/ChangeSkin.png"/>
-                        </Themes:ButtonChrome.Background>
-                    </Themes:ButtonChrome>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter Property="RenderDefaulted" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="ToggleButton.IsChecked" Value="true">
-                            <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="Images/ChangeSkinMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="OpacityMask" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="Images/ChangeSkinMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!--<Style x:Key="btnMiniStyle" TargetType="{x:Type Button}">
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Themes:ButtonChrome x:Name="Chrome"  >
-                        <Themes:ButtonChrome.OpacityMask>
-                            <ImageBrush  ImageSource="Images/Mini.png"/>
-                        </Themes:ButtonChrome.OpacityMask>
-                        <Themes:ButtonChrome.Background>
-                            <ImageBrush ImageSource="Images/Mini.png"/>
-                        </Themes:ButtonChrome.Background>
-                    </Themes:ButtonChrome>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter Property="RenderDefaulted" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="ToggleButton.IsChecked" Value="true">
-                            <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="Images/MiniMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="OpacityMask" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="Images/MiniMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="btnMaxiStyle" TargetType="{x:Type Button}">
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-
-                    <Themes:ButtonChrome x:Name="Chrome"  >
-                        <Themes:ButtonChrome.OpacityMask>
-                            <ImageBrush  ImageSource="Images/Maxi.png"/>
-                        </Themes:ButtonChrome.OpacityMask>
-                        <Themes:ButtonChrome.Background>
-                            <ImageBrush  ImageSource="Images/Maxi.png"/>
-                        </Themes:ButtonChrome.Background>
-                    </Themes:ButtonChrome>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter Property="RenderDefaulted" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="ToggleButton.IsChecked" Value="true">
-                            <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="Images/MaxiMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="OpacityMask" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="Images/MaxiMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="btnCloseStyle" TargetType="{x:Type Button}">
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Themes:ButtonChrome x:Name="Chrome"  >
-                        <Themes:ButtonChrome.OpacityMask>
-                            <ImageBrush  ImageSource="Images/Close.png"/>
-                        </Themes:ButtonChrome.OpacityMask>
-                        <Themes:ButtonChrome.Background>
-                            <ImageBrush  ImageSource="Images/Close.png"/>
-                        </Themes:ButtonChrome.Background>
-
-                    </Themes:ButtonChrome>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter Property="RenderDefaulted" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="ToggleButton.IsChecked" Value="true">
-                            <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="Images/CloseMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="OpacityMask" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="Images/CloseMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
-
     <Style x:Key="btnSetStyle" TargetType="{x:Type Button}">
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -1499,7 +1337,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     <Style x:Key="ListBoxThirdLevelMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Foreground" Value="#CBCBCB"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -1512,7 +1350,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <Grid x:Name="grid" Background="{TemplateBinding Background}">
-                                    <RadioButton Style="{DynamicResource RadioButtonFirstLevelMenu}" GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                    <RadioButton Style="{DynamicResource RadioButtonFirstLevelMenu}" Foreground="{TemplateBinding Foreground}" GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                     Content="{Binding MenuName}"/>
                                     <Popup x:Name="popup" IsOpen="False" 
             PlacementTarget="{Binding ElementName=grid}" 
@@ -1528,10 +1366,10 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
 
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsSelected" Value="true">
-                                        <Setter Property="Background" Value="#46B2E7"></Setter>
+                                        <Setter Property="Foreground" Value="#24806F"></Setter>
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Background" Value="#46B2E7"></Setter>
+                                        <Setter Property="Foreground" Value="#24806F"></Setter>
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -1565,7 +1403,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     <Style x:Key="ListBoxFourthMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Foreground" Value="#CBCBCB"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -1577,14 +1415,14 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <RadioButton Style="{DynamicResource RadioButtonFirstLevelMenu}" GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                <RadioButton Style="{DynamicResource RadioButtonFirstLevelMenu}" GroupName="A" Focusable="True" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                     Content="{Binding MenuName}" Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
                     <Style.Triggers>
                         <Trigger  Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="#46B2E7"></Setter>
+                            <Setter Property="Foreground" Value="#24806F"></Setter>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -1610,14 +1448,16 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     <!--主窗体左侧工具栏结束-->
     <!--主窗体右侧按钮样式开始-->
     <Style x:Key="btnMaxiStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="34"/>
+        <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
                         <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Line x:Name="PART_Path1" X1="2"  X2="10" Y1="1" Y2="1" Stroke="Gray"  StrokeThickness="2"  />
-                            <Line x:Name="PART_Path2" X1="2"  X2="10" Y1="2" Y2="2" Stroke="Gray"  StrokeThickness="2"  />
-                            <Line x:Name="PART_Path3" X1="2"  X2="10" Y1="3" Y2="3" Stroke="Gray"  StrokeThickness="2"  />
+                            <Line x:Name="PART_Path1" X1="2"  X2="10" Y1="1" Y2="1" Stroke="#616163"  StrokeThickness="2"  />
+                            <Line x:Name="PART_Path2" X1="2"  X2="10" Y1="2" Y2="2" Stroke="#616163"  StrokeThickness="2"  />
+                            <Line x:Name="PART_Path3" X1="2"  X2="10" Y1="3" Y2="3" Stroke="#616163"  StrokeThickness="2"  />
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -1648,11 +1488,13 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
     <Style x:Key="btnMiniStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="34"/>
+        <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
-                        <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="Gray"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="#616163"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -1680,11 +1522,88 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
     <Style x:Key="btnCloseStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="34"/>
+        <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
-                        <Path x:Name="PART_Path" Data="M2,2 L2,2 10,10 M10,2 L10,2 2,10" Fill="Gray"  Stroke="Gray" Stretch="None" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Path x:Name="PART_Path" Data="M2,2 L2,2 10,10 M10,2 L10,2 2,10" Fill="Gray"  Stroke="#616163" Stretch="None" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="PART_Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                        <GradientStop Color="White" Offset="0.5" />
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Stroke" TargetName="PART_Path" Value="#FFBA3232" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="UIElement.Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="btnChangeSkinStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="34"/>
+        <Setter Property="Height" Value="34"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="PART_Border" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"  BorderThickness="0" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Path x:Name="PART_Path" Fill="#FFF4F4F5" HorizontalAlignment="Center" Stroke="#616163" VerticalAlignment="Center" Height="18.12" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Width="17.759">
+                    		<Path.RenderTransform>
+                    			<TransformGroup>
+                    				<ScaleTransform/>
+                    				<SkewTransform/>
+                    				<RotateTransform Angle="131.051"/>
+                    				<TranslateTransform/>
+                    			</TransformGroup>
+                    		</Path.RenderTransform>
+                    		<Path.Data>
+                    			<PathGeometry>
+                    				<PathFigure IsFilled="False" StartPoint="0.5,78.8983172774315">
+                    					<BezierSegment Point3="49.5,127.898317277432" Point2="49.5,100.836363048867" Point1="27.5619542285649,78.8983172774315"/>
+                    				</PathFigure>
+                    				<PathFigure StartPoint="49.4805583085988,127.670269556321">
+                    					<LineSegment Point="96.0784127394104,130.246935524208"/>
+                    				</PathFigure>
+                    				<PathFigure StartPoint="0.738676457775789,78.7247658032647">
+                    					<LineSegment Point="3.31534855514627,32.126900749484"/>
+                    				</PathFigure>
+                    				<PathFigure StartPoint="90.3909287772115,89.0339314524066">
+                    					<LineSegment Point="127.644363732333,55.6845448906644"/>
+                    				</PathFigure>
+                    				<PathFigure StartPoint="40.3021150491014,34.5807450096124">
+                    					<LineSegment Point="78.3006220713602,0.564367701560684"/>
+                    				</PathFigure>
+                    				<PathFigure StartPoint="127.605323149417,56.390572995263">
+                    					<LineSegment Point="77.5719147880499,0.500000000091759"/>
+                    				</PathFigure>
+                    				<PathFigure IsFilled="False" StartPoint="90.7626642620414,89.2880813166091">
+                    					<BezierSegment Point3="95.510544637534,129.726476112273" Point2="105.442884011954,118.533124413565" Point1="103.317185681609,100.428239134179"/>
+                    				</PathFigure>
+                    				<PathFigure IsFilled="False" StartPoint="3.07833805025023,33.72898388847">
+                    					<BezierSegment Point3="40.367265441197,34.2215010104423" Point2="27.903005754828,24.0181742907099" Point1="11.2081869241446,23.7976641894249"/>
+                    				</PathFigure>
+                    			</PathGeometry>
+                    		</Path.Data>
+                    	</Path>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

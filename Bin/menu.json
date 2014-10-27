@@ -39,7 +39,7 @@
 							]
 						}, {
 							"title": "地区区域管理",
-							"actionType": 0,
+							"actionType": 1,
 							"actionName": "UCTreeViewMaintenanceT",
 							"showType": 0,
 							"iconUrl": "1-1.png",
@@ -616,7 +616,7 @@
 					"children": [
 						{
 							"title": "采购入库",
-							"actionType": 0,
+							"actionType": 1,
 							"actionName": "UCSearchListT",
 							"showType": 1,
 							"iconUrl": "2-1.png",
@@ -868,7 +868,7 @@
 					"children": [
 						{
 							"title": "采购明细查询组件",
-							"actionType": 0,
+							"actionType": 1,
 							"actionName": "UCReportSearchT",
 							"showType": 1,
 							"iconUrl": "3-1.png",
