@@ -11,7 +11,15 @@
         <vm:UCPortalWindowViewModel/>
     </Window.DataContext>
     <DockPanel LastChildFill="True">
-        <ScrollViewer Width="50" Style="{DynamicResource MenuScrollViewer}">
+        <ScrollViewer x:Name="scrollViewer" Width="50" Style="{DynamicResource MenuScrollViewer}">
+            <ScrollViewer.Triggers>
+                <EventTrigger RoutedEvent="ScrollViewer.MouseEnter">
+                    <BeginStoryboard Storyboard="{DynamicResource MenuExpandStoryboard}"></BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="ScrollViewer.MouseLeave">
+                    <BeginStoryboard Storyboard="{DynamicResource MenuCollapseStoryboard}"/>
+                </EventTrigger>
+            </ScrollViewer.Triggers>
             <Grid Style="{DynamicResource LeftGrid}">
                 <Grid.RowDefinitions>
                     <RowDefinition RowDefinition.Height="70"/>

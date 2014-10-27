@@ -72,7 +72,8 @@
     </Style>
 
     <Style x:Key="logoImage" TargetType="{x:Type Image}">
-        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Width" Value="20"/>
         <Setter Property="Height" Value="20"/>
@@ -1233,7 +1234,10 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     <Style x:Key="ListBoxSecondLevelMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Foreground" Value="#CBCBCB"></Setter>
+        <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
+        <Setter Property="FontSize" Value="14"></Setter>
+        <Setter Property="FontWeight"  Value="Bold"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -1241,6 +1245,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Margin" Value="10,10,20,0"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -1255,17 +1260,20 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                             </Grid>
                                         </ScrollViewer>
                                     </Popup>
-                                    <!--<Image x:Name="img" Width="26" Height="22" Margin="0,10,0,0" ToolTip="{Binding MenuName}" VerticalAlignment="Center" HorizontalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>-->
-
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Image x:Name="img" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
+                                        <TextBlock Margin="20,0,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}"
+                                                   FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" Text="{Binding MenuName}" VerticalAlignment="Center"/>
+                                    </StackPanel>
                                 </Grid>
 
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsSelected" Value="true">
-                                        <!--<Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>-->
+                                        <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
                                     </Trigger>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <!--<Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>-->
-                                        <!--<Setter Property="IsOpen" TargetName="popup" Value="true"/>-->
+                                        <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
+                                        <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -1406,6 +1414,20 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Storyboard x:Key="MenuExpandStoryboard">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
+            <EasingDoubleKeyFrame KeyTime="0" Value="50"/>
+            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="150"/>
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+
+    <Storyboard x:Key="MenuCollapseStoryboard">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
+            <EasingDoubleKeyFrame KeyTime="0" Value="150"/>
+            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="50"/>
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
     <!--主窗体左侧工具栏结束-->
     <!--主窗体右侧按钮样式开始-->
     <Style x:Key="btnMaxiStyle" TargetType="{x:Type Button}">
