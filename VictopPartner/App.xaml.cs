@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using Victop.Frame.PublicLib.Helpers;
-using Victop.Frame.SyncOperation;
 
 namespace VictopPartner
 {
