@@ -20,7 +20,7 @@ namespace Victop.Themes.GlassSkin
             /// <summary>
             /// 皮肤xaml文件
             /// </summary>
-            public string ThemeName = "/Victop.Themes.GlassicSkin;component/Styles.xaml";
+            public string ThemeName = "/Victop.Themes.GlassSkin;component/Styles.xaml";
        
     }
 }

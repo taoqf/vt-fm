@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
-namespace Victop.Themes.GlassicSkin
+namespace Victop.Themes.GlassSkin
 {
     /// <summary>
     /// 转换器。

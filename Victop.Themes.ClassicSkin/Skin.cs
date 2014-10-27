@@ -15,7 +15,7 @@ namespace Victop.Themes.ClassicSkin
         /// <summary>
         /// 皮肤名称
         /// </summary>
-        public string SkinName = "手掌";
+        public string SkinName = "默认皮肤";
 
         /// <summary>
         /// 皮肤xaml文件
