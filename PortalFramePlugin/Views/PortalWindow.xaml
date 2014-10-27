@@ -30,26 +30,7 @@
                         </i:Interaction.Triggers>
                     </RadioButton>
                     <ListBox x:Name="listSecondMenuLocal" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding listSecondMenuLocalSelectionChangedCommand}" CommandParameter="{Binding ElementName=listSecondMenuLocal,Path=SelectedItem}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <ListBox.Triggers>
-                            <EventTrigger RoutedEvent="ListBox.SelectionChanged">
-                                <BeginStoryboard Storyboard="{DynamicResource ThirdLevelMenuExpandStoryboard}"/>
-                            </EventTrigger>
-                        </ListBox.Triggers>
                     </ListBox>
-                    <Menu ItemsSource="{Binding SystemMenuListLocal}">
-                        <Menu.ItemTemplate>
-                            <HierarchicalDataTemplate ItemsSource="{Binding SystemMenuList}">
-                                <Button Style="{DynamicResource ButtonFirstLevelMenu}" Focusable="True" 
-                                    Content="{Binding MenuName}" 
-                                        Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
-                            </HierarchicalDataTemplate>
-                        </Menu.ItemTemplate>
-                    </Menu>
                     <RadioButton Content="企业云" Style="{DynamicResource RadioButtonFirstLevelMenu}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
@@ -143,39 +124,6 @@
                     </controls:VicTabControlNormal>
                 </Grid>
             </Grid>
-            <StackPanel Orientation="Horizontal" Grid.RowSpan="2" Grid.Column="1">
-                <ScrollViewer x:Name="scrollViewerThirdMenu" Width="0" Visibility="Hidden" Style="{DynamicResource MenuScrollViewer}">
-                    <Grid Style="{DynamicResource LeftGrid}">
-                        <ListBox x:Name="listThirdMenuLocal" Style="{DynamicResource ListBoxThirdLevelMenu}" SelectedItem="{Binding SelectedThirdMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemThirdLevelMenuList,UpdateSourceTrigger=PropertyChanged}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction Command="{Binding listBoxThirdMenuListSelectionChangedCommand}" CommandParameter="{Binding ElementName=listThirdMenuLocal,Path=SelectedItem}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <ListBox.Triggers>
-                                <EventTrigger RoutedEvent="ListBox.SelectionChanged">
-                                    <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuExpandStoryboard}"/>
-                                </EventTrigger>
-                            </ListBox.Triggers>
-                        </ListBox>
-                    </Grid>
-                </ScrollViewer>
-                <ScrollViewer x:Name="scrollViewerFourMenu" Width="0" Visibility="Hidden" Style="{DynamicResource MenuScrollViewer}">
-                    <Grid Style="{DynamicResource LeftGrid}">
-                        <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}">
-                            <ListBox.Triggers>
-                                <EventTrigger RoutedEvent="ListBox.MouseLeave">
-                                    <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuCollapseStoryboard}"/>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="ListBox.SelectionChanged">
-                                    <BeginStoryboard Storyboard="{DynamicResource FourthLevelMenuCollapseStoryboard}"/>
-                                    <BeginStoryboard Storyboard="{DynamicResource ThirdLevelMenuCollapseStoryboard}"/>
-                                </EventTrigger>
-                            </ListBox.Triggers>
-                        </ListBox>
-                    </Grid>
-                </ScrollViewer>
-            </StackPanel>
             <!--<Label Name="tb"  Content="当前软件已是最新版本（2014-04-23）" Style="{DynamicResource MainFrmBottomGridStyle}"/>-->
         </Grid>
     </DockPanel>

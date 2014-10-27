@@ -1431,7 +1431,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
 
-
     <Style x:Key="ListBoxSecondLevelMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -1446,8 +1445,19 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Grid>
+                                <Grid x:Name="grid" Background="{TemplateBinding Background}">
+                                    <Popup x:Name="popup" IsOpen="False" 
+            PlacementTarget="{Binding ElementName=grid}" 
+            Placement="Right">
+                                        <ScrollViewer x:Name="scrollViewerThirdMenu" Width="120" Style="{DynamicResource MenuScrollViewer}">
+                                            <Grid Style="{DynamicResource LeftGrid}">
+                                                <ListBox x:Name="listThirdMenuLocal" Style="{DynamicResource ListBoxThirdLevelMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
+                                                </ListBox>
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </Popup>
                                     <Image x:Name="img" Width="26" Height="22" Margin="0,10,0,0" ToolTip="{Binding MenuName}" VerticalAlignment="Center" HorizontalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
+
                                 </Grid>
 
                                 <ControlTemplate.Triggers>
@@ -1456,6 +1466,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     </Trigger>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
+                                        <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -1500,19 +1511,33 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <RadioButton Style="{DynamicResource RadioButtonFirstLevelMenu}" GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                <Grid x:Name="grid" Background="{TemplateBinding Background}">
+                                    <RadioButton Style="{DynamicResource RadioButtonFirstLevelMenu}" GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                     Content="{Binding MenuName}"/>
+                                    <Popup x:Name="popup" IsOpen="False" 
+            PlacementTarget="{Binding ElementName=grid}" 
+            Placement="Right">
+                                        <ScrollViewer x:Name="scrollViewerThirdMenu" Width="120" Style="{DynamicResource MenuScrollViewer}">
+                                            <Grid Style="{DynamicResource LeftGrid}">
+                                                <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
+                                                </ListBox>
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </Popup>
+                                </Grid>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger  Property="IsSelected" Value="true">
+                                        <Setter Property="Background" Value="#46B2E7"></Setter>
+                                    </Trigger>
+                                    <Trigger  Property="IsMouseOver" Value="true">
+                                        <Setter Property="Background" Value="#46B2E7"></Setter>
+                                        <Setter Property="IsOpen" TargetName="popup" Value="true"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
-                    <Style.Triggers>
-                        <Trigger  Property="IsSelected" Value="true">
-                            <Setter Property="Background" Value="#46B2E7"></Setter>
-                        </Trigger>
-                        <Trigger  Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" Value="#46B2E7"></Setter>
-                        </Trigger>
-                    </Style.Triggers>
                 </Style>
             </Setter.Value>
         </Setter>
@@ -1581,99 +1606,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <Storyboard x:Key="ThirdLevelMenuExpandStoryboard">
-        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="scrollViewerThirdMenu">
-            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
-            <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
-        </ObjectAnimationUsingKeyFrames>
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewerThirdMenu">
-            <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="120"/>
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <Storyboard x:Key="ThirdLevelMenuCollapseStoryboard">
-        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="scrollViewerThirdMenu">
-            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
-            <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Hidden}"/>
-        </ObjectAnimationUsingKeyFrames>
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewerThirdMenu">
-            <EasingDoubleKeyFrame KeyTime="0" Value="120"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <Storyboard x:Key="FourthLevelMenuExpandStoryboard">
-        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="scrollViewerFourMenu">
-            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
-            <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
-        </ObjectAnimationUsingKeyFrames>
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewerFourMenu">
-            <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="120"/>
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <Storyboard x:Key="FourthLevelMenuCollapseStoryboard">
-        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="scrollViewerFourMenu">
-            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
-            <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Hidden}"/>
-        </ObjectAnimationUsingKeyFrames>
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewerFourMenu">
-            <EasingDoubleKeyFrame KeyTime="0" Value="120"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <Style TargetType="{x:Type Menu}">
-        <Setter Property="Width" Value="50"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Menu}">
-                    <Border CornerRadius="0" Width="{TemplateBinding Width}">
-                        <ItemsPresenter/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="{x:Type MenuItem}">
-        <Setter Property="Background" Value="Black"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type MenuItem}">
-                    <Border Margin="0,2" x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="0" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
-                        <Grid>
-                            <ContentPresenter Margin="0,10" ContentSource="Header" HorizontalAlignment="Center"/>
-                            <Popup x:Name="pop" IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Placement="Right">
-                                <Border CornerRadius="5" Background="{TemplateBinding Background}">
-                                    <StackPanel IsItemsHost="True">
-                                    </StackPanel>
-                                </Border>
-                            </Popup>
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="bd" Property="Background" Value="#0099CC"/>
-                            <Setter TargetName="pop" Property="IsOpen" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Setter TargetName="pop" Property="IsOpen" Value="false"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="bd" Property="Background" Value="#FF6666"/>
-                            <Setter TargetName="pop" Property="IsOpen" Value="false"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="VerticalAlignment" Value="Stretch"/>
     </Style>
     <!--主窗体左侧工具栏结束-->
     <!--主窗体右侧按钮样式开始-->
