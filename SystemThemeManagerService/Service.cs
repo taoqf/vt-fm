@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Xml;
@@ -14,7 +15,7 @@ namespace SystemThemeManagerService
     /// <summary>
     /// 系统主题管理服务
     /// </summary>
-    public class Service:IService
+    public class Service : IService
     {
         #region 属性
         /// <summary>
@@ -44,6 +45,7 @@ namespace SystemThemeManagerService
                     serviceReceiptMessageType = new List<string>();
                     serviceReceiptMessageType.Add("ServerCenterService.ChangeTheme");
                     serviceReceiptMessageType.Add("ServerCenterService.ChangeLanguage");
+                    serviceReceiptMessageType.Add("ServerCenterService.ChangeThemeByDll");
                 }
                 return serviceReceiptMessageType;
             }
@@ -105,6 +107,11 @@ namespace SystemThemeManagerService
                             ChangeFrameWorkTheme(SourceName);
                             result = true;
                             break;
+                        case "ServerCenterService.ChangeThemeByDll"://换肤
+                            string skinPath = JsonHelper.ReadJsonString(serviceParams, "SkinPath");
+                            ChangeFrameWorkTheme(SourceName, skinPath);
+                            result = true;
+                            break;
                         case "ServerCenterService.ChangeLanguage"://换语言
                             ChangeFrameWorkLanguage(SourceName);
                             break;
@@ -145,6 +152,16 @@ namespace SystemThemeManagerService
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
             }
+        }
+        /// <summary>
+        /// 切换主题
+        /// </summary>
+        /// <param name="ThemePath"></param>
+        private void ChangeFrameWorkTheme(string ThemeName, string SkinPath)
+        {
+            Assembly assembly = Assembly.LoadFrom(SkinPath);
+            ResourceDictionary myResourceDictionary = Application.LoadComponent(new Uri(ThemeName, UriKind.Relative)) as ResourceDictionary;
+            Application.Current.Resources.MergedDictionaries.Add(myResourceDictionary);
         }
         /// <summary>
         /// 切换语言

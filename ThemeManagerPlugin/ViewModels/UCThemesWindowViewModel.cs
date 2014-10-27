@@ -57,8 +57,8 @@ namespace ThemeManagerPlugin.ViewModels
         }
 
         /// <summary>N款皮肤 </summary>
-        private int  _skinNum;
-        public int  SkinNum
+        private int _skinNum;
+        public int SkinNum
         {
             get { return _skinNum; }
             set
@@ -70,7 +70,7 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
-       
+
         #endregion
 
         #region 窗体加载命令
@@ -79,7 +79,7 @@ namespace ThemeManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(( ) =>
+                return new RelayCommand(() =>
                 {
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
@@ -106,7 +106,7 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
-      
+
         /// <summary>
         /// 获取主题文件夹中皮肤个数和皮肤列表
         /// </summary>
@@ -137,12 +137,13 @@ namespace ThemeManagerPlugin.ViewModels
         /// 主题皮肤改变发送消息
         /// </summary>
         /// <param name="model"></param>
-        private void ChangeFrameWorkTheme(ThemeModel model)
+        private void ChangeFrameWorkTheme()
         {
-            string messageType = "ServerCenterService.ChangeTheme";
+            string messageType = "ServerCenterService.ChangeThemeByDll";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
-            ServiceParams.Add("SourceName", model.ThemeName);
+            ServiceParams.Add("SourceName", this.SelectedListBoxItem.ThemeName);
+            ServiceParams.Add("SkinPath", this.SelectedListBoxItem.SkinPath);
             contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
             MessageOperation messageOp = new MessageOperation();
             messageOp.SendMessage(messageType, contentDic);
@@ -160,16 +161,6 @@ namespace ThemeManagerPlugin.ViewModels
             model.SkinOrder = (int)type.GetField("SkinOrder").GetValue(obj);
             model.SkinName = type.GetField("SkinName").GetValue(obj).ToString();
             model.ThemeName = type.GetField("ThemeName").GetValue(obj).ToString();
-        }
-
-        /// <summary>
-        /// 加载皮肤
-        /// </summary>
-        private void LoadSkin()
-        {
-            Assembly assembly = Assembly.LoadFrom(this.SelectedListBoxItem.SkinPath);
-            ResourceDictionary myResourceDictionary = Application.LoadComponent(new Uri(this.SelectedListBoxItem.ThemeName, UriKind.Relative)) as ResourceDictionary;
-            Application.Current.Resources.MergedDictionaries.Add(myResourceDictionary);
         }
 
         /// <summary>
@@ -195,9 +186,8 @@ namespace ThemeManagerPlugin.ViewModels
                     {
                         try
                         {
-                            this.LoadSkin();
+                            ChangeFrameWorkTheme();
                             this.UpdateDefaultSkin();
-                            //ChangeFrameWorkTheme(SelectedListBoxItem);
                         }
                         catch (Exception ex)
                         {
