@@ -48,6 +48,12 @@
         </Setter>
     </Style>
 
+    <Style x:Key="MainFrmUserStackPanelStyle" TargetType="{x:Type StackPanel}">
+        <Setter Property="Margin" Value="20,10,150,0"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+    </Style>
+
     <Style x:Key="MainFrmUserPictrueGridStyle" TargetType="{x:Type controls:VicButtonImage}">
         <Setter Property="Width" Value="30"/>
         <Setter Property="Height" Value="30"/>
