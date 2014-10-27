@@ -150,7 +150,7 @@
     <ApplicationDefinition Include="Images\8-2.png" />
     <ApplicationDefinition Include="Images\9-1.png" />
     <ApplicationDefinition Include="Images\9-2.png" />
-    <ApplicationDefinition Include="Images\background.png" />
+    <Resource Include="Images\background.png" />
     <ApplicationDefinition Include="Images\btnMainFeedBack.png" />
     <ApplicationDefinition Include="Images\btnMOMainFeedBack.png" />
     <ApplicationDefinition Include="Images\ChangeSkin.png" />
@@ -178,7 +178,6 @@
     <ApplicationDefinition Include="Images\Set.png" />
     <ApplicationDefinition Include="Images\SetMouseOver.png" />
     <ApplicationDefinition Include="Images\Stretch.png" />
-    <ApplicationDefinition Include="Images\UserPhoto.png" />
     <ApplicationDefinition Include="Images\UserPictrue.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
