@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Themes.WaterSkin", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Themes.ClassicSkin", "Victop.Themes.ClassicSkin\Victop.Themes.ClassicSkin.csproj", "{5134BA03-EE73-49D3-9B9E-7ED21D7FC86C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Themes.GlassSkin", "Victop.Themes.GlassSkin\Victop.Themes.GlassSkin.csproj", "{4CE9D784-754A-40DC-9621-D312788E3054}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -315,6 +317,16 @@ Global
 		{5134BA03-EE73-49D3-9B9E-7ED21D7FC86C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5134BA03-EE73-49D3-9B9E-7ED21D7FC86C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5134BA03-EE73-49D3-9B9E-7ED21D7FC86C}.Release|x86.ActiveCfg = Release|Any CPU
+		{4CE9D784-754A-40DC-9621-D312788E3054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE9D784-754A-40DC-9621-D312788E3054}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE9D784-754A-40DC-9621-D312788E3054}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4CE9D784-754A-40DC-9621-D312788E3054}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4CE9D784-754A-40DC-9621-D312788E3054}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4CE9D784-754A-40DC-9621-D312788E3054}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CE9D784-754A-40DC-9621-D312788E3054}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CE9D784-754A-40DC-9621-D312788E3054}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4CE9D784-754A-40DC-9621-D312788E3054}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4CE9D784-754A-40DC-9621-D312788E3054}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -341,5 +353,6 @@ Global
 		{EBAF8D96-74A8-4D05-A2AA-C9F420DA6D0A} = {64ACB22B-54AA-431C-A4D9-5A0DC0BF0759}
 		{A6DC68A4-CBCF-457D-B3E7-45960AC9AC0E} = {B7B9BA2A-84E4-44A3-8FD8-DFC237F0A53E}
 		{5134BA03-EE73-49D3-9B9E-7ED21D7FC86C} = {B7B9BA2A-84E4-44A3-8FD8-DFC237F0A53E}
+		{4CE9D784-754A-40DC-9621-D312788E3054} = {B7B9BA2A-84E4-44A3-8FD8-DFC237F0A53E}
 	EndGlobalSection
 EndGlobal

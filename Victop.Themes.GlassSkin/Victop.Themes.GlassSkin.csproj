@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4CE9D784-754A-40DC-9621-D312788E3054}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Victop.Themes.GlassSkin</RootNamespace>
+    <AssemblyName>Victop.Themes.GlassSkin</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Victop.Wpf.Controls">
+      <HintPath>..\..\victopTemplates\Bin\Victop.Wpf.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ImgeNameToImageUrlConverter.cs" />
+    <Compile Include="Skin.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\1-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\1-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\10-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\10-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\11-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\11-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\12-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\12-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\13-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\13-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\14-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\14-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\15-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\15-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\16-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\16-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\17-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\17-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\18-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\18-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\19-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\19-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\2-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="Images\2-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\2.png" />
+    <ApplicationDefinition Include="Images\20-1.png" />
+    <ApplicationDefinition Include="Images\20-2.png" />
+    <ApplicationDefinition Include="Images\21-1.png" />
+    <ApplicationDefinition Include="Images\21-2.png" />
+    <ApplicationDefinition Include="Images\3-1.png" />
+    <ApplicationDefinition Include="Images\3-2.png" />
+    <ApplicationDefinition Include="Images\4-1.png" />
+    <ApplicationDefinition Include="Images\4-2.png" />
+    <ApplicationDefinition Include="Images\5-1.png" />
+    <ApplicationDefinition Include="Images\5-2.png" />
+    <ApplicationDefinition Include="Images\6-1.png" />
+    <ApplicationDefinition Include="Images\6-2.png" />
+    <ApplicationDefinition Include="Images\7-1.png" />
+    <ApplicationDefinition Include="Images\7-2.png" />
+    <ApplicationDefinition Include="Images\8-1.png" />
+    <ApplicationDefinition Include="Images\8-2.png" />
+    <ApplicationDefinition Include="Images\9-1.png" />
+    <ApplicationDefinition Include="Images\9-2.png" />
+    <ApplicationDefinition Include="Images\background.png" />
+    <ApplicationDefinition Include="Images\btnMainFeedBack.png" />
+    <ApplicationDefinition Include="Images\btnMOMainFeedBack.png" />
+    <ApplicationDefinition Include="Images\ChangeSkin.png" />
+    <ApplicationDefinition Include="Images\ChangeSkinMouseOver.png" />
+    <ApplicationDefinition Include="Images\Close.png" />
+    <ApplicationDefinition Include="Images\CloseMouseOver.png" />
+    <ApplicationDefinition Include="Images\Grid.png" />
+    <ApplicationDefinition Include="Images\in.png" />
+    <ApplicationDefinition Include="Images\index.png" />
+    <ApplicationDefinition Include="Images\indexSelected.png" />
+    <ApplicationDefinition Include="Images\loginBtn.png" />
+    <ApplicationDefinition Include="Images\loginMain.png" />
+    <ApplicationDefinition Include="Images\LoginSet.png" />
+    <ApplicationDefinition Include="Images\LoginSetMouseOver.png" />
+    <ApplicationDefinition Include="Images\loginTitle.png" />
+    <ApplicationDefinition Include="Images\LoginTopLeftGrid1.png" />
+    <ApplicationDefinition Include="Images\LoginTopLeftGrid2.png" />
+    <ApplicationDefinition Include="Images\loginWindow.png" />
+    <ApplicationDefinition Include="Images\logo.png" />
+    <ApplicationDefinition Include="Images\Maxi.png" />
+    <ApplicationDefinition Include="Images\MaxiMouseOver.png" />
+    <ApplicationDefinition Include="Images\Mini.png" />
+    <ApplicationDefinition Include="Images\MiniMouseOver.png" />
+    <ApplicationDefinition Include="Images\out.png" />
+    <ApplicationDefinition Include="Images\Set.png" />
+    <ApplicationDefinition Include="Images\SetMouseOver.png" />
+    <ApplicationDefinition Include="Images\Stretch.png" />
+    <ApplicationDefinition Include="Images\UserPhoto.png" />
+    <ApplicationDefinition Include="Images\UserPictrue.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
