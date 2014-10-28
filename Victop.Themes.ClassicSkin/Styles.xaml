@@ -108,6 +108,7 @@
         <Setter Property="Width" Value="20"/>
         <Setter Property="Height" Value="24"/>
         <Setter Property="Margin" Value="20,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Source" Value="Images\in.png"/>
     </Style>
 
@@ -119,8 +120,9 @@
 
     <Style x:Key="Image2" TargetType="Image">
         <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="20"/>
+        <Setter Property="Height" Value="24"/>
         <Setter Property="Margin" Value="20,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Source" Value="Images\out.png"/>
     </Style>
 
@@ -132,8 +134,9 @@
 
     <Style x:Key="Image3" TargetType="Image">
         <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="24"/>
+        <Setter Property="Height" Value="20"/>
         <Setter Property="Margin" Value="20,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Source" Value="Images\Grid.png"/>
     </Style>
 
@@ -156,7 +159,7 @@
     <Style x:Key="GridTitle" TargetType="{x:Type controls:VicTextBlockNormal}">
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="FontSize" Value="20"/>
         <Setter Property="Margin" Value="20,0,0,0"/>
     </Style>
 
