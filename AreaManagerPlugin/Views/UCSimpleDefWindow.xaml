@@ -4,12 +4,60 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <ComboBox Grid.Row="0" Name="cboxSimDef" DropDownOpened="cboxSimDef_DropDownOpened"></ComboBox>
+        <DockPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Name="panelLogin" Visibility="Visible">
+            <Label Margin="0,0,5,0">用户名:</Label>
+            <TextBox Width="200" Height="24" Margin="0,0,5,0" Name="tboxName" LostFocus="tboxName_LostFocus"/>
+            <Label Margin="0,0,5,0">密码:</Label>
+            <TextBox Margin="0,0,5,0" Height="24" Width="200" Name="tboxPwd"/>
+            <Label Margin="0,0,5,0">验证码：</Label>
+            <TextBox Margin="0,0,5,0" Width="100" Height="24" Name="tboxImgCode"/>
+            <Image Margin="0,0,5,0" Width="100" Height="40" Name="imgImgCode"/>
+            <Button Name="btnChangImgCode" Content="更换验证码" Width="100" Height="24" Click="btnChangImgCode_Click"/>
+            <Button Name="btnLogin" Content="登陆" Width="100" Height="24" Click="btnLogin_Click"/>
+        </DockPanel>
+        <DockPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Left" Name="panelOperation" Visibility="Collapsed">
+            <!--<Button Width="100" Height="24" Name="btnGetUserInfo" Margin="0,0,5,0" Content="获取用户组" Click="btnGetUserInfo_Click"/>-->
+        </DockPanel>
+        <TabControl Grid.Row="2" Grid.Column="0">
+            <TabItem Header="用户组信息">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <DockPanel Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <Button Width="100" Height="24" Name="btnGetGroupInfo" Margin="0,0,5,0" Content="获取分组信息" Click="btnGetGroupInfo_Click"/>
+                        <Button Width="100" Height="24" Name="btnGetGroupUserInfo" Margin="0,0,5,0" Content="获取用户信息" Click="btnGetGroupUserInfo_Click"/>
+                    </DockPanel>
+                    <DataGrid Name="datagridInfo" Grid.Row="1" Grid.Column="0"/>
+                    <DataGrid Name="datagriduserInfo" Grid.Row="1" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="菜单信息">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <Button Width="100" Height="24" Name="btnGetMenuInfo" Margin="0,0,5,0" Content="获取菜单信息" Click="btnGetMenuInfo_Click"/>
+                        <Button Width="100" Height="24" Name="btnCreateMenuInfo" Margin="0,0,5,0" Content="创建菜单" Click="btnCreateMenuInfo_Click"/>
+                        <Button Width="100" Height="24" Name="btnDelMenuInfo" Margin="0,0,5,0" Content="删除菜单" Click="btnDelMenuInfo_Click"/>
+                    </DockPanel>
+                    <TextBox Name="tboxMenuInfo" Grid.Row="1"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

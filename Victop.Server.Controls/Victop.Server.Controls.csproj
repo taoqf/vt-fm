@@ -100,6 +100,15 @@
     <Compile Include="Runtime\DefinViewsModel.cs" />
     <Compile Include="Runtime\OrgnizeRuntime.cs" />
     <Compile Include="Runtime\ViewsBlockModel.cs" />
+    <Compile Include="WeChat\WeChatAPIReturnModel.cs" />
+    <Compile Include="WeChat\LoginInfo.cs" />
+    <Compile Include="WeChat\LoginUser.cs" />
+    <Compile Include="WeChat\SendData.cs" />
+    <Compile Include="WeChat\SingleGroup.cs" />
+    <Compile Include="WeChat\WeChatMenuItemModel.cs" />
+    <Compile Include="WeChat\WeChatMenuItemTypeEnum.cs" />
+    <Compile Include="WeChat\WeChatOperation.cs" />
+    <Compile Include="WeChat\WeChatRetInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Victop.Frame.PublicLib\Victop.Frame.PublicLib.csproj">

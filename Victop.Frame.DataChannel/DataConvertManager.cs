@@ -136,7 +136,10 @@ namespace Victop.Frame.DataChannel
                                     break;
                             }
                             itemDt.AcceptChanges();
-                            newDs.Tables.Add(itemDt);
+                            if (!newDs.Tables.Contains(itemDt.TableName))
+                            {
+                                newDs.Tables.Add(itemDt);
+                            }
                         }
                     }
                     else//获取行数据
@@ -152,7 +155,10 @@ namespace Victop.Frame.DataChannel
                         }
                         UpdateDataTableRow(itemDt, jsonDic);
                         itemDt.AcceptChanges();
-                        newDs.Tables.Add(itemDt);
+                        if (!newDs.Tables.Contains(itemDt.TableName))
+                        {
+                            newDs.Tables.Add(itemDt);
+                        }
                     }
                 }
             }
@@ -617,56 +623,59 @@ namespace Victop.Frame.DataChannel
             }
             #endregion
             #region 组织ref中字段
-            foreach (Dictionary<string, object> item in refList)
+            if (refList != null && refList.Count > 0)
             {
-                if (item.ContainsKey("view") && item["view"] != null)
+                foreach (Dictionary<string, object> item in refList)
                 {
-                    List<RefViewModel> refViewList = JsonHelper.ToObject<List<RefViewModel>>(item["view"].ToString());
-                    foreach (RefViewModel refitem in refViewList)
+                    if (item.ContainsKey("view") && item["view"] != null)
                     {
-                        if (refitem.left.StartsWith(tableName))
+                        List<RefViewModel> refViewList = JsonHelper.ToObject<List<RefViewModel>>(item["view"].ToString());
+                        foreach (RefViewModel refitem in refViewList)
                         {
-                            string leftStr = refitem.left.Substring(refitem.left.IndexOf('.') + 1);
-                            if (newDt.Columns.Contains(leftStr))
-                                continue;
-                            DataColumn dc = new DataColumn(leftStr);
-                            if (clientrefList != null)
+                            if (refitem.left.StartsWith(tableName))
                             {
-                                Dictionary<string, object> refDic = clientrefList.Find(it => it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, leftStr)));
-                                if (refDic != null)
+                                string leftStr = refitem.left.Substring(refitem.left.IndexOf('.') + 1);
+                                if (newDt.Columns.Contains(leftStr))
+                                    continue;
+                                DataColumn dc = new DataColumn(leftStr);
+                                if (clientrefList != null)
                                 {
-                                    dc.ExtendedProperties.Add("DataReference", refDic);
+                                    Dictionary<string, object> refDic = clientrefList.Find(it => it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, leftStr)));
+                                    if (refDic != null)
+                                    {
+                                        dc.ExtendedProperties.Add("DataReference", refDic);
+                                    }
                                 }
-                            }
-                            dc.ExtendedProperties.Add("ColType", "ref");
-                            if (!string.IsNullOrEmpty(refitem.type))
-                            {
-                                switch (refitem.type)
+                                dc.ExtendedProperties.Add("ColType", "ref");
+                                if (!string.IsNullOrEmpty(refitem.type))
                                 {
-                                    case "int":
-                                        dc.DataType = typeof(Int32);
-                                        break;
-                                    case "long":
-                                        dc.DataType = typeof(Int64);
-                                        break;
-                                    case "date":
-                                        dc.DataType = typeof(DateTime);
-                                        break;
-                                    case "timestamp":
-                                        dc.DataType = typeof(DateTime);
-                                        break;
-                                    case "string":
-                                    default:
-                                        dc.DataType = typeof(String);
-                                        break;
+                                    switch (refitem.type)
+                                    {
+                                        case "int":
+                                            dc.DataType = typeof(Int32);
+                                            break;
+                                        case "long":
+                                            dc.DataType = typeof(Int64);
+                                            break;
+                                        case "date":
+                                            dc.DataType = typeof(DateTime);
+                                            break;
+                                        case "timestamp":
+                                            dc.DataType = typeof(DateTime);
+                                            break;
+                                        case "string":
+                                        default:
+                                            dc.DataType = typeof(String);
+                                            break;
+                                    }
                                 }
+                                DataSet ds = GetSimpleRef(viewId, dataPath, leftStr, null);
+                                if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
+                                {
+                                    dc.ExtendedProperties.Add("ComboBox", ds.Tables["dataArray"]);
+                                }
+                                newDt.Columns.Add(dc);
                             }
-                            DataSet ds = GetSimpleRef(viewId, dataPath, leftStr, null);
-                            if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
-                            {
-                                dc.ExtendedProperties.Add("ComboBox", ds.Tables["dataArray"]);
-                            }
-                            newDt.Columns.Add(dc);
                         }
                     }
                 }
