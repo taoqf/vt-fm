@@ -1307,7 +1307,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     </Popup>
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Image x:Name="img" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
-                                        <TextBlock Margin="20,0,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}"
+                                        <TextBlock x:Name="txt" Margin="20,0,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}"
                                                    FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" Text="{Binding MenuName}" VerticalAlignment="Center"/>
                                     </StackPanel>
 
@@ -1317,10 +1317,12 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     <Trigger  Property="IsSelected" Value="true">
                                         <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
                                     </Trigger>
-                                    <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
-                                        <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                         <Setter Property="Foreground" Value="Yellow"/>
+                                    </Trigger>
+                                    <Trigger SourceName="txt" Property="IsMouseOver" Value="True">
+                                        <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -1366,7 +1368,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <Grid x:Name="grid" Background="{TemplateBinding Background}">
-                                    <RadioButton Style="{DynamicResource RadioButtonFirstLevelMenu}" GroupName="A" Focusable="True" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                    <RadioButton x:Name="rBtn" Style="{DynamicResource RadioButtonFirstLevelMenu}" GroupName="A" Focusable="True" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                     Content="{Binding MenuName}"/>
                                     <Popup x:Name="popup" IsOpen="False" 
             PlacementTarget="{Binding ElementName=grid}" 
@@ -1386,6 +1388,8 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Foreground" Value="Yellow"></Setter>
+                                    </Trigger>
+                                    <Trigger SourceName="rBtn" Property="IsMouseOver" Value="True">
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
