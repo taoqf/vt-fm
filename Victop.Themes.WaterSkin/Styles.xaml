@@ -1305,9 +1305,9 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                             </Grid>
                                         </ScrollViewer>
                                     </Popup>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <StackPanel x:Name="txt" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Image x:Name="img" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
-                                        <TextBlock x:Name="txt" Margin="20,0,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}"
+                                        <TextBlock Margin="20,0,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}"
                                                    FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" Text="{Binding MenuName}" VerticalAlignment="Center"/>
                                     </StackPanel>
 
@@ -1320,8 +1320,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
                                         <Setter Property="Foreground" Value="Yellow"/>
-                                    </Trigger>
-                                    <Trigger SourceName="txt" Property="IsMouseOver" Value="True">
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -1388,8 +1386,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Foreground" Value="Yellow"></Setter>
-                                    </Trigger>
-                                    <Trigger SourceName="rBtn" Property="IsMouseOver" Value="True">
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>

@@ -1680,7 +1680,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <Grid x:Name="grid" Background="{TemplateBinding Background}">
-                                    <Popup x:Name="popup" IsOpen="False" 
+                                    <Popup x:Name="popup" IsOpen="False"
             PlacementTarget="{Binding ElementName=grid}" 
             Placement="Right">
                                         <ScrollViewer x:Name="scrollViewerThirdMenu" Width="120" Style="{DynamicResource MenuScrollViewer}">
@@ -1690,9 +1690,9 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                             </Grid>
                                         </ScrollViewer>
                                     </Popup>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <StackPanel x:Name="txt" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Image x:Name="img" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
-                                        <TextBlock x:Name="txt" Margin="20,0,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}"
+                                        <TextBlock Margin="20,0,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}"
                                                    FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" Text="{Binding MenuName}" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Grid>
@@ -1704,8 +1704,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
                                         <Setter Property="Foreground" Value="#24806F"/>
-                                    </Trigger>
-                                    <Trigger SourceName="txt" Property="IsMouseOver" Value="True">
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -1772,8 +1770,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Foreground" Value="#24806F"></Setter>
-                                    </Trigger>
-                                    <Trigger SourceName="rBtn" Property="IsMouseOver" Value="True">
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
