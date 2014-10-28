@@ -1515,7 +1515,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Margin" Value="10,10,20,0"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -1530,7 +1529,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                             </Grid>
                                         </ScrollViewer>
                                     </Popup>
-                                    <StackPanel x:Name="txt" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <StackPanel x:Name="txt" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0">
                                         <Image x:Name="img" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
                                         <TextBlock Margin="20,0,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}"
                                                    FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" Text="{Binding MenuName}" VerticalAlignment="Center"/>
