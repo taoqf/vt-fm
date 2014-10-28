@@ -75,7 +75,14 @@
                     </controls:VicButtonNormal>
                     <controls:VicButtonNormal Content="完工"></controls:VicButtonNormal>
                 </StackPanel>
-                <controls:VicDataGrid x:Name="testGrid3" Grid.Row="1" AutoGenerateColumns="False"></controls:VicDataGrid>
+                <controls:VicTabControlNormal TabStripPlacement="Left" Grid.Row="1" Style="{DynamicResource left_TabControlStyle}">
+                    <controls:VicTabItemNormal Style="{DynamicResource left_TabItemStyle}" Header="工作区">
+                        <controls:VicDataGrid x:Name="testGrid3" AutoGenerateColumns="False"></controls:VicDataGrid>
+                    </controls:VicTabItemNormal>
+                    <controls:VicTabItemNormal Style="{DynamicResource left_TabItemStyle}" Header="明细">
+                        <controls:VicDataGrid x:Name="testGrid4" AutoGenerateColumns="False"></controls:VicDataGrid>
+                    </controls:VicTabItemNormal>
+                </controls:VicTabControlNormal>
             </Grid>
         </Grid>
     </Border>
