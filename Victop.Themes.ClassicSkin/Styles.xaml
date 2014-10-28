@@ -885,7 +885,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background">
             <Setter.Value>
-                <ImageBrush ImageSource="Images\background.png" Stretch="UniformToFill"/>
+                <ImageBrush ImageSource="Images\loginbg.png" Stretch="UniformToFill"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
@@ -1460,7 +1460,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true">
                                         <Setter Property="Background" Value="#518C9B" />
-                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="Foreground" Value="Black"/>
                                         <Setter Property="Margin" TargetName="Bd" Value="0"/>
                                         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                                     </Trigger>
@@ -1681,7 +1681,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Margin" Value="10,10,20,0"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -1696,7 +1695,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                             </Grid>
                                         </ScrollViewer>
                                     </Popup>
-                                    <StackPanel x:Name="txt" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <StackPanel x:Name="txt" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0">
                                         <Image x:Name="img" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
                                         <TextBlock Margin="20,0,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}"
                                                    FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" Text="{Binding MenuName}" VerticalAlignment="Center"/>
@@ -1855,13 +1854,13 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     <Storyboard x:Key="MenuExpandStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
             <EasingDoubleKeyFrame KeyTime="0" Value="50"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="180"/>
+            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="200"/>
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
     <Storyboard x:Key="MenuCollapseStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
-            <EasingDoubleKeyFrame KeyTime="0" Value="180"/>
+            <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
             <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="50"/>
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>

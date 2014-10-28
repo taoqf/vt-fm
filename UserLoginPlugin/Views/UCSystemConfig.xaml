@@ -15,7 +15,7 @@
     <UserControl.DataContext>
         <vm:SystemConfigViewModel/>
     </UserControl.DataContext>
-    <controls:VicGridNormal Name="gridSysConfig">
+    <controls:VicGridNormal Name="gridSysConfig" Style="{DynamicResource loginMainGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
