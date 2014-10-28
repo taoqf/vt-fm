@@ -1062,23 +1062,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style x:Key="LoginTopLeftGridStyle1" TargetType="{x:Type Grid}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <ImageBrush ImageSource="Images\LoginTopLeftGrid1.png"/>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="LoginTopLeftGridStyle2" TargetType="{x:Type Grid}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <ImageBrush ImageSource="Images\LoginTopLeftGrid2.png"/>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="loginMainUserPhotoGridStyle" TargetType="{x:Type Grid}">
         <Setter Property="Background">
             <Setter.Value>
@@ -2323,78 +2306,114 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     </Style>
     <!--左TabControl样式结束-->
 
-    <!--VicCheckBox样式开始-->
-    <controls:CheckboxBoolConverter x:Key="CheckboxBoolConverter"/>
-
-    <!--//////////////////////////////////////////VicCheckBox样式//////////////////////////////////////////-->
-    <SolidColorBrush x:Key="CheckBoxFillNormal" Color="#F4F4F4"/>
-    <!--VicCheckBox 外框颜色-->
-    <SolidColorBrush x:Key="CheckBoxStroke" Color="Gainsboro"/>
-    <!--VicCheckBox 无内容时 焦点聚焦状态下的虚线框样式（左侧方框部分）-->
-    <Style x:Key="EmptyCheckBoxFocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle Margin="1" SnapsToDevicePixels="true" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <!--VicCheckBox 有内容时 焦点聚焦状态下的虚线框样式（右侧文字部分）-->
-    <Style x:Key="CheckRadioFocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle Margin="20,0,0,0" SnapsToDevicePixels="true" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style TargetType="{x:Type controls:VicCheckBoxNormal}">
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-        <Setter Property="Background" Value="{StaticResource CheckBoxFillNormal}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource CheckBoxStroke}"/>
+    <!--VicComboBoxNormal样式开始-->
+    <controls:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    <Geometry x:Key="DownArrowGeometry">M 0 0 L 3.5 4 L 7 0 Z</Geometry>
+    <Style x:Key="ComboBoxCheck" TargetType="{x:Type CheckBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="Gainsboro"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Height" Value="20"></Setter>
-        <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckBoxFocusVisual}"/>
+        <Setter Property="Height" Value="23"></Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VicCheckBoxNormal}">
-                    <BulletDecorator Background="Transparent" SnapsToDevicePixels="true">
-                        <BulletDecorator.Bullet>
-                            <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}"  Background="White" BorderThickness="1" CornerRadius="2" Width="20" Height="20">
-                                <Path Width="12" Height="12" x:Name="Check" Stroke="Black" StrokeThickness="2"
-            Data="M 0 6 L 6 11 L 11 0" />
-                            </Border>
-                        </BulletDecorator.Bullet>
-                        <ContentPresenter  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </BulletDecorator>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Border Background="{TemplateBinding Background }"  BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid x:Name="grid" Background="Gainsboro" Width="22"  HorizontalAlignment="Right">
+                            <Path x:Name="path" Data="{StaticResource DownArrowGeometry}" Fill="Gray" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="HasContent" Value="true">
-                            <Setter Property="FocusVisualStyle" Value="{StaticResource CheckRadioFocusVisual}"/>
-                            <Setter Property="Padding" Value="4,0,0,0"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="White" />
-                            <Setter TargetName="Border" Property="Background" Value="White" />
-                        </Trigger>
-                        <Trigger Property="IsChecked" Value="false">
-                            <Setter TargetName="Check" Property="Visibility" Value="Hidden" />
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="path" Property="Data" Value="M 0 0 L 3.5 4 L 7 0 Z" />
+                            <Setter TargetName="path" Property="Fill" Value="Gainsboro" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="{x:Null}">
-                            <Setter TargetName="Check" Property="Data" Value="M 0 6 L 12 6" />
+                            <Setter TargetName="path" Property="Data" Value="M 0 0 L 3.5 4 L 7 0 Z" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="White" />
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <!--VicCheckBox样式开始-->
-    <!--VicTextBoxNormal样式开始-->
+    <Style x:Key="ComboBoxEditableTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="IsEnabled" Value="False"/>
+        <Setter Property="MinWidth" Value="0"/>
+        <Setter Property="MinHeight" Value="0"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <ScrollViewer x:Name="PART_ContentHost" Background="Transparent" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type controls:VicComboBoxNormal}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="Gainsboro"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="MinWidth" Value="100"></Setter>
+        <Setter Property="Height" Value="23"></Setter>
+        <Setter Property="Padding" Value="4,3"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicComboBoxNormal}">
+                    <Border Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid x:Name="MainGrid" SnapsToDevicePixels="true" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom">
+                                <Themes:SystemDropShadowChrome x:Name="Shdw" Color="Transparent" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="{Binding ActualWidth, ElementName=MainGrid}">
+                                    <Border x:Name="DropDownBorder" BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" BorderThickness="1" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+                                        <ScrollViewer CanContentScroll="true">
+                                            <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Themes:SystemDropShadowChrome>
+                            </Popup>
+                            <TextBox x:Name="PART_EditableTextBox"   Grid.Column="0"  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}" Margin="{TemplateBinding Padding}" Style="{StaticResource ComboBoxEditableTextBox}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Visibility="Hidden"/>
+                            <ContentPresenter x:Name="ContentSite" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <CheckBox Grid.Column="1" Width="23"  HorizontalAlignment="Right" Margin="0"  Visibility="{TemplateBinding HideDropDownToggle,Converter={StaticResource BoolToVisibilityConverter}}"  Style="{StaticResource ComboBoxCheck}" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
+                            <Setter Property="Margin" TargetName="Shdw" Value="0,0,5,5"/>
+                            <Setter Property="Color" TargetName="Shdw" Value="#71000000"/>
+                        </Trigger>
+                        <Trigger Property="HasItems" Value="false">
+                            <Setter Property="Height" TargetName="DropDownBorder" Value="120"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <Setter Property="Background" Value="#FFF4F4F4"/>
+                        </Trigger>
+                        <Trigger Property="IsGrouping" Value="true">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </Trigger>
+                        <Trigger Property="IsEditable" Value="true">
+                            <Setter Property="IsTabStop" Value="false"/>
+                            <Setter Property="Visibility" Value="Visible" TargetName="PART_EditableTextBox"/>
+                            <Setter Property="IsEnabled"  Value="True"    TargetName="PART_EditableTextBox"/>
+                            <Setter Property="Visibility" Value="Hidden"  TargetName="ContentSite"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--VicComboBoxNormal样式开始-->
 
+    <!--VicTextBoxNormal样式开始-->
     <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
     <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
