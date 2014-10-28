@@ -172,7 +172,7 @@ namespace PortalFramePlugin.ViewModels
                     homeItem.Height = 40;
                     homeItem.Header = "飞道科技";
                     WebBrowser browser = new WebBrowser();
-                    browser.Source = new Uri("http://www.victop.com");
+                    //browser.Source = new Uri("http://www.victop.com");
                     homeItem.Content = browser;
                     tabItemList.Add(homeItem);
                 }
@@ -513,7 +513,7 @@ namespace PortalFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    CreateBrowser("www.victop.com", "飞道科技");
+                    //CreateBrowser("www.victop.com", "飞道科技");
                 });
             }
         }
