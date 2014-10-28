@@ -161,6 +161,7 @@ namespace SystemThemeManagerService
         {
             Assembly assembly = Assembly.LoadFrom(SkinPath);
             ResourceDictionary myResourceDictionary = Application.LoadComponent(new Uri(ThemeName, UriKind.Relative)) as ResourceDictionary;
+            Application.Current.Resources.MergedDictionaries.Clear();
             Application.Current.Resources.MergedDictionaries.Add(myResourceDictionary);
         }
         /// <summary>
