@@ -112,6 +112,9 @@
     <Compile Include="Views\UCAreaWindow.xaml.cs">
       <DependentUpon>UCAreaWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UCAreaWindowData.xaml.cs">
+      <DependentUpon>UCAreaWindowData.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UCSimpleDefWindow.xaml.cs">
       <DependentUpon>UCSimpleDefWindow.xaml</DependentUpon>
     </Compile>
@@ -149,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UCAreaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UCAreaWindowData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
