@@ -2332,4 +2332,118 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
 
     </Style>
     <!--左TabControl样式结束-->
+    
+    <!--VicCheckBox样式开始-->
+    <controls:CheckboxBoolConverter x:Key="CheckboxBoolConverter"/>
+
+    <!--//////////////////////////////////////////VicCheckBox样式//////////////////////////////////////////-->
+    <SolidColorBrush x:Key="CheckBoxFillNormal" Color="#F4F4F4"/>
+    <!--VicCheckBox 外框颜色-->
+    <SolidColorBrush x:Key="CheckBoxStroke" Color="Gainsboro"/>
+    <!--VicCheckBox 无内容时 焦点聚焦状态下的虚线框样式（左侧方框部分）-->
+    <Style x:Key="EmptyCheckBoxFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="1" SnapsToDevicePixels="true" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--VicCheckBox 有内容时 焦点聚焦状态下的虚线框样式（右侧文字部分）-->
+    <Style x:Key="CheckRadioFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="20,0,0,0" SnapsToDevicePixels="true" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type controls:VicCheckBoxNormal}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background" Value="{StaticResource CheckBoxFillNormal}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource CheckBoxStroke}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Height" Value="20"></Setter>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource EmptyCheckBoxFocusVisual}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicCheckBoxNormal}">
+                    <BulletDecorator Background="Transparent" SnapsToDevicePixels="true">
+                        <BulletDecorator.Bullet>
+                            <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}"  Background="White" BorderThickness="1" CornerRadius="2" Width="20" Height="20">
+                                <Path Width="12" Height="12" x:Name="Check" Stroke="Black" StrokeThickness="2"
+            Data="M 0 6 L 6 11 L 11 0" />
+                            </Border>
+                        </BulletDecorator.Bullet>
+                        <ContentPresenter  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource CheckRadioFocusVisual}"/>
+                            <Setter Property="Padding" Value="4,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter TargetName="Border" Property="Background" Value="White" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter TargetName="Check" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter TargetName="Check" Property="Data" Value="M 0 6 L 12 6" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--VicCheckBox样式开始-->
+    <!--VicTextBoxNormal样式开始-->
+   
+    <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
+    <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <controls:TextInputToVisibilityConverter x:Key="TextInputToVisibilityConverter" />
+    <Style   TargetType="{x:Type controls:VicTextBoxNormal}">
+        <Setter Property="BorderBrush" Value="Gainsboro"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="MinWidth" Value="40"></Setter>
+        <Setter Property="Height" Value="23"></Setter>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicTextBoxNormal}">
+                    <Border Name="Bd"  BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid    Height="{TemplateBinding Height}"  MinWidth="{TemplateBinding MinWidth}"  Background="{StaticResource brushWatermarkBackground}"  >
+                            <TextBlock  Text="{TemplateBinding WaterMark}"  Foreground="{StaticResource brushWatermarkForeground}" VerticalAlignment="Center"
+                               Visibility="{Binding ElementName=txtUserEntry, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <TextBox x:Name="txtUserEntry" VerticalContentAlignment="Center"  BorderThickness="0" Background="Transparent" Text="{TemplateBinding VicText}" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="Bd">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.GrayTextBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--VicTextBoxNormal样式结束-->
 </ResourceDictionary>
