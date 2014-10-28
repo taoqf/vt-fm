@@ -1524,7 +1524,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                             </Grid>
                                         </ScrollViewer>
                                     </Popup>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <StackPanel x:Name="txt" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                                         <Image x:Name="img" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
                                         <TextBlock Margin="20,0,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}"
                                                    FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" Text="{Binding MenuName}" VerticalAlignment="Center"/>
@@ -1535,10 +1535,10 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     <Trigger  Property="IsSelected" Value="true">
                                         <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
                                     </Trigger>
-                                    <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
-                                        <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                         <Setter Property="Foreground" Value="#24806F"/>
+                                        <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -1584,7 +1584,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <Grid x:Name="grid" Background="{TemplateBinding Background}">
-                                    <RadioButton Style="{DynamicResource RadioButtonFirstLevelMenu}" Foreground="{TemplateBinding Foreground}" GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                    <RadioButton x:Name="rBtn" Style="{DynamicResource RadioButtonFirstLevelMenu}" Foreground="{TemplateBinding Foreground}" GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                     Content="{Binding MenuName}"/>
                                     <Popup x:Name="popup" IsOpen="False" 
             PlacementTarget="{Binding ElementName=grid}" 
