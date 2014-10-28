@@ -13,15 +13,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Victop.Frame.MessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.CoreLibrary;
 using Victop.Frame.CoreLibrary.Models;
 using Victop.Server.Controls;
 using System.Windows.Media.Animation;
 using System.Configuration;
-using Victop.Frame.SyncOperation;
 using System.IO;
+using Victop.Frame.SyncOperation;
 
 namespace VictopPartner
 {
