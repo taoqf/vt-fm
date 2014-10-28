@@ -2287,7 +2287,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     </Style>
     <!--切换皮肤窗体样式结束-->
     <!--左TabControl样式开始-->
-    <Style x:Key="Left_VicTabControlNormal" TargetType="{x:Type controls:VicTabControlNormal}">
+    <!--<Style x:Key="Left_VicTabControlNormal" TargetType="{x:Type controls:VicTabControlNormal}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -2305,9 +2305,9 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-    
-    <Style x:Key="Left_VicTabControlItemNormal" TargetType="{x:Type controls:VicTabItemNormal}">
+    </Style>-->
+
+    <!--<Style x:Key="Left_VicTabControlItemNormal" TargetType="{x:Type controls:VicTabItemNormal}">
         <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="Width" Value="13"></Setter>
         <Setter Property="MinHeight" Value="60"></Setter>
@@ -2318,17 +2318,18 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicTabItemNormal}">
                     <Border x:Name="border" BorderThickness="0"  Background="{TemplateBinding Background}">
-                        <TextBlock x:Name="buttonText"  TextWrapping="Wrap" TextBlock.FontFamily="Calibri" TextAlignment="Center" TextBlock.FontSize="14" Text="{TemplateBinding Header}" />
+                        <TextBlock x:Name="buttonText"  TextWrapping="Wrap" TextBlock.FontFamily="Calibri" TextAlignment="Center" TextBlock.FontSize="14" Text="{TemplateBinding Header}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Panel.ZIndex" Value="1"/>
-                            <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                            <Setter Property="Background" TargetName="border"     Value="Black"/>
+                         
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-    <!--左TabControl样式开始-->
+    </Style>-->
+    <!--左TabControl样式结束-->
 </ResourceDictionary>
