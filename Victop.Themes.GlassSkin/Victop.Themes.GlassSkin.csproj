@@ -171,7 +171,6 @@
     <Resource Include="Images\9-1.png" />
     <Resource Include="Images\9-2.png" />
     <Resource Include="Images\UserPhoto.png" />
-    <Resource Include="Images\background.png" />
     <Resource Include="Images\btnMainFeedBack.png" />
     <Resource Include="Images\btnMOMainFeedBack.png" />
     <Resource Include="Images\Grid.png" />
@@ -190,6 +189,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\SetMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\background.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
