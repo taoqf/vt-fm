@@ -167,7 +167,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="{x:Type Button}">
+    <Style TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="Height" Value="30"></Setter>
@@ -182,7 +182,7 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                         <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
@@ -482,13 +482,13 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     </Style>
     <!--DataGrid样式结束-->
 
-    <Style x:Key="btnMainFeedBackStyle" TargetType="{x:Type Button}">
+    <Style x:Key="btnMainFeedBackStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Themes:ButtonChrome x:Name="Chrome"  >
                         <Themes:ButtonChrome.OpacityMask>
                             <ImageBrush  ImageSource="Images/btnMainFeedBack.png"/>
@@ -814,12 +814,12 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     </Style>
     <!--滚动条样式结束-->
 
-    <Style x:Key="btnStretchStyle" TargetType="{x:Type Button}">
+    <Style x:Key="btnStretchStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
 
                     <Themes:ButtonChrome x:Name="Chrome"  >
                         <Themes:ButtonChrome.Background>
@@ -1045,7 +1045,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
 
-    <Style x:Key="LoginButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="LoginButtonStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
@@ -1060,7 +1060,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                         <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
@@ -1080,12 +1080,12 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
 
-    <Style x:Key="btnLoginSetStyle" TargetType="{x:Type Button}">
+    <Style x:Key="btnLoginSetStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Themes:ButtonChrome x:Name="Chrome" >
                         <Themes:ButtonChrome.OpacityMask>
                             <ImageBrush  ImageSource="Images\LoginSet.png"/>
@@ -1121,12 +1121,12 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     <!--登陆窗体结束-->
 
     <!--选项卡样式开始-->
-    <Style x:Key="CloseButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="CloseButtonStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="border" 
 						CornerRadius="10" 
 						Background="{TemplateBinding Background}" 
@@ -1331,14 +1331,14 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
 									    RecognizesAccessKey="True">
                                 </ContentPresenter>
                             </Border>
-                            <Button x:Name="PART_CloseButton" 
+                            <controls:VicButtonNormal x:Name="PART_CloseButton" 
 								Grid.Column="1" 
 								VerticalAlignment="Top"
 								HorizontalAlignment="Right"
 								Margin="2"
 								Style="{DynamicResource CloseButtonStyle}"
 								Visibility="Collapsed">
-                            </Button>
+                            </controls:VicButtonNormal>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -1433,7 +1433,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     <!--选项卡样式结束-->
 
     <!--主窗体左侧工具栏开始-->
-    <Style x:Key="RadioButtonFirstLevelMenu" TargetType="{x:Type RadioButton}">
+    <Style x:Key="RadioButtonFirstLevelMenu" TargetType="{x:Type controls:VicRadioButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#435058"></Setter>
@@ -1451,7 +1451,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="IsEnabled" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type RadioButton}">
+                <ControlTemplate TargetType="{x:Type controls:VicRadioButtonNormal}">
                     <BulletDecorator Background="Transparent">
                         <Border x:Name="border"  
                             BorderBrush="{TemplateBinding BorderBrush}"
@@ -1467,7 +1467,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
 
-    <Style x:Key="ButtonFirstLevelMenu" TargetType="{x:Type Button}">
+    <Style x:Key="ButtonFirstLevelMenu" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#435058"></Setter>
@@ -1485,7 +1485,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="IsEnabled" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <BulletDecorator Background="Transparent">
                         <Border x:Name="border"  
                             BorderBrush="{TemplateBinding BorderBrush}"
@@ -1589,7 +1589,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <Grid x:Name="grid" Background="{TemplateBinding Background}">
-                                    <RadioButton x:Name="rBtn" Style="{DynamicResource RadioButtonFirstLevelMenu}" Foreground="{TemplateBinding Foreground}" GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                    <controls:VicRadioButtonNormal x:Name="rBtn" Style="{DynamicResource RadioButtonFirstLevelMenu}" Foreground="{TemplateBinding Foreground}" GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                     Content="{Binding MenuName}"/>
                                     <Popup x:Name="popup" IsOpen="False" 
             PlacementTarget="{Binding ElementName=grid}" 
@@ -1654,7 +1654,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <RadioButton Style="{DynamicResource RadioButtonFirstLevelMenu}" GroupName="A" Focusable="True" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                <controls:VicRadioButtonNormal Style="{DynamicResource RadioButtonFirstLevelMenu}" GroupName="A" Focusable="True" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                     Content="{Binding MenuName}" Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
                             </ControlTemplate>
                         </Setter.Value>
@@ -1700,12 +1700,12 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     </Storyboard>
     <!--主窗体左侧工具栏结束-->
     <!--主窗体右侧按钮样式开始-->
-    <Style x:Key="btnMaxiStyle" TargetType="{x:Type Button}">
+    <Style x:Key="btnMaxiStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Width" Value="34"/>
         <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
                         <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Line x:Name="PART_Path1" X1="2"  X2="10" Y1="1" Y2="1" Stroke="#616163"  StrokeThickness="2"  />
@@ -1740,12 +1740,12 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="btnMiniStyle" TargetType="{x:Type Button}">
+    <Style x:Key="btnMiniStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Width" Value="34"/>
         <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
                         <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="#616163"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
@@ -1774,12 +1774,12 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="btnCloseStyle" TargetType="{x:Type Button}">
+    <Style x:Key="btnCloseStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Width" Value="34"/>
         <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
                         <Path x:Name="PART_Path" Data="M2,2 L2,2 10,10 M10,2 L10,2 2,10" Fill="Gray"  Stroke="#616163" Stretch="None" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
@@ -1809,7 +1809,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
 
-    <Style x:Key="btnChangeSkinStyle" TargetType="{x:Type Button}">
+    <Style x:Key="btnChangeSkinStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Width" Value="34"/>
         <Setter Property="Height" Value="34"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -1817,7 +1817,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"  BorderThickness="0" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Path x:Name="PART_Path" Fill="#FFF4F4F5" HorizontalAlignment="Center" Stroke="#616163" VerticalAlignment="Center" Height="18.12" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Width="17.759">
                     		<Path.RenderTransform>
@@ -1884,4 +1884,124 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
     <!--主窗体右侧按钮样式结束-->
+    <!--消息提示框样式开始-->
+    <controls:IconToImageConverter x:Key="IconToImageConverter"/>
+    <Style x:Key="WindowButtonStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="Background" Value="#31527d" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="HorizontalContentAlignment"  Value="Center" />
+        <Setter Property="VerticalContentAlignment"  Value="Center" />
+        <Setter Property="Padding"  Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
+                    <Grid x:Name="grid"
+                          Background="{TemplateBinding Background}">
+                        <ContentPresenter x:Name="contentPresenter"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          RecognizesAccessKey="True"
+                                          Opacity="0.75" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Opacity"
+                                    Value="1" />
+                            <Setter TargetName="grid"
+                                    Property="Background"
+                                    Value="#31527d" />
+
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="False">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Opacity"
+                                    Value=".5" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="grid"
+                                    Property="Background"
+                                    Value="#31527d" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="#ADADAD" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type controls:VicMessageBoxNormal}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="ResizeMode" Value="NoResize"/>
+        <Setter Property="BorderBrush" Value="#024672"/>
+
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicMessageBoxNormal}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"   CornerRadius="0">
+                        <Border.Background>
+                            <ImageBrush  ImageSource="Images\background.png"></ImageBrush>
+                        </Border.Background>
+                        <Grid Name="gridRoot">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="40"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border Name="brTitle" Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,1">
+                                <Grid Name="gridTitle"  Background="#31527d">
+                                    <Label Name="lblTitle"  HorizontalAlignment="Left"  Margin="10,0,0,0" VerticalAlignment="Center" FontSize="16px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="White"/>
+                                    <controls:VicButtonNormal x:Name="btnClose"  HorizontalAlignment="Right" Style="{StaticResource WindowButtonStyle}"  VerticalAlignment="Top" Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="关闭">
+                                        <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z" SnapsToDevicePixels="True" Fill="White" />
+                                    </controls:VicButtonNormal>
+                                </Grid>
+                            </Border>
+
+                            <Grid Name="gridBody" Grid.Row="1" >
+                                <Grid.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.6"></SolidColorBrush>
+                                </Grid.Background>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image VerticalAlignment="Center" Margin="10,0,10,0" Width="32" Height="32" Source="{TemplateBinding Icon,Converter={StaticResource IconToImageConverter}}"></Image>
+                                <TextBlock Text="{TemplateBinding Message}" VerticalAlignment="Center" Grid.Column="1" Margin="10" TextTrimming="None"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   TextWrapping="WrapWithOverflow"
+                                   FontSize="{TemplateBinding FontSize}" />
+                            </Grid>
+                            <Border Name="brBtn" BorderThickness="0" Grid.Row="2">
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.6"></SolidColorBrush>
+                                </Border.Background>
+                                <Grid Name="gridBtn">
+                                    <ItemsControl Name="butt" Margin="2" ItemsSource="{TemplateBinding CtrlButtonCollection}"  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,5,0">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <UniformGrid Rows="1"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--消息提示框样式结束-->
 </ResourceDictionary>
