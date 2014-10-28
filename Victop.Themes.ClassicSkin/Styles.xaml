@@ -476,9 +476,13 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         <Setter Property="Height" Value="40"></Setter>
         <Setter Property="MinWidth" Value="80"></Setter>
-        <Setter Property="Background" Value="White"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="FontSize" Value="13" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="red" Opacity="0.8"></SolidColorBrush>
+            </Setter.Value>
+        </Setter>
     </Style>
     <!--DataGrid样式结束-->
 
