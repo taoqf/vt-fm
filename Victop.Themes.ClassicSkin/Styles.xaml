@@ -2157,6 +2157,27 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                                 <UniformGrid Rows="1"/>
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemContainerStyle>
+                                            <Style TargetType="Button">
+                                                <Setter Property="Background"   Value="#f1f1f1"/>
+                                                <!--<Setter Property="Template">
+                                                   <Setter.Value>
+                                                       <ControlTemplate TargetType="Button">
+                                                            <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True" >
+                                                                    <Setter Property="Background"   Value="#31527d"/>
+                                                                    <Setter Property="Foreground"   Value="White"/>
+                                                             </Trigger>
+                                                                <Trigger Property="IsPressed" Value="True" >
+                                                                    <Setter Property="Background"   Value="#31527d"/>
+                                                                    <Setter Property="Foreground"   Value="White"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                               </Setter>-->
+                                            </Style>
+                                        </ItemsControl.ItemContainerStyle>
                                     </ItemsControl>
                                 </Grid>
                             </Border>
@@ -2167,7 +2188,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
     <!--消息提示框样式结束-->
-    <!--窗体样式开始-->
+    <!--切换皮肤窗体样式开始-->
     <Style x:Key="WindowChangeSkin" TargetType="{x:Type controls:VicWindowNormal}">
         <Setter Property="BorderBrush" Value="#024672"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -2264,5 +2285,5 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
             </Setter.Value>
         </Setter>
     </Style>
-    <!--窗体样式结束-->
+    <!--切换皮肤窗体样式结束-->
 </ResourceDictionary>
