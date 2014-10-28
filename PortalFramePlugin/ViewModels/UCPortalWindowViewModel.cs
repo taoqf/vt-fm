@@ -266,7 +266,7 @@ namespace PortalFramePlugin.ViewModels
                     ChangeFrameWorkTheme();
                     //LoadMenuListLocal();
                     LoadJsonMenuListLocal();
-                    UserLogin();
+                    //UserLogin();
                 });
             }
         }
