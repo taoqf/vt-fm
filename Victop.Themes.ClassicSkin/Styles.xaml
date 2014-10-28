@@ -2287,8 +2287,8 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     </Style>
     <!--切换皮肤窗体样式结束-->
     <!--左TabControl样式开始-->
-    <!--<Style x:Key="Left_VicTabControlNormal" TargetType="{x:Type controls:VicTabControlNormal}">
-        <Setter Property="Background" Value="Transparent"/>
+    <Style x:Key="left_TabControlStyle" TargetType="{x:Type controls:VicTabControlNormal}">
+        <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicTabControlNormal}">
@@ -2299,16 +2299,15 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                         </Grid.ColumnDefinitions>
                         <Border Background="White" Grid.Column="0" BorderThickness="0"/>
                         <StackPanel IsItemsHost="True" Grid.Column="0" Margin="0" />
-                        <Border Background="tr" Grid.Column="1" BorderBrush="WhiteSmoke" BorderThickness="1" SnapsToDevicePixels="True" />
+                        <Border Background="WhiteSmoke" Grid.Column="1" BorderBrush="WhiteSmoke" BorderThickness="1" SnapsToDevicePixels="True" />
                         <ContentPresenter Content="{TemplateBinding SelectedContent}" Grid.Column="1" Margin="1,0,0,0" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>-->
-
-    <!--<Style x:Key="Left_VicTabControlItemNormal" TargetType="{x:Type controls:VicTabItemNormal}">
-        <Setter Property="Background" Value="Transparent"></Setter>
+    </Style>
+    <Style x:Key="left_TabItemStyle" TargetType="{x:Type controls:VicTabItemNormal}">
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Width" Value="13"></Setter>
         <Setter Property="MinHeight" Value="60"></Setter>
         <Setter Property="Margin" Value="0,5,0,5"></Setter>
@@ -2317,19 +2316,20 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicTabItemNormal}">
-                    <Border x:Name="border" BorderThickness="0"  Background="{TemplateBinding Background}">
-                        <TextBlock x:Name="buttonText"  TextWrapping="Wrap" TextBlock.FontFamily="Calibri" TextAlignment="Center" TextBlock.FontSize="14" Text="{TemplateBinding Header}"/>
+                    <Border x:Name="border" BorderThickness="0" Background="Transparent">
+                        <TextBlock x:Name="buttonText"  TextWrapping="Wrap" TextBlock.FontFamily="Calibri" TextAlignment="Center" TextBlock.FontSize="14" Text="{TemplateBinding Header}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Panel.ZIndex" Value="1"/>
-                            <Setter Property="Background" TargetName="border"     Value="Black"/>
-                         
+                            <Setter Property="Background" TargetName="border" Value="Black"/>
+                            <Setter Property="Foreground" TargetName="buttonText" Value="White"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>-->
+
+    </Style>
     <!--左TabControl样式结束-->
 </ResourceDictionary>
