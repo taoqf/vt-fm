@@ -568,11 +568,11 @@ namespace AreaManagerPlugin.ViewModels
                         MessageType = "MongoDataChannelService.conveyor";
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("systemid", "906");
-                        contentDic.Add("configsystemid", "101");
+                        contentDic.Add("configsystemid", "906");
                         contentDic.Add("spaceId", "victop_core");
-                        contentDic.Add("conveyor_id", "06199465571a204e863bb421");
+                        contentDic.Add("conveyor_id", "60619465971a204e853bb421");
                         List<object> list = new List<object>();
-                        list.Add("90aba5asfer7b6gy5");
+                        list.Add("9aba5asfer7b6gy5");
                         contentDic.Add("params", list);
                         Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                         viewId = returnDic["DataChannelId"].ToString();

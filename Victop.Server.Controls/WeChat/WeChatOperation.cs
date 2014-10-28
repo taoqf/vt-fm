@@ -291,7 +291,7 @@ namespace Victop.Server.Controls.WeChat
         /// 获取用户组
         /// </summary>
         /// <returns></returns>
-        public static string GetUserInfo()
+        public static string GetAllUserInfo()
         {
             string url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=" + GetAccesstoken();
 
@@ -304,7 +304,26 @@ namespace Victop.Server.Controls.WeChat
             }
             catch (Exception ex)
             {
-                throw;
+                return string.Empty;
+            }
+        }
+        /// <summary>
+        /// 根据OpenId获取用户信息
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <returns></returns>
+        public static string GetUserInfoByOpenId(string openId)
+        {
+            string url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=" + GetAccesstoken() + "&openid=" + openId + "&lang=zh_CN";
+            try
+            {
+                CookieContainer container = new CookieContainer();
+                string htmlContent = SendMessageToWeChatServer(url, "get", null, ref container);
+                return htmlContent;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
             }
         }
 
