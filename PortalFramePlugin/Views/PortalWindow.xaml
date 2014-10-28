@@ -114,7 +114,7 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <Grid Name="gridMid" Grid.Column="1" Grid.Row="1">
+            <Grid Name="gridMid" Grid.Column="1" Grid.Row="1" Style="{DynamicResource MainGrid}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition ColumnDefinition.Width="0" />
                     <ColumnDefinition ColumnDefinition.Width="*" />

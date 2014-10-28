@@ -65,14 +65,17 @@
     <ProjectReference Include="..\Victop.Frame.CoreLibrary\Victop.Frame.CoreLibrary.csproj">
       <Project>{9bf73423-7f54-4de6-bfbb-e179ba454f0e}</Project>
       <Name>Victop.Frame.CoreLibrary</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.PublicLib\Victop.Frame.PublicLib.csproj">
       <Project>{90c4d04f-f952-4c63-8a69-0c9d12e050fb}</Project>
       <Name>Victop.Frame.PublicLib</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Victop.Server.Controls\Victop.Server.Controls.csproj">
       <Project>{d609f0a2-27e1-4855-a5b6-942e580d0d8a}</Project>
       <Name>Victop.Server.Controls</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

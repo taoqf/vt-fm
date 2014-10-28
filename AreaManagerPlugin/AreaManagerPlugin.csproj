@@ -63,10 +63,12 @@
     <Reference Include="GalaSoft.MvvmLight.Extras.WPF4, Version=4.2.30.23173, Culture=neutral, PublicKeyToken=1673db7d5906b0ad, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\VictopLib\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight.WPF4, Version=4.2.30.23173, Culture=neutral, PublicKeyToken=63eb5c012e0b3c1c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\VictopLib\GalaSoft.MvvmLight.WPF4.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -81,6 +83,7 @@
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\VictopLib\System.Windows.Interactivity.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -93,6 +96,7 @@
     <Reference Include="Victop.Wpf.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Bin\Victop.Wpf.Controls.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -116,22 +120,27 @@
     <ProjectReference Include="..\Victop.Frame.DataChannel\Victop.Frame.DataChannel.csproj">
       <Project>{ad1deb10-b0b3-44fb-8214-5e1cbbcf9147}</Project>
       <Name>Victop.Frame.DataChannel</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.MessageManager\Victop.Frame.MessageManager.csproj">
       <Project>{e2066a80-e481-488d-a260-5c0ac9b7eff0}</Project>
       <Name>Victop.Frame.MessageManager</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.PublicLib\Victop.Frame.PublicLib.csproj">
       <Project>{90c4d04f-f952-4c63-8a69-0c9d12e050fb}</Project>
       <Name>Victop.Frame.PublicLib</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.SyncOperation\Victop.Frame.SyncOperation.csproj">
       <Project>{d852f8b6-0ff8-4637-bdaa-9cd145d1aa65}</Project>
       <Name>Victop.Frame.SyncOperation</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Victop.Server.Controls\Victop.Server.Controls.csproj">
       <Project>{d609f0a2-27e1-4855-a5b6-942e580d0d8a}</Project>
       <Name>Victop.Server.Controls</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -87,8 +87,11 @@
     </Style>
 
     <Style x:Key="MainGrid" TargetType="{x:Type Grid}">
-        <Setter Property="Opacity" Value="0.5"/>
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="White" Opacity="0.5"></SolidColorBrush>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="SubBorder" TargetType="{x:Type Border}">
@@ -135,8 +138,11 @@
     </Style>
 
     <Style x:Key="RightGrid" TargetType="{x:Type Grid}">
-        <Setter Property="Opacity" Value="0.6"/>
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="White" Opacity="0.6"></SolidColorBrush>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="SelectedFaceImage" TargetType="{x:Type Grid}">
@@ -1849,13 +1855,13 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     <Storyboard x:Key="MenuExpandStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
             <EasingDoubleKeyFrame KeyTime="0" Value="50"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="150"/>
+            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="180"/>
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
     <Storyboard x:Key="MenuCollapseStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
-            <EasingDoubleKeyFrame KeyTime="0" Value="150"/>
+            <EasingDoubleKeyFrame KeyTime="0" Value="180"/>
             <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="50"/>
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
