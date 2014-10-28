@@ -243,7 +243,7 @@
     <Resource Include="Images\9-2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\2.png" />
+    <Resource Include="Images\messagebackground.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
