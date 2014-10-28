@@ -112,7 +112,7 @@ namespace ThemeManagerPlugin.ViewModels
         /// </summary>
         private void GetThemeSkinNum()
         {
-            string[] files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "theme", "*.dll");
+            string[] files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "theme", "*Skin.dll");
             SkinNum = files.Count();
             for (int j = 0; j < files.Count(); j++)
             {
