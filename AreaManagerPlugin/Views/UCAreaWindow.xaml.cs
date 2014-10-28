@@ -62,7 +62,6 @@ namespace AreaManagerPlugin.Views
             testGrid1.ItemsSource = dt.DefaultView;
             testGrid2.ItemsSource = dt.DefaultView;
             testGrid3.ItemsSource = dt.DefaultView;
-            testGrid4.ItemsSource = dt.DefaultView;
         }
     }
 }

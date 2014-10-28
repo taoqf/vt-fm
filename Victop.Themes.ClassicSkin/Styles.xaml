@@ -1495,7 +1495,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                         </MultiTrigger.Conditions>
                                         <Setter Property="Panel.ZIndex" Value="2" />
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1,0,1,1"/>
-                                        <!--<Setter Property="CornerRadius" TargetName="Bd" Value="0,0,4,4"/>-->
                                         <Setter Property="Margin" TargetName="Bd" Value="0,-1,0,0"/>
                                     </MultiTrigger>
 
@@ -1506,7 +1505,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                         </MultiTrigger.Conditions>
                                         <Setter Property="Panel.ZIndex" Value="2" />
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1,1,0,1"/>
-                                        <!--<Setter Property="CornerRadius" TargetName="Bd" Value="4,0,0,4"/>-->
                                         <Setter Property="Margin" TargetName="Bd" Value="0,0,0,-1"/>
                                     </MultiTrigger>
 
@@ -1517,7 +1515,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                         </MultiTrigger.Conditions>
                                         <Setter Property="Panel.ZIndex" Value="2" />
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1,1,1,1"/>
-                                        <!--<Setter Property="CornerRadius" TargetName="Bd" Value="0,4,0,0"/>-->
                                         <Setter Property="Margin" TargetName="Bd" Value="0,0,0,-1"/>
                                     </MultiTrigger>
                                 </ControlTemplate.Triggers>
@@ -2146,7 +2143,40 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemContainerStyle>
                                             <Style TargetType="Button">
-                                                <Setter Property="Background"   Value="#f1f1f1"/>
+                                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                                <Setter Property="Height" Value="30"></Setter>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                                <Setter Property="BorderBrush" Value="Gainsboro"></Setter>
+                                                <Setter Property="BorderThickness" Value="1"></Setter>
+                                                <Setter Property="Width" Value="80"></Setter>
+                                                <Setter Property="Background" Value="#FAFAFA"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Setter Property="FontSize" Value="13" />
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Border Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                            </Border>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" TargetName="border" Value="#518c9b"/>
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsPressed" Value="true">
+                                                                    <Setter Property="Background" TargetName="border" Value="#518c9b"/>
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsEnabled" Value="false">
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
                                             </Style>
                                         </ItemsControl.ItemContainerStyle>
                                     </ItemsControl>
