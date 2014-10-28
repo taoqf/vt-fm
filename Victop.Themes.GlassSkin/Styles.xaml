@@ -1843,7 +1843,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
     <!--主窗体左侧工具栏结束-->
-    <!--主窗体右侧按钮样式开始-->
+   <!--主窗体右侧按钮样式开始-->
     <Style x:Key="btnMaxiStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Width" Value="34"/>
         <Setter Property="Height" Value="34"/>
@@ -1852,9 +1852,9 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
                         <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Line x:Name="PART_Path1" X1="2"  X2="10" Y1="1" Y2="1" Stroke="#616163"  StrokeThickness="2"  />
-                            <Line x:Name="PART_Path2" X1="2"  X2="10" Y1="2" Y2="2" Stroke="#616163"  StrokeThickness="2"  />
-                            <Line x:Name="PART_Path3" X1="2"  X2="10" Y1="3" Y2="3" Stroke="#616163"  StrokeThickness="2"  />
+                            <Line x:Name="PART_Path1" X1="2"  X2="10" Y1="1" Y2="1" Stroke="White"  StrokeThickness="2"  />
+                            <Line x:Name="PART_Path2" X1="2"  X2="10" Y1="2" Y2="2" Stroke="White"  StrokeThickness="2"  />
+                            <Line x:Name="PART_Path3" X1="2"  X2="10" Y1="3" Y2="3" Stroke="White"  StrokeThickness="2"  />
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -1875,7 +1875,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
                                 <Setter.Value>
-                                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
+                                    <DropShadowEffect BlurRadius="10" Color="White" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -1891,7 +1891,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
-                        <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="#616163"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="White"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -1909,7 +1909,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
                                 <Setter.Value>
-                                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
+                                    <DropShadowEffect BlurRadius="10" Color="White" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -1925,7 +1925,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
-                        <Path x:Name="PART_Path" Data="M2,2 L2,2 10,10 M10,2 L10,2 2,10" Fill="Gray"  Stroke="#616163" Stretch="None" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Path x:Name="PART_Path" Data="M2,2 L2,2 10,10 M10,2 L10,2 2,10" Fill="White"  Stroke="White" Stretch="None" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -1943,7 +1943,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
                                 <Setter.Value>
-                                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
+                                    <DropShadowEffect BlurRadius="10" Color="White" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -1963,7 +1963,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"  BorderThickness="0" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Path x:Name="PART_Path" Fill="#FFF4F4F5" HorizontalAlignment="Center" Stroke="#616163" VerticalAlignment="Center" Height="18.12" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Width="17.759">
+                        <Path x:Name="PART_Path" Fill="White" HorizontalAlignment="Center" Stroke="White" VerticalAlignment="Center" Height="18.12" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Width="17.759">
                     		<Path.RenderTransform>
                     			<TransformGroup>
                     				<ScaleTransform/>
@@ -2018,7 +2018,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
                                 <Setter.Value>
-                                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
+                                    <DropShadowEffect BlurRadius="10" Color="White" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
