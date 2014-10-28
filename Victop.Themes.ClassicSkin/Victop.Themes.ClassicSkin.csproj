@@ -95,20 +95,6 @@
     <Resource Include="Images\UserPictrue.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\loginMain.png" />
-    <Resource Include="Images\loginTitle.png" />
-    <Resource Include="Images\loginWindow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\loginBtn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\LoginTopLeftGrid2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\LoginTopLeftGrid1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\UserPhoto.png" />
   </ItemGroup>
   <ItemGroup>

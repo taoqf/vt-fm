@@ -178,18 +178,18 @@
     <Resource Include="Images\in.png" />
     <Resource Include="Images\index.png" />
     <Resource Include="Images\indexSelected.png" />
-    <Resource Include="Images\loginBtn.png" />
-    <Resource Include="Images\loginMain.png" />
     <Resource Include="Images\LoginSet.png" />
     <Resource Include="Images\LoginSetMouseOver.png" />
-    <Resource Include="Images\loginTitle.png" />
-    <Resource Include="Images\LoginTopLeftGrid1.png" />
-    <Resource Include="Images\LoginTopLeftGrid2.png" />
-    <Resource Include="Images\loginWindow.png" />
     <Resource Include="Images\logo.png" />
     <Resource Include="Images\out.png" />
     <Resource Include="Images\Stretch.png" />
     <Resource Include="Images\UserPictrue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Set.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SetMouseOver.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

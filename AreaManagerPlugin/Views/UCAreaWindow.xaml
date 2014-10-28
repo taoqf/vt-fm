@@ -64,6 +64,9 @@
                     <controls:VicTextBlockNormal Text="工序任务列表" Style="{DynamicResource GridTitle}"></controls:VicTextBlockNormal>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
+                    <controls:VicComboBoxNormal></controls:VicComboBoxNormal>
+                    <controls:VicCheckBoxNormal></controls:VicCheckBoxNormal>
+                    <controls:VicTextBoxNormal></controls:VicTextBoxNormal>
                     <controls:VicButtonNormal Content="派发任务">
                     </controls:VicButtonNormal>
                         <controls:VicButtonNormal Content="问题反馈">

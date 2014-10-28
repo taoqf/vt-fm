@@ -2160,22 +2160,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                         <ItemsControl.ItemContainerStyle>
                                             <Style TargetType="Button">
                                                 <Setter Property="Background"   Value="#f1f1f1"/>
-                                                <!--<Setter Property="Template">
-                                                   <Setter.Value>
-                                                       <ControlTemplate TargetType="Button">
-                                                            <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="True" >
-                                                                    <Setter Property="Background"   Value="#31527d"/>
-                                                                    <Setter Property="Foreground"   Value="White"/>
-                                                             </Trigger>
-                                                                <Trigger Property="IsPressed" Value="True" >
-                                                                    <Setter Property="Background"   Value="#31527d"/>
-                                                                    <Setter Property="Foreground"   Value="White"/>
-                                                                </Trigger>
-                                                            </ControlTemplate.Triggers>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                               </Setter>-->
                                             </Style>
                                         </ItemsControl.ItemContainerStyle>
                                     </ItemsControl>
