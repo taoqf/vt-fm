@@ -104,6 +104,7 @@ namespace Victop.Frame.Connection
                         break;
                     case "MongoDataChannelService.findBusiData":
                     case "MongoDataChannelService.findTableData":
+                    case "MongoDataChannelService.conveyor":
                         dicContent = GetFindMongoTableDataMessage(dicContent);
                         replyIsToChannel = DataOperateEnum.SAVE;
                         break;

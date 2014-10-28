@@ -450,32 +450,55 @@ namespace AreaManagerPlugin.ViewModels
                         string MessageType = "MongoDataChannelService.findBusiData";
                         MessageOperation messageOp = new MessageOperation();
                         #region victop_core库
-                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                        contentDic.Add("systemid", "906");
-                        contentDic.Add("configsystemid", "906");
-                        contentDic.Add("modelid", "victop_model_scheme_0001");
-                        List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
-                        Dictionary<string, object> conDic = new Dictionary<string, object>();
-                        conDic.Add("name", "scheme");
-                        Dictionary<string, object> pageDic = new Dictionary<string, object>();
-                        pageDic.Add("size", 2);
-                        pageDic.Add("index", 1);
-                        conDic.Add("paging", pageDic);
-                        conDic.Add("tablecondition", "[{\"current_state\":100}]");
-                        conList.Add(conDic);
-                        contentDic.Add("conditions", conList);
-                        Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
-                        if (returnDic != null)
-                        {
-                            viewId = returnDic["DataChannelId"].ToString();
-                            List<object> pathList = new List<object>();
-                            pathList.Add("scheme");
-                            dataPath = JsonHelper.ToJson(pathList);
-                            DataOperation dataOp = new DataOperation();
-                            DataSet ds = new DataSet();
-                            ds = dataOp.GetData(viewId, dataPath);
-                            JsonDataTable = ds.Tables["dataArray"];
-                        }
+                        //Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        //contentDic.Add("systemid", "906");
+                        //contentDic.Add("configsystemid", "101");
+                        //contentDic.Add("modelid", "victop_model_client_0006");
+                        ////List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+                        ////Dictionary<string, object> conDic = new Dictionary<string, object>();
+                        ////conDic.Add("name", "scheme");
+                        ////Dictionary<string, object> pageDic = new Dictionary<string, object>();
+                        ////pageDic.Add("size", 2);
+                        ////pageDic.Add("index", 1);
+                        ////conDic.Add("paging", pageDic);
+                        ////conDic.Add("tablecondition", "[{\"current_state\":100}]");
+                        ////conList.Add(conDic);
+                        ////contentDic.Add("conditions", conList);
+                        //List<string> client_point_idList = new List<string>();
+                        //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        //if (returnDic != null)
+                        //{
+                        //    DataOperation dataOp = new DataOperation();
+                        //    viewId = returnDic["DataChannelId"].ToString();
+                        //    List<object> pathList = new List<object>();
+                        //    pathList.Add("pub_client");
+                        //    dataPath = JsonHelper.ToJson(pathList);
+                        //    DataSet mastDs = new DataSet();
+                        //    mastDs = dataOp.GetData(viewId, dataPath);
+                        //    JsonDataTable = mastDs.Tables["dataArray"];
+                        //    //DataSet mastDs = new DataSet();
+                        //    //mastDs = dataOp.GetData(viewId, JsonHelper.ToJson(pathList));
+                        //    //foreach (DataRow item in mastDs.Tables["dataArray"].Rows)
+                        //    //{
+                        //    //    pathList.Clear();
+                        //    //    pathList.Add("pub_client");
+                        //    //    Dictionary<string, object> subDic = new Dictionary<string, object>();
+                        //    //    subDic.Add("key", "_id");
+                        //    //    subDic.Add("value", item["_id"].ToString());
+                        //    //    pathList.Add(subDic);
+                        //    //    pathList.Add("client_point");
+                        //    //    dataPath = JsonHelper.ToJson(pathList);
+                        //    //    DataSet ds = new DataSet();
+
+                        //    //    ds = dataOp.GetData(viewId, dataPath);
+                        //    //    JsonDataTable = ds.Tables["dataArray"];
+                        //    //    foreach (DataRow subItem in JsonDataTable.Rows)
+                        //    //    {
+                        //    //        client_point_idList.Add(subItem["_id"].ToString());
+                        //    //    }
+                        //    //}
+
+                        //}
                         #endregion
                         #region tianlong库
                         //Dictionary<string, object> contentDic = new Dictionary<string, object>();
@@ -542,13 +565,19 @@ namespace AreaManagerPlugin.ViewModels
                         #endregion
 
                         #region 获取菜单
-                        //MessageType = "MongoDataChannelService.menu";
-                        //Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                        //contentDic.Add("userCode", "wangzhaoguang");
-                        //contentDic.Add("systemid", "906");
-                        //contentDic.Add("client_type", "1");
-                        //contentDic.Add("configsystemid", "906");
-                        //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        MessageType = "MongoDataChannelService.conveyor";
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        contentDic.Add("systemid", "906");
+                        contentDic.Add("configsystemid", "101");
+                        contentDic.Add("spaceId", "victop_core");
+                        contentDic.Add("conveyor_id", "06199465571a204e863bb421");
+                        List<object> list = new List<object>();
+                        list.Add("90aba5asfer7b6gy5");
+                        contentDic.Add("params", list);
+                        Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        viewId = returnDic["DataChannelId"].ToString();
+                        DataOperation dataOp = new DataOperation();
+                        string dataStr = dataOp.GetJSONData(viewId);
                         #endregion
                     }
                     catch (Exception ex)
@@ -583,9 +612,9 @@ namespace AreaManagerPlugin.ViewModels
                     //MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                     contentDic.Add("DataChannelId", viewId);
-                    contentDic.Add("modelid", "victop_model_scheme_0001");
+                    contentDic.Add("modelid", "victop_model_scheme_0005");
                     contentDic.Add("systemid", "906");
-                    contentDic.Add("configsystemid", "906");
+                    contentDic.Add("configsystemid", "101");
                     Dictionary<string, object> resultDic = messageOp.SendMessage("MongoDataChannelService.saveBusiData", contentDic, "JSON");
                     if (!resultDic["ReplyMode"].ToString().Equals("0"))
                     {

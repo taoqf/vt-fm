@@ -48,7 +48,11 @@ namespace AreaManagerPlugin
 
         public UserControl StartControl
         {
-            get { return new UCAreaWindow(); }
+            get
+            {
+                return new UCAreaWindow();
+                //return new UCSimpleDefWindow();
+            }
         }
 
         public void Init()
