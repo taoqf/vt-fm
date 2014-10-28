@@ -178,7 +178,19 @@ namespace AreaManagerPlugin.Views
 
         private void btnGetGroupUserInfo_Click(object sender, RoutedEventArgs e)
         {
-            string resultStr = WeChatOperation.GetUserInfo();
+            string resultStr = WeChatOperation.GetAllUserInfo();
+            resultStr = JsonHelper.ReadJsonString(resultStr, "data");
+            resultStr = JsonHelper.ReadJsonString(resultStr, "openid");
+            List<string> OpenIdList = JsonHelper.ToObject<List<string>>(resultStr);
+            DataTable dt = new DataTable();
+            dt.Columns.Add("OPENID");
+            foreach (string item in OpenIdList)
+            {
+                DataRow dr = dt.NewRow();
+                dr["OPENID"] = item;
+                dt.Rows.Add(dr);
+            }
+            datagriduserInfo.ItemsSource = dt.DefaultView;
         }
 
     }

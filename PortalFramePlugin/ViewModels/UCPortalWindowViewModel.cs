@@ -777,49 +777,6 @@ namespace PortalFramePlugin.ViewModels
                         return;
                     }
                 }
-                else if (selectedFourthMenu.ActionType == "0")//启动组件
-                {
-                    RunComponent(selectedFourthMenu);
-                }
-            }
-        }
-        /// <summary>
-        /// 启动组件
-        /// </summary>
-        /// <param name="selectedFourthMenu"></param>
-        private void RunComponent(MenuModel selectedFourthMenu)
-        {
-            Assembly assemblyLoad = ServerFactory.GetServerAssemblyByName("Victop.Frame.Templates", "", false);
-            string actionPath = string.Format("Victop.Frame.Templates.{0}", selectedFourthMenu.ResourceName);
-            TemplateControl control = (TemplateControl)assemblyLoad.CreateInstance(actionPath);
-            if (control == null)
-            {
-                VicMessageBoxNormal.Show("组件不存在");
-                return;
-            }
-            control.SystemId = selectedFourthMenu.BzSystemId;
-            control.FormId = selectedFourthMenu.FormId;
-            control.ModelId = selectedFourthMenu.ModelId;
-            control.MasterName = selectedFourthMenu.MasterName;
-            if (selectedFourthMenu.FitDataPath.Rows.Count != 0)
-            {
-                control.FitDataPath = selectedFourthMenu.FitDataPath.Rows[0]["value"].ToString();
-            }
-            if (selectedFourthMenu.ShowType == "1")//UserControl展示
-            {
-                VicTabItemNormal tabItem = new VicTabItemNormal();
-                tabItem.Header = selectedFourthMenu.MenuName;
-                tabItem.Content = control;
-                tabItem.AllowDelete = true;
-                tabItem.IsSelected = true;
-                TabItemList.Add(tabItem);
-            }
-            else if (selectedFourthMenu.ShowType == "0")//窗口展示
-            {
-                VicWindowNormal window = new VicWindowNormal();
-                window.Content = control;
-                window.Title = selectedFourthMenu.MenuName;
-                window.Show();
             }
         }
         #endregion
