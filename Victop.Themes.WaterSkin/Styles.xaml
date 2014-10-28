@@ -336,15 +336,15 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     </Style>
 
     <Style x:Key="DataGridRowStyle"  TargetType="DataGridRow">
-        <Setter Property="Background" Value="#F2F2F2" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Height" Value="25"/>
         <Setter Property="Foreground" Value="Black" />
         <Style.Triggers>
             <Trigger Property="AlternationIndex" Value="0" >
-                <Setter Property="Background" Value="#ffffff" />
+                <Setter Property="Background" Value="Transparent" />
             </Trigger>
             <Trigger Property="AlternationIndex" Value="1" >
-                <Setter Property="Background" Value="#fafafa" />
+                <Setter Property="Background" Value="Transparent" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#eceaea"/>
@@ -475,11 +475,15 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="BorderThickness" Value="0.5"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-        <Setter Property="Height" Value="40"></Setter>
+        <Setter Property="Height" Value="35"></Setter>
         <Setter Property="MinWidth" Value="80"></Setter>
-        <Setter Property="Background" Value="White"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="FontSize" Value="13" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="White" Opacity="0.8"></SolidColorBrush>
+            </Setter.Value>
+        </Setter>
     </Style>
     <!--DataGrid样式结束-->
 
