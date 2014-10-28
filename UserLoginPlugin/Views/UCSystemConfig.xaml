@@ -175,8 +175,8 @@
         </controls:VicTabControlNormal>
         <Border Grid.Row="1" BorderBrush="#024672" BorderThickness="0,1,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Style="{DynamicResource LoginButtonStyle}" Content="确定"  Command="{Binding btnConfirmClickCommand}" />
-                <Button Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消"  Command="{Binding btnCancelClickCommand}"/>
+                <controls:VicButtonNormal Style="{DynamicResource LoginButtonStyle}" Content="确定"  Command="{Binding btnConfirmClickCommand}" />
+                <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消"  Command="{Binding btnCancelClickCommand}"/>
             </StackPanel>
         </Border>
         <i:Interaction.Triggers>

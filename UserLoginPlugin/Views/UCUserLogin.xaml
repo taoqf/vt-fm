@@ -5,6 +5,7 @@
              xmlns:helpers="clr-namespace:UserLoginPlugin.Helpers"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="292" d:DesignWidth="389" Name="ucUserLongin">
     <Grid x:Name="gridMain">
@@ -28,9 +29,9 @@
                     <Grid HorizontalAlignment="Left" Height="15" Margin="3"   Width="71" Style="{DynamicResource LoginTopLeftGridStyle2}"/>
                 </DockPanel >
                 <DockPanel Grid.Column="2">
-                    <Button Content="" Name="btnSystemSet" HorizontalAlignment="Right"   Width="34" Style="{DynamicResource btnLoginSetStyle}" Height="34" Command="{Binding btnSystemSetClickCommand}"/>
-                    <Button Content="" Name="btnMini" HorizontalAlignment="Right"  Width="34" Style="{DynamicResource btnMiniStyle}" Height="34" Command="{Binding btnMiniClickCommand}" />
-                    <Button Content="" Name="btnClose" HorizontalAlignment="Right"  Width="34"  Style="{DynamicResource btnCloseStyle}" Height="34" Command="{Binding btnCloseClickCommand}"/>
+                    <controls:VicButtonNormal Content="" Name="btnSystemSet" HorizontalAlignment="Right"   Width="34" Style="{DynamicResource btnLoginSetStyle}" Height="34" Command="{Binding btnSystemSetClickCommand}"/>
+                    <controls:VicButtonNormal Content="" Name="btnMini" HorizontalAlignment="Right"  Width="34" Style="{DynamicResource btnMiniStyle}" Height="34" Command="{Binding btnMiniClickCommand}" />
+                    <controls:VicButtonNormal Content="" Name="btnClose" HorizontalAlignment="Right"  Width="34"  Style="{DynamicResource btnCloseStyle}" Height="34" Command="{Binding btnCloseClickCommand}"/>
                 </DockPanel>
             </Grid>
             <Grid  Grid.Row="1" HorizontalAlignment="Right" Height="41" Margin="0,8,8,0" VerticalAlignment="Top" Width="133" Style="{DynamicResource LoginTopRightGridStyle}" />
@@ -75,7 +76,7 @@
                 </ComboBox>
             </Grid>
             <TextBlock Grid.Row="2" Grid.Column="0" Padding="5,0,0,0" HorizontalAlignment="Left" Name="ErrLabel"  Text="{Binding ErrMsg}" Foreground="Red" Height="22"/>
-            <Button Grid.Row="2" Grid.Column="1" x:Name="btnLogin" Style="{DynamicResource LoginButtonStyle}" Content="{DynamicResource L_R_89}" Command="{Binding btnLoginClickCommand}" TabIndex="5" />
+            <controls:VicButtonNormal Grid.Row="2" Grid.Column="1" x:Name="btnLogin" Style="{DynamicResource LoginButtonStyle}" Content="{DynamicResource L_R_89}" Command="{Binding btnLoginClickCommand}" TabIndex="5" />
         </Grid>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">

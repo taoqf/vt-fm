@@ -26,11 +26,11 @@
                 <Border Grid.Row="0" HorizontalAlignment="Left" Style="{DynamicResource Line1}"/>
                 <StackPanel Orientation="Horizontal">
                     <Image Style="{DynamicResource Image1}"></Image>
-                    <TextBlock Text="工作接收区" Style="{DynamicResource GridTitle}"></TextBlock>
+                    <controls:VicTextBlockNormal Text="工作接收区" Style="{DynamicResource GridTitle}"></controls:VicTextBlockNormal>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
-                    <Button Content="下载文件"></Button>
-                    <Button Content="打开文件"></Button>
+                    <controls:VicButtonNormal Content="下载文件"></controls:VicButtonNormal>
+                    <controls:VicButtonNormal Content="打开文件"></controls:VicButtonNormal>
                 </StackPanel>
                 <controls:VicDataGrid x:Name="testGrid1" Grid.Row="1" AutoGenerateColumns="False" SelectionUnit="FullRow"></controls:VicDataGrid>
             </Grid>
@@ -42,12 +42,14 @@
                 <Border Grid.Row="0" HorizontalAlignment="Left" Style="{DynamicResource Line2}"/>
                 <StackPanel Orientation="Horizontal">
                     <Image Style="{DynamicResource Image2}"></Image>
-                    <TextBlock Text="工作上传区" Style="{DynamicResource GridTitle}"></TextBlock>
+                    <controls:VicTextBlockNormal Text="工作上传区" Style="{DynamicResource GridTitle}"></controls:VicTextBlockNormal>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
-                    <Button Content="新建"></Button>
-                    <Button Content="编辑"></Button>
-                    <Button Content="删除"></Button>
+                    <controls:VicButtonNormal Content="新建">
+                    </controls:VicButtonNormal>
+                        <controls:VicButtonNormal Content="编辑">
+                    </controls:VicButtonNormal>
+                    <controls:VicButtonNormal Content="删除"></controls:VicButtonNormal>
                 </StackPanel>
                 <controls:VicDataGrid x:Name="testGrid2" Grid.Row="1" AutoGenerateColumns="False"></controls:VicDataGrid>
             </Grid>
@@ -59,13 +61,16 @@
                 <Border Grid.Row="0" HorizontalAlignment="Left" Style="{DynamicResource Line3}"/>
                 <StackPanel Orientation="Horizontal">
                     <Image Style="{DynamicResource Image3}"></Image>
-                    <TextBlock Text="工序任务列表" Style="{DynamicResource GridTitle}"></TextBlock>
+                    <controls:VicTextBlockNormal Text="工序任务列表" Style="{DynamicResource GridTitle}"></controls:VicTextBlockNormal>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
-                    <Button Content="派发任务"></Button>
-                    <Button Content="问题反馈"></Button>
-                    <Button Content="开工"></Button>
-                    <Button Content="完工"></Button>
+                    <controls:VicButtonNormal Content="派发任务">
+                    </controls:VicButtonNormal>
+                        <controls:VicButtonNormal Content="问题反馈">
+                    </controls:VicButtonNormal>
+                            <controls:VicButtonNormal Content="开工">
+                    </controls:VicButtonNormal>
+                    <controls:VicButtonNormal Content="完工"></controls:VicButtonNormal>
                 </StackPanel>
                 <controls:VicDataGrid x:Name="testGrid3" Grid.Row="1" AutoGenerateColumns="False"></controls:VicDataGrid>
             </Grid>
