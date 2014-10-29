@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
-                    xmlns:local="clr-namespace:Victop.Themes.ClassicSkin"
+                    xmlns:local="clr-namespace:Victop.Themes.MetalSkin"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
 
     <local:ImgeNameToImageUrlConverter x:Key="ImgeNameToImageUrlConverter"/>
@@ -342,7 +342,7 @@
     </Style>
 
     <Style x:Key="MenuScrollViewer" TargetType="{x:Type ScrollViewer}">
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Width" Value="50"></Setter>
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="HorizontalScrollBarVisibility" Value="Hidden"/>
@@ -358,7 +358,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Rectangle x:Name="Corner" Grid.Column="1" StrokeThickness="{TemplateBinding BorderThickness}" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1"/>
+                        <Rectangle x:Name="Corner" Grid.Column="1" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1"/>
                         <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Margin="{TemplateBinding Padding}" Grid.Row="0"/>
                         <ScrollBar x:Name="PART_VerticalScrollBar" Style="{DynamicResource MenuScrollBar}" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}"/>
                         <ScrollBar x:Name="PART_HorizontalScrollBar" Style="{DynamicResource MenuScrollBar}" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"/>
@@ -735,7 +735,6 @@
         <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="FontWeight"  Value="Bold"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -746,26 +745,22 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Grid Background="{TemplateBinding Background}" Margin="0,10,0,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Image x:Name="img" Grid.Column="0" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
-                                    <Grid x:Name="grid" Grid.Column="1" Width="115" >
-                                        <TextBlock Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}" 
-                                                   TextWrapping="Wrap"
+                                <Grid x:Name="grid" Background="{TemplateBinding Background}">
+                                    <Popup x:Name="popup" IsOpen="False"
+            PlacementTarget="{Binding ElementName=grid}" 
+            Placement="Right">
+                                        <ScrollViewer x:Name="scrollViewerThirdMenu" Width="120" Style="{DynamicResource MenuScrollViewer}">
+                                            <Grid Style="{DynamicResource LeftGrid}">
+                                                <ListBox x:Name="listThirdMenuLocal" Style="{DynamicResource ListBoxThirdLevelMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
+                                                </ListBox>
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </Popup>
+                                    <StackPanel x:Name="txt" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0">
+                                        <Image x:Name="img" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
+                                        <TextBlock Margin="20,0,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}"
                                                    FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" Text="{Binding MenuName}" VerticalAlignment="Center"/>
-
-                                        <Popup x:Name="popup" IsOpen="False" PlacementTarget="{Binding ElementName=grid}" Placement="Right">
-                                            <ScrollViewer x:Name="scrollViewerThirdMenu" Style="{DynamicResource MenuScrollViewer}">
-                                                <Grid Style="{DynamicResource LeftGrid}">
-                                                    <ListBox x:Name="listThirdMenuLocal" Style="{DynamicResource ListBoxThirdLevelMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
-                                                    </ListBox>
-                                                </Grid>
-                                            </ScrollViewer>
-                                        </Popup>
-                                    </Grid>
+                                    </StackPanel>
                                 </Grid>
 
                                 <ControlTemplate.Triggers>
@@ -775,8 +770,6 @@
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
                                         <Setter Property="Foreground" Value="#24806F"/>
-                                    </Trigger>
-                                    <Trigger SourceName="grid" Property="IsMouseOver" Value="true">
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -824,8 +817,10 @@
                                 <Grid x:Name="grid" Background="{TemplateBinding Background}">
                                     <controls:VicRadioButtonNormal x:Name="rBtn" Style="{DynamicResource RadioButtonFirstLevelMenu}" Foreground="{TemplateBinding Foreground}" GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                     Content="{Binding MenuName}"/>
-                                    <Popup x:Name="popup" IsOpen="False" PlacementTarget="{Binding ElementName=grid}" Placement="Right">
-                                        <ScrollViewer x:Name="scrollViewerThirdMenu" Style="{DynamicResource MenuScrollViewer}">
+                                    <Popup x:Name="popup" IsOpen="False" 
+            PlacementTarget="{Binding ElementName=grid}" 
+            Placement="Right">
+                                        <ScrollViewer x:Name="scrollViewerThirdMenu" Width="120" Style="{DynamicResource MenuScrollViewer}">
                                             <Grid Style="{DynamicResource LeftGrid}">
                                                 <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
                                                 </ListBox>
@@ -918,14 +913,14 @@
     <Storyboard x:Key="MenuExpandStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
             <EasingDoubleKeyFrame KeyTime="0" Value="50"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="170"/>
+            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="200"/>
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
     <Storyboard x:Key="MenuCollapseStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
-            <EasingDoubleKeyFrame KeyTime="0" Value="170"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="50"/>
+            <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="50"/>
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
     <!--主窗体左侧工具栏结束-->

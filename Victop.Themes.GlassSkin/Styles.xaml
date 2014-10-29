@@ -796,7 +796,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     </Style>
 
     <Style x:Key="MenuScrollViewer" TargetType="{x:Type ScrollViewer}">
-        <Setter Property="Width" Value="50"></Setter>
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="HorizontalScrollBarVisibility" Value="Hidden"/>
@@ -1671,22 +1670,26 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Grid x:Name="grid" Background="{TemplateBinding Background}">
-                                    <Popup x:Name="popup" IsOpen="False" 
+                                <Grid Background="{TemplateBinding Background}" Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image x:Name="img" Grid.Column="0" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
+                                    <Grid x:Name="grid" Grid.Column="1" Width="115">
+                                        <TextBlock Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}" TextWrapping="Wrap"
+                                                   FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" Text="{Binding MenuName}" VerticalAlignment="Center"/>
+                                        <Popup x:Name="popup" IsOpen="False" 
             PlacementTarget="{Binding ElementName=grid}" 
             Placement="Right">
-                                        <ScrollViewer x:Name="scrollViewerThirdMenu" Width="120" Style="{DynamicResource MenuScrollViewer}">
-                                            <Grid Style="{DynamicResource LeftGrid}">
-                                                <ListBox x:Name="listThirdMenuLocal" Style="{DynamicResource ListBoxThirdLevelMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
-                                                </ListBox>
-                                            </Grid>
-                                        </ScrollViewer>
-                                    </Popup>
-                                    <StackPanel x:Name="txt" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,10,0,0">
-                                        <Image x:Name="img" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
-                                        <TextBlock Margin="20,0,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}"
-                                                   FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" Text="{Binding MenuName}" VerticalAlignment="Center"/>
-                                    </StackPanel>
+                                            <ScrollViewer x:Name="scrollViewerThirdMenu" Style="{DynamicResource MenuScrollViewer}">
+                                                <Grid Style="{DynamicResource LeftGrid}">
+                                                    <ListBox x:Name="listThirdMenuLocal" Style="{DynamicResource ListBoxThirdLevelMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
+                                                    </ListBox>
+                                                </Grid>
+                                            </ScrollViewer>
+                                        </Popup>
+                                    </Grid>
                                 </Grid>
 
                                 <ControlTemplate.Triggers>
@@ -1696,6 +1699,8 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
                                         <Setter Property="Foreground" Value="#24806F"/>
+                                    </Trigger>
+                                    <Trigger SourceName="grid" Property="IsMouseOver" Value="true">
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -1746,7 +1751,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                     <Popup x:Name="popup" IsOpen="False" 
             PlacementTarget="{Binding ElementName=grid}" 
             Placement="Right">
-                                        <ScrollViewer x:Name="scrollViewerThirdMenu" Width="120" Style="{DynamicResource MenuScrollViewer}">
+                                        <ScrollViewer x:Name="scrollViewerThirdMenu" Style="{DynamicResource MenuScrollViewer}">
                                             <Grid Style="{DynamicResource LeftGrid}">
                                                 <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
                                                 </ListBox>
@@ -1839,14 +1844,14 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     <Storyboard x:Key="MenuExpandStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
             <EasingDoubleKeyFrame KeyTime="0" Value="50"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="180"/>
+            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="170"/>
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
     <Storyboard x:Key="MenuCollapseStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
-            <EasingDoubleKeyFrame KeyTime="0" Value="180"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="50"/>
+            <EasingDoubleKeyFrame KeyTime="0" Value="170"/>
+            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="50"/>
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
     <!--主窗体左侧工具栏结束-->
@@ -2312,7 +2317,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="left_TabItemStyle" TargetType="{x:Type controls:VicTabItemNormal}">
+    <Style x:Key="left_TabItemStyle" TargetType="{x:Type TabItem}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Width" Value="13"></Setter>
         <Setter Property="MinHeight" Value="60"></Setter>
@@ -2321,7 +2326,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VicTabItemNormal}">
+                <ControlTemplate TargetType="{x:Type TabItem}">
                     <Border x:Name="border" BorderThickness="0" Background="Transparent">
                         <TextBlock x:Name="buttonText"  TextWrapping="Wrap" TextBlock.FontFamily="Calibri" Foreground="Black" TextAlignment="Center" TextBlock.FontSize="14" Text="{TemplateBinding Header}" />
                     </Border>
@@ -2335,7 +2340,6 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
     </Style>
     <!--左TabControl样式结束-->
 
@@ -2406,7 +2410,8 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
             </Setter.Value>
         </Setter>
     </Style>
-    <!--VicCheckBox样式开始-->
+    <!--VicCheckBox样式结束-->
+    
     <!--VicComboBoxNormal样式开始-->
     <controls:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <Geometry x:Key="DownArrowGeometry">M 0 0 L 3.5 4 L 7 0 Z</Geometry>
@@ -2512,9 +2517,9 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
             </Setter.Value>
         </Setter>
     </Style>
-    <!--VicComboBoxNormal样式开始-->
+    <!--VicComboBoxNormal样式结束-->
+    
     <!--VicTextBoxNormal样式开始-->
-
     <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
     <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
