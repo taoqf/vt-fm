@@ -37,7 +37,7 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </controls:VicRadioButtonNormal>
-                    <ListBox x:Name="listSecondMenuLocal" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
+                    <ListBox x:Name="listSecondMenuLocal" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
                     </ListBox>
                     <controls:VicRadioButtonNormal Content="企业云" Style="{DynamicResource RadioButtonFirstLevelMenu}">
                         <i:Interaction.Triggers>
