@@ -25,7 +25,7 @@
                 <ControlTemplate TargetType="{x:Type controls:VicWindowNormal}">
                     <Grid >
                         <Grid.Background>
-                            <ImageBrush ImageSource="..\Images\background.png"/>
+                            <ImageBrush ImageSource="..\Images\messagebackground.png"/>
                         </Grid.Background>
                         <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" CornerRadius="0">
                             <Grid Name="gridRoot">
