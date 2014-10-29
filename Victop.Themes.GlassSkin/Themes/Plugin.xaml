@@ -398,9 +398,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                             <ColumnDefinition Width="13"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Border Background="Transparent" Opacity="0.6" Grid.Column="0" BorderThickness="0"/>
                         <StackPanel IsItemsHost="True" Grid.Column="0" Margin="0" />
-                        <Border Background="#FAFAFA" Opacity="0.6" Grid.Column="1" BorderBrush="Transparent" BorderThickness="1" SnapsToDevicePixels="True" />
                         <ContentPresenter Content="{TemplateBinding SelectedContent}" Grid.Column="1" Margin="1,0,0,0" />
                     </Grid>
                 </ControlTemplate>
