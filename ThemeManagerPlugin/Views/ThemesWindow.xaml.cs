@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -24,11 +25,28 @@ namespace ThemeManagerPlugin.Views
     /// </summary>
     public partial class ThemesWindow : Victop.Wpf.Controls.VicWindowNormal
     {
-
+        Storyboard stdEnd;
         public ThemesWindow()
         {
             InitializeComponent();
+            stdEnd = (Storyboard)portalWindow.Resources["end"];
         }
+
+        private void ThemesWindow_OnClosed(object sender, EventArgs e)
+        {
+            //MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            //if (result == MessageBoxResult.Yes)
+            //{
+            //    this.stdEnd.Begin();
+            //    stdEnd.Completed += (c, d) =>
+            //    {
+            //        portalWindow.Close();
+                   
+            //    };  
+            //}
+        }
+        
+       
     }
 
 }

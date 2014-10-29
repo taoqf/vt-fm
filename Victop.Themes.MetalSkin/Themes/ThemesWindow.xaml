@@ -34,29 +34,15 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="auto"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Grid Name="gridTitleBar" Grid.Row="0" Background="#518c9b">
+                                <Grid Name="gridTitleBar" Grid.Row="0" Background="#1e1e1e">
                                     <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="White"/>
-                                    <controls:VicButtonNormal x:Name="btnMini" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right" Margin="0,0,66,0" VerticalAlignment="Top"  Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最小化">
-                                        <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
-                                  SnapsToDevicePixels="True"
-                                  Fill="White" />
-                                    </controls:VicButtonNormal>
-                                    <controls:VicButtonNormal x:Name="btnMax" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  Margin="0,0,33,0" VerticalAlignment="Top" Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最大化">
-                                        <Grid>
-                                            <Path x:Name="MaximisePath"
-                                      SnapsToDevicePixels="True"
-                                      Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"
-                                      Fill="White" />
-                                            <Path x:Name="RestorePath"
-                                      SnapsToDevicePixels="True"
-                                      Data="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z"
-                                      Fill="White" />
-                                        </Grid>
+                                    <controls:VicButtonNormal x:Name="btnMini" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Top"  Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最小化">
+                                        <Line x:Name="PART_Path" X1="2"  X2="18" Y1="2" Y2="2" Stroke="White"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </controls:VicButtonNormal>
                                     <controls:VicButtonNormal x:Name="btnClose"  Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  VerticalAlignment="Top" Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="关闭">
                                         <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
                                   SnapsToDevicePixels="True"
-                                  Fill="White" />
+                                  Fill="White"   VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     </controls:VicButtonNormal>
                                 </Grid>
                                 <Grid Name="gridBody" Grid.Row="1">
@@ -78,14 +64,14 @@
         </Setter>
     </Style>
     <Style  x:Key="RadioButtonListStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"   Value="Auto"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
-                    </ScrollViewer>
+                    <WrapPanel Orientation="Horizontal" IsItemsHost="True" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -4,31 +4,36 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:ThemeManagerPlugin.ViewModels" 
         xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
-       Title="飞道皮肤中心" Height="531" Width="680" Style="{DynamicResource WindowChangeSkin}">
+       Title="飞道皮肤中心" Name="portalWindow" Height="600" Width="680"  WindowStartupLocation="CenterScreen" Style="{DynamicResource WindowChangeSkin}" ResizeMode="NoResize">
+    <!--<controls:VicWindowNormal.Resources>
+        <Storyboard x:Key="end" Completed="mainstory_Completed">
+            <DoubleAnimation Storyboard.TargetName="portalWindow" Storyboard.TargetProperty="(Window.Width)" From="680" To="0" Duration="0:0:0.5" />
+        </Storyboard>
+    </controls:VicWindowNormal.Resources>-->
     <controls:VicWindowNormal.DataContext>
         <vm:UCThemesWindowViewModel/>
     </controls:VicWindowNormal.DataContext>
-        <Grid >
-            <Grid.RowDefinitions>
-                <RowDefinition RowDefinition.Height="30"/>
-                <RowDefinition RowDefinition.Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid   Grid.Row="0"  >
-                <TextBlock HorizontalAlignment="Left" Margin="543,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" Text="共有"/>
-                <TextBlock Name="tblockSkinNum" Text="{Binding SkinNum}" HorizontalAlignment="Left" Margin="570,7,0,0" TextWrapping="Wrap"   VerticalAlignment="Top" Width="22" Height="16" TextAlignment="Center"/>
-                <TextBlock HorizontalAlignment="Left" Margin="594,7,0,0" TextWrapping="Wrap" Text="款皮肤" VerticalAlignment="Top" RenderTransformOrigin="0.655,-0.688"/>
-            </Grid>
-            <ListBox Name="listBoxThemeList" Grid.Row="1"  SelectedItem="{Binding SelectedListBoxItem}"   Style="{DynamicResource RadioButtonListStyle}" ItemsSource="{Binding SystemThemeList,UpdateSourceTrigger=PropertyChanged}"  >
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding listBoxSystemThemeListSelectionChangedCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ListBox>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition RowDefinition.Height="30"/>
+            <RowDefinition RowDefinition.Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid   Grid.Row="0"  >
+            <TextBlock HorizontalAlignment="Left" Margin="543,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" Text="共有"/>
+            <TextBlock Name="tblockSkinNum" Text="{Binding SkinNum}" HorizontalAlignment="Left" Margin="570,7,0,0" TextWrapping="Wrap"   VerticalAlignment="Top" Width="22" Height="16" TextAlignment="Center"/>
+            <TextBlock HorizontalAlignment="Left" Margin="594,7,0,0" TextWrapping="Wrap" Text="款皮肤" VerticalAlignment="Top" RenderTransformOrigin="0.655,-0.688"/>
         </Grid>
+        <ListBox Name="listBoxThemeList" Grid.Row="1"  SelectedItem="{Binding SelectedListBoxItem}"   Style="{DynamicResource RadioButtonListStyle}" ItemsSource="{Binding SystemThemeList,UpdateSourceTrigger=PropertyChanged}"  >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding listBoxSystemThemeListSelectionChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ListBox>
+    </Grid>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding gridMainLoadedCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-</controls:VicWindowNormal>
+    </controls:VicWindowNormal>

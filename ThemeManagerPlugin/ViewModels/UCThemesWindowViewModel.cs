@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using GalaSoft.MvvmLight.Command;
 using ThemeManagerPlugin.Models;
 using Victop.Frame.PublicLib.Helpers;
@@ -21,6 +22,7 @@ namespace ThemeManagerPlugin.ViewModels
     public class UCThemesWindowViewModel : ModelBase
     {
         #region 字段&属性
+       
         /// <summary>皮肤列表 </summary>
         private ObservableCollection<ThemeModel> _systemThemeList;
         public ObservableCollection<ThemeModel> SystemThemeList
