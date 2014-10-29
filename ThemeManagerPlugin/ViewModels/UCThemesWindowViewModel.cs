@@ -22,7 +22,8 @@ namespace ThemeManagerPlugin.ViewModels
     public class UCThemesWindowViewModel : ModelBase
     {
         #region 字段&属性
-       
+        Storyboard stdEnd;
+        private Window portalWindow;
         /// <summary>皮肤列表 </summary>
         private ObservableCollection<ThemeModel> _systemThemeList;
         public ObservableCollection<ThemeModel> SystemThemeList
@@ -81,13 +82,40 @@ namespace ThemeManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand <object>((x) =>
                 {
+                   
+                    portalWindow = (Window)x;
+                    stdEnd = (Storyboard)portalWindow.Resources["end"];
+                    stdEnd.Completed += (c, d) =>
+                    {
+                       portalWindow.Close();
+                    };
+                 
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
                 });
             }
         }
+
+        #region 窗体关闭命令
+        public ICommand btnCloseClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    //MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                    //if (result == MessageBoxResult.Yes)
+                    //{
+                        stdEnd.Begin();
+                    //}
+                });
+            }
+        }
+        #endregion
+
+     
 
         /// <summary>
         /// 获取主题文件夹中默认皮肤路径

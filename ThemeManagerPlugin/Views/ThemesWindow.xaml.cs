@@ -23,30 +23,15 @@ namespace ThemeManagerPlugin.Views
     /// <summary>
     /// ThemesWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class ThemesWindow : Victop.Wpf.Controls.VicWindowNormal
+    public partial class ThemesWindow : Window
     {
-        Storyboard stdEnd;
+
         public ThemesWindow()
         {
             InitializeComponent();
-            stdEnd = (Storyboard)portalWindow.Resources["end"];
+
         }
 
-        private void ThemesWindow_OnClosed(object sender, EventArgs e)
-        {
-            //MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
-            //if (result == MessageBoxResult.Yes)
-            //{
-            //    this.stdEnd.Begin();
-            //    stdEnd.Completed += (c, d) =>
-            //    {
-            //        portalWindow.Close();
-                   
-            //    };  
-            //}
-        }
-        
-       
     }
 
 }
