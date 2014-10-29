@@ -278,7 +278,7 @@ namespace Victop.Frame.Connection
             messageInfo.MessageType = "MongoDataChannelService.menu";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("systemid", "906");
-            contentDic.Add("client_type", "1");
+            contentDic.Add("client_type_val", "1");
             contentDic.Add("configsystemid", "906");
             string userCode = messageInfo.MessageContent.Contains("usercode") ? JsonHelper.ReadJsonString(messageInfo.MessageContent, "usercode") : JsonHelper.ReadJsonString(messageInfo.MessageContent, "userCode");
             contentDic.Add("userCode", userCode);
