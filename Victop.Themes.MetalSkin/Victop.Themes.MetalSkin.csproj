@@ -31,7 +31,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
+    <OutputPath>..\Bin\theme\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -245,46 +245,46 @@
     <Resource Include="Images\UserPictrue.png" />
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="Themes\Colors.xaml">
+    <Page Include="Themes\Colors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </CodeAnalysisDictionary>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="Themes\Common.xaml">
+    <Page Include="Themes\Common.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </CodeAnalysisDictionary>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="Themes\Plugin.xaml">
+    <Page Include="Themes\Plugin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </CodeAnalysisDictionary>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="Themes\PortalWindow.xaml">
+    <Page Include="Themes\PortalWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </CodeAnalysisDictionary>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="Themes\ThemesWindow.xaml">
+    <Page Include="Themes\ThemesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </CodeAnalysisDictionary>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="Themes\UCUserLogin.xaml">
+    <Page Include="Themes\UCUserLogin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </CodeAnalysisDictionary>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDictionary Include="Styles.xaml">
+    <Page Include="Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </CodeAnalysisDictionary>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\background.png" />

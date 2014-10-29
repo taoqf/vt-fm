@@ -46,12 +46,7 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </controls:VicRadioButtonNormal>
-                    <ListBox x:Name="listSecondMenuEnterprise" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" BorderBrush="#F1F3F5" BorderThickness="0" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListEnterprise,UpdateSourceTrigger=PropertyChanged}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding listSecondMenuEnterpriseSelectionChangedCommand}" CommandParameter="{Binding ElementName=listSecondMenuEnterprise,Path=SelectedItem}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                    <ListBox x:Name="listSecondMenuEnterprise" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListEnterprise,UpdateSourceTrigger=PropertyChanged}">
                     </ListBox>
                 </StackPanel>
             </Grid>

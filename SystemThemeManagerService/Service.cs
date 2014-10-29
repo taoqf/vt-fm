@@ -104,7 +104,7 @@ namespace SystemThemeManagerService
                     switch (CurrentMessageType)
                     {
                         case "ServerCenterService.ChangeTheme"://换肤
-                            //ChangeFrameWorkTheme(SourceName);
+                            ChangeFrameWorkTheme(SourceName);
                             result = true;
                             break;
                         case "ServerCenterService.ChangeThemeByDll"://换肤
