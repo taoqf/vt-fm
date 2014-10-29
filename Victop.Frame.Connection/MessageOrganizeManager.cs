@@ -1557,7 +1557,10 @@ namespace Victop.Frame.Connection
                 {
                     dicContent.Add("crudlist", new List<object>());
                 }
-                dicContent["crudlist"] = JsonHelper.ToObject<List<object>>(dataXml);
+                if (!string.IsNullOrEmpty(dataXml))
+                {
+                    dicContent["crudlist"] = JsonHelper.ToObject<List<object>>(dataXml);
+                }
             }
             return dicContent;
         }
