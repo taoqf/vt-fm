@@ -60,7 +60,12 @@
     <Style x:Key="RightGrid" TargetType="{x:Type Grid}">
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="White" Opacity="0.6"></SolidColorBrush>
+                <LinearGradientBrush EndPoint="0.75,0" StartPoint="0.25,0.75" MappingMode="RelativeToBoundingBox">
+                    <GradientStop Color="#33FFFFFF" Offset="0"/>
+                    <GradientStop Color="#80FFFFFF" Offset="0.616"/>
+                    <GradientStop Color="#40FFFFFF" Offset="0.612"/>
+                    <GradientStop Color="#33FFFFFF" Offset="1"/>
+                </LinearGradientBrush>
             </Setter.Value>
         </Setter>
     </Style>

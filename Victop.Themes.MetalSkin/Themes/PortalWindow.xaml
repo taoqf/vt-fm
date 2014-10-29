@@ -435,7 +435,10 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="White" Opacity="0.6"/>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop Color="#FF333333"/>
+                    <GradientStop Offset="0.776" Color="#FF232323"/>
+                </LinearGradientBrush>
             </Setter.Value>
         </Setter>
         <Setter Property="ItemContainerStyle">

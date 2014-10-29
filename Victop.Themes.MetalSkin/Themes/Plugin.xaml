@@ -60,7 +60,7 @@
     <Style x:Key="RightGrid" TargetType="{x:Type Grid}">
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="White" Opacity="0.6"></SolidColorBrush>
+                <SolidColorBrush Color="#393939"></SolidColorBrush>
             </Setter.Value>
         </Setter>
     </Style>
@@ -236,15 +236,15 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     </Style>
 
     <Style x:Key="DataGridRowStyle"  TargetType="DataGridRow">
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background" Value="#414141" />
         <Setter Property="Height" Value="25"/>
         <Setter Property="Foreground" Value="Black" />
         <Style.Triggers>
             <Trigger Property="AlternationIndex" Value="0" >
-                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Background" Value="#414141" />
             </Trigger>
             <Trigger Property="AlternationIndex" Value="1" >
-                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Background" Value="#414141" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#eceaea"/>
@@ -299,15 +299,14 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="CanUserResizeColumns" Value="True"/>
         <Setter Property="AutoGenerateColumns" Value="True"/>
         <Setter Property="CanUserAddRows" Value="False"/>
-        <Setter Property="BorderBrush" Value="#d6c79b" />
         <Setter Property="HorizontalGridLinesBrush">
             <Setter.Value>
-                <SolidColorBrush Color="#d6d8da"/>
+                <SolidColorBrush Color="Black"/>
             </Setter.Value>
         </Setter>
         <Setter Property="VerticalGridLinesBrush">
             <Setter.Value>
-                <SolidColorBrush Color="#d6d8da"/>
+                <SolidColorBrush Color="Black"/>
             </Setter.Value>
         </Setter>
         <Setter Property="AlternationCount" Value="2"></Setter>
@@ -381,7 +380,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="White" Opacity="0.8"></SolidColorBrush>
+                <SolidColorBrush Color="#262626"></SolidColorBrush>
             </Setter.Value>
         </Setter>
     </Style>
