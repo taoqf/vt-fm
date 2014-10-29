@@ -10,7 +10,7 @@
     <controls:TextInputToVisibilityConverter x:Key="TextInputToVisibilityConverter" />
 
     <Style x:Key="WindowButtonStyle" TargetType="{x:Type controls:VicButtonNormal}">
-        <Setter Property="Background" Value="#31527d" />
+        <Setter Property="Background" Value="#92a3a9" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="HorizontalContentAlignment"  Value="Center" />
         <Setter Property="VerticalContentAlignment"  Value="Center" />
@@ -36,7 +36,7 @@
                                     Value="1" />
                             <Setter TargetName="grid"
                                     Property="Background"
-                                    Value="#31527d" />
+                                    Value="#92a3a9" />
 
                         </Trigger>
                         <Trigger Property="IsMouseOver"
@@ -49,7 +49,7 @@
                                  Value="True">
                             <Setter TargetName="grid"
                                     Property="Background"
-                                    Value="#31527d" />
+                                    Value="#92a3a9" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
@@ -84,7 +84,7 @@
                                 <RowDefinition Height="40"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Border Name="brTitle" Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,1">
-                                <Grid Name="gridTitle"  Background="#31527d">
+                                <Grid Name="gridTitle"  Background="#92a3a9">
                                     <Label Name="lblTitle"  HorizontalAlignment="Left"  Margin="10,0,0,0" VerticalAlignment="Center" FontSize="16px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="White"/>
                                     <controls:VicButtonNormal x:Name="btnClose"  HorizontalAlignment="Right" Style="{DynamicResource WindowButtonStyle}"  VerticalAlignment="Top" Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="关闭">
                                         <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z" SnapsToDevicePixels="True" Fill="White" />
@@ -140,11 +140,11 @@
                                                             </Border>
                                                             <ControlTemplate.Triggers>
                                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                                    <Setter Property="Background" TargetName="border" Value="#31527d"/>
+                                                                    <Setter Property="Background" TargetName="border" Value="#92a3a9"/>
                                                                     <Setter Property="Foreground" Value="White"/>
                                                                 </Trigger>
                                                                 <Trigger Property="IsPressed" Value="true">
-                                                                    <Setter Property="Background" TargetName="border" Value="#31527d"/>
+                                                                    <Setter Property="Background" TargetName="border" Value="#92a3a9"/>
                                                                     <Setter Property="Foreground" Value="White"/>
                                                                 </Trigger>
                                                                 <Trigger Property="IsEnabled" Value="false">
