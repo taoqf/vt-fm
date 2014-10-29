@@ -114,7 +114,7 @@
                     </controls:VicButtonNormal>
                 </StackPanel>
             </Grid>
-            <Grid Name="gridMid" Grid.Column="1" Grid.Row="1" Style="{DynamicResource MainGrid}">
+            <Grid Name="gridMid" Grid.Column="1" Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition ColumnDefinition.Width="0" />
                     <ColumnDefinition ColumnDefinition.Width="*" />
