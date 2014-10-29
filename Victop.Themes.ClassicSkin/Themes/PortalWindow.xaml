@@ -3,7 +3,6 @@
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
                     xmlns:local="clr-namespace:Victop.Themes.ClassicSkin"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
-
     <local:ImgeNameToImageUrlConverter x:Key="ImgeNameToImageUrlConverter"/>
 
     <Style x:Key="ShadowWindow" TargetType="{x:Type Window}">
@@ -731,7 +730,7 @@
     <Style x:Key="ListBoxSecondLevelMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="#CBCBCB"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"></Setter>
         <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="FontWeight"  Value="Bold"/>
@@ -774,7 +773,7 @@
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
-                                        <Setter Property="Foreground" Value="#24806F"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"/>
                                     </Trigger>
                                     <Trigger SourceName="grid" Property="IsMouseOver" Value="true">
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
@@ -810,7 +809,7 @@
     <Style x:Key="ListBoxThirdLevelMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="#CBCBCB"/>
+        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -836,10 +835,10 @@
 
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsSelected" Value="true">
-                                        <Setter Property="Foreground" Value="#24806F"></Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"></Setter>
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Foreground" Value="#24806F"></Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"></Setter>
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -873,7 +872,7 @@
     <Style x:Key="ListBoxFourthMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="#CBCBCB"/>
+        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -891,7 +890,7 @@
                     </Setter>
                     <Style.Triggers>
                         <Trigger  Property="IsMouseOver" Value="true">
-                            <Setter Property="Foreground" Value="#24806F"></Setter>
+                            <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"></Setter>
                         </Trigger>
                     </Style.Triggers>
                 </Style>

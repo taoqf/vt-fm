@@ -1,6 +1,81 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--皮肤主题颜色-->
+    <SolidColorBrush x:Key="SkinColor" Color="#518c9b"/>
+
+    <!--皮肤前景色-->
+    <SolidColorBrush x:Key="SkinForeground" Color="Black"/>
+
+    <!--皮肤边框颜色-->
+    <SolidColorBrush x:Key="SkinBorderBrush" Color="Gainsboro"/>
+
+    <!--皮肤边框鼠标移上颜色-->
+    <SolidColorBrush x:Key="SkinOverBorderBrush" Color="#F8F7F6"/>
+
+    <!--皮肤背景色-->
+    <SolidColorBrush x:Key="SkinBackground" Color="#FAFAFA"/>
+
+    <!--白色遮罩-->
+    <SolidColorBrush x:Key="WhiteShade" Color="White" Opacity="0.6"/>
+
+    <!--左侧工具栏字体颜色-->
+    <SolidColorBrush x:Key="LeftMenuForeground" Color="#CBCBCB"/>
+    
+    <!--左侧工具栏鼠标移上字体颜色-->
+    <SolidColorBrush x:Key="LeftMenuOverForeground" Color="#24806F"/>
+    
+    <!--窗体关闭按钮前景色-->
+    <SolidColorBrush x:Key="WinCloseForeground" Color="White"/>
+
+    <!--按钮不可用时的前景色-->
+    <SolidColorBrush x:Key="BtnDisableForeground" Color="#ADADAD"/>
+
+    <!--按钮不可用时的背景色-->
+    <SolidColorBrush x:Key="BtnDisableBackground" Color="#F4F4F4"/>
+
+    <!--弹出消息框边框颜色-->
+    <SolidColorBrush x:Key="MsgBoxBorderBrush" Color="#024672"/>
+    
+    <!--弹出消息框标题颜色-->
+    <SolidColorBrush x:Key="MsgBoxTitleColor" Color="White"/>
+    
+    <!--弹出消息框按钮鼠标移上前景色-->
+    <SolidColorBrush x:Key="MsgBoxBtnOverForeground" Color="White"/>
+    
+    <!--DataGrid行背景色-->
+    <SolidColorBrush x:Key="DataGridRowBackground" Color="Transparent"/>
+
+    <!--DataGrid行前景色-->
+    <SolidColorBrush x:Key="DataGridRowForeground" Color="Black"/>
+
+    <!--DataGrid行鼠标移上背景色-->
+    <SolidColorBrush x:Key="DataGridRowOverBgColor" Color="#eceaea"/>
+
+    <!--DataGrid行选中前景色-->
+    <SolidColorBrush x:Key="DataGridRowSelectForeColor" Color="Black"/>
+
+    <!--DataGrid行选中背景色-->
+    <SolidColorBrush x:Key="DataGridRowSelectBgColor" Color="LightGray"/>
+
+    <!--DataGrid间隔线色-->
+    <SolidColorBrush x:Key="DataGridLineColor" Color="#d6d8da"/>
+    
+    <!--DataGrid列标题背景色-->
+    <SolidColorBrush x:Key="DataGridHeaderBgColor" Color="White" Opacity="0.8"></SolidColorBrush>
+
+    <!--DataGrid列标题前景色-->
+    <SolidColorBrush x:Key="DataGridHeaderForeColor" Color="Black"></SolidColorBrush>
+    
+    <!--选项卡标题前景色-->
+    <SolidColorBrush x:Key="TabItemForeColor" Color="Black"/>
+
+    <!--选项卡标题选中前景色-->
+    <SolidColorBrush x:Key="TabItemSelectForeColor" Color="White"/>
+
+    <!--选项卡标题选中背景色-->
+    <SolidColorBrush x:Key="TabItemSelectBgColor" Color="Black"/>
+
     <SolidColorBrush x:Key="StandardBorderBrush" Color="#d8e9f0" />
     <SolidColorBrush x:Key="StandardBackgroundBrush" Color="#FFF" />
     <SolidColorBrush x:Key="HoverBorderBrush" Color="#DDD" />

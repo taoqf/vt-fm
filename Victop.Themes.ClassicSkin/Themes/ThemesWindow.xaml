@@ -26,7 +26,7 @@
         </Setter>
     </Style>
     <Style x:Key="WindowChangeSkinTitleBackGround" TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="#518c9b"/>
+        <Setter Property="Background" Value="{DynamicResource SkinColor}"/>
     </Style>
     <Style  x:Key="RadioButtonListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="HorizontalAlignment" Value="Left" />

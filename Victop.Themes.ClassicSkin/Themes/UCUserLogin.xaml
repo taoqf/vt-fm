@@ -2,7 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
-
     <Style x:Key="loginWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
         <Setter Property="AllowsTransparency" Value="true"/>
@@ -172,10 +171,7 @@
     </Style>
 
     <Style x:Key="loginTopGridStyle" TargetType="{x:Type Grid}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="#518c9b"/>
-            </Setter.Value>
+        <Setter Property="Background" Value="{DynamicResource SkinColor}">
         </Setter>
     </Style>
 
@@ -215,10 +211,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#518c9b"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinColor}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="#518c9b"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinColor}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="White"/>
