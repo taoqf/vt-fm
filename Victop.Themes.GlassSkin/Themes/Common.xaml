@@ -75,7 +75,7 @@
                 <ControlTemplate TargetType="{x:Type controls:VicMessageBoxNormal}">
                     <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"   CornerRadius="0">
                         <Border.Background>
-                            <ImageBrush  ImageSource="..\Images\loginbg.png"></ImageBrush>
+                            <ImageBrush  ImageSource="..\Images\background.png"></ImageBrush>
                         </Border.Background>
                         <Grid Name="gridRoot">
                             <Grid.RowDefinitions>

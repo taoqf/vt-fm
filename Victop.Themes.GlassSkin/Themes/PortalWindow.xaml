@@ -434,10 +434,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="White" Opacity="0.6"/>
-            </Setter.Value>
+        <Setter Property="Background" Value="Transparent">
         </Setter>
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
