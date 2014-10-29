@@ -17,51 +17,16 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="WindowChangeSkin" TargetType="{x:Type controls:VicWindowNormal}">
-        <Setter Property="BorderBrush" Value="#024672"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Template">
+    
+    <Style x:Key="WindowChangeSkinBackground" TargetType="{x:Type Grid}">
+        <Setter Property="Background" >
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VicWindowNormal}">
-                    <Grid >
-                        <Grid.Background>
-                            <ImageBrush ImageSource="..\Images\background.png"/>
-                        </Grid.Background>
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" CornerRadius="0">
-                            <Grid Name="gridRoot">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="60"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="auto"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Grid Name="gridTitleBar" Grid.Row="0" Background="#1e1e1e">
-                                    <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="White"/>
-                                    <controls:VicButtonNormal x:Name="btnMini" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalAlignment="Top"  Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最小化">
-                                        <Line x:Name="PART_Path" X1="2"  X2="18" Y1="2" Y2="2" Stroke="White"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </controls:VicButtonNormal>
-                                    <controls:VicButtonNormal x:Name="btnClose"  Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  VerticalAlignment="Top" Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="关闭">
-                                        <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
-                                  SnapsToDevicePixels="True"
-                                  Fill="White"   VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    </controls:VicButtonNormal>
-                                </Grid>
-                                <Grid Name="gridBody" Grid.Row="1">
-                                    <Grid.Background>
-                                        <SolidColorBrush Color="White" Opacity="0.6"/>
-                                    </Grid.Background>
-                                    <AdornerDecorator>
-                                        <ContentPresenter/>
-                                    </AdornerDecorator>
-                                </Grid>
-                                <Grid Name="statusBar" Grid.Row="2" Visibility="Collapsed">
-                                    <Label Content="状态栏" FontFamily="SimSun"  Foreground="#828282" Padding="15,0,0,0"></Label>
-                                </Grid>
-                            </Grid>
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
+                <ImageBrush ImageSource="..\Images\background.png"/>
             </Setter.Value>
         </Setter>
+    </Style>
+    <Style x:Key="WindowChangeSkinTitleBackGround" TargetType="{x:Type Grid}">
+        <Setter Property="Background" Value="#1e1e1e"/>
     </Style>
     <Style  x:Key="RadioButtonListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="HorizontalAlignment" Value="Center" />
