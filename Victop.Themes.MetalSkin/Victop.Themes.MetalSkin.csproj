@@ -285,6 +285,7 @@
     <Resource Include="Images\background.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\logo1.png" />
     <Content Include="Images\组合 2 对象3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
