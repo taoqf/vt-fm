@@ -24,7 +24,31 @@
     
     <!--左侧工具栏鼠标移上字体颜色-->
     <SolidColorBrush x:Key="LeftMenuOverForeground" Color="#24806F"/>
-    
+
+    <!--主窗体用户名字体颜色-->
+    <SolidColorBrush x:Key="MainFrmUserNameColor" Color="Black"/>
+
+    <!--左侧工具栏背景色-->
+    <SolidColorBrush x:Key="LeftMenuBackground" Color="Black"/>
+
+    <!--主窗体选项卡关闭按钮颜色-->
+    <SolidColorBrush x:Key="MainFrmTabItemCloseBgColor" Color="#444444"/>
+
+    <!--主窗体选项卡标题鼠标移上背景色-->
+    <SolidColorBrush x:Key="MainFrmTabItemOverBgColor" Color="White" Opacity="0.9"/>
+
+    <!--主窗体选项卡标题选中前景色-->
+    <SolidColorBrush x:Key="MainFrmTabItemSelectForeColor" Color="White"/>
+
+    <!--主窗体选项卡标题选中背景色-->
+    <SolidColorBrush x:Key="MainFrmTabItemSelectBgColor" Color="Black"/>
+
+    <!--主窗体按钮前景色-->
+    <SolidColorBrush x:Key="MainFrmWinBtnForeColor" Color="#616163"/>
+
+    <!--主窗体按钮鼠标移上前景色-->
+    <SolidColorBrush x:Key="MainFrmWinBtnOverForeColor" Color="#BA3232"/>
+
     <!--窗体关闭按钮前景色-->
     <SolidColorBrush x:Key="WinCloseForeground" Color="White"/>
 
@@ -67,14 +91,26 @@
     <!--DataGrid列标题前景色-->
     <SolidColorBrush x:Key="DataGridHeaderForeColor" Color="Black"></SolidColorBrush>
     
-    <!--选项卡标题前景色-->
+    <!--内容页选项卡标题前景色-->
     <SolidColorBrush x:Key="TabItemForeColor" Color="Black"/>
 
-    <!--选项卡标题选中前景色-->
+    <!--内容页选项卡标题选中前景色-->
     <SolidColorBrush x:Key="TabItemSelectForeColor" Color="White"/>
 
-    <!--选项卡标题选中背景色-->
+    <!--内容页选项卡标题选中背景色-->
     <SolidColorBrush x:Key="TabItemSelectBgColor" Color="Black"/>
+
+    <!--登录窗体选项卡关闭按钮颜色-->
+    <SolidColorBrush x:Key="LoginTabItemCloseBgColor" Color="#444444"/>
+
+    <!--登录窗体选项卡标题鼠标移上背景色-->
+    <SolidColorBrush x:Key="LoginTabItemOverBgColor" Color="White" Opacity="0.9"/>
+
+    <!--登录窗体选项卡标题选中前景色-->
+    <SolidColorBrush x:Key="LoginTabItemSelectForeColor" Color="White"/>
+
+    <!--登录窗体选项卡标题选中背景色-->
+    <SolidColorBrush x:Key="LoginTabItemSelectBgColor" Color="#518C9B"/>
 
     <SolidColorBrush x:Key="StandardBorderBrush" Color="#d8e9f0" />
     <SolidColorBrush x:Key="StandardBackgroundBrush" Color="#FFF" />
