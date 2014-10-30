@@ -5,10 +5,10 @@
     <SolidColorBrush x:Key="SkinColor" Color="#1e1e1e"/>
 
     <!--皮肤前景色-->
-    <SolidColorBrush x:Key="SkinForeground" Color="Black"/>
+    <SolidColorBrush x:Key="SkinForeground" Color="#8A8A8A"/>
 
     <!--皮肤边框颜色-->
-    <SolidColorBrush x:Key="SkinBorderBrush" Color="Gainsboro"/>
+    <SolidColorBrush x:Key="SkinBorderBrush" Color="Black"/>
 
     <!--皮肤边框鼠标移上颜色-->
     <SolidColorBrush x:Key="SkinOverBorderBrush" Color="#F8F7F6"/>
@@ -16,8 +16,11 @@
     <!--皮肤背景色-->
     <SolidColorBrush x:Key="SkinBackground" Color="#1e1e1e"/>
 
-    <!--白色遮罩-->
-    <SolidColorBrush x:Key="WhiteShade" Color="White" Opacity="0.6"/>
+    <!--背景渐变-->
+    <LinearGradientBrush x:Key="SkinLinearBgColor" EndPoint="0,1">
+        <GradientStop Color="#FF333333"/>
+        <GradientStop Offset="0.776" Color="#FF232323"/>
+    </LinearGradientBrush>
 
     <!--左侧工具栏字体颜色-->
     <SolidColorBrush x:Key="LeftMenuForeground" Color="#CBCBCB"/>
@@ -71,7 +74,7 @@
     <SolidColorBrush x:Key="DataGridRowBackground" Color="#414141"/>
 
     <!--DataGrid行前景色-->
-    <SolidColorBrush x:Key="DataGridRowForeground" Color="Black"/>
+    <SolidColorBrush x:Key="DataGridRowForeground" Color="#7A7A7A"/>
 
     <!--DataGrid行鼠标移上背景色-->
     <SolidColorBrush x:Key="DataGridRowOverBgColor" Color="#eceaea"/>
@@ -89,7 +92,7 @@
     <SolidColorBrush x:Key="DataGridHeaderBgColor" Color="#262626"></SolidColorBrush>
 
     <!--DataGrid列标题前景色-->
-    <SolidColorBrush x:Key="DataGridHeaderForeColor" Color="Black"></SolidColorBrush>
+    <SolidColorBrush x:Key="DataGridHeaderForeColor" Color="White"></SolidColorBrush>
 
     <!--内容页选项卡标题前景色-->
     <SolidColorBrush x:Key="TabItemForeColor" Color="Black"/>
@@ -99,6 +102,9 @@
 
     <!--内容页选项卡标题选中背景色-->
     <SolidColorBrush x:Key="TabItemSelectBgColor" Color="Black"/>
+
+    <!--内容页背景色-->
+    <SolidColorBrush x:Key="RightBackground" Color="#393939"/>
 
     <!--登录窗体选项卡关闭按钮颜色-->
     <SolidColorBrush x:Key="LoginTabItemCloseBgColor" Color="#444444"/>
