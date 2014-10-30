@@ -162,11 +162,11 @@
     </Style>
 
     <Style x:Key="logoImage" TargetType="{x:Type Image}">
-        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="20"/>
+        <Setter Property="Width" Value="40"/>
+        <Setter Property="Height" Value="40"/>
         <Setter Property="Source" Value="..\Images\logo.png"/>
         <Setter Property="UIElement.Effect">
             <Setter.Value>
