@@ -168,6 +168,11 @@
         <Setter Property="Width" Value="20"/>
         <Setter Property="Height" Value="20"/>
         <Setter Property="Source" Value="..\Images\logo.png"/>
+        <Setter Property="UIElement.Effect">
+            <Setter.Value>
+                <DropShadowEffect BlurRadius="10" Color="Gold" Direction="0"  RenderingBias="Performance" ShadowDepth="0" />
+            </Setter.Value>
+        </Setter>
     </Style>
     <!--图片资源结束-->
     
