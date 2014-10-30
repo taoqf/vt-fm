@@ -30,11 +30,11 @@
     </Style>
 
     <Style x:Key="RightGrid" TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="{DynamicResource WhiteShade}"/>
+        <Setter Property="Background" Value="{DynamicResource RightBackground}"/>
     </Style>
     
     <Style x:Key="GridTitle" TargetType="{x:Type controls:VicTextBlockNormal}">
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{DynamicResource RigthTitleColor}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="Margin" Value="20,0,0,0"/>
@@ -61,10 +61,12 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinOverBorderBrush}"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinOverBackground}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource SkinOverForeground}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinOverBorderBrush}"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinOverBackground}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource SkinOverForeground}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
@@ -260,14 +262,14 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     <Style x:Key="DataGridRowHeaderStyle" TargetType="DataGridRowHeader">
         <Setter Property="Width" Value="1"/>
         <!--调试心得：查找出来的数据集里面出现空行时，会错位，所以必须设置行头宽度个值-->
-        <Setter Property="Background" Value="#e4f4fc"/>
+        <Setter Property="Background" Value="{DynamicResource DataGridLineColor}"/>
     </Style>
 
     <Style TargetType="{x:Type controls:VicDataGrid}">
         <Setter Property="CanUserResizeColumns" Value="True"/>
         <Setter Property="AutoGenerateColumns" Value="True"/>
         <Setter Property="CanUserAddRows" Value="False"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DataGridLineColor}" />
         <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource DataGridLineColor}"/>
         <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource DataGridLineColor}"/>
         <Setter Property="AlternationCount" Value="2"></Setter>
@@ -330,7 +332,7 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
     <Style TargetType="DataGridColumnHeader">
-        <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource DataGridLineColor}"></Setter>
         <Setter Property="BorderThickness" Value="1"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>

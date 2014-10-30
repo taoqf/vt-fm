@@ -292,10 +292,9 @@ namespace PortalFramePlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) =>
+                return new RelayCommand(() =>
                 {
-                    gridTitle = (Grid)x;
-                    gridTitle.MouseMove += gridTitle_MouseMove;
+                    mainWindow.DragMove();
                 });
             }
         }
@@ -900,15 +899,6 @@ namespace PortalFramePlugin.ViewModels
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("ObjectId", pluginModel.ObjectId);
             messageOp.SendMessage(messageType, contentDic);
-        }
-        #endregion
-
-        #region 窗体移动
-        void gridTitle_MouseMove(object sender, MouseEventArgs e)
-        {
-            gridTitle.AllowDrop = true;
-            if (e.LeftButton == MouseButtonState.Pressed)
-                mainWindow.DragMove();
         }
         #endregion
 

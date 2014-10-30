@@ -7,6 +7,9 @@
     <!--皮肤前景色-->
     <SolidColorBrush x:Key="SkinForeground" Color="#8A8A8A"/>
 
+    <!--皮肤鼠标移上前景色-->
+    <SolidColorBrush x:Key="SkinOverForeground" Color="White"/>
+
     <!--皮肤边框颜色-->
     <SolidColorBrush x:Key="SkinBorderBrush" Color="Black"/>
 
@@ -117,6 +120,9 @@
 
     <!--登录窗体选项卡标题选中背景色-->
     <SolidColorBrush x:Key="LoginTabItemSelectBgColor" Color="#518C9B"/>
+
+    <!--内容页标题前景色色-->
+    <SolidColorBrush x:Key="RigthTitleColor" Color="White"/>
 
     <!--图片资源开始-->
     <ImageBrush x:Key="Set" ImageSource="../Images/Set.png"/>

@@ -66,6 +66,7 @@
         <Setter Property="ResizeMode" Value="NoResize"/>
         <Setter Property="BorderBrush" Value="{DynamicResource MsgBoxBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="{DynamicResource MsgBoxTitleColor}"/>
         <Setter Property="SizeToContent" Value="WidthAndHeight" />
         <Setter Property="Template">
             <Setter.Value>

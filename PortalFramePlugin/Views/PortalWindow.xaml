@@ -57,11 +57,6 @@
                 <RowDefinition RowDefinition.Height="*"/>
             </Grid.RowDefinitions>
             <Grid Name="gridTitle" Grid.Row="0"  Grid.Column="1">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseMove">
-                        <i:InvokeCommandAction Command="{Binding gridTitleMouseMoveCommand}" CommandParameter="{Binding ElementName=gridTitle}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
                 <!--Width="260"-->
                 <StackPanel Orientation="Horizontal" Style="{DynamicResource MainFrmUserStackPanelStyle}">
                     <controls:VicButtonImage Name="btnUserLogin"
@@ -133,6 +128,9 @@
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding gridMainLoadedCommand}"  CommandParameter="{Binding ElementName=mainWindow}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="MouseDown">
+            <i:InvokeCommandAction Command="{Binding gridTitleMouseMoveCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 </Window>
