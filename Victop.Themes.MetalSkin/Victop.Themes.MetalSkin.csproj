@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -210,12 +211,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\in.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\index.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\indexSelected.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\LoginSet.png" />

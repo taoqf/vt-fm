@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Media;
 
 namespace ThemeManagerPlugin.Models
 {
@@ -67,6 +68,15 @@ namespace ThemeManagerPlugin.Models
             {
                 skinName = value;
             }
+        }
+
+        /// <summary>
+        /// 皮肤图标
+        /// </summary>
+        public string SkinFace
+        {
+            get;
+            set;
         }
 
         public int CompareTo(ThemeModel other)

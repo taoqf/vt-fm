@@ -199,8 +199,6 @@
     <Resource Include="Images\btnMOMainFeedBack.png" />
     <Resource Include="Images\Grid.png" />
     <Resource Include="Images\in.png" />
-    <Resource Include="Images\index.png" />
-    <Resource Include="Images\indexSelected.png" />
     <Resource Include="Images\LoginSet.png" />
     <Resource Include="Images\LoginSetMouseOver.png" />
     <Resource Include="Images\logo.png" />

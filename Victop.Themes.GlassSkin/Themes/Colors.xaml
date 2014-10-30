@@ -135,8 +135,6 @@
     <ImageBrush x:Key="MainBackgroundImage" ImageSource="../Images/background.png" Stretch="UniformToFill"/>
     <ImageBrush x:Key="BtnMainFeedBack"  ImageSource="../Images/btnMainFeedBack.png"/>
     <ImageBrush x:Key="BtnMOMainFeedBack" ImageSource="../Images/btnMOMainFeedBack.png"/>
-    <ImageBrush x:Key="SkinFace" ImageSource="../Images/index.png" />
-    <ImageBrush x:Key="SelectedSkinFace" ImageSource="../Images/indexSelected.png" />
     <ImageBrush x:Key="WindowBackground" ImageSource="../Images/background.png" Stretch="UniformToFill"/>
     <ImageBrush x:Key="LoginSet"  ImageSource="..\Images\LoginSet.png"/>
     <ImageBrush x:Key="LoginSetMouseOver" ImageSource="..\Images\LoginSetMouseOver.png"/>

@@ -110,8 +110,6 @@
     <Resource Include="Images\btnMOMainFeedBack.png" />
     <Resource Include="Images\Grid.png" />
     <Resource Include="Images\in.png" />
-    <Resource Include="Images\index.png" />
-    <Resource Include="Images\indexSelected.png" />
     <Resource Include="Images\out.png" />
     <Resource Include="Images\Set.png" />
     <Resource Include="Images\SetMouseOver.png" />

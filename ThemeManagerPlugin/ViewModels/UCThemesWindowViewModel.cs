@@ -16,6 +16,7 @@ using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Media;
 
 namespace ThemeManagerPlugin.ViewModels
 {
@@ -191,6 +192,7 @@ namespace ThemeManagerPlugin.ViewModels
             model.SkinOrder = (int)type.GetField("SkinOrder").GetValue(obj);
             model.SkinName = type.GetField("SkinName").GetValue(obj).ToString();
             model.ThemeName = type.GetField("ThemeName").GetValue(obj).ToString();
+            model.SkinFace = type.GetField("SkinFace").GetValue(obj).ToString();
         }
 
         /// <summary>

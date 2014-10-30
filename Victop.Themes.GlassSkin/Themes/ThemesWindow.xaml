@@ -2,14 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls">
 
-    <Style x:Key="SelectedFaceImage" TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="{DynamicResource SelectedSkinFace}"/>
-    </Style>
-
-    <Style x:Key="FaceImage" TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="{DynamicResource SkinFace}"/>
-    </Style>
-    
     <Style x:Key="WindowChangeSkinBackground" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
     </Style>
@@ -40,12 +32,39 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-                                    <Grid Name="grid" MinHeight="122" MinWidth="203" Style="{DynamicResource FaceImage}"/>
+                                    <Border Name="border" BorderBrush="White" CornerRadius="5" BorderThickness="3" Height="122" Width="203">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="{Binding SkinFace}" Stretch="UniformToFill"/>
+                                        </Border.Background>
+                                        <Border Name="borderSelect" Opacity="0" Background="Yellow" CornerRadius="24" HorizontalAlignment="Left" Height="24" Margin="154,90,0,0" VerticalAlignment="Top" Width="24">
+                                            <Grid>
+                                                <Path Fill="Red" HorizontalAlignment="Left" 
+                                                  StrokeThickness="0" 
+                                                  VerticalAlignment="Top" 
+                                                  Margin="8.383,10.541,0,0" 
+                                                  Data="M0,0 L12,0 12,0.38199188 12.230031,0.36226721 12.913506,8.3330173 10.920817,8.5038862 10.363123,2 0,2 z" 
+                                                  Height="8.504" 
+                                                  RenderTransformOrigin="0.464629838490983,0.117593290001535" 
+                                                  Stretch="Fill" 
+                                                  Width="12.914">
+                                                    <Path.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform/>
+                                                            <SkewTransform/>
+                                                            <RotateTransform Angle="135.502"/>
+                                                            <TranslateTransform/>
+                                                        </TransformGroup>
+                                                    </Path.RenderTransform>
+                                                </Path>
+                                            </Grid>
+                                        </Border>
+                                    </Border>
                                     <TextBlock Text="{Binding SkinName}" MinWidth="60" MinHeight="30" TextAlignment="Center"/>
                                 </StackPanel>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsSelected" Value="true" >
-                                        <Setter Property="Style" TargetName="grid"  Value="{DynamicResource SelectedFaceImage}"/>
+                                        <Setter Property="BorderBrush" TargetName="border"  Value="Yellow"/>
+                                        <Setter Property="Opacity" TargetName="borderSelect"  Value="1"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
