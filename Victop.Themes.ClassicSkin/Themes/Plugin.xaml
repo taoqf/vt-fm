@@ -17,40 +17,16 @@
         <Setter Property="Background" Value="#19BB9B"/>
     </Style>
 
-    <Style x:Key="Image1" TargetType="Image">
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="24"/>
-        <Setter Property="Margin" Value="20,0,0,0"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Source" Value="..\Images\in.png"/>
-    </Style>
-
     <Style x:Key="Line2" TargetType="{x:Type Border}">
         <Setter Property="Margin" Value="0,5,0,5"/>
         <Setter Property="Width" Value="2"/>
         <Setter Property="Background" Value="#FF9900"/>
     </Style>
 
-    <Style x:Key="Image2" TargetType="Image">
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="24"/>
-        <Setter Property="Margin" Value="20,0,0,0"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Source" Value="..\Images\out.png"/>
-    </Style>
-
     <Style x:Key="Line3" TargetType="{x:Type Border}">
         <Setter Property="Margin" Value="0,5,0,5"/>
         <Setter Property="Width" Value="2"/>
         <Setter Property="Background" Value="#3399CC"/>
-    </Style>
-
-    <Style x:Key="Image3" TargetType="Image">
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="20"/>
-        <Setter Property="Margin" Value="20,0,0,0"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Source" Value="..\Images\Grid.png"/>
     </Style>
 
     <Style x:Key="RightGrid" TargetType="{x:Type Grid}">

@@ -175,7 +175,6 @@
     <Resource Include="Images\9-2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\2.png" />
     <Resource Include="Images\loginbg.png" />
   </ItemGroup>
   <ItemGroup />

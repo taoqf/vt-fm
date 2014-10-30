@@ -10,11 +10,7 @@
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="Width" Value="965"/>
         <Setter Property="Height" Value="670"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <ImageBrush ImageSource="../Images/background.png" Stretch="UniformToFill"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource MainBackgroundImage}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
@@ -47,11 +43,7 @@
     <Style x:Key="MainFrmUserPictrueGridStyle" TargetType="{x:Type controls:VicButtonImage}">
         <Setter Property="Width" Value="30"/>
         <Setter Property="Height" Value="30"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <ImageBrush ImageSource="..\Images\UserPictrue.png"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource UserPictrue}"/>
     </Style>
 
     <Style x:Key="MainFrmUserName" TargetType="{x:Type controls:VicTextBlockNormal}">
@@ -67,15 +59,6 @@
         <Setter Property="Background" Value="{DynamicResource LeftMenuBackground}"/>
     </Style>
 
-    <Style x:Key="logoImage" TargetType="{x:Type Image}">
-        <Setter Property="Margin" Value="10,0,0,0"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="20"/>
-        <Setter Property="Source" Value="..\Images\logo.png"/>
-    </Style>
-
     <Style x:Key="btnMainFeedBackStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
@@ -83,13 +66,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Themes:ButtonChrome x:Name="Chrome"  >
-                        <Themes:ButtonChrome.OpacityMask>
-                            <ImageBrush  ImageSource="../Images/btnMainFeedBack.png"/>
-                        </Themes:ButtonChrome.OpacityMask>
-                        <Themes:ButtonChrome.Background>
-                            <ImageBrush ImageSource="../Images/btnMainFeedBack.png"/>
-                        </Themes:ButtonChrome.Background>
+                    <Themes:ButtonChrome x:Name="Chrome" OpacityMask="{DynamicResource BtnMainFeedBack}" Background="{DynamicResource BtnMainFeedBack}">
                     </Themes:ButtonChrome>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="true">
@@ -99,16 +76,8 @@
                             <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="../Images/btnMOMainFeedBack.png"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="OpacityMask" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="../Images/btnMOMainFeedBack.png"/>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background" TargetName="Chrome" Value="{DynamicResource BtnMOMainFeedBack}"/>
+                            <Setter Property="OpacityMask" TargetName="Chrome" Value="{DynamicResource BtnMOMainFeedBack}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -122,13 +91,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Themes:ButtonChrome x:Name="Chrome" >
-                        <Themes:ButtonChrome.OpacityMask>
-                            <ImageBrush  ImageSource="../Images/Set.png"/>
-                        </Themes:ButtonChrome.OpacityMask>
-                        <Themes:ButtonChrome.Background>
-                            <ImageBrush  ImageSource="../Images/Set.png"/>
-                        </Themes:ButtonChrome.Background>
+                    <Themes:ButtonChrome x:Name="Chrome" OpacityMask="{DynamicResource Set}" Background="{DynamicResource Set}">
                     </Themes:ButtonChrome>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="true">
@@ -138,16 +101,8 @@
                             <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="../Images/SetMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="OpacityMask" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="../Images/SetMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background" TargetName="Chrome" Value="{DynamicResource SetMouseOver}"/>
+                            <Setter Property="OpacityMask" TargetName="Chrome" Value="{DynamicResource SetMouseOver}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -412,11 +367,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
 
-                    <Themes:ButtonChrome x:Name="Chrome"  >
-                        <Themes:ButtonChrome.Background>
-                            <ImageBrush  ImageSource="..\Images\Stretch.png"/>
-                        </Themes:ButtonChrome.Background>
-                    </Themes:ButtonChrome>
+                    <Themes:ButtonChrome x:Name="Chrome" Background="{DynamicResource BtnStretch}"/>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="true">
                             <Setter Property="RenderDefaulted" TargetName="Chrome" Value="true"/>

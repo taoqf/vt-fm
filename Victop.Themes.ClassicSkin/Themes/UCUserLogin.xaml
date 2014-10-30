@@ -9,11 +9,7 @@
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="BorderBrush" Value="#024672"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <ImageBrush ImageSource="..\Images\loginbg.png" Stretch="UniformToFill"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
@@ -180,11 +176,7 @@
     </Style>
     
     <Style x:Key="loginMainUserPhotoGridStyle" TargetType="{x:Type Grid}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <ImageBrush ImageSource="..\Images\UserPhoto.png"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource UserPhoto}"/>
     </Style>
 
     <Style x:Key="LoginButtonStyle" TargetType="{x:Type controls:VicButtonNormal}">
@@ -228,13 +220,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Themes:ButtonChrome x:Name="Chrome" >
-                        <Themes:ButtonChrome.OpacityMask>
-                            <ImageBrush  ImageSource="..\Images\LoginSet.png"/>
-                        </Themes:ButtonChrome.OpacityMask>
-                        <Themes:ButtonChrome.Background>
-                            <ImageBrush  ImageSource="..\Images\LoginSet.png"/>
-                        </Themes:ButtonChrome.Background>
+                    <Themes:ButtonChrome x:Name="Chrome" OpacityMask="{DynamicResource LoginSet}" Background="{DynamicResource LoginSet}">
                     </Themes:ButtonChrome>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="true">
@@ -244,16 +230,8 @@
                             <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="..\Images\LoginSetMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="OpacityMask" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="..\Images\LoginSetMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background" TargetName="Chrome" Value="{DynamicResource LoginSetMouseOver}"/>
+                            <Setter Property="OpacityMask" TargetName="Chrome" Value="{DynamicResource LoginSetMouseOver}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

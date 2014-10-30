@@ -21,7 +21,7 @@
 
     <!--左侧工具栏字体颜色-->
     <SolidColorBrush x:Key="LeftMenuForeground" Color="#CBCBCB"/>
-    
+
     <!--左侧工具栏鼠标移上字体颜色-->
     <SolidColorBrush x:Key="LeftMenuOverForeground" Color="#24806F"/>
 
@@ -60,13 +60,13 @@
 
     <!--弹出消息框边框颜色-->
     <SolidColorBrush x:Key="MsgBoxBorderBrush" Color="#024672"/>
-    
+
     <!--弹出消息框标题颜色-->
     <SolidColorBrush x:Key="MsgBoxTitleColor" Color="White"/>
-    
+
     <!--弹出消息框按钮鼠标移上前景色-->
     <SolidColorBrush x:Key="MsgBoxBtnOverForeground" Color="White"/>
-    
+
     <!--DataGrid行背景色-->
     <SolidColorBrush x:Key="DataGridRowBackground" Color="Transparent"/>
 
@@ -84,13 +84,13 @@
 
     <!--DataGrid间隔线色-->
     <SolidColorBrush x:Key="DataGridLineColor" Color="#d6d8da"/>
-    
+
     <!--DataGrid列标题背景色-->
     <SolidColorBrush x:Key="DataGridHeaderBgColor" Color="White" Opacity="0.8"></SolidColorBrush>
 
     <!--DataGrid列标题前景色-->
     <SolidColorBrush x:Key="DataGridHeaderForeColor" Color="Black"></SolidColorBrush>
-    
+
     <!--内容页选项卡标题前景色-->
     <SolidColorBrush x:Key="TabItemForeColor" Color="Black"/>
 
@@ -112,6 +112,55 @@
     <!--登录窗体选项卡标题选中背景色-->
     <SolidColorBrush x:Key="LoginTabItemSelectBgColor" Color="#518C9B"/>
 
+    <!--图片资源开始-->
+    <ImageBrush x:Key="Set" ImageSource="../Images/Set.png"/>
+    <ImageBrush x:Key="SetMouseOver" ImageSource="../Images/SetMouseOver.png"/>
+    <ImageBrush x:Key="MainBackgroundImage" ImageSource="../Images/background.png" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="BtnMainFeedBack"  ImageSource="../Images/btnMainFeedBack.png"/>
+    <ImageBrush x:Key="BtnMOMainFeedBack" ImageSource="../Images/btnMOMainFeedBack.png"/>
+    <ImageBrush x:Key="SkinFace" ImageSource="../Images/index.png" />
+    <ImageBrush x:Key="SelectedSkinFace" ImageSource="../Images/indexSelected.png" />
+    <ImageBrush x:Key="WindowBackground" ImageSource="../Images/loginbg.png" Stretch="UniformToFill"/>
+    <ImageBrush x:Key="LoginSet"  ImageSource="..\Images\LoginSet.png"/>
+    <ImageBrush x:Key="LoginSetMouseOver" ImageSource="..\Images\LoginSetMouseOver.png"/>
+    <ImageBrush x:Key="BtnStretch"  ImageSource="..\Images\Stretch.png"/>
+    <ImageBrush x:Key="UserPhoto" ImageSource="..\Images\UserPhoto.png"/>
+    <ImageBrush x:Key="UserPictrue" ImageSource="..\Images\UserPictrue.png"/>
+
+    <Style x:Key="Image3" TargetType="Image">
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Margin" Value="20,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Source" Value="..\Images\Grid.png"/>
+    </Style>
+
+    <Style x:Key="Image1" TargetType="Image">
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="Margin" Value="20,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Source" Value="..\Images\in.png"/>
+    </Style>
+
+    <Style x:Key="Image2" TargetType="Image">
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="Margin" Value="20,0,0,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Source" Value="..\Images\out.png"/>
+    </Style>
+
+    <Style x:Key="logoImage" TargetType="{x:Type Image}">
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Source" Value="..\Images\logo.png"/>
+    </Style>
+    <!--图片资源结束-->
+    
     <SolidColorBrush x:Key="StandardBorderBrush" Color="#d8e9f0" />
     <SolidColorBrush x:Key="StandardBackgroundBrush" Color="#FFF" />
     <SolidColorBrush x:Key="HoverBorderBrush" Color="#DDD" />
@@ -155,11 +204,11 @@
     </LinearGradientBrush>
 
     <SolidColorBrush x:Key="CheckBoxFillNormal" Color="#F4F4F4"/>
-    
+
     <!--VicCheckBox 外框颜色-->
     <SolidColorBrush x:Key="CheckBoxStroke" Color="Gainsboro"/>
     <Geometry x:Key="DownArrowGeometry">M 0 0 L 3.5 4 L 7 0 Z</Geometry>
-    
+
     <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
     <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
 </ResourceDictionary>
