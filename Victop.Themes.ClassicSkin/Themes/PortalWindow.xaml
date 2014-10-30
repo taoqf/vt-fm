@@ -650,6 +650,7 @@
     <Style x:Key="RadioButtonFirstLevelMenu" TargetType="{x:Type controls:VicRadioButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
         <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="FontWeight"  Value="Bold"/>
@@ -683,6 +684,7 @@
     <Style x:Key="ButtonFirstLevelMenu" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
         <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="FontWeight"  Value="Bold"/>
