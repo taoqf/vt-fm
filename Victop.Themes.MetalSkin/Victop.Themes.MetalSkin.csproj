@@ -257,10 +257,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\Plugin.xaml">
+    <Resource Include="Themes\Plugin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\PortalWindow.xaml">
@@ -288,6 +288,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\组合 2 对象3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

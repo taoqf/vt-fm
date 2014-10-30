@@ -3,34 +3,23 @@
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls">
 
     <Style x:Key="SelectedFaceImage" TargetType="{x:Type Grid}">
-        <Setter Property="Background" >
-            <Setter.Value>
-                <ImageBrush ImageSource="../Images/indexSelected.png" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource SelectedSkinFace}"/>
     </Style>
 
     <Style x:Key="FaceImage" TargetType="{x:Type Grid}">
-        <Setter Property="Background" >
-            <Setter.Value>
-                <ImageBrush ImageSource="../Images/index.png" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource SkinFace}"/>
     </Style>
-
-   
+    
     <Style x:Key="WindowChangeSkinBackground" TargetType="{x:Type Grid}">
-        <Setter Property="Background" >
-            <Setter.Value>
-                <ImageBrush ImageSource="..\Images\background.png"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
     </Style>
+    
     <Style x:Key="WindowChangeSkinTitleBackGround" TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="#31527d"/>
+        <Setter Property="Background" Value="{DynamicResource SkinColor}"/>
     </Style>
+    
     <Style  x:Key="RadioButtonListStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility"   Value="Auto"/>
@@ -44,6 +33,7 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
+                  
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
                     <Setter Property="Margin"  Value="10"/>
                     <Setter Property="Template">

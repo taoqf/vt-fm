@@ -3,7 +3,6 @@
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
                     xmlns:local="clr-namespace:Victop.Themes.MetalSkin"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
-
     <local:ImgeNameToImageUrlConverter x:Key="ImgeNameToImageUrlConverter"/>
 
     <Style x:Key="ShadowWindow" TargetType="{x:Type Window}">
@@ -11,11 +10,7 @@
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="Width" Value="965"/>
         <Setter Property="Height" Value="670"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <ImageBrush ImageSource="../Images/background.png" Stretch="UniformToFill"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource MainBackgroundImage}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
@@ -48,16 +43,12 @@
     <Style x:Key="MainFrmUserPictrueGridStyle" TargetType="{x:Type controls:VicButtonImage}">
         <Setter Property="Width" Value="30"/>
         <Setter Property="Height" Value="30"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <ImageBrush ImageSource="..\Images\UserPictrue.png"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource UserPictrue}"/>
     </Style>
 
     <Style x:Key="MainFrmUserName" TargetType="{x:Type controls:VicTextBlockNormal}">
         <Setter Property="TextWrapping" Value="Wrap"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Focusable" Value="True"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -65,16 +56,7 @@
     </Style>
 
     <Style x:Key="LeftGrid" TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="Black"/>
-    </Style>
-
-    <Style x:Key="logoImage" TargetType="{x:Type Image}">
-        <Setter Property="Margin" Value="10,0,0,0"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="20"/>
-        <Setter Property="Source" Value="..\Images\logo.png"/>
+        <Setter Property="Background" Value="{DynamicResource LeftMenuBackground}"/>
     </Style>
 
     <Style x:Key="btnMainFeedBackStyle" TargetType="{x:Type controls:VicButtonNormal}">
@@ -84,13 +66,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Themes:ButtonChrome x:Name="Chrome"  >
-                        <Themes:ButtonChrome.OpacityMask>
-                            <ImageBrush  ImageSource="../Images/btnMainFeedBack.png"/>
-                        </Themes:ButtonChrome.OpacityMask>
-                        <Themes:ButtonChrome.Background>
-                            <ImageBrush ImageSource="../Images/btnMainFeedBack.png"/>
-                        </Themes:ButtonChrome.Background>
+                    <Themes:ButtonChrome x:Name="Chrome" OpacityMask="{DynamicResource BtnMainFeedBack}" Background="{DynamicResource BtnMainFeedBack}">
                     </Themes:ButtonChrome>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="true">
@@ -100,16 +76,8 @@
                             <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="../Images/btnMOMainFeedBack.png"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="OpacityMask" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="../Images/btnMOMainFeedBack.png"/>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background" TargetName="Chrome" Value="{DynamicResource BtnMOMainFeedBack}"/>
+                            <Setter Property="OpacityMask" TargetName="Chrome" Value="{DynamicResource BtnMOMainFeedBack}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -123,13 +91,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Themes:ButtonChrome x:Name="Chrome" >
-                        <Themes:ButtonChrome.OpacityMask>
-                            <ImageBrush  ImageSource="../Images/Set.png"/>
-                        </Themes:ButtonChrome.OpacityMask>
-                        <Themes:ButtonChrome.Background>
-                            <ImageBrush  ImageSource="../Images/Set.png"/>
-                        </Themes:ButtonChrome.Background>
+                    <Themes:ButtonChrome x:Name="Chrome" OpacityMask="{DynamicResource Set}" Background="{DynamicResource Set}">
                     </Themes:ButtonChrome>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="true">
@@ -139,16 +101,8 @@
                             <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="../Images/SetMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="OpacityMask" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="../Images/SetMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background" TargetName="Chrome" Value="{DynamicResource SetMouseOver}"/>
+                            <Setter Property="OpacityMask" TargetName="Chrome" Value="{DynamicResource SetMouseOver}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -342,6 +296,7 @@
     </Style>
 
     <Style x:Key="MenuScrollViewer" TargetType="{x:Type ScrollViewer}">
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="HorizontalScrollBarVisibility" Value="Hidden"/>
@@ -357,7 +312,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Rectangle x:Name="Corner" Grid.Column="1" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1"/>
+                        <Rectangle x:Name="Corner" Grid.Column="1" StrokeThickness="{TemplateBinding BorderThickness}" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1"/>
                         <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Margin="{TemplateBinding Padding}" Grid.Row="0"/>
                         <ScrollBar x:Name="PART_VerticalScrollBar" Style="{DynamicResource MenuScrollBar}" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}"/>
                         <ScrollBar x:Name="PART_HorizontalScrollBar" Style="{DynamicResource MenuScrollBar}" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"/>
@@ -412,11 +367,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
 
-                    <Themes:ButtonChrome x:Name="Chrome"  >
-                        <Themes:ButtonChrome.Background>
-                            <ImageBrush  ImageSource="..\Images\Stretch.png"/>
-                        </Themes:ButtonChrome.Background>
-                    </Themes:ButtonChrome>
+                    <Themes:ButtonChrome x:Name="Chrome" Background="{DynamicResource BtnStretch}"/>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="true">
                             <Setter Property="RenderDefaulted" TargetName="Chrome" Value="true"/>
@@ -433,14 +384,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <LinearGradientBrush EndPoint="0,1">
-                    <GradientStop Color="#FF333333"/>
-                    <GradientStop Offset="0.776" Color="#FF232323"/>
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource WhiteShade}"/>
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type controls:VicTabItemNormal}">
@@ -453,11 +397,7 @@
                     <Setter Property="SnapsToDevicePixels" Value="True"/>
                     <Setter Property="Height" Value="35"/>
                     <Setter Property="Width" Value="130"/>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <SolidColorBrush Color="White" Opacity="0.6"/>
-                        </Setter.Value>
-                    </Setter>
+                    <Setter Property="Background" Value="{DynamicResource WhiteShade}"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type controls:VicTabItemNormal}">
@@ -501,12 +441,12 @@
 						CornerRadius="10" 
 						Background="{TemplateBinding Background}" 
 						BorderThickness="1" 
-						BorderBrush="#FF444444" 
+						BorderBrush="{DynamicResource MainFrmTabItemCloseBgColor}" 
 						Width="15" Height="15" 
 						SnapsToDevicePixels="True">
                                                                     <Grid Width="8" Height="8" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                                        <Path x:Name="path1" Stroke="#FF444444" Data="M0,0 L8,8" StrokeThickness="2" />
-                                                                        <Path x:Name="path2" Stroke="#FF444444" Data="M8,0 L0,8" StrokeThickness="2" />
+                                                                        <Path x:Name="path1" Stroke="{DynamicResource MainFrmTabItemCloseBgColor}" Data="M0,0 L8,8" StrokeThickness="2" />
+                                                                        <Path x:Name="path2" Stroke="{DynamicResource MainFrmTabItemCloseBgColor}" Data="M8,0 L0,8" StrokeThickness="2" />
                                                                     </Grid>
                                                                 </Border>
                                                             </ControlTemplate>
@@ -519,15 +459,11 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="true">
-                                        <Setter Property="Background">
-                                            <Setter.Value>
-                                                <SolidColorBrush Color="White" Opacity="0.9"/>
-                                            </Setter.Value>
-                                        </Setter>
+                                        <Setter Property="Background" Value="{DynamicResource MainFrmTabItemOverBgColor}"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true">
-                                        <Setter Property="Background" Value="Black" />
-                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="Background" Value="{DynamicResource MainFrmTabItemSelectBgColor}" />
+                                        <Setter Property="Foreground" Value="{DynamicResource MainFrmTabItemSelectForeColor}"/>
                                         <Setter Property="Margin" TargetName="Bd" Value="0"/>
                                         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                                     </Trigger>
@@ -653,7 +589,7 @@
                             <Setter Property="Margin" TargetName="HeaderPanel" Value="0,2,2,2"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -665,7 +601,7 @@
     <Style x:Key="RadioButtonFirstLevelMenu" TargetType="{x:Type controls:VicRadioButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="#435058"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
         <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="FontWeight"  Value="Bold"/>
@@ -699,7 +635,7 @@
     <Style x:Key="ButtonFirstLevelMenu" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="#435058"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
         <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="FontWeight"  Value="Bold"/>
@@ -733,10 +669,11 @@
     <Style x:Key="ListBoxSecondLevelMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="#CBCBCB"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"></Setter>
         <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="FontWeight"  Value="Bold"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -775,7 +712,7 @@
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
-                                        <Setter Property="Foreground" Value="#24806F"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"/>
                                     </Trigger>
                                     <Trigger SourceName="grid" Property="IsMouseOver" Value="true">
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
@@ -797,7 +734,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource BtnDisableBackground}"/>
                         </Trigger>
                         <Trigger Property="IsGrouping" Value="true">
                             <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
@@ -811,7 +748,7 @@
     <Style x:Key="ListBoxThirdLevelMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="#CBCBCB"/>
+        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -825,12 +762,10 @@
                                 <Grid x:Name="grid" Background="{TemplateBinding Background}">
                                     <controls:VicRadioButtonNormal x:Name="rBtn" Style="{DynamicResource RadioButtonFirstLevelMenu}" Foreground="{TemplateBinding Foreground}" GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                     Content="{Binding MenuName}"/>
-                                    <Popup x:Name="popup" IsOpen="False" 
-            PlacementTarget="{Binding ElementName=grid}" 
-            Placement="Right">
+                                    <Popup x:Name="popup" IsOpen="False" PlacementTarget="{Binding ElementName=grid}" Placement="Right">
                                         <ScrollViewer x:Name="scrollViewerThirdMenu" Style="{DynamicResource MenuScrollViewer}">
                                             <Grid Style="{DynamicResource LeftGrid}">
-                                                <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
+                                                <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
                                                 </ListBox>
                                             </Grid>
                                         </ScrollViewer>
@@ -839,10 +774,10 @@
 
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsSelected" Value="true">
-                                        <Setter Property="Foreground" Value="#24806F"></Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"></Setter>
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Foreground" Value="#24806F"></Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"></Setter>
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -862,7 +797,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource BtnDisableBackground}"/>
                         </Trigger>
                         <Trigger Property="IsGrouping" Value="true">
                             <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
@@ -876,7 +811,7 @@
     <Style x:Key="ListBoxFourthMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="#CBCBCB"/>
+        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -894,7 +829,7 @@
                     </Setter>
                     <Style.Triggers>
                         <Trigger  Property="IsMouseOver" Value="true">
-                            <Setter Property="Foreground" Value="#24806F"></Setter>
+                            <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"></Setter>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
@@ -910,7 +845,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource BtnDisableBackground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -941,9 +876,9 @@
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
                         <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Line x:Name="PART_Path1" X1="2"  X2="10" Y1="1" Y2="1" Stroke="#616163"  StrokeThickness="2"  />
-                            <Line x:Name="PART_Path2" X1="2"  X2="10" Y1="2" Y2="2" Stroke="#616163"  StrokeThickness="2"  />
-                            <Line x:Name="PART_Path3" X1="2"  X2="10" Y1="3" Y2="3" Stroke="#616163"  StrokeThickness="2"  />
+                            <Line x:Name="PART_Path1" X1="2"  X2="10" Y1="1" Y2="1" Stroke="{DynamicResource MainFrmWinBtnForeColor}"  StrokeThickness="2"  />
+                            <Line x:Name="PART_Path2" X1="2"  X2="10" Y1="2" Y2="2" Stroke="{DynamicResource MainFrmWinBtnForeColor}"  StrokeThickness="2"  />
+                            <Line x:Name="PART_Path3" X1="2"  X2="10" Y1="3" Y2="3" Stroke="{DynamicResource MainFrmWinBtnForeColor}"  StrokeThickness="2"  />
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -957,9 +892,9 @@
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Stroke" TargetName="PART_Path1" Value="#FFBA3232" />
-                            <Setter Property="Stroke" TargetName="PART_Path2" Value="#FFBA3232" />
-                            <Setter Property="Stroke" TargetName="PART_Path3" Value="#FFBA3232" />
+                            <Setter Property="Stroke" TargetName="PART_Path1" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
+                            <Setter Property="Stroke" TargetName="PART_Path2" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
+                            <Setter Property="Stroke" TargetName="PART_Path3" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
@@ -980,7 +915,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
-                        <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="#616163"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="{DynamicResource MainFrmWinBtnForeColor}"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -993,7 +928,7 @@
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Stroke" TargetName="PART_Path" Value="#FFBA3232" />
+                            <Setter Property="Stroke" TargetName="PART_Path" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
@@ -1014,7 +949,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
-                        <Path x:Name="PART_Path" Data="M2,2 L2,2 10,10 M10,2 L10,2 2,10" Fill="Gray"  Stroke="#616163" Stretch="None" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Path x:Name="PART_Path" Data="M2,2 L2,2 10,10 M10,2 L10,2 2,10" Fill="Gray"  Stroke="{DynamicResource MainFrmWinBtnForeColor}" Stretch="None" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -1027,7 +962,7 @@
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Stroke" TargetName="PART_Path" Value="#FFBA3232" />
+                            <Setter Property="Stroke" TargetName="PART_Path" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
@@ -1052,7 +987,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"  BorderThickness="0" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Path x:Name="PART_Path" Fill="#FFF4F4F5" HorizontalAlignment="Center" Stroke="#616163" VerticalAlignment="Center" Height="18.12" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Width="17.759">
+                        <Path x:Name="PART_Path" Fill="#FFF4F4F5" HorizontalAlignment="Center" Stroke="{DynamicResource MainFrmWinBtnForeColor}" VerticalAlignment="Center" Height="18.12" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Width="17.759">
                             <Path.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
@@ -1102,7 +1037,7 @@
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Stroke" TargetName="PART_Path" Value="#FFBA3232" />
+                            <Setter Property="Stroke" TargetName="PART_Path" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">

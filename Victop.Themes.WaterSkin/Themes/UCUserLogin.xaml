@@ -2,19 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
-
     <Style x:Key="loginWindowStyle" TargetType="{x:Type Window}">
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
         <Setter Property="AllowsTransparency" Value="true"/>
         <Setter Property="ResizeMode" Value="NoResize"/>
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="BorderBrush" Value="#024672"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <ImageBrush ImageSource="..\Images\background.png" Stretch="UniformToFill"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
@@ -172,56 +167,46 @@
     </Style>
 
     <Style x:Key="loginTopGridStyle" TargetType="{x:Type Grid}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="#31527d"/>
-            </Setter.Value>
+        <Setter Property="Background" Value="{DynamicResource SkinColor}">
         </Setter>
     </Style>
 
     <Style x:Key="loginMainGridStyle" TargetType="{x:Type Grid}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="White" Opacity="0.6"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource WhiteShade}"/>
     </Style>
+    
     <Style x:Key="loginMainUserPhotoGridStyle" TargetType="{x:Type Grid}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <ImageBrush ImageSource="..\Images\UserPhoto.png"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource UserPhoto}"/>
     </Style>
 
-    <Style x:Key="LoginButtonStyle" TargetType="{x:Type controls:VicButtonNormal}">
+    <Style x:Key="LoginButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Height" Value="30"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="BorderBrush" Value="Gainsboro"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}"></Setter>
         <Setter Property="BorderThickness" Value="1"></Setter>
         <Setter Property="Width" Value="80"></Setter>
-        <Setter Property="Background" Value="#FAFAFA"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Background" Value="{DynamicResource SkinBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
+                <ControlTemplate TargetType="{x:Type Button}">
                     <Border Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                         <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#31527D"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinColor}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="#31527D"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinColor}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -235,13 +220,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Themes:ButtonChrome x:Name="Chrome" >
-                        <Themes:ButtonChrome.OpacityMask>
-                            <ImageBrush  ImageSource="..\Images\LoginSet.png"/>
-                        </Themes:ButtonChrome.OpacityMask>
-                        <Themes:ButtonChrome.Background>
-                            <ImageBrush  ImageSource="..\Images\LoginSet.png"/>
-                        </Themes:ButtonChrome.Background>
+                    <Themes:ButtonChrome x:Name="Chrome" OpacityMask="{DynamicResource LoginSet}" Background="{DynamicResource LoginSet}">
                     </Themes:ButtonChrome>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="true">
@@ -251,16 +230,8 @@
                             <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="..\Images\LoginSetMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="OpacityMask" TargetName="Chrome">
-                                <Setter.Value>
-                                    <ImageBrush ImageSource="..\Images\LoginSetMouseOver.png"/>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background" TargetName="Chrome" Value="{DynamicResource LoginSetMouseOver}"/>
+                            <Setter Property="OpacityMask" TargetName="Chrome" Value="{DynamicResource LoginSetMouseOver}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -288,11 +259,7 @@
                     <Setter Property="SnapsToDevicePixels" Value="True"/>
                     <Setter Property="Height" Value="35"/>
                     <Setter Property="Width" Value="100"/>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <SolidColorBrush Color="#FAFAFA"/>
-                        </Setter.Value>
-                    </Setter>
+                    <Setter Property="Background" Value="{DynamicResource SkinBackground}"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type controls:VicTabItemNormal}">
@@ -336,12 +303,12 @@
 						CornerRadius="10" 
 						Background="{TemplateBinding Background}" 
 						BorderThickness="1" 
-						BorderBrush="#FF444444" 
+						BorderBrush="{DynamicResource LoginTabItemCloseBgColor}" 
 						Width="15" Height="15" 
 						SnapsToDevicePixels="True">
                                                                     <Grid Width="8" Height="8" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                                        <Path x:Name="path1" Stroke="#FF444444" Data="M0,0 L8,8" StrokeThickness="2" />
-                                                                        <Path x:Name="path2" Stroke="#FF444444" Data="M8,0 L0,8" StrokeThickness="2" />
+                                                                        <Path x:Name="path1" Stroke="{DynamicResource LoginTabItemCloseBgColor}" Data="M0,0 L8,8" StrokeThickness="2" />
+                                                                        <Path x:Name="path2" Stroke="{DynamicResource LoginTabItemCloseBgColor}" Data="M8,0 L0,8" StrokeThickness="2" />
                                                                     </Grid>
                                                                 </Border>
                                                             </ControlTemplate>
@@ -354,15 +321,11 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="true">
-                                        <Setter Property="Background">
-                                            <Setter.Value>
-                                                <SolidColorBrush Color="White" Opacity="0.9"/>
-                                            </Setter.Value>
-                                        </Setter>
+                                        <Setter Property="Background" Value="{DynamicResource LoginTabItemOverBgColor}"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true">
-                                        <Setter Property="Background" Value="#518C9B" />
-                                        <Setter Property="Foreground" Value="Black"/>
+                                        <Setter Property="Background" Value="{DynamicResource LoginTabItemSelectBgColor}" />
+                                        <Setter Property="Foreground" Value="{DynamicResource LoginTabItemSelectForeColor}"/>
                                         <Setter Property="Margin" TargetName="Bd" Value="0"/>
                                         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                                     </Trigger>
@@ -488,7 +451,7 @@
                             <Setter Property="Margin" TargetName="HeaderPanel" Value="0,2,2,2"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

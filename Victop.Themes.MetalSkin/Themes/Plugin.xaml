@@ -4,11 +4,7 @@
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
 
     <Style x:Key="MainGrid" TargetType="{x:Type Grid}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="White" Opacity="0.5"></SolidColorBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource WhiteShade}"/>
     </Style>
 
     <Style x:Key="SubBorder" TargetType="{x:Type Border}">
@@ -21,26 +17,10 @@
         <Setter Property="Background" Value="#19BB9B"/>
     </Style>
 
-    <Style x:Key="Image1" TargetType="Image">
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="24"/>
-        <Setter Property="Margin" Value="20,0,0,0"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Source" Value="..\Images\in.png"/>
-    </Style>
-
     <Style x:Key="Line2" TargetType="{x:Type Border}">
         <Setter Property="Margin" Value="0,5,0,5"/>
         <Setter Property="Width" Value="2"/>
         <Setter Property="Background" Value="#FF9900"/>
-    </Style>
-
-    <Style x:Key="Image2" TargetType="Image">
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="24"/>
-        <Setter Property="Margin" Value="20,0,0,0"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Source" Value="..\Images\out.png"/>
     </Style>
 
     <Style x:Key="Line3" TargetType="{x:Type Border}">
@@ -49,20 +29,8 @@
         <Setter Property="Background" Value="#3399CC"/>
     </Style>
 
-    <Style x:Key="Image3" TargetType="Image">
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="Height" Value="20"/>
-        <Setter Property="Margin" Value="20,0,0,0"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Source" Value="..\Images\Grid.png"/>
-    </Style>
-
     <Style x:Key="RightGrid" TargetType="{x:Type Grid}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="#393939"></SolidColorBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource WhiteShade}"/>
     </Style>
     
     <Style x:Key="GridTitle" TargetType="{x:Type controls:VicTextBlockNormal}">
@@ -79,11 +47,11 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="5,0,0,0"/>
-        <Setter Property="BorderBrush" Value="Gainsboro"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}"></Setter>
         <Setter Property="BorderThickness" Value="1"></Setter>
         <Setter Property="Width" Value="80"></Setter>
-        <Setter Property="Background" Value="#FEFDFB"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Background" Value="{DynamicResource SkinBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Template">
             <Setter.Value>
@@ -93,13 +61,13 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#F8F7F6"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinOverBorderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="#F8F7F6"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinOverBorderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="#ADADAD"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -236,22 +204,22 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
     </Style>
 
     <Style x:Key="DataGridRowStyle"  TargetType="DataGridRow">
-        <Setter Property="Background" Value="#414141" />
+        <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}" />
         <Setter Property="Height" Value="25"/>
-        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}" />
         <Style.Triggers>
             <Trigger Property="AlternationIndex" Value="0" >
-                <Setter Property="Background" Value="#414141" />
+                <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}" />
             </Trigger>
             <Trigger Property="AlternationIndex" Value="1" >
-                <Setter Property="Background" Value="#414141" />
+                <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#eceaea"/>
+                <Setter Property="Background" Value="{DynamicResource DataGridRowOverBgColor}"/>
             </Trigger>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Foreground" Value="Black"/>
-                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
+                <Setter Property="Background" Value="{DynamicResource DataGridRowSelectBgColor}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -271,10 +239,10 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="Background" Value="{DynamicResource DataGridRowSelectBgColor}"/>
             </Trigger>
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="Background" Value="{DynamicResource DataGridRowSelectBgColor}"/>
                 <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=FocusBorderBrushKey, TypeInTargetAssembly={x:Type DataGrid}}}"/>
             </Trigger>
             <MultiTrigger>
@@ -282,10 +250,10 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                     <Condition Property="IsSelected" Value="True"/>
                     <Condition Property="Selector.IsSelectionActive" Value="False"/>
                 </MultiTrigger.Conditions>
-                <Setter Property="Background" Value="LightGray"/>
+                <Setter Property="Background" Value="{DynamicResource DataGridRowSelectBgColor}"/>
             </MultiTrigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -299,18 +267,10 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="CanUserResizeColumns" Value="True"/>
         <Setter Property="AutoGenerateColumns" Value="True"/>
         <Setter Property="CanUserAddRows" Value="False"/>
-        <Setter Property="HorizontalGridLinesBrush">
-            <Setter.Value>
-                <SolidColorBrush Color="Black"/>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="VerticalGridLinesBrush">
-            <Setter.Value>
-                <SolidColorBrush Color="Black"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource DataGridLineColor}"/>
+        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource DataGridLineColor}"/>
         <Setter Property="AlternationCount" Value="2"></Setter>
-
         <Setter Property="CellStyle" Value="{DynamicResource DataGridCellStyle}"></Setter>
         <Setter Property="RowHeaderStyle" Value="{DynamicResource DataGridRowHeaderStyle}"></Setter>
         <Setter Property="RowStyle" Value="{DynamicResource DataGridRowStyle}"></Setter>
@@ -370,19 +330,15 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         </Setter>
     </Style>
     <Style TargetType="DataGridColumnHeader">
-        <Setter Property="BorderBrush" Value="Gainsboro"></Setter>
-        <Setter Property="BorderThickness" Value="0.5"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}"></Setter>
+        <Setter Property="BorderThickness" Value="1"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         <Setter Property="Height" Value="35"></Setter>
         <Setter Property="MinWidth" Value="80"></Setter>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeColor}"/>
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="#262626"></SolidColorBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource DataGridHeaderBgColor}"/>
     </Style>
     <!--DataGrid样式结束-->
 
@@ -397,16 +353,14 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                             <ColumnDefinition Width="13"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Border Background="Transparent" Opacity="0.6" Grid.Column="0" BorderThickness="0"/>
                         <StackPanel IsItemsHost="True" Grid.Column="0" Margin="0" />
-                        <Border Background="#FAFAFA" Opacity="0.6" Grid.Column="1" BorderBrush="Transparent" BorderThickness="1" SnapsToDevicePixels="True" />
                         <ContentPresenter Content="{TemplateBinding SelectedContent}" Grid.Column="1" Margin="1,0,0,0" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="left_TabItemStyle" TargetType="{x:Type controls:VicTabItemNormal}">
+    <Style x:Key="left_TabItemStyle" TargetType="{x:Type TabItem}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Width" Value="13"></Setter>
         <Setter Property="MinHeight" Value="60"></Setter>
@@ -415,21 +369,20 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VicTabItemNormal}">
+                <ControlTemplate TargetType="{x:Type TabItem}">
                     <Border x:Name="border" BorderThickness="0" Background="Transparent">
-                        <TextBlock x:Name="buttonText"  TextWrapping="Wrap" TextBlock.FontFamily="Calibri" Foreground="Black" TextAlignment="Center" TextBlock.FontSize="14" Text="{TemplateBinding Header}" />
+                        <TextBlock x:Name="buttonText"  TextWrapping="Wrap" TextBlock.FontFamily="Calibri" Foreground="{DynamicResource TabItemForeColor}" TextAlignment="Center" TextBlock.FontSize="14" Text="{TemplateBinding Header}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Panel.ZIndex" Value="1"/>
-                            <Setter Property="Background" TargetName="border" Value="Black"/>
-                            <Setter Property="Foreground" TargetName="buttonText" Value="White"/>
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource TabItemSelectBgColor}"/>
+                            <Setter Property="Foreground" TargetName="buttonText" Value="{DynamicResource TabItemSelectForeColor}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
     </Style>
     <!--左TabControl样式结束-->
 </ResourceDictionary>
