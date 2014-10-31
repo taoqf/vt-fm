@@ -270,10 +270,10 @@ namespace Victop.Server.Controls.WeChat
         #endregion
         #region 用户组管理
         /// <summary>
-        /// 获取用户组信息
+        /// 获取所有用户组信息
         /// </summary>
         /// <returns></returns>
-        public static string GetGroupInfo()
+        public static string GetAllGroupInfo()
         {
             string url = "https://api.weixin.qq.com/cgi-bin/groups/get?access_token=" + GetAccesstoken();
             try
@@ -288,7 +288,107 @@ namespace Victop.Server.Controls.WeChat
             }
         }
         /// <summary>
-        /// 获取用户组
+        /// 获取用户所在分组Id
+        /// </summary>
+        /// <param name="openId"></param>
+        /// <returns></returns>
+        public static string GetUserGroupInfo(string openId)
+        {
+            string url = "https://api.weixin.qq.com/cgi-bin/groups/getid?access_token=" + GetAccesstoken();
+            Dictionary<string, object> userDic = new Dictionary<string, object>();
+            userDic.Add("openid", openId);
+            string rqData = JsonHelper.ToJson(userDic);
+            try
+            {
+                CookieContainer container = new CookieContainer();//接收缓存
+                string htmlContent = SendMessageToWeChatServer(url, "post", rqData, ref container);
+                return htmlContent;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+        /// <summary>
+        /// 创建用户分组
+        /// </summary>
+        /// <param name="groupId">分组id</param>
+        /// <param name="groupName">分组名称</param>
+        /// <returns></returns>
+        public static string CreateGroupInfo(string groupId, string groupName)
+        {
+            string url = "https://api.weixin.qq.com/cgi-bin/groups/create?access_token=" + GetAccesstoken();
+            Dictionary<string, object> fullDic = new Dictionary<string, object>();
+            Dictionary<string, object> groupDic = new Dictionary<string, object>();
+            groupDic.Add("id", groupId);
+            groupDic.Add("name", groupName);
+            fullDic.Add("group", groupDic);
+            string rqData = JsonHelper.ToJson(fullDic);
+            try
+            {
+                CookieContainer container = new CookieContainer();//接收缓存
+                string htmlContent = SendMessageToWeChatServer(url, "post", rqData, ref container);
+                return htmlContent;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        /// <summary>
+        /// 修改用户组信息
+        /// </summary>
+        /// <param name="groupId">分组Id</param>
+        /// <param name="groupName">分组名称</param>
+        /// <returns></returns>
+        public static string UpdateGroupInfo(string groupId, string groupName)
+        {
+            string url = "https://api.weixin.qq.com/cgi-bin/groups/update?access_token=" + GetAccesstoken();
+            Dictionary<string, object> fullDic = new Dictionary<string, object>();
+            Dictionary<string, object> groupDic = new Dictionary<string, object>();
+            groupDic.Add("id", groupId);
+            groupDic.Add("name", groupName);
+            fullDic.Add("group", groupDic);
+            string rqData = JsonHelper.ToJson(fullDic);
+            try
+            {
+                CookieContainer container = new CookieContainer();//接收缓存
+                string htmlContent = SendMessageToWeChatServer(url, "post", rqData, ref container);
+                return htmlContent;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        /// <summary>
+        /// 调整用户所在分组
+        /// </summary>
+        /// <param name="openId">用户Id</param>
+        /// <param name="groupId">分组Id</param>
+        /// <returns></returns>
+        public static string UpdateUserOfGroup(string openId, string groupId)
+        {
+            string url = "https://api.weixin.qq.com/cgi-bin/groups/members/update?access_token=" + GetAccesstoken();
+            Dictionary<string, object> groupDic = new Dictionary<string, object>();
+            groupDic.Add("openid", openId);
+            groupDic.Add("to_groupid", groupId);
+            string rqData = JsonHelper.ToJson(groupDic);
+            try
+            {
+                CookieContainer container = new CookieContainer();//接收缓存
+                string htmlContent = SendMessageToWeChatServer(url, "post", rqData, ref container);
+                return htmlContent;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+        #endregion
+        #region 用户管理
+        /// <summary>
+        /// 获取所有用户信息
         /// </summary>
         /// <returns></returns>
         public static string GetAllUserInfo()
@@ -327,6 +427,30 @@ namespace Victop.Server.Controls.WeChat
             }
         }
 
+        /// <summary>
+        /// 设置用户备注信息
+        /// </summary>
+        /// <param name="openId">用户标识</param>
+        /// <param name="remark">备注信息</param>
+        /// <returns></returns>
+        public static string SetUserRemark(string openId, string remark)
+        {
+            string url = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token=" + GetAccesstoken();
+            Dictionary<string, object> dataDic = new Dictionary<string, object>();
+            dataDic.Add("openid", openId);
+            dataDic.Add("remark", remark);
+            string rqData = JsonHelper.ToJson(dataDic);
+            try
+            {
+                CookieContainer container = new CookieContainer();
+                string htmlContent = SendMessageToWeChatServer(url, "post", rqData, ref container);
+                return htmlContent;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+        }
         #endregion
         /// <summary>
         /// 获取访问Token
