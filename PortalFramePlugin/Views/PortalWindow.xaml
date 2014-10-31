@@ -129,7 +129,7 @@
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding gridMainLoadedCommand}"  CommandParameter="{Binding ElementName=mainWindow}"/>
         </i:EventTrigger>
-        <i:EventTrigger EventName="MouseDown">
+        <i:EventTrigger EventName="MouseLeftButtonDown">
             <i:InvokeCommandAction Command="{Binding gridTitleMouseMoveCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
