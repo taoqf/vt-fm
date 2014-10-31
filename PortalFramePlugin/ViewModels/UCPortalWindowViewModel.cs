@@ -263,7 +263,7 @@ namespace PortalFramePlugin.ViewModels
                     ChangeFrameWorkTheme();
                     //LoadMenuListLocal();
                     LoadJsonMenuListLocal();
-                    //UserLogin();
+                    UserLogin();
                 });
             }
         }
@@ -863,30 +863,37 @@ namespace PortalFramePlugin.ViewModels
 
         private void PluginShow(PluginModel pluginModel)
         {
-            PluginOperation pluginOp = new PluginOperation();
-            switch (pluginModel.PluginInterface.ShowType)
+            try
             {
-                case 0:
-                    Window pluginWin = pluginModel.PluginInterface.StartWindow;
-                    pluginWin.Uid = pluginModel.ObjectId;
-                    ActivePluginNum = pluginOp.GetActivePluginList().Count;
-                    pluginWin.ShowDialog();
-                    SendPluginCloseMessage(pluginModel);
-                    break;
-                case 1:
-                    UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;
-                    pluginCtrl.Uid = pluginModel.ObjectId;
-                    VicTabItemNormal tabItem = new VicTabItemNormal();
-                    tabItem.Header = pluginModel.PluginInterface.PluginTitle;
-                    tabItem.Content = pluginCtrl;
-                    tabItem.AllowDelete = true;
-                    tabItem.IsSelected = true;
-                    TabItemList.Add(tabItem);
-                    break;
-                default:
-                    break;
+                PluginOperation pluginOp = new PluginOperation();
+                switch (pluginModel.PluginInterface.ShowType)
+                {
+                    case 0:
+                        Window pluginWin = pluginModel.PluginInterface.StartWindow;
+                        pluginWin.Uid = pluginModel.ObjectId;
+                        ActivePluginNum = pluginOp.GetActivePluginList().Count;
+                        pluginWin.ShowDialog();
+                        SendPluginCloseMessage(pluginModel);
+                        break;
+                    case 1:
+                        UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;
+                        pluginCtrl.Uid = pluginModel.ObjectId;
+                        VicTabItemNormal tabItem = new VicTabItemNormal();
+                        tabItem.Header = pluginModel.PluginInterface.PluginTitle;
+                        tabItem.Content = pluginCtrl;
+                        tabItem.AllowDelete = true;
+                        tabItem.IsSelected = true;
+                        TabItemList.Add(tabItem);
+                        break;
+                    default:
+                        break;
+                }
+                ActivePluginNum = pluginOp.GetActivePluginList().Count;
             }
-            ActivePluginNum = pluginOp.GetActivePluginList().Count;
+            catch (Exception ex)
+            {
+                VicMessageBoxNormal.Show(ex.Message);
+            }
         }
         /// <summary>
         /// 发送关闭插件消息
