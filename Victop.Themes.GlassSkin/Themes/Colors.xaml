@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--皮肤主题颜色-->
-    <SolidColorBrush x:Key="SkinColor" Color="#518c9b"/>
+    <SolidColorBrush x:Key="SkinColor" Color="#667074"/>
 
     <!--皮肤前景色-->
     <SolidColorBrush x:Key="SkinForeground" Color="Black"/>
