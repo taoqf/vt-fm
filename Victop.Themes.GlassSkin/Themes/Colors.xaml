@@ -129,6 +129,26 @@
     <!--登录窗体选项卡标题选中背景色-->
     <SolidColorBrush x:Key="LoginTabItemSelectBgColor" Color="#518C9B"/>
 
+    <!--DataGrid滚动条颜色开始-->
+    <SolidColorBrush x:Key="DG_NormalBrush" Color="#6E7A7F" Opacity="0.6"/>
+    <SolidColorBrush x:Key="DG_NormalBorderBrush" Color="#495153" />
+    <SolidColorBrush x:Key="DG_ScrollBackground" Color="#666F73" Opacity="0.6"/>
+    <SolidColorBrush x:Key="DG_ScrollBorderBrush" Color="#A5ADB1"/>
+    <LinearGradientBrush x:Key="DG_ThumbBackground" EndPoint="1,0.5" StartPoint="0,0.5">
+        <GradientStop Color="#99788183" Offset="0.5"/>
+        <GradientStop Color="White" Offset="1"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="DG_ThumbBorderBrush" Color="#6F7A7F" />
+    <LinearGradientBrush x:Key="DG_HoriThumbBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#99788183" Offset="0.5"/>
+        <GradientStop Color="White" Offset="1"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="DG_HoriThumbBorderBrush" Color="White" />
+    <SolidColorBrush x:Key="DG_GlyphBrush" Color="#BEC2C3" />
+    <SolidColorBrush x:Key="DG_DisabledForegroundBrush" Color="#888" />
+    <SolidColorBrush x:Key="DG_PressedBrush" Color="#495153" Opacity="0.8"></SolidColorBrush>
+    <!--DataGrid滚动条颜色结束-->
+
     <!--图片资源开始-->
     <ImageBrush x:Key="Set" ImageSource="../Images/Set.png"/>
     <ImageBrush x:Key="SetMouseOver" ImageSource="../Images/SetMouseOver.png"/>
