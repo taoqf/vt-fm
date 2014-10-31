@@ -184,7 +184,7 @@
                             <Track.Thumb>
                                 <Thumb
           Style="{DynamicResource DG_ScrollBarThumb}"
-          Margin="1,0,1,0"
+          Margin="2,0,2,0"
           Background="{DynamicResource DG_ThumbBackground}"
           BorderBrush="{DynamicResource DG_ThumbBorderBrush}" />
                             </Track.Thumb>
@@ -239,7 +239,7 @@
                             <Track.Thumb>
                                 <Thumb
           Style="{DynamicResource DG_ScrollBarThumb}"
-          Margin="0,1,0,1"
+          Margin="0,2,0,2"
           Background="{DynamicResource DG_HoriThumbBackground}"
           BorderBrush="{DynamicResource DG_HoriThumbBorderBrush}" />
                             </Track.Thumb>

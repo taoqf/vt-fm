@@ -39,7 +39,7 @@ namespace AreaManagerPlugin.Views
             dt.Columns.Add("教师姓名");
             dt.Columns.Add("监护人姓名");
             dt.Columns.Add("监护人性别");
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 50; i++)
             {
                 DataRow dr = dt.NewRow();
                 dr["编号"] = i;
