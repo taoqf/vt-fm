@@ -78,128 +78,184 @@
     </Style>
 
     <!--DataGrid样式开始-->
-    <Style x:Key="scroll_thumb_style" TargetType="Thumb">
+    <Style x:Key="DG_ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
-        <Setter Property="IsTabStop" Value="false"/>
         <Setter Property="Focusable" Value="false"/>
-        <Setter Property="Margin" Value="1"></Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Thumb">
-                    <Rectangle Width="18" Fill="White" >
-                    </Rectangle>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border
+          Name="Border"
+          Margin="1"
+          CornerRadius="2"
+          Background="{DynamicResource DG_NormalBrush}"
+          BorderBrush="{DynamicResource DG_NormalBorderBrush}"
+          BorderThickness="{TemplateBinding BorderThickness}">
+                        <Path
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Fill="{DynamicResource DG_GlyphBrush}"
+            Data="{Binding Path=Content,
+                RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Border" Property="Background"
+                                Value="{DynamicResource DG_PressedBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground"
+                                Value="{DynamicResource DG_DisabledForegroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="Ver_ScrollBar_style" TargetType="ScrollBar">
+
+    <Style x:Key="DG_ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ScrollBar">
-                    <Grid Width="22" Opacity="0.6">
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DG_ScrollBarThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border
+          CornerRadius="2"
+          Background="{TemplateBinding Background}"
+          BorderBrush="{TemplateBinding BorderBrush}"
+          BorderThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DG_VerticalScrollBar" TargetType="ScrollBar">
+        <Setter Property="Width" Value="18"/>
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid >
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="22" />
-                            <RowDefinition />
-                            <RowDefinition Height="22" />
+                            <RowDefinition MaxHeight="18"/>
+                            <RowDefinition Height="0.00001*"/>
+                            <RowDefinition MaxHeight="18"/>
                         </Grid.RowDefinitions>
-                        <!--上按钮-->
-                        <RepeatButton OverridesDefaultStyle ="True" BorderThickness="0" FocusVisualStyle="{x:Null}" Command="ScrollBar.LineUpCommand" Themes:ScrollChrome.ScrollGlyph="UpArrow" >
-                            <RepeatButton.Template>
-                                <ControlTemplate TargetType="RepeatButton">
-                                    <Themes:ScrollChrome Name="Chrome" SnapsToDevicePixels="True" Themes:ScrollChrome.ScrollGlyph="{TemplateBinding Themes:ScrollChrome.ScrollGlyph}" />
-                                </ControlTemplate>
-                            </RepeatButton.Template>
-                        </RepeatButton>
-                        <Border Grid.Row="1" Margin="0,1,0,1" Background="#33555555">
-                            <Track HorizontalAlignment="Left" Name="PART_Track" Width="{TemplateBinding Width}" Maximum="{TemplateBinding Maximum}" Minimum="{TemplateBinding Minimum}" 
-Value="{TemplateBinding Value}" IsDirectionReversed="true">
-                                <Track.DecreaseRepeatButton>
-                                    <RepeatButton OverridesDefaultStyle="True" Background="Transparent" Command="ScrollBar.PageUpCommand" />
-                                </Track.DecreaseRepeatButton>
-                                <Track.IncreaseRepeatButton>
-                                    <RepeatButton OverridesDefaultStyle="True" Background="Transparent" Command="ScrollBar.PageDownCommand" />
-                                </Track.IncreaseRepeatButton>
-                                <Track.Thumb>
-                                    <Thumb Style="{StaticResource scroll_thumb_style}" >
-                                    </Thumb>
-                                </Track.Thumb>
-                            </Track>
-                        </Border>
-                        <!--下按钮-->
-                        <RepeatButton Grid.Row="2" FocusVisualStyle="{x:Null}" BorderThickness="0" Command="ScrollBar.LineDownCommand" OverridesDefaultStyle ="True" Themes:ScrollChrome.ScrollGlyph="DownArrow" >
-                            <RepeatButton.Template>
-                                <ControlTemplate TargetType="RepeatButton">
-                                    <Themes:ScrollChrome Name="Chrome" SnapsToDevicePixels="True" Themes:ScrollChrome.ScrollGlyph="{TemplateBinding Themes:ScrollChrome.ScrollGlyph}" />
-                                </ControlTemplate>
-                            </RepeatButton.Template>
-                        </RepeatButton>
-
+                        <Border
+      Grid.RowSpan="3"
+      CornerRadius="2"
+      Background="{DynamicResource DG_ScrollBackground}" 
+      BorderBrush="{DynamicResource DG_ScrollBorderBrush}"
+      BorderThickness="1"/>
+                        <RepeatButton
+      Grid.Row="0"
+      Style="{DynamicResource DG_ScrollBarLineButton}"
+      Height="18"
+      Command="ScrollBar.LineUpCommand"
+      Content="M 0 4 L 8 4 L 4 0 Z" BorderThickness="0,0,0,1"/>
+                        <Track
+      Name="PART_Track"
+      Grid.Row="1"
+      IsDirectionReversed="true">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton
+          Style="{DynamicResource DG_ScrollBarPageButton}"
+          Command="ScrollBar.PageUpCommand" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb
+          Style="{DynamicResource DG_ScrollBarThumb}"
+          Margin="1,0,1,0"
+          Background="{DynamicResource DG_ThumbBackground}"
+          BorderBrush="{DynamicResource DG_ThumbBorderBrush}" />
+                            </Track.Thumb>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton
+          Style="{DynamicResource DG_ScrollBarPageButton}"
+          Command="ScrollBar.PageDownCommand" />
+                            </Track.IncreaseRepeatButton>
+                        </Track>
+                        <RepeatButton
+      Grid.Row="3"
+      Style="{DynamicResource DG_ScrollBarLineButton}"
+      Height="18"
+      Command="ScrollBar.LineDownCommand"
+      Content="M 0 0 L 4 4 L 8 0 Z" BorderThickness="0,1,0,0"/>
                     </Grid>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="hori_scroll_thumb_style" TargetType="Thumb">
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="OverridesDefaultStyle" Value="true"/>
-        <Setter Property="IsTabStop" Value="false"/>
-        <Setter Property="Focusable" Value="false"/>
-        <Setter Property="Margin" Value="1"></Setter>
+    <Style x:Key="DG_HorizontalScrollBar" TargetType="ScrollBar">
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Height" Value="18" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Thumb">
-                    <Rectangle Height="18" Fill="White" >
-                    </Rectangle>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="Hori_ScrollBar_style" TargetType="ScrollBar">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ScrollBar">
-                    <Grid Height="22" Opacity="0.6">
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="21" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="21" />
+                            <ColumnDefinition MaxWidth="18"/>
+                            <ColumnDefinition Width="0.00001*"/>
+                            <ColumnDefinition MaxWidth="18"/>
                         </Grid.ColumnDefinitions>
-                        <!--左按钮-->
-                        <RepeatButton OverridesDefaultStyle ="True" BorderThickness="0" FocusVisualStyle="{x:Null}" Command="ScrollBar.LineLeftCommand" Themes:ScrollChrome.ScrollGlyph="LeftArrow" >
-                            <RepeatButton.Template>
-                                <ControlTemplate TargetType="RepeatButton">
-                                    <Themes:ScrollChrome Name="Chrome" SnapsToDevicePixels="True" Themes:ScrollChrome.ScrollGlyph="{TemplateBinding Themes:ScrollChrome.ScrollGlyph}" />
-                                </ControlTemplate>
-                            </RepeatButton.Template>
-                        </RepeatButton>
-                        <Border Grid.Column="1" Margin="1,0,1,0" Background="#33555555">
-                            <Track VerticalAlignment="Top" Name="PART_Track" Height="{TemplateBinding Height}" Maximum="{TemplateBinding Maximum}" Minimum="{TemplateBinding Minimum}" 
-Value="{TemplateBinding Value}" IsDirectionReversed="true">
-                                <Track.DecreaseRepeatButton>
-                                    <RepeatButton OverridesDefaultStyle="True" Background="Transparent" Command="ScrollBar.PageLeftCommand" />
-                                </Track.DecreaseRepeatButton>
-                                <Track.IncreaseRepeatButton>
-                                    <RepeatButton OverridesDefaultStyle="True" Background="Transparent" Command="ScrollBar.PageRightCommand" />
-                                </Track.IncreaseRepeatButton>
-                                <Track.Thumb>
-                                    <Thumb Style="{StaticResource hori_scroll_thumb_style}" >
-                                    </Thumb>
-                                </Track.Thumb>
-                            </Track>
-                        </Border>
-                        <!--右按钮-->
-                        <RepeatButton Grid.Column="2" FocusVisualStyle="{x:Null}" BorderThickness="0" Command="ScrollBar.LineRightCommand" OverridesDefaultStyle ="True" Themes:ScrollChrome.ScrollGlyph="RightArrow" >
-                            <RepeatButton.Template>
-                                <ControlTemplate TargetType="RepeatButton">
-                                    <Themes:ScrollChrome Name="Chrome" SnapsToDevicePixels="True" Themes:ScrollChrome.ScrollGlyph="{TemplateBinding Themes:ScrollChrome.ScrollGlyph}" />
-                                </ControlTemplate>
-                            </RepeatButton.Template>
-                        </RepeatButton>
-
+                        <Border
+      Grid.ColumnSpan="3"
+      CornerRadius="2"
+      Background="#F0F0F0" />
+                        <RepeatButton
+      Grid.Column="0"
+      Style="{DynamicResource DG_ScrollBarLineButton}"
+      Width="18"
+      Command="ScrollBar.LineLeftCommand"
+      Content="M 4 0 L 4 8 L 0 4 Z" BorderThickness="0,0,1,0"/>
+                        <Track
+      Name="PART_Track"
+      Grid.Column="1"
+      IsDirectionReversed="False">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton
+          Style="{DynamicResource DG_ScrollBarPageButton}"
+          Command="ScrollBar.PageLeftCommand" />
+                            </Track.DecreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb
+          Style="{DynamicResource DG_ScrollBarThumb}"
+          Margin="0,1,0,1"
+          Background="{DynamicResource DG_ThumbBackground}"
+          BorderBrush="{DynamicResource DG_ThumbBorderBrush}" />
+                            </Track.Thumb>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton
+          Style="{DynamicResource DG_ScrollBarPageButton}"
+          Command="ScrollBar.PageRightCommand" />
+                            </Track.IncreaseRepeatButton>
+                        </Track>
+                        <RepeatButton
+      Grid.Column="3"
+      Style="{DynamicResource DG_ScrollBarLineButton}"
+      Width="18"
+      Command="ScrollBar.LineRightCommand"
+      Content="M 0 0 L 4 4 L 0 8 Z" BorderThickness="1,0,0,0"/>
                     </Grid>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -285,25 +341,16 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
+                                            <RowDefinition/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <Button Command="ApplicationCommands.SelectAll" Focusable="False" Style="{DynamicResource {ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}}" Width="{Binding CellsPanelHorizontalOffset, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type DataGrid}}}">
-                                            <Button.Visibility>
-                                                <Binding Path="HeadersVisibility" RelativeSource="{RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type DataGrid}}">
-                                                    <Binding.ConverterParameter>
-                                                        <DataGridHeadersVisibility>All</DataGridHeadersVisibility>
-                                                    </Binding.ConverterParameter>
-                                                </Binding>
-                                            </Button.Visibility>
-                                        </Button>
-                                        <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter" Grid.Column="1">
+
+                                        <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter" Grid.Row="0" Grid.Column="0">
                                             <DataGridColumnHeadersPresenter.Visibility>
                                                 <Binding Path="HeadersVisibility" RelativeSource="{RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type DataGrid}}">
                                                     <Binding.ConverterParameter>
@@ -312,15 +359,23 @@ Value="{TemplateBinding Value}" IsDirectionReversed="true">
                                                 </Binding>
                                             </DataGridColumnHeadersPresenter.Visibility>
                                         </DataGridColumnHeadersPresenter>
-                                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"  CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" Grid.ColumnSpan="2" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Grid.Row="1"/>
-                                        <ScrollBar x:Name="PART_VerticalScrollBar" Style="{DynamicResource Ver_ScrollBar_style}" Grid.Column="2" Maximum="{TemplateBinding ScrollableHeight}" Orientation="Vertical" Grid.Row="1" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}"/>
-                                        <Grid Grid.Column="1" Grid.Row="2">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="{Binding NonFrozenColumnsViewportHorizontalOffset, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type DataGrid}}}"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <ScrollBar x:Name="PART_HorizontalScrollBar" Style="{DynamicResource Hori_ScrollBar_style}" Grid.Column="1" Maximum="{TemplateBinding ScrollableWidth}" Orientation="Horizontal" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"/>
-                                        </Grid>
+                                        <ScrollContentPresenter Grid.Row="1" Grid.Column="0"/>
+                                        <ScrollBar Name="PART_VerticalScrollBar"
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Style="{DynamicResource DG_VerticalScrollBar}"
+                                                    Value="{TemplateBinding VerticalOffset}"
+                                                    Maximum="{TemplateBinding ScrollableHeight}"
+                                                    ViewportSize="{TemplateBinding ViewportHeight}"
+                                                    Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                                        <ScrollBar Name="PART_HorizontalScrollBar"
+                                                   Style="{DynamicResource DG_HorizontalScrollBar}" 
+                                                    Grid.Row="2"
+                                                    Grid.Column="0"
+                                                    Value="{TemplateBinding HorizontalOffset}"
+                                                    Maximum="{TemplateBinding ScrollableWidth}"
+                                                    ViewportSize="{TemplateBinding ViewportWidth}"
+                                                    Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
                                     </Grid>
                                 </ControlTemplate>
                             </ScrollViewer.Template>

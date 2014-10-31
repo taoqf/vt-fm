@@ -118,6 +118,28 @@
     <!--内容页标题前景色色-->
     <SolidColorBrush x:Key="RigthTitleColor" Color="Black"/>
 
+    <!--DataGrid滚动条颜色开始-->
+    <SolidColorBrush x:Key="DG_NormalBrush" Color="#DADAD9" Opacity="0.6"/>
+    <SolidColorBrush x:Key="DG_NormalBorderBrush" Color="White" />
+    <SolidColorBrush x:Key="DG_ScrollBackground" Color="#DADBDA" Opacity="0.6"/>
+    <SolidColorBrush x:Key="DG_ScrollBorderBrush" Color="White"/>
+    <SolidColorBrush x:Key="DG_ThumbBackground" Color="White" Opacity="1"/>
+    <SolidColorBrush x:Key="DG_ThumbBorderBrush" Color="White" />
+    <SolidColorBrush x:Key="DG_GlyphBrush" Color="#444" />
+    <SolidColorBrush x:Key="DG_DisabledForegroundBrush" Color="#888" />
+    <LinearGradientBrush x:Key="DG_PressedBrush"
+            StartPoint="0,0" EndPoint="0,1">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#BBB" Offset="0.0"/>
+                <GradientStop Color="#EEE" Offset="0.1"/>
+                <GradientStop Color="#EEE" Offset="0.9"/>
+                <GradientStop Color="#FFF" Offset="1.0"/>
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <!--DataGrid滚动条颜色结束-->
+
     <!--图片资源开始-->
     <ImageBrush x:Key="Set" ImageSource="../Images/Set.png"/>
     <ImageBrush x:Key="SetMouseOver" ImageSource="../Images/SetMouseOver.png"/>
