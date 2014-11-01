@@ -127,7 +127,7 @@
     <SolidColorBrush x:Key="LoginTabItemSelectForeColor" Color="White"/>
 
     <!--登录窗体选项卡标题选中背景色-->
-    <SolidColorBrush x:Key="LoginTabItemSelectBgColor" Color="#518C9B"/>
+    <SolidColorBrush x:Key="LoginTabItemSelectBgColor" Color="#667074"/>
 
     <!--DataGrid滚动条颜色开始-->
     <SolidColorBrush x:Key="DG_NormalBrush" Color="#6E7A7F" Opacity="0.6"/>
