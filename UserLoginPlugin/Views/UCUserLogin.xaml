@@ -14,7 +14,6 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Border Grid.RowSpan="3" BorderBrush="{DynamicResource SkinColor}" />
         <Grid Grid.Row="0" Name="titleBar" Style="{DynamicResource loginMainGridStyle}">
             <Grid Width="40" Height="40" HorizontalAlignment="Left" Margin="10">
                 <Ellipse Fill="{DynamicResource SkinColor}"/>
