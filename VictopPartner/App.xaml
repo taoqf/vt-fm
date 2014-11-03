@@ -5,6 +5,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Name="skin"/>
+                <ResourceDictionary x:Name="language"/>
                 <ResourceDictionary Source="themes\Common.xaml"/>
                 <ResourceDictionary Source="themes\Plugin.xaml"/>
                 <ResourceDictionary Source="themes\PortalWindow.xaml"/>
