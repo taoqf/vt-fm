@@ -699,7 +699,7 @@
                                         <ColumnDefinition Width="50"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Image x:Name="img" Margin="0,10,0,0" Grid.Column="0" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Source="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
+                                    <Border x:Name="border" Margin="0,10,0,0" Grid.Column="0" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Background="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
                                     <Grid x:Name="grid" Grid.Column="1" Width="115" Background="{TemplateBinding Background}">
                                         <TextBlock Margin="0,10,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}" 
                                                    TextWrapping="Wrap"
@@ -718,10 +718,10 @@
 
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsSelected" Value="true">
-                                        <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
+                                        <Setter Property="Background" TargetName="border" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Source" TargetName="img" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
+                                        <Setter Property="Background" TargetName="border" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
                                         <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"/>
                                     </Trigger>
                                     <Trigger SourceName="grid" Property="IsMouseOver" Value="true">
