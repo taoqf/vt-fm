@@ -149,6 +149,7 @@
     <Style x:Key="DG_VerticalScrollBar" TargetType="ScrollBar">
         <Setter Property="Width" Value="18"/>
         <Setter Property="Height" Value="Auto" />
+        <Setter Property="Orientation" Value="Vertical"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="Template">
@@ -157,7 +158,7 @@
                     <Grid >
                         <Grid.RowDefinitions>
                             <RowDefinition MaxHeight="18"/>
-                            <RowDefinition Height="0.00001*"/>
+                            <RowDefinition Height="*"/>
                             <RowDefinition MaxHeight="18"/>
                         </Grid.RowDefinitions>
                         <Border
@@ -208,19 +209,24 @@
     <Style x:Key="DG_HorizontalScrollBar" TargetType="ScrollBar">
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="Height" Value="18" />
+        <Setter Property="Orientation" Value="Horizontal"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition MaxWidth="18"/>
-                            <ColumnDefinition Width="0.00001*"/>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition MaxWidth="18"/>
                         </Grid.ColumnDefinitions>
                         <Border
       Grid.ColumnSpan="3"
       CornerRadius="2"
-      Background="#F0F0F0" />
+      Background="{DynamicResource DG_ScrollBackground}" 
+      BorderBrush="{DynamicResource DG_ScrollBorderBrush}"
+      BorderThickness="1"/>
                         <RepeatButton
       Grid.Column="0"
       Style="{DynamicResource DG_ScrollBarLineButton}"
