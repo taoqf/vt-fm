@@ -32,6 +32,40 @@ namespace VictopPartner
         public MainWindow()
         {
             InitializeComponent();
+            this.Loaded += MainWindow_Loaded;
+        }
+
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (FrameInit.GetInstance().FrameRun())
+            {
+                try
+                {
+                    this.GetCurrentSkin();
+                    string mainPlugin = ConfigurationManager.AppSettings["portalWindow"];
+                    Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName(mainPlugin, "");
+                    Type[] types = pluginAssembly.GetTypes();
+                    foreach (Type t in types)
+                    {
+                        if (IsValidPlugin(t))
+                        {
+                            IPlugin plugin = (IPlugin)pluginAssembly.CreateInstance(t.FullName);
+                            this.Hide();
+                            plugin.StartWindow.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+                            plugin.StartWindow.ShowDialog();
+                            FrameInit.GetInstance().FrameUnload();
+                            Environment.Exit(0);
+                            break;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("门户" + ex.Message);
+                    FrameInit.GetInstance().FrameUnload();
+                    Environment.Exit(0);
+                }
+            }
         }
 
         private string AnonymousLogin()

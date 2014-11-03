@@ -116,10 +116,10 @@
     <SolidColorBrush x:Key="LoginTabItemOverBgColor" Color="White" Opacity="0.9"/>
 
     <!--登录窗体选项卡标题选中前景色-->
-    <SolidColorBrush x:Key="LoginTabItemSelectForeColor" Color="White"/>
+    <SolidColorBrush x:Key="LoginTabItemSelectForeColor" Color="Green"/>
 
     <!--登录窗体选项卡标题选中背景色-->
-    <SolidColorBrush x:Key="LoginTabItemSelectBgColor" Color="#518C9B"/>
+    <SolidColorBrush x:Key="LoginTabItemSelectBgColor" Color="#1e1e1e"/>
 
     <!--内容页标题前景色色-->
     <SolidColorBrush x:Key="RigthTitleColor" Color="White"/>

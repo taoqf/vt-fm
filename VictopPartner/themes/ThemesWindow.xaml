@@ -1,0 +1,124 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls">
+
+    <Style x:Key="WindowChangeSkinBackground" TargetType="{x:Type Grid}">
+        <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
+    </Style>
+    
+    <Style x:Key="WindowChangeSkinTitleBackGround" TargetType="{x:Type Grid}">
+        <Setter Property="Background" Value="{DynamicResource SkinColor}"/>
+    </Style>
+    
+    <Style  x:Key="RadioButtonListStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"   Value="Auto"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <WrapPanel Orientation="Horizontal" IsItemsHost="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                  
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+                    <Setter Property="Margin"  Value="10"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+                                    <Border Name="border" BorderBrush="White" CornerRadius="5" BorderThickness="3" Height="122" Width="203">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="{Binding SkinFace}" Stretch="UniformToFill"/>
+                                        </Border.Background>
+                                        <Border Name="borderSelect" Opacity="0" Background="Yellow" CornerRadius="24" HorizontalAlignment="Left" Height="24" Margin="154,90,0,0" VerticalAlignment="Top" Width="24">
+                                            <Grid>
+                                                <Path Fill="Red" HorizontalAlignment="Left" 
+                                                  StrokeThickness="0" 
+                                                  VerticalAlignment="Top" 
+                                                  Margin="8.383,10.541,0,0" 
+                                                  Data="M0,0 L12,0 12,0.38199188 12.230031,0.36226721 12.913506,8.3330173 10.920817,8.5038862 10.363123,2 0,2 z" 
+                                                  Height="8.504" 
+                                                  RenderTransformOrigin="0.464629838490983,0.117593290001535" 
+                                                  Stretch="Fill" 
+                                                  Width="12.914">
+                                                    <Path.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform/>
+                                                            <SkewTransform/>
+                                                            <RotateTransform Angle="135.502"/>
+                                                            <TranslateTransform/>
+                                                        </TransformGroup>
+                                                    </Path.RenderTransform>
+                                                </Path>
+                                            </Grid>
+                                        </Border>
+                                    </Border>
+                                    <TextBlock Text="{Binding SkinName}" MinWidth="60" MinHeight="30" TextAlignment="Center"/>
+                                </StackPanel>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="true" >
+                                        <Setter Property="BorderBrush" TargetName="border"  Value="Yellow"/>
+                                        <Setter Property="Opacity" TargetName="borderSelect"  Value="1"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--窗体弹出框样式开始-->
+    <Style x:Key="WindowMessageSkin" TargetType="{x:Type controls:VicWindowNormal}">
+        <Setter Property="BorderBrush" Value="#024672"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicWindowNormal}">
+                    <Grid Background="{DynamicResource WindowBackground}"> 
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" CornerRadius="0">
+                            <Grid Name="gridRoot">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid Name="gridTitleBar" Grid.Row="0" Background="{DynamicResource SkinColor}">
+                                    <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="White"/>
+                                    <controls:VicButtonNormal x:Name="btnMini" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right" Margin="0,0,33,0" VerticalAlignment="Top"  Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最小化">
+                                        <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
+                                  SnapsToDevicePixels="True"
+                                  Fill="White" />
+                                    </controls:VicButtonNormal>
+                                    <controls:VicButtonNormal x:Name="btnClose"  Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  VerticalAlignment="Top" Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="关闭">
+                                        <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
+                                  SnapsToDevicePixels="True"
+                                  Fill="White" />
+                                    </controls:VicButtonNormal>
+                                </Grid>
+                                <Grid Name="gridBody" Grid.Row="1">
+                                    <Grid.Background>
+                                        <SolidColorBrush Color="White" Opacity="0.6"/>
+                                    </Grid.Background>
+                                    <AdornerDecorator>
+                                        <ContentPresenter/>
+                                    </AdornerDecorator>
+                                </Grid>
+                                <Grid Name="statusBar" Grid.Row="2" Visibility="Collapsed">
+                                    <Label Content="状态栏" FontFamily="SimSun"  Foreground="#828282" Padding="15,0,0,0"></Label>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--窗体弹出框样式结束-->
+</ResourceDictionary>

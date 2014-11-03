@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--皮肤主题颜色-->
-    <SolidColorBrush x:Key="SkinColor" Color="#31527D"/>
+    <SolidColorBrush x:Key="SkinColor" Color="#b39575"/>
 
     <!--皮肤前景色-->
     <SolidColorBrush x:Key="SkinForeground" Color="Black"/>
@@ -113,7 +113,7 @@
     <SolidColorBrush x:Key="LoginTabItemSelectForeColor" Color="White"/>
 
     <!--登录窗体选项卡标题选中背景色-->
-    <SolidColorBrush x:Key="LoginTabItemSelectBgColor" Color="#518C9B"/>
+    <SolidColorBrush x:Key="LoginTabItemSelectBgColor" Color="#b39575"/>
 
     <!--内容页标题前景色色-->
     <SolidColorBrush x:Key="RigthTitleColor" Color="Black"/>
