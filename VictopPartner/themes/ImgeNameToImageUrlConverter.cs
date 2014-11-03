@@ -17,8 +17,8 @@ namespace VictopPartner.Themes
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value == null || value.ToString() == string.Empty) return string.Empty;
-            return new BitmapImage(new Uri(@"/VictopPartner.Themes;component/Images/" + value.ToString(), UriKind.Relative));
-
+            value = System.IO.Path.GetFileNameWithoutExtension(value.ToString());
+            return App.Current.Resources[value];
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
