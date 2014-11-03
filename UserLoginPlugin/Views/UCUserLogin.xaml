@@ -88,7 +88,7 @@
             <Border Grid.Row="2" Grid.Column="1" BorderBrush="#024672" BorderThickness="0">
                 <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
                     <controls:VicButtonNormal  x:Name="btnLogin" IsDefault="True" Style="{DynamicResource LoginButtonStyle}" Content="{DynamicResource L_R_89}" Command="{Binding btnLoginClickCommand}" TabIndex="5" />
-                    <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消"  Command="{Binding btnCancelClickCommand}"/>
+                    <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消" IsCancel="True"  Command="{Binding btnCancelClickCommand}"/>
                 </StackPanel>
             </Border>
         </Grid>

@@ -224,7 +224,7 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    LoginWindow.Close();
+                    LoginWindow.Hide();
                 });
             }
         }
