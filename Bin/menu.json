@@ -1435,6 +1435,269 @@
 					]
 				}
 			]
+		}, {
+			"title": "菜单管理",
+			"iconUrl": "25.png",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "菜单管理",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "菜单管理",
+							"actionType": 1,
+							"actionName": "MenuManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "用于菜单管理维护",
+							"systemId": 906,
+							"formId": "",
+							"modelId": "table::authority_menu",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "菜单项管理",
+							"actionType": 1,
+							"actionName": "MenuNecklacePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "用于菜单项管理维护",
+							"systemId": 906,
+							"formId": "",
+							"modelId": "table::authority_menu",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "用户管理",
+			"iconUrl": "25.png",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "用户管理",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "用户管理",
+							"actionType": 1,
+							"actionName": "UserManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "用于用户维护",
+							"systemId": 906,
+							"formId": "",
+							"modelId": "table::pub_user",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "权限组管理",
+			"iconUrl": "25.png",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "权限组管理",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "权限组管理",
+							"actionType": 1,
+							"actionName": "AuthorityGroupManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "用于权限维护",
+							"systemId": 906,
+							"formId": "",
+							"modelId": "table::authority_group",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "用户权限组关系",
+			"iconUrl": "25.png",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "用户权限组关系",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "用户权限组关系",
+							"actionType": 1,
+							"actionName": "AuthorityUserGroupManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "用于用户权限组关系维护",
+							"systemId": 906,
+							"formId": "",
+							"modelId": "table::authority_user_group",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "权限菜单关系",
+			"iconUrl": "25.png",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "权限菜单关系",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "权限菜单关系",
+							"actionType": 1,
+							"actionName": "AuthorityMenuGroupPlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "用于权限菜单关系维护",
+							"systemId": 906,
+							"formId": "",
+							"modelId": "table::authority_menu_group",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "权限码",
+			"iconUrl": "25.png",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "权限码",
+					"iconUrl": "25.png",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "权限码",
+							"actionType": 1,
+							"actionName": "AuthorityYardManagePlugin",
+							"showType": 1,
+							"iconUrl": "25.png",
+							"description": "用于权限码维护",
+							"systemId": 906,
+							"formId": "",
+							"modelId": "table::authority_code",
+							"masterName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
 		}
 	]
 }
