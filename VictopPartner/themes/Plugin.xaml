@@ -128,7 +128,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="DG_ScrollBarThumb" TargetType="{x:Type Thumb}">
+    <Style x:Key="DG_HorizontalScrollBarThumb" TargetType="{x:Type Thumb}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="IsTabStop" Value="false"/>
@@ -136,11 +136,51 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border
+                    <Border x:Name="border"
           CornerRadius="0"
           Background="{TemplateBinding Background}"
           BorderBrush="{TemplateBinding BorderBrush}"
-          BorderThickness="1" />
+          BorderThickness="1" >
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,2" HorizontalAlignment="Center">
+                            <Rectangle Width="1" Margin="2,0,0,0" Fill="{DynamicResource DG_ThumbLineBorderBrush}" Stroke="{DynamicResource DG_ThumbLineBorderBrush}"/>
+                            <Rectangle Width="1" Fill="{DynamicResource DG_DropShadowBrush}" Stroke="{DynamicResource DG_DropShadowBrush}"/>
+                            <Rectangle Width="1" Margin="2,0,0,0" Fill="{DynamicResource DG_ThumbLineBorderBrush}" Stroke="{DynamicResource DG_ThumbLineBorderBrush}"/>
+                            <Rectangle Width="1" Fill="{DynamicResource DG_DropShadowBrush}" Stroke="{DynamicResource DG_DropShadowBrush}"/>
+                            <Rectangle Width="1" Margin="2,0,0,0" Fill="{DynamicResource DG_ThumbLineBorderBrush}" Stroke="{DynamicResource DG_ThumbLineBorderBrush}"/>
+                            <Rectangle Width="1" Fill="{DynamicResource DG_DropShadowBrush}" Stroke="{DynamicResource DG_DropShadowBrush}"/>
+                            <Rectangle Width="1" Margin="2,0,0,0" Fill="{DynamicResource DG_ThumbLineBorderBrush}" Stroke="{DynamicResource DG_ThumbLineBorderBrush}"/>
+                            <Rectangle Width="1" Fill="{DynamicResource DG_DropShadowBrush}" Stroke="{DynamicResource DG_DropShadowBrush}"/>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DG_VerticalScrollBarThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border x:Name="border"
+          CornerRadius="0"
+          Background="{TemplateBinding Background}"
+          BorderBrush="{TemplateBinding BorderBrush}"
+          BorderThickness="1" >
+                        <StackPanel Orientation="Vertical" Margin="2,0,2,0" VerticalAlignment="Center">
+                            <Rectangle Height="1" Margin="0,2,0,0" Fill="{DynamicResource DG_ThumbLineBorderBrush}" Stroke="{DynamicResource DG_ThumbLineBorderBrush}"/>
+                            <Rectangle Height="1" Fill="{DynamicResource DG_DropShadowBrush}" Stroke="{DynamicResource DG_DropShadowBrush}"/>
+                            <Rectangle Height="1" Margin="0,2,0,0" Fill="{DynamicResource DG_ThumbLineBorderBrush}" Stroke="{DynamicResource DG_ThumbLineBorderBrush}"/>
+                            <Rectangle Height="1" Fill="{DynamicResource DG_DropShadowBrush}" Stroke="{DynamicResource DG_DropShadowBrush}"/>
+                            <Rectangle Height="1" Margin="0,2,0,0" Fill="{DynamicResource DG_ThumbLineBorderBrush}" Stroke="{DynamicResource DG_ThumbLineBorderBrush}"/>
+                            <Rectangle Height="1" Fill="{DynamicResource DG_DropShadowBrush}" Stroke="{DynamicResource DG_DropShadowBrush}"/>
+                            <Rectangle Height="1" Margin="0,2,0,0" Fill="{DynamicResource DG_ThumbLineBorderBrush}" Stroke="{DynamicResource DG_ThumbLineBorderBrush}"/>
+                            <Rectangle Height="1" Fill="{DynamicResource DG_DropShadowBrush}" Stroke="{DynamicResource DG_DropShadowBrush}"/>
+                        </StackPanel>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -184,7 +224,7 @@
                             </Track.DecreaseRepeatButton>
                             <Track.Thumb>
                                 <Thumb
-          Style="{DynamicResource DG_ScrollBarThumb}"
+          Style="{DynamicResource DG_VerticalScrollBarThumb}"
           Margin="2,0,2,0"
           Background="{DynamicResource DG_ThumbBackground}"
           BorderBrush="{DynamicResource DG_ThumbBorderBrush}" />
@@ -244,7 +284,7 @@
                             </Track.DecreaseRepeatButton>
                             <Track.Thumb>
                                 <Thumb
-          Style="{DynamicResource DG_ScrollBarThumb}"
+          Style="{DynamicResource DG_HorizontalScrollBarThumb}"
           Margin="0,2,0,2"
           Background="{DynamicResource DG_ThumbBackground}"
           BorderBrush="{DynamicResource DG_ThumbBorderBrush}" />
