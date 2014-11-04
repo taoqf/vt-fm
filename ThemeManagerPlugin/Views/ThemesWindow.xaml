@@ -21,7 +21,8 @@
             <RowDefinition RowDefinition.Height="*"/>
         </Grid.RowDefinitions>
         <Border BorderBrush="{DynamicResource SkinColor}" BorderThickness="1"  Grid.RowSpan="4"></Border>
-        <Grid Name="gridTitleBar" Grid.Row="0" Style="{DynamicResource WindowChangeSkinTitleBackGround}">
+        <Border Grid.Row="0" Background="{DynamicResource WindowBackground}"/>
+        <Grid Name="gridTitleBar" Grid.Row="0" Style="{DynamicResource loginMainGridStyle}" >
             <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="飞道皮肤中心" FontWeight="Bold" Foreground="White"/>
             <controls:VicButtonNormal  Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right" Margin="0,0,33,0" VerticalAlignment="Top"  Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最小化">
                 <Line x:Name="PART_Path" X1="2"  X2="12" Y1="2" Y2="2" Stroke="White"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
