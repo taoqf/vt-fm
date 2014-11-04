@@ -87,7 +87,7 @@
                                 </Grid>
                             </Border>
                             <Grid  Grid.Row="1" Background="{DynamicResource SkinColor}"/>
-                            <Grid Name="gridBody" Grid.Row="2" Background="{DynamicResource WhiteShade}">
+                            <Grid Name="gridBody" Grid.Row="2" Background="White">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
@@ -98,7 +98,7 @@
                                    TextWrapping="WrapWithOverflow"
                                    FontSize="{TemplateBinding FontSize}" />
                             </Grid>
-                            <Border Name="brBtn" BorderThickness="0" Grid.Row="3" Background="{DynamicResource WhiteShade}">
+                            <Border Name="brBtn" BorderThickness="0" Grid.Row="3" Background="White">
                                 <Grid Name="gridBtn">
                                     <ItemsControl Name="butt" Margin="2" ItemsSource="{TemplateBinding CtrlButtonCollection}"  ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,5,0">
