@@ -4,10 +4,12 @@
 
     <Style x:Key="WindowChangeSkinBackground" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
+       
     </Style>
     
     <Style x:Key="WindowChangeSkinTitleBackGround" TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="{DynamicResource SkinColor}"/>
+        <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
+        <Setter Property="Opacity" Value="0.6"/>
     </Style>
     
     <Style  x:Key="RadioButtonListStyle" TargetType="{x:Type ListBox}">
@@ -89,7 +91,7 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="auto"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <Grid Name="gridTitleBar" Grid.Row="0" Background="{DynamicResource SkinColor}">
+                                <Grid Name="gridTitleBar" Grid.Row="0" Background="{DynamicResource MainBackgroundImage}">
                                     <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="White"/>
                                     <controls:VicButtonNormal x:Name="btnMini" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right" Margin="0,0,33,0" VerticalAlignment="Top"  Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最小化">
                                         <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"

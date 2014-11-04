@@ -10,7 +10,7 @@
     <controls:TextInputToVisibilityConverter x:Key="TextInputToVisibilityConverter" />
 
     <Style x:Key="WindowButtonStyle" TargetType="{x:Type controls:VicButtonNormal}">
-        <Setter Property="Background" Value="{DynamicResource SkinColor}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalContentAlignment"  Value="Center" />
         <Setter Property="VerticalContentAlignment"  Value="Center" />
         <Setter Property="Padding"  Value="1" />
@@ -64,29 +64,30 @@
     <!--消息提示框样式开始-->
     <Style TargetType="{x:Type controls:VicMessageBoxNormal}">
         <Setter Property="ResizeMode" Value="NoResize"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource MsgBoxBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource SkinColor}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="SizeToContent" Value="WidthAndHeight" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicMessageBoxNormal}">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{DynamicResource WindowBackground}"  CornerRadius="0">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"   CornerRadius="0">
                         <Grid Name="gridRoot">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"></RowDefinition>
+                                <RowDefinition Height="5"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
                                 <RowDefinition Height="40"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Border Name="brTitle" Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,1">
-                                <Grid Name="gridTitle"  Background="{DynamicResource SkinColor}">
+                            <Border Name="brTitle" Grid.Row="0">
+                                <Grid Name="gridTitle"  Background="{DynamicResource WindowBackground}" Opacity="0.6">
                                     <Label Name="lblTitle"  HorizontalAlignment="Left"  Margin="10,0,0,0" VerticalAlignment="Center" FontSize="16px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="{DynamicResource MsgBoxTitleColor}"/>
                                     <controls:VicButtonNormal x:Name="btnClose"  HorizontalAlignment="Right" Style="{DynamicResource WindowButtonStyle}"  VerticalAlignment="Top" Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="关闭">
                                         <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z" SnapsToDevicePixels="True" Fill="{DynamicResource WinCloseForeground}" />
                                     </controls:VicButtonNormal>
                                 </Grid>
                             </Border>
-
-                            <Grid Name="gridBody" Grid.Row="1" Background="{DynamicResource WhiteShade}">
+                            <Grid  Grid.Row="1" Background="{DynamicResource SkinColor}"/>
+                            <Grid Name="gridBody" Grid.Row="2" Background="{DynamicResource WhiteShade}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
@@ -97,7 +98,7 @@
                                    TextWrapping="WrapWithOverflow"
                                    FontSize="{TemplateBinding FontSize}" />
                             </Grid>
-                            <Border Name="brBtn" BorderThickness="0" Grid.Row="2" Background="{DynamicResource WhiteShade}">
+                            <Border Name="brBtn" BorderThickness="0" Grid.Row="3" Background="{DynamicResource WhiteShade}">
                                 <Grid Name="gridBtn">
                                     <ItemsControl Name="butt" Margin="2" ItemsSource="{TemplateBinding CtrlButtonCollection}"  ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0,0,5,0">
@@ -117,7 +118,7 @@
                                                 <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}"></Setter>
                                                 <Setter Property="BorderThickness" Value="1"></Setter>
                                                 <Setter Property="Width" Value="80"></Setter>
-                                                <Setter Property="Background" Value="{DynamicResource SkinBackground}"/>
+                                                <Setter Property="Background" Value="Transparent"/>
                                                 <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
                                                 <Setter Property="FontSize" Value="13" />
                                                 <Setter Property="Template">

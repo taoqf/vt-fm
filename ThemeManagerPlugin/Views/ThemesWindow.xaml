@@ -13,13 +13,14 @@
     <Window.DataContext>
         <vm:UCThemesWindowViewModel/>
     </Window.DataContext>
-    <Grid  Style="{DynamicResource  WindowChangeSkinBackground}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition RowDefinition.Height="60"/>
-            <RowDefinition RowDefinition.Height="0"/>
+            <RowDefinition RowDefinition.Height="5"/>
+            <RowDefinition RowDefinition.Height="30"/>
             <RowDefinition RowDefinition.Height="*"/>
         </Grid.RowDefinitions>
-        <Border BorderBrush="#024672" BorderThickness="1"  Grid.RowSpan="3"></Border>
+        <Border BorderBrush="{DynamicResource SkinColor}" BorderThickness="1"  Grid.RowSpan="4"></Border>
         <Grid Name="gridTitleBar" Grid.Row="0" Style="{DynamicResource WindowChangeSkinTitleBackGround}">
             <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="飞道皮肤中心" FontWeight="Bold" Foreground="White"/>
             <controls:VicButtonNormal  Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right" Margin="0,0,33,0" VerticalAlignment="Top"  Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最小化">
@@ -34,14 +35,14 @@
                 </i:Interaction.Triggers>
             </controls:VicButtonNormal>
         </Grid>
-        <Border BorderThickness="0" Grid.Row="1"/>
-        <Grid  Grid.Row="1">
+        <Grid Background="{DynamicResource SkinColor}"  Grid.Row="1"/>
+        <Grid  Grid.Row="2" Background="{DynamicResource WhiteShade}">
             <TextBlock HorizontalAlignment="Left" Margin="543,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" Text="共有"/>
             <TextBlock Name="tblockSkinNum" Text="{Binding SkinNum}" HorizontalAlignment="Left" Margin="570,7,0,0" TextWrapping="Wrap"   VerticalAlignment="Top" Width="22" Height="16" TextAlignment="Center"/>
             <TextBlock HorizontalAlignment="Left" Margin="594,7,0,0" TextWrapping="Wrap" Text="款皮肤" VerticalAlignment="Top" RenderTransformOrigin="0.655,-0.688"/>
         </Grid>
-        <Border Background="White" Opacity="0.6" Grid.Row="2"></Border>
-        <ListBox Name="listBoxThemeList" Grid.Row="2"   SelectedItem="{Binding SelectedListBoxItem}"   Style="{DynamicResource RadioButtonListStyle}" ItemsSource="{Binding SystemThemeList,UpdateSourceTrigger=PropertyChanged}"  >
+        <Border Background="{DynamicResource WhiteShade}" Grid.Row="3"></Border>
+        <ListBox Name="listBoxThemeList" Grid.Row="3"   SelectedItem="{Binding SelectedListBoxItem}"   Style="{DynamicResource RadioButtonListStyle}" ItemsSource="{Binding SystemThemeList,UpdateSourceTrigger=PropertyChanged}"  >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding listBoxSystemThemeListSelectionChangedCommand}"/>
