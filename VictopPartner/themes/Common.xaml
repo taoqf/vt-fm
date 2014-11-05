@@ -359,4 +359,113 @@
         </Setter>
     </Style>
     <!--VicTextBoxNormal样式结束-->
+
+    <!--VicNumericUpDown样式开始-->
+    <Style x:Key="RepeatButtonButtonStyle"  TargetType="{x:Type RepeatButton}">
+        <Setter Property="Background" Value="{DynamicResource CheckBoxFillNormal}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate  TargetType="{x:Type RepeatButton}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <ContentPresenter x:Name="contentPresenter"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              Margin="{TemplateBinding Padding}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                              RecognizesAccessKey="True"
+                               />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource SkinColor}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type controls:VicNumericUpDown}">
+        <Setter Property="BorderThickness"  Value="1" />
+        <Setter Property="BorderBrush"  Value="{DynamicResource SkinBorderBrush}"/>
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="MinHeight" Value="23" />
+        <Setter Property="MinWidth"  Value="20" />
+        <!--<Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicNumericUpDown}">
+
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}"  BorderThickness="{TemplateBinding BorderThickness}"        Background="{TemplateBinding Background}" >
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition x:Name="TextColumn" Width="*"/>
+                                <ColumnDefinition x:Name="UpDownButtonsColumn" Width="23"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="PART_TextBox"
+                                     Grid.Column="0"
+                                     MinWidth="20"
+                                     HorizontalContentAlignment="Right"
+                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"                                       
+                                     BorderThickness="0"   
+                                     Background="Transparent" 
+                                     HorizontalScrollBarVisibility="Auto"
+                                     VerticalScrollBarVisibility="Auto"
+                                     IsReadOnly="{TemplateBinding IsReadOnly}"
+                                     FontFamily="{TemplateBinding FontFamily}"
+                                     FontSize="{TemplateBinding FontSize}"/>
+                            <!-- BorderThickness="0"  不能少，不然出现凹框-->
+                            <Grid   Grid.Column="1" Background="{DynamicResource CheckBoxFillNormal}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition x:Name="PART_NumericUpColumn"/>
+                                    <RowDefinition x:Name="PART_NumericDownColumn"/>
+                                </Grid.RowDefinitions>
+                                <RepeatButton x:Name="PART_NumericUp"
+                                          Delay="{TemplateBinding Delay}"
+                                        Style="{StaticResource RepeatButtonButtonStyle}"
+                                          IsTabStop="False">
+                                    <Path x:Name="PolygonUp" Fill="Gray"  Data="M 0 4 L 3.5 0 L 7 4 Z" />
+                                </RepeatButton>
+                                <RepeatButton x:Name="PART_NumericDown"
+                                          Grid.Row="1"                  
+                                          Delay="{TemplateBinding Delay}"
+                                        Style="{StaticResource RepeatButtonButtonStyle}"
+                                          IsTabStop="False">
+                                    <Path x:Name="PolygonDown" Fill="Gray" Data="M 0 0 L 3.5 4 L 7 0 Z" />
+                                </RepeatButton>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsReadOnly"
+                                 Value="True">
+                            <Setter Property="InterceptArrowKeys"
+                                    Value="False" />
+                            <Setter Property="InterceptMouseWheel"
+                                    Value="False" />
+                            <Setter Property="InterceptManualEnter"
+                                    Value="False" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True" SourceName="PART_TextBox" >
+                            <Setter Property="Background" TargetName="PART_TextBox" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="HideUpDownButtons"   Value="True">
+                            <Setter TargetName="PART_NumericUp"      Property="Visibility"   Value="Collapsed" />
+                            <Setter TargetName="PART_NumericDown"    Property="Visibility"   Value="Collapsed" />
+                            <Setter TargetName="UpDownButtonsColumn" Property="Width"        Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--VicNumericUpDown样式结束-->
 </ResourceDictionary>

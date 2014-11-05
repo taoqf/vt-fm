@@ -47,28 +47,31 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="5,0,0,0"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource BtnNormalBorderBrush}"></Setter>
         <Setter Property="BorderThickness" Value="1"></Setter>
         <Setter Property="Width" Value="80"></Setter>
-        <Setter Property="Background" Value="{DynamicResource SkinBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
+        <Setter Property="Background" Value="{DynamicResource BtnNormalBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BtnNormalForeground}"/>
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                    <Border Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                         <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinOverBorderBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
+                            <Setter Property="Background" Value="{DynamicResource BtnHotBackground}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource BtnHotBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnHotForeground}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinOverBorderBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
+                            <Setter Property="Background" Value="{DynamicResource BtnPressedBackground}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource BtnPressedBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnPressedForeground}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" Value="{DynamicResource BtnDisableBackground}"/>
                             <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -446,42 +449,459 @@
     <!--DataGrid样式结束-->
 
     <!--左TabControl样式开始-->
-    <Style x:Key="left_TabControlStyle" TargetType="{x:Type controls:VicTabControlNormal}">
-        <Setter Property="Background" Value="Transparent"></Setter>
+    <Style x:Key="left_TabItemCloseStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="MinWidth" Value="0"/>
+        <Setter Property="MinHeight" Value="0"/>
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="Height" Value="10"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VicTabControlNormal}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="13"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel IsItemsHost="True" Grid.Column="0" Margin="0" />
-                        <ContentPresenter Content="{TemplateBinding SelectedContent}" Grid.Column="1" Margin="1,0,0,0" />
-                    </Grid>
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
+                    <Border x:Name="border" 
+									CornerRadius="10" 
+									Background="{TemplateBinding Background}" 
+									BorderThickness="1" 
+									BorderBrush="{TemplateBinding Foreground}" 
+									SnapsToDevicePixels="True" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Path x:Name="path1" Stroke="{TemplateBinding Foreground}" Data="M1,1 L6.2503861,6.7497592" StrokeThickness="2" Fill="{TemplateBinding Foreground}" Width="7" Height="7" />
+                            <Path x:Name="path2" Stroke="{TemplateBinding Foreground}" Data="M6.1464467,1 L1,6.3599219" StrokeThickness="2" Fill="{TemplateBinding Foreground}" Width="7" Height="7" />
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="left_TabItemStyle" TargetType="{x:Type TabItem}">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Width" Value="13"></Setter>
-        <Setter Property="MinHeight" Value="60"></Setter>
-        <Setter Property="Margin" Value="0,5,0,5"></Setter>
-        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+    
+    <Style x:Key="left_TabControlStyle" TargetType="{x:Type controls:VicTabControlNormal}">
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle"/>
+        <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle"/>
+        <Setter Property="BorderThickness" Value="0,1,0,0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="TabStripPlacement" Value="Left"/>
+        <Setter Property="Background" Value="{DynamicResource Plugin_TabControlNomalBackground}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Plugin_TabControlNormalBorderBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TabItem}">
-                    <Border x:Name="border" BorderThickness="0" Background="Transparent">
-                        <TextBlock x:Name="buttonText"  TextWrapping="Wrap" TextBlock.FontFamily="Calibri" Foreground="{DynamicResource TabItemForeColor}" TextAlignment="Center" TextBlock.FontSize="14" Text="{TemplateBinding Header}" />
+                <ControlTemplate TargetType="{x:Type controls:VicTabControlNormal}">
+                    <Grid ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="ColumnDefinition0" Width="auto"/>
+                            <ColumnDefinition x:Name="ColumnDefinition1" />
+                            <ColumnDefinition x:Name="ColumnDefinition2" Width="0"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+                            <RowDefinition x:Name="RowDefinition1" Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TabPanel x:Name="HeaderPanel" Background="Transparent" Grid.Column="1" IsItemsHost="true" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+                        <Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="1" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
+                            <ContentPresenter x:Name="PART_SelectedContentHost"  ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="TabStripPlacement" Value="Bottom">
+                            <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="1"/>
+                            <Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+                            <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                            <Setter Property="Height" TargetName="RowDefinition1" Value="Auto"/>
+                            <Setter Property="Margin" TargetName="HeaderPanel" Value="2,0,2,2"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Left">
+                            <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
+                            <Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+                            <Setter Property="Grid.Column" TargetName="HeaderPanel" Value="0"/>
+                            <Setter Property="Grid.Column" TargetName="ContentPanel" Value="1"/>
+                            <Setter Property="Width" TargetName="ColumnDefinition0" Value="Auto"/>
+                            <Setter Property="Width" TargetName="ColumnDefinition1" Value="*"/>
+                            <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                            <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+                            <Setter Property="Margin" TargetName="HeaderPanel" Value="2,2,0,2"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Right">
+                            <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
+                            <Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
+                            <Setter Property="Grid.Column" TargetName="HeaderPanel" Value="1"/>
+                            <Setter Property="Grid.Column" TargetName="ContentPanel" Value="0"/>
+                            <Setter Property="Width" TargetName="ColumnDefinition0" Value="*"/>
+                            <Setter Property="Width" TargetName="ColumnDefinition1" Value="Auto"/>
+                            <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
+                            <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+                            <Setter Property="Margin" TargetName="HeaderPanel" Value="0,2,2,2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="top_TabItemStyle" TargetType="{x:Type controls:VicTabItemNormal}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Width" Value="70"/>
+        <Setter Property="Panel.ZIndex" Value="2" />
+        <Setter Property="Foreground" Value="{DynamicResource Plugin_TabItemNomalForeground}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicTabItemNormal}">
+                    <Border x:Name="Bd"
+                                        CornerRadius="4,4,0,0"
+                                        Background="{DynamicResource Plugin_TabItemNormalBackground}"
+                                        BorderBrush="{DynamicResource Plugin_TabItemNormalBorderBrush}"
+                                        BorderThickness="1,1,1,0"
+										Margin="1,0,0,0"
+							            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid  Name="grid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Path x:Name="path" Grid.ColumnSpan="2" Fill="{DynamicResource Plugin_TabItemShapeNormalBackground}" Stroke="{DynamicResource Plugin_TabItemShapeNormalBorderBrush}" Data="M0.307774,17.378201 L10.769231,0.5 79.692308,0.5 79.692308,34.5 0.30769231,34.5 z" Stretch="Fill"/>
+                            <ContentPresenter Name="aa" Content="{TemplateBinding Icon}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Name="bb" Margin="2,0,2,0" Grid.Column="1">
+                                <ContentPresenter Name="cc"
+									    Content="{TemplateBinding Header}"
+									    ContentTemplate="{TemplateBinding HeaderTemplate}"
+									    ContentSource="Header"
+										HorizontalAlignment="Center"
+										VerticalAlignment="Center"
+									    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+									    Margin="{TemplateBinding Padding}"
+									    RecognizesAccessKey="True">
+                                </ContentPresenter>
+                            </Border>
+                            <controls:VicButtonNormal x:Name="PART_CloseButton" 
+								Grid.Column="1" 
+								VerticalAlignment="Top"
+								HorizontalAlignment="Right"
+								Margin="1"
+								Visibility="Collapsed" Foreground="{DynamicResource Plugin_TabItemCloseForeground}" Height="Auto" Width="Auto" MinWidth="0" Style="{DynamicResource left_TabItemCloseStyle}">
+                            </controls:VicButtonNormal>
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="true">
-                            <Setter Property="Panel.ZIndex" Value="1"/>
-                            <Setter Property="Background" TargetName="border" Value="{DynamicResource TabItemSelectBgColor}"/>
-                            <Setter Property="Foreground" TargetName="buttonText" Value="{DynamicResource TabItemSelectForeColor}"/>
+                        <Trigger Property="AllowDelete" Value="false">
+                            <Setter Property="Visibility" TargetName="PART_CloseButton" Value="Collapsed"/>
                         </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemHotBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemHotBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeHotBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeHotBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Plugin_TabItemHotForeground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemSelectedBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemSelectedBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeSelectedBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeSelectedBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Plugin_TabItemSelectedForeground}"/>
+                            <Setter Property="Margin" TargetName="Bd" Value="1,0,0,-1"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemDisabledBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemDisabledBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="true"/>
+                                <Condition Property="AllowDelete" Value="true"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Visible"></Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="AllowDelete" Value="True"/>
+                                <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" TargetName="PART_CloseButton" Value="{DynamicResource Plugin_TabItemCloseSelectedForeground}"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="left_TabItemStyle" TargetType="{x:Type controls:VicTabItemNormal}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Height" Value="70"/>
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Panel.ZIndex" Value="2" />
+        <Setter Property="Foreground" Value="{DynamicResource Plugin_TabItemNomalForeground}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicTabItemNormal}">
+                    <Border x:Name="Bd"
+                                        CornerRadius="4,0,0,4"
+										BorderThickness="1,1,0,1"
+										Margin="0,1,0,0"
+                                        Background="{DynamicResource Plugin_TabItemNormalBackground}"
+                                        BorderBrush="{DynamicResource Plugin_TabItemNormalBorderBrush}"
+							            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid  Name="grid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Path x:Name="path" Grid.RowSpan="2" Fill="{DynamicResource Plugin_TabItemShapeNormalBackground}" Stroke="{DynamicResource Plugin_TabItemShapeNormalBorderBrush}" Data="M-0.89510486,30.047619 L-0.29370627,0.5 79.692308,0.5 79.692308,34.5 44.811188,34.56746 z" Stretch="Fill"/>
+                            <ContentPresenter x:Name="aa" Grid.Row="1" Content="{TemplateBinding Icon}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border x:Name="bb" Margin="2,0,2,0" Grid.Row="0">
+                                <TextBlock TextWrapping="Wrap" x:Name="cc"
+                                    			Text="{TemplateBinding Header}"
+                                    			HorizontalAlignment="Center"
+                                    			VerticalAlignment="Center"
+                                    			SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    			Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                            <controls:VicButtonNormal x:Name="PART_CloseButton" 
+                                    		Grid.Row="0" 
+                                    		VerticalAlignment="Top"
+                                    		HorizontalAlignment="Left"
+                                    		Margin="1"
+                                    		Visibility="Collapsed" Foreground="{DynamicResource Plugin_TabItemCloseForeground}" Style="{DynamicResource left_TabItemCloseStyle}"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="AllowDelete" Value="false">
+                            <Setter Property="Visibility" TargetName="PART_CloseButton" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemHotBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemHotBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeHotBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeHotBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Plugin_TabItemHotForeground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemSelectedBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemSelectedBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeSelectedBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeSelectedBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Plugin_TabItemSelectedForeground}"/>
+                            <Setter Property="Margin" TargetName="Bd" Value="0,1,-1,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemDisabledBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemDisabledBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="true"/>
+                                <Condition Property="AllowDelete" Value="true"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Visible"></Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="AllowDelete" Value="True"/>
+                                <Condition Property="Selector.IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" TargetName="PART_CloseButton" Value="{DynamicResource Plugin_TabItemCloseSelectedForeground}"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="bottom_TabItemStyle" TargetType="{x:Type controls:VicTabItemNormal}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Width" Value="70"/>
+        <Setter Property="Panel.ZIndex" Value="2" />
+        <Setter Property="Foreground" Value="{DynamicResource Plugin_TabItemNomalForeground}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicTabItemNormal}">
+                    <Border x:Name="Bd"
+                                        CornerRadius="0,0,4,4"
+										BorderThickness="1,0,1,1"
+										Margin="1,0,0,0"
+                                        Background="{DynamicResource Plugin_TabItemNormalBackground}"
+                                        BorderBrush="{DynamicResource Plugin_TabItemNormalBorderBrush}"
+							            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid  Name="grid">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <ContentPresenter Name="aa" Content="{TemplateBinding Icon}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Name="bb" Margin="2,0,2,0" Grid.Column="1">
+                                <ContentPresenter Name="cc"
+									    Content="{TemplateBinding Header}"
+									    ContentTemplate="{TemplateBinding HeaderTemplate}"
+									    ContentSource="Header"
+										HorizontalAlignment="Center"
+										VerticalAlignment="Center"
+									    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+									    Margin="{TemplateBinding Padding}"
+									    RecognizesAccessKey="True">
+                                </ContentPresenter>
+                            </Border>
+                            <controls:VicButtonNormal x:Name="PART_CloseButton" 
+								Grid.Column="1" 
+								VerticalAlignment="Bottom"
+								HorizontalAlignment="Right"
+								Margin="1"
+								Visibility="Collapsed" Foreground="{DynamicResource Plugin_TabItemCloseForeground}" Height="Auto" Width="Auto" MinWidth="0" Style="{DynamicResource left_TabItemCloseStyle}">
+                            </controls:VicButtonNormal>
+                            <Path x:Name="path" Grid.ColumnSpan="2" Fill="{DynamicResource Plugin_TabItemShapeNormalBackground}" Stroke="{DynamicResource Plugin_TabItemShapeNormalBorderBrush}" Data="M0.307774,17.378201 L0.30769232,0.5 79.692308,0.5 79.692308,34.5 0.30769231,34.5 z" Stretch="Fill"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="AllowDelete" Value="false">
+                            <Setter Property="Visibility" TargetName="PART_CloseButton" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemHotBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemHotBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeHotBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeHotBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Plugin_TabItemHotForeground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemSelectedBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemSelectedBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeSelectedBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeSelectedBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Plugin_TabItemSelectedForeground}"/>
+                            <Setter Property="Margin" TargetName="Bd" Value="1,-1,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemDisabledBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemDisabledBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="true"/>
+                                <Condition Property="AllowDelete" Value="true"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Visible"></Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="AllowDelete" Value="True"/>
+                                <Condition Property="Selector.IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" TargetName="PART_CloseButton" Value="{DynamicResource Plugin_TabItemCloseSelectedForeground}"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="right_TabItemStyle" TargetType="{x:Type controls:VicTabItemNormal}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Height" Value="70"/>
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Panel.ZIndex" Value="2"/>
+        <Setter Property="Foreground" Value="{DynamicResource Plugin_TabItemNomalForeground}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicTabItemNormal}">
+                    <Border x:Name="Bd"
+                                        CornerRadius="0,4,4,0"
+										BorderThickness="0,1,1,1"
+										Margin="0,1,0,0"
+                                        Background="{DynamicResource Plugin_TabItemNormalBackground}"
+                                        BorderBrush="{DynamicResource Plugin_TabItemNormalBorderBrush}"
+							            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid  Name="grid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Path x:Name="path" Grid.RowSpan="2" Fill="{DynamicResource Plugin_TabItemShapeNormalBackground}" Stroke="{DynamicResource Plugin_TabItemShapeNormalBorderBrush}" Data="M0.91820294,34.567593 L0.31224837,0.43253967 37.275679,0.43253967 80.904205,4.8937546 80.904208,34.702781 z" Stretch="Fill"/>
+                            <ContentPresenter x:Name="aa" Content="{TemplateBinding Icon}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border x:Name="bb" Margin="2,0,2,0" Grid.Row="1">
+                                <ContentPresenter x:Name="cc"
+                                    			Content="{TemplateBinding Header}"
+                                    			ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                    			ContentSource="Header"
+                                    			HorizontalAlignment="Center"
+                                    			VerticalAlignment="Center"
+                                    			SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    			Margin="{TemplateBinding Padding}"
+                                    			RecognizesAccessKey="True"/>
+                            </Border>
+                            <controls:VicButtonNormal x:Name="PART_CloseButton" 
+                                    		Grid.Row="1" 
+                                    		VerticalAlignment="Bottom"
+                                    		HorizontalAlignment="Right"
+                                    		Margin="1"
+                                    		Visibility="Collapsed" Foreground="{DynamicResource Plugin_TabItemCloseForeground}" Height="Auto" Width="Auto" MinWidth="0" Style="{DynamicResource left_TabItemCloseStyle}"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="AllowDelete" Value="false">
+                            <Setter Property="Visibility" TargetName="PART_CloseButton" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemHotBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemHotBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeHotBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeHotBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Plugin_TabItemHotForeground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemSelectedBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemSelectedBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeSelectedBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeSelectedBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Plugin_TabItemSelectedForeground}"/>
+                            <Setter Property="Margin" TargetName="Bd" Value="-1,1,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemDisabledBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemDisabledBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="true"/>
+                                <Condition Property="AllowDelete" Value="true"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Visible"></Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="AllowDelete" Value="True"/>
+                                <Condition Property="Selector.IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Foreground" TargetName="PART_CloseButton" Value="{DynamicResource Plugin_TabItemCloseSelectedForeground}"/>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
