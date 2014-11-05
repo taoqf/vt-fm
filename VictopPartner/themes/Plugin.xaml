@@ -47,28 +47,31 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="5,0,0,0"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource BtnNormalBorderBrush}"></Setter>
         <Setter Property="BorderThickness" Value="1"></Setter>
         <Setter Property="Width" Value="80"></Setter>
-        <Setter Property="Background" Value="{DynamicResource SkinBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
+        <Setter Property="Background" Value="{DynamicResource BtnNormalBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource BtnNormalForeground}"/>
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                    <Border Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                         <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinOverBorderBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
+                            <Setter Property="Background" Value="{DynamicResource BtnHotBackground}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource BtnHotBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnHotForeground}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="border" Value="{DynamicResource SkinOverBorderBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
+                            <Setter Property="Background" Value="{DynamicResource BtnPressedBackground}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource BtnPressedBorderBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnPressedForeground}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" Value="{DynamicResource BtnDisableBackground}"/>
                             <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
