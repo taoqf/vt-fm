@@ -275,7 +275,7 @@ namespace Victop.Frame.Connection
         /// <returns></returns>
         private ReplyMessage GetLoginUserMenuSubmit(IAdapter adapter, RequestMessage messageInfo)
         {
-            messageInfo.MessageType = "MongoDataChannelService.menu";
+            messageInfo.MessageType = "MongoDataChannelService.afterLogin";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("systemid", "906");
             contentDic.Add("client_type_val", "1");
@@ -298,7 +298,7 @@ namespace Victop.Frame.Connection
                     BaseResourceInfo baseResourceInfo = new BaseResourceInfo();
                     baseResourceInfo.GalleryId = GalleryManager.GetCurrentGalleryId();
                     baseResourceInfo.ResourceXml = replyMessage.ReplyContent;
-                    List<MenuInfo> menuInfo = JsonHelper.ToObject<List<MenuInfo>>(replyMessage.ReplyContent);
+                    List<MenuInfo> menuInfo = JsonHelper.ToObject<List<MenuInfo>>(JsonHelper.ReadJsonString(replyMessage.ReplyContent,"menu"));
                     foreach (MenuInfo item in menuInfo)
                     {
                         if (string.IsNullOrEmpty(item.parent_id))
