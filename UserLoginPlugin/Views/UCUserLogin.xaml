@@ -71,7 +71,7 @@
                 <PasswordBox Grid.Row="1" Name="pwBox" Grid.Column="0"  Width="192" Height="28" HorizontalAlignment="Left"  
                             helpers:PasswordBoxBindingHelper.Attach="True" helpers:PasswordBoxBindingHelper.Password=
                     "{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            VerticalAlignment="Center"  BorderBrush="#b2e6ff"  Background="White"  >
+                            VerticalAlignment="Center"  BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
                 </PasswordBox>
                 <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Content="找回密码"  VerticalAlignment="Center"/>
                 <ComboBox Grid.Row="2" Grid.Column="0"  Width="192" Height="28" Name="CloudSOAComboBox"  
