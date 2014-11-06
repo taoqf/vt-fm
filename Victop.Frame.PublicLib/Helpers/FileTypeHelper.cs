@@ -594,5 +594,22 @@ namespace Victop.Frame.PublicLib.Helpers
 
             return _mappings.TryGetValue(extension, out mime) ? mime : "application/octet-stream";
         }
+        /// <summary>
+        /// 获取文件扩展名
+        /// </summary>
+        /// <param name="mimeType"></param>
+        /// <returns></returns>
+        public static string GetExtensionType(string mimeType)
+        {
+            KeyValuePair<string, string> mapDic = _mappings.FirstOrDefault(it => it.Value.Equals(mimeType));
+            if (mapDic.Key != null)
+            {
+                return mapDic.Key;
+            }
+            else
+            {
+                return ".txt";
+            }
+        }
     }
 }

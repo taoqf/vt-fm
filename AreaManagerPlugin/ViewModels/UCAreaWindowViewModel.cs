@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Threading;
@@ -287,14 +288,31 @@ namespace AreaManagerPlugin.ViewModels
                 {
                     MessageOperation messageOp = new MessageOperation();
                     Dictionary<string, object> result = messageOp.SendMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
-                    string temp = string.Empty;
+                    string fileInfo = JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserImg");
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.Title = "下载到";
+                    saveFileDialog.Filter = string.Format("{0}文件|*{0}", string.Empty);
+                    //saveFileDialog.DefaultExt = "jpg";
+                    string path = "";
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        path = saveFileDialog.FileName;
+                    }
+                    if (path == "")
+                    {
+                        return;
+                    }
+                    MessageOperation messageOperation = new MessageOperation();
+                    Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                    Dictionary<string, string> address = new Dictionary<string, string>();
+                    address.Add("DownloadUrl", ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + fileInfo);
+                    address.Add("DownloadToPath", path);
+                    messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+                    Dictionary<string, object> downResult = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
+                    MessageBox.Show(JsonHelper.ToJson(downResult));
                 });
             }
         }
-
-        string fileId = "95714ce8-1df8-4534-9f89-0c5a25a30aa9";
-        string fileSuffix = string.Empty;
-
         public ICommand btnUploadFile1ClickCommand
         {
             get
@@ -318,8 +336,6 @@ namespace AreaManagerPlugin.ViewModels
                     System.Windows.Forms.MessageBox.Show(JsonHelper.ToJson(result));
 
                     Dictionary<string, object> replyContent = JsonHelper.ToObject<Dictionary<string, object>>(result["ReplyContent"].ToString());
-                    this.fileId = replyContent["fileId"].ToString();
-                    this.fileSuffix = replyContent["fileSuffix"].ToString();
                 });
             }
         }
@@ -330,34 +346,34 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (this.fileId.Length > 0)
-                    {
-                        SaveFileDialog saveFileDialog = new SaveFileDialog();
-                        saveFileDialog.Title = "下载到";
-                        saveFileDialog.Filter = string.Format("{0}文件|*{0}", this.fileSuffix);
-                        string path = "";
-                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                        {
-                            path = saveFileDialog.FileName;
-                        }
-                        if (path == "")
-                        {
-                            return;
-                        }
+                    //if (this.fileId.Length > 0)
+                    //{
+                    //    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    //    saveFileDialog.Title = "下载到";
+                    //    saveFileDialog.Filter = string.Format("{0}文件|*{0}", this.fileSuffix);
+                    //    string path = "";
+                    //    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    //    {
+                    //        path = saveFileDialog.FileName;
+                    //    }
+                    //    if (path == "")
+                    //    {
+                    //        return;
+                    //    }
 
-                        MessageOperation messageOperation = new MessageOperation();
-                        Dictionary<string, object> messageContent = new Dictionary<string, object>();
-                        Dictionary<string, string> address = new Dictionary<string, string>();
-                        address.Add("DownloadUrl", @"http://192.168.40.191:8080/fsweb/getfile?id=" + this.fileId);
-                        address.Add("DownloadToPath", path);
-                        messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
-                        Dictionary<string, object> result = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
-                        System.Windows.MessageBox.Show(JsonHelper.ToJson(result));
-                    }
-                    else
-                    {
-                        System.Windows.MessageBox.Show("文件不存在");
-                    }
+                    //    MessageOperation messageOperation = new MessageOperation();
+                    //    Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                    //    Dictionary<string, string> address = new Dictionary<string, string>();
+                    //    address.Add("DownloadUrl", @"http://192.168.40.191:8080/fsweb/getfile?id=" + this.fileId);
+                    //    address.Add("DownloadToPath", path);
+                    //    messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+                    //    Dictionary<string, object> result = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
+                    //    System.Windows.MessageBox.Show(JsonHelper.ToJson(result));
+                    //}
+                    //else
+                    //{
+                    //    System.Windows.MessageBox.Show("文件不存在");
+                    //}
                 });
             }
         }
@@ -453,15 +469,16 @@ namespace AreaManagerPlugin.ViewModels
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("systemid", "906");
                         contentDic.Add("configsystemid", "101");
-                        contentDic.Add("modelid", "victop_model_client_0006");
+                        contentDic.Add("modelid", "victop_model_com_plugin_type_0001");
                         //List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
                         //Dictionary<string, object> conDic = new Dictionary<string, object>();
-                        //conDic.Add("name", "scheme");
-                        //Dictionary<string, object> pageDic = new Dictionary<string, object>();
-                        //pageDic.Add("size", 2);
-                        //pageDic.Add("index", 1);
-                        //conDic.Add("paging", pageDic);
-                        //conDic.Add("tablecondition", "[{\"current_state\":100}]");
+                        //conDic.Add("name", "client_point");
+                        //Dictionary<string, object> tableDic = new Dictionary<string, object>();
+                        //Dictionary<string, object> stateDic = new Dictionary<string, object>();
+                        //stateDic.Add("$gte", 501000);
+                        //stateDic.Add("$lte", 511000);
+                        //tableDic.Add("current_state", stateDic);
+                        //conDic.Add("tablecondition", tableDic);
                         //conList.Add(conDic);
                         //contentDic.Add("conditions", conList);
                         List<string> client_point_idList = new List<string>();
@@ -471,7 +488,7 @@ namespace AreaManagerPlugin.ViewModels
                             DataOperation dataOp = new DataOperation();
                             viewId = returnDic["DataChannelId"].ToString();
                             List<object> pathList = new List<object>();
-                            pathList.Add("pub_client");
+                            pathList.Add("com_plugin_type");
                             dataPath = JsonHelper.ToJson(pathList);
                             DataSet mastDs = new DataSet();
                             mastDs = dataOp.GetData(viewId, dataPath);

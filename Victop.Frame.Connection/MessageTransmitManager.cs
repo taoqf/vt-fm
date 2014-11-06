@@ -295,10 +295,11 @@ namespace Victop.Frame.Connection
             {
                 if (!string.IsNullOrEmpty(replyMessage.ReplyContent))
                 {
+                    #region 菜单处理
                     BaseResourceInfo baseResourceInfo = new BaseResourceInfo();
                     baseResourceInfo.GalleryId = GalleryManager.GetCurrentGalleryId();
                     baseResourceInfo.ResourceXml = replyMessage.ReplyContent;
-                    List<MenuInfo> menuInfo = JsonHelper.ToObject<List<MenuInfo>>(JsonHelper.ReadJsonString(replyMessage.ReplyContent,"menu"));
+                    List<MenuInfo> menuInfo = JsonHelper.ToObject<List<MenuInfo>>(JsonHelper.ReadJsonString(replyMessage.ReplyContent, "menu"));
                     foreach (MenuInfo item in menuInfo)
                     {
                         if (string.IsNullOrEmpty(item.parent_id))
@@ -317,7 +318,18 @@ namespace Victop.Frame.Connection
                     }
                     baseResourceInfo.ResourceMnenus = menuInfo;
                     BaseResourceManager baseResourceManager = new BaseResourceManager();
-                    bool result = baseResourceManager.AddResouce(baseResourceInfo);
+                    bool result = baseResourceManager.AddResouce(baseResourceInfo); 
+                    #endregion
+                    #region 用户信息管理
+                    string userInfoStr = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userInfo");
+                    List<Dictionary<string, object>> userInfoList = JsonHelper.ToObject<List<Dictionary<string, object>>>(userInfoStr);
+                    if (userInfoList != null && userInfoList.Count > 0)
+                    {
+                        CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+                        currentGallery.ClientInfo.UserId = userInfoList[0]["_id"].ToString();
+                        currentGallery.ClientInfo.UserImg = userInfoList[0]["staff_picture"].ToString();
+                    }
+                    #endregion
                 }
             }
             return replyMessage;

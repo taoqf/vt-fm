@@ -80,7 +80,7 @@
                 <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding MyDt, UpdateSourceTrigger=PropertyChanged}">
                 </ctrl:VicDataGrid>
             </TabItem>
-            <TabItem Header="其他测试" Visibility="Collapsed">
+            <TabItem Header="其他测试">
                 <Button Width="100" Height="24" Content="用户服务" Name="btnGetUserInfo" Margin="3,0,187,0">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
