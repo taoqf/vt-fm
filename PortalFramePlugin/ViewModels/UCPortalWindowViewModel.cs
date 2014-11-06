@@ -971,18 +971,21 @@ namespace PortalFramePlugin.ViewModels
                 return path;
             }
 
-            MessageOperation messageOperation = new MessageOperation();
-            Dictionary<string, object> messageContent = new Dictionary<string, object>();
-            Dictionary<string, string> address = new Dictionary<string, string>();
-            address.Add("DownloadUrl", ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + fileInfo);
-            address.Add("DownloadToPath", path);
-            messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
-            Dictionary<string, object> downResult = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
-            if (downResult != null)
+            if (string.IsNullOrWhiteSpace(fileInfo) == false)
             {
-                if (downResult["ReplyMode"].ToString() == "1")
+                MessageOperation messageOperation = new MessageOperation();
+                Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                Dictionary<string, string> address = new Dictionary<string, string>();
+                address.Add("DownloadUrl", ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + fileInfo);
+                address.Add("DownloadToPath", path);
+                messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+                Dictionary<string, object> downResult = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
+                if (downResult != null)
                 {
-                    return path;
+                    if (downResult["ReplyMode"].ToString() == "1")
+                    {
+                        return path;
+                    }
                 }
             }
 

@@ -17,19 +17,26 @@ namespace UserLoginPlugin.Convert
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value == null || value.ToString() == string.Empty)
+            try
+            {
+                if (value == null || value.ToString() == string.Empty)
+                {
+                    return null;
+                }
+
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\VictopPartner\\UserPhoto\\" + value.ToString() + ".jpg";
+                if (System.IO.File.Exists(path) == false)
+                {
+                    return null;
+                }
+
+                ImageSource image = new BitmapImage(new Uri(path));
+                return image;
+            }
+            catch
             {
                 return null;
             }
-
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\VictopPartner\\UserPhoto\\" + value.ToString() + ".jpg";
-            if (System.IO.File.Exists(path) == false)
-            {
-                return null;
-            }
-
-            ImageSource image = new BitmapImage(new Uri(path));
-            return image;
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
