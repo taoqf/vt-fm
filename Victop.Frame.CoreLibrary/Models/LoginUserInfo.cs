@@ -17,6 +17,18 @@ namespace Victop.Frame.CoreLibrary.Models
 	/// <remarks>登录用户信息</remarks>
 	public class LoginUserInfo
 	{
+        /// <summary>
+        /// 用户Id
+        /// </summary>
+        private string userId;
+        /// <summary>
+        /// 用户Id
+        /// </summary>
+        public string UserId
+        {
+            get { return userId; }
+            set { userId = value; }
+        }
         private string userName;
 		/// <summary>
 		/// 用户名
@@ -35,6 +47,18 @@ namespace Victop.Frame.CoreLibrary.Models
             get { return userPwd; }
             set { userPwd = value; }
 		}
+        /// <summary>
+        /// 用户头像
+        /// </summary>
+        private string userImg;
+        /// <summary>
+        /// 用户头像
+        /// </summary>
+        public string UserImg
+        {
+            get { return userImg; }
+            set { userImg = value; }
+        }
         private string linkServerAddress;
 		/// <summary>
 		/// 连接器服务地址
