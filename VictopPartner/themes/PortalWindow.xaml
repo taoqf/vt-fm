@@ -44,6 +44,18 @@
         <Setter Property="Width" Value="30"/>
         <Setter Property="Height" Value="30"/>
         <Setter Property="Background" Value="{DynamicResource UserPictrue}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicButtonImage}">
+                    <Border x:Name="back" Background="{TemplateBinding Background}" CornerRadius="15">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{TemplateBinding ImgSource}"/>
+                            <ContentPresenter x:Name="content" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="MainFrmUserName" TargetType="{x:Type controls:VicTextBlockNormal}">

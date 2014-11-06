@@ -50,10 +50,13 @@
             <!--<Grid HorizontalAlignment="Center" Height="100" Width="80" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Style="{DynamicResource loginMainUserPhotoGridStyle}"/>-->
             <Grid  Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center"   Height="100" Width="100"   Grid.Row="1" >
                 <Border BorderThickness="1" Background="White" BorderBrush="{DynamicResource SkinColor}" Margin="3">
-                    <StackPanel Width="60" Height="80" >
-                        <Ellipse Fill="{DynamicResource SkinColor}" Width="30" Height="30"/>
-                        <Ellipse Fill="{DynamicResource SkinColor}" Margin="0,3,0,0" Height="100" Width="60"/>
-                    </StackPanel>
+                    <Grid>
+                        <StackPanel Width="60" Height="80">
+                            <Ellipse Fill="{DynamicResource SkinColor}" Width="30" Height="30"/>
+                            <Ellipse Fill="{DynamicResource SkinColor}" Margin="0,3,0,0" Height="100" Width="60"/>
+                        </StackPanel>
+                        <Image Stretch="UniformToFill"/>
+                    </Grid>
                 </Border>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="1">
@@ -74,7 +77,7 @@
                             VerticalAlignment="Center"  BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
                 </PasswordBox>
                 <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Content="找回密码"  VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="2" Grid.Column="0"  Width="192" Height="28" Name="CloudSOAComboBox"  
+                <controls:VicComboBoxNormal Grid.Row="2" Grid.Column="0"  Width="192" Height="28" Name="CloudSOAComboBox"  
                         ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
                         HorizontalAlignment="Left"  VerticalAlignment="Center" VerticalContentAlignment="Center" SelectedValue="{Binding SelectedGallery,UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Triggers>
@@ -82,7 +85,7 @@
                             <i:InvokeCommandAction Command="{Binding CloudSOAComboBoxSelectionChangedCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </ComboBox>
+                </controls:VicComboBoxNormal>
             </Grid>
             <TextBlock Grid.Row="2" Grid.Column="0" Padding="5,0,0,0" HorizontalAlignment="Left" Name="ErrLabel"  Text="{Binding ErrMsg}" Foreground="Red" Height="22"/>
             <Border Grid.Row="2" Grid.Column="1" BorderBrush="#024672" BorderThickness="0">
