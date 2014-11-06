@@ -24,6 +24,7 @@ using Victop.Frame.SyncOperation;
 using System.Windows.Navigation;
 using System.IO;
 using System.Text;
+using System.Windows.Media;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -47,6 +48,10 @@ namespace PortalFramePlugin.ViewModels
         /// 用户名
         /// </summary>
         private string userName;
+        /// <summary>
+        /// 用户头像
+        /// </summary>
+        private string userImg;
         /// <summary>
         /// 活动插件数目
         /// </summary>
@@ -220,6 +225,24 @@ namespace PortalFramePlugin.ViewModels
                 {
                     userName = value;
                     RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        /// <summary>
+        /// 用户头像
+        /// </summary>
+        public string UserImg
+        {
+            get
+            {
+                return userImg;
+            }
+            set
+            {
+                if (userImg != value)
+                {
+                    userImg = value;
+                    RaisePropertyChanged("UserImg");
                 }
             }
         }
@@ -925,6 +948,7 @@ namespace PortalFramePlugin.ViewModels
                 if (userDic != null)
                 {
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
+                    this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 isFirstLogin = false;
                 LoadStandardMenu();
@@ -932,6 +956,33 @@ namespace PortalFramePlugin.ViewModels
 
         }
 
+        private string DownLoadUserImg(string userCode, string fileInfo)
+        {
+            string path = string.Empty;
+            string dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\VictopPartner\\UserPhoto\\";
+            if (Directory.Exists(dir) == false)
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            path = dir + userCode + ".jpg";
+            MessageOperation messageOperation = new MessageOperation();
+            Dictionary<string, object> messageContent = new Dictionary<string, object>();
+            Dictionary<string, string> address = new Dictionary<string, string>();
+            address.Add("DownloadUrl", ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + fileInfo);
+            address.Add("DownloadToPath", path);
+            messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+            Dictionary<string, object> downResult = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
+            if (downResult != null)
+            {
+                if (downResult["ReplyMode"].ToString() == "1")
+                {
+                    return path;
+                }
+            }
+
+            return string.Empty;
+        }
         #endregion
 
         #region 换肤

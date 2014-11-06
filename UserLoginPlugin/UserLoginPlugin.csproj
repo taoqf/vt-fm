@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convert\CheckboxBoolConverter.cs" />
+    <Compile Include="Convert\ImgeNameToBackgroundConverter.cs" />
     <Compile Include="Helpers\PasswordBoxBindingHelper.cs" />
     <Compile Include="Models\LoginUserInfoModel.cs" />
     <Compile Include="Models\SystemConfigModel.cs" />

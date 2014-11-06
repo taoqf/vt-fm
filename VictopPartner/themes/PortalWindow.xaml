@@ -43,7 +43,6 @@
     <Style x:Key="MainFrmUserPictrueGridStyle" TargetType="{x:Type controls:VicButtonImage}">
         <Setter Property="Width" Value="30"/>
         <Setter Property="Height" Value="30"/>
-        <Setter Property="Background" Value="{DynamicResource UserPictrue}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonImage}">

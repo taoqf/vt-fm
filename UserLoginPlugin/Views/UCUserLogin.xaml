@@ -5,9 +5,13 @@
              xmlns:helpers="clr-namespace:UserLoginPlugin.Helpers"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:convert="clr-namespace:UserLoginPlugin.Convert"
              xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400" Name="ucUserLongin">
+    <UserControl.Resources>
+        <convert:ImgeNameToBackgroundConverter x:Key="imgeNameToBackgroundConverter"/>
+    </UserControl.Resources>
     <Grid x:Name="gridMain" Style="{DynamicResource WindowChangeSkinBackground}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -55,7 +59,7 @@
                             <Ellipse Fill="{DynamicResource SkinColor}" Width="30" Height="30"/>
                             <Ellipse Fill="{DynamicResource SkinColor}" Margin="0,3,0,0" Height="100" Width="60"/>
                         </StackPanel>
-                        <Image Stretch="UniformToFill"/>
+                        <Image Source="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}" Stretch="UniformToFill"/>
                     </Grid>
                 </Border>
             </Grid>

@@ -7,6 +7,9 @@
         xmlns:local="clr-namespace:PortalFramePlugin"
         xmlns:views="clr-namespace:PortalFramePlugin.Views"
         Title="PortalWindow" Name="mainWindow" Style="{DynamicResource ShadowWindow}">
+    <Window.Resources>
+        <local:ImgeNameToBackgroundConverter x:Key="imgeNameToBackgroundConverter"/>
+    </Window.Resources>
     <Window.DataContext>
         <vm:UCPortalWindowViewModel/>
     </Window.DataContext>
@@ -59,7 +62,7 @@
             <Grid Name="gridTitle" Grid.Row="0"  Grid.Column="1">
                 <!--Width="260"-->
                 <StackPanel Orientation="Horizontal" Style="{DynamicResource MainFrmUserStackPanelStyle}">
-                    <controls:VicButtonImage Name="btnUserLogin"
+                    <controls:VicButtonImage Name="btnUserLogin" Background="{Binding UserImg, Converter={StaticResource imgeNameToBackgroundConverter}}"
                                          Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}">
                     </controls:VicButtonImage>
                     <controls:VicTextBlockNormal Visibility="Collapsed" Text="{Binding UserName}" Style="{DynamicResource MainFrmUserName}"/>

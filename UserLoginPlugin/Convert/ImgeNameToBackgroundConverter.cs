@@ -8,7 +8,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace PortalFramePlugin
+namespace UserLoginPlugin.Convert
 {
     /// <summary>
     /// 转换器。
@@ -19,12 +19,16 @@ namespace PortalFramePlugin
         {
             if (value == null || value.ToString() == string.Empty)
             {
-                return Application.Current.Resources["UserPictrue"] as ImageBrush;
+                return null;
             }
 
-            ImageBrush image = new ImageBrush();
-            image.Stretch = Stretch.UniformToFill;
-            image.ImageSource = new BitmapImage(new Uri(value.ToString()));
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\VictopPartner\\UserPhoto\\" + value.ToString() + ".jpg";
+            if (System.IO.File.Exists(path) == false)
+            {
+                return null;
+            }
+
+            ImageSource image = new BitmapImage(new Uri(path));
             return image;
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
