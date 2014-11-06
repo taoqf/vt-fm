@@ -966,6 +966,11 @@ namespace PortalFramePlugin.ViewModels
             }
 
             path = dir + userCode + ".jpg";
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
             MessageOperation messageOperation = new MessageOperation();
             Dictionary<string, object> messageContent = new Dictionary<string, object>();
             Dictionary<string, string> address = new Dictionary<string, string>();
