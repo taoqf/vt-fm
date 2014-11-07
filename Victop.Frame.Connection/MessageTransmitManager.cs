@@ -323,11 +323,16 @@ namespace Victop.Frame.Connection
                     #region 用户信息管理
                     string userInfoStr = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userInfo");
                     List<Dictionary<string, object>> userInfoList = JsonHelper.ToObject<List<Dictionary<string, object>>>(userInfoStr);
+                    CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
                     if (userInfoList != null && userInfoList.Count > 0)
                     {
-                        CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
                         currentGallery.ClientInfo.UserId = userInfoList[0]["_id"].ToString();
                         currentGallery.ClientInfo.UserImg = userInfoList[0]["staff_picture"].ToString();
+                    }
+                    else
+                    {
+                        currentGallery.ClientInfo.UserId = string.Empty;
+                        currentGallery.ClientInfo.UserImg = string.Empty;
                     }
                     #endregion
                 }
