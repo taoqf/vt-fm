@@ -52,9 +52,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!--<Grid HorizontalAlignment="Center" Height="100" Width="80" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Style="{DynamicResource loginMainUserPhotoGridStyle}"/>-->
-            <Grid  Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Bottom"   Height="150" Width="105"   Grid.Row="1" >
+            <Grid  Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Bottom"   Height="120" Width="94"   Grid.Row="1" >
                 <Border BorderThickness="1" Background="White" BorderBrush="{DynamicResource SkinColor}" Margin="3">
-                    <Grid>
+                    <Grid >
                         <StackPanel Width="60" Height="80">
                             <Ellipse Fill="{DynamicResource SkinColor}" Width="30" Height="30"/>
                             <Ellipse Fill="{DynamicResource SkinColor}" Margin="0,3,0,0" Height="100" Width="60"/>
@@ -73,7 +73,7 @@
                     <ColumnDefinition Width="202"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Row="0" Grid.Column="0" Width="192" Height="28"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding LoginInfoModel.UserName}"  VerticalContentAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="0" Width="192" Height="28"   HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding LoginInfoModel.UserName}"  VerticalContentAlignment="Center"/>
                 <Label Grid.Row="0" Grid.Column="1" FontFamily="SimSun" Content="注册账号"  HorizontalAlignment="Left" VerticalContentAlignment="Bottom"/>
                 <PasswordBox Grid.Row="1" Name="pwBox" Grid.Column="0"  Width="192" Height="28" HorizontalAlignment="Left"  
                             helpers:PasswordBoxBindingHelper.Attach="True" helpers:PasswordBoxBindingHelper.Password=
