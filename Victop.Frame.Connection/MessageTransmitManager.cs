@@ -300,21 +300,24 @@ namespace Victop.Frame.Connection
                     baseResourceInfo.GalleryId = GalleryManager.GetCurrentGalleryId();
                     baseResourceInfo.ResourceXml = replyMessage.ReplyContent;
                     List<MenuInfo> menuInfo = JsonHelper.ToObject<List<MenuInfo>>(JsonHelper.ReadJsonString(replyMessage.ReplyContent, "menu"));
-                    foreach (MenuInfo item in menuInfo)
+                    if (menuInfo != null)
                     {
-                        if (string.IsNullOrEmpty(item.parent_id))
+                        foreach (MenuInfo item in menuInfo)
                         {
-                            item.ParentMenu = "0";
+                            if (string.IsNullOrEmpty(item.parent_id))
+                            {
+                                item.ParentMenu = "0";
+                            }
+                            else
+                            {
+                                item.ParentMenu = item.parent_id;
+                            }
+                            item.Id = item._id;
+                            item.MenuId = item._id;
+                            item.MenuName = item.menu_name;
+                            item.BzSystemId = item.systemid;
+                            item.HomeId = item.authority_code;
                         }
-                        else
-                        {
-                            item.ParentMenu = item.parent_id;
-                        }
-                        item.Id = item._id;
-                        item.MenuId = item._id;
-                        item.MenuName = item.menu_name;
-                        item.BzSystemId = item.systemid;
-                        item.HomeId = item.authority_code;
                     }
                     baseResourceInfo.ResourceMnenus = menuInfo;
                     BaseResourceManager baseResourceManager = new BaseResourceManager();
