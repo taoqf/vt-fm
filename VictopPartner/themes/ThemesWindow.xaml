@@ -92,7 +92,7 @@
                                 </Grid.RowDefinitions>
                                     <Border  Grid.Row="0" Background="{DynamicResource WindowBackground}"/>
                                  <Grid Name="gridTitleBar" Grid.Row="0" Style="{DynamicResource loginMainGridStyle}">
-                                    <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="White"/>
+                                    <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="{DynamicResource MsgBoxTitleColor}"/>
                                     <controls:VicButtonNormal x:Name="btnMini" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right" Margin="0,0,33,0" VerticalAlignment="Top"  Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最小化">
                                         <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
                                   SnapsToDevicePixels="True"
