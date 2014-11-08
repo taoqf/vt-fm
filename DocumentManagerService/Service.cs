@@ -178,15 +178,11 @@ namespace DocumentManagerService
         /// <returns></returns> 
         private string UploadFile(string iUploadUrl, string iUploadFromPath, string iSuffname)
         {
-            //文件 
             FileStream fileStream = new FileStream(iUploadFromPath, FileMode.Open, FileAccess.Read);
             BinaryReader br = new BinaryReader(fileStream);
             byte[] buffer = br.ReadBytes(Convert.ToInt32(fileStream.Length));
-
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
             string contentType = FileTypeHelper.GetMimeType(iSuffname);
-
-            // mode_id=1,1,,1此处的字符串表示共上传4个文件，其中第1、2、4个文件需要按模式1做缩略图处理
             WebRequest req = WebRequest.Create(iUploadUrl);
             req.Method = "POST";
             req.ContentType = "multipart/form-data; boundary=" + boundary; //组织表单数据 
@@ -198,15 +194,9 @@ namespace DocumentManagerService
             sb.Append("\r\n\r\n");
             string head = sb.ToString();
             byte[] form_data = Encoding.UTF8.GetBytes(head);
-
-            //结尾 
             byte[] foot_data = Encoding.UTF8.GetBytes("\r\n--" + boundary + "--\r\n");
-
-            //post总长度 
             long length = form_data.Length + fileStream.Length + foot_data.Length;
-
             req.ContentLength = length;
-
             Stream requestStream = req.GetRequestStream();
             //这里要注意一下发送顺序，先发送form_data > buffer > foot_data 
             //发送表单参数 
@@ -215,7 +205,6 @@ namespace DocumentManagerService
             requestStream.Write(buffer, 0, buffer.Length);
             //结尾 
             requestStream.Write(foot_data, 0, foot_data.Length);
-
             requestStream.Close();
             fileStream.Close();
             fileStream.Dispose();

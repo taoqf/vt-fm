@@ -1,0 +1,12 @@
+﻿<controls:VicWindowNormal x:Class="MachinePlatformPlugin.Views.MachinePlatform"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+        xmlns:vm="clr-namespace:MachinePlatformPlugin.ViewModels"
+        xmlns:Views="clr-namespace:MachinePlatformPlugin.Views"
+        Title="PageFlowMachinePlatform" Height="350" Width="525">
+    <controls:VicGridNormal>
+        <Views:UCMachinePlatform/>
+    </controls:VicGridNormal>
+</controls:VicWindowNormal>

@@ -1,24 +1,23 @@
-﻿using AreaManagerPlugin.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using Victop.Server.Controls;
-
-namespace AreaManagerPlugin
+using MachinePlatformPlugin.Views;
+using System.Windows.Controls;
+namespace MachinePlatformPlugin
 {
-    public class Plugin:IPlugin
+    public class Plugin : IPlugin
     {
         public string PluginTitle
         {
-            get { return "区域管理"; }
+            get { return "页面流程机台 "; }
         }
 
         public string PluginName
         {
-            get { return "AreaManagerPlugin"; }
+            get { return "MachinePlatformPlugin"; }
         }
 
         public List<string> ServiceReceiptMessageType
@@ -43,17 +42,12 @@ namespace AreaManagerPlugin
 
         public Window StartWindow
         {
-            get { return new AreaWindow(); }
+            get { return new MachinePlatform(); }
         }
 
         public UserControl StartControl
         {
-            get
-            {
-                //return new UCAreaWindow();
-                //return new UCSimpleDefWindow();
-                return new UCAreaWindowData();
-            }
+            get { return new UCMachinePlatform(); }
         }
 
         public void Init()
@@ -61,19 +55,24 @@ namespace AreaManagerPlugin
             throw new NotImplementedException();
         }
 
-        private Dictionary<string, object> paramDict;
 
         public Dictionary<string, object> ParamDict
         {
             get
             {
-                if (paramDict == null)
-                    paramDict = new Dictionary<string, object>();
-                return paramDict;
+                if (ShowType == 0)
+                {
+                    return MachinePlatform.ParamDict;
+                }
+                else
+                {
+                    return UCMachinePlatform.ParamDict;
+                }
             }
             set
             {
-                paramDict = value;
+                UCMachinePlatform.ParamDict = value;
+                MachinePlatform.ParamDict = value;
             }
         }
     }

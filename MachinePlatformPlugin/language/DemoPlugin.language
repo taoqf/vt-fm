@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- edited with XMLSpy v2013 (http://www.altova.com) by  () -->
+<root>
+  <resourcecollection language="en-tw">
+    <resource id="DemoPlugin_L_R_1">
+      <value>名稱</value>
+    </resource>
+  </resourcecollection>
+  <resourcecollection language="en-us">
+    <resource id="DemoPlugin_L_R_1">
+      <value>name</value>
+    </resource>
+  </resourcecollection>
+  <resourcecollection language="zh-cn">
+    <resource id="DemoPlugin_L_R_1">
+      <value>名称</value>
+    </resource>
+ </resourcecollection>
+</root>
