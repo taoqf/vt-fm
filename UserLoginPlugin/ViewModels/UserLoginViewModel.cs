@@ -215,7 +215,20 @@ namespace UserLoginPlugin.ViewModels
             }
         }
         #endregion
-        
+
+        #region 取消命令
+        /// <summary>取消命令 </summary>
+        public ICommand btnCancelClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    LoginWindow.Hide();
+                });
+            }
+        }
+        #endregion
         #endregion
 
         #region 自定义方法

@@ -249,16 +249,18 @@ namespace DocumentManagerService
         private void DownloadFile(string iDownloadUrl, string iDownloadToPath)
         {
             WebRequest request = WebRequest.Create(iDownloadUrl);
-
             //perform　the　GET　request
             WebResponse response = request.GetResponse();
-
             //get　stream　containing　received　data
             Stream s = response.GetResponseStream();
-
+            if (!iDownloadToPath.Contains("."))
+            {
+                LoggerHelper.InfoFormat("ContentType:{0}", response.ContentType);
+                iDownloadToPath += FileTypeHelper.GetExtensionType(response.ContentType);
+            }
+            LoggerHelper.InfoFormat("iDownloadToPath:{0}", iDownloadToPath);
             //open　filestream　for　the　output　file
             FileStream fs = new FileStream(iDownloadToPath, FileMode.Create, FileAccess.Write);
-
             //copy　until　all　data　is　read　标准的缓存读取格式
             byte[] buffer = new byte[1024];
             int bytesRead = s.Read(buffer, 0, buffer.Length);
@@ -267,7 +269,6 @@ namespace DocumentManagerService
                 fs.Write(buffer, 0, bytesRead);
                 bytesRead = s.Read(buffer, 0, buffer.Length);
             }
-
             //close　both　streams
             fs.Close();
             s.Close();

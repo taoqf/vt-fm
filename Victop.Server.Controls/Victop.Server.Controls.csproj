@@ -109,6 +109,7 @@
     <Compile Include="WeChat\WeChatMenuItemTypeEnum.cs" />
     <Compile Include="WeChat\WeChatOperation.cs" />
     <Compile Include="WeChat\WeChatRetInfo.cs" />
+    <Compile Include="WeChat\WeChatUserInfoModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Victop.Frame.PublicLib\Victop.Frame.PublicLib.csproj">

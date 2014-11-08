@@ -7,6 +7,9 @@
         xmlns:local="clr-namespace:PortalFramePlugin"
         xmlns:views="clr-namespace:PortalFramePlugin.Views"
         Title="PortalWindow" Name="mainWindow" Style="{DynamicResource ShadowWindow}">
+    <Window.Resources>
+        <local:ImgeNameToBackgroundConverter x:Key="imgeNameToBackgroundConverter"/>
+    </Window.Resources>
     <Window.DataContext>
         <vm:UCPortalWindowViewModel/>
     </Window.DataContext>
@@ -29,29 +32,24 @@
                     <Image Style="{DynamicResource logoImage}"></Image>
                 </Grid>
                 <StackPanel Grid.Row="1" Name="MenuStackPanel" Orientation="Vertical" Margin="0,50,0,0">
-                    <RadioButton Content="飞道云" Style="{DynamicResource RadioButtonFirstLevelMenu}"></RadioButton>
-                    <RadioButton Content="本地" Style="{DynamicResource RadioButtonFirstLevelMenu}">
+                    <controls:VicRadioButtonNormal Content="飞道云" Style="{DynamicResource RadioButtonFirstLevelMenu}"></controls:VicRadioButtonNormal>
+                    <controls:VicRadioButtonNormal Content="本地" Style="{DynamicResource RadioButtonFirstLevelMenu}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding localBtnClickCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </RadioButton>
-                    <ListBox x:Name="listSecondMenuLocal" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
+                    </controls:VicRadioButtonNormal>
+                    <ListBox x:Name="listSecondMenuLocal" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
                     </ListBox>
-                    <RadioButton Content="企业云" Style="{DynamicResource RadioButtonFirstLevelMenu}">
+                    <controls:VicRadioButtonNormal Content="企业云" Style="{DynamicResource RadioButtonFirstLevelMenu}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding enterPriseBtnClickCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </RadioButton>
-                    <ListBox x:Name="listSecondMenuEnterprise" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" BorderBrush="#F1F3F5" BorderThickness="0" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuListEnterprise,UpdateSourceTrigger=PropertyChanged}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding listSecondMenuEnterpriseSelectionChangedCommand}" CommandParameter="{Binding ElementName=listSecondMenuEnterprise,Path=SelectedItem}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                    </controls:VicRadioButtonNormal>
+                    <ListBox x:Name="listSecondMenuEnterprise" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListEnterprise,UpdateSourceTrigger=PropertyChanged}">
                     </ListBox>
                 </StackPanel>
             </Grid>
@@ -62,56 +60,51 @@
                 <RowDefinition RowDefinition.Height="*"/>
             </Grid.RowDefinitions>
             <Grid Name="gridTitle" Grid.Row="0"  Grid.Column="1">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseMove">
-                        <i:InvokeCommandAction Command="{Binding gridTitleMouseMoveCommand}" CommandParameter="{Binding ElementName=gridTitle}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
                 <!--Width="260"-->
                 <StackPanel Orientation="Horizontal" Style="{DynamicResource MainFrmUserStackPanelStyle}">
-                    <controls:VicButtonImage Name="btnUserLogin"
+                    <controls:VicButtonImage Name="btnUserLogin" Background="{Binding UserImg, Converter={StaticResource imgeNameToBackgroundConverter}}"
                                          Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}">
                     </controls:VicButtonImage>
-                    <TextBlock Visibility="Collapsed" Text="{Binding UserName}" Style="{DynamicResource MainFrmUserName}"/>
-                    <TextBlock Text="{Binding UserName}" Style="{DynamicResource MainFrmUserName}"/>
+                    <controls:VicTextBlockNormal Visibility="Collapsed" Text="{Binding UserName}" Style="{DynamicResource MainFrmUserName}"/>
+                    <controls:VicTextBlockNormal Text="{Binding UserName}" Style="{DynamicResource MainFrmUserName}"/>
                 </StackPanel>
                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <!--<Button Name="btnFeedBack" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>-->
-                    <Button Name="btnChangeSkin" Style="{DynamicResource btnChangeSkinStyle}" >
+                    <controls:VicButtonNormal Name="btnChangeSkin" Style="{DynamicResource btnChangeSkinStyle}" >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding btnChangeSkinClickCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </Button>
-                    <Button Name="btnSet" Visibility="Collapsed" Style="{DynamicResource btnSetStyle}" >
+                    </controls:VicButtonNormal>
+                    <controls:VicButtonNormal Name="btnSet" Visibility="Collapsed" Style="{DynamicResource btnSetStyle}" >
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding btnSetClickCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </Button>
-                    <Button Name="btnMax" Style="{DynamicResource btnMaxiStyle}">
+                    </controls:VicButtonNormal>
+                    <controls:VicButtonNormal Name="btnMax" Style="{DynamicResource btnMaxiStyle}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding btnMaxClickCommand}" CommandParameter="{Binding ElementName=btnMax}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </Button>
-                    <Button Name="btnMini" Style="{DynamicResource btnMiniStyle}">
+                    </controls:VicButtonNormal>
+                    <controls:VicButtonNormal Name="btnMini" Style="{DynamicResource btnMiniStyle}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding btnMiniClickCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </Button>
-                    <Button Name="btnClose" Style="{DynamicResource btnCloseStyle}">
+                    </controls:VicButtonNormal>
+                    <controls:VicButtonNormal Name="btnClose" Style="{DynamicResource btnCloseStyle}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding btnCloseClickCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </Button>
+                    </controls:VicButtonNormal>
                 </StackPanel>
             </Grid>
             <Grid Name="gridMid" Grid.Column="1" Grid.Row="1">
@@ -120,7 +113,7 @@
                     <ColumnDefinition ColumnDefinition.Width="*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Width="10" Grid.Column="0" VerticalAlignment="Center">
-                    <Button Name="btnStretch" Height="70" Width="10" Style="{DynamicResource btnStretchStyle}" Margin="-3,0,-4,0"></Button>
+                    <controls:VicButtonNormal Name="btnStretch" Height="70" Width="10" Style="{DynamicResource btnStretchStyle}" Margin="-3,0,-4,0"></controls:VicButtonNormal>
                 </StackPanel>
                 <Grid Grid.Column="1">
                     <controls:VicTabControlNormal Name="MainTabControl" Style="{DynamicResource MainVicTabControlStyle}" ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
@@ -138,6 +131,9 @@
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding gridMainLoadedCommand}"  CommandParameter="{Binding ElementName=mainWindow}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <i:InvokeCommandAction Command="{Binding gridTitleMouseMoveCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 </Window>

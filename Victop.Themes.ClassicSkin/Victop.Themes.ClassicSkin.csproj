@@ -79,6 +79,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\PortalWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Plugin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ThemesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\UCUserLogin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Common.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\background.png" />
@@ -86,27 +110,11 @@
     <Resource Include="Images\btnMOMainFeedBack.png" />
     <Resource Include="Images\Grid.png" />
     <Resource Include="Images\in.png" />
-    <Resource Include="Images\index.png" />
-    <Resource Include="Images\indexSelected.png" />
     <Resource Include="Images\out.png" />
     <Resource Include="Images\Set.png" />
     <Resource Include="Images\SetMouseOver.png" />
     <Resource Include="Images\Stretch.png" />
     <Resource Include="Images\UserPictrue.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\loginMain.png" />
-    <Resource Include="Images\loginTitle.png" />
-    <Resource Include="Images\loginWindow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\loginBtn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\LoginTopLeftGrid2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\LoginTopLeftGrid1.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\UserPhoto.png" />
@@ -165,8 +173,9 @@
     <Resource Include="Images\9-2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\2.png" />
+    <Resource Include="Images\loginbg.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

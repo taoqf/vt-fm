@@ -78,6 +78,8 @@ namespace UserManagerService
                 Dictionary<string, object> userDic = new Dictionary<string, object>();
                 userDic.Add("UserName", loginUserInfo.UserName);
                 userDic.Add("UserCode", loginUserInfo.UserCode);
+                userDic.Add("UserId", loginUserInfo.UserId);
+                userDic.Add("UserImg", loginUserInfo.UserImg);
                 returnDic.Add("ReplyContent", userDic);
                 returnDic.Add("ReplyMode", 1);
                 returnDic.Add("ReplyAlertMessage", null);

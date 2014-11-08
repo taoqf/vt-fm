@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using GalaSoft.MvvmLight.Command;
 using ThemeManagerPlugin.Models;
 using Victop.Frame.PublicLib.Helpers;
@@ -15,12 +16,15 @@ using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Media;
 
 namespace ThemeManagerPlugin.ViewModels
 {
     public class UCThemesWindowViewModel : ModelBase
     {
         #region 字段&属性
+        Storyboard stdEnd;
+        private Window portalWindow;
         /// <summary>皮肤列表 </summary>
         private ObservableCollection<ThemeModel> _systemThemeList;
         public ObservableCollection<ThemeModel> SystemThemeList
@@ -79,13 +83,40 @@ namespace ThemeManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand <object>((x) =>
                 {
+                   
+                    portalWindow = (Window)x;
+                    stdEnd = (Storyboard)portalWindow.Resources["end"];
+                    stdEnd.Completed += (c, d) =>
+                    {
+                       portalWindow.Close();
+                    };
+                 
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
                 });
             }
         }
+
+        #region 窗体关闭命令
+        public ICommand btnCloseClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    //MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                    //if (result == MessageBoxResult.Yes)
+                    //{
+                        stdEnd.Begin();
+                    //}
+                });
+            }
+        }
+        #endregion
+
+     
 
         /// <summary>
         /// 获取主题文件夹中默认皮肤路径
@@ -112,7 +143,7 @@ namespace ThemeManagerPlugin.ViewModels
         /// </summary>
         private void GetThemeSkinNum()
         {
-            string[] files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "theme", "*.dll");
+            string[] files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "theme", "*Skin.dll");
             SkinNum = files.Count();
             for (int j = 0; j < files.Count(); j++)
             {
@@ -161,6 +192,7 @@ namespace ThemeManagerPlugin.ViewModels
             model.SkinOrder = (int)type.GetField("SkinOrder").GetValue(obj);
             model.SkinName = type.GetField("SkinName").GetValue(obj).ToString();
             model.ThemeName = type.GetField("ThemeName").GetValue(obj).ToString();
+            model.SkinFace = type.GetField("SkinFace").GetValue(obj).ToString();
         }
 
         /// <summary>

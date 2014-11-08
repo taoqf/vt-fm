@@ -163,7 +163,7 @@ namespace AreaManagerPlugin.Views
             dt.Columns.Add("id");
             dt.Columns.Add("name");
             dt.Columns.Add("count");
-            string resultStr = WeChatOperation.GetGroupInfo();
+            string resultStr = WeChatOperation.GetAllGroupInfo();
             List<Dictionary<string, object>> groupList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(resultStr, "groups"));
             foreach (Dictionary<string,object> item in groupList)
             {
@@ -178,7 +178,22 @@ namespace AreaManagerPlugin.Views
 
         private void btnGetGroupUserInfo_Click(object sender, RoutedEventArgs e)
         {
-            string resultStr = WeChatOperation.GetUserInfo();
+            List<WeChatUserInfoModel> UserList = new List<WeChatUserInfoModel>();
+            string resultStr = WeChatOperation.GetAllUserInfo();
+            resultStr = JsonHelper.ReadJsonString(resultStr, "data");
+            resultStr = JsonHelper.ReadJsonString(resultStr, "openid");
+            List<string> OpenIdList = JsonHelper.ToObject<List<string>>(resultStr);
+            DataTable dt = new DataTable();
+            dt.Columns.Add("OPENID");
+            foreach (string item in OpenIdList)
+            {
+                string userInfoStr = WeChatOperation.GetUserInfoByOpenId(item);
+                if (!string.IsNullOrEmpty(userInfoStr))
+                {
+                    UserList.Add(JsonHelper.ToObject<WeChatUserInfoModel>(userInfoStr));
+                }
+            }
+            datagriduserInfo.ItemsSource = UserList;
         }
 
     }

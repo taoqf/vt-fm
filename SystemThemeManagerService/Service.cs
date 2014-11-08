@@ -104,7 +104,7 @@ namespace SystemThemeManagerService
                     switch (CurrentMessageType)
                     {
                         case "ServerCenterService.ChangeTheme"://换肤
-                            //ChangeFrameWorkTheme(SourceName);
+                            ChangeFrameWorkTheme(SourceName);
                             result = true;
                             break;
                         case "ServerCenterService.ChangeThemeByDll"://换肤
@@ -161,7 +161,14 @@ namespace SystemThemeManagerService
         {
             Assembly assembly = Assembly.LoadFrom(SkinPath);
             ResourceDictionary myResourceDictionary = Application.LoadComponent(new Uri(ThemeName, UriKind.Relative)) as ResourceDictionary;
-            Application.Current.Resources.MergedDictionaries.Add(myResourceDictionary);
+            if (Application.Current.Resources.MergedDictionaries.Count > 0 && Application.Current.Resources.MergedDictionaries[0] != null)
+            {
+                Application.Current.Resources.MergedDictionaries[0] = myResourceDictionary;
+            }
+            else
+            {
+                Application.Current.Resources.MergedDictionaries.Add(myResourceDictionary);
+            }
         }
         /// <summary>
         /// 切换语言

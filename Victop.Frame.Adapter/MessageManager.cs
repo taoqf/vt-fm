@@ -144,6 +144,7 @@ namespace Victop.Frame.Adapter
             }
             MessagePoolManager messagePoolManager = new MessagePoolManager();
             ReplyMessage replyMessage = FrameInit.GetInstance().ComlinkObject.SendMessage(message);
+            LoggerHelper.InfoFormat("发送消息:{0}", JsonHelper.ToJson(message));
             switch (replyMessage.ReplyMode)
             {
                 case ReplyModeEnum.ASYNC:

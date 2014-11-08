@@ -17,10 +17,22 @@ namespace PortalFramePlugin
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            //if (value == null||value.ToString()==string.Empty) return null;
-            ImageBrush image = new ImageBrush();
-            image.ImageSource = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + @"images/" + parameter.ToString()));
-            return image;
+            try
+            {
+                if (value == null || value.ToString() == string.Empty)
+                {
+                    return Application.Current.Resources["UserPictrue"] as ImageBrush;
+                }
+
+                ImageBrush image = new ImageBrush();
+                image.Stretch = Stretch.UniformToFill;
+                image.ImageSource = new BitmapImage(new Uri(value.ToString()));
+                return image;
+            }
+            catch
+            {
+                return Application.Current.Resources["UserPictrue"] as ImageBrush;
+            }
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

@@ -24,6 +24,7 @@ using Victop.Frame.SyncOperation;
 using System.Windows.Navigation;
 using System.IO;
 using System.Text;
+using System.Windows.Media;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -47,6 +48,10 @@ namespace PortalFramePlugin.ViewModels
         /// 用户名
         /// </summary>
         private string userName;
+        /// <summary>
+        /// 用户头像
+        /// </summary>
+        private string userImg;
         /// <summary>
         /// 活动插件数目
         /// </summary>
@@ -169,10 +174,9 @@ namespace PortalFramePlugin.ViewModels
                     VicTabItemNormal homeItem = new VicTabItemNormal();
                     homeItem.Name = "homeItem";
                     homeItem.AllowDelete = false;
-                    homeItem.Height = 40;
                     homeItem.Header = "飞道科技";
                     WebBrowser browser = new WebBrowser();
-                    browser.Source = new Uri("http://www.victop.com");
+                    //browser.Source = new Uri("http://www.victop.com");
                     homeItem.Content = browser;
                     tabItemList.Add(homeItem);
                 }
@@ -225,6 +229,24 @@ namespace PortalFramePlugin.ViewModels
             }
         }
         /// <summary>
+        /// 用户头像
+        /// </summary>
+        public string UserImg
+        {
+            get
+            {
+                return userImg;
+            }
+            set
+            {
+                if (userImg != value)
+                {
+                    userImg = value;
+                    RaisePropertyChanged("UserImg");
+                }
+            }
+        }
+        /// <summary>
         /// 活动插件数目
         /// </summary>
         public long ActivePluginNum
@@ -263,7 +285,7 @@ namespace PortalFramePlugin.ViewModels
                     ChangeFrameWorkTheme();
                     //LoadMenuListLocal();
                     LoadJsonMenuListLocal();
-                    //UserLogin();
+                    UserLogin();
                 });
             }
         }
@@ -292,10 +314,9 @@ namespace PortalFramePlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) =>
+                return new RelayCommand(() =>
                 {
-                    gridTitle = (Grid)x;
-                    gridTitle.MouseMove += gridTitle_MouseMove;
+                    mainWindow.DragMove();
                 });
             }
         }
@@ -513,7 +534,7 @@ namespace PortalFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    CreateBrowser("www.victop.com", "飞道科技");
+                    //CreateBrowser("www.victop.com", "飞道科技");
                 });
             }
         }
@@ -777,49 +798,6 @@ namespace PortalFramePlugin.ViewModels
                         return;
                     }
                 }
-                else if (selectedFourthMenu.ActionType == "0")//启动组件
-                {
-                    RunComponent(selectedFourthMenu);
-                }
-            }
-        }
-        /// <summary>
-        /// 启动组件
-        /// </summary>
-        /// <param name="selectedFourthMenu"></param>
-        private void RunComponent(MenuModel selectedFourthMenu)
-        {
-            Assembly assemblyLoad = ServerFactory.GetServerAssemblyByName("Victop.Frame.Templates", "", false);
-            string actionPath = string.Format("Victop.Frame.Templates.{0}", selectedFourthMenu.ResourceName);
-            TemplateControl control = (TemplateControl)assemblyLoad.CreateInstance(actionPath);
-            if (control == null)
-            {
-                VicMessageBoxNormal.Show("组件不存在");
-                return;
-            }
-            control.SystemId = selectedFourthMenu.BzSystemId;
-            control.FormId = selectedFourthMenu.FormId;
-            control.ModelId = selectedFourthMenu.ModelId;
-            control.MasterName = selectedFourthMenu.MasterName;
-            if (selectedFourthMenu.FitDataPath.Rows.Count != 0)
-            {
-                control.FitDataPath = selectedFourthMenu.FitDataPath.Rows[0]["value"].ToString();
-            }
-            if (selectedFourthMenu.ShowType == "1")//UserControl展示
-            {
-                VicTabItemNormal tabItem = new VicTabItemNormal();
-                tabItem.Header = selectedFourthMenu.MenuName;
-                tabItem.Content = control;
-                tabItem.AllowDelete = true;
-                tabItem.IsSelected = true;
-                TabItemList.Add(tabItem);
-            }
-            else if (selectedFourthMenu.ShowType == "0")//窗口展示
-            {
-                VicWindowNormal window = new VicWindowNormal();
-                window.Content = control;
-                window.Title = selectedFourthMenu.MenuName;
-                window.Show();
             }
         }
         #endregion
@@ -907,30 +885,37 @@ namespace PortalFramePlugin.ViewModels
 
         private void PluginShow(PluginModel pluginModel)
         {
-            PluginOperation pluginOp = new PluginOperation();
-            switch (pluginModel.PluginInterface.ShowType)
+            try
             {
-                case 0:
-                    Window pluginWin = pluginModel.PluginInterface.StartWindow;
-                    pluginWin.Uid = pluginModel.ObjectId;
-                    ActivePluginNum = pluginOp.GetActivePluginList().Count;
-                    pluginWin.ShowDialog();
-                    SendPluginCloseMessage(pluginModel);
-                    break;
-                case 1:
-                    UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;
-                    pluginCtrl.Uid = pluginModel.ObjectId;
-                    VicTabItemNormal tabItem = new VicTabItemNormal();
-                    tabItem.Header = pluginModel.PluginInterface.PluginTitle;
-                    tabItem.Content = pluginCtrl;
-                    tabItem.AllowDelete = true;
-                    tabItem.IsSelected = true;
-                    TabItemList.Add(tabItem);
-                    break;
-                default:
-                    break;
+                PluginOperation pluginOp = new PluginOperation();
+                switch (pluginModel.PluginInterface.ShowType)
+                {
+                    case 0:
+                        Window pluginWin = pluginModel.PluginInterface.StartWindow;
+                        pluginWin.Uid = pluginModel.ObjectId;
+                        ActivePluginNum = pluginOp.GetActivePluginList().Count;
+                        pluginWin.ShowDialog();
+                        SendPluginCloseMessage(pluginModel);
+                        break;
+                    case 1:
+                        UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;
+                        pluginCtrl.Uid = pluginModel.ObjectId;
+                        VicTabItemNormal tabItem = new VicTabItemNormal();
+                        tabItem.Header = pluginModel.PluginInterface.PluginTitle;
+                        tabItem.Content = pluginCtrl;
+                        tabItem.AllowDelete = true;
+                        tabItem.IsSelected = true;
+                        TabItemList.Add(tabItem);
+                        break;
+                    default:
+                        break;
+                }
+                ActivePluginNum = pluginOp.GetActivePluginList().Count;
             }
-            ActivePluginNum = pluginOp.GetActivePluginList().Count;
+            catch (Exception ex)
+            {
+                VicMessageBoxNormal.Show(ex.Message);
+            }
         }
         /// <summary>
         /// 发送关闭插件消息
@@ -943,15 +928,6 @@ namespace PortalFramePlugin.ViewModels
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("ObjectId", pluginModel.ObjectId);
             messageOp.SendMessage(messageType, contentDic);
-        }
-        #endregion
-
-        #region 窗体移动
-        void gridTitle_MouseMove(object sender, MouseEventArgs e)
-        {
-            gridTitle.AllowDrop = true;
-            if (e.LeftButton == MouseButtonState.Pressed)
-                mainWindow.DragMove();
         }
         #endregion
 
@@ -972,6 +948,7 @@ namespace PortalFramePlugin.ViewModels
                 if (userDic != null)
                 {
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
+                    this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 isFirstLogin = false;
                 LoadStandardMenu();
@@ -979,6 +956,41 @@ namespace PortalFramePlugin.ViewModels
 
         }
 
+        private string DownLoadUserImg(string userCode, string fileInfo)
+        {
+            string path = string.Empty;
+            string dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\VictopPartner\\UserPhoto\\";
+            if (Directory.Exists(dir) == false)
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            path = dir + userCode + ".jpg";
+            if (File.Exists(path))
+            {
+                return path;
+            }
+
+            if (string.IsNullOrWhiteSpace(fileInfo) == false)
+            {
+                MessageOperation messageOperation = new MessageOperation();
+                Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                Dictionary<string, string> address = new Dictionary<string, string>();
+                address.Add("DownloadUrl", ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + fileInfo);
+                address.Add("DownloadToPath", path);
+                messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+                Dictionary<string, object> downResult = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
+                if (downResult != null)
+                {
+                    if (downResult["ReplyMode"].ToString() == "1")
+                    {
+                        return path;
+                    }
+                }
+            }
+
+            return string.Empty;
+        }
         #endregion
 
         #region 换肤

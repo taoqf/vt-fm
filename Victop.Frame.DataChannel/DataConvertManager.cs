@@ -211,7 +211,14 @@ namespace Victop.Frame.DataChannel
                                     break;
                                 case "date":
                                 default:
-                                    arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                    if (string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()))
+                                    {
+                                        arrayDr[dtCol.ColumnName] = DBNull.Value;
+                                    }
+                                    else
+                                    {
+                                        arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                    }
                                     break;
                             }
                         }
@@ -283,7 +290,14 @@ namespace Victop.Frame.DataChannel
                                 break;
                             case "date":
                             default:
-                                objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
+                                if (string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()))
+                                {
+                                    objectDr[dtCol.ColumnName] = DBNull.Value;
+                                }
+                                else
+                                {
+                                    objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
+                                }
                                 break;
                         }
                     }
@@ -362,7 +376,14 @@ namespace Victop.Frame.DataChannel
                                                 break;
                                             case "date":
                                             default:
-                                                arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                                if (string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()))
+                                                {
+                                                    arrayDr[dtCol.ColumnName] = DBNull.Value;
+                                                }
+                                                else
+                                                {
+                                                    arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                                }
                                                 break;
                                         }
                                     }
@@ -431,7 +452,14 @@ namespace Victop.Frame.DataChannel
                                             break;
                                         case "date":
                                         default:
-                                            objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
+                                            if (string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()))
+                                            {
+                                                objectDr[dtCol.ColumnName] = DBNull.Value;
+                                            }
+                                            else
+                                            {
+                                                objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
+                                            }
                                             break;
                                     }
                                 }
@@ -922,7 +950,7 @@ namespace Victop.Frame.DataChannel
                                         switch (dc.ExtendedProperties["ColType"].ToString())
                                         {
                                             case "int":
-                                                addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? 0 : dr[dc.ColumnName]);
+                                                addDic.Add(dc.ColumnName, (dr[dc.ColumnName] == null || string.IsNullOrEmpty(dr[dc.ColumnName].ToString())) ? 0 : dr[dc.ColumnName]);
                                                 break;
                                             case "date":
                                                 addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? DateTime.Now : dr[dc.ColumnName]);
@@ -982,7 +1010,7 @@ namespace Victop.Frame.DataChannel
                                         switch (dc.ExtendedProperties["ColType"].ToString())
                                         {
                                             case "int":
-                                                modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? 0 : dr[dc.ColumnName]);
+                                                modDic.Add(dc.ColumnName, (dr[dc.ColumnName] == null || string.IsNullOrEmpty(dr[dc.ColumnName].ToString())) ? 0 : dr[dc.ColumnName]);
                                                 break;
                                             case "date":
                                                 modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? DateTime.Now : dr[dc.ColumnName]);

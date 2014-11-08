@@ -78,6 +78,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Common.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Plugin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\PortalWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ThemesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\UCUserLogin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\1-1.png" />
@@ -152,7 +176,6 @@
     <Resource Include="Images\2-2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\2.png" />
     <Resource Include="Images\20-1.png" />
     <Resource Include="Images\20-2.png" />
     <Resource Include="Images\21-1.png" />
@@ -172,25 +195,28 @@
     <Resource Include="Images\9-1.png" />
     <Resource Include="Images\9-2.png" />
     <Resource Include="Images\UserPhoto.png" />
-    <Resource Include="Images\background.png" />
     <Resource Include="Images\btnMainFeedBack.png" />
     <Resource Include="Images\btnMOMainFeedBack.png" />
     <Resource Include="Images\Grid.png" />
     <Resource Include="Images\in.png" />
-    <Resource Include="Images\index.png" />
-    <Resource Include="Images\indexSelected.png" />
-    <Resource Include="Images\loginBtn.png" />
-    <Resource Include="Images\loginMain.png" />
     <Resource Include="Images\LoginSet.png" />
     <Resource Include="Images\LoginSetMouseOver.png" />
-    <Resource Include="Images\loginTitle.png" />
-    <Resource Include="Images\LoginTopLeftGrid1.png" />
-    <Resource Include="Images\LoginTopLeftGrid2.png" />
-    <Resource Include="Images\loginWindow.png" />
     <Resource Include="Images\logo.png" />
     <Resource Include="Images\out.png" />
     <Resource Include="Images\Stretch.png" />
     <Resource Include="Images\UserPictrue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Set.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SetMouseOver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\组合 2 对象3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -32,19 +32,10 @@ namespace VictopPartner
         public MainWindow()
         {
             InitializeComponent();
+            this.Loaded += MainWindow_Loaded;
         }
 
-        private string AnonymousLogin()
-        {
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "LoginService.getCurrentLinker");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
-            contentDic.Add("usercode", "test7");
-            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-            return JsonHelper.ToJson(messageDic);
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             if (FrameInit.GetInstance().FrameRun())
             {
@@ -75,6 +66,16 @@ namespace VictopPartner
                     Environment.Exit(0);
                 }
             }
+        }
+
+        private string AnonymousLogin()
+        {
+            Dictionary<string, string> messageDic = new Dictionary<string, string>();
+            messageDic.Add("MessageType", "LoginService.getCurrentLinker");
+            Dictionary<string, string> contentDic = new Dictionary<string, string>();
+            contentDic.Add("usercode", "test7");
+            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
+            return JsonHelper.ToJson(messageDic);
         }
 
         void mainstory_Completed(object sender, EventArgs e)

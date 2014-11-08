@@ -15,7 +15,7 @@
     <UserControl.DataContext>
         <vm:SystemConfigViewModel/>
     </UserControl.DataContext>
-    <controls:VicGridNormal Name="gridSysConfig">
+    <controls:VicGridNormal Name="gridSysConfig" Style="{DynamicResource loginMainGridStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
@@ -27,7 +27,7 @@
                         <RowDefinition/>
                         <RowDefinition  Height="80"/>
                     </Grid.RowDefinitions>
-                    <controls:VicGroupBoxNormal Header="系统配置" Margin="5,0,5,0">
+                    <controls:VicGroupBoxNormal Header="系统配置" Margin="5,0,5,0" Foreground="{DynamicResource Login_TabControlNomalForeground}">
                         <controls:VicGridNormal>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.8*"/>
@@ -57,7 +57,7 @@
                             <controls:VicNumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding SysConfigModel.BroadCastTime}"/>
                         </controls:VicGridNormal>
                     </controls:VicGroupBoxNormal>
-                    <controls:VicGroupBoxNormal Grid.Row="1" Header="日志配置" Margin="5,0,5,0">
+                    <controls:VicGroupBoxNormal Grid.Row="1" Header="日志配置" Margin="5,0,5,0" Foreground="{DynamicResource Login_TabControlNomalForeground}">
                         <controls:VicGridNormal>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0.8*"/>
@@ -87,7 +87,7 @@
                         <RowDefinition Height="4.5*"/>
                         <RowDefinition Height="5.5*"/>
                     </Grid.RowDefinitions>
-                    <controls:VicGroupBoxNormal Header="云服务通信" Margin="5,0,5,0">
+                    <controls:VicGroupBoxNormal Header="云服务通信" Margin="5,0,5,0" Foreground="{DynamicResource Login_TabControlNomalForeground}">
                         <controls:VicGridNormal>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -114,7 +114,7 @@
                             <controls:VicNumericUpDown Grid.Row="2" Grid.Column="3" Value="{Binding SysConfigModel.CloudHostPort}"/>
                         </controls:VicGridNormal>
                     </controls:VicGroupBoxNormal>
-                    <controls:VicGroupBoxNormal Header="企业SOA和P2P" Grid.Row="1" Margin="5,0,5,0">
+                    <controls:VicGroupBoxNormal Header="企业SOA和P2P" Grid.Row="1" Margin="5,0,5,0" Foreground="{DynamicResource Login_TabControlNomalForeground}">
                         <controls:VicGridNormal>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -150,7 +150,7 @@
             </controls:VicTabItemNormal>
             <controls:VicTabItemNormal Header="用户信息" Height="30" AllowDelete="False" >
                 <controls:VicGridNormal>
-                    <controls:VicGroupBoxNormal Header="用户信息" Margin="5,0,5,0" Height="80" VerticalAlignment="Top">
+                    <controls:VicGroupBoxNormal Header="用户信息" Margin="5,0,5,0" Height="80" VerticalAlignment="Top" Foreground="{DynamicResource Login_TabControlNomalForeground}">
                         <controls:VicGridNormal>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -175,8 +175,8 @@
         </controls:VicTabControlNormal>
         <Border Grid.Row="1" BorderBrush="#024672" BorderThickness="0,1,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Style="{DynamicResource LoginButtonStyle}" Content="确定"  Command="{Binding btnConfirmClickCommand}" />
-                <Button Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消"  Command="{Binding btnCancelClickCommand}"/>
+                <controls:VicButtonNormal Style="{DynamicResource LoginButtonStyle}" Content="确定"  Command="{Binding btnConfirmClickCommand}" />
+                <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消"  Command="{Binding btnCancelClickCommand}"/>
             </StackPanel>
         </Border>
         <i:Interaction.Triggers>
