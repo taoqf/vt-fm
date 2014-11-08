@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using Victop.Server.Controls.Models;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
-using MachinePlatformPlugin.Views;
-using System.Windows.Controls;
-using Victop.Wpf.Controls;
-using Victop.Frame.Components;
-using System.Windows;
-using Victop.Frame.PublicLib.Helpers;
-using Victop.Server.Controls.Runtime;
-using Victop.Frame.SyncOperation;
-using System.Windows.Forms;
-using Victop.Frame.DataChannel;
 using MachinePlatformPlugin.Models;
 namespace MachinePlatformPlugin.ViewModels
 {
@@ -32,27 +20,10 @@ namespace MachinePlatformPlugin.ViewModels
         /// 机台状态集合
         /// </summary>
         private DataTable cabTaskStatusDt;
-
-        private System.Windows.Controls.UserControl PageFlowMachinePlatformView;
         /// <summary>
-        /// 工作区
+        /// 传送带数据
         /// </summary>
-        private CompntSingleDataGridWithCheckBox comdgridWork;
-        /// <summary>
-        /// 明细
-        /// </summary>
-        private CompntSingleDataGrid comdgridDetail;
-        /// <summary>
-        /// 客户表
-        /// </summary>
-        private DataTable DtClientData;
-
         private DataTable dtConData;
-        /// <summary>
-        /// 主视图可用
-        /// </summary>
-        private bool mainViewAble;
-        
         #endregion
 
         #region 属性
@@ -107,27 +78,6 @@ namespace MachinePlatformPlugin.ViewModels
                 RaisePropertyChanged("DtConData");
             }
         }
-
-        /// <summary>
-        /// 主视图可用
-        /// </summary>
-        public bool MainViewAble
-        {
-            get
-            {
-                return mainViewAble;
-            }
-            set
-            {
-                if (mainViewAble != value)
-                {
-                    mainViewAble = value;
-                    RaisePropertyChanged("MainViewAble");
-                }
-            }
-        }
-
-
         #endregion
 
         #region 命令
@@ -140,26 +90,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    cabinetInfoModel.SystemId = UCMachinePlatform.ParamDict["systemid"].ToString();
-                    PageFlowMachinePlatformView = (System.Windows.Controls.UserControl)x;
-                    comdgridDetail = (CompntSingleDataGrid)PageFlowMachinePlatformView.FindName("comdgridDetail");
-
-                    //comdgridWork.ParamsModel.SelectedItemChanged += ParamsModel_SelectedItemChanged;//注册工作区datagrid选项改变事件
-                    //获取机台初始化数据
-                    //InitCabinetData();
-                    UCMachinePlatform.ParamDict["cabinet_id"] = cabinetInfoModel.CabinetId;
-                    comdgridWork.ParamsModel.SystemId = cabinetInfoModel.SystemId;
-                    List<Dictionary<string, object>> fitDataList = UCMachinePlatform.ParamDict["fitdata"] as List<Dictionary<string, object>>;
-                    Dictionary<string, object> fitDataDic = fitDataList.Find(it => it["key"].ToString().Equals("datagridMaster"));
-                    if (fitDataDic != null)
-                    {
-                        string fitDataStr = JsonHelper.ToJson(fitDataDic);
-                        comdgridWork.ParamsModel.SettingModel = JsonHelper.ToObject<CompntSettingModel>(fitDataStr);
-                        comdgridWork.DoRender();
-                    }
-                    else
-                    {
-                    }
+                    
                 });
             }
         }
@@ -174,6 +105,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                   
                 });
             }
         }
@@ -189,6 +121,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+             
                 });
             }
         }
@@ -204,7 +137,6 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    
                 });
             }
         }
@@ -220,7 +152,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    
+
                 });
             }
         }
@@ -299,7 +231,6 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    
                 });
             }
         }
@@ -315,7 +246,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    
+
                 });
             }
         }
@@ -331,6 +262,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                  
                 });
             }
         }
@@ -343,6 +275,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                   
                 });
             }
         }
@@ -358,7 +291,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    
+                   
                 });
             }
         }
@@ -374,6 +307,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                   
                 });
             }
         }
@@ -389,6 +323,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                   
                 });
             }
         }
@@ -406,6 +341,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                   
                 });
             }
         }
@@ -421,6 +357,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                   
                 });
             }
         }
@@ -436,6 +373,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                    
                 });
             }
         }
@@ -451,6 +389,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                    
                 });
             }
         }
@@ -466,6 +405,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                   
                 });
             }
         }
@@ -481,6 +421,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                   
                 });
             }
         }
@@ -488,5 +429,8 @@ namespace MachinePlatformPlugin.ViewModels
 
         #endregion
 
+        #region 方法
+       
+        #endregion
     }
 }
