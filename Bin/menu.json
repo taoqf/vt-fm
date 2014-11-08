@@ -38,20 +38,20 @@
 								}
 							]
 						}, {
-							"title": "地区区域管理",
+							"title": "飞道综合机台",
 							"actionType": 1,
-							"actionName": "UCTreeViewMaintenanceT",
-							"showType": 0,
+							"actionName": "MachinePlatformPlugin",
+							"showType": 1,
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
 							"formId": "",
 							"modelId": "",
-							"masterName": "地区区域表",
+							"masterName": "飞道综合机台",
 							"fitDataPath": [
 								{
-									"key": "",
-									"value": "SpecialMaintenanceDataDemo"
+									"key": "datagridMaster",
+									"value": "PageFlowMachinePlatFormPlugin_Setting"
 								}
 							]
 						}, {

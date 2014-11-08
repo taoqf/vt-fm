@@ -9,6 +9,24 @@ namespace MachinePlatformPlugin.Models
     public class CabinetInfoModel
     {
         /// <summary>
+        /// SystemId
+        /// </summary>
+        private string systemId;
+        /// <summary>
+        /// SystemId
+        /// </summary>
+        public string SystemId
+        {
+            get
+            {
+                return systemId;
+            }
+            set
+            {
+                systemId = value;
+            }
+        }
+        /// <summary>
         /// 机台Id
         /// </summary>
         private string cabinetId;

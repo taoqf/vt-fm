@@ -469,7 +469,7 @@ namespace AreaManagerPlugin.ViewModels
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("systemid", "906");
                         contentDic.Add("configsystemid", "101");
-                        contentDic.Add("modelid", "victop_model_base_data_diagram_0001");
+                        contentDic.Add("modelid", "victop_model_com_compnt_0001");
                         //List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
                         //Dictionary<string, object> conDic = new Dictionary<string, object>();
                         //conDic.Add("name", "client_point");
@@ -488,7 +488,7 @@ namespace AreaManagerPlugin.ViewModels
                             DataOperation dataOp = new DataOperation();
                             viewId = returnDic["DataChannelId"].ToString();
                             List<object> pathList = new List<object>();
-                            pathList.Add("base_data_diagram");
+                            pathList.Add("com_compnt");
                             dataPath = JsonHelper.ToJson(pathList);
                             DataSet mastDs = new DataSet();
                             mastDs = dataOp.GetData(viewId, dataPath);

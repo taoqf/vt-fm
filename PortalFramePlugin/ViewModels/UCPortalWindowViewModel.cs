@@ -639,6 +639,7 @@ namespace PortalFramePlugin.ViewModels
                 menuModel.ResourceName = localModel.ResourceName;
                 menuModel.ActionType = localModel.ActionType;
                 menuModel.BzSystemId = localModel.BzSystemId;
+                menuModel.FitDataPath = localModel.FitDataPath;
             }
             return menuModel;
         }
@@ -762,7 +763,7 @@ namespace PortalFramePlugin.ViewModels
             model.FormId = JsonHelper.ReadJsonString(str, "formId");
             model.ModelId = JsonHelper.ReadJsonString(str, "modelId");
             model.MasterName = JsonHelper.ReadJsonString(str, "masterName");
-            model.FitDataPath = JsonHelper.ReadJsonObject<DataTable>(str, "fitDataPath");
+            model.FitDataPath = JsonHelper.ReadJsonObject<List<Dictionary<string,object>>>(str, "fitDataPath");
             model.SystemMenuList = CreateChildrenMenuList(JsonHelper.ReadJsonString(str, "children"));
             return model;
         }
@@ -787,6 +788,7 @@ namespace PortalFramePlugin.ViewModels
                     paramDic.Add("modelid", selectedFourthMenu.ModelId);
                     paramDic.Add("menuCode", selectedFourthMenu.MenuCode);
                     paramDic.Add("authorityCode", selectedFourthMenu.HomeId);
+                    paramDic.Add("fitdata", selectedFourthMenu.FitDataPath);
                     PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
                     if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                     {

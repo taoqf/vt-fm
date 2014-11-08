@@ -448,7 +448,7 @@ namespace PortalFramePlugin.Models
         /// 装配数据路径
         /// </summary>
         [JsonProperty(PropertyName = "fitDataPath")]
-        public DataTable FitDataPath
+        public List<Dictionary<string,object>> FitDataPath
         {
             get;
             set;
