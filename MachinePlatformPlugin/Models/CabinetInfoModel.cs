@@ -27,6 +27,30 @@ namespace MachinePlatformPlugin.Models
             }
         }
         /// <summary>
+        /// configSystemId
+        /// </summary>
+        private string configSystemId;
+        /// <summary>
+        /// ConfigSystemId
+        /// </summary>
+        public string ConfigSystemId
+        {
+            get { return configSystemId; }
+            set { configSystemId = value; }
+        }
+        /// <summary>
+        /// spaceId
+        /// </summary>
+        private string spaceId;
+        /// <summary>
+        /// SpaceId
+        /// </summary>
+        public string SpaceId
+        {
+            get { return spaceId; }
+            set { spaceId = value; }
+        }
+        /// <summary>
         /// 机台Id
         /// </summary>
         private string cabinetId;
@@ -181,6 +205,18 @@ namespace MachinePlatformPlugin.Models
                 return cabinetParamsList;
             }
             set { cabinetParamsList = value; }
+        }
+        /// <summary>
+        /// 机台配置数据
+        /// </summary>
+        private List<Dictionary<string, object>> cabinetFitData;
+        /// <summary>
+        /// 机台配置数据
+        /// </summary>
+        public List<Dictionary<string, object>> CabinetFitData
+        {
+            get { return cabinetFitData; }
+            set { cabinetFitData = value; }
         }
     }
 }

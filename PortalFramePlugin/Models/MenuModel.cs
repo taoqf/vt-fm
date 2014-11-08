@@ -303,18 +303,18 @@ namespace PortalFramePlugin.Models
             set;
         }
 
-        private string formId;
+        private string configsystemid;
         /// <summary>
-        /// FormId
+        /// configsystemid
         /// </summary>
-        [JsonProperty(PropertyName = "formId")]
-        public string FormId
+        [JsonProperty(PropertyName = "configsystemid")]
+        public string ConfigSystemId
         {
-            get { return formId; }
+            get { return configsystemid; }
             set
             {
-                formId = value;
-                RaisePropertyChanged("FormId");
+                configsystemid = value;
+                RaisePropertyChanged("ConfigSystemId");
             }
         }
 
@@ -427,19 +427,19 @@ namespace PortalFramePlugin.Models
             set;
         }
         /// <summary>
-        /// ModelID
+        /// spaceId
         /// </summary>
-        [JsonProperty(PropertyName = "modelId")]
-        public string ModelId
+        [JsonProperty(PropertyName = "spaceId")]
+        public string SpaceId
         {
             get;
             set;
         }
         /// <summary>
-        /// MasterName
+        /// menuno
         /// </summary>
-        [JsonProperty(PropertyName = "masterName")]
-        public string MasterName
+        [JsonProperty(PropertyName = "menuno")]
+        public string MenuNo
         {
             get;
             set;

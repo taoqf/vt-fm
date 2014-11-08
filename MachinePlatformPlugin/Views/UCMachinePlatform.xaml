@@ -6,10 +6,14 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              xmlns:components="clr-namespace:Victop.Frame.Components;assembly=Victop.Frame.Components"
+             xmlns:vm="clr-namespace:MachinePlatformPlugin.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800" Name="PageFlowMachinePlatformView">
+             d:DesignHeight="600" d:DesignWidth="800" Name="MachinePlatformView">
     <Border Style="{DynamicResource SubBorder}">
-        <Grid>
+        <Grid IsEnabled="{Binding MainViewAble}">
+            <Grid.DataContext>
+                <vm:MachinePlatformViewModel/>
+            </Grid.DataContext>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -111,7 +115,7 @@
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0" Grid.Row="0">
                             <controls:VicLabelNormal Grid.Row="0" Grid.Column="0" Content="状态:"/>
-                            <controls:VicComboBoxNormal Grid.Row="0" Grid.Column="1" Name="comStatus" ItemsSource="{Binding CabTaskStatusDt}" DisplayMemberPath="cabinet_state_name" SelectedValuePath="cabinet_state">
+                            <controls:VicComboBoxNormal Grid.Row="0" Grid.Column="1" Name="comStatus" ItemsSource="{Binding CabTaskStatusDt}" DisplayMemberPath="cabinet_state_name" SelectedValuePath="cabinet_state" SelectedValue="{Binding SearchTaskState,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             </controls:VicComboBoxNormal>
                             <controls:VicLabelNormal Grid.Row="0" Grid.Column="2" Content="客户:" />
                             <controls:VicTextBoxNormal VicText="{Binding Client, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Width="120" Grid.Column="3"/>
@@ -220,13 +224,18 @@
                 </StackPanel>
                 <controls:VicTabControlNormal TabStripPlacement="Left" Grid.Row="1" Style="{DynamicResource left_TabControlStyle}">
                     <controls:VicTabItemNormal Style="{DynamicResource left_TabItemStyle}" Header="工作区" AllowDelete="False">
-                        <components:CompntSingleDataGridWithCheckBox Name="comdgridWork" MinHeight="200"/>
+                        <components:CompntSingleDataGridWithCheckBox Name="datagridMaster" MinHeight="200"/>
                     </controls:VicTabItemNormal>
                     <controls:VicTabItemNormal Style="{DynamicResource left_TabItemStyle}" Header="明细" AllowDelete="False">
                         <components:CompntSingleDataGrid Name="comdgridDetail" MinHeight="260"/>
                     </controls:VicTabItemNormal>
                 </controls:VicTabControlNormal>
             </Grid>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding MachinePlatformViewLoadedCommand}" CommandParameter="{Binding ElementName=MachinePlatformView}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </Grid>
     </Border>
 </UserControl>

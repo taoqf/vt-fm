@@ -616,7 +616,7 @@ namespace PortalFramePlugin.ViewModels
             menuModel.DocStatus = item.DocStatus;
             menuModel.EndPoint = item.EndPoint;
             menuModel.EndPointParam = item.EndPointParam;
-            menuModel.FormId = item.FormId;
+            menuModel.ConfigSystemId = item.FormId;
             menuModel.FormMemo = item.FormMemo;
             menuModel.FormName = item.FormName;
             menuModel.HomeId = item.HomeId;
@@ -760,9 +760,9 @@ namespace PortalFramePlugin.ViewModels
             model.ShowType = JsonHelper.ReadJsonString(str, "showType");
             model.IconUrl = JsonHelper.ReadJsonString(str, "iconUrl");
             model.BzSystemId = JsonHelper.ReadJsonString(str, "systemId");
-            model.FormId = JsonHelper.ReadJsonString(str, "formId");
-            model.ModelId = JsonHelper.ReadJsonString(str, "modelId");
-            model.MasterName = JsonHelper.ReadJsonString(str, "masterName");
+            model.ConfigSystemId = JsonHelper.ReadJsonString(str, "formId");
+            model.SpaceId = JsonHelper.ReadJsonString(str, "modelId");
+            model.MenuNo = JsonHelper.ReadJsonString(str, "masterName");
             model.FitDataPath = JsonHelper.ReadJsonObject<List<Dictionary<string,object>>>(str, "fitDataPath");
             model.SystemMenuList = CreateChildrenMenuList(JsonHelper.ReadJsonString(str, "children"));
             return model;
@@ -784,8 +784,9 @@ namespace PortalFramePlugin.ViewModels
                     PluginOperation pluginOp = new PluginOperation();
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
                     paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
-                    paramDic.Add("formid", selectedFourthMenu.FormId);
-                    paramDic.Add("modelid", selectedFourthMenu.ModelId);
+                    paramDic.Add("configsytemid", selectedFourthMenu.ConfigSystemId);
+                    paramDic.Add("spaceid", selectedFourthMenu.SpaceId);
+                    paramDic.Add("menuno", selectedFourthMenu.MenuNo);
                     paramDic.Add("menuCode", selectedFourthMenu.MenuCode);
                     paramDic.Add("authorityCode", selectedFourthMenu.HomeId);
                     paramDic.Add("fitdata", selectedFourthMenu.FitDataPath);
@@ -868,7 +869,7 @@ namespace PortalFramePlugin.ViewModels
                 PluginOperation pluginOp = new PluginOperation();
                 Dictionary<string, object> paramDic = new Dictionary<string, object>();
                 paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
-                paramDic.Add("formid", selectedFourthMenu.FormId);
+                paramDic.Add("formid", selectedFourthMenu.ConfigSystemId);
                 PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
                 if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {
