@@ -160,7 +160,7 @@
                             </i:Interaction.Triggers>
                         </Button>
                     </DockPanel>
-                    <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding JsonDataTable}">
+                    <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding JsonDataTable}" IsShowContextMenu="True">
                     </ctrl:VicDataGrid>
                 </Grid>
             </TabItem>
