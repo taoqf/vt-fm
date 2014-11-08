@@ -220,10 +220,10 @@
                 </StackPanel>
                 <controls:VicTabControlNormal TabStripPlacement="Left" Grid.Row="1" Style="{DynamicResource left_TabControlStyle}">
                     <controls:VicTabItemNormal Style="{DynamicResource left_TabItemStyle}" Header="工作区" AllowDelete="False">
-                        <controls:VicDataGrid x:Name="datagridWork" AutoGenerateColumns="False" MinHeight="150"></controls:VicDataGrid>
+                        <components:CompntSingleDataGridWithCheckBox Name="comdgridWork" MinHeight="200"/>
                     </controls:VicTabItemNormal>
                     <controls:VicTabItemNormal Style="{DynamicResource left_TabItemStyle}" Header="明细" AllowDelete="False">
-                        <controls:VicDataGrid x:Name="datagridDetail" AutoGenerateColumns="False" MinHeight="150"></controls:VicDataGrid>
+                        <components:CompntSingleDataGrid Name="comdgridDetail" MinHeight="260"/>
                     </controls:VicTabItemNormal>
                 </controls:VicTabControlNormal>
             </Grid>
