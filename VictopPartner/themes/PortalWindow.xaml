@@ -622,7 +622,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <!--主窗体左侧工具栏开始-->
     <Style x:Key="RadioButtonFirstLevelMenu" TargetType="{x:Type controls:VicRadioButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -715,7 +715,7 @@
                                         <ColumnDefinition Width="50"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Border x:Name="border" Margin="0,10,0,0" Grid.Column="0" Width="26" Height="22" ToolTip="{Binding MenuName}" VerticalAlignment="Center" Background="{Binding IconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"/>
+                                    <controls:VicTextBlockNormal x:Name="border" Margin="0,10,0,0" Grid.Column="0"  ToolTip="{Binding MenuName}" FontFamily="/#iconfont" VerticalAlignment="Center" Text="{Binding IconUrl}"/>
                                     <Grid x:Name="grid" Grid.Column="1" Width="115" Background="{TemplateBinding Background}">
                                         <TextBlock Margin="0,10,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}" 
                                                    TextWrapping="Wrap"

@@ -9,7 +9,7 @@ using Victop.Server.Controls.Models;
 
 namespace PortalFramePlugin.Models
 {
-    public class MenuModel:ModelBase
+    public class MenuModel : ModelBase
     {
         #region 暂未使用
         private string id;
@@ -387,33 +387,11 @@ namespace PortalFramePlugin.Models
             get { return _iconUrl; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value) == false &&
-                    value.Contains("-"))
+                if (string.IsNullOrWhiteSpace(value) == false)
                 {
                     _iconUrl = value;
                     RaisePropertyChanged("IconUrl");
-                    string[] strs = _iconUrl.Split("-".ToCharArray());
-                    if (strs.Length > 0)
-                    {
-                        this.CheckedIconUrl = strs[0] + "-2.png";
-                    }
                 }
-            }
-        }
-
-        private string _checkedIconUrl;
-
-        /// <summary>
-        /// 选中图标路径
-        /// </summary>
-        [JsonProperty(PropertyName = "checkedIconUrl")]
-        public string CheckedIconUrl
-        {
-            get { return _checkedIconUrl; }
-            set
-            {
-                _checkedIconUrl = value;
-                RaisePropertyChanged("CheckedIconUrl");
             }
         }
 
@@ -448,7 +426,7 @@ namespace PortalFramePlugin.Models
         /// 装配数据路径
         /// </summary>
         [JsonProperty(PropertyName = "fitDataPath")]
-        public List<Dictionary<string,object>> FitDataPath
+        public List<Dictionary<string, object>> FitDataPath
         {
             get;
             set;
