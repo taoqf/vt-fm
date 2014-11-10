@@ -640,6 +640,7 @@ namespace PortalFramePlugin.ViewModels
                 menuModel.ActionType = localModel.ActionType;
                 menuModel.BzSystemId = localModel.BzSystemId;
                 menuModel.FitDataPath = localModel.FitDataPath;
+                menuModel.ActionCADName = localModel.ActionCADName;
             }
             return menuModel;
         }
@@ -790,6 +791,7 @@ namespace PortalFramePlugin.ViewModels
                     paramDic.Add("menuCode", selectedFourthMenu.MenuCode);
                     paramDic.Add("authorityCode", selectedFourthMenu.HomeId);
                     paramDic.Add("fitdata", selectedFourthMenu.FitDataPath);
+                    paramDic.Add("cadname", selectedFourthMenu.ActionCADName);
                     PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
                     if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                     {

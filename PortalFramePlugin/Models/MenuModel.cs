@@ -453,6 +453,15 @@ namespace PortalFramePlugin.Models
             get;
             set;
         }
+        /// <summary>
+        /// CAD名称
+        /// </summary>
+        [JsonProperty(PropertyName = "actionCADName")]
+        public string ActionCADName
+        {
+            get;
+            set;
+        }
         #endregion
     }
 }

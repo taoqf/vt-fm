@@ -1,0 +1,35 @@
+﻿<controls:VicWindowNormal x:Class="MachinePlatformPlugin.Views.OperationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:MachinePlatformPlugin.ViewModels"
+        xmlns:Views="clr-namespace:MachinePlatformPlugin.Views"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"                  
+        Title="操作区" Height="500" Name="windowOperationView" Style="{DynamicResource WindowMessageSkin}" WindowStartupLocation="CenterScreen" Width="400" WindowState="Maximized">
+    <Border Style="{DynamicResource SubBorder}">
+        <controls:VicGridNormal>
+            <Grid.DataContext>
+                <vm:OperationWindowViewModel/>
+            </Grid.DataContext>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <controls:VicDockPanelNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">
+                <controls:VicButtonNormal Width="100" Height="24" Content="保存" Name="btnSave">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnSaveClickCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </controls:VicButtonNormal>
+            </controls:VicDockPanelNormal>
+            <ContentControl Grid.Row="1" Content="{Binding TabList}"/>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding windowOperationViewLoadedCommand}" CommandParameter="{Binding ElementName=windowOperationView}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </controls:VicGridNormal>
+    </Border>
+</controls:VicWindowNormal>

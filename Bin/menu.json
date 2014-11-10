@@ -21,15 +21,16 @@
 					],
 					"children": [
 						{
-							"title": "数据巡航",
+							"title": "数据架构设计",
 							"actionType": 1,
-							"actionName": "DataCruisePlugin",
+							"actionName": "DataArchitecturePlugin",
 							"showType": 1,
 							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": "",
-							"spaceId": "",
+							"description": "数据架构设计",
+							"systemId": 100,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"actionCADName": "CADPlugin",
 							"menuno": "地区区域表",
 							"fitDataPath": [
 								{
@@ -43,10 +44,11 @@
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
 							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
+							"description": "飞道综合机台",
 							"systemId": 906,
 							"configsystemid": 101,
 							"spaceId": "victop_core",
+							"actionCADName": "AreaManagerPlugin",
 							"menuno": "30030",
 							"fitDataPath": [
 								{
@@ -62,8 +64,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -79,8 +82,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": "",
+							"configsystemid": 101,
 							"spaceId": "",
+							"actionCADName": "CADPlugin",
 							"menuno": "公司表",
 							"fitDataPath": [
 								{
@@ -96,8 +100,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -113,8 +118,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -130,8 +136,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -147,8 +154,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -176,8 +184,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -193,8 +202,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -210,8 +220,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -227,8 +238,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -244,8 +256,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -261,8 +274,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -278,8 +292,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -307,8 +322,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -324,8 +340,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -341,8 +358,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -358,8 +376,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -375,8 +394,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -392,8 +412,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -409,8 +430,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -426,8 +448,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -455,8 +478,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -472,8 +496,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -489,8 +514,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -518,8 +544,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -535,8 +562,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -564,8 +592,9 @@
 							"iconUrl": "1-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -583,6 +612,7 @@
 							"systemId": 905,
 							"configsystemid": 1001,
 							"spaceId": "fds",
+							"actionCADName": "CADPlugin",
 							"menuno": "ds",
 							"fitDataPath": [
 								{
@@ -639,8 +669,8 @@
 							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -668,8 +698,8 @@
 							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -685,8 +715,8 @@
 							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -702,8 +732,8 @@
 							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -719,8 +749,8 @@
 							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -736,8 +766,8 @@
 							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -765,8 +795,8 @@
 							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -782,8 +812,8 @@
 							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -799,8 +829,8 @@
 							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -816,8 +846,8 @@
 							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -833,8 +863,8 @@
 							"iconUrl": "2-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -908,8 +938,8 @@
 							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -925,8 +955,8 @@
 							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -942,8 +972,8 @@
 							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -959,8 +989,8 @@
 							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -976,8 +1006,8 @@
 							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -993,8 +1023,8 @@
 							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1010,8 +1040,8 @@
 							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1027,8 +1057,8 @@
 							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1044,8 +1074,8 @@
 							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1061,8 +1091,8 @@
 							"iconUrl": "3-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1104,6 +1134,7 @@
 							"systemId": 905,
 							"configsystemid": "",
 							"spaceId": "ERP11103",
+							"actionCADName": "CADPlugin",
 							"menuno": "",
 							"fitDataPath": [
 								{
@@ -1121,6 +1152,7 @@
 							"systemId": 905,
 							"configsystemid": 1001,
 							"spaceId": "dsa",
+							"actionCADName": "CADPlugin",
 							"menuno": "fds",
 							"fitDataPath": [
 								{
@@ -1136,8 +1168,9 @@
 							"iconUrl": "4-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1153,8 +1186,9 @@
 							"iconUrl": "4-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1170,8 +1204,9 @@
 							"iconUrl": "4-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1187,8 +1222,9 @@
 							"iconUrl": "4-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
+							"actionCADName": "CADPlugin",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1262,8 +1298,8 @@
 							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1279,8 +1315,8 @@
 							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1296,8 +1332,8 @@
 							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1313,8 +1349,8 @@
 							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1330,8 +1366,8 @@
 							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{
@@ -1347,8 +1383,8 @@
 							"iconUrl": "5-1.png",
 							"description": "阿东嘎达",
 							"systemId": 905,
-							"configsystemid": 10001,
-							"spaceId": "erp10001",
+							"configsystemid": 101,
+							"spaceId": "erp101",
 							"menuno": "店面管理",
 							"fitDataPath": [
 								{

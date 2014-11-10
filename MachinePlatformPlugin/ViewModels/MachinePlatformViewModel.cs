@@ -11,6 +11,7 @@ using System;
 using Victop.Frame.DataChannel;
 using Victop.Frame.Components;
 using Victop.Server.Controls.Runtime;
+using System.Windows;
 namespace MachinePlatformPlugin.ViewModels
 {
     public class MachinePlatformViewModel : ModelBase
@@ -150,6 +151,7 @@ namespace MachinePlatformPlugin.ViewModels
                     cabinetInfoModel.ConfigSystemId = UCMachinePlatform.ParamDict["configsytemid"].ToString();
                     cabinetInfoModel.SpaceId = UCMachinePlatform.ParamDict["spaceid"].ToString();
                     cabinetInfoModel.CabinetFitData = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ToJson(UCMachinePlatform.ParamDict["fitdata"]));
+                    cabinetInfoModel.CabinetCADName = UCMachinePlatform.ParamDict["cadname"].ToString();
                     cabinetInfoModel.CabinetCode = UCMachinePlatform.ParamDict["menuno"].ToString();
 
                     CompntSingleDataGridWithCheckBox datagridMaster = (CompntSingleDataGridWithCheckBox)ucMachineMainView.FindName("datagridMaster");
@@ -160,6 +162,19 @@ namespace MachinePlatformPlugin.ViewModels
                     
                     string JsonStr = datagridMaster.DoRender();
                     datagridMaster.Search();
+                });
+            }
+        }
+        /// <summary>
+        /// 设计
+        /// </summary>
+        public ICommand btnDeviseClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    OperationWindow opWindow = new OperationWindow(cabinetInfoModel);
+                    opWindow.ShowDialog();
                 });
             }
         }

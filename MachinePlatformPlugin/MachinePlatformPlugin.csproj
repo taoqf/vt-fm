@@ -117,8 +117,12 @@
     <Compile Include="ViewModels\IssueLogViewModel.cs" />
     <Compile Include="ViewModels\IsueFeedbackViewModel.cs" />
     <Compile Include="ViewModels\MachinePlatformViewModel.cs" />
+    <Compile Include="ViewModels\OperationWindowViewModel.cs" />
     <Compile Include="ViewModels\ProductLogViewModel.cs" />
     <Compile Include="ViewModels\SelectPersonnelViewModel.cs" />
+    <Compile Include="Views\OperationWindow.xaml.cs">
+      <DependentUpon>OperationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\IssueLog.xaml.cs">
       <DependentUpon>IssueLog.xaml</DependentUpon>
     </Compile>
@@ -151,6 +155,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\OperationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\IssueLog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

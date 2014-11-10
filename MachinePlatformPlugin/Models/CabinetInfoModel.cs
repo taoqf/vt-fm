@@ -6,6 +6,9 @@ using System.Text;
 
 namespace MachinePlatformPlugin.Models
 {
+    /// <summary>
+    /// 机台信息实体
+    /// </summary>
     public class CabinetInfoModel
     {
         /// <summary>
@@ -217,6 +220,18 @@ namespace MachinePlatformPlugin.Models
         {
             get { return cabinetFitData; }
             set { cabinetFitData = value; }
+        }
+        /// <summary>
+        /// 机台CAD名称
+        /// </summary>
+        private string cabinetCADName;
+        /// <summary>
+        /// 机台CAD名称
+        /// </summary>
+        public string CabinetCADName
+        {
+            get { return cabinetCADName; }
+            set { cabinetCADName = value; }
         }
     }
 }

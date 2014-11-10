@@ -5,6 +5,9 @@ using System.Text;
 
 namespace MachinePlatformPlugin.Models
 {
+    /// <summary>
+    /// 机台状态实体
+    /// </summary>
     public class CabinetTaskStateModel
     {
         /// <summary>
