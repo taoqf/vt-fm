@@ -89,7 +89,7 @@
                     </i:Interaction.Triggers>
                 </Button>
             </TabItem>
-            <TabItem Header="文件服务" Visibility="Collapsed">
+            <TabItem Header="文件服务">
                 <StackPanel Orientation="Horizontal">
                     <Button Width="100" Height="24" Content="文件下载">
                         <i:Interaction.Triggers>

@@ -336,13 +336,13 @@ namespace AreaManagerPlugin.ViewModels
                     messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
                     Dictionary<string, object> result = new MessageOperation().SendMessage("ServerCenterService.UploadDocument", messageContent);
                     Dictionary<string, object> replyContent = JsonHelper.ToObject<Dictionary<string, object>>(result["ReplyContent"].ToString());
-                    //this.fileId = replyContent["fileId"].ToString();
+                    this.fileId = replyContent["fileId"].ToString();
                     this.fileSuffix = replyContent["fileSuffix"].ToString();
                 });
             }
         }
 
-        string fileId = "7e7d3ead-c5d9-4d57-9a9f-1f3e64397ab1";
+        string fileId = string.Empty;
         string fileSuffix = string.Empty;
         public ICommand btnDownloadFile1ClickCommand
         {
