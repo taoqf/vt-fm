@@ -2,7 +2,7 @@
 	"menu": [
 		{
 			"title": "公共基础数据管理",
-			"iconUrl": "&#xe6a4;",
+			"iconUrl": "\ue6a4",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -626,7 +626,7 @@
 			]
 		}, {
 			"title": "进销存管理",
-			"iconUrl": "&#xe679;",
+			"iconUrl": "\ue679",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -878,7 +878,7 @@
 			]
 		}, {
 			"title": "报表分析",
-			"iconUrl": "&#xe682;",
+			"iconUrl": "\ue682",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1106,7 +1106,7 @@
 			]
 		}, {
 			"title": "售后服务",
-			"iconUrl": "&#xe68c;",
+			"iconUrl": "\ue68c",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1238,7 +1238,7 @@
 			]
 		}, {
 			"title": "生产管理",
-			"iconUrl": "&#xe68e;",
+			"iconUrl": "\ue68e",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1398,7 +1398,7 @@
 			]
 		}, {
 			"title": "分销系统",
-			"iconUrl": "&#xe669;",
+			"iconUrl": "\ue669",
 			"fitDataPath": [
 				{
 					"key": "",
