@@ -1473,7 +1473,7 @@
 			]
 		}, {
 			"title": "菜单管理",
-			"iconUrl": "25.png",
+			"iconUrl": "\ue6b7",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1531,7 +1531,7 @@
 			]
 		}, {
 			"title": "用户管理",
-			"iconUrl": "25.png",
+			"iconUrl": "\ue6b6",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1572,7 +1572,7 @@
 			]
 		}, {
 			"title": "权限组管理",
-			"iconUrl": "25.png",
+			"iconUrl": "\ue6b5",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1613,7 +1613,7 @@
 			]
 		}, {
 			"title": "用户权限组关系",
-			"iconUrl": "25.png",
+			"iconUrl": "\ue6b4",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1654,7 +1654,7 @@
 			]
 		}, {
 			"title": "权限菜单关系",
-			"iconUrl": "25.png",
+			"iconUrl": "\ue690",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1695,7 +1695,7 @@
 			]
 		}, {
 			"title": "权限码",
-			"iconUrl": "25.png",
+			"iconUrl": "\ue693",
 			"fitDataPath": [
 				{
 					"key": "",
