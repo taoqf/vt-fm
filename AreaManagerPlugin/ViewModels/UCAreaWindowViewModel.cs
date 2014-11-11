@@ -330,50 +330,54 @@ namespace AreaManagerPlugin.ViewModels
                     Dictionary<string, object> messageContent = new Dictionary<string, object>();
                     Dictionary<string, string> address = new Dictionary<string, string>();
                     address.Add("UploadFromPath", uploadFromPath);
-                    address.Add("UploadUrl", "http://192.168.40.191:8080/fsweb/upload?mode_id=1");
+                    address.Add("DelFileId", this.fileId);
+                    //address.Add("UploadUrl", ConfigurationManager.AppSettings.Get("fileserverhttp") + "upload?mode_id=1");
+                    address.Add("UploadUrl", ConfigurationManager.AppSettings.Get("fileserverhttp") + "reupload");
                     messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
                     Dictionary<string, object> result = new MessageOperation().SendMessage("ServerCenterService.UploadDocument", messageContent);
-                    System.Windows.Forms.MessageBox.Show(JsonHelper.ToJson(result));
-
                     Dictionary<string, object> replyContent = JsonHelper.ToObject<Dictionary<string, object>>(result["ReplyContent"].ToString());
+                    //this.fileId = replyContent["fileId"].ToString();
+                    this.fileSuffix = replyContent["fileSuffix"].ToString();
                 });
             }
         }
 
+        string fileId = "7e7d3ead-c5d9-4d57-9a9f-1f3e64397ab1";
+        string fileSuffix = string.Empty;
         public ICommand btnDownloadFile1ClickCommand
         {
             get
             {
                 return new RelayCommand(() =>
                 {
-                    //if (this.fileId.Length > 0)
-                    //{
-                    //    SaveFileDialog saveFileDialog = new SaveFileDialog();
-                    //    saveFileDialog.Title = "下载到";
-                    //    saveFileDialog.Filter = string.Format("{0}文件|*{0}", this.fileSuffix);
-                    //    string path = "";
-                    //    if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                    //    {
-                    //        path = saveFileDialog.FileName;
-                    //    }
-                    //    if (path == "")
-                    //    {
-                    //        return;
-                    //    }
+                    if (this.fileId.Length > 0)
+                    {
+                        SaveFileDialog saveFileDialog = new SaveFileDialog();
+                        saveFileDialog.Title = "下载到";
+                        saveFileDialog.Filter = string.Format("{0}文件|*{0}", this.fileSuffix);
+                        string path = "";
+                        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            path = saveFileDialog.FileName;
+                        }
+                        if (path == "")
+                        {
+                            return;
+                        }
 
-                    //    MessageOperation messageOperation = new MessageOperation();
-                    //    Dictionary<string, object> messageContent = new Dictionary<string, object>();
-                    //    Dictionary<string, string> address = new Dictionary<string, string>();
-                    //    address.Add("DownloadUrl", @"http://192.168.40.191:8080/fsweb/getfile?id=" + this.fileId);
-                    //    address.Add("DownloadToPath", path);
-                    //    messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
-                    //    Dictionary<string, object> result = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
-                    //    System.Windows.MessageBox.Show(JsonHelper.ToJson(result));
-                    //}
-                    //else
-                    //{
-                    //    System.Windows.MessageBox.Show("文件不存在");
-                    //}
+                        MessageOperation messageOperation = new MessageOperation();
+                        Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                        Dictionary<string, string> address = new Dictionary<string, string>();
+                        address.Add("DownloadUrl", @"http://192.168.40.191:8080/fsweb/getfile?id=" + this.fileId);
+                        address.Add("DownloadToPath", path);
+                        messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+                        Dictionary<string, object> result = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
+                        System.Windows.MessageBox.Show(JsonHelper.ToJson(result));
+                    }
+                    else
+                    {
+                        System.Windows.MessageBox.Show("文件不存在");
+                    }
                 });
             }
         }
@@ -577,7 +581,7 @@ namespace AreaManagerPlugin.ViewModels
                         //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
                         //if (returnDic != null)
                         //{
- 
+
                         //}
                         #endregion
 
@@ -715,7 +719,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) => {
+                return new RelayCommand<object>((x) =>
+                {
                     DataSet ds = new DataSet();
                     System.Windows.Controls.ComboBox cBox = (System.Windows.Controls.ComboBox)x;
                     if (cBox.ItemsSource == null)
@@ -734,9 +739,10 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) => { 
-                System.Windows.Controls.ComboBox cBox = (System.Windows.Controls.ComboBox)x;
-                comboxSelectedValue = cBox.SelectedValue.ToString();
+                return new RelayCommand<object>((x) =>
+                {
+                    System.Windows.Controls.ComboBox cBox = (System.Windows.Controls.ComboBox)x;
+                    comboxSelectedValue = cBox.SelectedValue.ToString();
                 });
             }
         }
@@ -745,7 +751,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) => {
+                return new RelayCommand<object>((x) =>
+                {
                     DataSet ds = new DataSet();
                     System.Windows.Controls.ComboBox cBox = (System.Windows.Controls.ComboBox)x;
                     DataOperation dataOp = new DataOperation();

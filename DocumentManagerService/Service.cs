@@ -70,24 +70,59 @@ namespace DocumentManagerService
                 try
                 {
                     WebClient webClient = new WebClient();
-                    if (CurrentMessageType == "ServerCenterService.DownloadDocument")
+                    Dictionary<string, object> serviceParams = JsonHelper.ToObject<Dictionary<string, object>>(ServiceParams);
+                    if (serviceParams != null)
                     {
-                        string downloadUrl = JsonHelper.ReadJsonString(ServiceParams, "DownloadUrl");
-                        string downloadToPath = JsonHelper.ReadJsonString(ServiceParams, "DownloadToPath");
-                        this.DownloadFile(downloadUrl, downloadToPath);
-                        returnDic.Add("ReplyContent", "下载成功");
-                        returnDic.Add("ReplyMode", 1);
-                        result = true;
-                    }
-                    if (CurrentMessageType == "ServerCenterService.UploadDocument")
-                    {
-                        string uploadFromPath = JsonHelper.ReadJsonString(ServiceParams, "UploadFromPath");
-                        string uploadUrl = JsonHelper.ReadJsonString(ServiceParams, "UploadUrl");
-                        returnDic.Add("ReplyContent", this.Upload(uploadUrl, uploadFromPath));
-                        returnDic.Add("ReplyMode", 1);
-                        result = true;
-                    }
+                        if (CurrentMessageType == "ServerCenterService.DownloadDocument")
+                        {
+                            string downloadUrl = string.Empty;
+                            if (serviceParams.ContainsKey("DownloadUrl"))
+                            {
+                                downloadUrl = serviceParams["DownloadUrl"].ToString();
+                            }
 
+                            string downloadToPath = JsonHelper.ReadJsonString(ServiceParams, "DownloadToPath");
+                            if (serviceParams.ContainsKey("DownloadToPath"))
+                            {
+                                downloadToPath = serviceParams["DownloadToPath"].ToString();
+                            }
+
+                            this.DownloadFile(downloadUrl, downloadToPath);
+                            returnDic.Add("ReplyContent", "下载成功");
+                            returnDic.Add("ReplyMode", 1);
+                            result = true;
+                        }
+                        if (CurrentMessageType == "ServerCenterService.UploadDocument")
+                        {
+                            string uploadFromPath = string.Empty;
+                            if (serviceParams.ContainsKey("UploadFromPath"))
+                            {
+                                uploadFromPath = serviceParams["UploadFromPath"].ToString();
+                            }
+
+                            string uploadUrl = string.Empty;
+                            if (serviceParams.ContainsKey("UploadUrl"))
+                            {
+                                uploadUrl = serviceParams["UploadUrl"].ToString();
+                            }
+
+                            string delFileId = System.Guid.NewGuid().ToString();
+                            if (serviceParams.ContainsKey("DelFileId") && string.IsNullOrWhiteSpace(serviceParams["DelFileId"].ToString()) == false)
+                            {
+                                delFileId = serviceParams["DelFileId"].ToString();
+                            }
+
+                            returnDic.Add("ReplyContent", this.Upload(uploadUrl, uploadFromPath, delFileId));
+                            returnDic.Add("ReplyMode", 1);
+                            result = true;
+                        }
+                    }
+                    else
+                    {
+                        returnDic.Add("ReplyContent", "参数出错");
+                        returnDic.Add("ReplyMode", 0);
+                        result = false;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -120,8 +155,8 @@ namespace DocumentManagerService
         /// </summary> 
         /// <param name="iUploadUrl">上传页面Url</param> 
         /// <param name="iUploadFromPath">文件路径</param> 
-        /// <param name="iSuffname">文件后缀名</param> 
-        private Dictionary<string, object> Upload(string iUploadUrl, string iUploadFromPath)
+        /// <param name="iDelFileId">删除文件的Id</param> 
+        private Dictionary<string, object> Upload(string iUploadUrl, string iUploadFromPath, string iDelFileId)
         {
             Dictionary<string, object> returnDic = new Dictionary<string, object>();
             try
@@ -130,7 +165,7 @@ namespace DocumentManagerService
                 {
                     int i = iUploadFromPath.LastIndexOf('.');
                     string suffname = iUploadFromPath.Substring(i + 1);
-                    string myrequest = UploadFile(iUploadUrl, iUploadFromPath, suffname);//返回的Jason字符串 
+                    string myrequest = UploadFile(iUploadUrl + "?delfile_name=" + iDelFileId, iUploadFromPath, suffname);//返回的Jason字符串 
 
                     myrequest = myrequest.Replace("[", "");
                     myrequest = myrequest.Replace("]", "");

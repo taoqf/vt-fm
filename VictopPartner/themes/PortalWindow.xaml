@@ -715,7 +715,7 @@
                                         <ColumnDefinition Width="50"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <controls:VicTextBlockNormal x:Name="border" Margin="0,10,0,0" Grid.Column="0"  ToolTip="{Binding MenuName}" FontFamily="/#iconfont" VerticalAlignment="Center" Text="{Binding IconUrl}"/>
+                                    <controls:VicTextBlockNormal x:Name="border" Margin="0,10,0,0" Grid.Column="0"  ToolTip="{Binding MenuName}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" Text="{Binding IconUrl}" FontFamily="/Fonts/#iconfont"/>
                                     <Grid x:Name="grid" Grid.Column="1" Width="115" Background="{TemplateBinding Background}">
                                         <TextBlock Margin="0,10,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}" 
                                                    TextWrapping="Wrap"
@@ -734,10 +734,9 @@
 
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsSelected" Value="true">
-                                        <Setter Property="Background" TargetName="border" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"/>
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Background" TargetName="border" Value="{Binding CheckedIconUrl,Converter={StaticResource ImgeNameToImageUrlConverter}}"></Setter>
                                         <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"/>
                                     </Trigger>
                                     <Trigger SourceName="grid" Property="IsMouseOver" Value="true">
