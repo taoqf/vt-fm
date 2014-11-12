@@ -328,6 +328,8 @@
     <!--VicComboBoxNormal样式结束-->
 
     <!--VicTextBoxNormal样式开始-->
+    <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
+    <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
     <Style   TargetType="{x:Type controls:VicTextBoxNormal}">
         <Setter Property="BorderBrush" Value="#b2e6ff"/>
         <Setter Property="BorderThickness" Value="1"/>
