@@ -328,10 +328,8 @@
     <!--VicComboBoxNormal样式结束-->
 
     <!--VicTextBoxNormal样式开始-->
-    <SolidColorBrush x:Key="brushWatermarkBackground" Color="White" />
-    <SolidColorBrush x:Key="brushWatermarkForeground" Color="LightSteelBlue" />
     <Style   TargetType="{x:Type controls:VicTextBoxNormal}">
-        <Setter Property="BorderBrush" Value="#b2e6ff"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="1"/>
         <Setter Property="AllowDrop" Value="true"/>
@@ -342,24 +340,16 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicTextBoxNormal}">
                     <Border Name="Bd"  BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                        <Grid    Height="{TemplateBinding Height}"  MinWidth="{TemplateBinding MinWidth}"  Background="{StaticResource brushWatermarkBackground}"  >
-                            <TextBlock  Text="{TemplateBinding WaterMark}"  Foreground="{StaticResource brushWatermarkForeground}" 
+                        <Grid    Height="{TemplateBinding Height}"  MinWidth="{TemplateBinding MinWidth}"  Background="{DynamicResource brushWatermarkBackground}"  >
+                            <TextBlock  Text="{TemplateBinding WaterMark}"  Foreground="{DynamicResource brushWatermarkForeground}" 
                                Visibility="{Binding ElementName=txtUserEntry, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <TextBox x:Name="txtUserEntry" AcceptsReturn="{TemplateBinding AcceptsReturn}" TextWrapping="{TemplateBinding TextWrapping}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" TextAlignment="{TemplateBinding TextAlignment}"  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"  HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" BorderThickness="0" Background="Transparent" Text="{TemplateBinding VicText}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" TargetName="Bd">
-                                <Setter.Value>
-                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlBrushKey}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Foreground">
-                                <Setter.Value>
-                                    <DynamicResource ResourceKey="{x:Static SystemColors.GrayTextBrushKey}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource BtnDisableBackground}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource BtnDisableForeground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
