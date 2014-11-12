@@ -50,9 +50,9 @@ namespace AreaManagerPlugin
         {
             get
             {
-                //return new UCAreaWindow();
+                return new UCAreaWindow();
                 //return new UCSimpleDefWindow();
-                return new UCAreaWindowData();
+                //return new UCAreaWindowData();
             }
         }
 
