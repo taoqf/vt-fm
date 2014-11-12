@@ -8,32 +8,54 @@
     <title></title>
     <script src="js/jquery.min.js" type="text/javascript"></script>
     <script src="js/jquery-linedtextarea.js" type="text/javascript"></script>
+    <script src="js/json2.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/jsl.parser.js"></script>
     <script type="text/javascript" src="js/jsl.format.js"></script>
     <script type="text/javascript" src="js/jsl.interactions.js"></script>
     <link href="css/jquery-linedtextarea.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<script type="text/javascript"> 
-function ExcuteWPF(param)
-{ 
-document.getElementById("json_input").value = param; 
-$("#validate").click();
-} 
+<script type="text/javascript">
+    function ExcuteWPF(param){
+        document.getElementById("json_input").value = param;
+        $("#validate").click();
+    }
+    //提交数据
+    function subInfo(){
+        $("#validate").click();
+        var cls = $("#results").attr("class");
+        if(cls.indexOf("error")>-1){
+            alert("输入的json格式有误，请修正");
+            return false;
+        }else{
+            var val = $("#json_input").val();
+            //提交wpf
+             window.external.ModifiedDataOperation(val);
+        }
+    }
 </script>
-<form id="JSONValidate" method="post" action="." name="JSONValidate">
-    <div>
-        <textarea id="json_input" name="json_input" class="json_input" rows="30" cols="100" spellcheck="false" placeholder="Enter JSON to validate, or a URL to JSON to validate."></textarea>
-    </div>
-    <div class="validateButtons clear">
-        <div class="left">
-            <div style="float:left">
-                <input name="validate" id="validate" style="margin-top:4px" type="button" value="校验">
-                <input value="清空" type="button" style="font-size: 1.65em;color: #333;padding-left: 0.5em;padding-right: 0.5em;margin-top:4px;" onclick="javascript: json_input.value=''"></div>
+<div class="container">
+    <form name="JSONValidate" action="." method="post" id="JSONValidate">
+        <div>
+            <textarea placeholder="Enter JSON to validate, or a URL to JSON to validate." spellcheck="false" cols="100" rows="30" class="json_input" name="json_input" id="json_input" style="resize: both; width: 889px; max-width: 883px;"></textarea>
         </div>
-        <div class="right" id="right">
+        <div class="validateButtons clear">
+            <div class="left">
+                <div style="float:left">
+                    <input type="button" value="校验" style="margin-top:4px" id="validate"  name="validate">
+                    <input type="button" onclick="javascript: json_input.value=''" style="font-size: 1.65em;color: #333;padding-left: 0.5em;padding-right: 0.5em;margin-top:4px;" value="清空">
+                    <input type="button" onclick="subInfo();" style="font-size: 1.65em;color: #333;padding-left: 0.5em;padding-right: 0.5em;margin-top:4px;" value="提交">
+                </div>
+            </div>
+            <div id="right" class="right"></div>
         </div>
+    </form>
+    <div class="hide" id="results_header">
+        <h3>
+            Results
+        </h3>
     </div>
-</form>
+    <pre id="results"></pre>
+</div>
 </body>
 </html>
