@@ -56,6 +56,7 @@ namespace MachinePlatformPlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     windowOperationView = (OperationWindow)x;
+                    TabList = CreateTabContent();
                 });
             }
         }
@@ -64,7 +65,6 @@ namespace MachinePlatformPlugin.ViewModels
             get
             {
                 return new RelayCommand(() => {
-                    TabList = CreateTabContent();
                 });
             }
         }
@@ -98,6 +98,7 @@ namespace MachinePlatformPlugin.ViewModels
             VicTabControlNormal tabCtrlNormal = new VicTabControlNormal();
             tabCtrlNormal.SetResourceReference(VicTabControlNormal.StyleProperty, "MainVicTabControlStyle");
             VicTabItemNormal tabItemNormal = new VicTabItemNormal();
+            tabItemNormal.AllowDelete = false;
             tabItemNormal.Header = pluginModel.PluginInterface.PluginTitle;
             tabItemNormal.Content = pluginModel.PluginInterface.StartControl;
             tabCtrlNormal.Items.Add(tabItemNormal);

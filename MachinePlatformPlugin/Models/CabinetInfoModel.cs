@@ -233,5 +233,29 @@ namespace MachinePlatformPlugin.Models
             get { return cabinetCADName; }
             set { cabinetCADName = value; }
         }
+        /// <summary>
+        /// 机台菜单权限
+        /// </summary>
+        private long cabinetMenuCode;
+        /// <summary>
+        /// 机台菜单权限
+        /// </summary>
+        public long CabinetMenuCode
+        {
+            get { return cabinetMenuCode; }
+            set { cabinetMenuCode = value; }
+        }
+        /// <summary>
+        /// 机台授权权限
+        /// </summary>
+        private long cabinetAuthorityCode;
+        /// <summary>
+        /// 机台授权权限
+        /// </summary>
+        public long CabinetAuthorityCode
+        {
+            get { return cabinetAuthorityCode; }
+            set { cabinetAuthorityCode = value; }
+        }
     }
 }

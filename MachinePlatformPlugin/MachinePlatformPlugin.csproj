@@ -109,9 +109,12 @@
     <Compile Include="Converters\DemoConverter.cs" />
     <Compile Include="Converters\StatusConvert.cs" />
     <Compile Include="Converters\StyleConvert .cs" />
+    <Compile Include="Enums\BtnCodeEnum.cs" />
     <Compile Include="FtpUpLoadOrDownLoadHelper.cs" />
+    <Compile Include="Models\CabinetButtonsModel.cs" />
     <Compile Include="Models\CabinetInfoModel.cs" />
     <Compile Include="Models\CabinetTaskStateModel.cs" />
+    <Compile Include="Models\CabinetTaskTabModel.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\IssueLogViewModel.cs" />

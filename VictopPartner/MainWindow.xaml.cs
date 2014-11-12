@@ -61,7 +61,7 @@ namespace VictopPartner
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("门户" + ex.Message);
+                    MessageBox.Show(ex.Message);
                     FrameInit.GetInstance().FrameUnload();
                     Environment.Exit(0);
                 }

@@ -12,6 +12,9 @@ using Victop.Frame.DataChannel;
 using Victop.Frame.Components;
 using Victop.Server.Controls.Runtime;
 using System.Windows;
+using System.Windows.Media;
+using Victop.Wpf.Controls;
+using MachinePlatformPlugin.Enums;
 namespace MachinePlatformPlugin.ViewModels
 {
     public class MachinePlatformViewModel : ModelBase
@@ -27,6 +30,14 @@ namespace MachinePlatformPlugin.ViewModels
         /// 机台状态实体
         /// </summary>
         private CabinetTaskStateModel taskStateModel = new CabinetTaskStateModel();
+        /// <summary>
+        /// 任务Tab实体
+        /// </summary>
+        private CabinetTaskTabModel taskTabModel;
+        /// <summary>
+        /// 机台按钮实体
+        /// </summary>
+        private CabinetButtonsModel btnsModel;
         /// <summary>
         /// 机台状态集合
         /// </summary>
@@ -62,6 +73,10 @@ namespace MachinePlatformPlugin.ViewModels
         /// 主视图可用
         /// </summary>
         private bool mainViewAble;
+        /// <summary>
+        /// 第一次加载
+        /// </summary>
+        private bool isFristLoaded = true;
         #endregion
 
         #region 属性
@@ -134,6 +149,46 @@ namespace MachinePlatformPlugin.ViewModels
                 }
             }
         }
+        /// <summary>
+        /// 任务状态实体
+        /// </summary>
+        public CabinetTaskTabModel TaskTabModel
+        {
+            get
+            {
+                if (taskTabModel == null)
+                    taskTabModel = new CabinetTaskTabModel();
+                return taskTabModel;
+            }
+            set
+            {
+                if (taskTabModel != value)
+                {
+                    taskTabModel = value;
+                    RaisePropertyChanged("TaskTabModel");
+                }
+            }
+        }
+        /// <summary>
+        /// 机台按钮实体
+        /// </summary>
+        public CabinetButtonsModel BtnsModel
+        {
+            get
+            {
+                if (btnsModel == null)
+                    btnsModel = new CabinetButtonsModel();
+                return btnsModel;
+            }
+            set
+            {
+                if (btnsModel != value)
+                {
+                    btnsModel = value;
+                    RaisePropertyChanged("BtnsModel");
+                }
+            }
+        }
         #endregion
 
         #region 命令
@@ -146,22 +201,59 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    ucMachineMainView = (UCMachinePlatform)x;
-                    cabinetInfoModel.SystemId = UCMachinePlatform.ParamDict["systemid"].ToString();
-                    cabinetInfoModel.ConfigSystemId = UCMachinePlatform.ParamDict["configsytemid"].ToString();
-                    cabinetInfoModel.SpaceId = UCMachinePlatform.ParamDict["spaceid"].ToString();
-                    cabinetInfoModel.CabinetFitData = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ToJson(UCMachinePlatform.ParamDict["fitdata"]));
-                    cabinetInfoModel.CabinetCADName = UCMachinePlatform.ParamDict["cadname"].ToString();
-                    cabinetInfoModel.CabinetCode = UCMachinePlatform.ParamDict["menuno"].ToString();
+                    if (isFristLoaded)
+                    {
+                        ucMachineMainView = (UCMachinePlatform)x;
+                        cabinetInfoModel.SystemId = UCMachinePlatform.ParamDict["systemid"].ToString();
+                        cabinetInfoModel.ConfigSystemId = UCMachinePlatform.ParamDict["configsytemid"].ToString();
+                        cabinetInfoModel.SpaceId = UCMachinePlatform.ParamDict["spaceid"].ToString();
+                        cabinetInfoModel.CabinetFitData = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ToJson(UCMachinePlatform.ParamDict["fitdata"]));
+                        cabinetInfoModel.CabinetCADName = UCMachinePlatform.ParamDict["cadname"].ToString();
+                        cabinetInfoModel.CabinetCode = UCMachinePlatform.ParamDict["menuno"].ToString();
+                        cabinetInfoModel.CabinetMenuCode = string.IsNullOrEmpty(UCMachinePlatform.ParamDict["menucode"].ToString()) ? 0 : Convert.ToInt64(UCMachinePlatform.ParamDict["menucode"].ToString());
+                        cabinetInfoModel.CabinetAuthorityCode = string.IsNullOrEmpty(UCMachinePlatform.ParamDict["authoritycode"].ToString()) ? 0 : Convert.ToInt64(UCMachinePlatform.ParamDict["authoritycode"].ToString());
+                        InitCabinetData();
 
-                    CompntSingleDataGridWithCheckBox datagridMaster = (CompntSingleDataGridWithCheckBox)ucMachineMainView.FindName("datagridMaster");
-                    InitCabinetData();
-                    datagridMaster.ParamsModel.SystemId = cabinetInfoModel.SystemId;
-                    string masterSetting = cabinetInfoModel.CabinetFitData.Find(it => it["key"].ToString().Equals("datagridMaster"))["value"].ToString();
-                    datagridMaster.ParamsModel.SettingModel = JsonHelper.ToObject<CompntSettingModel>(FileHelper.ReadFitData(masterSetting));
-                    
-                    string JsonStr = datagridMaster.DoRender();
-                    datagridMaster.Search();
+                    }
+                });
+            }
+        }
+        /// <summary>
+        /// 指南区下载
+        /// </summary>
+        public ICommand btnDownFileLeftClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 生产日志
+        /// </summary>
+        public ICommand btnProLogClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 问题日志
+        /// </summary>
+        public ICommand btnIssueLogClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
                 });
             }
         }
@@ -172,13 +264,184 @@ namespace MachinePlatformPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     OperationWindow opWindow = new OperationWindow(cabinetInfoModel);
+                    Window parentWin = GetParentObject<Window>(ucMachineMainView);
+                    opWindow.Owner = parentWin;
                     opWindow.ShowDialog();
                 });
             }
         }
+        /// <summary>
+        /// 清除
+        /// </summary>
+        public ICommand btnClearClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
 
+                });
+            }
+        }
+        /// <summary>
+        /// 传入区下载
+        /// </summary>
+        public ICommand btnDownFileRightClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 新增
+        /// </summary>
+        public ICommand btnAddClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 删除
+        /// </summary>
+        public ICommand btnDeleteClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 保存
+        /// </summary>
+        public ICommand btnSaveClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 派工
+        /// </summary>
+        public ICommand btnDivideClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 开工
+        /// </summary>
+        public ICommand btnWorkClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 挂起
+        /// </summary>
+        public ICommand btnSuspendClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 解挂
+        /// </summary>
+        public ICommand btnContinueClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 交工
+        /// </summary>
+        public ICommand btnEndWorkClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 审核
+        /// </summary>
+        public ICommand btnExamineClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 驳回
+        /// </summary>
+        public ICommand btnRejectClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 问题反馈
+        /// </summary>
+        public ICommand btnFeedbackClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
         #endregion
         #region 方法
         /// <summary>
@@ -186,10 +449,67 @@ namespace MachinePlatformPlugin.ViewModels
         /// </summary>
         private void InitCabinetData()
         {
+            InitTaskTabStatus();
             GetLoginUserInfo();
+            InitCabinetButtonVisibility();
             GetCabinetInfo();
-            GetCabinetTaskState();
+            //GetCabinetTaskState();
             MainViewAble = true;
+        }
+        /// <summary>
+        /// 初始化机台任务Tab
+        /// </summary>
+        private void InitTaskTabStatus()
+        {
+            try
+            {
+                if (cabinetInfoModel.CabinetFitData != null && cabinetInfoModel.CabinetFitData.Count > 0)
+                {
+                    foreach (Dictionary<string, object> item in cabinetInfoModel.CabinetFitData)
+                    {
+                        if (!string.IsNullOrEmpty(item["value"].ToString()))
+                        {
+                            object gridObj = ucMachineMainView.FindName(item["key"].ToString());
+                            if (gridObj != null)
+                            {
+                                CompntSingleDataGridWithCheckBox datagrid = (CompntSingleDataGridWithCheckBox)gridObj;
+                                datagrid.ParamsModel.SystemId = cabinetInfoModel.SystemId;
+                                datagrid.ParamsModel.SettingModel = JsonHelper.ToObject<CompntSettingModel>(FileHelper.ReadFitData(item["value"].ToString()));
+                                switch (item["key"].ToString())
+                                {
+                                    case "datagridMaster":
+                                        TaskTabModel.MasterTabHeader = item["title"].ToString();
+                                        TaskTabModel.MasterTabName = item["key"].ToString();
+                                        TaskTabModel.MasterTabVisibility = Visibility.Visible;
+                                        datagrid.DoRender();
+                                        datagrid.Search();
+                                        break;
+                                    case "datagridDetail":
+                                        TaskTabModel.DetialTabHeader = item["title"].ToString();
+                                        TaskTabModel.DetialTabName = item["key"].ToString();
+                                        TaskTabModel.DetialTabVisibility = Visibility.Visible;
+                                        datagrid.ParamsModel.IsShowCheckBox = false;
+                                        break;
+                                    case "datagridSubDetail":
+                                        TaskTabModel.SubDetialTabHeader = item["title"].ToString();
+                                        TaskTabModel.SubDetialTabName = item["key"].ToString();
+                                        TaskTabModel.SubDetialTabVisibility = Visibility.Visible;
+                                        datagrid.ParamsModel.IsShowCheckBox = false;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    isFristLoaded = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MainViewAble = false;
+                LoggerHelper.ErrorFormat("初始化机台任务列表状态异常:{0}", ex.Message);
+            }
         }
         /// <summary>
         /// 获取登录用户信息
@@ -206,6 +526,7 @@ namespace MachinePlatformPlugin.ViewModels
             }
             catch (Exception ex)
             {
+                MainViewAble = false;
                 LoggerHelper.ErrorFormat("获取用户信息异常:{0}", ex.Message);
             }
         }
@@ -219,7 +540,7 @@ namespace MachinePlatformPlugin.ViewModels
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             List<object> conCitionsList = new List<object>();
             Dictionary<string, object> tableConCabinetDic = new Dictionary<string, object>();
-            tableConCabinetDic.Add("cabinet_no", "30030");
+            tableConCabinetDic.Add("cabinet_no", cabinetInfoModel.CabinetCode);
             conCitionsList.Add(tableConCabinetDic);
             List<object> conClientList = null;
             if (conCitionsList != null && conCitionsList.Count > 0)
@@ -310,6 +631,47 @@ namespace MachinePlatformPlugin.ViewModels
                 cabinetInfoModel.CabinetTaskStateDt.Rows.InsertAt(dr, 0);
                 CabTaskStatusDt = cabinetInfoModel.CabinetTaskStateDt.Copy();
             }
+        }
+        /// <summary>
+        /// 初始化机台按钮可视状态
+        /// </summary>
+        private void InitCabinetButtonVisibility()
+        {
+            if ((cabinetInfoModel.CabinetAuthorityCode & (long)BtnCodeEnum.SEARCH) > 0)
+            {
+                BtnsModel.SearchBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetAuthorityCode & (long)BtnCodeEnum.ADD) > 0)
+            {
+                BtnsModel.AddBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetAuthorityCode & (long)BtnCodeEnum.DELETE) > 0)
+            {
+                BtnsModel.DelBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetAuthorityCode & (long)BtnCodeEnum.SAVE) > 0)
+            {
+                BtnsModel.SaveBtnVisibility = Visibility.Visible;
+            }
+        }
+        /// <summary>
+        /// 获取父级控件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public T GetParentObject<T>(DependencyObject obj) where T : FrameworkElement
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(obj);
+            while (parent != null)
+            {
+                if (parent is T)
+                {
+                    return (T)parent;
+                }
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+            return null;
         }
         #endregion
     }

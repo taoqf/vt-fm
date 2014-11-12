@@ -12,7 +12,7 @@ namespace MachinePlatformPlugin
     {
         public string PluginTitle
         {
-            get { return "页面流程机台 "; }
+            get { return "飞道综合机台"; }
         }
 
         public string PluginName

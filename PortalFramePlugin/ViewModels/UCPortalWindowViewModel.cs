@@ -25,6 +25,7 @@ using System.Windows.Navigation;
 using System.IO;
 using System.Text;
 using System.Windows.Media;
+using System.Drawing;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -641,6 +642,10 @@ namespace PortalFramePlugin.ViewModels
                 menuModel.BzSystemId = localModel.BzSystemId;
                 menuModel.FitDataPath = localModel.FitDataPath;
                 menuModel.ActionCADName = localModel.ActionCADName;
+                menuModel.ConfigSystemId = localModel.ConfigSystemId;
+                menuModel.SpaceId = localModel.SpaceId;
+                menuModel.MenuNo = localModel.MenuNo;
+
             }
             return menuModel;
         }
@@ -662,29 +667,6 @@ namespace PortalFramePlugin.ViewModels
         }
 
         #region 加载本地菜单集合
-        /// <summary>加载本地菜单集合 </summary>
-        private void LoadMenuListLocal()
-        {
-            this.SystemMenuListLocal.Clear();
-            string FilePath = AppDomain.CurrentDomain.BaseDirectory + ConfigurationManager.AppSettings["userplugins"];
-            ReadLocalMenuListFromXml(FilePath);
-        }
-        /// <summary>读取菜单信息</summary>
-        private void ReadLocalMenuListFromXml(string PluginFilePath)
-        {
-            XDocument xDoc = XDocument.Load(PluginFilePath);
-            XElement root = xDoc.Element("MenuInfo");
-            foreach (var item in root.Elements())
-            {
-                MenuModel menuModel = GetPluginInfoModel(item);
-                menuModel = CreatLocalMenuModel(item, menuModel);
-                this.SystemMenuListLocal.Add(menuModel);
-            }
-            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
-            {
-                this.SystemMenuListLocal.Clear();
-            }
-        }
         private MenuModel CreatLocalMenuModel(XElement element, MenuModel menuModel)
         {
             foreach (var item in element.Elements())
@@ -764,7 +746,7 @@ namespace PortalFramePlugin.ViewModels
             model.ConfigSystemId = JsonHelper.ReadJsonString(str, "formId");
             model.SpaceId = JsonHelper.ReadJsonString(str, "modelId");
             model.MenuNo = JsonHelper.ReadJsonString(str, "masterName");
-            model.FitDataPath = JsonHelper.ReadJsonObject<List<Dictionary<string,object>>>(str, "fitDataPath");
+            model.FitDataPath = JsonHelper.ReadJsonObject<List<Dictionary<string, object>>>(str, "fitDataPath");
             model.SystemMenuList = CreateChildrenMenuList(JsonHelper.ReadJsonString(str, "children"));
             return model;
         }
@@ -788,14 +770,14 @@ namespace PortalFramePlugin.ViewModels
                     paramDic.Add("configsytemid", selectedFourthMenu.ConfigSystemId);
                     paramDic.Add("spaceid", selectedFourthMenu.SpaceId);
                     paramDic.Add("menuno", selectedFourthMenu.MenuNo);
-                    paramDic.Add("menuCode", selectedFourthMenu.MenuCode);
-                    paramDic.Add("authorityCode", selectedFourthMenu.HomeId);
+                    paramDic.Add("menucode", selectedFourthMenu.MenuCode);
+                    paramDic.Add("authoritycode", selectedFourthMenu.HomeId);
                     paramDic.Add("fitdata", selectedFourthMenu.FitDataPath);
                     paramDic.Add("cadname", selectedFourthMenu.ActionCADName);
                     PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
                     if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                     {
-                        PluginShow(pluginModel);
+                        PluginShow(pluginModel,selectedFourthMenu.MenuName);
                     }
                     else
                     {
@@ -860,35 +842,7 @@ namespace PortalFramePlugin.ViewModels
         #endregion
 
         #region 加载插件
-        /// <summary>
-        /// 加载插件
-        /// </summary>
-        /// <param name="selectedFourthMenu">当前选择的四级菜单</param>
-        private void LoadPlugin(MenuModel selectedFourthMenu)
-        {
-            if (selectedFourthMenu.ResourceName != null && selectedFourthMenu.ResourceName.Contains("Plugin"))
-            {
-                PluginOperation pluginOp = new PluginOperation();
-                Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
-                paramDic.Add("formid", selectedFourthMenu.ConfigSystemId);
-                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
-                if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
-                {
-                    PluginShow(pluginModel);
-                }
-                else
-                {
-                    VicMessageBoxNormal.Show(pluginModel.ErrorMsg);
-                }
-            }
-            else
-            {
-                VicMessageBoxNormal.Show("不存在关联功能");
-            }
-        }
-
-        private void PluginShow(PluginModel pluginModel)
+        private void PluginShow(PluginModel pluginModel, string HeaderTitle = null)
         {
             try
             {
@@ -898,6 +852,7 @@ namespace PortalFramePlugin.ViewModels
                     case 0:
                         Window pluginWin = pluginModel.PluginInterface.StartWindow;
                         pluginWin.Uid = pluginModel.ObjectId;
+                        pluginWin.Owner = mainWindow;
                         ActivePluginNum = pluginOp.GetActivePluginList().Count;
                         pluginWin.ShowDialog();
                         SendPluginCloseMessage(pluginModel);
@@ -906,7 +861,7 @@ namespace PortalFramePlugin.ViewModels
                         UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;
                         pluginCtrl.Uid = pluginModel.ObjectId;
                         VicTabItemNormal tabItem = new VicTabItemNormal();
-                        tabItem.Header = pluginModel.PluginInterface.PluginTitle;
+                        tabItem.Header = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle;
                         tabItem.Content = pluginCtrl;
                         tabItem.AllowDelete = true;
                         tabItem.IsSelected = true;
@@ -945,6 +900,7 @@ namespace PortalFramePlugin.ViewModels
             IPlugin PluginInstance = pluginModel.PluginInterface;
             Window loginWin = PluginInstance.StartWindow;
             loginWin.Uid = pluginModel.ObjectId;
+            loginWin.Owner = mainWindow;
             bool? result = loginWin.ShowDialog();
             if (result == true)
             {

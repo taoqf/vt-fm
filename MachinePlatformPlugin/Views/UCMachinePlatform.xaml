@@ -9,11 +9,13 @@
              xmlns:vm="clr-namespace:MachinePlatformPlugin.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800" Name="MachinePlatformView">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <vm:MachinePlatformViewModel x:Key="platformViewModel"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Border Style="{DynamicResource SubBorder}">
-        <Grid IsEnabled="{Binding MainViewAble}">
-            <Grid.DataContext>
-                <vm:MachinePlatformViewModel/>
-            </Grid.DataContext>
+        <Grid IsEnabled="{Binding MainViewAble}" DataContext="{StaticResource ResourceKey=platformViewModel}">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -33,7 +35,7 @@
                     <controls:VicTextBlockNormal Text="工作接收区" Style="{DynamicResource GridTitle}"></controls:VicTextBlockNormal>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0">
-                    <controls:VicButtonNormal Content="下载文件">
+                    <controls:VicButtonNormal Content="下载文件" Name="btnDownFileLeft" Visibility="{Binding BtnsModel.InputDownBtnVisibility}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding btnDownFileLeftClickCommand}"/>
@@ -55,7 +57,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0">
                     <!--生产日志按钮-->
-                    <controls:VicButtonNormal x:Name="btnProLog" Content="生产日志">
+                    <controls:VicButtonNormal x:Name="btnProLog" Content="生产日志" Visibility="{Binding BtnsModel.ProLogBtnVisibility}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding btnProLogClickCommand}"/>
@@ -63,7 +65,7 @@
                         </i:Interaction.Triggers>
                     </controls:VicButtonNormal>
                     <!--问题日志-->
-                    <controls:VicButtonNormal  x:Name="btnQusLog" Content="问题日志" >
+                    <controls:VicButtonNormal  x:Name="btnQusLog" Content="问题日志" Visibility="{Binding BtnsModel.IssueLogBtnVisibility}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding btnIssueLogClickCommand}"/>
@@ -71,7 +73,7 @@
                         </i:Interaction.Triggers>
                     </controls:VicButtonNormal>
                     <!--设置按钮-->
-                    <controls:VicButtonNormal  x:Name="btnDevise" Content="设  计" >
+                    <controls:VicButtonNormal  x:Name="btnDevise" Content="设  计" Visibility="{Binding BtnsModel.DeviseBtnVisibility}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding btnDeviseClickCommand}"/>
@@ -87,7 +89,7 @@
                         </i:Interaction.Triggers>
                     </controls:VicButtonNormal>
                     <!--下载文件按钮-->
-                    <controls:VicButtonNormal x:Name="btnDown"  Content="下载文件" >
+                    <controls:VicButtonNormal x:Name="btnDown"  Content="下载文件" Visibility="{Binding BtnsModel.OutPutDownBtnVisibility}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding btnDownFileRightClickCommand}"/>
@@ -119,7 +121,7 @@
                             </controls:VicComboBoxNormal>
                             <controls:VicLabelNormal Grid.Row="0" Grid.Column="2" Content="客户:" />
                             <controls:VicTextBoxNormal VicText="{Binding Client, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Width="120" Grid.Column="3"/>
-                            <controls:VicButtonNormal Grid.Row="0" Name="btnSearch" Grid.Column="4"  Width="75" Height="30" Margin="2.5,5" Content="查询"  >
+                            <controls:VicButtonNormal Grid.Row="0" Name="btnSearch" Grid.Column="4"  Width="75" Height="30" Margin="2.5,5" Content="查询" Visibility="{Binding BtnsModel.SearchBtnVisibility}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction Command="{Binding btnSeachClickCommand}"/>
@@ -129,7 +131,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0" Grid.Row="1">
                             <!--新增-->
-                            <controls:VicButtonNormal Width="75" x:Name="btnAdd" Margin="2.5,5" Content="新增">
+                            <controls:VicButtonNormal Width="75" x:Name="btnAdd" Margin="2.5,5" Content="新增" Visibility="{Binding BtnsModel.AddBtnVisibility}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction Command="{Binding btnAddClickCommand}"/>
@@ -137,7 +139,7 @@
                                 </i:Interaction.Triggers>
                             </controls:VicButtonNormal>
                             <!--删除-->
-                            <controls:VicButtonNormal Width="75" Margin="2.5,5" x:Name="btnDelete" Content="删除">
+                            <controls:VicButtonNormal Width="75" Margin="2.5,5" x:Name="btnDelete" Content="删除" Visibility="{Binding BtnsModel.DelBtnVisibility}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction Command="{Binding btnDeleteClickCommand}"/>
@@ -146,7 +148,7 @@
                             </controls:VicButtonNormal>
 
                             <!--保存-->
-                            <controls:VicButtonNormal Width="75" Grid.Row="0" Margin="2.5,5" x:Name="btnSave" Grid.Column="4" Content="保存">
+                            <controls:VicButtonNormal Width="75" Grid.Row="0" Margin="2.5,5" x:Name="btnSave" Grid.Column="4" Content="保存" Visibility="{Binding BtnsModel.SaveBtnVisibility}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction Command="{Binding btnSaveClickCommand}"/>
@@ -154,7 +156,7 @@
                                 </i:Interaction.Triggers>
                             </controls:VicButtonNormal>
                             <!--派工-->
-                            <controls:VicButtonNormal Width="75" Grid.Row="0" Name="btnAllotWork" Margin="2.5,5" Grid.Column="4" Content="派工">
+                            <controls:VicButtonNormal Width="75" Grid.Row="0" Name="btnDivide" Margin="2.5,5" Grid.Column="4" Content="派工" Visibility="{Binding BtnsModel.DivideBtnVisibility}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction Command="{Binding btnDivideClickCommand}"/>
@@ -162,7 +164,7 @@
                                 </i:Interaction.Triggers>
                             </controls:VicButtonNormal>
                             <!--开工-->
-                            <controls:VicButtonNormal Width="75" Grid.Row="0" x:Name="btnStart" Margin="2.5,5" Grid.Column="4" Content="开工">
+                            <controls:VicButtonNormal Width="75" Grid.Row="0" x:Name="btnWork" Margin="2.5,5" Grid.Column="4" Content="开工" Visibility="{Binding BtnsModel.WorkBtnVisibility}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction Command="{Binding btnWorkClickCommand}"/>
@@ -170,24 +172,24 @@
                                 </i:Interaction.Triggers>
                             </controls:VicButtonNormal>
                             <!--挂起-->
-                            <controls:VicButtonNormal Width="75" Grid.Row="0" Margin="2.5,5" x:Name="btnSuspend" Grid.Column="4" Content="挂起">
+                            <controls:VicButtonNormal Width="75" Grid.Row="0" Margin="2.5,5" x:Name="btnSuspend" Grid.Column="4" Content="挂起" Visibility="{Binding BtnsModel.SuspendBtnVisibility}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
-                                        <i:InvokeCommandAction Command="{Binding btnHangupClickCommand}"/>
+                                        <i:InvokeCommandAction Command="{Binding btnSuspendClickCommand}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </controls:VicButtonNormal>
                             <!--解挂-->
-                            <controls:VicButtonNormal Width="75" Grid.Row="0" Margin="2.5,5" x:Name="btnContinue" Grid.Column="4" Content="解挂">
+                            <controls:VicButtonNormal Width="75" Grid.Row="0" Margin="2.5,5" x:Name="btnContinue" Grid.Column="4" Content="解挂" Visibility="{Binding BtnsModel.ContinueBtnVisibility}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
-                                        <i:InvokeCommandAction Command="{Binding btnUnHangupClickCommand}"/>
+                                        <i:InvokeCommandAction Command="{Binding btnContinueClickCommand}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </controls:VicButtonNormal>
 
                             <!--交工-->
-                            <controls:VicButtonNormal Width="75" Grid.Row="0" Margin="2.5,5" x:Name="btnEnd" Grid.Column="4" Content="交工">
+                            <controls:VicButtonNormal Width="75" Grid.Row="0" Margin="2.5,5" x:Name="btnEndWork" Grid.Column="4" Content="交工" Visibility="{Binding BtnsModel.EndWorkBtnVisibility}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction Command="{Binding btnEndWorkClickCommand}"/>
@@ -195,14 +197,14 @@
                                 </i:Interaction.Triggers>
                             </controls:VicButtonNormal>
                             <!--审核-->
-                            <controls:VicButtonNormal Width="75" Grid.Row="0" Margin="2.5,5" x:Name="btnCheckup" Grid.Column="4" Content="审核">
+                            <controls:VicButtonNormal Width="75" Grid.Row="0" Margin="2.5,5" x:Name="btnExamine" Grid.Column="4" Content="审核" Visibility="{Binding BtnsModel.ExamineBtnVisibility}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction Command="{Binding btnExamineClickCommand}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </controls:VicButtonNormal>
-                            <controls:VicButtonNormal Width="75" Margin="2.5,5" x:Name="btnBack"  Content="驳回">
+                            <controls:VicButtonNormal Width="75" Margin="2.5,5" x:Name="btnReject"  Content="驳回" Visibility="{Binding BtnsModel.RejectBtnVisibility}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction Command="{Binding btnRejectClickCommand}"/>
@@ -211,7 +213,7 @@
                             </controls:VicButtonNormal>
                             <!--驳回-->
                             <!--问题反馈-->
-                            <controls:VicButtonNormal Width="75" x:Name="btnIssueBack" Content="问题反馈">
+                            <controls:VicButtonNormal Width="75" x:Name="btnFeedback" Content="问题反馈" Visibility="{Binding BtnsModel.FeedbackBtnVisibility}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:InvokeCommandAction Command="{Binding btnFeedbackClickCommand}"/>
@@ -223,11 +225,14 @@
                     </Grid>
                 </StackPanel>
                 <controls:VicTabControlNormal TabStripPlacement="Left" Grid.Row="1" Style="{DynamicResource left_TabControlStyle}">
-                    <controls:VicTabItemNormal Style="{DynamicResource left_TabItemStyle}" Header="工作区" AllowDelete="False">
+                    <controls:VicTabItemNormal Style="{DynamicResource left_TabItemStyle}" Header="{Binding TaskTabModel.MasterTabHeader}" Visibility="{Binding TaskTabModel.MasterTabVisibility}" AllowDelete="False">
                         <components:CompntSingleDataGridWithCheckBox Name="datagridMaster" MinHeight="200"/>
                     </controls:VicTabItemNormal>
-                    <controls:VicTabItemNormal Style="{DynamicResource left_TabItemStyle}" Header="明细" AllowDelete="False">
-                        <components:CompntSingleDataGrid Name="comdgridDetail" MinHeight="260"/>
+                    <controls:VicTabItemNormal Style="{DynamicResource left_TabItemStyle}" Header="{Binding TaskTabModel.DetialTabHeader}" Visibility="{Binding TaskTabModel.DetialTabVisibility}" AllowDelete="False">
+                        <components:CompntSingleDataGridWithCheckBox Name="datagridDetail" MinHeight="260"/>
+                    </controls:VicTabItemNormal>
+                    <controls:VicTabItemNormal Style="{DynamicResource left_TabItemStyle}" Header="{Binding TaskTabModel.SubDetialTabHeader}" Visibility="{Binding TaskTabModel.SubDetialTabVisibility}" AllowDelete="False">
+                        <components:CompntSingleDataGridWithCheckBox Name="datagridSubDetail" MinHeight="260"/>
                     </controls:VicTabItemNormal>
                 </controls:VicTabControlNormal>
             </Grid>

@@ -452,6 +452,37 @@ namespace Victop.Server.Controls.WeChat
             }
         }
         #endregion
+        #region 消息管理
+        /// <summary>
+        /// 根据OpenId发送消息
+        /// </summary>
+        /// <param name="OpenId">用户标识</param>
+        /// <param name="MessageType">消息类型</param>
+        /// <param name="MessageContent">消息内容</param>
+        /// <returns></returns>
+        public static string SendMessageByOpenId(string OpenId, string MessageType, Dictionary<string,object> MessageContent)
+        {
+            string url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + GetAccesstoken();//请求登录的URL
+            Dictionary<string, object> ParamDic = new Dictionary<string, object>();
+            ParamDic.Add("touser", OpenId);
+            ParamDic.Add("msgtype", MessageType);
+            ParamDic.Add("text", MessageContent);
+            string rqData = JsonHelper.ToJson(ParamDic);
+            try
+            {
+                CookieContainer container = new CookieContainer();
+                string htmlContent = SendMessageToWeChatServer(url, "post", rqData, ref container);
+                return htmlContent;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        #endregion
+        #region 多媒体管理(多媒体文件上传到微信服务器，只能保存三天)
+        
+        #endregion
         /// <summary>
         /// 获取访问Token
         /// </summary>

@@ -376,7 +376,7 @@ namespace PortalFramePlugin.Models
             set;
         }
 
-        private string _iconUrl;
+        private string _iconUrl = "\ue6a4";
 
         /// <summary>
         /// 图标路径

@@ -5,14 +5,16 @@
         xmlns:Views="clr-namespace:MachinePlatformPlugin.Views"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"                  
-        Title="操作区" Height="500" Name="windowOperationView" Style="{DynamicResource WindowMessageSkin}" WindowStartupLocation="CenterScreen" Width="400" WindowState="Maximized">
+        Title="操作区" Height="500" Name="windowOperationView" Style="{DynamicResource WindowMessageSkin}" WindowStartupLocation="CenterScreen" Width="400" WindowState="Maximized" ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <vm:OperationWindowViewModel x:Key="windowViewModel"/>
+        </ResourceDictionary>
+    </Window.Resources>
     <Border Style="{DynamicResource SubBorder}">
-        <controls:VicGridNormal>
-            <Grid.DataContext>
-                <vm:OperationWindowViewModel/>
-            </Grid.DataContext>
+        <controls:VicGridNormal DataContext="{StaticResource ResourceKey=windowViewModel}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <controls:VicDockPanelNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">
