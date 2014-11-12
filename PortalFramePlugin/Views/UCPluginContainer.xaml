@@ -9,127 +9,6 @@
              xmlns:local="clr-namespace:PortalFramePlugin"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <local:ImgeNameToBackgroundConverter x:Key="ImgeNameToBackgroundConverter"/>
-        <Style x:Key="ListBoxThirdMenuListStyle" TargetType="{x:Type ListBox}">
-            <Setter Property="Background" Value="#F1F4F4"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="ItemContainerStyle">
-                <Setter.Value>
-                    <Style TargetType="{x:Type ListBoxItem}">
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                        <Setter Property="Padding" Value="5"/>
-                        <Setter Property="FontSize" Value="12"/>
-                        <Setter Property="FontFamily" Value="SimSun"></Setter>
-                        <Setter Property="Height" Value="25"/>
-                        <Setter Property="Margin" Value="5,5,5,5"/>
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
-                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsSelected" Value="true">
-                                            <Setter Property="Background" TargetName="Bd" Value="#16A2E7"/>
-                                            <Setter Property="Foreground" Value="White"/>
-                                        </Trigger>
-                                        <MultiTrigger>
-                                            <MultiTrigger.Conditions>
-                                                <Condition Property="IsSelected" Value="true"/>
-                                                <Condition Property="Selector.IsSelectionActive" Value="false"/>
-                                            </MultiTrigger.Conditions>
-                                            <Setter Property="Background" TargetName="Bd" Value="#16A2E7"/>
-                                            <Setter Property="Foreground" Value="White"/>
-                                        </MultiTrigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBox}">
-                        <ScrollViewer FocusVisualStyle="{x:Null}"  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
-                            <WrapPanel FocusVisualStyle="{x:Null}" Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
-                        </ScrollViewer>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="ListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="ItemContainerStyle">
-                <Setter.Value>
-                    <Style TargetType="{x:Type ListBoxItem}">
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                        <Setter Property="Margin" Value="22,15,0,15"/>
-                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <controls:VicButtonImage Name="btnPluginIco" Background="{Binding ., Converter={StaticResource ImgeNameToBackgroundConverter},ConverterParameter=4.png}"  Margin="0" Width="57" Height="56">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="Click">
-                                                    <i:InvokeCommandAction Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </controls:VicButtonImage>
-                                        <Grid Width="80" Margin="20,0,0,0">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="35"/>
-                                                <RowDefinition Height="38"/>
-                                                <RowDefinition Height="21"/>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Text="{Binding MenuName}" FontFamily="SimSun" FontSize="12" FontWeight="Bold" Foreground="#4C4C4C" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                            <TextBlock Text="{Binding MenuName}" Grid.Row="1" FontFamily="SimSun" FontSize="12" Foreground="#4C4C4C" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                            <controls:VicButtonImage Grid.Row="2" Name="btnPluginRun" Background="{Binding .,Converter={StaticResource ImgeNameToBackgroundConverter}, ConverterParameter=run-btn.png}" Width="67" Height="21"  HorizontalAlignment="Left">
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </controls:VicButtonImage>
-                                        </Grid>
-                                    </StackPanel>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBox}">
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
-                            <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
-                        </ScrollViewer>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
@@ -138,7 +17,7 @@
         <ListBox Name="listBoxThirdMenuList" SelectedItem="{Binding SelectedThirdMenuModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Style="{DynamicResource ListBoxThirdMenuListStyle}" ItemsSource="{Binding SystemThirdLevelMenuList,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="MenuName">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding listBoxThirdMenuListSelectionChangedCommand}"/>
+                    <i:InvokeCommandAction Command="{Binding listBoxThirdMenuListSelectionChangedCommand}" CommandParameter="{Binding SelectedThirdMenuModel}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListBox>

@@ -635,9 +635,6 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-        <Setter Property="MinWidth" Value="30"></Setter>
-        <Setter Property="Height" Value="37"></Setter>
-        <Setter Property="Margin" Value="5"></Setter>
         <Setter Property="Padding" Value="2,0,0,0"/>
         <Setter Property="IsEnabled" Value="True"/>
         <Setter Property="Template">
@@ -649,7 +646,17 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}">
                             <Grid>
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <TextBlock 
+                                    Margin="{TemplateBinding Padding}" 
+                                    Foreground="{TemplateBinding Foreground}" 
+                                    Background="{TemplateBinding Background}" 
+                                    FontSize="{TemplateBinding FontSize}" 
+                                    TextWrapping="Wrap"
+                                    FontFamily="{TemplateBinding FontFamily}" 
+                                    FontWeight="{TemplateBinding FontWeight}" 
+                                    Text="{TemplateBinding Content}" 
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Grid>
                         </Border>
                     </BulletDecorator>
@@ -657,23 +664,18 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style x:Key="ButtonFirstLevelMenu" TargetType="{x:Type controls:VicButtonNormal}">
+    
+    <Style x:Key="ButtonFourthLevelMenu" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
-        <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
-        <Setter Property="FontSize" Value="14"></Setter>
-        <Setter Property="FontWeight"  Value="Bold"/>
+        <Setter Property="FontSize" Value="30"></Setter>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-        <Setter Property="MinWidth" Value="30"></Setter>
-        <Setter Property="Height" Value="37"></Setter>
         <Setter Property="Margin" Value="0"></Setter>
         <Setter Property="Padding" Value="2,0,0,0"/>
-        <Setter Property="IsEnabled" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
@@ -683,7 +685,14 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}">
                             <Grid>
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <controls:VicTextBlockNormal ToolTip="{Binding MenuName}" 
+                                                             Foreground="{TemplateBinding Foreground}"
+                                                             Style="{DynamicResource TextBlockMenu}" 
+                                                             FontSize="{TemplateBinding FontSize}"
+                                                             Text="{Binding IconUrl}"
+                                                             Margin="{TemplateBinding Padding}"
+                                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Grid>
                         </Border>
                     </BulletDecorator>
@@ -696,7 +705,6 @@
         <Setter Property="Margin" Value="10,5,0,0"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="/Fonts/#iconfont"/>
-        <Setter Property="FontSize" Value="23"/>
     </Style>
 
     <Style x:Key="ListBoxSecondLevelMenu" TargetType="{x:Type ListBox}">
@@ -726,12 +734,21 @@
                                                                  ToolTip="{Binding MenuName}" 
                                                                  Foreground="{TemplateBinding Foreground}"
                                                                  Style="{DynamicResource TextBlockMenu}" 
+                                                                 FontSize="23"
                                                                  Text="{Binding IconUrl}"/>
                                     <Grid x:Name="grid" Grid.Column="1" Width="115" Background="{TemplateBinding Background}">
-                                        <TextBlock Margin="0,10,0,0" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" FontSize="{TemplateBinding FontSize}" 
-                                                   TextWrapping="Wrap"
-                                                   FontFamily="{TemplateBinding FontFamily}" FontWeight="{TemplateBinding FontWeight}" Text="{Binding MenuName}" VerticalAlignment="Center"/>
-
+                                        
+                                        <controls:VicRadioButtonNormal 
+                                            Style="{DynamicResource RadioButtonFirstLevelMenu}" 
+                                            GroupName="A" 
+                                            Focusable="True" 
+                                            Margin="0,10,0,0"
+                                            Foreground="{TemplateBinding Foreground}" 
+                                            Background="{TemplateBinding Background}" 
+                                            IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                            Content="{Binding MenuName}" 
+                                            Command="{Binding DataContext.listSecondMenuLocalSelectionChangedCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                            CommandParameter="{Binding .}"/>
                                         <Popup x:Name="popup" IsOpen="False" PlacementTarget="{Binding ElementName=grid}" Placement="Right">
                                             <ScrollViewer x:Name="scrollViewerThirdMenu" Style="{DynamicResource MenuScrollViewer}">
                                                 <Grid Style="{DynamicResource LeftGrid}">
@@ -792,6 +809,9 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="MinWidth" Value="30"></Setter>
+                    <Setter Property="Height" Value="37"></Setter>
+                    <Setter Property="Margin" Value="5"></Setter>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -855,6 +875,9 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="MinWidth" Value="30"></Setter>
+                    <Setter Property="Height" Value="37"></Setter>
+                    <Setter Property="Margin" Value="5"></Setter>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -889,6 +912,130 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ListBoxThirdMenuListStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="#F1F4F4" Opacity="0.8"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                    <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                    <Setter Property="Padding" Value="5"/>
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="FontFamily" Value="SimSun"></Setter>
+                    <Setter Property="Height" Value="25"/>
+                    <Setter Property="Margin" Value="5,5,5,5"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter Property="Background" TargetName="Bd" Value="#16A2E7"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsSelected" Value="true"/>
+                                            <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="Background" TargetName="Bd" Value="#16A2E7"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </MultiTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <ScrollViewer FocusVisualStyle="{x:Null}"  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
+                        <WrapPanel FocusVisualStyle="{x:Null}" Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="{DynamicResource RightBackground}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                    <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                    <Setter Property="Margin" Value="22,15,0,15"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <StackPanel Orientation="Horizontal">
+                                    <controls:VicButtonNormal
+                                        Style="{DynamicResource ButtonFourthLevelMenu}"
+                                        Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding .}">
+                                    </controls:VicButtonNormal>
+                                    <Grid Width="80" Margin="20,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="35"/>
+                                            <RowDefinition Height="38"/>
+                                            <RowDefinition Height="21"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{Binding MenuName}" FontFamily="SimSun" FontSize="12" FontWeight="Bold" Foreground="#4C4C4C" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding MenuName}" Grid.Row="1" FontFamily="SimSun" FontSize="12" Foreground="#4C4C4C" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        <controls:VicButtonNormal 
+                                            Grid.Row="2" 
+                                            Name="btnPluginRun" 
+                                            Content="运行"
+                                            Width="67" 
+                                            Height="21"  
+                                            HorizontalAlignment="Left"
+                                            Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                            CommandParameter="{Binding .}">
+                                        </controls:VicButtonNormal>
+                                    </Grid>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
+                        <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Storyboard x:Key="MenuExpandStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
             <EasingDoubleKeyFrame KeyTime="0" Value="50"/>
