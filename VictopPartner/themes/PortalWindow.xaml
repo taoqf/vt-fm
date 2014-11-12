@@ -635,7 +635,6 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-        <Setter Property="Padding" Value="2,0,0,0"/>
         <Setter Property="IsEnabled" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -647,7 +646,7 @@
                                 Background="{TemplateBinding Background}">
                             <Grid>
                                 <TextBlock 
-                                    Margin="{TemplateBinding Padding}" 
+                                    Margin="0,0,-5,0"
                                     Foreground="{TemplateBinding Foreground}" 
                                     Background="{TemplateBinding Background}" 
                                     FontSize="{TemplateBinding FontSize}" 
@@ -668,7 +667,6 @@
     <Style x:Key="ButtonFourthLevelMenu" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
         <Setter Property="FontSize" Value="30"></Setter>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -736,8 +734,7 @@
                                                                  Style="{DynamicResource TextBlockMenu}" 
                                                                  FontSize="23"
                                                                  Text="{Binding IconUrl}"/>
-                                    <Grid x:Name="grid" Grid.Column="1" Width="115" Background="{TemplateBinding Background}">
-                                        
+                                    <Grid x:Name="grid" Grid.Column="1" Background="{TemplateBinding Background}">
                                         <controls:VicRadioButtonNormal 
                                             Style="{DynamicResource RadioButtonFirstLevelMenu}" 
                                             GroupName="A" 
@@ -920,11 +917,8 @@
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="#F1F4F4" Opacity="0.8"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource DataGridHeaderBgColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeColor}"/>
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
@@ -945,16 +939,16 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsSelected" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="#16A2E7"/>
-                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
                                     </Trigger>
                                     <MultiTrigger>
                                         <MultiTrigger.Conditions>
                                             <Condition Property="IsSelected" Value="true"/>
                                             <Condition Property="Selector.IsSelectionActive" Value="false"/>
                                         </MultiTrigger.Conditions>
-                                        <Setter Property="Background" TargetName="Bd" Value="#16A2E7"/>
-                                        <Setter Property="Foreground" Value="White"/>
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
                                     </MultiTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -975,7 +969,8 @@
     </Style>
 
     <Style x:Key="ListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="Background" Value="{DynamicResource RightBackground}"/>
+        <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
@@ -996,6 +991,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <controls:VicButtonNormal
                                         Style="{DynamicResource ButtonFourthLevelMenu}"
+                                        Foreground="{TemplateBinding Foreground}"
                                         Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}"
                                         CommandParameter="{Binding .}">
                                     </controls:VicButtonNormal>
@@ -1005,8 +1001,10 @@
                                             <RowDefinition Height="38"/>
                                             <RowDefinition Height="21"/>
                                         </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding MenuName}" FontFamily="SimSun" FontSize="12" FontWeight="Bold" Foreground="#4C4C4C" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding MenuName}" Grid.Row="1" FontFamily="SimSun" FontSize="12" Foreground="#4C4C4C" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding MenuName}" FontFamily="SimSun" FontSize="12" FontWeight="Bold" 
+                                            Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                        <TextBlock Text="{Binding MenuName}" Grid.Row="1" FontFamily="SimSun" FontSize="12" 
+                                            Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                         <controls:VicButtonNormal 
                                             Grid.Row="2" 
                                             Name="btnPluginRun" 
@@ -1014,6 +1012,7 @@
                                             Width="67" 
                                             Height="21"  
                                             HorizontalAlignment="Left"
+                                            Foreground="{TemplateBinding Foreground}"
                                             Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                             CommandParameter="{Binding .}">
                                         </controls:VicButtonNormal>
