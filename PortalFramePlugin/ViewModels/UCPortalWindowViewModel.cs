@@ -767,6 +767,11 @@ namespace PortalFramePlugin.ViewModels
         /// </summary>
         private void OpenJsonMenuPlugin(MenuModel selectedFourthMenu)
         {
+            if (TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)) != null)
+            {
+                TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)).IsSelected = true;
+                return;
+            }
             if (selectedFourthMenu.ResourceName == null)
                 selectedFourthMenu.ResourceName = ConfigurationManager.AppSettings["runplugin"];
             if (selectedFourthMenu.ResourceName != null)
@@ -870,6 +875,7 @@ namespace PortalFramePlugin.ViewModels
                         UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;
                         pluginCtrl.Uid = pluginModel.ObjectId;
                         VicTabItemNormal tabItem = new VicTabItemNormal();
+                        tabItem.Name = pluginModel.AppId;
                         tabItem.Header = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle;
                         tabItem.Content = pluginCtrl;
                         tabItem.AllowDelete = true;
