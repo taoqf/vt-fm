@@ -20,8 +20,22 @@ namespace MachinePlatformPlugin.ViewModels
     public class MachinePlatformViewModel : ModelBase
     {
         #region 字段
-
+        /// <summary>
+        /// 主窗体
+        /// </summary>
         private UCMachinePlatform ucMachineMainView;
+        /// <summary>
+        /// 主Tab区
+        /// </summary>
+        private CompntSingleDataGridWithCheckBox datagridMaster;
+        /// <summary>
+        /// 明细区
+        /// </summary>
+        private CompntSingleDataGridWithCheckBox datagridDetial;
+        /// <summary>
+        /// 备明细区
+        /// </summary>
+        private CompntSingleDataGridWithCheckBox datagridSubDetial;
         /// <summary>
         /// 机台信息实体
         /// </summary>
@@ -215,6 +229,17 @@ namespace MachinePlatformPlugin.ViewModels
                         InitCabinetData();
 
                     }
+                });
+            }
+        }
+        public ICommand MachinePlatformViewUnoadedCommand
+        {
+            get
+            {
+                return new RelayCommand<Object>((x) => {
+                    string Uid = (string)x;
+                    PluginOperation pluginOp = new PluginOperation();
+                    pluginOp.StopPlugin(Uid);
                 });
             }
         }
@@ -442,6 +467,19 @@ namespace MachinePlatformPlugin.ViewModels
                 });
             }
         }
+        /// <summary>
+        /// 查询
+        /// </summary>
+        public ICommand btnSeachClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    //TODO:附加查询条件
+                    datagridMaster.Search();
+                });
+            }
+        }
         #endregion
         #region 方法
         /// <summary>
@@ -478,23 +516,26 @@ namespace MachinePlatformPlugin.ViewModels
                                 switch (item["key"].ToString())
                                 {
                                     case "datagridMaster":
+                                        datagridMaster = datagrid;
                                         TaskTabModel.MasterTabHeader = item["title"].ToString();
                                         TaskTabModel.MasterTabName = item["key"].ToString();
                                         TaskTabModel.MasterTabVisibility = Visibility.Visible;
                                         datagrid.DoRender();
-                                        datagrid.Search();
+                                        //datagrid.Search();
                                         break;
                                     case "datagridDetail":
+                                        datagridDetial = datagrid;
                                         TaskTabModel.DetialTabHeader = item["title"].ToString();
                                         TaskTabModel.DetialTabName = item["key"].ToString();
                                         TaskTabModel.DetialTabVisibility = Visibility.Visible;
-                                        datagrid.ParamsModel.IsShowCheckBox = false;
+                                        datagrid.DoRender();
                                         break;
                                     case "datagridSubDetail":
+                                        datagridSubDetial = datagrid;
                                         TaskTabModel.SubDetialTabHeader = item["title"].ToString();
                                         TaskTabModel.SubDetialTabName = item["key"].ToString();
                                         TaskTabModel.SubDetialTabVisibility = Visibility.Visible;
-                                        datagrid.ParamsModel.IsShowCheckBox = false;
+                                        datagrid.DoRender();
                                         break;
                                     default:
                                         break;
@@ -637,21 +678,71 @@ namespace MachinePlatformPlugin.ViewModels
         /// </summary>
         private void InitCabinetButtonVisibility()
         {
-            if ((cabinetInfoModel.CabinetAuthorityCode & (long)BtnCodeEnum.SEARCH) > 0)
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.SEARCH) > 0)
             {
                 BtnsModel.SearchBtnVisibility = Visibility.Visible;
             }
-            if ((cabinetInfoModel.CabinetAuthorityCode & (long)BtnCodeEnum.ADD) > 0)
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.ADD) > 0)
             {
                 BtnsModel.AddBtnVisibility = Visibility.Visible;
             }
-            if ((cabinetInfoModel.CabinetAuthorityCode & (long)BtnCodeEnum.DELETE) > 0)
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.DELETE) > 0)
             {
                 BtnsModel.DelBtnVisibility = Visibility.Visible;
             }
-            if ((cabinetInfoModel.CabinetAuthorityCode & (long)BtnCodeEnum.SAVE) > 0)
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.SAVE) > 0)
             {
                 BtnsModel.SaveBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.DISPATCH) > 0)
+            {
+                BtnsModel.DivideBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.DISPATCH) > 0)
+            {
+                BtnsModel.DivideBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.WORK) > 0)
+            {
+                BtnsModel.WorkBtnVisibility = Visibility.Visible;
+                BtnsModel.DeviseBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.SUSPEND) > 0)
+            {
+                BtnsModel.SuspendBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.CONTINUE) > 0)
+            {
+                BtnsModel.ContinueBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.ENDWORK) > 0)
+            {
+                BtnsModel.EndWorkBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.ERJECT) > 0)
+            {
+                BtnsModel.RejectBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.EXAMINE) > 0)
+            {
+                BtnsModel.ExamineBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.FEEDBACK) > 0)
+            {
+                BtnsModel.FeedbackBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.DOWNLOAD) > 0)
+            {
+                BtnsModel.InputDownBtnVisibility = Visibility.Visible;
+                BtnsModel.OutPutDownBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.PROLOG) > 0)
+            {
+                BtnsModel.ProLogBtnVisibility = Visibility.Visible;
+            }
+            if ((cabinetInfoModel.CabinetMenuCode & (long)BtnCodeEnum.ISSUELOG) > 0)
+            {
+                BtnsModel.IssueLogBtnVisibility = Visibility.Visible;
             }
         }
         /// <summary>

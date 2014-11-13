@@ -892,11 +892,8 @@ namespace PortalFramePlugin.ViewModels
         /// <param name="pluginModel"></param>
         private static void SendPluginCloseMessage(PluginModel pluginModel)
         {
-            MessageOperation messageOp = new MessageOperation();
-            string messageType = "PluginService.PluginStop";
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("ObjectId", pluginModel.ObjectId);
-            messageOp.SendMessage(messageType, contentDic);
+            PluginOperation pluginOp = new PluginOperation();
+            pluginOp.StopPlugin(pluginModel.ObjectId);
         }
         #endregion
 

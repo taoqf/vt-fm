@@ -1,7 +1,7 @@
 {
 	"menu": [
 		{
-			"title": "公共基础数据管理",
+			"title": "客服阶段",
 			"iconUrl": "\ue6a4",
 			"fitDataPath": [
 				{
@@ -11,8 +11,8 @@
 			],
 			"children": [
 				{
-					"title": "组织结构数据管理",
-					"iconUrl": "1-1.png",
+					"title": "客服相关机台",
+					"iconUrl": "\ue6a4",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -21,1487 +21,16 @@
 					],
 					"children": [
 						{
-							"title": "数据架构设计",
+							"title": "报价机台（初步）",
 							"actionType": 1,
-							"actionName": "DataArchitecturePlugin",
 							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "数据架构设计",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"actionCADName": "CADPlugin",
-							"menuno": "地区区域表",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "飞道综合机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "飞道综合机台",
-							"systemId": 906,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"actionCADName": "AreaManagerPlugin",
-							"menuno": "30030",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "PageFlowMachinePlatFormPlugin_Setting"
-								}
-							]
-						}, {
-							"title": "区域管理",
-							"actionType": 1,
-							"actionName": "AreaManagerPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "公司管理",
-							"actionType": 1,
-							"actionName": "ToolBarDataGridPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "",
-							"actionCADName": "CADPlugin",
-							"menuno": "公司表",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": "ToolBarDataGridPlugin"
-								}
-							]
-						}, {
-							"title": "部门管理",
-							"actionType": 1,
-							"actionName": "DepatmentManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "店面管理",
-							"actionType": 1,
-							"actionName": "StoreManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "职位管理",
-							"actionType": 1,
-							"actionName": "PositionManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "员工管理",
-							"actionType": 1,
-							"actionName": "EmployeeManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "基础设置",
-					"iconUrl": "1-1.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "税率设置",
-							"actionType": 1,
-							"actionName": "TaxRatePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "基本单位",
-							"actionType": 1,
-							"actionName": "BaseUnitPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "库区管理",
-							"actionType": 1,
-							"actionName": "StorageManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "服务套餐设置",
-							"actionType": 1,
-							"actionName": "PackageIsSetPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "会员级别设置",
-							"actionType": 1,
-							"actionName": "VipLevelSetPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "会员优惠政策",
-							"actionType": 1,
-							"actionName": "VipPreferentialPoliciesPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "结算方式设置",
-							"actionType": 1,
-							"actionName": "MethodOfPaymentIsSetPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "产品管理",
-					"iconUrl": "1-1.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "产品类别管理",
-							"actionType": 1,
-							"actionName": "CategoryManagementPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "产品品牌管理",
-							"actionType": 1,
-							"actionName": "ProductBrandManPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "类别品牌管理",
-							"actionType": 1,
-							"actionName": "BrandManagementPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "产品树设置",
-							"actionType": 1,
-							"actionName": "ProductTreeSettingsPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "产品参数设置",
-							"actionType": 1,
-							"actionName": "ParameterSettingPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "产品信息管理",
-							"actionType": 1,
-							"actionName": "ProInfoManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "门店类别品牌关联",
-							"actionType": 1,
-							"actionName": "ShopcateBrandAssPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "门店产品型号关联",
-							"actionType": 1,
-							"actionName": "ShopProTypeAssPlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "供应商管理",
-					"iconUrl": "1-1.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "供应商管理",
-							"actionType": 1,
-							"actionName": "SupplierManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "供应商柜台管理",
-							"actionType": 1,
-							"actionName": "CounterManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "供应商类别品牌管理",
-							"actionType": 1,
-							"actionName": "BrandTypeManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "客户管理",
-					"iconUrl": "1-1.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "奔宇客户信息管理",
-							"actionType": 1,
-							"actionName": "CustomerInfoManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "分销客户管理",
-							"actionType": 1,
-							"actionName": "DistributionCusInfoManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "电商账号",
-					"iconUrl": "1-1.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "电商账号管理",
-							"actionType": 1,
-							"actionName": "ElecCommerceAccountManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "电商账号类型管理",
-							"actionType": 1,
-							"actionName": "ElecCommerceAccountTypeManagePlugin",
-							"showType": 1,
-							"iconUrl": "1-1.png",
-							"description": "dsf",
-							"systemId": 905,
-							"configsystemid": 1001,
-							"spaceId": "fds",
-							"actionCADName": "CADPlugin",
-							"menuno": "ds",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}
-			]
-		}, {
-			"title": "进销存管理",
-			"iconUrl": "\ue679",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
-					"title": "采购管理",
-					"iconUrl": "2-1.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "采购入库",
-							"actionType": 1,
-							"actionName": "UCSearchListT",
-							"showType": 1,
-							"iconUrl": "2-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 11101,
-							"spaceId": "ERP11101",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": "SearchListFitDataDemo"
-								}
-							]
-						}, {
-							"title": "采购退货",
-							"actionType": 1,
-							"actionName": "ProcurementReturnPlugin",
-							"showType": 1,
-							"iconUrl": "2-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "销售管理",
-					"iconUrl": "2-1.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "订单待处理",
-							"actionType": 1,
-							"actionName": "OrdersStayProcessedPlugin",
-							"showType": 1,
-							"iconUrl": "2-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "订单处理",
-							"actionType": 1,
-							"actionName": "OrderProcessedPlugin",
-							"showType": 1,
-							"iconUrl": "2-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "销售出库",
-							"actionType": 1,
-							"actionName": "SalesOfOoutboundPlugin",
-							"showType": 1,
-							"iconUrl": "2-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "销售退货",
-							"actionType": 1,
-							"actionName": "SalesReturnPlugin",
-							"showType": 1,
-							"iconUrl": "2-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "销售换货",
-							"actionType": 1,
-							"actionName": "SalesExchangePlugin",
-							"showType": 1,
-							"iconUrl": "2-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "库存管理",
-					"iconUrl": "2-1.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "库存查询",
-							"actionType": 1,
-							"actionName": "InventoryQueryPlugin",
-							"showType": 1,
-							"iconUrl": "2-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "调拨出库",
-							"actionType": 1,
-							"actionName": "TransfersOutboundPlugin",
-							"showType": 1,
-							"iconUrl": "2-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "调拨入库",
-							"actionType": 1,
-							"actionName": "TransfersWarehousingPlugin",
-							"showType": 1,
-							"iconUrl": "2-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "库存盘点",
-							"actionType": 1,
-							"actionName": "StockTakingPlugin",
-							"showType": 1,
-							"iconUrl": "2-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "摆样查询",
-							"actionType": 1,
-							"actionName": "PutSampleQueryPlugin",
-							"showType": 1,
-							"iconUrl": "2-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}
-			]
-		}, {
-			"title": "报表分析",
-			"iconUrl": "\ue682",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
-					"title": "报表分类",
-					"iconUrl": "3-1.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "采购明细查询组件",
-							"actionType": 1,
-							"actionName": "UCReportSearchT",
-							"showType": 1,
-							"iconUrl": "3-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": "",
-							"spaceId": "ERP11103",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": "ReportFitDataDemo"
-								}
-							]
-						}, {
-							"title": "采购明细查询",
-							"actionType": 1,
-							"actionName": "ProcurementDetailedQueryPlugin",
-							"showType": 1,
-							"iconUrl": "3-1.png",
-							"description": "fds",
-							"systemId": 905,
-							"configsystemid": 1001,
-							"spaceId": "fdsa",
-							"menuno": "dsa",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "销售明细查询",
-							"actionType": 1,
-							"actionName": "SalesDetailedQueryPlugin",
-							"showType": 1,
-							"iconUrl": "3-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "调拨明细查询",
-							"actionType": 1,
-							"actionName": "TransfersDetailedQueryPlugin",
-							"showType": 1,
-							"iconUrl": "3-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "盘点明细查询",
-							"actionType": 1,
-							"actionName": "InventoryDetailedQueryPlugin",
-							"showType": 1,
-							"iconUrl": "3-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "利润明细查询",
-							"actionType": 1,
-							"actionName": "ProfitInformationQueryPlugin",
-							"showType": 1,
-							"iconUrl": "3-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "谈单成功率查询",
-							"actionType": 1,
-							"actionName": "TalkSingleSuccessRateQueryPlugin",
-							"showType": 1,
-							"iconUrl": "3-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "新老客户查询",
-							"actionType": 1,
-							"actionName": "NewOldCustomersQueryPlugin",
-							"showType": 1,
-							"iconUrl": "3-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "主推比例查询",
-							"actionType": 1,
-							"actionName": "MainProportionQueryPlugin",
-							"showType": 1,
-							"iconUrl": "3-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "产品新增/停用查询",
-							"actionType": 1,
-							"actionName": "ProductNewDisableQueryPlugin",
-							"showType": 1,
-							"iconUrl": "3-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "调价差异表查询",
-							"actionType": 1,
-							"actionName": "PricingDifferencesBetweenTableQueryPlugin",
-							"showType": 1,
-							"iconUrl": "3-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "产品利润表查询",
-							"actionType": 1,
-							"actionName": "ProductProfitStatementQueryPlugin",
-							"showType": 1,
-							"iconUrl": "3-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}
-			]
-		}, {
-			"title": "售后服务",
-			"iconUrl": "\ue68c",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
-					"title": "售后服务",
-					"iconUrl": "4-1.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "客户合同",
-							"actionType": 1,
-							"actionName": "ContractQueryPlugin",
-							"showType": 1,
-							"iconUrl": "4-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": "",
-							"spaceId": "ERP11103",
-							"actionCADName": "CADPlugin",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": "ReportFitDataDemo"
-								}
-							]
-						}, {
-							"title": "电话客服",
-							"actionType": 1,
-							"actionName": "PhoneServicePlugin",
-							"showType": 1,
-							"iconUrl": "4-1.png",
-							"description": "dsa",
-							"systemId": 905,
-							"configsystemid": 1001,
-							"spaceId": "dsa",
-							"actionCADName": "CADPlugin",
-							"menuno": "fds",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "上门服务",
-							"actionType": 1,
-							"actionName": "DoorServicePlugin",
-							"showType": 1,
-							"iconUrl": "4-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "客户送修",
-							"actionType": 1,
-							"actionName": "CustomerSendPlugin",
-							"showType": 1,
-							"iconUrl": "4-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "返厂维修",
-							"actionType": 1,
-							"actionName": "ReturnToFactoryMaintenancePlugin",
-							"showType": 1,
-							"iconUrl": "4-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "客户信息查询",
-							"actionType": 1,
-							"actionName": "CustomerInformationQueryPlugin",
-							"showType": 1,
-							"iconUrl": "4-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"actionCADName": "CADPlugin",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}
-			]
-		}, {
-			"title": "生产管理",
-			"iconUrl": "\ue68e",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
-					"title": "生产管理",
-					"iconUrl": "5-1.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "生产线调度",
-							"actionType": 1,
-							"actionName": "ProductionSchedulingPlugin",
-							"showType": 1,
-							"iconUrl": "5-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": "",
-							"spaceId": "ERP11103",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": "ReportFitDataDemo"
-								}
-							]
-						}, {
-							"title": "工作中心调度",
-							"actionType": 1,
-							"actionName": "WorkCenterSchedulingPlugin",
-							"showType": 1,
-							"iconUrl": "5-1.png",
-							"description": "fdsa",
-							"systemId": 905,
-							"configsystemid": "fds",
-							"spaceId": "ds",
-							"menuno": "ds",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "班组调度",
-							"actionType": 1,
-							"actionName": "ShiftSchedulingPlugin",
-							"showType": 1,
-							"iconUrl": "5-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "工位看板",
-							"actionType": 1,
-							"actionName": "LocationKanbanPlugin",
-							"showType": 1,
-							"iconUrl": "5-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "缺陷审批",
-							"actionType": 1,
-							"actionName": "DefectsPlugin",
-							"showType": 1,
-							"iconUrl": "5-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "排班",
-							"actionType": 1,
-							"actionName": "SchedulingPlugin",
-							"showType": 1,
-							"iconUrl": "5-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "故障列表",
-							"actionType": 1,
-							"actionName": "FaultListPlugin",
-							"showType": 1,
-							"iconUrl": "5-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "批量故障",
-							"actionType": 1,
-							"actionName": "BatchFailurePlugin",
-							"showType": 1,
-							"iconUrl": "5-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": 101,
-							"spaceId": "erp101",
-							"menuno": "店面管理",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}
-			]
-		}, {
-			"title": "分销系统",
-			"iconUrl": "\ue669",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
-					"title": "系统管理",
-					"iconUrl": "6-1.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "角色管理",
-							"actionType": 1,
-							"actionName": "ProductionSchedulingPlugin",
-							"showType": 1,
-							"iconUrl": "6-1.png",
-							"description": "阿东嘎达",
-							"systemId": 905,
-							"configsystemid": "",
-							"spaceId": "ERP11103",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": "ReportFitDataDemo"
-								}
-							]
-						}, {
-							"title": "用户管理",
-							"actionType": 1,
-							"actionName": "WorkCenterSchedulingPlugin",
-							"showType": 1,
-							"iconUrl": "6-1.png",
-							"description": "fdsa",
-							"systemId": 905,
-							"configsystemid": "fds",
-							"spaceId": "ds",
-							"menuno": "ds",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "策划机台",
-							"actionType": 1,
-							"actionName": "PlanDemandMachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "6-1.png",
+							"iconUrl": "\ue6a4",
 							"description": "用于策划机台维护",
 							"systemId": 906,
 							"configsystemid": "",
 							"spaceId": "",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}
-			]
-		}, {
-			"title": "菜单管理",
-			"iconUrl": "\ue6b7",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
-					"title": "菜单管理",
-					"iconUrl": "25.png",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "菜单管理",
-							"actionType": 1,
-							"actionName": "MenuManagePlugin",
-							"showType": 1,
-							"iconUrl": "25.png",
-							"description": "用于菜单管理维护",
-							"systemId": 906,
-							"configsystemid": "",
-							"spaceId": "table::authority_menu",
-							"menuno": "",
+							"menuno": " ",
+							"actionCADName": "",
 							"fitDataPath": [
 								{
 									"key": "",
@@ -1509,16 +38,67 @@
 								}
 							]
 						}, {
-							"title": "菜单项管理",
+							"title": "调研机台",
 							"actionType": 1,
-							"actionName": "MenuNecklacePlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
-							"description": "用于菜单项管理维护",
+							"iconUrl": "\ue6a4",
+							"description": "用于策划机台维护",
 							"systemId": 906,
 							"configsystemid": "",
-							"spaceId": "table::authority_menu",
-							"menuno": "",
+							"spaceId": "",
+							"menuno": "  ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "解决方案机台",
+							"actionType": 1,
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于策划机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "实施规划机台",
+							"actionType": 1,
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于策划机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "报价机台（详细）",
+							"actionType": 1,
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于策划机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
 							"fitDataPath": [
 								{
 									"key": "",
@@ -1530,8 +110,8 @@
 				}
 			]
 		}, {
-			"title": "用户管理",
-			"iconUrl": "\ue6b6",
+			"title": "策划阶段",
+			"iconUrl": "\ue6a4",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1540,8 +120,8 @@
 			],
 			"children": [
 				{
-					"title": "用户管理",
-					"iconUrl": "25.png",
+					"title": "策划相关机台",
+					"iconUrl": "\ue6a4",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1550,16 +130,17 @@
 					],
 					"children": [
 						{
-							"title": "用户管理",
+							"title": "策划机台",
 							"actionType": 1,
-							"actionName": "UserManagePlugin",
+							"actionName": "PlanDemandMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
-							"description": "用于用户维护",
+							"iconUrl": "\ue6a4",
+							"description": "用于策划机台维护",
 							"systemId": 906,
 							"configsystemid": "",
-							"spaceId": "table::pub_user",
-							"menuno": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
 							"fitDataPath": [
 								{
 									"key": "",
@@ -1571,8 +152,8 @@
 				}
 			]
 		}, {
-			"title": "权限组管理",
-			"iconUrl": "\ue6b5",
+			"title": "规划阶段",
+			"iconUrl": "\ue6a4",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1581,8 +162,8 @@
 			],
 			"children": [
 				{
-					"title": "权限组管理",
-					"iconUrl": "25.png",
+					"title": "规划相关机台",
+					"iconUrl": "\ue6a4",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1591,16 +172,80 @@
 					],
 					"children": [
 						{
-							"title": "权限组管理",
+							"title": "页面流程图机台",
 							"actionType": 1,
-							"actionName": "AuthorityGroupManagePlugin",
+							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
-							"description": "用于权限维护",
+							"iconUrl": "\ue6a5",
+							"description": "页面流程图",
+							"systemId": 906,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"actionCADName": "PageAssemblyPlugin",
+							"menuno": "30030",
+							"fitDataPath": [
+								{
+									"key": "datagridMaster",
+									"value": "PageFlowMachinePlatFormPlugin_Setting",
+									"title": "工作区"
+								}, {
+									"key": "datagridDetail",
+									"value": "PageFlowMachinePlatFormPlugin_Setting",
+									"title": "页面明细"
+								}, {
+									"key": "datagridSubDetail",
+									"value": "",
+									"title": "APP明细"
+								}
+							]
+						}, {
+							"title": "数据架构机台",
+							"actionType": 1,
+							"actionName": "StatePicturePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于数据架构维护",
 							"systemId": 906,
 							"configsystemid": "",
-							"spaceId": "table::authority_group",
-							"menuno": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "页面地图机台",
+							"actionType": 1,
+							"actionName": "PageAssemblyPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于页面地图维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "用例机台",
+							"actionType": 1,
+							"actionName": "UseCasesMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于用例维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
 							"fitDataPath": [
 								{
 									"key": "",
@@ -1612,8 +257,8 @@
 				}
 			]
 		}, {
-			"title": "用户权限组关系",
-			"iconUrl": "\ue6b4",
+			"title": "设计阶段",
+			"iconUrl": "\ue6a4",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1622,8 +267,8 @@
 			],
 			"children": [
 				{
-					"title": "用户权限组关系",
-					"iconUrl": "25.png",
+					"title": "设计相关机台",
+					"iconUrl": "\ue6a4",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1632,16 +277,179 @@
 					],
 					"children": [
 						{
-							"title": "用户权限组关系",
+							"title": "状态图机台用例级",
 							"actionType": 1,
-							"actionName": "AuthorityUserGroupManagePlugin",
+							"actionName": "StatePicMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
-							"description": "用于用户权限组关系维护",
+							"iconUrl": "\ue6a4",
+							"description": "用于状态图维护",
 							"systemId": 906,
 							"configsystemid": "",
-							"spaceId": "table::authority_user_group",
-							"menuno": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "状态图机台App级",
+							"actionType": 1,
+							"actionName": "StatePicMachinePlatformAPPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于状态图APP维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "页面草图机台",
+							"actionType": 1,
+							"actionName": "PageDraftMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于页面草图维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "数据字典架构机台",
+							"actionType": 1,
+							"actionName": "DataDictionaryMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于数据字典架构维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "页面效果图机台",
+							"actionType": 1,
+							"actionName": "PageEffectPictureMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于页面效果图维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "页面定义机台",
+							"actionType": 1,
+							"actionName": "PageDefinitionMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于页面定义维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "数据建模机台",
+							"actionType": 1,
+							"actionName": "DataModelingMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于数据建模维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "页面组件分析机台",
+							"actionType": 1,
+							"actionName": "PageComponentMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于页面组件分析机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "组件定义机台",
+							"actionType": 1,
+							"actionName": "ComponentDefinitionMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于组件定义机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "部件定义机台",
+							"actionType": 1,
+							"actionName": "PartsDevelopMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于部件定义机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
 							"fitDataPath": [
 								{
 									"key": "",
@@ -1653,8 +461,8 @@
 				}
 			]
 		}, {
-			"title": "权限菜单关系",
-			"iconUrl": "\ue690",
+			"title": "开发阶段",
+			"iconUrl": "\ue6a4",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1663,8 +471,8 @@
 			],
 			"children": [
 				{
-					"title": "权限菜单关系",
-					"iconUrl": "25.png",
+					"title": "开发相关机台",
+					"iconUrl": "\ue6a4",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1673,16 +481,143 @@
 					],
 					"children": [
 						{
-							"title": "权限菜单关系",
+							"title": "切图机台",
 							"actionType": 1,
-							"actionName": "AuthorityMenuGroupPlugin",
+							"actionName": "CutPhotoListPageMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
-							"description": "用于权限菜单关系维护",
+							"iconUrl": "\ue6a4",
+							"description": "用于切图机台维护",
 							"systemId": 906,
 							"configsystemid": "",
-							"spaceId": "table::authority_menu_group",
-							"menuno": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "部件版式开发机台",
+							"actionType": 1,
+							"actionName": "PartFormatDevelopMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于部件版式开发机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "部件程序开发机台",
+							"actionType": 1,
+							"actionName": "PartProcedureMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于部件程序开发机维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "组件版式开发机台",
+							"actionType": 1,
+							"actionName": "ComponentFormatDevelopMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于组件版式开发机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "组件程序开发机台",
+							"actionType": 1,
+							"actionName": "ComponentProcedureDevelopMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于组件程序开发机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "页面版式开发机台",
+							"actionType": 1,
+							"actionName": "PageFormatDevelopMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于页面版式开发机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "页面程序开发机台",
+							"actionType": 1,
+							"actionName": "PageProcedureDevelopMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于页面程序开发机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "页面装配机台",
+							"actionType": 1,
+							"actionName": "PageAssemblyMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于页面装配机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
 							"fitDataPath": [
 								{
 									"key": "",
@@ -1694,8 +629,8 @@
 				}
 			]
 		}, {
-			"title": "权限码",
-			"iconUrl": "\ue693",
+			"title": "设置阶段",
+			"iconUrl": "\ue6a4",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1704,8 +639,8 @@
 			],
 			"children": [
 				{
-					"title": "权限码",
-					"iconUrl": "25.png",
+					"title": "设置相关机台",
+					"iconUrl": "\ue6a4",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1714,16 +649,215 @@
 					],
 					"children": [
 						{
-							"title": "权限码",
+							"title": "菜单设置机台",
 							"actionType": 1,
-							"actionName": "AuthorityYardManagePlugin",
+							"actionName": "MenuMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "25.png",
-							"description": "用于权限码维护",
+							"iconUrl": "\ue6a4",
+							"description": "用于页面布局机台维护",
 							"systemId": 906,
 							"configsystemid": "",
-							"spaceId": "table::authority_code",
-							"menuno": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "巡航任务机台",
+							"actionType": 1,
+							"actionName": "DataCruiseMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于数据巡航机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "基础数据维护机台",
+							"actionType": 1,
+							"actionName": "BaseDataMaintainMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于基础数据维护机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "CMS机台（内容管理）",
+							"actionType": 1,
+							"actionName": "CMSMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于CMS机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "权限维护机台",
+							"actionType": 1,
+							"actionName": "AuthorityMaintainMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于权限维护机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "测试阶段",
+			"iconUrl": "\ue6a4",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "测试相关机台",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "测试机台",
+							"actionType": 1,
+							"actionName": "TestMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于测试机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "部署阶段",
+			"iconUrl": "\ue6a4",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "部署相关机台",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "部署机台",
+							"actionType": 1,
+							"actionName": "DeployMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于部署机台维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "系统阶段",
+			"iconUrl": "\ue6a4",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "系统相关机台",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "布局库开发机台",
+							"actionType": 1,
+							"actionName": "LayoutLibMachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于布局库开发维护",
+							"systemId": 906,
+							"configsystemid": "",
+							"spaceId": "",
+							"menuno": " ",
+							"actionCADName": "",
 							"fitDataPath": [
 								{
 									"key": "",

@@ -14,7 +14,7 @@
     <Border Style="{DynamicResource SubBorder}">
         <controls:VicGridNormal DataContext="{StaticResource ResourceKey=windowViewModel}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="0"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <controls:VicDockPanelNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right">

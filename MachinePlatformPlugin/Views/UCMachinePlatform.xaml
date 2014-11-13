@@ -240,6 +240,9 @@
                 <i:EventTrigger EventName="Loaded">
                     <i:InvokeCommandAction Command="{Binding MachinePlatformViewLoadedCommand}" CommandParameter="{Binding ElementName=MachinePlatformView}"/>
                 </i:EventTrigger>
+                <i:EventTrigger EventName="Unloaded">
+                    <i:InvokeCommandAction Command="{Binding MachinePlatformViewUnoadedCommand}" CommandParameter="{Binding ElementName=MachinePlatformView, Path=Uid}"/>
+                </i:EventTrigger>
             </i:Interaction.Triggers>
         </Grid>
     </Border>

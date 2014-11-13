@@ -73,7 +73,26 @@ namespace Victop.Frame.SyncOperation
             }
             return returnModel;
         }
-
+        /// <summary>
+        /// 释放插件
+        /// </summary>
+        /// <param name="ObjectId"></param>
+        /// <param name="waitTime"></param>
+        /// <returns></returns>
+        public bool StopPlugin(string ObjectId, int waitTime = 15)
+        {
+            bool result = false;
+            MessageOperation messageOp = new MessageOperation();
+            string messageType = "PluginService.PluginStop";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("ObjectId", ObjectId);
+            Dictionary<string, object> resultDic = messageOp.SendMessage(messageType, contentDic, waitTime);
+            if (resultDic != null)
+            {
+                result = resultDic["ReplyMode"].ToString().Equals("0") ? false : true;
+            }
+            return result;
+        }
         /// <summary>
         /// 获取活动插件列表
         /// </summary>

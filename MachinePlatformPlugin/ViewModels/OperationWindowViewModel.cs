@@ -23,6 +23,7 @@ namespace MachinePlatformPlugin.ViewModels
         /// 主窗口
         /// </summary>
         private OperationWindow windowOperationView;
+        private Grid cadGrid;
         /// <summary>
         /// Tab集合
         /// </summary>
@@ -95,14 +96,15 @@ namespace MachinePlatformPlugin.ViewModels
         private object CreateTabContent()
         {
             PluginModel pluginModel = RunCADPlugin();
-            VicTabControlNormal tabCtrlNormal = new VicTabControlNormal();
-            tabCtrlNormal.SetResourceReference(VicTabControlNormal.StyleProperty, "MainVicTabControlStyle");
-            VicTabItemNormal tabItemNormal = new VicTabItemNormal();
-            tabItemNormal.AllowDelete = false;
-            tabItemNormal.Header = pluginModel.PluginInterface.PluginTitle;
-            tabItemNormal.Content = pluginModel.PluginInterface.StartControl;
-            tabCtrlNormal.Items.Add(tabItemNormal);
-            return tabCtrlNormal;
+            windowOperationView.Title = pluginModel.PluginInterface.PluginTitle;
+            //VicTabControlNormal tabCtrlNormal = new VicTabControlNormal();
+            //tabCtrlNormal.SetResourceReference(VicTabControlNormal.StyleProperty, "MainVicTabControlStyle");
+            //VicTabItemNormal tabItemNormal = new VicTabItemNormal();
+            //tabItemNormal.AllowDelete = false;
+            //tabItemNormal.Header = pluginModel.PluginInterface.PluginTitle;
+            //tabItemNormal.Content = pluginModel.PluginInterface.StartControl;
+            //tabCtrlNormal.Items.Add(tabItemNormal);
+            return pluginModel.PluginInterface.StartControl;
         }
         #endregion
     }
