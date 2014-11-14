@@ -627,15 +627,13 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="ButtonFourthLevelMenu" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FontSize" Value="30"></Setter>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="Margin" Value="0"></Setter>
         <Setter Property="Padding" Value="2,0,0,0"/>
         <Setter Property="Template">
@@ -945,43 +943,100 @@
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                    <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                    <Setter Property="Margin" Value="22,15,0,15"/>
+                    <!--<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                    <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>-->
+                    <Setter Property="Width" Value="180"/>
+                    <Setter Property="Height" Value="90"/>
+                    <Setter Property="Margin" Value="10"/>
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <StackPanel Orientation="Horizontal">
-                                    <controls:VicButtonNormal
-                                        Style="{DynamicResource ButtonFourthLevelMenu}"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}"
-                                        CommandParameter="{Binding .}">
-                                    </controls:VicButtonNormal>
-                                    <Grid Width="80" Margin="20,0,0,0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="35"/>
-                                            <RowDefinition Height="38"/>
-                                            <RowDefinition Height="21"/>
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Text="{Binding MenuName}" FontFamily="SimSun" FontSize="12" FontWeight="Bold" 
-                                            Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding MenuName}" Grid.Row="1" FontFamily="SimSun" FontSize="12" 
-                                            Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                        <controls:VicButtonNormal 
-                                            Grid.Row="2" 
-                                            Name="btnPluginRun" 
-                                            Content="运行"
-                                            Width="67" 
-                                            Height="21"  
-                                            HorizontalAlignment="Left"
-                                            Foreground="{TemplateBinding Foreground}"
-                                            Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                            CommandParameter="{Binding .}">
-                                        </controls:VicButtonNormal>
+                                <ControlTemplate.Resources>
+                                    <Storyboard x:Key="Storyboard1">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border" SpeedRatio="6" Storyboard.TargetProperty="Opacity">
+                                            <LinearDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+                                            <LinearDoubleKeyFrame KeyTime="00:00:02" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                      
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate" SpeedRatio="6"  Storyboard.TargetProperty="Y">
+                                            <LinearDoubleKeyFrame KeyTime="00:00:00" Value="-180"/>
+                                            <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </ControlTemplate.Resources>
+                                <Border    BorderBrush="{TemplateBinding BorderBrush}"  BorderThickness="{TemplateBinding BorderThickness}"  Background="{TemplateBinding Background}">
+                                    <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"  >
+                                        <Grid x:Name="logo" Width="{TemplateBinding Width}" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <controls:VicButtonNormal Grid.Column="0" FontSize="55" FontWeight="Bold" Height="{TemplateBinding Height}"
+                                        Style="{DynamicResource ButtonFourthLevelMenu}" 
+                                        Foreground="{DynamicResource SkinColor}">
+                                            </controls:VicButtonNormal>
+                                            <Grid  Grid.Column="1"  Margin="10,0,0,0" VerticalAlignment="Center">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Text="{Binding MenuName}" Grid.Row="0" FontFamily="SimSun" FontSize="12" FontWeight="Bold"
+                                            Foreground="{DynamicResource SkinColor}"  TextWrapping="Wrap"/>
+                                                <TextBlock Text="{Binding MenuName}" Grid.Row="1"   FontFamily="SimSun" FontSize="12"
+                                            Foreground="{TemplateBinding Foreground}" TextWrapping="Wrap"/>
+                                            </Grid>
+                                        </Grid>
+
+                                        <Border x:Name="border"  Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"  Opacity="0" Background="{TemplateBinding Background}">
+                                           
+                                                <!--<controls:VicButtonNormal Style="{DynamicResource ButtonFourthLevelMenu}" Foreground="{TemplateBinding Foreground}"
+                                                   Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}"  CommandParameter="{Binding .}"/> -->
+                                                <Grid x:Name="stap" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"  Background="Transparent">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Text="{Binding MenuName}" FontFamily="SimSun" FontSize="12" FontWeight="Bold"  Margin="5"
+                                                        Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                    <TextBlock Text="{Binding MenuName}" Grid.Row="1" FontFamily="SimSun" FontSize="12"  Margin="5"
+                                                         Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                    <controls:VicButtonNormal  Grid.Row="2"   Name="btnPluginRun" BorderThickness="0"  Content="运行"   Width="{TemplateBinding Width}" HorizontalContentAlignment="Center"   VerticalContentAlignment="Center"
+                                                       Background="{DynamicResource SkinColor}"
+                                                        Foreground="White" VerticalAlignment="Bottom" Margin="0" SnapsToDevicePixels="True"
+                                                         Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                       CommandParameter="{Binding .}"/>
+                                                </Grid>
+                                            <Border.RenderTransform>
+                                                <TransformGroup>
+                                                    <TranslateTransform x:Name="changedImage_translate"/>
+                                                </TransformGroup>
+                                            </Border.RenderTransform>
+                                        </Border>
                                     </Grid>
-                                </StackPanel>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="False">
+                                        <Setter Property="Visibility"     TargetName="stap" Value="Collapsed"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Cursor" TargetName="logo" Value="Hand"/>
+                                    </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.EnterActions>
+                                            <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
+                                        </MultiTrigger.EnterActions>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsMouseOver" Value="True"/>
+                                            <Condition Property="IsFocused" Value="False"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="BorderBrush"     TargetName="border" Value="{DynamicResource SkinColor}"/>
+                                        <Setter Property="BorderThickness" TargetName="border" Value="1"/>
+                                        <Setter Property="Visibility" TargetName="logo" Value="Collapsed"/>
+                                    </MultiTrigger>
+                                </ControlTemplate.Triggers>
+
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -991,6 +1046,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
+
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
                         <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
                     </ScrollViewer>
@@ -998,7 +1054,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Storyboard x:Key="MenuExpandStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
             <EasingDoubleKeyFrame KeyTime="0" Value="50"/>
