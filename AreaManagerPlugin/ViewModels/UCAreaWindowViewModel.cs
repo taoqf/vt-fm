@@ -331,8 +331,6 @@ namespace AreaManagerPlugin.ViewModels
                     Dictionary<string, string> address = new Dictionary<string, string>();
                     address.Add("UploadFromPath", uploadFromPath);
                     address.Add("DelFileId", this.fileId);
-                    //address.Add("UploadUrl", ConfigurationManager.AppSettings.Get("fileserverhttp") + "upload?mode_id=1");
-                    address.Add("UploadUrl", ConfigurationManager.AppSettings.Get("fileserverhttp") + "reupload");
                     messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
                     Dictionary<string, object> result = new MessageOperation().SendMessage("ServerCenterService.UploadDocument", messageContent);
                     Dictionary<string, object> replyContent = JsonHelper.ToObject<Dictionary<string, object>>(result["ReplyContent"].ToString());
@@ -368,7 +366,7 @@ namespace AreaManagerPlugin.ViewModels
                         MessageOperation messageOperation = new MessageOperation();
                         Dictionary<string, object> messageContent = new Dictionary<string, object>();
                         Dictionary<string, string> address = new Dictionary<string, string>();
-                        address.Add("DownloadUrl", @"http://192.168.40.191:8080/fsweb/getfile?id=" + this.fileId);
+                        address.Add("DownloadFileId", this.fileId);
                         address.Add("DownloadToPath", path);
                         messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
                         Dictionary<string, object> result = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);

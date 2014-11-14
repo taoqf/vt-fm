@@ -1,6 +1,7 @@
 ﻿﻿
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -75,12 +76,13 @@ namespace DocumentManagerService
                     {
                         if (CurrentMessageType == "ServerCenterService.DownloadDocument")
                         {
-                            string downloadUrl = string.Empty;
-                            if (serviceParams.ContainsKey("DownloadUrl"))
+                            string downloadFileId = System.Guid.NewGuid().ToString();
+                            if (serviceParams.ContainsKey("DownloadFileId"))
                             {
-                                downloadUrl = serviceParams["DownloadUrl"].ToString();
+                                downloadFileId = serviceParams["DownloadFileId"].ToString();
                             }
 
+                            string downloadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + downloadFileId;
                             string downloadToPath = JsonHelper.ReadJsonString(ServiceParams, "DownloadToPath");
                             if (serviceParams.ContainsKey("DownloadToPath"))
                             {
@@ -94,16 +96,11 @@ namespace DocumentManagerService
                         }
                         if (CurrentMessageType == "ServerCenterService.UploadDocument")
                         {
+                            string uploadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "reupload";
                             string uploadFromPath = string.Empty;
                             if (serviceParams.ContainsKey("UploadFromPath"))
                             {
                                 uploadFromPath = serviceParams["UploadFromPath"].ToString();
-                            }
-
-                            string uploadUrl = string.Empty;
-                            if (serviceParams.ContainsKey("UploadUrl"))
-                            {
-                                uploadUrl = serviceParams["UploadUrl"].ToString();
                             }
 
                             string delFileId = System.Guid.NewGuid().ToString();
