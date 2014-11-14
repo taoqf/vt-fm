@@ -74,24 +74,43 @@ namespace DocumentManagerService
                 {
                     if (CurrentMessageType == "ServerCenterService.DownloadDocument")
                     {
-                        string downloadFileId = System.Guid.NewGuid().ToString();
+                        string downloadFileId = string.Empty;
                         if (serviceParams.ContainsKey("DownloadFileId"))
                         {
                             downloadFileId = serviceParams["DownloadFileId"].ToString();
                         }
 
-                        string downloadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + downloadFileId;
-                        string downloadToPath = JsonHelper.ReadJsonString(ServiceParams, "DownloadToPath");
-                        if (serviceParams.ContainsKey("DownloadToPath"))
+                        if (string.IsNullOrWhiteSpace(downloadFileId))
                         {
-                            downloadToPath = serviceParams["DownloadToPath"].ToString();
+                            returnDic.Add("ReplyContent", "文件编号为空");
+                            returnDic.Add("ReplyMode", 0);
+                            result = false;
                         }
+                        else
+                        {
+                            string downloadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + downloadFileId;
+                            string downloadToPath = string.Empty;
+                            if (serviceParams.ContainsKey("DownloadToPath"))
+                            {
+                                downloadToPath = serviceParams["DownloadToPath"].ToString();
+                            }
 
-                        this.DownloadFile(downloadUrl, downloadToPath);
-                        returnDic.Add("ReplyContent", "下载成功");
-                        returnDic.Add("ReplyMode", 1);
-                        result = true;
+                            if (string.IsNullOrWhiteSpace(downloadToPath))
+                            {
+                                returnDic.Add("ReplyContent", "请选择文件保存路径");
+                                returnDic.Add("ReplyMode", 0);
+                                result = false;
+                            }
+                            else
+                            {
+                                this.DownloadFile(downloadUrl, downloadToPath);
+                                returnDic.Add("ReplyContent", "下载成功");
+                                returnDic.Add("ReplyMode", 1);
+                                result = true;
+                            }
+                        }
                     }
+
                     if (CurrentMessageType == "ServerCenterService.UploadDocument")
                     {
                         string uploadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "reupload";
