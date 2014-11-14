@@ -1,6 +1,7 @@
 ﻿﻿
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -64,82 +65,105 @@ namespace DocumentManagerService
         public bool ServiceRun()
         {
             bool result = false;
+            Dictionary<string, object> returnDic = new Dictionary<string, object>();
             try
             {
-                Dictionary<string, object> returnDic = new Dictionary<string, object>();
-                try
+                WebClient webClient = new WebClient();
+                Dictionary<string, object> serviceParams = JsonHelper.ToObject<Dictionary<string, object>>(ServiceParams);
+                if (serviceParams != null)
                 {
-                    WebClient webClient = new WebClient();
-                    Dictionary<string, object> serviceParams = JsonHelper.ToObject<Dictionary<string, object>>(ServiceParams);
-                    if (serviceParams != null)
+                    if (CurrentMessageType == "ServerCenterService.DownloadDocument")
                     {
-                        if (CurrentMessageType == "ServerCenterService.DownloadDocument")
+                        string downloadFileId = string.Empty;
+                        if (serviceParams.ContainsKey("DownloadFileId"))
                         {
-                            string downloadUrl = string.Empty;
-                            if (serviceParams.ContainsKey("DownloadUrl"))
-                            {
-                                downloadUrl = serviceParams["DownloadUrl"].ToString();
-                            }
+                            downloadFileId = serviceParams["DownloadFileId"].ToString();
+                        }
 
-                            string downloadToPath = JsonHelper.ReadJsonString(ServiceParams, "DownloadToPath");
+                        if (string.IsNullOrWhiteSpace(downloadFileId))
+                        {
+                            returnDic.Add("ReplyContent", "文件编号为空");
+                            returnDic.Add("ReplyMode", 0);
+                            result = false;
+                        }
+                        else
+                        {
+                            string downloadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + downloadFileId;
+                            string downloadToPath = string.Empty;
                             if (serviceParams.ContainsKey("DownloadToPath"))
                             {
                                 downloadToPath = serviceParams["DownloadToPath"].ToString();
                             }
 
-                            this.DownloadFile(downloadUrl, downloadToPath);
-                            returnDic.Add("ReplyContent", "下载成功");
-                            returnDic.Add("ReplyMode", 1);
-                            result = true;
+                            if (string.IsNullOrWhiteSpace(downloadToPath))
+                            {
+                                returnDic.Add("ReplyContent", "请选择文件保存路径");
+                                returnDic.Add("ReplyMode", 0);
+                                result = false;
+                            }
+                            else
+                            {
+                                this.DownloadFile(downloadUrl, downloadToPath);
+                                returnDic.Add("ReplyContent", "下载成功");
+                                returnDic.Add("ReplyMode", 1);
+                                result = true;
+                            }
                         }
-                        if (CurrentMessageType == "ServerCenterService.UploadDocument")
+                    }
+
+                    if (CurrentMessageType == "ServerCenterService.UploadDocument")
+                    {
+                        string uploadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "reupload";
+                        string uploadFromPath = string.Empty;
+                        if (serviceParams.ContainsKey("UploadFromPath"))
                         {
-                            string uploadFromPath = string.Empty;
-                            if (serviceParams.ContainsKey("UploadFromPath"))
-                            {
-                                uploadFromPath = serviceParams["UploadFromPath"].ToString();
-                            }
+                            uploadFromPath = serviceParams["UploadFromPath"].ToString();
+                        }
 
-                            string uploadUrl = string.Empty;
-                            if (serviceParams.ContainsKey("UploadUrl"))
-                            {
-                                uploadUrl = serviceParams["UploadUrl"].ToString();
-                            }
+                        string delFileId = System.Guid.NewGuid().ToString();
+                        if (serviceParams.ContainsKey("DelFileId") && string.IsNullOrWhiteSpace(serviceParams["DelFileId"].ToString()) == false)
+                        {
+                            delFileId = serviceParams["DelFileId"].ToString();
+                        }
 
-                            string delFileId = System.Guid.NewGuid().ToString();
-                            if (serviceParams.ContainsKey("DelFileId") && string.IsNullOrWhiteSpace(serviceParams["DelFileId"].ToString()) == false)
-                            {
-                                delFileId = serviceParams["DelFileId"].ToString();
-                            }
-
+                        if (string.IsNullOrWhiteSpace(uploadFromPath))
+                        {
+                            returnDic.Add("ReplyContent", "请选择要上传的文件");
+                            returnDic.Add("ReplyMode", 0);
+                            result = false;
+                        }
+                        else if (File.Exists(uploadFromPath) == false)
+                        {
+                            returnDic.Add("ReplyContent", "文件不存在");
+                            returnDic.Add("ReplyMode", 0);
+                            result = false;
+                        }
+                        else
+                        {
                             returnDic.Add("ReplyContent", this.Upload(uploadUrl, uploadFromPath, delFileId));
                             returnDic.Add("ReplyMode", 1);
                             result = true;
                         }
                     }
-                    else
-                    {
-                        returnDic.Add("ReplyContent", "参数出错");
-                        returnDic.Add("ReplyMode", 0);
-                        result = false;
-                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    returnDic.Add("ReplyContent", ex.Message);
+                    returnDic.Add("ReplyContent", "参数出错");
                     returnDic.Add("ReplyMode", 0);
                     result = false;
                 }
-                finally
-                {
-                    replyContent = JsonHelper.ToJson(returnDic);
-                }
-                return result;
             }
             catch (Exception ex)
             {
-
+                returnDic.Add("ReplyContent", ex.Message);
+                returnDic.Add("ReplyMode", 0);
+                result = false;
             }
+            finally
+            {
+                replyContent = JsonHelper.ToJson(returnDic);
+            }
+
             return result;
         }
 
@@ -159,47 +183,40 @@ namespace DocumentManagerService
         private Dictionary<string, object> Upload(string iUploadUrl, string iUploadFromPath, string iDelFileId)
         {
             Dictionary<string, object> returnDic = new Dictionary<string, object>();
-            try
-            {
-                if (iUploadFromPath != "")
-                {
-                    int i = iUploadFromPath.LastIndexOf('.');
-                    string suffname = iUploadFromPath.Substring(i + 1);
-                    string myrequest = UploadFile(iUploadUrl + "?delfile_name=" + iDelFileId, iUploadFromPath, suffname);//返回的Jason字符串 
+            int i = iUploadFromPath.LastIndexOf('.');
+            string suffname = iUploadFromPath.Substring(i + 1);
+            string myrequest = UploadFile(iUploadUrl + "?delfile_name=" + iDelFileId, iUploadFromPath, suffname);//返回的Jason字符串 
 
-                    myrequest = myrequest.Replace("[", "");
-                    myrequest = myrequest.Replace("]", "");
-                    Match m = Regex.Match(myrequest, @"([\s\S]*?)thumbnail");
-                    if (m.Success)
-                    {
-                        myrequest = m.Result("$1");
-                        myrequest = myrequest.Substring(0, myrequest.Length - 2);//不必 
-                        string[] split = myrequest.Split(':');
-                        split[1] = split[1].Replace("\\", "");
-                        string[] myname = split[1].Split(',');
-                        string[] mywidth = split[2].Split(',');
-                        string[] myhigh = split[3].Split(',');
-                        string fileName = myname[0].ToString().Replace("\"", "");
-                        returnDic.Add("imgurl", fileName);
-                        returnDic.Add("imgname", fileName);
-                        returnDic.Add("imgwidth", mywidth[0].ToString());
-                        returnDic.Add("imghigh", myhigh[0].ToString());
-                        returnDic.Add("imgrule", "2");
-                        returnDic.Add("fileId", fileName.Substring(0, fileName.LastIndexOf(".")));
-                        returnDic.Add("fileSuffix", fileName.Substring(fileName.LastIndexOf(".")));
-                    }
-                    else
-                    {
-                        Dictionary<string, string> rqobj = JsonHelper.ToObject<Dictionary<string, string>>(myrequest);
-                        string fileName = rqobj["filename"].ToString();
-                        returnDic.Add("imgurl", fileName);
-                        returnDic.Add("imgname", fileName);
-                        returnDic.Add("fileId", fileName.Substring(0, fileName.LastIndexOf(".")));
-                        returnDic.Add("fileSuffix", fileName.Substring(fileName.LastIndexOf(".")));
-                    }
-                }
+            myrequest = myrequest.Replace("[", "");
+            myrequest = myrequest.Replace("]", "");
+            Match m = Regex.Match(myrequest, @"([\s\S]*?)thumbnail");
+            if (m.Success)
+            {
+                myrequest = m.Result("$1");
+                myrequest = myrequest.Substring(0, myrequest.Length - 2);//不必 
+                string[] split = myrequest.Split(':');
+                split[1] = split[1].Replace("\\", "");
+                string[] myname = split[1].Split(',');
+                string[] mywidth = split[2].Split(',');
+                string[] myhigh = split[3].Split(',');
+                string fileName = myname[0].ToString().Replace("\"", "");
+                returnDic.Add("imgurl", fileName);
+                returnDic.Add("imgname", fileName);
+                returnDic.Add("imgwidth", mywidth[0].ToString());
+                returnDic.Add("imghigh", myhigh[0].ToString());
+                returnDic.Add("imgrule", "2");
+                returnDic.Add("fileId", fileName.Substring(0, fileName.LastIndexOf(".")));
+                returnDic.Add("fileSuffix", fileName.Substring(fileName.LastIndexOf(".")));
             }
-            catch (System.Exception ex) { }
+            else
+            {
+                Dictionary<string, string> rqobj = JsonHelper.ToObject<Dictionary<string, string>>(myrequest);
+                string fileName = rqobj["filename"].ToString();
+                returnDic.Add("imgurl", fileName);
+                returnDic.Add("imgname", fileName);
+                returnDic.Add("fileId", fileName.Substring(0, fileName.LastIndexOf(".")));
+                returnDic.Add("fileSuffix", fileName.Substring(fileName.LastIndexOf(".")));
+            }
 
             return returnDic;
         }
