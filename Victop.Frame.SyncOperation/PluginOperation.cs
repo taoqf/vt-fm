@@ -136,7 +136,8 @@ namespace Victop.Frame.SyncOperation
             else
             {
                 PluginInfo = new PluginModel() {
-                    ErrorMsg = JsonHelper.ReadJsonString(message.ToString(), "ReplyAlertMessage")
+                    ErrorMsg = JsonHelper.ReadJsonString(message.ToString(), "ReplyAlertMessage"),
+                    ObjectId=string.Empty
                 };
             }
         }

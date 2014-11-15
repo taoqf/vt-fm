@@ -20,6 +20,7 @@ namespace MachinePlatformPlugin.ViewModels
     public class MachinePlatformViewModel : ModelBase
     {
         #region 字段
+        private DataOperation dataOp = new DataOperation();
         /// <summary>
         /// 主窗体
         /// </summary>
@@ -82,7 +83,6 @@ namespace MachinePlatformPlugin.ViewModels
                 }
             }
         }
-
         /// <summary>
         /// 主视图可用
         /// </summary>
@@ -94,6 +94,21 @@ namespace MachinePlatformPlugin.ViewModels
         #endregion
 
         #region 属性
+        /// <summary>
+        /// 机台信息
+        /// </summary>
+        public CabinetInfoModel CabinetInfoModel
+        {
+            get
+            {
+                return cabinetInfoModel;
+            }
+            set
+            {
+                cabinetInfoModel = value;
+                RaisePropertyChanged("CabinetInfoModel");
+            }
+        }
         /// <summary>
         /// 机台状态集合
         /// </summary>
@@ -145,6 +160,7 @@ namespace MachinePlatformPlugin.ViewModels
                 RaisePropertyChanged("DtConData");
             }
         }
+
         /// <summary>
         /// 主视图可用
         /// </summary>
@@ -203,6 +219,7 @@ namespace MachinePlatformPlugin.ViewModels
                 }
             }
         }
+
         #endregion
 
         #region 命令
@@ -224,8 +241,8 @@ namespace MachinePlatformPlugin.ViewModels
                         cabinetInfoModel.CabinetFitData = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ToJson(UCMachinePlatform.ParamDict["fitdata"]));
                         cabinetInfoModel.CabinetCADName = UCMachinePlatform.ParamDict["cadname"].ToString();
                         cabinetInfoModel.CabinetCode = UCMachinePlatform.ParamDict["menuno"].ToString();
-                        cabinetInfoModel.CabinetMenuCode = string.IsNullOrEmpty(UCMachinePlatform.ParamDict["menucode"].ToString()) ? 0 : Convert.ToInt64(UCMachinePlatform.ParamDict["menucode"].ToString());
-                        cabinetInfoModel.CabinetAuthorityCode = string.IsNullOrEmpty(UCMachinePlatform.ParamDict["authoritycode"].ToString()) ? 0 : Convert.ToInt64(UCMachinePlatform.ParamDict["authoritycode"].ToString());
+                        cabinetInfoModel.CabinetMenuCode = (UCMachinePlatform.ParamDict["menucode"] == null || string.IsNullOrEmpty(UCMachinePlatform.ParamDict["menucode"].ToString())) ? 65535 : Convert.ToInt64(UCMachinePlatform.ParamDict["menucode"].ToString());
+                        cabinetInfoModel.CabinetAuthorityCode = (UCMachinePlatform.ParamDict["authoritycode"] == null || string.IsNullOrEmpty(UCMachinePlatform.ParamDict["authoritycode"].ToString())) ? 65535 : Convert.ToInt64(UCMachinePlatform.ParamDict["authoritycode"].ToString());
                         InitCabinetData();
 
                     }
@@ -236,7 +253,8 @@ namespace MachinePlatformPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<Object>((x) => {
+                return new RelayCommand<Object>((x) =>
+                {
                     string Uid = (string)x;
                     PluginOperation pluginOp = new PluginOperation();
                     pluginOp.StopPlugin(Uid);
@@ -265,7 +283,15 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
+                    if (datagridMaster.ParamsModel.CheckedRows.Length != 1)
+                    {
+                        VicMessageBoxNormal.Show("查看生产日志时，只能选择单一任务查看，请重新选择!", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                    ProductLog win = new ProductLog();
+                    ProductLogViewModel.value = datagridMaster.ParamsModel.CheckedRows[0]["production_log"].ToString();
+                    win.Owner = GetParentObject<Window>(ucMachineMainView);
+                    win.ShowDialog();
                 });
             }
         }
@@ -278,7 +304,15 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
+                    if (datagridMaster.ParamsModel.CheckedRows.Length != 1)
+                    {
+                        VicMessageBoxNormal.Show("查看问题日志时，只能选择单一任务查看，请重新选择!", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                    IssueLog win = new IssueLog();
+                    IssueLogViewModel.value = datagridMaster.ParamsModel.CheckedRows[0]["issue_log"].ToString();
+                    win.Owner = GetParentObject<Window>(ucMachineMainView);
+                    win.ShowDialog();
                 });
             }
         }
@@ -333,7 +367,8 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
+                    datagridMaster.Add();
+                    datagridMaster.ParamsModel.GridSelectedRow["wt_state"] = ((long)TaskStateEnum.未派工).ToString();
                 });
             }
         }
@@ -346,7 +381,23 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    if (datagridMaster.ParamsModel.CheckedRows.Length > 0)
+                    {
+                        if (MessageBoxResult.OK == VicMessageBoxNormal.Show("确定要删除当前选中的信息", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Warning))
+                        {
+                            for (int i = 0; i < datagridMaster.ParamsModel.CheckedRows.Length; i++)
+                            {
+                                datagridMaster.ParamsModel.GridSelectedRow = datagridMaster.ParamsModel.CheckedRows[i];
+                                string strTemp = "\n";
+                                strTemp += cabinetInfoModel.UserName + ": " + GetSysServiceTime() + ": " + "删除";
+                                datagridMaster.ParamsModel.GridSelectedRow["production_log"] += strTemp;
+                                datagridMaster.Delete();
+                                datagridMaster.Save();
+                            }
 
+                        }
+
+                    }
                 });
             }
         }
@@ -359,7 +410,13 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
+                    string JsonStr = datagridMaster.Save();
+                    string ResultMess = JsonHelper.ReadJsonString(JsonStr, "ReplyAlertMessage");
+                    string ResultMode = (JsonHelper.ReadJsonString(JsonStr, "ReplyMode")).ToString();//键"ReplyMode"的值等于1，表示操作成功；等于0，表示当前操作失败。
+                    if (!string.IsNullOrEmpty(ResultMess))//键"ReplyMode"的值不等于1，则抛出操作失败的原因；反之，程序没有提示
+                    {
+                        VicMessageBoxNormal.Show(ResultMess, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 });
             }
         }
@@ -372,7 +429,36 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    SelectPersonnel peronWindow = new SelectPersonnel(this);
+                    peronWindow.Owner = GetParentObject<Window>(ucMachineMainView);
+                    peronWindow.ShowDialog();
+                    if(cabinetInfoModel.CabinetSelectedStaff!=null)
+                    {
+                        for (int i = 0; i < datagridMaster.ParamsModel.CheckedRows.Length; i++)
+                        {
+                            datagridMaster.ParamsModel.CheckedRows[i]["work_staff_no"] = cabinetInfoModel.CabinetSelectedStaff["staff_no"];
+                            datagridMaster.ParamsModel.CheckedRows[i]["wt_state"] = ((long)TaskStateEnum.未派工).ToString();
+                            datagridMaster.ParamsModel.CheckedRows[i]["start_time"] = DBNull.Value;
+                            datagridMaster.ParamsModel.CheckedRows[i]["finish_time"] = DBNull.Value;
+                            datagridMaster.ParamsModel.CheckedRows[i]["last_wo_no"] = "";
+                            //添加生产日志
+                            string strTemp = "\n";
+                            strTemp += cabinetInfoModel.UserName + ": " + GetSysServiceTime() + ": " + cabinetInfoModel.CabinetName + "     派工给:" + SelectPersonnelViewModel.staffName; ;
 
+                            datagridMaster.ParamsModel.CheckedRows[i]["production_log"] += strTemp;
+                        }
+                        string JsonStr = datagridMaster.Save();
+                        string ResultMess = JsonHelper.ReadJsonString(JsonStr, "ReplyAlertMessage");
+                        string ResultMode = (JsonHelper.ReadJsonString(JsonStr, "ReplyMode")).ToString();
+                        if (ResultMode != "1" && !string.IsNullOrEmpty(ResultMess))//键"ReplyMode"的值等于1，表示操作成功；等于0，表示当前操作失败。
+                        {
+                            VicMessageBoxNormal.Show(ResultMess, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            VicMessageBoxNormal.Show("派工成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
                 });
             }
         }
@@ -463,7 +549,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
+                    Feedback();
                 });
             }
         }
@@ -474,9 +560,49 @@ namespace MachinePlatformPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
-                    //TODO:附加查询条件
-                    datagridMaster.Search();
+                return new RelayCommand(() =>
+                {
+
+                    if (SearchTaskState > 0)
+                    {
+                        List<object> conlist = new List<object>();
+                        Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+                        tableConDic.Add("wt_state", SearchTaskState.ToString());
+                        conlist.Add(tableConDic);
+                        datagridMaster.ParamsModel.ConditionList = conlist;
+                        datagridMaster.Search();
+                    }
+                    else
+                    {
+                        datagridMaster.Search();
+                    }
+                });
+            }
+        }
+        /// <summary>
+        /// 选择人员确定
+        /// </summary>
+        public ICommand btnAffirmClickCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) => {
+                    SelectPersonnel peronWindow = (SelectPersonnel)x;
+                    peronWindow.Close();
+                });
+            }
+        }
+        /// <summary>
+        /// 选择人员取消
+        /// </summary>
+        public ICommand btnCancelClickCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) => {
+                    SelectPersonnel peronWindow = (SelectPersonnel)x;
+                    peronWindow.Close();
+                    cabinetInfoModel.CabinetSelectedStaff = null;
                 });
             }
         }
@@ -491,8 +617,64 @@ namespace MachinePlatformPlugin.ViewModels
             GetLoginUserInfo();
             InitCabinetButtonVisibility();
             GetCabinetInfo();
-            //GetCabinetTaskState();
+            GetCabinetTaskState();
             MainViewAble = true;
+        }
+        /// <summary>
+        /// 问题反馈
+        /// </summary>
+        private void Feedback()
+        {
+            if (datagridMaster.ParamsModel.CheckedRows.Length != 1)
+            {
+                VicMessageBoxNormal.Show("问题反馈时，只能选择单一任务反馈，请重新选择!", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            else
+            {
+                string strTemp = "\n";
+                strTemp += cabinetInfoModel.UserName + "说: " + GetSysServiceTime() + "\n";
+                IsueFeedback win = new IsueFeedback();
+                IsueFeedbackViewModel.valueInput = (strTemp + datagridMaster.ParamsModel.GridSelectedRow["issue_log"].ToString());
+                win.Owner = GetParentObject<Window>(ucMachineMainView);
+                win.ShowDialog();
+                if (string.IsNullOrEmpty(IsueFeedbackViewModel.valueOutput))
+                {
+                    return;
+                }
+                strTemp = IsueFeedbackViewModel.valueInput;
+                datagridMaster.ParamsModel.CheckedRows[0]["issue_log"] = strTemp;
+
+
+                //添加生产日志
+                string strTemp2 = "\n";
+                strTemp += cabinetInfoModel.UserName + ":" + GetSysServiceTime() + "  " + cabinetInfoModel.CabinetName + "  问题反馈";
+                datagridMaster.ParamsModel.GridSelectedRow["production_log"] += strTemp2;
+                string JsonStr = datagridMaster.Save();
+                string ResultMess = JsonHelper.ReadJsonString(JsonStr, "ReplyAlertMessage");
+                string ResultMode = (JsonHelper.ReadJsonString(JsonStr, "ReplyMode")).ToString();
+                if (ResultMode != "1" && !string.IsNullOrEmpty(ResultMess))//键"ReplyMode"的值等于1，表示操作成功；等于0，表示当前操作失败。
+                {
+                    VicMessageBoxNormal.Show(ResultMess, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    VicMessageBoxNormal.Show("问题反馈成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+            }
+        }
+        /// <summary> 
+        /// 获取服务器时间 
+        /// </summary>         
+        /// <returns></returns> 
+        private string GetSysServiceTime()
+        {
+            MessageOperation messageOp = new MessageOperation();
+            Dictionary<string, object> result = messageOp.SendMessage("MongoDataChannelService.fetchSystime", new Dictionary<string, object>());
+            return JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "simpleDate");
+
+
         }
         /// <summary>
         /// 初始化机台任务Tab
@@ -576,40 +758,54 @@ namespace MachinePlatformPlugin.ViewModels
         /// </summary>
         private void GetCabinetInfo()
         {
-            MessageOperation messageOp = new MessageOperation();
-            string MessageType = "MongoDataChannelService.findBusiData";
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            List<object> conCitionsList = new List<object>();
-            Dictionary<string, object> tableConCabinetDic = new Dictionary<string, object>();
-            tableConCabinetDic.Add("cabinet_no", cabinetInfoModel.CabinetCode);
-            conCitionsList.Add(tableConCabinetDic);
-            List<object> conClientList = null;
-            if (conCitionsList != null && conCitionsList.Count > 0)
+            try
             {
-                conClientList = new List<object>();
-                Dictionary<string, object> conDic = new Dictionary<string, object>();
-                conDic.Add("name", "cabinet");
-                conDic.Add("tablecondition", conCitionsList);
-                conClientList.Add(conDic);
+                MessageOperation messageOp = new MessageOperation();
+                string MessageType = "MongoDataChannelService.findBusiData";
+                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                List<object> conCitionsList = new List<object>();
+                Dictionary<string, object> tableConCabinetDic = new Dictionary<string, object>();
+                tableConCabinetDic.Add("cabinet_no", cabinetInfoModel.CabinetCode);
+                conCitionsList.Add(tableConCabinetDic);
+                List<object> conClientList = null;
+                if (conCitionsList != null && conCitionsList.Count > 0)
+                {
+                    conClientList = new List<object>();
+                    Dictionary<string, object> conDic = new Dictionary<string, object>();
+                    conDic.Add("name", "cabinet");
+                    conDic.Add("tablecondition", conCitionsList);
+                    conClientList.Add(conDic);
+                }
+                contentDic.Clear();
+                contentDic.Add("systemid", cabinetInfoModel.SystemId);
+                contentDic.Add("configsystemid", cabinetInfoModel.ConfigSystemId);
+                contentDic.Add("modelid", "feidao_core_model_cabinet_0001");
+                if (conClientList != null)
+                {
+                    contentDic.Add("conditions", conClientList);
+                }
+                Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                if (returnDic != null)
+                {
+                    List<object> pathList = new List<object>();
+                    pathList.Add("cabinet");
+                    string viewId = returnDic["DataChannelId"].ToString();
+                    DataOperation dataOp = new DataOperation();
+                    DataTable cabinetInfoDt = dataOp.GetData(viewId, JsonHelper.ToJson(pathList)).Tables["dataArray"];
+                    cabinetInfoModel.CabinetId = cabinetInfoDt.Rows[0]["_id"].ToString();
+                    cabinetInfoModel.CabinetBomNo = cabinetInfoDt.Rows[0]["wt_category_no"].ToString();
+                    cabinetInfoModel.CabinetName = cabinetInfoDt.Rows[0]["cabinet_name"].ToString();
+                    Dictionary<string, object> cabinetCurrentDic = new Dictionary<string, object>();
+                    cabinetCurrentDic.Add("key", "_id");
+                    cabinetCurrentDic.Add("value", cabinetInfoModel.CabinetId);
+                    pathList.Add(cabinetCurrentDic);
+                    pathList.Add("cabinet_staff");
+                    CabinetInfoModel.CabinetStaffDt = dataOp.GetData(viewId, JsonHelper.ToJson(pathList)).Tables["dataArray"];
+                }
             }
-            contentDic.Clear();
-            contentDic.Add("systemid", cabinetInfoModel.SystemId);
-            contentDic.Add("configsystemid", cabinetInfoModel.ConfigSystemId);
-            contentDic.Add("modelid", "victop_model_cabinet_0002");
-            if (conClientList != null)
+            catch (Exception ex)
             {
-                contentDic.Add("conditions", conClientList);
-            }
-            Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
-            if (returnDic != null)
-            {
-                string viewId = returnDic["DataChannelId"].ToString();
-                DataOperation dataOp = new DataOperation();
-                DataTable cabinetInfoDt = dataOp.GetData(viewId, "[\"cabinet\"]").Tables["dataArray"];
-                cabinetInfoModel.CabinetId = cabinetInfoDt.Rows[0]["_id"].ToString();
-                cabinetInfoModel.CabinetBeginState = Convert.ToInt32(cabinetInfoDt.Rows[0]["begin_state"].ToString());
-                cabinetInfoModel.CabinetEndState = Convert.ToInt32(cabinetInfoDt.Rows[0]["end_state"].ToString());
-                cabinetInfoModel.CabinetName = cabinetInfoDt.Rows[0]["cabinet_name"].ToString();
+                LoggerHelper.ErrorFormat("获取机台基础数据异常:{0}",ex.Message);
             }
         }
         /// <summary>
@@ -617,61 +813,25 @@ namespace MachinePlatformPlugin.ViewModels
         /// </summary>
         private void GetCabinetTaskState()
         {
-            string MessageType = "MongoDataChannelService.findBusiData";
-            MessageOperation messageOp = new MessageOperation();
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", cabinetInfoModel.SystemId);
-            contentDic.Add("configsystemid", cabinetInfoModel.ConfigSystemId);
-            contentDic.Add("modelid", "victop_model_cabinet_state_0001");
-            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> conDic = new Dictionary<string, object>();
-            conDic.Add("name", "cabinet_state");
-            conDic.Add("tablecondition", "[{\"cabinet_id\":\"" + cabinetInfoModel.CabinetId + "\"}]");
-            conList.Add(conDic);
-            contentDic.Add("conditions", conList);
-            List<string> client_point_idList = new List<string>();
-            Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
-            if (returnDic != null)
+            CabTaskStatusDt = new DataTable();
+            DataColumn valueDc = new DataColumn("val", typeof(Int64));
+            DataColumn txtDc = new DataColumn("txt", typeof(string));
+            CabTaskStatusDt.Columns.Add(valueDc);
+            CabTaskStatusDt.Columns.Add(txtDc);
+            Array valueList = Enum.GetValues(typeof(TaskStateEnum));
+            for (int i = 0; i < valueList.Length; i++)
             {
-                DataOperation dataOp = new DataOperation();
-                string viewId = returnDic["DataChannelId"].ToString();
-                List<object> pathList = new List<object>();
-                pathList.Add("cabinet_state");
-                string dataPath = JsonHelper.ToJson(pathList);
-                cabinetInfoModel.CabinetTaskStateDt = dataOp.GetData(viewId, dataPath).Tables["dataArray"];
-                foreach (DataRow item in cabinetInfoModel.CabinetTaskStateDt.Rows)
-                {
-                    int stateNum = Convert.ToInt32(item["cabinet_state"].ToString());
-                    switch (item["cabinet_state_name"].ToString())
-                    {
-                        case "未派工":
-                            taskStateModel.UnDivideCode = stateNum;
-                            break;
-                        case "已派工":
-                            taskStateModel.DivideCode = stateNum;
-                            break;
-                        case "已开工":
-                            taskStateModel.StartWork = stateNum;
-                            break;
-                        case "挂起":
-                            taskStateModel.SuspendWork = stateNum;
-                            break;
-                        case "已交工":
-                            taskStateModel.EndWork = stateNum;
-                            break;
-                        case "已审核":
-                            taskStateModel.EndReview = stateNum;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                DataRow dr = cabinetInfoModel.CabinetTaskStateDt.NewRow();
-                dr["cabinet_state"] = 0;
-                dr["cabinet_state_name"] = "所有";
-                cabinetInfoModel.CabinetTaskStateDt.Rows.InsertAt(dr, 0);
-                CabTaskStatusDt = cabinetInfoModel.CabinetTaskStateDt.Copy();
+                DataRow dr = CabTaskStatusDt.NewRow();
+                int stateVal = (int)valueList.GetValue(i);
+                dr["val"] = stateVal;
+                dr["txt"] = Enum.GetName(typeof(TaskStateEnum), stateVal);
+                CabTaskStatusDt.Rows.Add(dr);
             }
+            DataRow allDr = CabTaskStatusDt.NewRow();
+            allDr["val"] = -1;
+            allDr["txt"] = "所有";
+            CabTaskStatusDt.Rows.InsertAt(allDr, 0);
+            SearchTaskState = -1;
         }
         /// <summary>
         /// 初始化机台按钮可视状态
@@ -751,7 +911,7 @@ namespace MachinePlatformPlugin.ViewModels
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public T GetParentObject<T>(DependencyObject obj) where T : FrameworkElement
+        private T GetParentObject<T>(DependencyObject obj) where T : FrameworkElement
         {
             DependencyObject parent = VisualTreeHelper.GetParent(obj);
             while (parent != null)
@@ -764,6 +924,69 @@ namespace MachinePlatformPlugin.ViewModels
             }
             return null;
         }
+
+        #region  初始化传送带传入区参数
+        /// <summary>
+        /// 初始化传送带传入区参数
+        /// </summary>
+        private void GetConveyorParams()
+        {
+            #region 查询关联conveyorid
+            string MessageType = "MongoDataChannelService.findBusiData";
+            MessageOperation messageOp = new MessageOperation();
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", cabinetInfoModel.SystemId);
+            contentDic.Add("configsystemid", cabinetInfoModel.ConfigSystemId);
+            contentDic.Add("modelid", "victop_model_conveyor_0002");
+            List<object> conCitionsList = new List<object>();
+            Dictionary<string, object> tableConClientDic = new Dictionary<string, object>();
+            tableConClientDic.Add("cabinet_id", cabinetInfoModel.CabinetId);
+            conCitionsList.Add(tableConClientDic);
+            List<object> conditionsList = new List<object>();
+            Dictionary<string, object> conditionsDic = new Dictionary<string, object>();
+            conditionsDic.Add("name", "conveyor");
+            conditionsDic.Add("tablecondition", conCitionsList);
+            conditionsList.Add(conditionsDic);
+            contentDic.Add("conditions", conditionsList);
+            Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+            if (returnDic != null)
+            {
+                List<Dictionary<string, object>> paramsList = new List<Dictionary<string, object>>();
+                string viewId = returnDic["DataChannelId"].ToString();
+                List<object> pathList = new List<object>();
+                pathList.Add("conveyor");
+                DataTable dtConveryor = dataOp.GetData(viewId, JsonHelper.ToJson(pathList)).Tables["dataArray"];
+                if (dtConveryor.Rows.Count > 0)
+                {
+                    foreach (DataRow item in dtConveryor.Rows)
+                    {
+                        Dictionary<string, object> itemDic = new Dictionary<string, object>();
+                        itemDic.Add("conveyor_id", item["_id"].ToString());
+                        pathList.Clear();
+                        pathList.Add("conveyor");
+                        Dictionary<string, object> currentDic = new Dictionary<string, object>();
+                        currentDic.Add("key", "_id");
+                        currentDic.Add("value", item["_id"].ToString());
+                        pathList.Add(currentDic);
+                        pathList.Add("current_cont");
+                        DataTable dtCurrentCont = dataOp.GetData(viewId, JsonHelper.ToJson(pathList)).Tables["dataArray"];
+                        List<string> paramList = new List<string>();
+                        if (dtCurrentCont.Rows.Count > 0)
+                        {
+                            foreach (DataRow dritem in dtCurrentCont.Rows)
+                            {
+                                paramList.Add(dritem["current_where"].ToString());
+                            }
+                        }
+                        itemDic.Add("params", paramList);
+                        paramsList.Add(itemDic);
+                    }
+                }
+                cabinetInfoModel.CabinetParamsList = paramsList;
+            }
+            #endregion
+        }
+        #endregion
         #endregion
     }
 }

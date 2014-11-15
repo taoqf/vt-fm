@@ -161,6 +161,12 @@ namespace Victop.Frame.DataChannel
                         }
                     }
                 }
+                else
+                {
+                    string tableName = pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString();
+                    DataTable itemDt = GetDataTableStructByModel(modelData, tableName, viewId, dataPath);
+                    newDs.Tables.Add(itemDt);
+                }
             }
             bool checkFlag = false;
             foreach (JsonMapKey item in JsonTableMap.Keys)

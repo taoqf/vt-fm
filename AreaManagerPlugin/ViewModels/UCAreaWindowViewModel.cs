@@ -469,9 +469,10 @@ namespace AreaManagerPlugin.ViewModels
                         MessageOperation messageOp = new MessageOperation();
                         #region victop_core库
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                        contentDic.Add("systemid", "906");
+                        contentDic.Add("systemid", "100");
                         contentDic.Add("configsystemid", "101");
-                        contentDic.Add("modelid", "victop_model_com_compnt_0001");
+                        contentDic.Add("modelid", "feidao_core_model_cs_work_ticket_0001");
+                        contentDic.Add("spaceId", "feidao_core");
                         //List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
                         //Dictionary<string, object> conDic = new Dictionary<string, object>();
                         //conDic.Add("name", "client_point");
@@ -490,7 +491,7 @@ namespace AreaManagerPlugin.ViewModels
                             DataOperation dataOp = new DataOperation();
                             viewId = returnDic["DataChannelId"].ToString();
                             List<object> pathList = new List<object>();
-                            pathList.Add("com_compnt");
+                            pathList.Add("cs_work_ticket");
                             dataPath = JsonHelper.ToJson(pathList);
                             DataSet mastDs = new DataSet();
                             mastDs = dataOp.GetData(viewId, dataPath);

@@ -24,5 +24,10 @@ namespace MachinePlatformPlugin.Views
         {
             InitializeComponent();
         }
+        public SelectPersonnel(object viewModel)
+        {
+            InitializeComponent();
+            this.DataContext = viewModel;
+        }
     }
 }

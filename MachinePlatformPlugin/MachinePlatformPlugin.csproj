@@ -110,6 +110,7 @@
     <Compile Include="Converters\StatusConvert.cs" />
     <Compile Include="Converters\StyleConvert .cs" />
     <Compile Include="Enums\BtnCodeEnum.cs" />
+    <Compile Include="Enums\TaskStateEnum.cs" />
     <Compile Include="FtpUpLoadOrDownLoadHelper.cs" />
     <Compile Include="Models\CabinetButtonsModel.cs" />
     <Compile Include="Models\CabinetInfoModel.cs" />
@@ -150,9 +151,6 @@
     <Compile Include="Views\UCProductLog.xaml.cs">
       <DependentUpon>UCProductLog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UCSelectPersonnel.xaml.cs">
-      <DependentUpon>UCSelectPersonnel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\UCIssueLog.xaml.cs">
       <DependentUpon>UCIssueLog.xaml</DependentUpon>
     </Compile>
@@ -191,10 +189,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UCProductLog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UCSelectPersonnel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

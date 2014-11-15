@@ -206,7 +206,11 @@ namespace MachinePlatformPlugin.Models
         public Visibility FeedbackBtnVisibility
         {
             get { return feedbackBtnVisibility; }
-            set { feedbackBtnVisibility = value; }
+            set
+            {
+                feedbackBtnVisibility = value;
+                RaisePropertyChanged("FeedbackBtnVisibility");
+            }
         }
         #endregion
         #region 传入区/指南区按钮

@@ -55,7 +55,7 @@ namespace Victop.Frame.Connection
                 ReplyMessage replyMessage = new ReplyMessage()
                 {
                     MessageId = messageInfo.MessageId,
-                    ReplyContent = ex.Message
+                    ReplyContent = ex.InnerException.Message
                 };
 
                 return replyMessage;
@@ -277,9 +277,9 @@ namespace Victop.Frame.Connection
         {
             messageInfo.MessageType = "MongoDataChannelService.afterLogin";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "906");
+            contentDic.Add("systemid", "100");
             contentDic.Add("client_type_val", "1");
-            contentDic.Add("configsystemid", "906");
+            contentDic.Add("configsystemid", "101");
             string userCode = messageInfo.MessageContent.Contains("usercode") ? JsonHelper.ReadJsonString(messageInfo.MessageContent, "usercode") : JsonHelper.ReadJsonString(messageInfo.MessageContent, "userCode");
             contentDic.Add("userCode", userCode);
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
@@ -327,13 +327,22 @@ namespace Victop.Frame.Connection
                     string userInfoStr = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userInfo");
                     List<Dictionary<string, object>> userInfoList = JsonHelper.ToObject<List<Dictionary<string, object>>>(userInfoStr);
                     CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
-                    if (userInfoList != null && userInfoList.Count > 0)
+                    try
                     {
-                        currentGallery.ClientInfo.UserId = userInfoList[0]["_id"].ToString();
-                        currentGallery.ClientInfo.UserImg = userInfoList[0]["staff_picture"].ToString();
+                        if (userInfoList != null && userInfoList.Count > 0)
+                        {
+                            currentGallery.ClientInfo.UserId = userInfoList[0]["_id"].ToString();
+                            currentGallery.ClientInfo.UserImg = userInfoList[0]["staff_picture"].ToString();
+                        }
+                        else
+                        {
+                            currentGallery.ClientInfo.UserId = string.Empty;
+                            currentGallery.ClientInfo.UserImg = string.Empty;
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
+                        LoggerHelper.ErrorFormat("用户信息:{0}", userInfoStr);
                         currentGallery.ClientInfo.UserId = string.Empty;
                         currentGallery.ClientInfo.UserImg = string.Empty;
                     }

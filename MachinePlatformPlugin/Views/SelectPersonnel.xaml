@@ -8,9 +8,6 @@
         xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
         Title="选择人员" Height="500" Width="400" Style="{DynamicResource WindowMessageSkin}" WindowStartupLocation="CenterScreen" Name="ChooseStaffView">
     <controls:VicGridNormal>
-        <Grid.DataContext>
-            <vm:SelectPersonnelViewModel/>
-        </Grid.DataContext>
         <!--页面初始化-->
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">
@@ -35,7 +32,12 @@
             <controls:VicTextBoxNormal Grid.Column="1" Margin="2.5,5" IsReadOnly="True" Name="tboxStaffNname"></controls:VicTextBoxNormal>
         </controls:VicGridNormal>
         <!--主界面第二行-->
-        <components:CompntSingleDataGrid Grid.Row="1" x:Name="comdgridSaff"></components:CompntSingleDataGrid>
+        <controls:VicDataGrid Grid.Row="1" x:Name="comdgridSaff" ItemsSource="{Binding CabinetInfoModel.CabinetStaffDt}" AutoGenerateColumns="False" IsUserSetColumn="True" SelectedItem="{Binding CabinetInfoModel.CabinetSelectedStaff}">
+            <DataGrid.Columns>
+                <controls:VicDataGridTextColumn Header="工号" Binding="{Binding staff_no}"/>
+                <controls:VicDataGridTextColumn Header="名称" Binding="{Binding staff_name}"/>
+            </DataGrid.Columns>
+        </controls:VicDataGrid>
         <!--主界面第三行-->
         <controls:VicGridNormal Grid.Row="2">
             <controls:VicStackPanelNormal Orientation="Horizontal" HorizontalAlignment="Center">
@@ -43,7 +45,7 @@
                 <controls:VicButtonNormal x:Name="btnAffirm"  Content="确 认" Width="75" Margin="2.5,5" Height="30">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding btnAffirmClickCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding btnAffirmClickCommand}" CommandParameter="{Binding ElementName=ChooseStaffView}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </controls:VicButtonNormal>
@@ -51,7 +53,7 @@
                 <controls:VicButtonNormal x:Name="btnCancel" Content="取 消" Width="75" Margin="2.5,5" Height="30">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding btnCancelClickCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding btnCancelClickCommand}" CommandParameter="{Binding ElementName=ChooseStaffView}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </controls:VicButtonNormal>

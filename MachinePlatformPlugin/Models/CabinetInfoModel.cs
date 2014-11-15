@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using Victop.Server.Controls.Models;
 
 namespace MachinePlatformPlugin.Models
 {
     /// <summary>
     /// 机台信息实体
     /// </summary>
-    public class CabinetInfoModel
+    public class CabinetInfoModel:ModelBase
     {
         /// <summary>
         /// SystemId
@@ -92,14 +93,14 @@ namespace MachinePlatformPlugin.Models
         /// <summary>
         /// 机台开始状态
         /// </summary>
-        private int cabinetBeginState;
+        private string cabinetBomNo;
         /// <summary>
         /// 机台开始状态
         /// </summary>
-        public int CabinetBeginState
+        public string CabinetBomNo
         {
-            get { return cabinetBeginState; }
-            set { cabinetBeginState = value; }
+            get { return cabinetBomNo; }
+            set { cabinetBomNo = value; }
         }
         /// <summary>
         /// 机台结束状态
@@ -256,6 +257,41 @@ namespace MachinePlatformPlugin.Models
         {
             get { return cabinetAuthorityCode; }
             set { cabinetAuthorityCode = value; }
+        }
+        /// <summary>
+        /// 机台人员信息
+        /// </summary>
+        private DataTable cabinetStaffDt;
+        /// <summary>
+        /// 机台人员信息
+        /// </summary>
+        public DataTable CabinetStaffDt
+        {
+            get
+            {
+                return cabinetStaffDt;
+            }
+            set
+            {
+                cabinetStaffDt = value;
+                RaisePropertyChanged("CabinetStaffDt");
+            }
+        }
+        /// <summary>
+        /// 机台选定人员
+        /// </summary>
+        private DataRowView cabinetSelectedStaff;
+        /// <summary>
+        /// 机台选定人员
+        /// </summary>
+        public DataRowView CabinetSelectedStaff
+        {
+            get { return cabinetSelectedStaff; }
+            set
+            {
+                cabinetSelectedStaff = value;
+                RaisePropertyChanged("CabinetSelectedStaff");
+            }
         }
     }
 }

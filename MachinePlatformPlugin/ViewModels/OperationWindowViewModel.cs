@@ -10,6 +10,7 @@ using Victop.Frame.SyncOperation;
 using Victop.Frame.PublicLib.Helpers;
 using System.Windows.Controls;
 using Victop.Wpf.Controls;
+using System.Windows;
 
 namespace MachinePlatformPlugin.ViewModels
 {
@@ -23,7 +24,6 @@ namespace MachinePlatformPlugin.ViewModels
         /// 主窗口
         /// </summary>
         private OperationWindow windowOperationView;
-        private Grid cadGrid;
         /// <summary>
         /// Tab集合
         /// </summary>
@@ -65,7 +65,8 @@ namespace MachinePlatformPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                 });
             }
         }
@@ -96,15 +97,18 @@ namespace MachinePlatformPlugin.ViewModels
         private object CreateTabContent()
         {
             PluginModel pluginModel = RunCADPlugin();
-            windowOperationView.Title = pluginModel.PluginInterface.PluginTitle;
-            //VicTabControlNormal tabCtrlNormal = new VicTabControlNormal();
-            //tabCtrlNormal.SetResourceReference(VicTabControlNormal.StyleProperty, "MainVicTabControlStyle");
-            //VicTabItemNormal tabItemNormal = new VicTabItemNormal();
-            //tabItemNormal.AllowDelete = false;
-            //tabItemNormal.Header = pluginModel.PluginInterface.PluginTitle;
-            //tabItemNormal.Content = pluginModel.PluginInterface.StartControl;
-            //tabCtrlNormal.Items.Add(tabItemNormal);
-            return pluginModel.PluginInterface.StartControl;
+            if (!string.IsNullOrEmpty(pluginModel.ObjectId))
+            {
+                windowOperationView.Title = pluginModel.PluginInterface.PluginTitle;
+                return pluginModel.PluginInterface.StartControl;
+            }
+            else
+            {
+                windowOperationView.Hide();
+                VicMessageBoxNormal.Show("CAD" + pluginModel.ErrorMsg, "提示", MessageBoxButton.OK, MessageBoxImage.Error);
+                windowOperationView.Close();
+                return null;
+            }
         }
         #endregion
     }

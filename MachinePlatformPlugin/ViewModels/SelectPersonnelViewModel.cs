@@ -11,6 +11,7 @@ using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Server.Controls.Runtime;
 using Victop.Wpf.Controls;
+using System.Data;
 namespace MachinePlatformPlugin.ViewModels
 {
    public class SelectPersonnelViewModel:ModelBase
@@ -32,9 +33,26 @@ namespace MachinePlatformPlugin.ViewModels
         public static string staffName;
         public static string guid;
         public static bool chooseFlag = false;//默认未选中任何人进行派工
+       /// <summary>
+       /// 机台人员集合
+       /// </summary>
+        public static DataTable CabinetUserInfoDt;
         #endregion
 
         #region 属性
+
+        public DataTable UserInfoDt
+        {
+            get
+            {
+                return SelectPersonnelViewModel.CabinetUserInfoDt;
+            }
+            set
+            {
+                SelectPersonnelViewModel.CabinetUserInfoDt = value;
+                RaisePropertyChanged("UserInfoDt");
+            }
+        }
         #endregion
 
         #region 命令
@@ -51,30 +69,7 @@ namespace MachinePlatformPlugin.ViewModels
                 {
                     try
                     {
-                        winChooseStaff = (VicWindowNormal)x;
-                        comdgrid = (CompntSingleDataGrid)winChooseStaff.FindName("comdgridSaff");
-                        tboxName = (VicTextBoxNormal)winChooseStaff.FindName("tboxStaffNname");
-
-                        //注册事件
-                        comdgrid.MouseLeftButtonUp += comdgrid_MouseLeftButtonUp;
-
-                        comdgrid.CompntDataGridParams.SystemId = UCMachinePlatform.ParamDict["systemid"].ToString(); ;
-                        comdgrid.CompntDataGridParams.SettingModel = JsonHelper.ToObject<CompntSettingModel>(FileHelper.ReadFitData("CompntSingleDataGrid_ChooseStaff_Cabinet_staff_Settings"));
-                        string JsonStr = comdgrid.DoRender();
-                        string ResultMess = JsonHelper.ReadJsonString(JsonStr, "ReplyAlertMessage");
-                        string ResultMode = (JsonHelper.ReadJsonString(JsonStr, "ReplyMode")).ToString();//键"ReplyMode"的值等于1，表示操作成功；等于0，表示当前操作失败。
-                        if (ResultMode != "1" && !string.IsNullOrEmpty(ResultMess))//键"ReplyMode"的值不等于1，则抛出操作失败的原因；反之，程序没有提示
-                        {
-                            VicMessageBoxNormal.Show(ResultMess, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                        }
-                        else
-                        {
-
-                        }
-                        Dictionary<string, object> dict = new Dictionary<string, object>();
-                        dict.Add("cabinet_id", UCMachinePlatform.ParamDict["cabinet_id"].ToString());
-                        comdgrid.CompntDataGridParams.ConditionList = GetSearchCondition(dict);
-                        comdgrid.Search();
+                        
                     }
                     catch { }
 

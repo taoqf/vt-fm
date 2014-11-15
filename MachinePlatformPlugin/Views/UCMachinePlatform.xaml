@@ -117,7 +117,7 @@
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0" Grid.Row="0">
                             <controls:VicLabelNormal Grid.Row="0" Grid.Column="0" Content="状态:"/>
-                            <controls:VicComboBoxNormal Grid.Row="0" Grid.Column="1" Name="comStatus" ItemsSource="{Binding CabTaskStatusDt}" DisplayMemberPath="cabinet_state_name" SelectedValuePath="cabinet_state" SelectedValue="{Binding SearchTaskState,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <controls:VicComboBoxNormal Grid.Row="0" Grid.Column="1" Name="comStatus" ItemsSource="{Binding CabTaskStatusDt}" DisplayMemberPath="txt" SelectedValuePath="val" SelectedValue="{Binding SearchTaskState,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             </controls:VicComboBoxNormal>
                             <controls:VicLabelNormal Grid.Row="0" Grid.Column="2" Content="客户:" />
                             <controls:VicTextBoxNormal VicText="{Binding Client, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Width="120" Grid.Column="3"/>
