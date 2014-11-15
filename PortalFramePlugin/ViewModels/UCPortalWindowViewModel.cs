@@ -949,7 +949,7 @@ namespace PortalFramePlugin.ViewModels
                 MessageOperation messageOperation = new MessageOperation();
                 Dictionary<string, object> messageContent = new Dictionary<string, object>();
                 Dictionary<string, string> address = new Dictionary<string, string>();
-                address.Add("DownloadUrl", ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + fileInfo);
+                address.Add("DownloadFileId",fileInfo);
                 address.Add("DownloadToPath", path);
                 messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
                 Dictionary<string, object> downResult = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);

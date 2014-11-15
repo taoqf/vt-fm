@@ -164,9 +164,7 @@ namespace Victop.Frame.ServerManagerCenter
                     }
                     else
                     {
-                        returnDic.Add("ReplyMode", "0");
-                        returnDic.Add("ReplyContent", "服务启动失败");
-                        replyContent = JsonHelper.ToJson(returnDic);
+                        replyContent = service.ReplyContent;
                     }
                 }
             }

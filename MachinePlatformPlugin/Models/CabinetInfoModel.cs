@@ -293,5 +293,40 @@ namespace MachinePlatformPlugin.Models
                 RaisePropertyChanged("CabinetSelectedStaff");
             }
         }
+        /// <summary>
+        /// 任务选择行
+        /// </summary>
+        private DataRow cabinetSelectedDataRow;
+        /// <summary>
+        /// summary>
+        /// 任务选择行
+        /// </summary>
+        public DataRow CabinetSelectedDataRow
+        {
+            get { return cabinetSelectedDataRow; }
+            set { cabinetSelectedDataRow = value; }
+        }
+        /// <summary>
+        /// 机台CAD结果键值
+        /// </summary>
+        private Dictionary<string, object> cabinetCADResultDic;
+        /// <summary>
+        /// 机台CAD结果键值
+        /// </summary>
+        public Dictionary<string, object> CabinetCADResultDic
+        {
+            get
+            {
+                if (cabinetCADResultDic == null)
+                {
+                    cabinetCADResultDic = new Dictionary<string, object>();
+                    cabinetCADResultDic.Add("file_name", string.Empty);
+                    cabinetCADResultDic.Add("file_type", string.Empty);
+                    cabinetCADResultDic.Add("file_path", string.Empty);
+                }
+                return cabinetCADResultDic;
+            }
+            set { cabinetCADResultDic = value; }
+        }
     }
 }

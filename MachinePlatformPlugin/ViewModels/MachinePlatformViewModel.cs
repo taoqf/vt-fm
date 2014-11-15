@@ -15,6 +15,7 @@ using System.Windows;
 using System.Windows.Media;
 using Victop.Wpf.Controls;
 using MachinePlatformPlugin.Enums;
+using System.Windows.Forms;
 namespace MachinePlatformPlugin.ViewModels
 {
     public class MachinePlatformViewModel : ModelBase
@@ -60,7 +61,7 @@ namespace MachinePlatformPlugin.ViewModels
         /// <summary>
         /// 传送带数据
         /// </summary>
-        private DataTable dtConData;
+        private DataTable conveyorData;
         /// <summary>
         /// 检索任务状态
         /// </summary>
@@ -130,34 +131,36 @@ namespace MachinePlatformPlugin.ViewModels
         /// <summary>
         /// 产出区数据源
         /// </summary>
-        private DataTable dtData;
-        public DataTable DtData
+        private DataTable outPutData;
+        public DataTable OutPutData
         {
             get
             {
-                return dtData;
+                return outPutData;
             }
             set
             {
-                if (dtData != value)
-                    dtData = value;
-                RaisePropertyChanged("DtData");
+                if (outPutData != value)
+                {
+                    outPutData = value;
+                    RaisePropertyChanged("OutPutData");
+                }
             }
         }
         /// <summary>
         /// 传送带数据源
         /// </summary>
-        public DataTable DtConData
+        public DataTable ConveyorData
         {
             get
             {
-                return dtConData;
+                return conveyorData;
             }
             set
             {
-                if (dtConData != value)
-                    dtConData = value;
-                RaisePropertyChanged("DtConData");
+                if (conveyorData != value)
+                    conveyorData = value;
+                RaisePropertyChanged("ConveyorData");
             }
         }
 
@@ -249,6 +252,9 @@ namespace MachinePlatformPlugin.ViewModels
                 });
             }
         }
+        /// <summary>
+        /// 机台初始化
+        /// </summary>
         public ICommand MachinePlatformViewUnoadedCommand
         {
             get
@@ -268,9 +274,13 @@ namespace MachinePlatformPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand<object>((x) =>
                 {
-
+                    if (x != null)
+                    {
+                        DataRowView drView = (DataRowView)x;
+                        DownLoadFileById(drView["file"].ToString(), drView["name"].ToString(), drView["file_type"].ToString());
+                    }
                 });
             }
         }
@@ -346,15 +356,19 @@ namespace MachinePlatformPlugin.ViewModels
             }
         }
         /// <summary>
-        /// 传入区下载
+        /// 传出区下载
         /// </summary>
         public ICommand btnDownFileRightClickCommand
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand<object>((x) =>
                 {
-
+                    if (x != null)
+                    {
+                        DataRowView drView = (DataRowView)x;
+                        DownLoadFileById(drView["file_path"].ToString(), drView["file_name"].ToString(), drView["file_type"].ToString());
+                    }
                 });
             }
         }
@@ -429,15 +443,28 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    if (datagridMaster.ParamsModel.CheckedRows.Length <= 0)
+                    {
+                        VicMessageBoxNormal.Show("请选择需要派工的任务！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
                     SelectPersonnel peronWindow = new SelectPersonnel(this);
                     peronWindow.Owner = GetParentObject<Window>(ucMachineMainView);
                     peronWindow.ShowDialog();
-                    if(cabinetInfoModel.CabinetSelectedStaff!=null)
+                    if (cabinetInfoModel.CabinetSelectedStaff != null)
                     {
                         for (int i = 0; i < datagridMaster.ParamsModel.CheckedRows.Length; i++)
                         {
+                            if (datagridMaster.ParamsModel.CheckedRows[i]["wt_state"].ToString() != ((long)TaskStateEnum.未派工).ToString())
+                            {
+                                if (MessageBoxResult.OK == VicMessageBoxNormal.Show("选定的任务中存在不符合派工条件的任务，是否停止派工", "提示", MessageBoxButton.OK, MessageBoxImage.Information))
+                                {
+                                    datagridMaster.Search();
+                                    return;
+                                }
+                            }
                             datagridMaster.ParamsModel.CheckedRows[i]["work_staff_no"] = cabinetInfoModel.CabinetSelectedStaff["staff_no"];
-                            datagridMaster.ParamsModel.CheckedRows[i]["wt_state"] = ((long)TaskStateEnum.未派工).ToString();
+                            datagridMaster.ParamsModel.CheckedRows[i]["wt_state"] = ((long)TaskStateEnum.已派工).ToString();
                             datagridMaster.ParamsModel.CheckedRows[i]["start_time"] = DBNull.Value;
                             datagridMaster.ParamsModel.CheckedRows[i]["finish_time"] = DBNull.Value;
                             datagridMaster.ParamsModel.CheckedRows[i]["last_wo_no"] = "";
@@ -471,7 +498,33 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
+                    if (datagridMaster.ParamsModel.GridSelectedRow != null)
+                    {
+                        if (!datagridMaster.ParamsModel.GridSelectedRow["wt_state"].ToString().Equals(((long)TaskStateEnum.已派工).ToString()))
+                        {
+                            VicMessageBoxNormal.Show("请选择已派工的任务进行开工操作！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            string sysTime = GetSysServiceTime();
+                            datagridMaster.ParamsModel.GridSelectedRow["start_time"] = sysTime;
+                            datagridMaster.ParamsModel.GridSelectedRow["wt_state"] = ((long)TaskStateEnum.已开工).ToString();
+                            string strTemp = "\n";
+                            strTemp += cabinetInfoModel.UserName + ": " + sysTime + ": " + cabinetInfoModel.CabinetName + "  开工  ";
+                            datagridMaster.ParamsModel.GridSelectedRow["production_log"] += strTemp;
+                            string JsonStr = datagridMaster.Save();
+                            string ResultMess = JsonHelper.ReadJsonString(JsonStr, "ReplyAlertMessage");
+                            string ResultMode = (JsonHelper.ReadJsonString(JsonStr, "ReplyMode")).ToString();
+                            if (ResultMode != "1" && !string.IsNullOrEmpty(ResultMess))//键"ReplyMode"的值等于1，表示操作成功；等于0，表示当前操作失败。
+                            {
+                                VicMessageBoxNormal.Show(ResultMess, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                            else
+                            {
+                                VicMessageBoxNormal.Show("开工成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                        }
+                    }
                 });
             }
         }
@@ -484,7 +537,35 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
+                    if (datagridMaster.ParamsModel.GridSelectedRow != null)
+                    {
+                        if (!datagridMaster.ParamsModel.GridSelectedRow["wt_state"].ToString().Equals(((long)TaskStateEnum.已开工).ToString()))
+                        {
+                            VicMessageBoxNormal.Show("选择的任务不可进行挂起操作，请重新选择！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            datagridMaster.ParamsModel.GridSelectedRow["wt_state"] = ((long)TaskStateEnum.挂起).ToString();
+                            string strTemp = "\n";
+                            strTemp += cabinetInfoModel.UserName + ": " + GetSysServiceTime() + ": " + cabinetInfoModel.CabinetName + "  挂起  " + datagridMaster.ParamsModel.GridSelectedRow["product_no"].ToString();
+                            datagridMaster.ParamsModel.GridSelectedRow["production_log"] += strTemp;
+                            string JsonStr = datagridMaster.Save();
+                            string ResultMess = JsonHelper.ReadJsonString(JsonStr, "ReplyAlertMessage");
+                            string ResultMode = (JsonHelper.ReadJsonString(JsonStr, "ReplyMode")).ToString();
+                            if (ResultMode != "1" && !string.IsNullOrEmpty(ResultMess))//键"ReplyMode"的值等于1，表示操作成功；等于0，表示当前操作失败。
+                            {
+                                VicMessageBoxNormal.Show(ResultMess, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                            else
+                            {
+                                VicMessageBoxNormal.Show("挂起成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        VicMessageBoxNormal.Show("请选择需要挂起的任务", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 });
             }
         }
@@ -497,7 +578,36 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
+                    if (datagridMaster.ParamsModel.GridSelectedRow != null)
+                    {
+                        if (!datagridMaster.ParamsModel.GridSelectedRow["wt_state"].ToString().Equals(((long)TaskStateEnum.挂起).ToString()))
+                        {
+                            VicMessageBoxNormal.Show("选择的任务无法解挂，请重新选择！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            datagridMaster.ParamsModel.GridSelectedRow["wt_state"] = ((long)TaskStateEnum.已开工).ToString();
+                            // 添加生产日志
+                            string strTemp = "\n";
+                            strTemp += cabinetInfoModel.UserName + ": " + GetSysServiceTime() + ": " + cabinetInfoModel.CabinetName + "  解挂  " + datagridMaster.ParamsModel.GridSelectedRow["product_no"].ToString();
+                            datagridMaster.ParamsModel.GridSelectedRow["production_log"] += strTemp;
+                            string JsonStr = datagridMaster.Save();
+                            string ResultMess = JsonHelper.ReadJsonString(JsonStr, "ReplyAlertMessage");
+                            string ResultMode = (JsonHelper.ReadJsonString(JsonStr, "ReplyMode")).ToString();
+                            if (ResultMode != "1" && !string.IsNullOrEmpty(ResultMess))//键"ReplyMode"的值等于1，表示操作成功；等于0，表示当前操作失败。
+                            {
+                                VicMessageBoxNormal.Show(ResultMess, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                            else
+                            {
+                                VicMessageBoxNormal.Show("解挂成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        VicMessageBoxNormal.Show("请选择需要解挂的任务", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 });
             }
         }
@@ -510,7 +620,44 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    if (datagridMaster.ParamsModel.GridSelectedRow != null)
+                    {
+                        if (datagridMaster.ParamsModel.GridSelectedRow["wt_state"].ToString() != ((long)TaskStateEnum.已开工).ToString())
+                        {
+                            VicMessageBoxNormal.Show("选择任务非已开工状态任务,不能交工，请重新选择!", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            if (string.IsNullOrEmpty(datagridMaster.ParamsModel.GridSelectedRow["file_name"].ToString()) || string.IsNullOrEmpty(datagridMaster.ParamsModel.GridSelectedRow["file_path"].ToString()))
+                            {
+                                if (MessageBoxResult.OK == VicMessageBoxNormal.Show("当前任务无产出内容，是否确认交工", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Information))
+                                {
+                                    string sysTime = GetSysServiceTime();
+                                    datagridMaster.ParamsModel.GridSelectedRow["wt_state"] = ((long)TaskStateEnum.已交工).ToString();
+                                    datagridMaster.ParamsModel.GridSelectedRow["finish_time"] = sysTime;
+                                    string strTemp = "\n";
+                                    strTemp += cabinetInfoModel.UserName + ":" + sysTime + "  " + cabinetInfoModel.CabinetName + "  " + datagridMaster.ParamsModel.GridSelectedRow["product_no"].ToString() + "  " + "任务交工";
+                                    datagridMaster.ParamsModel.GridSelectedRow["production_log"] += strTemp;
+                                    string JsonStr = datagridMaster.Save();
+                                    string ResultMess = JsonHelper.ReadJsonString(JsonStr, "ReplyAlertMessage");
+                                    string ResultMode = (JsonHelper.ReadJsonString(JsonStr, "ReplyMode")).ToString();
+                                    if (ResultMode != "1" && !string.IsNullOrEmpty(ResultMess))//键"ReplyMode"的值等于1，表示操作成功；等于0，表示当前操作失败。
+                                    {
+                                        VicMessageBoxNormal.Show(ResultMess, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    }
+                                    else
+                                    {
+                                        VicMessageBoxNormal.Show("交工成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        VicMessageBoxNormal.Show("未选择需要交工的任务，请重新选择!", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 });
             }
         }
@@ -523,7 +670,36 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    if (datagridMaster.ParamsModel.GridSelectedRow != null)
+                    {
+                        if (datagridMaster.ParamsModel.GridSelectedRow["wt_state"].ToString() != ((long)TaskStateEnum.已交工).ToString())
+                        {
+                            VicMessageBoxNormal.Show("选择的任务无法驳回，请重新选择！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            datagridMaster.ParamsModel.GridSelectedRow["wt_state"] = taskStateModel.EndReview;
+                            string strTemp = "\n";
+                            strTemp += cabinetInfoModel.UserName + ": " + GetSysServiceTime() + ": " + cabinetInfoModel.CabinetName + "  审核";
+                            datagridMaster.ParamsModel.GridSelectedRow["production_log"] += strTemp;
+                            string JsonStr = datagridMaster.Save();
+                            string ResultMess = JsonHelper.ReadJsonString(JsonStr, "ReplyAlertMessage");
+                            string ResultMode = (JsonHelper.ReadJsonString(JsonStr, "ReplyMode")).ToString();
+                            if (ResultMode != "1" && !string.IsNullOrEmpty(ResultMess))//键"ReplyMode"的值等于1，表示操作成功；等于0，表示当前操作失败。
+                            {
+                                VicMessageBoxNormal.Show(ResultMess, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                            else
+                            {
+                                VicMessageBoxNormal.Show("审核成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                            }
+                        }
+                    }
+                    else
+                    {
+                        VicMessageBoxNormal.Show("请选择需要审核的任务", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 });
             }
         }
@@ -536,7 +712,38 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
+                    if (datagridMaster.ParamsModel.GridSelectedRow != null)
+                    {
+                        if (datagridMaster.ParamsModel.GridSelectedRow["wt_state"].ToString() != ((long)TaskStateEnum.已交工).ToString())
+                        {
+                            VicMessageBoxNormal.Show("选择的任务无法驳回，请重新选择！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            datagridMaster.ParamsModel.GridSelectedRow["wt_state"] = ((long)TaskStateEnum.未派工).ToString();
+                            datagridMaster.ParamsModel.GridSelectedRow["start_time"] = DBNull.Value;
+                            datagridMaster.ParamsModel.GridSelectedRow["finish_time"] = DBNull.Value;
+                            datagridMaster.ParamsModel.GridSelectedRow["work_staff_no"] = "";
+                            string strTemp = "\n";
+                            strTemp += cabinetInfoModel.UserName + ": " + GetSysServiceTime() + ": " + cabinetInfoModel.CabinetName + "  驳回";
+                            datagridMaster.ParamsModel.GridSelectedRow["production_log"] += strTemp;
+                            string JsonStr = datagridMaster.Save();
+                            string ResultMess = JsonHelper.ReadJsonString(JsonStr, "ReplyAlertMessage");
+                            string ResultMode = (JsonHelper.ReadJsonString(JsonStr, "ReplyMode")).ToString();
+                            if (ResultMode != "1" && !string.IsNullOrEmpty(ResultMess))//键"ReplyMode"的值等于1，表示操作成功；等于0，表示当前操作失败。
+                            {
+                                VicMessageBoxNormal.Show(ResultMess, "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                            else
+                            {
+                                VicMessageBoxNormal.Show("驳回成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        VicMessageBoxNormal.Show("请选择需要驳回的任务", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 });
             }
         }
@@ -586,7 +793,8 @@ namespace MachinePlatformPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) => {
+                return new RelayCommand<object>((x) =>
+                {
                     SelectPersonnel peronWindow = (SelectPersonnel)x;
                     peronWindow.Close();
                 });
@@ -599,7 +807,8 @@ namespace MachinePlatformPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) => {
+                return new RelayCommand<object>((x) =>
+                {
                     SelectPersonnel peronWindow = (SelectPersonnel)x;
                     peronWindow.Close();
                     cabinetInfoModel.CabinetSelectedStaff = null;
@@ -699,6 +908,7 @@ namespace MachinePlatformPlugin.ViewModels
                                 {
                                     case "datagridMaster":
                                         datagridMaster = datagrid;
+                                        datagridMaster.ParamsModel.SelectedItemChanged += ParamsModel_SelectedItemChanged;
                                         TaskTabModel.MasterTabHeader = item["title"].ToString();
                                         TaskTabModel.MasterTabName = item["key"].ToString();
                                         TaskTabModel.MasterTabVisibility = Visibility.Visible;
@@ -733,6 +943,37 @@ namespace MachinePlatformPlugin.ViewModels
                 MainViewAble = false;
                 LoggerHelper.ErrorFormat("初始化机台任务列表状态异常:{0}", ex.Message);
             }
+        }
+
+        void ParamsModel_SelectedItemChanged(object sender, DataRow dr)
+        {
+            cabinetInfoModel.CabinetSelectedDataRow = dr;
+            DataTable OutPutDt = new DataTable();
+            DataColumn clientNoDc = new DataColumn("client_no");
+            clientNoDc.Caption = "客户编号";
+            DataColumn productNoDc = new DataColumn("product_no");
+            productNoDc.Caption = "客户";
+            DataColumn fileNameDc = new DataColumn("file_name");
+            fileNameDc.Caption = "产出文件";
+            DataColumn fileTypeDc = new DataColumn("file_type");
+            fileTypeDc.Caption = "文件类型";
+            DataColumn filePathDc = new DataColumn("file_path");
+            filePathDc.Caption = "文件标识";
+            OutPutDt.Columns.Add(clientNoDc);
+            OutPutDt.Columns.Add(productNoDc);
+            OutPutDt.Columns.Add(fileNameDc);
+            OutPutDt.Columns.Add(fileTypeDc);
+            OutPutDt.Columns.Add(filePathDc);
+            DataRow drow = OutPutDt.NewRow();
+            drow["client_no"] = dr["client_no"];
+            drow["product_no"] = dr["product_no"];
+            drow["file_name"] = datagridMaster.ParamsModel.GridSelectedRow["file_name"];
+            drow["file_type"] = datagridMaster.ParamsModel.GridSelectedRow["file_type"];
+            drow["file_path"] = datagridMaster.ParamsModel.GridSelectedRow["file_path"];
+            OutPutDt.Rows.Add(drow);
+            OutPutData = OutPutDt.Copy();
+            ConveyorMethod(dr);
+
         }
         /// <summary>
         /// 获取登录用户信息
@@ -801,11 +1042,49 @@ namespace MachinePlatformPlugin.ViewModels
                     pathList.Add(cabinetCurrentDic);
                     pathList.Add("cabinet_staff");
                     CabinetInfoModel.CabinetStaffDt = dataOp.GetData(viewId, JsonHelper.ToJson(pathList)).Tables["dataArray"];
+
+                    pathList.Clear();
+                    pathList.Add("cabinet");
+                    pathList.Add(cabinetCurrentDic);
+                    pathList.Add("conveyor");
+                    DataTable conveyorDt = dataOp.GetData(viewId, JsonHelper.ToJson(pathList)).Tables["dataArray"];
+                    if (conveyorDt != null && conveyorDt.Rows.Count > 0)
+                    {
+                        List<object> conveyorList = new List<object>();
+                        List<Dictionary<string, object>> paramsList = new List<Dictionary<string, object>>();
+                        foreach (object item in pathList)
+                        {
+                            conveyorList.Add(item);
+                        }
+                        foreach (DataRow item in conveyorDt.Rows)
+                        {
+                            Dictionary<string, object> itemDic = new Dictionary<string, object>();
+                            itemDic.Add("conveyor_id", item["_id"].ToString());
+                            Dictionary<string, object> conveyorDic = new Dictionary<string, object>();
+                            conveyorDic.Add("key", "_id");
+                            conveyorDic.Add("value", item["_id"]);
+                            conveyorList.Add(conveyorDic);
+                            conveyorList.Add("current_cont");
+                            DataTable CurrentContDt = dataOp.GetData(viewId, JsonHelper.ToJson(conveyorList)).Tables["dataArray"];
+                            List<string> paramList = new List<string>();
+                            if (CurrentContDt.Rows.Count > 0)
+                            {
+                                foreach (DataRow dritem in CurrentContDt.Rows)
+                                {
+                                    paramList.Add(dritem["current_where"].ToString());
+                                }
+                            }
+                            itemDic.Add("params", paramList);
+                            paramsList.Add(itemDic);
+                        }
+                        cabinetInfoModel.CabinetParamsList = paramsList;
+                    }
+
                 }
             }
             catch (Exception ex)
             {
-                LoggerHelper.ErrorFormat("获取机台基础数据异常:{0}",ex.Message);
+                LoggerHelper.ErrorFormat("获取机台基础数据异常:{0}", ex.Message);
             }
         }
         /// <summary>
@@ -925,7 +1204,69 @@ namespace MachinePlatformPlugin.ViewModels
             return null;
         }
 
-        #region  初始化传送带传入区参数
+        /// <summary>
+        /// 传送带方法
+        /// </summary>
+        /// <param name="pageGuid"></param>
+        private void ConveyorMethod(DataRow dr)
+        {
+            #region 创建dataTable
+            DataTable dtConveyor = new DataTable("dataArray");
+            DataColumn sourceDc = new DataColumn("source", typeof(string));
+            sourceDc.Caption = "来源";
+            dtConveyor.Columns.Add(sourceDc);
+            DataColumn nameDc = new DataColumn("name", typeof(string));
+            nameDc.Caption = "名称";
+            dtConveyor.Columns.Add(nameDc);
+            DataColumn userageDc = new DataColumn("useage", typeof(string));
+            userageDc.Caption = "用途";
+            dtConveyor.Columns.Add(userageDc);
+            DataColumn fileTypeDc = new DataColumn("file_type", typeof(string));
+            fileTypeDc.Caption = "文件类型";
+            dtConveyor.Columns.Add(fileTypeDc);
+            DataColumn fileDc = new DataColumn("file", typeof(string));
+            fileDc.Caption = "文件";
+            dtConveyor.Columns.Add(fileDc);
+            #endregion
+            string MessageType = "MongoDataChannelService.conveyor";
+            MessageOperation op = new MessageOperation();
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", cabinetInfoModel.SystemId);
+            contentDic.Add("configsystemid", cabinetInfoModel.ConfigSystemId);
+            contentDic.Add("cabinet_id", cabinetInfoModel.CabinetId);
+            List<Dictionary<string, object>> ConveyorList = new List<Dictionary<string, object>>();
+            if (cabinetInfoModel.CabinetParamsList != null && cabinetInfoModel.CabinetParamsList.Count > 0)
+            {
+                foreach (Dictionary<string, object> item in cabinetInfoModel.CabinetParamsList)
+                {
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    paramDic.Add("conveyor_id", item["conveyor_id"]);
+                    List<object> paramValList = new List<object>();
+                    List<string> paramList = item["params"] as List<string>;
+                    if (paramList != null && paramList.Count > 0)
+                    {
+                        foreach (string paramItem in paramList)
+                        {
+                            if (dr.Table.Columns.Contains(paramItem))
+                            {
+                                paramValList.Add(dr[paramItem]);
+                            }
+                        }
+                    }
+                    paramDic.Add("params", paramValList);
+                    ConveyorList.Add(paramDic);
+                }
+            }
+            contentDic.Add("conveyor", ConveyorList);
+            Dictionary<string, object> resultDic = op.SendMessage(MessageType, contentDic, "JSON");
+            if (resultDic != null && !resultDic["ReplyMode"].ToString().Equals("0"))
+            {
+                DataSet ds = new DataSet();
+                ds.Tables.Add(dtConveyor);
+                ds = dataOp.GetData(resultDic["DataChannelId"].ToString(), "[\"conveyor\"]", ds);
+                ConveyorData = ds.Tables["dataArray"];
+            }
+        }
         /// <summary>
         /// 初始化传送带传入区参数
         /// </summary>
@@ -986,7 +1327,33 @@ namespace MachinePlatformPlugin.ViewModels
             }
             #endregion
         }
-        #endregion
+        /// <summary>
+        /// 根据文件标识下载文件
+        /// </summary>
+        /// <param name="fileId"></param>
+        private void DownLoadFileById(string fileId,string fileName,string fileType)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.FileName = fileName;
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            saveFileDialog.Filter = string.Format("{0}文件|*.{0}", fileType);
+            saveFileDialog.OverwritePrompt = true;
+            if (DialogResult.OK == saveFileDialog.ShowDialog())
+            {
+                MessageOperation messageOp = new MessageOperation();
+                string messageType = "ServerCenterService.DownloadDocument";
+                Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                contentDic.Add("DownloadFileId", fileId);
+                contentDic.Add("DownloadToPath", saveFileDialog.FileName);
+                messageContent.Add("ServiceParams", JsonHelper.ToJson(contentDic));
+                Dictionary<string, object> resultDic = messageOp.SendMessage(messageType, messageContent);
+                if (resultDic != null)
+                {
+                    VicMessageBoxNormal.Show(resultDic["ReplyContent"].ToString(), "提示", MessageBoxButton.OK);
+                }
+            }
+        }
         #endregion
     }
 }

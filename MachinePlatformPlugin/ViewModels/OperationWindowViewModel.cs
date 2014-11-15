@@ -25,6 +25,10 @@ namespace MachinePlatformPlugin.ViewModels
         /// </summary>
         private OperationWindow windowOperationView;
         /// <summary>
+        /// 插件实体
+        /// </summary>
+        private PluginModel pluginModel;
+        /// <summary>
         /// Tab集合
         /// </summary>
         private object tabList;
@@ -61,12 +65,26 @@ namespace MachinePlatformPlugin.ViewModels
                 });
             }
         }
+        /// <summary>
+        /// 窗口关闭时
+        /// </summary>
+        public ICommand windowOperationViewClosingCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    OperationWindow.CabinetInfoModel.CabinetCADResultDic = (Dictionary<string,object>)pluginModel.PluginInterface.ParamDict["resultdic"];
+                });
+            }
+        }
+
         public ICommand btnSaveClickCommand
         {
             get
             {
                 return new RelayCommand(() =>
                 {
+                    OperationWindow.CabinetInfoModel.CabinetSelectedDataRow["wt_state"] = "1";
                 });
             }
         }
@@ -83,12 +101,14 @@ namespace MachinePlatformPlugin.ViewModels
             paramDic.Add("systemid", OperationWindow.CabinetInfoModel.SystemId);
             paramDic.Add("configsystemid", OperationWindow.CabinetInfoModel.ConfigSystemId);
             paramDic.Add("spaceid", OperationWindow.CabinetInfoModel.SpaceId);
-            //TODO:工序列表区当前选择行
-            paramDic.Add("row", null);
-            paramDic.Add("resultdic", new Dictionary<string, object>());
+            paramDic.Add("row", OperationWindow.CabinetInfoModel.CabinetSelectedDataRow);
+            OperationWindow.CabinetInfoModel.CabinetCADResultDic["file_name"] = OperationWindow.CabinetInfoModel.CabinetSelectedDataRow["file_name"];
+            OperationWindow.CabinetInfoModel.CabinetCADResultDic["file_type"] = OperationWindow.CabinetInfoModel.CabinetSelectedDataRow["file_type"];
+            OperationWindow.CabinetInfoModel.CabinetCADResultDic["file_path"] = OperationWindow.CabinetInfoModel.CabinetSelectedDataRow["file_path"];
+            paramDic.Add("resultdic", OperationWindow.CabinetInfoModel.CabinetCADResultDic);
             PluginOperation pluginOp = new PluginOperation();
-            PluginModel pluginModel = pluginOp.StratPlugin(OperationWindow.CabinetInfoModel.CabinetCADName, paramDic);
-            return pluginModel;
+            return pluginOp.StratPlugin(OperationWindow.CabinetInfoModel.CabinetCADName, paramDic);
+            
         }
         /// <summary>
         /// 创建Tab区域
@@ -96,7 +116,7 @@ namespace MachinePlatformPlugin.ViewModels
         /// <returns></returns>
         private object CreateTabContent()
         {
-            PluginModel pluginModel = RunCADPlugin();
+            pluginModel = RunCADPlugin();
             if (!string.IsNullOrEmpty(pluginModel.ObjectId))
             {
                 windowOperationView.Title = pluginModel.PluginInterface.PluginTitle;
