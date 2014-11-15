@@ -3,7 +3,6 @@
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
                     xmlns:themes="clr-namespace:VictopPartner.Themes">
-    <themes:ImgeNameToImageUrlConverter x:Key="ImgeNameToImageUrlConverter"/>
 
     <Style x:Key="ShadowWindow" TargetType="{x:Type Window}">
         <Setter Property="ResizeMode" Value="NoResize"/>
@@ -26,7 +25,7 @@
                    Padding="{TemplateBinding Margin}"
                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                    CornerRadius="0">
-                            <ContentPresenter />
+                                <ContentPresenter />
                         </Border>
                     </Grid>
                 </ControlTemplate>
