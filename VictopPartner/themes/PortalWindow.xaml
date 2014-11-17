@@ -950,21 +950,21 @@
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <ControlTemplate.Resources>
                                     <Storyboard x:Key="InStoryboard">
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="4" Storyboard.TargetProperty="Y">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="6" Storyboard.TargetProperty="Y">
                                             <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
                                             <LinearDoubleKeyFrame KeyTime="00:00:01" Value="120"/>
                                         </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="4" Storyboard.TargetProperty="Y">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="6" Storyboard.TargetProperty="Y">
                                             <LinearDoubleKeyFrame KeyTime="00:00:00" Value="-120"/>
                                             <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                     <Storyboard x:Key="OutStoryboard">
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="4" Storyboard.TargetProperty="Y">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="6" Storyboard.TargetProperty="Y">
                                             <LinearDoubleKeyFrame KeyTime="00:00:00" Value="120"/>
                                             <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
                                         </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="4" Storyboard.TargetProperty="Y">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="6" Storyboard.TargetProperty="Y">
                                             <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
                                             <LinearDoubleKeyFrame KeyTime="00:00:01" Value="-120"/>
                                         </DoubleAnimationUsingKeyFrames>
