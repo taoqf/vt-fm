@@ -453,9 +453,8 @@ namespace PortalFramePlugin.ViewModels
         {
             if (TabItemList[0].Content.GetType().Name.Equals("WebBrowser"))
             {
-                ScrollViewer scroll = new ScrollViewer();
-                scroll.Content = new UCPluginContainer();
-                TabItemList[0].Content = scroll;
+                UCPluginContainer pluginContainer = new UCPluginContainer();
+                TabItemList[0].Content = pluginContainer;
                 TabItemList[0].Header = "功能列表";
             }
             MenuModel menuModel = (MenuModel)x;
