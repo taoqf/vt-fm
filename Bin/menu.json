@@ -140,9 +140,9 @@
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于策划机台维护",
-							"systemId": 906,
+							"systemId": 100,
 							"configsystemid": 101,
-							"spaceId": "victop_core",
+							"spaceId": "feidao_core",
 							"actionCADName": "DataMaintainDefDesPlugin",
 							"menuno": "20020",
 							"fitDataPath": [

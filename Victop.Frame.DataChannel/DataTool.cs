@@ -465,6 +465,10 @@ namespace Victop.Frame.DataChannel
                                     break;
                                 }
                             }
+                            else
+                            {
+                                newCurdList.Add(curdDic);
+                            }
                         }
                         dataOp.SaveCurdJSONData(viewId, newCurdList);
                         break;
