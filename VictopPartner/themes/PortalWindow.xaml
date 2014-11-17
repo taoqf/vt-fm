@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
-    
+
     <Style x:Key="ShadowWindow" TargetType="{x:Type Window}">
         <Setter Property="ResizeMode" Value="NoResize"/>
         <Setter Property="WindowStyle" Value="None"/>
@@ -941,62 +941,47 @@
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Cursor" Value="Hand"/>
                     <!--<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
                     <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>-->
-                    <Setter Property="Width" Value="180"/>
-                    <Setter Property="Height" Value="90"/>
+                    <Setter Property="Width" Value="150"/>
+                    <Setter Property="Height" Value="100"/>
                     <Setter Property="Margin" Value="10"/>
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                    <ControlTemplate.Resources>
-                                        <Storyboard x:Key="Storyboard1">
-                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border2" SpeedRatio="6"  Storyboard.TargetProperty="Opacity">
-                                                <LinearDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
-                                                <LinearDoubleKeyFrame KeyTime="00:00:02" Value="0"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border1" SpeedRatio="6" Storyboard.TargetProperty="Opacity">
-                                                <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
-                                                <LinearDoubleKeyFrame KeyTime="00:00:02" Value="1"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="6"  Storyboard.TargetProperty="Y">
-                                                <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
-                                                <LinearDoubleKeyFrame KeyTime="00:00:01" Value="-90"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="6"  Storyboard.TargetProperty="Y">
-                                                <LinearDoubleKeyFrame KeyTime="00:00:00" Value="90"/>
-                                                <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                        <Storyboard x:Key="Storyboard2">
-                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border2" SpeedRatio="6" Storyboard.TargetProperty="Opacity">
-                                                <LinearDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
-                                                <LinearDoubleKeyFrame KeyTime="00:00:02" Value="1"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border1" SpeedRatio="6" Storyboard.TargetProperty="Opacity">
-                                                <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
-                                                <LinearDoubleKeyFrame KeyTime="00:00:02" Value="0"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="6"  Storyboard.TargetProperty="Y">
-                                                <LinearDoubleKeyFrame KeyTime="00:00:00" Value="-90"/>
-                                                <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="6"  Storyboard.TargetProperty="Y">
-                                                <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
-                                                <LinearDoubleKeyFrame KeyTime="00:00:01" Value="90"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                        </Storyboard>
+                                <ControlTemplate.Resources>
+                                    <Storyboard x:Key="Storyboard1">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="4"  Storyboard.TargetProperty="Y">
+                                            <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+                                            <LinearDoubleKeyFrame KeyTime="00:00:01" Value="-150"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="4"  Storyboard.TargetProperty="ScaleY">
+                                            <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+                                            <LinearDoubleKeyFrame KeyTime="00:00:01" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                    <Storyboard x:Key="Storyboard2">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="4"  Storyboard.TargetProperty="Y">
+                                            <LinearDoubleKeyFrame KeyTime="00:00:00" Value="-150"/>
+                                            <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="4"  Storyboard.TargetProperty="ScaleY">
+                                            <LinearDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+                                            <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </ControlTemplate.Resources>
                                 <Border  BorderBrush="{TemplateBinding BorderBrush}"  BorderThickness="{TemplateBinding BorderThickness}"  Background="{TemplateBinding Background}">
-                                    <Grid  Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-                                        <Border x:Name="border1"  Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Opacity="1"  Background="{TemplateBinding Background}">
-                                            <Grid x:Name="logo" Width="{TemplateBinding Width}" >
+                                    <Grid ClipToBounds="True">
+                                        <Border x:Name="border1" RenderTransformOrigin="0.5,1">
+                                            <Grid x:Name="logo">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
-                                                <controls:VicButtonNormal Grid.Column="0" FontSize="55" FontWeight="Bold" Height="{TemplateBinding Height}"
+                                                <controls:VicButtonNormal Grid.Column="0" FontSize="55" FontWeight="Bold"
                                                      Style="{DynamicResource ButtonFourthLevelMenu}"  Foreground="{DynamicResource SkinColor}"/>
                                                 <Grid  Grid.Column="1"  Margin="10,0,0,0" VerticalAlignment="Center">
                                                     <Grid.RowDefinitions>
@@ -1008,60 +993,45 @@
                                                 </Grid>
                                             </Grid>
                                             <Border.RenderTransform>
-                                                <TransformGroup>
-                                                    <TranslateTransform x:Name="changedImage_translate1"/>
-                                                </TransformGroup>
+                                                <ScaleTransform x:Name="changedImage_translate1" CenterY="1" ScaleY="1"/>
                                             </Border.RenderTransform>
                                         </Border>
-                                        <Border x:Name="border2"  Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"  Opacity="0" Background="{TemplateBinding Background}">
-                                                <!--<controls:VicButtonNormal Style="{DynamicResource ButtonFourthLevelMenu}" Foreground="{TemplateBinding Foreground}"
+                                        <Border x:Name="border2" BorderBrush="{DynamicResource SkinColor}" BorderThickness="1" Background="{DynamicResource SkinBackground}">
+                                            <!--<controls:VicButtonNormal Style="{DynamicResource ButtonFourthLevelMenu}" Foreground="{TemplateBinding Foreground}"
                                                    Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}"  CommandParameter="{Binding .}"/> -->
-                                                <Grid x:Name="stap" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"  Background="WhiteSmoke">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="*"/>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Text="{Binding MenuName}" FontFamily="SimSun" FontSize="12" FontWeight="Bold"  Margin="5"
+                                            <Grid x:Name="stap">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Text="{Binding MenuName}" FontFamily="SimSun" FontSize="12" FontWeight="Bold"  Margin="5"
                                                         Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                    <TextBlock Text="{Binding MenuName}" Grid.Row="1" FontFamily="SimSun" FontSize="12"  Margin="5"
+                                                <TextBlock Text="{Binding MenuName}" Grid.Row="1" FontFamily="SimSun" FontSize="12"  Margin="5"
                                                          Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                    <controls:VicButtonNormal  Grid.Row="2"   Name="btnPluginRun" BorderThickness="0"  Content="运行"   Width="{TemplateBinding Width}" HorizontalContentAlignment="Center"   VerticalContentAlignment="Center"
-                                                       Background="{DynamicResource SkinColor}"
-                                                        Foreground="White" VerticalAlignment="Bottom" Margin="0" SnapsToDevicePixels="True"
+                                                <controls:VicButtonNormal  Grid.Row="2"   Name="btnPluginRun" BorderThickness="0"  Content="运行"
+                                                       Background="{DynamicResource SkinColor}" Width="{TemplateBinding Width}"
+                                                        Foreground="{DynamicResource SkinForeground}" Margin="0" VerticalAlignment="Bottom"
                                                          Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                        CommandParameter="{Binding .}"/>
-                                                </Grid>
+                                            </Grid>
                                             <Border.RenderTransform>
                                                 <TransformGroup>
-                                                    <TranslateTransform x:Name="changedImage_translate2"/>
+                                                    <TranslateTransform x:Name="changedImage_translate2" Y="-150"/>
                                                 </TransformGroup>
                                             </Border.RenderTransform>
                                         </Border>
                                     </Grid>
                                 </Border>
-                                <ControlTemplate.Triggers>  
-                                    <MultiTrigger>
-                                        <MultiTrigger.EnterActions>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Trigger.EnterActions>
                                             <BeginStoryboard Storyboard="{StaticResource Storyboard2}"/>
-                                        </MultiTrigger.EnterActions>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsMouseOver" Value="True" />
-                                            <Condition Property="IsFocused"   Value="False" />
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="BorderBrush"      Value="{DynamicResource SkinColor}"/>
-                                        <Setter Property="BorderThickness"  Value="1"/>
-                                        <Setter Property="Cursor"  Value="Hand"/>
-                                    </MultiTrigger>
-                                    <MultiTrigger>
-                                        <MultiTrigger.EnterActions>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
                                             <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
-                                        </MultiTrigger.EnterActions>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsMouseOver" Value="False"/>    
-                                        </MultiTrigger.Conditions>
-                                     <Setter Property="Cursor"  Value="Hand"/>
-                                    </MultiTrigger>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
                                 </ControlTemplate.Triggers>
 
                             </ControlTemplate>
