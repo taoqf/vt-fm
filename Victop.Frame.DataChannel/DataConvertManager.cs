@@ -161,11 +161,14 @@ namespace Victop.Frame.DataChannel
                         }
                     }
                 }
-                else
+                else if (structDs == null)
                 {
                     string tableName = pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString();
                     DataTable itemDt = GetDataTableStructByModel(modelData, tableName, viewId, dataPath);
-                    newDs.Tables.Add(itemDt);
+                    if (!newDs.Tables.Contains(itemDt.TableName))
+                    {
+                        newDs.Tables.Add(itemDt);
+                    }
                 }
             }
             bool checkFlag = false;
