@@ -949,28 +949,32 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <ControlTemplate.Resources>
-                                    <Storyboard x:Key="InStoryboard">
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="4" Storyboard.TargetProperty="Y">
+                                    <Storyboard x:Key="InStoryboard" BeginTime="00:00:0.2" Duration="00:00:01" SpeedRatio="4">
+                                        <DoubleAnimation To="120" Storyboard.TargetName="changedImage_translate1" Storyboard.TargetProperty="Y"/>
+                                        <DoubleAnimation To="0" Storyboard.TargetName="changedImage_translate2" Storyboard.TargetProperty="Y"/>
+                                        <!--<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="4" Storyboard.TargetProperty="Y">
                                             <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
                                             <LinearDoubleKeyFrame KeyTime="00:00:01" Value="120"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="4" Storyboard.TargetProperty="Y">
                                             <LinearDoubleKeyFrame KeyTime="00:00:00" Value="-120"/>
                                             <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
-                                        </DoubleAnimationUsingKeyFrames>
+                                        </DoubleAnimationUsingKeyFrames>-->
                                     </Storyboard>
-                                    <Storyboard x:Key="OutStoryboard">
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="4" Storyboard.TargetProperty="Y">
+                                    <Storyboard x:Key="OutStoryboard" Duration="00:00:01" SpeedRatio="4">
+                                        <DoubleAnimation To="0" Storyboard.TargetName="changedImage_translate1" Storyboard.TargetProperty="Y"/>
+                                        <DoubleAnimation To="-120" Storyboard.TargetName="changedImage_translate2" Storyboard.TargetProperty="Y"/>
+                                        <!--<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="4" Storyboard.TargetProperty="Y">
                                             <LinearDoubleKeyFrame KeyTime="00:00:00" Value="120"/>
                                             <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="4" Storyboard.TargetProperty="Y">
                                             <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
                                             <LinearDoubleKeyFrame KeyTime="00:00:01" Value="-120"/>
-                                        </DoubleAnimationUsingKeyFrames>
+                                        </DoubleAnimationUsingKeyFrames>-->
                                     </Storyboard>
                                 </ControlTemplate.Resources>
-                                <Border  BorderBrush="{TemplateBinding BorderBrush}"  BorderThickness="{TemplateBinding BorderThickness}"  Background="{TemplateBinding Background}">
+                                <Border  BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"  Background="{TemplateBinding Background}">
                                     <Grid ClipToBounds="True">
                                         <Border x:Name="border1">
                                             <Grid x:Name="logo" VerticalAlignment="Center">
