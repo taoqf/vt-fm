@@ -18,15 +18,15 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,10,20" Style="{DynamicResource RightGrid}">
+            <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,40,0" Style="{DynamicResource RightGrid}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="80"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" HorizontalAlignment="Left" Style="{DynamicResource Line1}"/>
                 <StackPanel Orientation="Horizontal">
-                    <Image Style="{DynamicResource Image1}"></Image>
-                    <controls:VicTextBlockNormal Text="工作接收区" Style="{DynamicResource GridTitle}"></controls:VicTextBlockNormal>
+                    <Image Style="{DynamicResource Image1}"/>
+                    <controls:VicTextBlockNormal Text="工作接收区" Style="{DynamicResource GridTitle}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
                     <controls:VicButtonNormal Content="下载文件"></controls:VicButtonNormal>
@@ -34,15 +34,15 @@
                 </StackPanel>
                 <controls:VicDataGrid x:Name="testGrid1" Grid.Row="1" AutoGenerateColumns="False" SelectionUnit="FullRow"></controls:VicDataGrid>
             </Grid>
-            <Grid Grid.Row="0" Grid.Column="1" Margin="10,0,0,20" Style="{DynamicResource RightGrid}">
+            <Grid Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" Style="{DynamicResource RightGrid}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="80"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" HorizontalAlignment="Left" Style="{DynamicResource Line2}"/>
                 <StackPanel Orientation="Horizontal">
-                    <Image Style="{DynamicResource Image2}"></Image>
-                    <controls:VicTextBlockNormal Text="工作上传区" Style="{DynamicResource GridTitle}"></controls:VicTextBlockNormal>
+                    <Image Style="{DynamicResource Image2}"/>
+                    <controls:VicTextBlockNormal Text="工作产出区" Style="{DynamicResource GridTitle}"></controls:VicTextBlockNormal>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,0">
                     <controls:VicButtonNormal Content="新建">
@@ -53,9 +53,9 @@
                 </StackPanel>
                 <controls:VicDataGrid x:Name="testGrid2" Grid.Row="1" AutoGenerateColumns="False"></controls:VicDataGrid>
             </Grid>
-            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" Style="{DynamicResource RightGrid}">
+            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,40,0,0" Style="{DynamicResource RightGrid}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="108"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" HorizontalAlignment="Left" Style="{DynamicResource Line3}"/>
