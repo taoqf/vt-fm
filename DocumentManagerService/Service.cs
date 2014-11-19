@@ -114,16 +114,31 @@ namespace DocumentManagerService
                     if (CurrentMessageType == "ServerCenterService.UploadDocument")
                     {
                         string uploadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "reupload";
+                        string uploadMode = string.Empty;
+                        if (serviceParams.ContainsKey("UploadMode"))
+                        {
+                            uploadMode = serviceParams["UploadMode"].ToString();
+                        }
+
+                        if (string.IsNullOrWhiteSpace(uploadMode) == false)
+                        {
+                            uploadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "upload?mode_id=" + uploadMode;
+                        }
+                        else
+                        {
+                            string delFileId = System.Guid.NewGuid().ToString();
+                            if (serviceParams.ContainsKey("DelFileId") && string.IsNullOrWhiteSpace(serviceParams["DelFileId"].ToString()) == false)
+                            {
+                                delFileId = serviceParams["DelFileId"].ToString();
+                            }
+
+                            uploadUrl += "?delfile_name=" + delFileId;
+                        }
+
                         string uploadFromPath = string.Empty;
                         if (serviceParams.ContainsKey("UploadFromPath"))
                         {
                             uploadFromPath = serviceParams["UploadFromPath"].ToString();
-                        }
-
-                        string delFileId = System.Guid.NewGuid().ToString();
-                        if (serviceParams.ContainsKey("DelFileId") && string.IsNullOrWhiteSpace(serviceParams["DelFileId"].ToString()) == false)
-                        {
-                            delFileId = serviceParams["DelFileId"].ToString();
                         }
 
                         if (string.IsNullOrWhiteSpace(uploadFromPath))
@@ -140,7 +155,7 @@ namespace DocumentManagerService
                         }
                         else
                         {
-                            returnDic.Add("ReplyContent", this.Upload(uploadUrl, uploadFromPath, delFileId));
+                            returnDic.Add("ReplyContent", this.Upload(uploadUrl, uploadFromPath));
                             returnDic.Add("ReplyMode", 1);
                             result = true;
                         }
@@ -180,12 +195,12 @@ namespace DocumentManagerService
         /// <param name="iUploadUrl">上传页面Url</param> 
         /// <param name="iUploadFromPath">文件路径</param> 
         /// <param name="iDelFileId">删除文件的Id</param> 
-        private Dictionary<string, object> Upload(string iUploadUrl, string iUploadFromPath, string iDelFileId)
+        private Dictionary<string, object> Upload(string iUploadUrl, string iUploadFromPath)
         {
             Dictionary<string, object> returnDic = new Dictionary<string, object>();
             int i = iUploadFromPath.LastIndexOf('.');
             string suffname = iUploadFromPath.Substring(i + 1);
-            string myrequest = UploadFile(iUploadUrl + "?delfile_name=" + iDelFileId, iUploadFromPath, suffname);//返回的Jason字符串 
+            string myrequest = UploadFile(iUploadUrl, iUploadFromPath, suffname);//返回的Jason字符串 
 
             myrequest = myrequest.Replace("[", "");
             myrequest = myrequest.Replace("]", "");

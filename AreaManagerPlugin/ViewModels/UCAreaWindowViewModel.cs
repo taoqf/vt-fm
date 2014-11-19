@@ -329,6 +329,7 @@ namespace AreaManagerPlugin.ViewModels
 
                     Dictionary<string, object> messageContent = new Dictionary<string, object>();
                     Dictionary<string, string> address = new Dictionary<string, string>();
+                    address.Add("UploadMode", "wpf");
                     address.Add("UploadFromPath", uploadFromPath);
                     address.Add("DelFileId", this.fileId);
                     messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
