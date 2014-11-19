@@ -46,7 +46,7 @@
         <Setter Property="Foreground" Value="#333333"/>
         <Setter Property="Width" Value="170"/>
         <Setter Property="Height" Value="30"/>
-      
+
     </Style>
     <Style x:Key="MainFrmUserStackPanelStyle" TargetType="{x:Type StackPanel}">
         <Setter Property="Margin" Value="20,10,150,0"/>
@@ -602,16 +602,18 @@
 
     <!--主窗体左侧工具栏开始-->
     <Style x:Key="RadioButtonFirstLevelMenu" TargetType="{x:Type controls:VicRadioButtonNormal}">
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
+        <Setter Property="Height" Value="26"/>
+        <Setter Property="Background" Value="{DynamicResource FirstMenuItemNormalBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource FirstMenuItemNormalForeground}"/>
         <Setter Property="FontFamily" Value="Microsoft YaHei"/>
-        <Setter Property="FontSize" Value="14"></Setter>
+        <Setter Property="FontSize" Value="12"></Setter>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource FirstMenuItemNormalBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0,1,0,1"/>
+        <Setter Property="Margin" Value="0,2,0,0"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="2,0,0,0"/>
+        <Setter Property="Padding" Value="6,0,0,0"/>
         <Setter Property="IsEnabled" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -640,8 +642,44 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="RadioButtonSecondLevelMenu" TargetType="{x:Type controls:VicRadioButtonNormal}">
+        <Setter Property="FontFamily" Value="Microsoft YaHei"/>
+        <Setter Property="FontSize" Value="12"></Setter>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="IsEnabled" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicRadioButtonNormal}">
+                    <BulletDecorator Background="Transparent">
+                        <Border>
+                            <StackPanel>
+                                <controls:VicTextBlockNormal Margin="0,26,0,0"
+                                                                 ToolTip="{Binding MenuName}" 
+                                                                 Foreground="{TemplateBinding Foreground}"
+                                                                 Style="{DynamicResource TextBlockMenu}" 
+                                                                 FontSize="32"
+                                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                 Text="{Binding IconUrl}"/>
+                                <controls:VicTextBlockNormal Margin="0,10,0,26"
+                                                                 Foreground="{TemplateBinding Foreground}"
+                                                                FontFamily="{TemplateBinding FontFamily}" 
+                                                                FontSize="{TemplateBinding FontSize}" 
+                                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                 Text="{Binding MenuName}"/>
+                                <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="46" Height="1" HorizontalAlignment="Center"/>
+                                <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="46" Height="1" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </BulletDecorator>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="TextBlockMenu" TargetType="controls:VicTextBlockNormal">
-        <Setter Property="Margin" Value="0,5,0,5"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="/Fonts/#iconfont"/>
@@ -650,12 +688,9 @@
     <Style x:Key="ListBoxSecondLevelMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
-        <Setter Property="FontFamily" Value="Microsoft YaHei"/>
-        <Setter Property="FontSize" Value="14"></Setter>
-        <Setter Property="FontWeight"  Value="Bold"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -665,48 +700,44 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <controls:VicTextBlockNormal Grid.Row="0" 
-                                                                 ToolTip="{Binding MenuName}" 
-                                                                 Foreground="{TemplateBinding Foreground}"
-                                                                 Style="{DynamicResource TextBlockMenu}" 
-                                                                 FontSize="32"
-                                                                 Text="{Binding IconUrl}"/>
-                                    <Grid x:Name="grid" Grid.Row="1" Width="62" Background="{TemplateBinding Background}">
-                                        <controls:VicRadioButtonNormal 
-                                            Style="{DynamicResource RadioButtonFirstLevelMenu}" 
+                                <Grid x:Name="grid">
+                                    <controls:VicRadioButtonNormal 
+                                            Style="{DynamicResource RadioButtonSecondLevelMenu}" 
                                             GroupName="A" 
                                             Focusable="True" 
-                                            Margin="0,10,0,0"
                                             Foreground="{TemplateBinding Foreground}" 
                                             Background="{TemplateBinding Background}" 
                                             IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
-                                            Content="{Binding MenuName}" 
+                                            DataContext="{Binding .}" 
                                             Command="{Binding DataContext.listSecondMenuLocalSelectionChangedCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                             CommandParameter="{Binding .}"/>
-                                        <Popup x:Name="popup" IsOpen="False" PlacementTarget="{Binding ElementName=grid}" Placement="Right">
-                                            <ScrollViewer x:Name="scrollViewerThirdMenu" Style="{DynamicResource MenuScrollViewer}">
-                                                <Grid Style="{DynamicResource LeftGrid}">
+                                    <Popup 
+                                        x:Name="popup" 
+                                        IsOpen="False"
+                                        PlacementTarget="{Binding ElementName=grid}" 
+                                        Height="{Binding Height, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                        Placement="Absolute" 
+                                        HorizontalOffset="60" 
+                                        VerticalOffset="0">
+                                        <ScrollViewer x:Name="scrollViewerThirdMenu" Style="{DynamicResource MenuScrollViewer}">
+                                            <Grid Style="{DynamicResource LeftGrid}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="1"/>
+                                                    <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="1"/>
                                                     <ListBox x:Name="listThirdMenuLocal" Style="{DynamicResource ListBoxThirdLevelMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
                                                     </ListBox>
-                                                </Grid>
-                                            </ScrollViewer>
-                                        </Popup>
-                                    </Grid>
+                                                </StackPanel>
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </Popup>
                                 </Grid>
 
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsSelected" Value="true">
-                                        <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"/>
-                                    </Trigger>
-                                    <Trigger SourceName="grid" Property="IsMouseOver" Value="true">
+                                        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -738,30 +769,48 @@
     </Style>
 
     <Style x:Key="ListBoxThirdLevelMenu" TargetType="{x:Type ListBox}">
+        <Setter Property="Width" Value="112"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Width" Value="122"></Setter>
-                    <Setter Property="Height" Value="26"></Setter>
-                    <Setter Property="Margin" Value="5"></Setter>
+                    <Setter Property="Margin" Value="0,8,0,8"></Setter>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <Grid x:Name="grid" Background="{TemplateBinding Background}">
-                                    <controls:VicRadioButtonNormal x:Name="rBtn" Style="{DynamicResource RadioButtonFirstLevelMenu}" Foreground="{TemplateBinding Foreground}" GroupName="A" Focusable="True" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
-                                    Content="{Binding MenuName}"/>
-                                    <Popup x:Name="popup" IsOpen="False" PlacementTarget="{Binding ElementName=grid}" Placement="Right">
+                                    <controls:VicRadioButtonNormal 
+                                        x:Name="rBtn" 
+                                        Style="{DynamicResource RadioButtonFirstLevelMenu}" 
+                                        Foreground="{TemplateBinding Foreground}" 
+                                        BorderBrush="Transparent"
+                                        Background="Transparent"
+                                        GroupName="B" 
+                                        Focusable="True" 
+                                        Margin="0,6,0,6"
+                                        IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                        Content="{Binding MenuName}"/>
+                                    <Popup x:Name="popup" 
+                                           IsOpen="False" 
+                                           PlacementTarget="{Binding ElementName=grid}" 
+                                           Height="{Binding Height, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                           Placement="Absolute" 
+                                           HorizontalOffset="172" 
+                                           VerticalOffset="0">
                                         <ScrollViewer x:Name="scrollViewerThirdMenu" Style="{DynamicResource MenuScrollViewer}">
                                             <Grid Style="{DynamicResource LeftGrid}">
-                                                <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
-                                                </ListBox>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="1"/>
+                                                    <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="1"/>
+                                                    <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
+                                                    </ListBox>
+                                                </StackPanel>
                                             </Grid>
                                         </ScrollViewer>
                                     </Popup>
@@ -769,10 +818,14 @@
 
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsSelected" Value="true">
-                                        <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"></Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"></Setter>
+                                        <Setter Property="Background" Value="{DynamicResource FirstMenuItemNormalBackground}" TargetName="rBtn"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource FirstMenuItemNormalBorderBrush}" TargetName="rBtn"/>
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"></Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"></Setter>
+                                        <Setter Property="Background" Value="{DynamicResource FirstMenuItemNormalBackground}" TargetName="rBtn"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource FirstMenuItemNormalBorderBrush}" TargetName="rBtn"/>
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -804,32 +857,44 @@
     </Style>
 
     <Style x:Key="ListBoxFourthMenu" TargetType="{x:Type ListBox}">
+        <Setter Property="Width" Value="112"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Width" Value="122"></Setter>
-                    <Setter Property="Height" Value="26"></Setter>
-                    <Setter Property="Margin" Value="5"></Setter>
+                    <Setter Property="Margin" Value="0,4,0,4"></Setter>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <controls:VicRadioButtonNormal Style="{DynamicResource RadioButtonFirstLevelMenu}" GroupName="A" Focusable="True" Foreground="{TemplateBinding Foreground}" Background="{TemplateBinding Background}" IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
-                                    Content="{Binding MenuName}" Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
+                                <controls:VicRadioButtonNormal 
+                                    x:Name="rBtn"
+                                    Style="{DynamicResource RadioButtonFirstLevelMenu}" 
+                                    GroupName="C" 
+                                    Focusable="True" 
+                                        Margin="0,8,0,8"
+                                    Foreground="{TemplateBinding Foreground}" 
+                                        BorderBrush="Transparent"
+                                        Background="Transparent"
+                                    IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                    Content="{Binding MenuName}" 
+                                    Command="{Binding DataContext.btnPluginIcoClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                    CommandParameter="{Binding .}"/>
+                                <ControlTemplate.Triggers>
+                                    <Trigger  Property="IsMouseOver" Value="true">
+                                        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"></Setter>
+                                        <Setter Property="Background" Value="{DynamicResource FirstMenuItemNormalBackground}" TargetName="rBtn"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource FirstMenuItemNormalBorderBrush}" TargetName="rBtn"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
-                    <Style.Triggers>
-                        <Trigger  Property="IsMouseOver" Value="true">
-                            <Setter Property="Foreground" Value="{DynamicResource LeftMenuOverForeground}"></Setter>
-                        </Trigger>
-                    </Style.Triggers>
                 </Style>
             </Setter.Value>
         </Setter>
@@ -1059,21 +1124,8 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <!--<Storyboard x:Key="MenuExpandStoryboard">
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
-            <EasingDoubleKeyFrame KeyTime="0" Value="62"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="175"/>
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
-
-    <Storyboard x:Key="MenuCollapseStoryboard">
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
-            <EasingDoubleKeyFrame KeyTime="0" Value="175"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="62"/>
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>-->
     <!--主窗体左侧工具栏结束-->
+    
     <!--主窗体右侧按钮样式开始-->
     <Style x:Key="btnMaxiStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Width" Value="34"/>

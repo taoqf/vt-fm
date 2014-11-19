@@ -179,9 +179,9 @@ namespace PortalFramePlugin.ViewModels
                     homeItem.Name = "homeItem";
                     homeItem.AllowDelete = false;
                     homeItem.Header = "飞道科技";
-                    WebBrowser browser = new WebBrowser();
+                    //WebBrowser browser = new WebBrowser();
                     //browser.Source = new Uri("http://www.victop.com");
-                    homeItem.Content = browser;
+                    //homeItem.Content = browser;
                     tabItemList.Add(homeItem);
                 }
                 return tabItemList;
@@ -451,7 +451,7 @@ namespace PortalFramePlugin.ViewModels
         /// <param name="x"></param>
         private void BuildPluginContainer(object x)
         {
-            if (TabItemList[0].Content.GetType().Name.Equals("WebBrowser"))
+            if (TabItemList[0].Content == null)
             {
                 UCPluginContainer pluginContainer = new UCPluginContainer();
                 TabItemList[0].Content = pluginContainer;
@@ -790,7 +790,7 @@ namespace PortalFramePlugin.ViewModels
                     PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
                     if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                     {
-                        PluginShow(pluginModel,selectedFourthMenu.MenuName);
+                        PluginShow(pluginModel, selectedFourthMenu.MenuName);
                     }
                     else
                     {
@@ -948,7 +948,7 @@ namespace PortalFramePlugin.ViewModels
                 MessageOperation messageOperation = new MessageOperation();
                 Dictionary<string, object> messageContent = new Dictionary<string, object>();
                 Dictionary<string, string> address = new Dictionary<string, string>();
-                address.Add("DownloadFileId",fileInfo);
+                address.Add("DownloadFileId", fileInfo);
                 address.Add("DownloadToPath", path);
                 messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
                 Dictionary<string, object> downResult = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
