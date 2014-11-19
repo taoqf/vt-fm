@@ -31,7 +31,23 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    <Style x:Key="MainFrmSearchGridStyle" TargetType="{x:Type Grid}">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Opacity" Value="0.6"/>
+        <Setter Property="Width" Value="202"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Margin" Value="0,0,60,0"/>
+    </Style>
+    <Style x:Key="MainFrmSearchBoxStyle" TargetType="{x:Type controls:VicTextBoxNormal}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="#333333"/>
+        <Setter Property="Width" Value="170"/>
+        <Setter Property="Height" Value="30"/>
+      
+    </Style>
     <Style x:Key="MainFrmUserStackPanelStyle" TargetType="{x:Type StackPanel}">
         <Setter Property="Margin" Value="20,10,150,0"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
@@ -61,7 +77,7 @@
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Focusable" Value="True"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="10,0,20,0"/>
+        <Setter Property="Margin" Value="16,0,94,0"/>
     </Style>
 
     <Style x:Key="LeftGrid" TargetType="{x:Type Grid}">
@@ -589,13 +605,12 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
-        <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
+        <Setter Property="FontFamily" Value="Microsoft YaHei"/>
         <Setter Property="FontSize" Value="14"></Setter>
-        <Setter Property="FontWeight"  Value="Bold"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
-        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="2,0,0,0"/>
         <Setter Property="IsEnabled" Value="True"/>
         <Setter Property="Template">
@@ -625,42 +640,9 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style x:Key="ButtonFourthLevelMenu" TargetType="{x:Type controls:VicButtonNormal}">
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="FontSize" Value="30"></Setter>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Margin" Value="0"></Setter>
-        <Setter Property="Padding" Value="2,0,0,0"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <BulletDecorator Background="Transparent">
-                        <Border x:Name="border"  
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}">
-                            <Grid>
-                                <controls:VicTextBlockNormal  
-                                                             Foreground="{TemplateBinding Foreground}"
-                                                             Style="{DynamicResource TextBlockMenu}" 
-                                                             FontSize="{TemplateBinding FontSize}"
-                                                             Text="{Binding IconUrl}"
-                                                             Margin="{TemplateBinding Padding}"
-                                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                            </Grid>
-                        </Border>
-                    </BulletDecorator>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="TextBlockMenu" TargetType="controls:VicTextBlockNormal">
-        <Setter Property="Margin" Value="10,5,0,0"/>
+        <Setter Property="Margin" Value="0,5,0,5"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="/Fonts/#iconfont"/>
     </Style>
@@ -668,8 +650,8 @@
     <Style x:Key="ListBoxSecondLevelMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"></Setter>
-        <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource LeftMenuForeground}"/>
+        <Setter Property="FontFamily" Value="Microsoft YaHei"/>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="FontWeight"  Value="Bold"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -684,17 +666,17 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <controls:VicTextBlockNormal Grid.Column="0" 
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <controls:VicTextBlockNormal Grid.Row="0" 
                                                                  ToolTip="{Binding MenuName}" 
                                                                  Foreground="{TemplateBinding Foreground}"
                                                                  Style="{DynamicResource TextBlockMenu}" 
-                                                                 FontSize="23"
+                                                                 FontSize="32"
                                                                  Text="{Binding IconUrl}"/>
-                                    <Grid x:Name="grid" Grid.Column="1" Width="115" Background="{TemplateBinding Background}">
+                                    <Grid x:Name="grid" Grid.Row="1" Width="62" Background="{TemplateBinding Background}">
                                         <controls:VicRadioButtonNormal 
                                             Style="{DynamicResource RadioButtonFirstLevelMenu}" 
                                             GroupName="A" 
@@ -766,8 +748,8 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="MinWidth" Value="30"></Setter>
-                    <Setter Property="Height" Value="37"></Setter>
+                    <Setter Property="Width" Value="122"></Setter>
+                    <Setter Property="Height" Value="26"></Setter>
                     <Setter Property="Margin" Value="5"></Setter>
                     <Setter Property="Template">
                         <Setter.Value>
@@ -832,8 +814,8 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="MinWidth" Value="30"></Setter>
-                    <Setter Property="Height" Value="37"></Setter>
+                    <Setter Property="Width" Value="122"></Setter>
+                    <Setter Property="Height" Value="26"></Setter>
                     <Setter Property="Margin" Value="5"></Setter>
                     <Setter Property="Template">
                         <Setter.Value>
@@ -928,6 +910,38 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ButtonFourthLevelMenu" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontSize" Value="30"></Setter>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="Padding" Value="2,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
+                    <BulletDecorator Background="Transparent">
+                        <Border x:Name="border"  
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}">
+                            <Grid>
+                                <controls:VicTextBlockNormal  
+                                                             Foreground="{TemplateBinding Foreground}"
+                                                             Style="{DynamicResource TextBlockMenu}" 
+                                                             FontSize="{TemplateBinding FontSize}"
+                                                             Text="{Binding IconUrl}"
+                                                             Margin="{TemplateBinding Padding}"
+                                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
+                        </Border>
+                    </BulletDecorator>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="ListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
         <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
@@ -950,28 +964,28 @@
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <ControlTemplate.Resources>
                                     <Storyboard x:Key="InStoryboard">
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="6" Storyboard.TargetProperty="Y">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:0.2" Storyboard.TargetName="changedImage_translate1" SpeedRatio="6" Storyboard.TargetProperty="Y">
                                             <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
                                             <LinearDoubleKeyFrame KeyTime="00:00:01" Value="120"/>
                                         </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="6" Storyboard.TargetProperty="Y">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:0.2" Storyboard.TargetName="changedImage_translate2" SpeedRatio="6" Storyboard.TargetProperty="Y">
                                             <LinearDoubleKeyFrame KeyTime="00:00:00" Value="-120"/>
                                             <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                     <Storyboard x:Key="OutStoryboard">
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="6" Storyboard.TargetProperty="Y">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:0.2" Storyboard.TargetName="changedImage_translate1" SpeedRatio="6" Storyboard.TargetProperty="Y">
                                             <LinearDoubleKeyFrame KeyTime="00:00:00" Value="120"/>
                                             <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
                                         </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="6" Storyboard.TargetProperty="Y">
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:0.2" Storyboard.TargetName="changedImage_translate2" SpeedRatio="6" Storyboard.TargetProperty="Y">
                                             <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
                                             <LinearDoubleKeyFrame KeyTime="00:00:01" Value="-120"/>
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </ControlTemplate.Resources>
                                 <Border  BorderBrush="{TemplateBinding BorderBrush}"  BorderThickness="{TemplateBinding BorderThickness}"  Background="{TemplateBinding Background}">
-                                    <Grid ClipToBounds="True">
+                                    <Grid x:Name="aa" ClipToBounds="True">
                                         <Border x:Name="border1">
                                             <Grid x:Name="logo" VerticalAlignment="Center">
                                                 <Grid.ColumnDefinitions>
@@ -1042,9 +1056,9 @@
         </Setter>
     </Style>
 
-    <Storyboard x:Key="MenuExpandStoryboard">
+    <!--<Storyboard x:Key="MenuExpandStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
-            <EasingDoubleKeyFrame KeyTime="0" Value="50"/>
+            <EasingDoubleKeyFrame KeyTime="0" Value="62"/>
             <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="175"/>
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
@@ -1052,9 +1066,9 @@
     <Storyboard x:Key="MenuCollapseStoryboard">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="scrollViewer">
             <EasingDoubleKeyFrame KeyTime="0" Value="175"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="50"/>
+            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="62"/>
         </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
+    </Storyboard>-->
     <!--主窗体左侧工具栏结束-->
     <!--主窗体右侧按钮样式开始-->
     <Style x:Key="btnMaxiStyle" TargetType="{x:Type controls:VicButtonNormal}">
@@ -1098,6 +1112,7 @@
         </Setter>
     </Style>
     <Style x:Key="btnMiniStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="Margin" Value="18,0,18,0"/>
         <Setter Property="Width" Value="34"/>
         <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
@@ -1169,6 +1184,7 @@
     <Style x:Key="btnChangeSkinStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Width" Value="34"/>
         <Setter Property="Height" Value="34"/>
+        <Setter Property="Margin" Value="22,0,18,0"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="IsTabStop" Value="False"/>

@@ -341,9 +341,9 @@
                 <ControlTemplate TargetType="{x:Type controls:VicTextBoxNormal}">
                     <Border Name="Bd"  BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid    Height="{TemplateBinding Height}"  MinWidth="{TemplateBinding MinWidth}"  Background="{DynamicResource brushWatermarkBackground}"  >
-                            <TextBlock  Text="{TemplateBinding WaterMark}"  Foreground="{DynamicResource brushWatermarkForeground}" 
+                            <TextBlock  Text="{TemplateBinding WaterMark}"  Foreground="{DynamicResource brushWatermarkForeground}"  VerticalAlignment="Center" 
                                Visibility="{Binding ElementName=txtUserEntry, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                            <TextBox x:Name="txtUserEntry" AcceptsReturn="{TemplateBinding AcceptsReturn}" TextWrapping="{TemplateBinding TextWrapping}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" TextAlignment="{TemplateBinding TextAlignment}"  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"  HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" BorderThickness="0" Background="Transparent" Text="{TemplateBinding VicText}" />
+                            <TextBox x:Name="txtUserEntry" AcceptsReturn="{TemplateBinding AcceptsReturn}" TextWrapping="{TemplateBinding TextWrapping}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" TextAlignment="{TemplateBinding TextAlignment}"  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"  HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}" BorderThickness="0" Background="{TemplateBinding Background}" Text="{TemplateBinding VicText}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
