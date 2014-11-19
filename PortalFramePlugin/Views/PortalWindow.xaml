@@ -14,26 +14,40 @@
         <vm:UCPortalWindowViewModel/>
     </Window.DataContext>
     <DockPanel LastChildFill="True">
-        <ScrollViewer x:Name="scrollViewer" Width="50" Style="{DynamicResource MenuScrollViewer}">
-            <ScrollViewer.Triggers>
+        <ScrollViewer x:Name="scrollViewer" Width="62" Style="{DynamicResource MenuScrollViewer}">
+            <!--<ScrollViewer.Triggers>
                 <EventTrigger RoutedEvent="ScrollViewer.MouseEnter">
                     <BeginStoryboard Storyboard="{DynamicResource MenuExpandStoryboard}"></BeginStoryboard>
                 </EventTrigger>
                 <EventTrigger RoutedEvent="ScrollViewer.MouseLeave">
                     <BeginStoryboard Storyboard="{DynamicResource MenuCollapseStoryboard}"/>
                 </EventTrigger>
-            </ScrollViewer.Triggers>
+            </ScrollViewer.Triggers>-->
             <Grid Style="{DynamicResource LeftGrid}">
                 <Grid.RowDefinitions>
                     <RowDefinition RowDefinition.Height="70"/>
+                    <RowDefinition RowDefinition.Height="80"/>
                     <RowDefinition RowDefinition.Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Style="{DynamicResource LeftGrid}">
                     <Image Style="{DynamicResource logoImage}"></Image>
                 </Grid>
-                <StackPanel Grid.Row="1" Name="MenuStackPanel" Orientation="Vertical" Margin="0,50,0,0">
-                    <controls:VicRadioButtonNormal Content="飞道云" Style="{DynamicResource RadioButtonFirstLevelMenu}"></controls:VicRadioButtonNormal>
-                    <controls:VicRadioButtonNormal Content="本地" Style="{DynamicResource RadioButtonFirstLevelMenu}">
+                <Grid Grid.Row="1" Width="42" Height="42" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,10,0,17">
+                    <Ellipse Fill="{DynamicResource SkinColor}"/>
+                    <Path Fill="Black" Data="M28.470366,158.34369 L29.77892,159.5663 30.148446,160.05597 C29.714695,159.64916 29.294255,159.23203 28.886935,158.80504 z M41.057682,95.974595 L40.526082,96.240349 40.552575,96.179253 z M99.857018,60.898804 C103.1907,60.925068 106.51707,61.081906 109.81231,61.371174 L111.62199,61.550988 111.55734,61.590966 C99.744873,69.110756 90.680535,82.009759 86.758309,97.499268 L86.628022,98.037835 85.44088,97.466034 C75.780373,93.020363 64.227601,90.980965 53.072346,92.401566 48.540528,92.978684 44.422894,94.082451 40.798279,95.612626 L40.552575,96.179253 39.750348,96.504288 C26.384634,102.26049 17.523858,116.70822 18.659258,133.25699 19.02825,138.63506 20.164862,143.84149 22.195719,148.55696 23.594094,151.80385 25.416447,154.81796 27.704125,157.49506 L28.470366,158.34369 27.923832,157.83305 C18.902026,148.90346 13.732324,136.07138 14.567038,121.48801 15.137664,111.51849 18.440117,102.02825 23.702961,93.793931 L23.804873,93.638222 24.274817,92.772111 C26.992632,87.962731 31.143908,83.313149 36.761113,79.044373 L37.875615,78.218285 37.999539,78.119713 C43.604145,73.758416 49.948922,70.360146 56.737118,68.223649 L57.103619,68.113022 58.04538,67.762131 C70.82782,63.123089 85.411072,60.784997 99.857018,60.898804 z M149.78171,0.0010525221 C154.89998,0.023463572 159.6944,0.40364768 164.10475,1.1285416 L164.26999,1.1582886 163.92377,1.2225612 C139.91499,5.9970727 119.53695,28.126824 116.02519,53.959797 L115.82426,55.749329 114.84116,55.585389 C105.27939,54.087941 94.740708,53.929623 83.723504,55.355912 46.135392,60.222065 15.876503,81.863236 11.516545,105.56468 L11.330864,106.69137 11.174584,107.22651 C10.116165,111.05504 9.5272049,115.12083 9.4654612,119.3802 9.0675664,146.82945 30.702031,172.8978 59.315991,181.26601 L60.082314,181.481 58.404522,181.2793 C25.465897,176.87587 4.3232004E-07,147.2941 0,111.45705 4.3232004E-07,101.13111 2.1142334,91.324517 5.9122729,82.489907 L5.9580946,82.386696 6.067028,81.957512 C13.391029,55.224774 53.060299,23.783186 100.61803,8.4747224 118.65717,2.6680642 135.48308,-0.061557436 149.78171,0.0010525221 z" RenderTransformOrigin="0.407995208219931,0.613523666167863" Stretch="Fill" Margin="4.924,6.5,4.986,2">
+                        <Path.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleX="0.83"/>
+                                <RotateTransform/>
+                                <TranslateTransform X="-0.986"/>
+                            </TransformGroup>
+                        </Path.RenderTransform>
+                    </Path>
+                </Grid>
+                <StackPanel Grid.Row="2" Name="MenuStackPanel" Orientation="Vertical">
+                    <controls:VicRadioButtonNormal Content="飞道云" Style="{DynamicResource RadioButtonFirstLevelMenu}"/>
+                    <controls:VicRadioButtonNormal Content="本地云" Style="{DynamicResource RadioButtonFirstLevelMenu}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding localBtnClickCommand}"/>
@@ -56,12 +70,22 @@
         </ScrollViewer>
         <Grid Name="gridMain">
             <Grid.RowDefinitions>
-                <RowDefinition RowDefinition.Height="70"/>
+                <RowDefinition RowDefinition.Height="68"/>
                 <RowDefinition RowDefinition.Height="*"/>
             </Grid.RowDefinitions>
             <Grid Name="gridTitle" Grid.Row="0"  Grid.Column="1">
                 <!--Width="260"-->
-                <StackPanel Orientation="Horizontal" Style="{DynamicResource MainFrmUserStackPanelStyle}">
+                <StackPanel Orientation="Horizontal" Style="{DynamicResource MainFrmUserStackPanelStyle}">  
+                    <Grid Name="gridSearch"  Style="{DynamicResource MainFrmSearchGridStyle}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <controls:VicTextBoxNormal  Grid.Column="0"  WaterMark="  搜索" Style="{DynamicResource MainFrmSearchBoxStyle}"/>
+                        <Grid Grid.Column="1" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Path  Margin="6" Data="M13.5,7 C13.5,10.589851 10.589851,13.5 7,13.5 C3.4101491,13.5 0.5,10.589851 0.5,7 C0.5,3.4101491 3.4101491,0.5 7,0.5 C10.589851,0.5 13.5,3.4101491 13.5,7 z M12,12 L20,20"  RenderTransformOrigin="0.493073170731708,0.37970731707317" Stroke="#333333"/>
+                        </Grid>
+                    </Grid>
                     <controls:VicButtonImage Name="btnUserLogin" Background="{Binding UserImg, Converter={StaticResource imgeNameToBackgroundConverter}}"
                                          Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}">
                     </controls:VicButtonImage>
