@@ -685,6 +685,88 @@
         <Setter Property="FontFamily" Value="/Fonts/#iconfont"/>
     </Style>
 
+    <Style x:Key="ExpanderDownHeaderStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Height" Value="26"/>
+        <Setter Property="Background" Value="{DynamicResource FirstMenuItemNormalBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource FirstMenuItemNormalForeground}"/>
+        <Setter Property="FontFamily" Value="Microsoft YaHei"/>
+        <Setter Property="FontSize" Value="12"></Setter>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource FirstMenuItemNormalBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0,1,0,1"/>
+        <Setter Property="Margin" Value="0,2,0,0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="6,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentPresenter HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
+                            <Path 
+                                HorizontalAlignment="Center" 
+                                Stroke="{TemplateBinding Foreground}" 
+                                StrokeThickness="2" 
+                                VerticalAlignment="Center" 
+                                Data="M1.5,1 L2,2 L1,2 z" 
+                                Height="4" 
+                                Margin="10,0,0,0"
+                                RenderTransformOrigin="0.5,0.5" 
+                                Stretch="Fill" 
+                                Width="5">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="180"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="true"/>
+                        <Trigger Property="IsMouseOver" Value="true"/>
+                        <Trigger Property="IsPressed" Value="true"/>
+                        <Trigger Property="IsEnabled" Value="false"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="ExpanderFirstLevel" TargetType="{x:Type Expander}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="3" SnapsToDevicePixels="true">
+                        <DockPanel>
+                            <ToggleButton 
+                                x:Name="HeaderSite" 
+                                Content="{TemplateBinding Header}" 
+                                DockPanel.Dock="Top" 
+                                IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                Style="{StaticResource ExpanderDownHeaderStyle}"/>
+                            <ContentPresenter x:Name="ExpandSite" DockPanel.Dock="Bottom" Focusable="false" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="true">
+                            <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="ListBoxSecondLevelMenu" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -724,7 +806,10 @@
                                                 <StackPanel Orientation="Horizontal">
                                                     <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="1"/>
                                                     <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="1"/>
-                                                    <ListBox x:Name="listThirdMenuLocal" Style="{DynamicResource ListBoxThirdLevelMenu}" BorderThickness="0" BorderBrush="#F1F3F5" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
+                                                    <ListBox 
+                                                        x:Name="listThirdMenuLocal" 
+                                                        Style="{DynamicResource ListBoxThirdLevelMenu}" 
+                                                        ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
                                                     </ListBox>
                                                 </StackPanel>
                                             </Grid>
@@ -780,7 +865,6 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Margin" Value="0,8,0,8"></Setter>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -793,9 +877,31 @@
                                         Background="Transparent"
                                         GroupName="B" 
                                         Focusable="True" 
-                                        Margin="0,6,0,6"
+                                        Margin="0,4,0,4"
                                         IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                         Content="{Binding MenuName}"/>
+                                    <Path 
+                                        x:Name="path"
+                                HorizontalAlignment="Right" 
+                                Stroke="{TemplateBinding Foreground}" 
+                                StrokeThickness="2" 
+                                        Visibility="Hidden"
+                                VerticalAlignment="Center" 
+                                Data="M1.5,1 L2,2 L1,2 z" 
+                                Height="4" 
+                                        Margin="0,0,10,0"
+                                RenderTransformOrigin="0.5,0.5" 
+                                Stretch="Fill" 
+                                Width="5">
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform/>
+                                                <SkewTransform/>
+                                                <RotateTransform Angle="90"/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                    </Path>
                                     <Popup x:Name="popup" 
                                            IsOpen="False" 
                                            PlacementTarget="{Binding ElementName=grid}" 
@@ -808,7 +914,13 @@
                                                 <StackPanel Orientation="Horizontal">
                                                     <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="1"/>
                                                     <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="1"/>
-                                                    <ListBox x:Name="listFourMenuLocal" Style="{DynamicResource ListBoxFourthMenu}" BorderThickness="0" Margin="0" Padding="0" ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
+                                                    <ListBox 
+                                                        x:Name="listFourMenuLocal" 
+                                                        Style="{DynamicResource ListBoxFourthMenu}" 
+                                                        BorderThickness="0" 
+                                                        Margin="0" 
+                                                        Padding="0" 
+                                                        ItemsSource="{Binding SystemMenuList,UpdateSourceTrigger=PropertyChanged}">
                                                     </ListBox>
                                                 </StackPanel>
                                             </Grid>
@@ -821,11 +933,13 @@
                                         <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"></Setter>
                                         <Setter Property="Background" Value="{DynamicResource FirstMenuItemNormalBackground}" TargetName="rBtn"/>
                                         <Setter Property="BorderBrush" Value="{DynamicResource FirstMenuItemNormalBorderBrush}" TargetName="rBtn"/>
+                                        <Setter Property="Visibility" Value="Visible" TargetName="path"/>
                                     </Trigger>
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"></Setter>
                                         <Setter Property="Background" Value="{DynamicResource FirstMenuItemNormalBackground}" TargetName="rBtn"/>
                                         <Setter Property="BorderBrush" Value="{DynamicResource FirstMenuItemNormalBorderBrush}" TargetName="rBtn"/>
+                                        <Setter Property="Visibility" Value="Visible" TargetName="path"/>
                                         <Setter Property="IsOpen" TargetName="popup" Value="true"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -868,7 +982,6 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Margin" Value="0,4,0,4"></Setter>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -877,7 +990,7 @@
                                     Style="{DynamicResource RadioButtonFirstLevelMenu}" 
                                     GroupName="C" 
                                     Focusable="True" 
-                                        Margin="0,8,0,8"
+                                        Margin="0,4,0,4"
                                     Foreground="{TemplateBinding Foreground}" 
                                         BorderBrush="Transparent"
                                         Background="Transparent"

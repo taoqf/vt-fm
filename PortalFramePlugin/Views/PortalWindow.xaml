@@ -34,24 +34,28 @@
                     <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="46" Height="1" HorizontalAlignment="Center" Margin="0,17,0,0"/>
                     <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="46" Height="1" HorizontalAlignment="Center"/>
                     <controls:VicRadioButtonNormal Content="飞道云" Margin="0,14,0,0" Style="{DynamicResource RadioButtonFirstLevelMenu}"/>
-                    <controls:VicRadioButtonNormal Content="本地云" Style="{DynamicResource RadioButtonFirstLevelMenu}">
+                    <!--<controls:VicRadioButtonNormal Content="本地云" Style="{DynamicResource RadioButtonFirstLevelMenu}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding localBtnClickCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </controls:VicRadioButtonNormal>
-                    <ListBox x:Name="listSecondMenuLocal" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
-                    </ListBox>
-                    <controls:VicRadioButtonNormal Content="企业云" Style="{DynamicResource RadioButtonFirstLevelMenu}">
+                    </controls:VicRadioButtonNormal>-->
+                    <Expander Header="本地云" Style="{DynamicResource ExpanderFirstLevel}" IsExpanded="True">
+                        <ListBox x:Name="listSecondMenuLocal" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
+                        </ListBox>
+                    </Expander>
+                    <!--<controls:VicRadioButtonNormal Content="企业云" Style="{DynamicResource RadioButtonFirstLevelMenu}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding enterPriseBtnClickCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </controls:VicRadioButtonNormal>
-                    <ListBox x:Name="listSecondMenuEnterprise" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListEnterprise,UpdateSourceTrigger=PropertyChanged}">
-                    </ListBox>
+                    </controls:VicRadioButtonNormal>-->
+                    <Expander Header="企业云" Style="{DynamicResource ExpanderFirstLevel}">
+                        <ListBox x:Name="listSecondMenuEnterprise" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListEnterprise,UpdateSourceTrigger=PropertyChanged}">
+                        </ListBox>
+                    </Expander>
                 </StackPanel>
             </Grid>
         </ScrollViewer>
