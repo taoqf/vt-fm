@@ -31,9 +31,6 @@
                 <i:EventTrigger EventName="Loaded">
                     <i:InvokeCommandAction Command="{Binding windowOperationViewLoadedCommand}" CommandParameter="{Binding ElementName=windowOperationView}"/>
                 </i:EventTrigger>
-                <i:EventTrigger EventName="Closing">
-                    <i:InvokeCommandAction Command="{Binding windowOperationViewClosingCommand}"/>
-                </i:EventTrigger>
             </i:Interaction.Triggers>
         </controls:VicGridNormal>
     </Border>

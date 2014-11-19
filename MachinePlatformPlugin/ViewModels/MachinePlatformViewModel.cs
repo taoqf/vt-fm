@@ -339,6 +339,7 @@ namespace MachinePlatformPlugin.ViewModels
                     Window parentWin = GetParentObject<Window>(ucMachineMainView);
                     opWindow.Owner = parentWin;
                     opWindow.ShowDialog();
+                    string JsonStr = datagridMaster.Save();
                 });
             }
         }
@@ -443,7 +444,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (datagridMaster.ParamsModel.CheckedRows.Length <= 0)
+                    if (datagridMaster.ParamsModel.CheckedRows == null || datagridMaster.ParamsModel.CheckedRows.Length <= 0)
                     {
                         VicMessageBoxNormal.Show("请选择需要派工的任务！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
@@ -464,13 +465,13 @@ namespace MachinePlatformPlugin.ViewModels
                                 }
                             }
                             datagridMaster.ParamsModel.CheckedRows[i]["work_staff_no"] = cabinetInfoModel.CabinetSelectedStaff["staff_no"];
+                            datagridMaster.ParamsModel.CheckedRows[i]["work_staff_name"] = cabinetInfoModel.CabinetSelectedStaff["staff_name"];
                             datagridMaster.ParamsModel.CheckedRows[i]["wt_state"] = ((long)TaskStateEnum.已派工).ToString();
                             datagridMaster.ParamsModel.CheckedRows[i]["start_time"] = DBNull.Value;
                             datagridMaster.ParamsModel.CheckedRows[i]["finish_time"] = DBNull.Value;
-                            datagridMaster.ParamsModel.CheckedRows[i]["last_wo_no"] = "";
                             //添加生产日志
                             string strTemp = "\n";
-                            strTemp += cabinetInfoModel.UserName + ": " + GetSysServiceTime() + ": " + cabinetInfoModel.CabinetName + "     派工给:" + SelectPersonnelViewModel.staffName; ;
+                            strTemp += cabinetInfoModel.UserName + ": " + GetSysServiceTime() + ": " + cabinetInfoModel.CabinetName + "     派工给:" + cabinetInfoModel.CabinetSelectedStaff["staff_name"];
 
                             datagridMaster.ParamsModel.CheckedRows[i]["production_log"] += strTemp;
                         }
@@ -674,7 +675,7 @@ namespace MachinePlatformPlugin.ViewModels
                     {
                         if (datagridMaster.ParamsModel.GridSelectedRow["wt_state"].ToString() != ((long)TaskStateEnum.已交工).ToString())
                         {
-                            VicMessageBoxNormal.Show("选择的任务无法驳回，请重新选择！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                            VicMessageBoxNormal.Show("选择的任务无法审核，请重新选择！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
                         {
@@ -724,6 +725,7 @@ namespace MachinePlatformPlugin.ViewModels
                             datagridMaster.ParamsModel.GridSelectedRow["start_time"] = DBNull.Value;
                             datagridMaster.ParamsModel.GridSelectedRow["finish_time"] = DBNull.Value;
                             datagridMaster.ParamsModel.GridSelectedRow["work_staff_no"] = "";
+                            datagridMaster.ParamsModel.GridSelectedRow["work_staff_name"] = "";
                             string strTemp = "\n";
                             strTemp += cabinetInfoModel.UserName + ": " + GetSysServiceTime() + ": " + cabinetInfoModel.CabinetName + "  驳回";
                             datagridMaster.ParamsModel.GridSelectedRow["production_log"] += strTemp;
@@ -769,20 +771,16 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
+                    List<object> conlist = new List<object>();
+                    Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+                    tableConDic.Add("wt_category_no", cabinetInfoModel.CabinetWTCateGoryNo);
                     if (SearchTaskState > 0)
                     {
-                        List<object> conlist = new List<object>();
-                        Dictionary<string, object> tableConDic = new Dictionary<string, object>();
                         tableConDic.Add("wt_state", SearchTaskState.ToString());
-                        conlist.Add(tableConDic);
-                        datagridMaster.ParamsModel.ConditionList = conlist;
-                        datagridMaster.Search();
                     }
-                    else
-                    {
-                        datagridMaster.Search();
-                    }
+                    conlist.Add(tableConDic);
+                    datagridMaster.ParamsModel.ConditionList = conlist;
+                    string resultStr = datagridMaster.Search();
                 });
             }
         }
@@ -951,7 +949,7 @@ namespace MachinePlatformPlugin.ViewModels
             DataTable OutPutDt = new DataTable();
             DataColumn clientNoDc = new DataColumn("client_no");
             clientNoDc.Caption = "客户编号";
-            DataColumn productNoDc = new DataColumn("product_no");
+            DataColumn productNoDc = new DataColumn("company_name");
             productNoDc.Caption = "客户";
             DataColumn fileNameDc = new DataColumn("file_name");
             fileNameDc.Caption = "产出文件";
@@ -966,7 +964,7 @@ namespace MachinePlatformPlugin.ViewModels
             OutPutDt.Columns.Add(filePathDc);
             DataRow drow = OutPutDt.NewRow();
             drow["client_no"] = dr["client_no"];
-            drow["product_no"] = dr["product_no"];
+            drow["company_name"] = dr["company_name"];
             drow["file_name"] = datagridMaster.ParamsModel.GridSelectedRow["file_name"];
             drow["file_type"] = datagridMaster.ParamsModel.GridSelectedRow["file_type"];
             drow["file_path"] = datagridMaster.ParamsModel.GridSelectedRow["file_path"];
@@ -1036,13 +1034,16 @@ namespace MachinePlatformPlugin.ViewModels
                     cabinetInfoModel.CabinetId = cabinetInfoDt.Rows[0]["_id"].ToString();
                     cabinetInfoModel.CabinetBomNo = cabinetInfoDt.Rows[0]["wt_category_no"].ToString();
                     cabinetInfoModel.CabinetName = cabinetInfoDt.Rows[0]["cabinet_name"].ToString();
+                    cabinetInfoModel.CabinetWTCateGoryNo = cabinetInfoDt.Rows[0]["wt_category_no"].ToString();
+                    #region 机台人员
                     Dictionary<string, object> cabinetCurrentDic = new Dictionary<string, object>();
                     cabinetCurrentDic.Add("key", "_id");
                     cabinetCurrentDic.Add("value", cabinetInfoModel.CabinetId);
                     pathList.Add(cabinetCurrentDic);
                     pathList.Add("cabinet_staff");
                     CabinetInfoModel.CabinetStaffDt = dataOp.GetData(viewId, JsonHelper.ToJson(pathList)).Tables["dataArray"];
-
+                    #endregion
+                    #region 机台参数
                     pathList.Clear();
                     pathList.Add("cabinet");
                     pathList.Add(cabinetCurrentDic);
@@ -1079,6 +1080,14 @@ namespace MachinePlatformPlugin.ViewModels
                         }
                         cabinetInfoModel.CabinetParamsList = paramsList;
                     }
+                    #endregion
+                    #region 机台操作
+                    pathList.Clear();
+                    pathList.Add("cabinet");
+                    pathList.Add(cabinetCurrentDic);
+                    pathList.Add("operation");
+                    cabinetInfoModel.CabinetCADOperationData= dataOp.GetData(viewId, JsonHelper.ToJson(pathList)).Tables["dataArray"];
+                    #endregion
 
                 }
             }
@@ -1331,7 +1340,7 @@ namespace MachinePlatformPlugin.ViewModels
         /// 根据文件标识下载文件
         /// </summary>
         /// <param name="fileId"></param>
-        private void DownLoadFileById(string fileId,string fileName,string fileType)
+        private void DownLoadFileById(string fileId, string fileName, string fileType)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.FileName = fileName;

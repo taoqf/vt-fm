@@ -79,6 +79,18 @@ namespace MachinePlatformPlugin.Models
             set { cabinetCode = value; }
         }
         /// <summary>
+        /// 机台工票类型编号
+        /// </summary>
+        private string cabinetWTCateGoryNo;
+        /// <summary>
+        /// 机台工票类型编号
+        /// </summary>
+        public string CabinetWTCateGoryNo
+        {
+            get { return cabinetWTCateGoryNo; }
+            set { cabinetWTCateGoryNo = value; }
+        }
+        /// <summary>
         /// 机台名称
         /// </summary>
         private string cabinetName;
@@ -327,6 +339,36 @@ namespace MachinePlatformPlugin.Models
                 return cabinetCADResultDic;
             }
             set { cabinetCADResultDic = value; }
+        }
+        /// <summary>
+        /// 机台主数据数据通道Id
+        /// </summary>
+        private string cabinetMasterDataId;
+        /// <summary>
+        /// 机台主数据数据通道Id
+        /// </summary>
+        public string CabinetMasterDataId
+        {
+            get { return cabinetMasterDataId; }
+            set { cabinetMasterDataId = value; }
+        }
+        /// <summary>
+        /// 机台CAD操作数据
+        /// </summary>
+        private DataTable cabinetCADOperationData;
+        /// <summary>
+        /// 机台CAD操作数据
+        /// </summary>
+        public DataTable CabinetCADOperationData
+        {
+            get
+            {
+                return cabinetCADOperationData;
+            }
+            set
+            {
+                cabinetCADOperationData = value;
+            }
         }
     }
 }

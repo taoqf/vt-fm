@@ -11,6 +11,8 @@ using Victop.Frame.PublicLib.Helpers;
 using System.Windows.Controls;
 using Victop.Wpf.Controls;
 using System.Windows;
+using System.Data;
+using System.ComponentModel;
 
 namespace MachinePlatformPlugin.ViewModels
 {
@@ -62,19 +64,31 @@ namespace MachinePlatformPlugin.ViewModels
                 {
                     windowOperationView = (OperationWindow)x;
                     TabList = CreateTabContent();
+                    windowOperationView.Closing += windowOperationView_Closing;
                 });
             }
         }
-        /// <summary>
-        /// 窗口关闭时
-        /// </summary>
-        public ICommand windowOperationViewClosingCommand
+
+        void windowOperationView_Closing(object sender, CancelEventArgs e)
         {
-            get
+            if (pluginModel.PluginInterface.ParamDict["row"] != null)
             {
-                return new RelayCommand(() => {
-                    OperationWindow.CabinetInfoModel.CabinetCADResultDic = (Dictionary<string,object>)pluginModel.PluginInterface.ParamDict["resultdic"];
-                });
+                Dictionary<string, object> rowDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(pluginModel.PluginInterface.ParamDict["row"]));
+                foreach (string item in rowDic.Keys)
+                {
+                    if (OperationWindow.CabinetInfoModel.CabinetSelectedDataRow.Table.Columns.Contains(item) && rowDic[item] != null)
+                    {
+                        OperationWindow.CabinetInfoModel.CabinetSelectedDataRow[item] = rowDic[item];
+                    }
+                }
+            }
+            OperationWindow.CabinetInfoModel.CabinetCADResultDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(pluginModel.PluginInterface.ParamDict["resultdic"]));
+            foreach (string item in OperationWindow.CabinetInfoModel.CabinetCADResultDic.Keys)
+            {
+                if (OperationWindow.CabinetInfoModel.CabinetSelectedDataRow.Table.Columns.Contains(item) && OperationWindow.CabinetInfoModel.CabinetCADResultDic[item] != null)
+                {
+                    OperationWindow.CabinetInfoModel.CabinetSelectedDataRow[item] = OperationWindow.CabinetInfoModel.CabinetCADResultDic[item];
+                }
             }
         }
 
@@ -84,7 +98,7 @@ namespace MachinePlatformPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    OperationWindow.CabinetInfoModel.CabinetSelectedDataRow["wt_state"] = "1";
+                    //OperationWindow.CabinetInfoModel.CabinetSelectedDataRow["wt_state"] = "1";
                 });
             }
         }
@@ -101,14 +115,23 @@ namespace MachinePlatformPlugin.ViewModels
             paramDic.Add("systemid", OperationWindow.CabinetInfoModel.SystemId);
             paramDic.Add("configsystemid", OperationWindow.CabinetInfoModel.ConfigSystemId);
             paramDic.Add("spaceid", OperationWindow.CabinetInfoModel.SpaceId);
-            paramDic.Add("row", OperationWindow.CabinetInfoModel.CabinetSelectedDataRow);
+            Dictionary<string, object> rowDic = new Dictionary<string, object>();
+            if (OperationWindow.CabinetInfoModel.CabinetSelectedDataRow != null)
+            {
+                foreach (DataColumn item in OperationWindow.CabinetInfoModel.CabinetSelectedDataRow.Table.Columns)
+                {
+                    rowDic.Add(item.ColumnName, OperationWindow.CabinetInfoModel.CabinetSelectedDataRow[item.ColumnName]);
+                }
+            }
+            paramDic.Add("caddata", OperationWindow.CabinetInfoModel.CabinetCADOperationData);
+            paramDic.Add("row", rowDic);
             OperationWindow.CabinetInfoModel.CabinetCADResultDic["file_name"] = OperationWindow.CabinetInfoModel.CabinetSelectedDataRow["file_name"];
             OperationWindow.CabinetInfoModel.CabinetCADResultDic["file_type"] = OperationWindow.CabinetInfoModel.CabinetSelectedDataRow["file_type"];
             OperationWindow.CabinetInfoModel.CabinetCADResultDic["file_path"] = OperationWindow.CabinetInfoModel.CabinetSelectedDataRow["file_path"];
             paramDic.Add("resultdic", OperationWindow.CabinetInfoModel.CabinetCADResultDic);
             PluginOperation pluginOp = new PluginOperation();
             return pluginOp.StratPlugin(OperationWindow.CabinetInfoModel.CabinetCADName, paramDic);
-            
+
         }
         /// <summary>
         /// 创建Tab区域
