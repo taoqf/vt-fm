@@ -57,6 +57,7 @@
 							"systemId": 100,
 							"configsystemid": 101,
 							"spaceId": "feidao_core",
+							"actionCADName": "",
 							"menuno": "10050",
 							"fitDataPath": [
 								{
@@ -79,13 +80,16 @@
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
 							"iconUrl": "\ue6a4",
+							"description": " ",
 							"systemId": 100,
 							"configsystemid": 101,
 							"spaceId": "feidao_core",
+							"actionCADName": "ProductReviewMachinePlatformPlugin",
+							"menuno": "10080",
 							"fitDataPath": [
 								{
 									"key": "datagridMaster",
-									"value": "",
+									"value": "ProductSummaryMachinePlatFormPlugin_Setting",
 									"title": "¹¤×÷Çø"
 								}, {
 									"key": "datagridDetail",
