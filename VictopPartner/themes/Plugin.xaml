@@ -314,7 +314,8 @@
 
     <Style x:Key="DataGridRowStyle"  TargetType="DataGridRow">
         <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}" />
-        <Setter Property="Height" Value="25"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}" />
         <Style.Triggers>
             <Trigger Property="AlternationIndex" Value="0" >
@@ -437,12 +438,13 @@
         </Setter>
     </Style>
     <Style TargetType="DataGridColumnHeader">
-        <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}"></Setter>
-        <Setter Property="BorderThickness" Value="1"></Setter>
-        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-        <Setter Property="Height" Value="35"></Setter>
-        <Setter Property="MinWidth" Value="80"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Width" Value="180"/>
         <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeColor}"/>
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Background" Value="{DynamicResource DataGridHeaderBgColor}"/>
