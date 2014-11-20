@@ -130,6 +130,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="HorizontalOffsetConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -228,6 +229,9 @@
   <ItemGroup>
     <Resource Include="Fonts\iconfont.ttf" />
     <Resource Include="victop.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Convert\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
