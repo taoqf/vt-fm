@@ -606,7 +606,7 @@ namespace Victop.Frame.DataChannel
                             DataColumn dc = new DataColumn(item["key"].ToString());
                             if (clientrefList != null)
                             {
-                                Dictionary<string, object> refDic = clientrefList.Find(it => it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, item["key"].ToString())));
+                                Dictionary<string, object> refDic = clientrefList.Find(it => (it.ContainsKey("field") && it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, item["key"].ToString()))) || (it.ContainsKey("refField") && it["refField"].ToString().Equals(string.Format("{0}.{1}", tableName, item["key"].ToString()))));
                                 if (refDic != null)
                                 {
                                     dc.ExtendedProperties.Add("DataReference", refDic);
@@ -677,7 +677,7 @@ namespace Victop.Frame.DataChannel
                                 DataColumn dc = new DataColumn(leftStr);
                                 if (clientrefList != null)
                                 {
-                                    Dictionary<string, object> refDic = clientrefList.Find(it => it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, leftStr)));
+                                    Dictionary<string, object> refDic = clientrefList.Find(it => (it.ContainsKey("field") && it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, leftStr))) || (it.ContainsKey("refField") && it["refField"].ToString().Equals(string.Format("{0}.{1}", tableName, leftStr))));
                                     if (refDic != null)
                                     {
                                         dc.ExtendedProperties.Add("DataReference", refDic);
