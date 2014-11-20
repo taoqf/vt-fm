@@ -179,9 +179,9 @@ namespace PortalFramePlugin.ViewModels
                     homeItem.Name = "homeItem";
                     homeItem.AllowDelete = false;
                     homeItem.Header = "飞道科技";
-                    //WebBrowser browser = new WebBrowser();
+                    WebBrowser browser = new WebBrowser();
                     //browser.Source = new Uri("http://www.victop.com");
-                    //homeItem.Content = browser;
+                    homeItem.Content = browser;
                     tabItemList.Add(homeItem);
                 }
                 return tabItemList;
@@ -451,7 +451,7 @@ namespace PortalFramePlugin.ViewModels
         /// <param name="x"></param>
         private void BuildPluginContainer(object x)
         {
-            if (TabItemList[0].Content == null)
+            if (TabItemList[0].Content.GetType().Name.Equals("WebBrowser"))
             {
                 UCPluginContainer pluginContainer = new UCPluginContainer();
                 TabItemList[0].Content = pluginContainer;

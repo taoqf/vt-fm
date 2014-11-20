@@ -53,7 +53,7 @@
 
     </Style>
     <Style x:Key="MainFrmUserStackPanelStyle" TargetType="{x:Type StackPanel}">
-        <Setter Property="Margin" Value="20,10,150,0"/>
+        <Setter Property="Margin" Value="20,10,120,0"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
     </Style>
