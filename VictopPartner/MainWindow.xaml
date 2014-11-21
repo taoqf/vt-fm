@@ -1,7 +1,7 @@
 ﻿<Window x:Class="VictopPartner.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Width="640" Height="480" WindowStyle="None" Background="{x:Null}" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Width="640" Height="480" WindowStyle="None" Background="{x:Null}" AllowsTransparency="True" WindowStartupLocation="CenterScreen" Icon="victop.ico">
     <Window.Resources>
         <Storyboard x:Key="mainstory" Completed="mainstory_Completed">
             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.OpacityMask).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="image">

@@ -78,6 +78,7 @@
     <!--窗体弹出框样式开始-->
     <Style x:Key="WindowMessageSkin" TargetType="{x:Type controls:VicWindowNormal}">
         <Setter Property="BorderBrush" Value="#024672"/>
+        <Setter Property="Icon" Value="..\victop.ico"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
