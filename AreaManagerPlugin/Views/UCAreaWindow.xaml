@@ -32,7 +32,14 @@
                     <controls:VicButtonNormal Content="下载文件"></controls:VicButtonNormal>
                     <controls:VicButtonNormal Content="打开文件"></controls:VicButtonNormal>
                 </StackPanel>
-                <controls:VicDataGrid x:Name="testGrid1" Grid.Row="1" AutoGenerateColumns="False" SelectionUnit="FullRow"></controls:VicDataGrid>
+                <controls:VicTabControlNormal Grid.Row="1" Style="{DynamicResource MainVicTabControlStyle}">
+                    <controls:VicTabItemNormal Header="图纸/指南区" Width="100" IsSelected="True" AllowDelete="False">
+                        <controls:VicDataGrid x:Name="testGrid1" AutoGenerateColumns="False" SelectionUnit="FullRow"></controls:VicDataGrid>
+                    </controls:VicTabItemNormal>
+                    <controls:VicTabItemNormal Header="文件模板区" Width="100" AllowDelete="False">
+                        
+                    </controls:VicTabItemNormal>
+                </controls:VicTabControlNormal>
             </Grid>
             <Grid Grid.Row="0" Grid.Column="1" Margin="0,0,0,0" Style="{DynamicResource RightGrid}">
                 <Grid.RowDefinitions>
