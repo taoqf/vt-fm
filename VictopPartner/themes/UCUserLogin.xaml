@@ -7,7 +7,11 @@
         <Setter Property="AllowsTransparency" Value="true"/>
         <Setter Property="ResizeMode" Value="NoResize"/>
         <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="Width" Value="397"/>
+        <Setter Property="Height" Value="299"/>
+        <Setter Property="ShowInTaskbar" Value="False"/>
         <Setter Property="Icon" Value="..\victop.ico"/>
+        <Setter Property="Title" Value="用户登录"/>
         <Setter Property="BorderBrush" Value="{DynamicResource SkinColor}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>

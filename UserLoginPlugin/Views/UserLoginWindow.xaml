@@ -6,7 +6,7 @@
         xmlns:views="clr-namespace:UserLoginPlugin.Views"
         xmlns:helpers="clr-namespace:UserLoginPlugin.Helpers"
         Name="winUserLogin"
-        Title="UserLoginWindow" Style="{DynamicResource loginWindowStyle}" Width="397" Height="299"  WindowStartupLocation="CenterScreen">
+        Style="{DynamicResource loginWindowStyle}" WindowStartupLocation="CenterScreen">
     <Window.Resources>
     </Window.Resources>
     <Grid x:Name="gridRoot" Width="397" Height="299" HorizontalAlignment="Center" VerticalAlignment="Center">
