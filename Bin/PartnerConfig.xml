@@ -13,12 +13,12 @@
   <Server Host="127.0.0.1:9528">
   </Server>
   <!--接入平台通讯配置 企业soa-->
-  <Client Server="192.168.40.253:9999" Router="192.168.40.253:9527" Lan="1" IsNeedRouter="0">
+  <Client Server="192.168.40.196:9999" Router="192.168.40.196:9527" Lan="1" IsNeedRouter="0">
   </Client>
   <!--p2p连接信息-->
   <P2PClient Server="192.168.110.213:9999">
   </P2PClient>
   <!--用户信息-->
-  <UserInfo User="" Pwd="" ClientId="victop_core">
+  <UserInfo User="" Pwd="" ClientId="feidao_core">
   </UserInfo>
 </Partner>
