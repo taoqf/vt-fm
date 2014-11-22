@@ -277,7 +277,7 @@ namespace Victop.Frame.Connection
         {
             messageInfo.MessageType = "MongoDataChannelService.afterLogin";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "100");
+            contentDic.Add("systemid", "101");
             contentDic.Add("client_type_val", "1");
             contentDic.Add("configsystemid", "101");
             string userCode = messageInfo.MessageContent.Contains("usercode") ? JsonHelper.ReadJsonString(messageInfo.MessageContent, "usercode") : JsonHelper.ReadJsonString(messageInfo.MessageContent, "userCode");

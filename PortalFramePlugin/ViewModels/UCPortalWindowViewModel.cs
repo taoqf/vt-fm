@@ -780,7 +780,7 @@ namespace PortalFramePlugin.ViewModels
                     PluginOperation pluginOp = new PluginOperation();
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
                     paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
-                    paramDic.Add("configsytemid", selectedFourthMenu.ConfigSystemId);
+                    paramDic.Add("configsystemid", selectedFourthMenu.ConfigSystemId);
                     paramDic.Add("spaceid", selectedFourthMenu.SpaceId);
                     paramDic.Add("menuno", selectedFourthMenu.MenuNo);
                     paramDic.Add("menucode", selectedFourthMenu.MenuCode);

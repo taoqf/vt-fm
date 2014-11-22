@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -20,6 +21,8 @@ namespace VictopPartner
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            //Process updatePro = Process.Start(ConfigurationManager.AppSettings["updateconfig"] + ".exe");
+            //updatePro.WaitForExit();
             if (FrameInit.GetInstance().FrameRun())
             {
                 try

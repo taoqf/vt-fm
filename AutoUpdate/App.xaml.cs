@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 
@@ -12,5 +13,14 @@ namespace AutoUpdate
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            Process[] process = Process.GetProcessesByName("VictopPartner.exe");
+            foreach (Process item in process)
+            {
+                item.Kill();
+            }
+        }
     }
 }

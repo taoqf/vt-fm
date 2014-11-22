@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -22,6 +23,10 @@ namespace AutoUpdate
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void updateWindow_Loaded(object sender, RoutedEventArgs e)
+        {
         }
     }
 }
