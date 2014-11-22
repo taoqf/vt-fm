@@ -1203,8 +1203,8 @@
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <controls:VicButtonNormal Grid.Column="0" FontSize="55" FontWeight="Bold"
-                                                     Style="{DynamicResource ButtonFourthLevelMenu}"  Foreground="{DynamicResource SkinColor}"/>
-                                                <TextBlock Text="{Binding MenuName}" Grid.Column="1"  Margin="10,0,0,0" FontFamily="SimSun" FontSize="12" FontWeight="Bold"   Foreground="{DynamicResource SkinColor}"  TextWrapping="Wrap"/>
+                                                     Style="{DynamicResource ButtonFourthLevelMenu}"  Foreground="{TemplateBinding Foreground}"/>
+                                                <TextBlock Text="{Binding MenuName}" Grid.Column="1"  Margin="10,0,0,0" FontFamily="SimSun" FontSize="12" FontWeight="Bold"   Foreground="{TemplateBinding Foreground}"  TextWrapping="Wrap"/>
                                             </Grid>
                                             <Border.RenderTransform>
                                                 <TransformGroup>
