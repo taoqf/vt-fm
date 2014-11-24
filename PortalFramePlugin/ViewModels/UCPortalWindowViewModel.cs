@@ -771,8 +771,6 @@ namespace PortalFramePlugin.ViewModels
                 TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)).IsSelected = true;
                 return;
             }
-            if (selectedFourthMenu.ResourceName == null)
-                selectedFourthMenu.ResourceName = ConfigurationManager.AppSettings["runplugin"];
             if (selectedFourthMenu.ResourceName != null)
             {
                 if (selectedFourthMenu.ActionType == "1")//启动插件
