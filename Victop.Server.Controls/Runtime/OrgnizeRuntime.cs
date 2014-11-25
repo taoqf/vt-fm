@@ -145,6 +145,13 @@ namespace Victop.Server.Controls.Runtime
                 blockmodel.BlockDataPath = new List<object>();
             blockmodel.BlockDataPath.Clear();
             blockmodel.BlockDataPath.Add(blockmodel.TableName);
+            if (blockmodel.DataSetType.Equals("row"))
+            {
+                Dictionary<string, object> pathDic = new Dictionary<string, object>();
+                pathDic.Add("key", "_id");
+                pathDic.Add("value", (blockmodel.CurrentRow == null || !blockmodel.CurrentRow.ContainsKey("_id")) ? Guid.NewGuid().ToString() : blockmodel.CurrentRow["_id"]);
+                blockmodel.BlockDataPath.Add(pathDic);
+            }
             if (blockmodel != null)
             {
                 RebuildDataPath(view, blockmodel);
