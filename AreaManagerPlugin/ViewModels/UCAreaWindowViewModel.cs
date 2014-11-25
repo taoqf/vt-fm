@@ -472,7 +472,7 @@ namespace AreaManagerPlugin.ViewModels
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("systemid", "100");
                         contentDic.Add("configsystemid", "101");
-                        contentDic.Add("modelid", "feidao_core_model_cs_work_ticket_0001");
+                        contentDic.Add("modelid", "feidao_core_model_requirements_0001");
                         contentDic.Add("spaceId", "feidao_core");
                         //List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
                         //Dictionary<string, object> conDic = new Dictionary<string, object>();
@@ -492,7 +492,7 @@ namespace AreaManagerPlugin.ViewModels
                             DataOperation dataOp = new DataOperation();
                             viewId = returnDic["DataChannelId"].ToString();
                             List<object> pathList = new List<object>();
-                            pathList.Add("cs_work_ticket");
+                            pathList.Add("requirements");
                             dataPath = JsonHelper.ToJson(pathList);
                             DataSet mastDs = new DataSet();
                             mastDs = dataOp.GetData(viewId, dataPath);
@@ -617,30 +617,8 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    MessageOperation messageOp = new MessageOperation();
-
-                    //string MessageType = "MongoDataChannelService.fetchSystime";
-                    //Dictionary<string, object> contentDic1 = new Dictionary<string, object>();
-                    //Dictionary<string, object> returnDic1 = messageOp.SendMessage(MessageType, contentDic1, "JSON");
-                    //if (returnDic1 != null)
-                    //{
-                    //    string time = JsonHelper.ReadJsonString(returnDic1["ReplyContent"].ToString(), "simpleDate");
-                    //    JsonDataTable.Rows[0]["startwork_time"] = Convert.ToDateTime(time);
-                    //}
-
-                    DataOperation dataOp = new DataOperation();
-                    bool result = dataOp.SaveData(viewId, dataPath);
-                    //MessageOperation messageOp = new MessageOperation();
-                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    contentDic.Add("DataChannelId", viewId);
-                    contentDic.Add("modelid", "victop_model_scheme_0005");
-                    contentDic.Add("systemid", "906");
-                    contentDic.Add("configsystemid", "101");
-                    Dictionary<string, object> resultDic = messageOp.SendMessage("MongoDataChannelService.saveBusiData", contentDic, "JSON");
-                    if (!resultDic["ReplyMode"].ToString().Equals("0"))
-                    {
-                        System.Windows.MessageBox.Show("保存成功");
-                    }
+                    DataRow dr = JsonDataTable.NewRow();
+                    JsonDataTable.Rows.Add(dr);
                 });
             }
         }
@@ -676,12 +654,14 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    string MessageType = "MysqlManagerService.FindBusiData";
-                    MessageOperation messageOp = new MessageOperation();
-                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    contentDic.Add("modelid", "ak00048");
-                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
-                    string temp = "test";
+                    //string MessageType = "MysqlManagerService.FindBusiData";
+                    //MessageOperation messageOp = new MessageOperation();
+                    //Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    //contentDic.Add("modelid", "ak00048");
+                    //Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                    //string temp = "test";
+                    System.Windows.Window updateWin = new AutoUpdate.MainWindow();
+                    updateWin.Show();
                 });
             }
         }

@@ -13,14 +13,5 @@ namespace AutoUpdate
     /// </summary>
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-            Process[] process = Process.GetProcessesByName("VictopPartner.exe");
-            foreach (Process item in process)
-            {
-                item.Kill();
-            }
-        }
     }
 }
