@@ -121,6 +121,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AutoUpdate\AutoUpdate.csproj">
+      <Project>{7f35d01d-d57a-4a4f-911c-95e47120c004}</Project>
+      <Name>AutoUpdate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.DataChannel\Victop.Frame.DataChannel.csproj">
       <Project>{ad1deb10-b0b3-44fb-8214-5e1cbbcf9147}</Project>
       <Name>Victop.Frame.DataChannel</Name>
