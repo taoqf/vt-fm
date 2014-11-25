@@ -570,38 +570,46 @@ namespace Victop.Frame.DataChannel
                             if (i == pathList.Count - 1)
                             {
                                 List<object> arrayList = JsonHelper.ToObject<List<object>>(jsonData);
-                                for (int j = 0; j < arrayList.Count; j++)
+                                if (arrayList != null && arrayList.Count > 0)
                                 {
-                                    Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(arrayList[j].ToString());
-                                    switch (rowState)
+                                    for (int j = 0; j < arrayList.Count; j++)
                                     {
-                                        case OpreateStateEnum.Added:
-                                            break;
-                                        case OpreateStateEnum.Modified:
-                                            if (itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i]), "value")))
-                                            {
-                                                Dictionary<string, object> saveDic = saveData;
-                                                foreach (string savekey in saveDic.Keys)
+                                        Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(arrayList[j].ToString());
+                                        switch (rowState)
+                                        {
+                                            case OpreateStateEnum.Added:
+                                                break;
+                                            case OpreateStateEnum.Modified:
+                                                if (itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i]), "value")))
                                                 {
-                                                    if (itemDic.ContainsKey(savekey))
+                                                    Dictionary<string, object> saveDic = saveData;
+                                                    foreach (string savekey in saveDic.Keys)
                                                     {
-                                                        itemDic[savekey] = saveDic[savekey];
-                                                    }
-                                                    else
-                                                    {
-                                                        itemDic.Add(savekey, saveDic[savekey]);
+                                                        if (itemDic.ContainsKey(savekey))
+                                                        {
+                                                            itemDic[savekey] = saveDic[savekey];
+                                                        }
+                                                        else
+                                                        {
+                                                            itemDic.Add(savekey, saveDic[savekey]);
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            break;
-                                        case OpreateStateEnum.Deleted:
-                                            break;
-                                        case OpreateStateEnum.None:
-                                            break;
-                                        default:
-                                            break;
+                                                break;
+                                            case OpreateStateEnum.Deleted:
+                                                break;
+                                            case OpreateStateEnum.None:
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        arrayList[j] = itemDic;
                                     }
-                                    arrayList[j] = itemDic;
+                                }
+                                else
+                                {
+                                    arrayList = new List<object>();
+                                    arrayList.Add(saveData);
                                 }
                                 tableDic["dataArray"] = arrayList;
                             }
