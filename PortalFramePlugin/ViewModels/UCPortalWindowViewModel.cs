@@ -282,6 +282,7 @@ namespace PortalFramePlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     mainWindow = (Window)x;
+                    mainWindow.MouseDown += mainWindow_MouseDown;
                     Rect rect = SystemParameters.WorkArea;
                     mainWindow.MaxWidth = rect.Width;
                     mainWindow.MaxHeight = rect.Height;
@@ -313,15 +314,12 @@ namespace PortalFramePlugin.ViewModels
         #endregion
 
         #region 窗体移动命令
-        /// <summary>窗体移动命令 </summary>
-        public ICommand gridTitleMouseMoveCommand
+
+        void mainWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            get
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                return new RelayCommand(() =>
-                {
-                    mainWindow.DragMove();
-                });
+                mainWindow.DragMove();
             }
         }
         #endregion
