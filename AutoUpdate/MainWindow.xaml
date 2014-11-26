@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="自动更新"  Name="updateWindow"   Height="180" Width="525"   ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
-         <SolidColorBrush x:Key="RightBackground" Color="White" Opacity="0.6"/>
+        <SolidColorBrush x:Key="RightBackground" Color="White" Opacity="0.6"/>
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="Background" Value="#D8D8D8"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -11,34 +11,15 @@
         <Style TargetType="{x:Type ProgressBar}">
             <Setter Property="Background" Value="Gainsboro"/>
             <Setter Property="Height" Value="40"/>
-            <Setter Property="Value" Value="40"/>
+            <Setter Property="Value" Value="20"/>
             <Setter Property="BorderBrush" Value="#D8D8D8"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Foreground" >
-                <Setter.Value>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                            <GradientStop Color="Yellow" Offset="0.0" />
-                            <GradientStop Color="YellowGreen" Offset="0.25" />
-                            <GradientStop Color="GreenYellow" Offset="0.75" />
-                            <GradientStop Color="LimeGreen" Offset="1.0" />
-                        </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ProgressBar}">
-                        <Grid MinHeight="14" MinWidth="200">
-                            <Border   
-            Name="PART_Track"   
-            CornerRadius="20"  
-            BorderBrush="Black"  
-            BorderThickness="1" Background="#FF57C7C9" />
-                            <Border   
-           x:Name="PART_Indicator"   
-           CornerRadius="16"   
-           BorderBrush="Red"   
-           BorderThickness="1"   
-           HorizontalAlignment="Left" >
+                        <Grid MinHeight="14" MinWidth="400">
+                            <Border Name="PART_Track"  CornerRadius="20"  BorderBrush="Black"  BorderThickness="1" Background="#FF57C7C9" />
+                            <Border x:Name="PART_Indicator"  CornerRadius="16" BorderBrush="Red" BorderThickness="1"  HorizontalAlignment="Left">
                                 <Border.Background>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="Orange" Offset="0"/>
@@ -51,7 +32,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>    
+        </Style>
     </Window.Resources>
     <Grid Opacity="0.6">
         <Grid.RowDefinitions>
