@@ -11,7 +11,7 @@
         </Style>
         <Style TargetType="{x:Type ProgressBar}">
             <Setter Property="Background" Value="Gainsboro"/>
-            <Setter Property="Height" Value="20"/>
+            <Setter Property="Height" Value="40"/>
             <Setter Property="Value" Value="40"/>
             <Setter Property="BorderBrush" Value="#D8D8D8"/>
             <Setter Property="BorderThickness" Value="1"/>
@@ -27,7 +27,7 @@
             </Setter>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ProgressBar">
+                    <ControlTemplate TargetType="{x:Type ProgressBar}">
                         <Border BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="5"
                                BorderThickness="{TemplateBinding BorderThickness}">
                             <Grid>
