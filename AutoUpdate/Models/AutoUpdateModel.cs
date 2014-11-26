@@ -56,6 +56,18 @@ namespace AutoUpdate.Models
             set { loadingFileName = value; }
         }
         /// <summary>
+        /// 下载文件所属文件夹
+        /// </summary>
+        private string loadingFilePath;
+        /// <summary>
+        /// 下载文件所属文件夹
+        /// </summary>
+        public string LoadingFilePath
+        {
+            get { return loadingFilePath; }
+            set { loadingFilePath = value; }
+        }
+        /// <summary>
         /// 当前文件大小
         /// </summary>
         private long loadingFileSize;

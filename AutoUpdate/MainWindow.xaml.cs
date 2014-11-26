@@ -6,18 +6,8 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml;
 
 namespace AutoUpdate
@@ -62,10 +52,16 @@ namespace AutoUpdate
                     updateClient.DownloadProgressChanged += updateClient_DownloadProgressChanged;
                     updateClient.DownloadFileCompleted += updateClient_DownloadFileCompleted;
                 }
+                else
+                {
+                    this.Close();
+                    return;
+                }
             }
             if (updateModel.TotalSize == 0)
             {
                 this.Close();
+                return;
             }
             GetUpdateFileList();
             if (updateModel.FileNames.Count > 0)
@@ -92,6 +88,7 @@ namespace AutoUpdate
                         updateModel.FileNames.Add(fileInfo);
                     }
                 }
+                updateModel.TotalCount = updateModel.FileNames.Count;
                 xr.Close();
                 sm.Close();
             }
@@ -121,7 +118,7 @@ namespace AutoUpdate
                 sm.Close();
             }
             catch (WebException ex)
-            {   
+            {
             }
         }
         /// <summary>
@@ -131,13 +128,32 @@ namespace AutoUpdate
         /// <param name="e"></param>
         void updateClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + updateModel.LoadingFileName))
+            if (string.IsNullOrEmpty(updateModel.LoadingFilePath))
             {
-                File.Delete(AppDomain.CurrentDomain.BaseDirectory + "\\" + updateModel.LoadingFileName);
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + updateModel.LoadingFileName))
+                {
+                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "\\" + updateModel.LoadingFileName);
+                }
+                File.Move(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpdater", updateModel.LoadingFileName), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateModel.LoadingFileName));
+                updateModel.UpdateSize += updateModel.LoadingFileSize;
             }
-            File.Move(AppDomain.CurrentDomain.BaseDirectory + "\\AutoUpdater\\" + updateModel.LoadingFileName, AppDomain.CurrentDomain.BaseDirectory + "\\" + updateModel.LoadingFileName);
-            updateModel.UpdateSize += updateModel.LoadingFileSize;
-            if (updateModel.FileNames.Count > updateModel.UpdatedNum)
+            else
+            {
+                string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateModel.LoadingFilePath);
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                filePath = Path.Combine(filePath, updateModel.LoadingFileName);
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+                string sourceFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpdater", updateModel.LoadingFilePath, updateModel.LoadingFileName);
+                File.Move(sourceFileName, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateModel.LoadingFilePath, updateModel.LoadingFileName));
+                updateModel.UpdateSize += updateModel.LoadingFileSize;
+            }
+            if (updateModel.FileNames.Count > updateModel.UpdatedNum + 1)
             {
                 try
                 {
@@ -146,7 +162,7 @@ namespace AutoUpdate
                 }
                 catch (Exception ex)
                 {
-                    
+
                 }
             }
             else
@@ -162,14 +178,42 @@ namespace AutoUpdate
         private void DownLoadFile()
         {
             updateModel.LoadingFileName = updateModel.FileNames[(int)updateModel.UpdatedNum];
-            tBlockNow.Text = string.Format("更新进度 {0}/{1}  [ {2} ]", updateModel.UpdatedNum, updateModel.TotalCount, ConvertSize(updateModel.TotalSize));
-            proBarTotal.Value = 0;
-            string directoryPath = AppDomain.CurrentDomain.BaseDirectory + "\\AutoUpdater\\";
-            if (!Directory.Exists(directoryPath))
+            if (updateModel.LoadingFileName.Contains("\\"))
             {
-                Directory.CreateDirectory(directoryPath);
+                string[] fileInfoStr = updateModel.LoadingFileName.Split('\\');
+                updateModel.LoadingFilePath = fileInfoStr[0];
+                updateModel.LoadingFileName = fileInfoStr[1];
             }
-            updateClient.DownloadFileAsync(new Uri(updateModel.UpdateUrl + "AutoUpdater/" + updateModel.LoadingFileName), directoryPath + updateModel.LoadingFileName);
+            else
+            {
+                updateModel.LoadingFilePath = string.Empty;
+            }
+            tBlockNow.Text = string.Format("更新进度 {0}/{1}  [ {2} ]", updateModel.UpdatedNum + 1, updateModel.TotalCount, ConvertSize(updateModel.TotalSize));
+            proBarTotal.Value = 0;
+
+            string directoryPath = AppDomain.CurrentDomain.BaseDirectory + "\\AutoUpdater\\";
+            if (string.IsNullOrEmpty(updateModel.LoadingFilePath))
+            {
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+                updateClient.DownloadFileAsync(new Uri(updateModel.UpdateUrl + "AutoUpdater/" + updateModel.LoadingFileName), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpdater", updateModel.LoadingFileName));
+            }
+            else
+            {
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+                directoryPath = Path.Combine(directoryPath, updateModel.LoadingFilePath);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+                string fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpdater", updateModel.LoadingFilePath, updateModel.LoadingFileName);
+                updateClient.DownloadFileAsync(new Uri(updateModel.UpdateUrl + "AutoUpdater/" + updateModel.LoadingFilePath + "/" + updateModel.LoadingFileName), fileName);
+            }
         }
         /// <summary>
         /// 下载进行时
@@ -238,6 +282,6 @@ namespace AutoUpdate
                 str = tempf.ToString(CultureInfo.InvariantCulture) + "B";
             }
             return str;
-        } 
+        }
     }
 }
