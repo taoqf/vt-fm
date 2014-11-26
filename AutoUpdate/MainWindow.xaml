@@ -1,17 +1,57 @@
-﻿<Window x:Class="AutoUpdate.MainWindow"
+﻿<controls:VicWindowNormal x:Class="AutoUpdate.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="自动更新" Height="180" Width="525" Name="updateWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+        Title="自动更新"  Name="updateWindow" Height="180" Width="525" Style="{DynamicResource WindowMessageSkin}"  ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <controls:VicWindowNormal.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Background" Value="{DynamicResource SkinColor}"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="{x:Type ProgressBar}">
+            <Setter Property="Background" Value="{DynamicResource BtnNormalBackground}"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Value" Value="40"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BtnNormalBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" >
+                <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="Yellow" Offset="0.0" />
+                            <GradientStop Color="YellowGreen" Offset="0.25" />
+                            <GradientStop Color="GreenYellow" Offset="0.75" />
+                            <GradientStop Color="LimeGreen" Offset="1.0" />
+                        </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                               BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Rectangle Fill="{TemplateBinding Background}" Name="PART_Track" />
+                                <Rectangle Fill="{TemplateBinding Foreground}"
+                                          Name="PART_Indicator" 
+                                          HorizontalAlignment="Left"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>    
+    </controls:VicWindowNormal.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Name="tBlockProcess"></TextBlock>
-        <ProgressBar Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="proBarTotal"></ProgressBar>
-        <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Name="tBlockNow" Text="正在下载:"/>
-        <ProgressBar Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Name="proBarNow"></ProgressBar>
+        <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Name="tBlockProcess" Margin="0,12"/>
+        <ProgressBar Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="proBarTotal" Margin="0,18" Grid.RowSpan="2"/>
+        <TextBlock Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Name="tBlockNow" Text="正在下载:" Margin="0,12"/>
+        <ProgressBar Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Name="proBarNow" Margin="0,18"/>
     </Grid>
-</Window>
+</controls:VicWindowNormal>
