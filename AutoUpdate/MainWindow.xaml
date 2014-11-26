@@ -28,15 +28,27 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ProgressBar}">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="5"
-                               BorderThickness="{TemplateBinding BorderThickness}">
-                            <Grid>
-                                <Rectangle Fill="{TemplateBinding Background}" Name="PART_Track" />
-                                <Rectangle Fill="{TemplateBinding Foreground}"
-                                          Name="PART_Indicator" 
-                                          HorizontalAlignment="Left"/>
-                            </Grid>
-                        </Border>
+                        <Grid MinHeight="14" MinWidth="200">
+                            <Border   
+            Name="PART_Track"   
+            CornerRadius="20"  
+            BorderBrush="Black"  
+            BorderThickness="1" Background="#FF57C7C9" />
+                            <Border   
+           x:Name="PART_Indicator"   
+           CornerRadius="16"   
+           BorderBrush="Red"   
+           BorderThickness="1"   
+           HorizontalAlignment="Left" >
+                                <Border.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="Orange" Offset="0"/>
+                                        <GradientStop Color="Yellow" Offset="0.5"/>
+                                        <GradientStop Color="Orange" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
