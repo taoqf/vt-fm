@@ -43,7 +43,12 @@ namespace AutoUpdate
         {
             updateModel.UpdateUrl = ConfigurationManager.AppSettings["UpdateUrl"];
             updateModel.LocalUpdateTimestamp = Convert.ToInt64(ConfigurationManager.AppSettings["UpDate"]);
-            GetTheLastUpdateTime();
+            if (!GetTheLastUpdateTime())
+            {
+                MessageBox.Show("未找到更新服务");
+                this.Close();
+                return;
+            }
             GetUpdateSize();
             if (updateModel.LocalUpdateTimestamp != 0 && updateModel.ServerUpdateTimestamp != 0)
             {
@@ -234,13 +239,14 @@ namespace AutoUpdate
         /// </summary> 
         /// <param name="Dir">服务器地址</param> 
         /// <returns>返回日期</returns> 
-        private void GetTheLastUpdateTime()
+        private bool GetTheLastUpdateTime()
         {
             string AutoUpdaterFileName = updateModel.UpdateUrl + "AutoUpdater/AutoUpdater.xml";
             try
             {
                 WebClient wc = new WebClient();
                 Stream sm = wc.OpenRead(AutoUpdaterFileName);
+                
                 XmlTextReader xml = new XmlTextReader(sm);
                 while (xml.Read())
                 {
@@ -252,9 +258,11 @@ namespace AutoUpdate
                 }
                 xml.Close();
                 sm.Close();
+                return true;
             }
             catch (WebException ex)
             {
+                return false;
             }
         }
         /// <summary> 
