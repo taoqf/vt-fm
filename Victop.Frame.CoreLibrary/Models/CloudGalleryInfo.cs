@@ -65,6 +65,24 @@ namespace Victop.Frame.CoreLibrary.Models
                 cloudGalleryId = value;
             }
 		}
+        /// <summary>
+        /// 云通道名称
+        /// </summary>
+        private string cloudGalleryName;
+        /// <summary>
+        /// 云通道名称
+        /// </summary>
+        public string CloudGalleryName
+        {
+            get
+            {
+                return cloudGalleryName;
+            }
+            set
+            {
+                cloudGalleryName = value;
+            }
+        }
         private string routerAddress;
 		/// <summary>
 		/// 路由地址

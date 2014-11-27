@@ -86,7 +86,7 @@ namespace Victop.Frame.ServerManagerCenter
             Dictionary<string, object> returnList = new Dictionary<string, object>();
             foreach (CloudGalleryInfo item in galleryList.Values)
             {
-                returnList.Add(item.CloudGalleryId.ToString(), item.CloudGalleryId.ToString());
+                returnList.Add(item.CloudGalleryId.ToString(), item.CloudGalleryName.ToString());
             }
             returnDic.Add("ReplyMode", "1");
             returnDic.Add("ReplyContent", returnList);
