@@ -1270,10 +1270,6 @@ namespace Victop.Frame.Connection
         {
             try
             {
-                if (!dicContent.ContainsKey("runUser"))
-                {
-                    dicContent.Add("runUser", null);
-                }
                 if (!dicContent.ContainsKey("clientId"))
                 {
                     dicContent.Add("clientId", null);
@@ -1282,17 +1278,9 @@ namespace Victop.Frame.Connection
                 {
                     dicContent.Add("controlid", null);
                 }
-                if (dicContent.ContainsKey("dataparam"))
+                if (!dicContent.ContainsKey("dataparam"))
                 {
-                    Dictionary<string, object> dataParDic = JsonHelper.ToObject<Dictionary<string, object>>(dicContent["dataparam"].ToString());
-                    if (!dataParDic.ContainsKey("usercode"))
-                    {
-                        GalleryManager galleryManager = new GalleryManager();
-                        CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
-                        LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
-                        dataParDic.Add("usercode", loginUserInfo.UserCode);
-                    }
-                    dicContent["dataparam"] = dataParDic;
+                    dicContent["dataparam"] = null;
                 }
                 return dicContent;
             }
