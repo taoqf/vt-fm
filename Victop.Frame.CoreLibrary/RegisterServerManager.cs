@@ -157,6 +157,16 @@ namespace Victop.Frame.CoreLibrary
                 setGalleryInfo.ServerStatus = ResourceEnum.NONE;
                 serverManager.RegisterServer(setGalleryInfo);
                 #endregion
+                #region 设置登录默认信息
+                RegisterServerInfo setUserInfo = new RegisterServerInfo();
+                setUserInfo.CloudGalleryId = item.ToString();
+                setUserInfo.ServerName = "SetUserInfo";
+                setUserInfo.ReceiptMessageType.Add(ConfigurationManager.AppSettings.Get(setUserInfo.ServerName.ToLower()));
+                setUserInfo.ServerType = ServerTypeEnum.LOCAL;
+                setUserInfo.ServerPath = string.Empty;
+                setUserInfo.ServerStatus = ResourceEnum.NONE;
+                serverManager.RegisterServer(setUserInfo);
+                #endregion
                 RegisterLocalServer(serverManager, item.ToString());
             }
         }
