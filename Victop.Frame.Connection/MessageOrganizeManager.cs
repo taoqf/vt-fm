@@ -113,6 +113,9 @@ namespace Victop.Frame.Connection
                         dicContent = GetSaveMongoTableDataMessage(dicContent);
                         replyIsToChannel = DataOperateEnum.COMMIT;
                         break;
+                    case "MongoDataChannelService.customeFunc":
+                        dicContent = GetMongoExecuteAsynMessage(dicContent);
+                        break;
                     default:
                         break;
                 }
@@ -1290,6 +1293,19 @@ namespace Victop.Frame.Connection
             }
         }
         /// <summary>
+        /// 获取mongo数据库自定义服务
+        /// </summary>
+        /// <param name="dicContent"></param>
+        /// <returns></returns>
+        private Dictionary<string, object> GetMongoExecuteAsynMessage(Dictionary<string, object> dicContent)
+        {
+            if (!dicContent.ContainsKey("controlid"))
+            {
+                dicContent.Add("controlid", null);
+            }
+            return dicContent;
+        }
+        /// <summary>
         /// 得到服务时间
         /// </summary>
         /// <remarks>LinkBaseService.getServerDateTime</remarks>
@@ -1517,6 +1533,7 @@ namespace Victop.Frame.Connection
             definition.Add("relation");
             definition.Add("clientRef");
             definition.Add("ref");
+            definition.Add("setting");
             definition.Add("dummyRelation");
             if (dicContent.ContainsKey("modeldefinition"))
             {

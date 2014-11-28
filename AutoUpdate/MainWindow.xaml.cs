@@ -242,25 +242,33 @@ namespace AutoUpdate
         private bool GetTheLastUpdateTime()
         {
             string AutoUpdaterFileName = updateModel.UpdateUrl + "AutoUpdater/AutoUpdater.xml";
-            try
+            string urlStatus = GetWebStatusCode(AutoUpdaterFileName, 3000);
+            if (urlStatus.Equals("200"))
             {
-                WebClient wc = new WebClient();
-                Stream sm = wc.OpenRead(AutoUpdaterFileName);
-                
-                XmlTextReader xml = new XmlTextReader(sm);
-                while (xml.Read())
+                try
                 {
-                    if (xml.Name == "UpdateTime")
+                    WebClient wc = new WebClient();
+                    Stream sm = wc.OpenRead(AutoUpdaterFileName);
+
+                    XmlTextReader xml = new XmlTextReader(sm);
+                    while (xml.Read())
                     {
-                        updateModel.ServerUpdateTimestamp = Convert.ToInt64(xml.GetAttribute("Date"));
-                        break;
+                        if (xml.Name == "UpdateTime")
+                        {
+                            updateModel.ServerUpdateTimestamp = Convert.ToInt64(xml.GetAttribute("Date"));
+                            break;
+                        }
                     }
+                    xml.Close();
+                    sm.Close();
+                    return true;
                 }
-                xml.Close();
-                sm.Close();
-                return true;
+                catch (WebException ex)
+                {
+                    return false;
+                }
             }
-            catch (WebException ex)
+            else
             {
                 return false;
             }
@@ -290,6 +298,37 @@ namespace AutoUpdate
                 str = tempf.ToString(CultureInfo.InvariantCulture) + "B";
             }
             return str;
+        }
+        /// <summary>
+        /// 获取请求地址状态
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
+        private string GetWebStatusCode(string url, int timeout)
+        {
+            HttpWebRequest req = null;
+            try
+            {
+                req = (HttpWebRequest)WebRequest.CreateDefault(new Uri(url));
+                req.Method = "HEAD";  //这是关键        
+                req.Timeout = timeout;
+                HttpWebResponse res = (HttpWebResponse)req.GetResponse();
+                return Convert.ToInt32(res.StatusCode).ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+            finally
+            {
+                if (req != null)
+                {
+                    req.Abort();
+                    req = null;
+                }
+            }
+
         }
     }
 }
