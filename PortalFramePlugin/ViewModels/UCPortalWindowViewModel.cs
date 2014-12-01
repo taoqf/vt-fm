@@ -383,6 +383,8 @@ namespace PortalFramePlugin.ViewModels
                     {
                         btnMax.SetResourceReference(Button.StyleProperty, "btnMaxiStyle");
                         mainWindow.WindowState = WindowState.Maximized;
+                        mainWindow.Left = 0;
+                        mainWindow.Top = 0;
                     }
                     else
                     {

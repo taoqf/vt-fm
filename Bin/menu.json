@@ -1,7 +1,239 @@
 {
 	"menu": [
 		{
-			"title": "客服阶段",
+			"title": "权限管理系统",
+			"iconUrl": "\ue6a4",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "菜单信息管理",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "菜单项管理",
+							"actionType": 1,
+							"actionName": "MenuNecklacePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于菜单项管理维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "tianlong",
+							"actionCADName": "",
+							"menuno": "10150",
+							"fitDataPath": [
+								{
+									"key": "datagridMaster",
+									"value": "",
+									"title": "工作区"
+								}, {
+									"key": "datagridDetail",
+									"value": "",
+									"title": "页面明细"
+								}, {
+									"key": "datagridSubDetail",
+									"value": "",
+									"title": "APP明细"
+								}
+							]
+						}
+					]
+				}, {
+					"title": "用户信息管理",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "用户管理",
+							"actionType": 1,
+							"actionName": "UserManagePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于用户维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "tianlong",
+							"actionCADName": "",
+							"menuno": "20040",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": "",
+									"title": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "权限组信息管理",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "权限组管理",
+							"actionType": 1,
+							"actionName": "AuthorityGroupManagePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于权限维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "tianlong",
+							"actionCADName": "",
+							"menuno": "30020",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "用户权限组关系管理",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "用户权限组关系",
+							"actionType": 1,
+							"actionName": "AuthorityUserGroupManagePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于用户权限组关系维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "tianlong",
+							"menuno": "40010",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "权限菜单关系管理",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "权限菜单关系",
+							"actionType": 1,
+							"actionName": "AuthorityMenuGroupPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于权限菜单关系维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "tianlong",
+							"menuno": "",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "数据权限管理",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "数据权限",
+							"actionType": 1,
+							"actionName": "AuthorityDatapermPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于数据权限维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "tianlong",
+							"menuno": "40110",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "权限码管理",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "权限码",
+							"actionType": 1,
+							"actionName": "AuthorityYardManagePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于权限码维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "tianlong",
+							"menuno": "50030",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "飞道机台体系",
 			"iconUrl": "\ue6a4",
 			"fitDataPath": [
 				{
@@ -211,19 +443,7 @@
 							]
 						}
 					]
-				}
-			]
-		}, {
-			"title": "规划阶段",
-			"iconUrl": "\ue6a4",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
+				}, {
 					"title": "规划相关机台",
 					"iconUrl": "\ue6a4",
 					"fitDataPath": [
@@ -298,19 +518,7 @@
 							]
 						}
 					]
-				}
-			]
-		}, {
-			"title": "设计阶段",
-			"iconUrl": "\ue6a4",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
+				}, {
 					"title": "设计相关机台",
 					"iconUrl": "\ue6a4",
 					"fitDataPath": [
@@ -484,19 +692,7 @@
 							]
 						}
 					]
-				}
-			]
-		}, {
-			"title": "开发阶段",
-			"iconUrl": "\ue6a4",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
+				}, {
 					"title": "开发相关机台",
 					"iconUrl": "\ue6a4",
 					"fitDataPath": [
@@ -652,19 +848,7 @@
 							]
 						}
 					]
-				}
-			]
-		}, {
-			"title": "设置阶段",
-			"iconUrl": "\ue6a4",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
+				}, {
 					"title": "设置相关机台",
 					"iconUrl": "\ue6a4",
 					"fitDataPath": [
@@ -766,19 +950,7 @@
 							]
 						}
 					]
-				}
-			]
-		}, {
-			"title": "测试阶段",
-			"iconUrl": "\ue6a4",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
+				}, {
 					"title": "测试相关机台",
 					"iconUrl": "\ue6a4",
 					"fitDataPath": [
@@ -808,19 +980,7 @@
 							]
 						}
 					]
-				}
-			]
-		}, {
-			"title": "部署阶段",
-			"iconUrl": "\ue6a4",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
+				}, {
 					"title": "部署相关机台",
 					"iconUrl": "\ue6a4",
 					"fitDataPath": [
@@ -850,19 +1010,7 @@
 							]
 						}
 					]
-				}
-			]
-		}, {
-			"title": "系统阶段",
-			"iconUrl": "\ue6a4",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
+				}, {
 					"title": "系统相关机台",
 					"iconUrl": "\ue6a4",
 					"fitDataPath": [
@@ -883,6 +1031,228 @@
 							"configsystemid": "",
 							"spaceId": "",
 							"menuno": "",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "数据管理工具",
+			"iconUrl": "\ue6a4",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "数据架构设计",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "数据架构设计",
+							"actionType": 1,
+							"actionName": "DataArchitecturePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于布局库开发维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "属性库管理",
+							"actionType": 1,
+							"actionName": "DataArchitecturePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于布局库开发维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "表库管理",
+							"actionType": 1,
+							"actionName": "DataArchitecturePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于布局库开发维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "数据建模工具",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "数据建模工具",
+							"actionType": 1,
+							"actionName": "",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于布局库开发维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "数据维护定义设计",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "数据维护定义设计",
+							"actionType": 1,
+							"actionName": "DataMaintainDefDesPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于布局库开发维护",
+							"systemId": 100,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "基础数据维护",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "天龙",
+							"actionType": 1,
+							"actionName": "DataMaintenancePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于基础数据维护",
+							"systemId": 904,
+							"configsystemid": 101,
+							"spaceId": "tianlong",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "飞道",
+							"actionType": 1,
+							"actionName": "DataMaintenancePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于基础数据维护",
+							"systemId": 100,
+							"configsystemid": 101,
+							"spaceId": "feidao_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "victop_core",
+							"actionType": 1,
+							"actionName": "DataMaintenancePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于基础数据维护",
+							"systemId": 906,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "招聘",
+							"actionType": 1,
+							"actionName": "DataMaintenancePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于基础数据维护",
+							"systemId": 904,
+							"configsystemid": 101,
+							"spaceId": "fd_hiring",
+							"menuno": " ",
 							"actionCADName": "",
 							"fitDataPath": [
 								{

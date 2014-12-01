@@ -12,6 +12,7 @@ using Victop.Frame.PublicLib.Managers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 using System.Diagnostics;
+using Victop.Frame.SyncOperation;
 
 namespace UserLoginPlugin.ViewModels
 {
@@ -238,11 +239,24 @@ namespace UserLoginPlugin.ViewModels
                 userInfoDic.Add("ClientId", SysConfigModel.ClientId);
                 ConfigManager.SaveAttributeOfNodeByName("UserInfo", userInfoDic);
                 #endregion
+                #region 更新通道信息
+                SetUserInfo();
+                #endregion
             }
             catch (Exception ex)
             {
                 VicMessageBoxNormal.Show(ex.ToString());
             }
+        }
+        private void SetUserInfo()
+        {
+            string messageType = "LoginService.setUserInfo";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("UserCode", SysConfigModel.UserName);
+            contentDic.Add("UserPwd", SysConfigModel.PassWord);
+            contentDic.Add("ClientId", SysConfigModel.ClientId);
+            MessageOperation messageOp = new MessageOperation();
+            messageOp.SendMessage(messageType, contentDic);
         }
         /// <summary>
         /// 获取ip地址和端口号

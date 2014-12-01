@@ -113,6 +113,9 @@ namespace Victop.Frame.Connection
                         dicContent = GetSaveMongoTableDataMessage(dicContent);
                         replyIsToChannel = DataOperateEnum.COMMIT;
                         break;
+                    case "MongoDataChannelService.customeFunc":
+                        dicContent = GetMongoExecuteAsynMessage(dicContent);
+                        break;
                     default:
                         break;
                 }
@@ -1270,10 +1273,6 @@ namespace Victop.Frame.Connection
         {
             try
             {
-                if (!dicContent.ContainsKey("runUser"))
-                {
-                    dicContent.Add("runUser", null);
-                }
                 if (!dicContent.ContainsKey("clientId"))
                 {
                     dicContent.Add("clientId", null);
@@ -1282,17 +1281,9 @@ namespace Victop.Frame.Connection
                 {
                     dicContent.Add("controlid", null);
                 }
-                if (dicContent.ContainsKey("dataparam"))
+                if (!dicContent.ContainsKey("dataparam"))
                 {
-                    Dictionary<string, object> dataParDic = JsonHelper.ToObject<Dictionary<string, object>>(dicContent["dataparam"].ToString());
-                    if (!dataParDic.ContainsKey("usercode"))
-                    {
-                        GalleryManager galleryManager = new GalleryManager();
-                        CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
-                        LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
-                        dataParDic.Add("usercode", loginUserInfo.UserCode);
-                    }
-                    dicContent["dataparam"] = dataParDic;
+                    dicContent["dataparam"] = null;
                 }
                 return dicContent;
             }
@@ -1300,6 +1291,19 @@ namespace Victop.Frame.Connection
             {
                 throw;
             }
+        }
+        /// <summary>
+        /// 获取mongo数据库自定义服务
+        /// </summary>
+        /// <param name="dicContent"></param>
+        /// <returns></returns>
+        private Dictionary<string, object> GetMongoExecuteAsynMessage(Dictionary<string, object> dicContent)
+        {
+            if (!dicContent.ContainsKey("controlid"))
+            {
+                dicContent.Add("controlid", null);
+            }
+            return dicContent;
         }
         /// <summary>
         /// 得到服务时间
@@ -1529,6 +1533,7 @@ namespace Victop.Frame.Connection
             definition.Add("relation");
             definition.Add("clientRef");
             definition.Add("ref");
+            definition.Add("setting");
             definition.Add("dummyRelation");
             if (dicContent.ContainsKey("modeldefinition"))
             {

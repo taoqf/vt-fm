@@ -71,6 +71,9 @@ namespace Victop.Frame.ServerManagerCenter
                 case "GalleryService.GetGalleryInfo":
                     ReplyContent = GetGalleryInfo(messageInfo);
                     break;
+                case "LoginService.setUserInfo":
+                    ReplyContent = SetUserInfo(messageInfo);
+                    break;
                 default:
                     RegisterServerInfo serverInfo = JsonHelper.ToObject<RegisterServerInfo>(JsonHelper.ReadJsonString(messageInfo.MessageContent, "ServerInfo"));
                     ReplyContent = ServerRun(serverInfo,messageInfo);
@@ -78,6 +81,40 @@ namespace Victop.Frame.ServerManagerCenter
             }
             return ReplyContent;
         }
+        /// <summary>
+        /// 设置用户信息
+        /// </summary>
+        /// <param name="messageInfo"></param>
+        /// <returns></returns>
+        private string SetUserInfo(RequestMessage messageInfo)
+        {
+            Dictionary<string, object> returnDic = new Dictionary<string, object>();
+            try
+            {
+                Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
+                Dictionary<string, CloudGalleryInfo> galleryList = new Dictionary<string, CloudGalleryInfo>();
+                galleryList = new GalleryManager().GetAllGalleryInfo();
+                CloudGalleryInfo galleryInfo = galleryList.FirstOrDefault(it => it.Key.Equals(GalleryManager.GetCurrentGalleryId().ToString())).Value;
+                galleryInfo.ClientId = contentDic["ClientId"].ToString();
+                galleryInfo.ClientInfo.UserCode = contentDic["UserCode"].ToString();
+                galleryInfo.ClientInfo.UserPwd = contentDic["UserPwd"].ToString();
+                returnDic.Add("ReplyMode", "1");
+                returnDic.Add("ReplyContent", "更新当前通道用户信息成功");
+                return JsonHelper.ToJson(returnDic);
+            }
+            catch (Exception ex)
+            {
+                returnDic = new Dictionary<string, object>();
+                returnDic.Add("ReplyMode", "0");
+                returnDic.Add("ReplyContent", "更新当前通道用户信息失败");
+                return JsonHelper.ToJson(returnDic);
+            }
+        }
+        /// <summary>
+        /// 获取通道信息
+        /// </summary>
+        /// <param name="messageInfo"></param>
+        /// <returns></returns>
         private string GetGalleryInfo(RequestMessage messageInfo)
         {
             Dictionary<string, CloudGalleryInfo> galleryList = new Dictionary<string, CloudGalleryInfo>();
@@ -86,12 +123,24 @@ namespace Victop.Frame.ServerManagerCenter
             Dictionary<string, object> returnList = new Dictionary<string, object>();
             foreach (CloudGalleryInfo item in galleryList.Values)
             {
-                returnList.Add(item.CloudGalleryId.ToString(), item.CloudGalleryId.ToString());
+                if (!string.IsNullOrEmpty(item.CloudGalleryName))
+                {
+                    returnList.Add(item.CloudGalleryId.ToString(), item.CloudGalleryName.ToString());
+                }
+                else
+                {
+                    returnList.Add(item.CloudGalleryId.ToString(), item.CloudGalleryId.ToString());
+                }
             }
             returnDic.Add("ReplyMode", "1");
             returnDic.Add("ReplyContent", returnList);
             return JsonHelper.ToJson(returnDic);
         }
+        /// <summary>
+        /// 设置当前通道
+        /// </summary>
+        /// <param name="messageInfo"></param>
+        /// <returns></returns>
         private string SetCurrentGallery(RequestMessage messageInfo)
         {
             Dictionary<string, string> returnDic = new Dictionary<string, string>();

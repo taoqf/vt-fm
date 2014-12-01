@@ -272,7 +272,7 @@ namespace UserLoginPlugin.ViewModels
                 GalleryList = JsonHelper.ReadJsonObject<Dictionary<string, string>>(returnDic["ReplyContent"].ToString());
                 if (GalleryList != null && GalleryList.Count > 0)
                 {
-                    SelectedGallery = GalleryList[GalleryList.Keys.First()];
+                    SelectedGallery = GalleryList.Keys.First();
                 }
             }
         }

@@ -69,6 +69,7 @@ namespace Victop.Frame.CoreLibrary
             #region 读取企业云配置
             CloudGalleryInfo EnterPriseGalleryInfo = new CloudGalleryInfo();
             EnterPriseGalleryInfo.CloudGalleryId = GalleryEnum.ENTERPRISE;
+            EnterPriseGalleryInfo.CloudGalleryName = ConfigManager.GetAttributeOfNodeByName("Client", "Name");
             EnterPriseGalleryInfo.CloudAddress = ConfigManager.GetAttributeOfNodeByName("Client", "Server");
             EnterPriseGalleryInfo.RouterAddress = ConfigManager.GetAttributeOfNodeByName("Client","Router");
             EnterPriseGalleryInfo.IsNeedRouter = ConfigManager.GetAttributeOfNodeByName("Client", "IsNeedRouter") == "0" ? true : false;
@@ -78,6 +79,7 @@ namespace Victop.Frame.CoreLibrary
             #region 内置飞道云
             CloudGalleryInfo victopGalleryInfo = new CloudGalleryInfo();
             victopGalleryInfo.CloudGalleryId = GalleryEnum.VICTOP;
+            victopGalleryInfo.CloudGalleryName = "飞道云";
             victopGalleryInfo.CloudAddress = "192.168.40.198:9999";
             victopGalleryInfo.RouterAddress = "192.168.40.198:9527";
             victopGalleryInfo.IsNeedRouter = true;
