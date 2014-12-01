@@ -731,6 +731,59 @@ namespace Victop.Frame.DataChannel
         /// 获取简单引用数据
         /// </summary>
         /// <param name="viewId"></param>
+        public DataSet GetSimpleRef(string viewId, string dataPath, string columnPath, string target, string targetValue, Dictionary<string, object> dependDic)
+        {
+            DataSet ds = new DataSet();
+            string constructPath = string.Empty;
+            #region 构建结构Path
+            List<object> pathList = JsonHelper.ToObject<List<Object>>(dataPath);
+            for (int i = 0; i < pathList.Count; i++)
+            {
+                if (pathList[i].GetType().Name.Equals("String"))
+                {
+                    if (i == pathList.Count - 1)
+                    {
+                        constructPath += pathList[i].ToString() + ".";
+                    }
+                    else
+                    {
+                        constructPath += pathList[i].ToString() + ".dataArray.";
+                    }
+                }
+                else
+                {
+                    constructPath += "dataArray.";
+                }
+            }
+            constructPath += "[" + target + ":" + columnPath + "]." + targetValue;
+            #endregion
+            #region 获取简单引用定义
+            string jsonData = DataTool.GetDataByPath(viewId, "[\"simpleRef\"]");
+            if (!string.IsNullOrEmpty(jsonData))
+            {
+                string dataArrayJson = JsonHelper.ReadJsonString(jsonData, "dataArray");
+                foreach (Dictionary<string, object> item in JsonHelper.ToObject<List<Dictionary<string, object>>>(dataArrayJson))
+                {
+                    if (item.ContainsKey("property") && item.ContainsKey("valueList"))
+                    {
+                        List<SimRefPropertyModel> propertyModelList = JsonHelper.ToObject<List<SimRefPropertyModel>>(item["property"].ToString());
+                        SimRefPropertyModel propertyModel = propertyModelList.FirstOrDefault(it => it.key.Equals(constructPath));
+                        if (propertyModel == null)
+                            break;
+                        DataTable dt = GetDataByConsturctPath(propertyModel.value, propertyModel.value, item["valueList"].ToString(), dependDic);
+                        ds.Tables.Add(dt);
+                        break;
+                    }
+                }
+            }
+            #endregion
+            return ds;
+        }
+
+        /// <summary>
+        /// 获取简单引用数据
+        /// </summary>
+        /// <param name="viewId"></param>
         public DataSet GetSimpleRef(string viewId, string dataPath, string columnPath, Dictionary<string, object> dependDic)
         {
             DataSet ds = new DataSet();

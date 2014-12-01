@@ -78,6 +78,19 @@ namespace Victop.Frame.DataChannel
         /// <param name="columnName"></param>
         /// <param name="dependValue"></param>
         /// <returns></returns>
+        public virtual DataSet GetSimpDefData(string channelId, string dataPath, string columnName, string target, string targetValue, Dictionary<string, object> dependDic = null)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.GetSimpleRef(channelId, dataPath, columnName, target, targetValue, dependDic);
+        }
+        /// <summary>
+        /// 获取简单引用数据
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="dataPath"></param>
+        /// <param name="columnName"></param>
+        /// <param name="dependValue"></param>
+        /// <returns></returns>
         public virtual DataSet GetSimpDefData(string channelId, string dataPath, string columnName, Dictionary<string, object> dependDic = null)
         {
             DataConvertManager convertManager = new DataConvertManager();
