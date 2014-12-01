@@ -507,6 +507,13 @@ namespace Victop.Frame.DataChannel
                 List<Dictionary<string, object>> tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "tables"));
                 List<Dictionary<string, object>> clientrefList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "clientRef"));
                 List<Dictionary<string, object>> refList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "ref"));
+                List<Dictionary<string, object>> settingList = new List<Dictionary<string, object>>();
+                string settingStr = JsonHelper.ReadJsonString(modelJson, "setting");
+                if (!string.IsNullOrEmpty(settingStr))
+                {
+                    settingStr = JsonHelper.ReadJsonString(settingStr, "fieldSetting");
+                    settingList = JsonHelper.ToObject<List<Dictionary<string, object>>>(settingStr);
+                }
                 if (tableList != null && tableList.Count > 0)
                 {
                     Dictionary<string, object> tableListDic = tableList.Find(it => it["name"].ToString().Equals(tableName));
