@@ -466,4 +466,92 @@
         </Setter>
     </Style>
     <!--VicNumericUpDown样式结束-->
+    <!--VicDatePickerNormal样式开始-->
+    <Style TargetType="{x:Type controls:VicDatePickerNormal}">
+        <Setter Property="MinWidth" Value="100"/>
+        <Setter Property="Height" Value="23"/>
+        <Setter Property="Background" Value="{DynamicResource CheckBoxFillNormal}"/>
+        <Setter Property="BorderBrush"   Value="{DynamicResource SkinBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value >
+                <ControlTemplate  ControlTemplate.TargetType="{x:Type controls:VicDatePickerNormal}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" >
+                        <Grid x:Name="MainGrid" SnapsToDevicePixels="true" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox  Name="textBox"  Grid.Column="0" BorderThickness="0" Background="White" />
+                            <TextBlock  x:Name="textBlock"  Grid.Column="1" Width="23"  Background="{DynamicResource CheckBoxFillNormal}"   HorizontalAlignment="Right"  >   
+                                <Path  Data="M 0 0 L 3.5 4 L 7 0 Z" Fill="Gray"  Margin="8"/>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HideButton" Value="True">
+                            <Setter TargetName="textBlock" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                    <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="textBlock" Property="Background" Value="{DynamicResource SkinColor}" />
+                    </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--VicDatePickerNormal样式结束-->
+    <!--VicTextBox样式开始-->
+    <Style x:Key="VicButtonToBox"  TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background"      Value="{DynamicResource CheckBoxFillNormal}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <!--按钮内容-->
+                        <ContentPresenter x:Name="content" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" Content="{TemplateBinding  Content}"/>
+                    </Border>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type controls:VicTextBox}">
+        <Setter Property="MinWidth"        Value="40" />
+        <Setter Property="BorderBrush"     Value="{DynamicResource SkinBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background"      Value="White"/>
+        <Setter Property="IsReadOnly"      Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicTextBox}">
+                    <Border  Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="PART_Input" Grid.Column="0" BorderBrush="Transparent" IsReadOnly="{TemplateBinding IsReadOnly}" Background="{TemplateBinding Background}"/>
+                            <Button x:Name="PART_Open" Grid.Column="1" Style="{StaticResource VicButtonToBox}" Width="23" Content="...."   Padding="0,0,0,8"  Foreground="Gray"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HideDataRefButton" Value="true">
+                            <Setter TargetName="PART_Open" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="PART_Open" Property="Background" Value="{DynamicResource SkinColor}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--VicTextBox样式结束-->
 </ResourceDictionary>
