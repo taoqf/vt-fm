@@ -179,7 +179,7 @@
     </Style>
     <Style TargetType="{x:Type controls:VicCheckBoxNormal}">
         <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
-        <Setter Property="Background" Value="{DynamicResource CheckBoxFillNormal}"/>
+        <Setter Property="Background" Value="White"/>
         <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Height" Value="20"></Setter>
@@ -256,6 +256,7 @@
         <Setter Property="AllowDrop" Value="true"/>
         <Setter Property="IsEnabled" Value="False"/>
         <Setter Property="MinWidth" Value="0"/>
+        <Setter Property="Background" Value="White"/>
         <Setter Property="MinHeight" Value="0"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
@@ -273,6 +274,7 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="Background" Value="White"/>
         <Setter Property="MinWidth" Value="100"></Setter>
         <Setter Property="Height" Value="23"></Setter>
         <Setter Property="Padding" Value="4,3"/>
@@ -295,7 +297,7 @@
                                 </Themes:SystemDropShadowChrome>
                             </Popup>
                             <TextBox x:Name="PART_EditableTextBox"   Grid.Column="0"  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}" Margin="{TemplateBinding Padding}" Style="{DynamicResource ComboBoxEditableTextBox}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Visibility="Hidden"/>
-                            <ContentPresenter x:Name="ContentSite" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <ContentPresenter x:Name="ContentSite"  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             <CheckBox Grid.Column="1" Width="23"  HorizontalAlignment="Right" Margin="0"  Visibility="{TemplateBinding HideDropDownToggle,Converter={StaticResource BoolToVisibilityConverter}}"  Style="{DynamicResource ComboBoxCheck}" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Grid>
                     </Border>
@@ -393,6 +395,7 @@
 
     <Style TargetType="{x:Type controls:VicNumericUpDown}">
         <Setter Property="BorderThickness"  Value="1" />
+        <Setter Property="Background" Value="White"/>
         <Setter Property="BorderBrush"  Value="{DynamicResource SkinBorderBrush}"/>
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="MinHeight" Value="23" />
