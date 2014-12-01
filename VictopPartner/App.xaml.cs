@@ -28,6 +28,8 @@ namespace VictopPartner
                 try
                 {
                     this.GetCurrentSkin();
+                    //NotificationCenter notifyCenter = new NotificationCenter();
+                    //notifyCenter.Show();
                     string mainPlugin = ConfigurationManager.AppSettings["portalWindow"];
                     Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName(mainPlugin, "");
                     Type[] types = pluginAssembly.GetTypes();

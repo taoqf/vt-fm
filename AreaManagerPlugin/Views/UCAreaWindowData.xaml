@@ -160,7 +160,12 @@
                             </i:Interaction.Triggers>
                         </Button>
                     </DockPanel>
-                    <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding JsonDataTable}" IsShowContextMenu="True">
+                    <ctrl:VicDataGrid Grid.Row="1" Name="jsonDataGrid" ItemsSource="{Binding JsonDataTable}" IsShowContextMenu="True">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding jsonSelectionChangedCommand}" CommandParameter="{Binding ElementName=jsonDataGrid}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </ctrl:VicDataGrid>
                 </Grid>
             </TabItem>
@@ -202,6 +207,11 @@
                     </Grid>
                 </Grid>
             </TabItem>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding datagridSelectionChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </TabControl>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">
