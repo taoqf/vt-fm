@@ -922,6 +922,8 @@ namespace PortalFramePlugin.ViewModels
                 }
                 isFirstLogin = false;
                 LoadStandardMenu();
+                NotificationCenter notifyCenter = new NotificationCenter();
+                notifyCenter.Show();
             }
 
         }

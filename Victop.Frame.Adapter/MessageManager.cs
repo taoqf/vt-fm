@@ -122,6 +122,19 @@ namespace Victop.Frame.Adapter
         /// </summary>
         public virtual ReplyMessage SubmitRequest(RequestMessage message)
         {
+            #region 获取推送消息
+            if (message.MessageType == "TaskNotifyService.GetNoifyInfo")
+            {
+                ReplyMessage repMessage = new ReplyMessage();
+                repMessage.MessageId = message.MessageId;
+                repMessage.ReplyMode = ReplyModeEnum.ASYNC;
+                repMessage.ReplyContent = JsonHelper.ToJson(NotificationPoolManager.NotificationPool.PoolMap);
+                //NotificationPoolManager notifyMgr = new NotificationPoolManager();
+                //notifyMgr.ClearNotificationPool();
+                return repMessage;
+            }
+            #endregion
+
             return SubmitRequest(message, 10000);
         }
 

@@ -123,6 +123,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\UCPortalWindowViewModel.cs" />
+    <Compile Include="Views\NotificationCenter.xaml.cs">
+      <DependentUpon>NotificationCenter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PortalWindow.xaml.cs">
       <DependentUpon>PortalWindow.xaml</DependentUpon>
     </Compile>
@@ -173,6 +176,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Views\NotificationCenter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\PortalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

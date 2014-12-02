@@ -102,7 +102,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -137,10 +136,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NotificationCenter.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="themes\Common.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -163,9 +158,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NotificationCenter.xaml.cs">
-      <DependentUpon>NotificationCenter.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -196,6 +188,10 @@
     <ProjectReference Include="..\Victop.Frame.CoreLibrary\Victop.Frame.CoreLibrary.csproj">
       <Project>{9bf73423-7f54-4de6-bfbb-e179ba454f0e}</Project>
       <Name>Victop.Frame.CoreLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Victop.Frame.MessageManager\Victop.Frame.MessageManager.csproj">
+      <Project>{e2066a80-e481-488d-a260-5c0ac9b7eff0}</Project>
+      <Name>Victop.Frame.MessageManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.PublicLib\Victop.Frame.PublicLib.csproj">
       <Project>{90c4d04f-f952-4c63-8a69-0c9d12e050fb}</Project>
