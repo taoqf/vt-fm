@@ -1264,6 +1264,228 @@
 					]
 				}
 			]
+		}, {
+			"title": "天龙计划",
+			"iconUrl": "\ue6a4",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "数据架构设计",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "数据架构设计",
+							"actionType": 1,
+							"actionName": "DataArchitecturePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于布局库开发维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "属性库管理",
+							"actionType": 1,
+							"actionName": "DataArchitecturePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于布局库开发维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "表库管理",
+							"actionType": 1,
+							"actionName": "DataArchitecturePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于布局库开发维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "数据建模工具",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "数据建模工具",
+							"actionType": 1,
+							"actionName": "",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于布局库开发维护",
+							"systemId": 101,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "数据维护定义设计",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "数据维护定义设计",
+							"actionType": 1,
+							"actionName": "DataMaintainDefDesPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于布局库开发维护",
+							"systemId": 100,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}, {
+					"title": "基础数据维护",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "天龙",
+							"actionType": 1,
+							"actionName": "DataMaintenancePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于基础数据维护",
+							"systemId": 904,
+							"configsystemid": 101,
+							"spaceId": "tianlong",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "飞道",
+							"actionType": 1,
+							"actionName": "DataMaintenancePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于基础数据维护",
+							"systemId": 100,
+							"configsystemid": 101,
+							"spaceId": "feidao_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "victop_core",
+							"actionType": 1,
+							"actionName": "DataMaintenancePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于基础数据维护",
+							"systemId": 906,
+							"configsystemid": 101,
+							"spaceId": "victop_core",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "招聘",
+							"actionType": 1,
+							"actionName": "DataMaintenancePlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于基础数据维护",
+							"systemId": 904,
+							"configsystemid": 101,
+							"spaceId": "fd_hiring",
+							"menuno": " ",
+							"actionCADName": "",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
 		}
 	]
 }

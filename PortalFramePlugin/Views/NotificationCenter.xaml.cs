@@ -25,13 +25,14 @@ namespace PortalFramePlugin.Views
     /// <summary>
     /// NotificationCenter.xaml 的交互逻辑
     /// </summary>
-    public partial class NotificationCenter :Window
+    public partial class NotificationCenter : Window
     {
         private readonly double _screenWidth;
         private readonly DispatcherTimer _timer;
         private readonly DispatcherTimer _timerClose;
         private readonly Storyboard _storyboardShow;
         private readonly Storyboard _storyboardHide;
+        private DataTable gridDataTable;
         public NotificationCenter()
         {
             InitializeComponent();
@@ -72,9 +73,12 @@ namespace PortalFramePlugin.Views
         private void timer_Tick(object sender, EventArgs e)
         {
             GetNotifyMessage();
-            _timer.Stop();
-            _timerClose.Start();
-            _storyboardShow.Begin();
+            if (gridDataTable != null && gridDataTable.Rows.Count > 0)
+            {
+                _timer.Stop();
+                _timerClose.Start();
+                _storyboardShow.Begin();
+            }
         }
         /// <summary>
         /// 定时刷新，隐藏消息中心
@@ -113,12 +117,17 @@ namespace PortalFramePlugin.Views
         }
         private void SaveDataSuccess(object message)
         {
-            DataTable dataTable = new DataTable();
-            dataTable.Columns.Add("消息类型");
-            dataTable.Columns.Add("消息内容");
-            dataTable.Columns.Add("状态");
-            //TODO:根据message中的组织DataTable的内容
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new WaitCallback(UpdateDataGridSource), dataTable);
+            gridDataTable = new DataTable();
+            gridDataTable.Columns.Add("消息类型");
+            gridDataTable.Columns.Add("消息内容");
+            gridDataTable.Columns.Add("状态");
+            Dictionary<string, object> replyDic = JsonHelper.ToObject<Dictionary<string, object>>(message.ToString());
+            replyDic = JsonHelper.ToObject<Dictionary<string, object>>(replyDic["ReplyContent"].ToString());
+            if (replyDic != null && replyDic.Keys.Count > 0)
+            {
+                //TODO:
+            }
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new WaitCallback(UpdateDataGridSource), gridDataTable);
         }
         private void UpdateDataGridSource(object ItemSource)
         {

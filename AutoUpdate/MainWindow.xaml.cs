@@ -15,7 +15,7 @@ namespace AutoUpdate
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow :Window
+    public partial class MainWindow : Window
     {
         #region 字段
         AutoUpdateModel updateModel = new AutoUpdateModel();
@@ -25,15 +25,22 @@ namespace AutoUpdate
         {
             InitializeComponent();
             this.Loaded += updateWindow_Loaded;
+            this.Closing += MainWindow_Closing;
         }
 
+        void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp")))
+            {
+                Directory.Delete(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp"), true);
+            }
+            Process updatePro = Process.Start("VictopPartner.exe", "true");
+        }
         private void updateWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            Process[] process = Process.GetProcessesByName("VictopPartner.exe");
-            foreach (Process item in process)
-            {
-                item.Kill();
-            }
+            string[] argsStr = Environment.GetCommandLineArgs();
+            Process process = Process.GetProcessById(Convert.ToInt32(argsStr[1]));
+            process.Kill();
             InitUpdateInfo();
         }
         /// <summary>
@@ -45,7 +52,6 @@ namespace AutoUpdate
             updateModel.LocalUpdateTimestamp = Convert.ToInt64(ConfigurationManager.AppSettings["UpDate"]);
             if (!GetTheLastUpdateTime())
             {
-                MessageBox.Show("未找到更新服务");
                 this.Close();
                 return;
             }
@@ -133,13 +139,20 @@ namespace AutoUpdate
         /// <param name="e"></param>
         void updateClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
+            if (!Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp")))
+            {
+                Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp"));
+            }
             if (string.IsNullOrEmpty(updateModel.LoadingFilePath))
             {
                 if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\" + updateModel.LoadingFileName))
                 {
-                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "\\" + updateModel.LoadingFileName);
+                    File.Replace(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpdater", updateModel.LoadingFileName), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateModel.LoadingFileName), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp", updateModel.LoadingFileName), true);
                 }
-                File.Move(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpdater", updateModel.LoadingFileName), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateModel.LoadingFileName));
+                else
+                {
+                    File.Move(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpdater", updateModel.LoadingFileName), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateModel.LoadingFileName));
+                }
                 updateModel.UpdateSize += updateModel.LoadingFileSize;
             }
             else
@@ -152,10 +165,13 @@ namespace AutoUpdate
                 filePath = Path.Combine(filePath, updateModel.LoadingFileName);
                 if (File.Exists(filePath))
                 {
-                    File.Delete(filePath);
+                    File.Replace(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpdater", updateModel.LoadingFilePath,updateModel.LoadingFileName), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateModel.LoadingFilePath,updateModel.LoadingFileName), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp", updateModel.LoadingFileName), true);
                 }
-                string sourceFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpdater", updateModel.LoadingFilePath, updateModel.LoadingFileName);
-                File.Move(sourceFileName, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateModel.LoadingFilePath, updateModel.LoadingFileName));
+                else
+                {
+                    string sourceFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpdater", updateModel.LoadingFilePath, updateModel.LoadingFileName);
+                    File.Move(sourceFileName, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateModel.LoadingFilePath, updateModel.LoadingFileName));
+                }
                 updateModel.UpdateSize += updateModel.LoadingFileSize;
             }
             if (updateModel.FileNames.Count > updateModel.UpdatedNum + 1)
@@ -185,9 +201,9 @@ namespace AutoUpdate
             updateModel.LoadingFileName = updateModel.FileNames[(int)updateModel.UpdatedNum];
             if (updateModel.LoadingFileName.Contains("\\"))
             {
-                string[] fileInfoStr = updateModel.LoadingFileName.Split('\\');
-                updateModel.LoadingFilePath = fileInfoStr[0];
-                updateModel.LoadingFileName = fileInfoStr[1];
+                int index = updateModel.LoadingFileName.LastIndexOf("\\");
+                updateModel.LoadingFilePath = updateModel.LoadingFileName.Substring(0, index + 1);
+                updateModel.LoadingFileName = updateModel.LoadingFileName.Substring(index + 1);
             }
             else
             {
