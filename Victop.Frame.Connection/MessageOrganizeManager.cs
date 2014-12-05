@@ -113,7 +113,7 @@ namespace Victop.Frame.Connection
                         dicContent = GetSaveMongoTableDataMessage(dicContent);
                         replyIsToChannel = DataOperateEnum.COMMIT;
                         break;
-                    case "MongoDataChannelService.customeFunc":
+                    case "MongoDataChannelService.customFunc":
                         dicContent = GetMongoExecuteAsynMessage(dicContent);
                         break;
                     default:
