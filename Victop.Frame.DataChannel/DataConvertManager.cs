@@ -558,7 +558,7 @@ namespace Victop.Frame.DataChannel
                     if (item.ContainsKey("value"))
                     {
                         string selectFlag = JsonHelper.ReadJsonString(item["value"].ToString(), "selectFlag");
-                        if (string.IsNullOrEmpty(selectFlag) || (!string.IsNullOrEmpty(selectFlag) && selectFlag.Equals("0")))
+                        if (string.IsNullOrEmpty(selectFlag) || (!string.IsNullOrEmpty(selectFlag) && selectFlag.Equals("1")))
                         {
                             DataColumn dc = new DataColumn(keyStr);
                             switch (JsonHelper.ReadJsonString(item["value"].ToString(), "type"))
@@ -608,7 +608,7 @@ namespace Victop.Frame.DataChannel
                     if (item.ContainsKey("value"))
                     {
                         string selectFlag = JsonHelper.ReadJsonString(item["value"].ToString(), "selectFlag");
-                        if (string.IsNullOrEmpty(selectFlag) || (!string.IsNullOrEmpty(selectFlag) && selectFlag.Equals("0")))
+                        if (string.IsNullOrEmpty(selectFlag) || (!string.IsNullOrEmpty(selectFlag) && selectFlag.Equals("1")))
                         {
                             DataColumn dc = new DataColumn(item["key"].ToString());
                             if (clientrefList != null)
