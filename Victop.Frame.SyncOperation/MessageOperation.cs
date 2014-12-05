@@ -88,7 +88,7 @@ namespace Victop.Frame.SyncOperation
                 messageContent = new Dictionary<string, object>();
             }
             messageDic.Add("MessageContent", messageContent);
-            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(MessageBack), dataForm.Equals("JSON") ? DataFormEnum.JSON : DataFormEnum.DATASET);
+            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(MessageBack), dataForm.Equals("JSON") ? DataFormEnum.JSON : DataFormEnum.DATASET, waiteTime);
             if (waiteTime > 0)
             {
                 bool flag = false;
