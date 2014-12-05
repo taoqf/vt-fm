@@ -255,7 +255,7 @@
 						{
 							"title": "原始需求机台",
 							"actionType": 1,
-							"actionName": "AreaManagerPlugin",
+							"actionName": "OriginalDemandMachinePlatformPlugin",
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于策划机台维护",
@@ -264,6 +264,25 @@
 							"spaceId": "feidao_core",
 							"actionCADName": "",
 							"menuno": "10010",
+							"fitDataPath": [
+								{
+									"key": "datagridMaster",
+									"value": "OriginalDemandMachinePlatformPlugin_Setting",
+									"title": "工作区"
+								}
+							]
+						}, {
+							"title": "报价机台(初步)",
+							"actionType": 1,
+							"actionName": "MachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "报价机台(初步)",
+							"systemId": 100,
+							"configsystemid": 101,
+							"spaceId": "feidao_core",
+							"actionCADName": "",
+							"menuno": "10050",
 							"fitDataPath": [
 								{
 									"key": "datagridMaster",
@@ -280,17 +299,17 @@
 								}
 							]
 						}, {
-							"title": "报价机台(初步)",
+							"title": "客户项目工单",
 							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
+							"actionName": "ServiceProjectWorkOrderPlugin",
 							"showType": 1,
 							"iconUrl": "\ue6a4",
-							"description": "报价机台(初步)",
+							"description": "客户项目工单",
 							"systemId": 100,
 							"configsystemid": 101,
 							"spaceId": "feidao_core",
 							"actionCADName": "",
-							"menuno": "10050",
+							"menuno": "10070",
 							"fitDataPath": [
 								{
 									"key": "datagridMaster",
@@ -339,16 +358,17 @@
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
 							"iconUrl": "\ue6a4",
-							"description": "用于策划机台维护",
+							"description": "业务调研报告",
 							"systemId": 100,
 							"configsystemid": 101,
 							"spaceId": "feidao_core",
-							"actionCADName": "",
+							"actionCADName": "BusinessArchitectureDiagramPlugin",
 							"menuno": "10020",
 							"fitDataPath": [
 								{
-									"key": "",
-									"value": ""
+									"key": "datagridMaster",
+									"value": "BusinessArchitectureDiagramPlugin_Setting",
+									"title": "工作区"
 								}
 							]
 						}, {
@@ -361,12 +381,21 @@
 							"systemId": 100,
 							"configsystemid": 101,
 							"spaceId": "feidao_core",
-							"actionCADName": "",
+							"actionCADName": "NonBusineSurveyReportMachinePlatformPlugin",
 							"menuno": "10030",
 							"fitDataPath": [
 								{
-									"key": "",
-									"value": ""
+									"key": "datagridMaster",
+									"value": "ProductSummaryMachinePlatFormPlugin_Setting",
+									"title": "工作区"
+								}, {
+									"key": "datagridDetail",
+									"value": "",
+									"title": "页面明细"
+								}, {
+									"key": "datagridSubDetail",
+									"value": "",
+									"title": "APP明细"
 								}
 							]
 						}, {
@@ -379,12 +408,12 @@
 							"systemId": 100,
 							"configsystemid": 101,
 							"spaceId": "feidao_core",
-							"actionCADName": "DataMaintainDefDesPlugin",
+							"actionCADName": "PageFlowPlugin",
 							"menuno": "20020",
 							"fitDataPath": [
 								{
 									"key": "datagridMaster",
-									"value": "PageFlowMachinePlatFormPlugin_Setting",
+									"value": "PageFlowPlugin_Setting",
 									"title": "工作区"
 								}, {
 									"key": "datagridDetail",
@@ -402,16 +431,25 @@
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
 							"iconUrl": "\ue6a4",
-							"description": "用于策划机台维护",
+							"description": "解决方案机台",
 							"systemId": 100,
 							"configsystemid": 101,
 							"spaceId": "feidao_core",
-							"actionCADName": "",
+							"actionCADName": "SolutionMachinePlatformPlugin",
 							"menuno": "10040",
 							"fitDataPath": [
 								{
-									"key": "",
-									"value": ""
+									"key": "datagridMaster",
+									"value": "SolutionMachinePlatformPlugin_Setting",
+									"title": "工作区"
+								}, {
+									"key": "datagridDetail",
+									"value": "",
+									"title": "页面明细"
+								}, {
+									"key": "datagridSubDetail",
+									"value": "",
+									"title": "APP明细"
 								}
 							]
 						}, {
@@ -430,6 +468,33 @@
 								{
 									"key": "datagridMaster",
 									"value": "PageFlowMachinePlatFormPlugin_Setting",
+									"title": "工作区"
+								}, {
+									"key": "datagridDetail",
+									"value": "",
+									"title": "页面明细"
+								}, {
+									"key": "datagridSubDetail",
+									"value": "",
+									"title": "APP明细"
+								}
+							]
+						}, {
+							"title": "报表机台",
+							"actionType": 1,
+							"actionName": "MachinePlatformPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": " ",
+							"systemId": 100,
+							"configsystemid": 101,
+							"spaceId": "feidao_core",
+							"actionCADName": "ReportMachinePlatformPlugin",
+							"menuno": "10090",
+							"fitDataPath": [
+								{
+									"key": "datagridMaster",
+									"value": "ProductSummaryMachinePlatFormPlugin_Setting",
 									"title": "工作区"
 								}, {
 									"key": "datagridDetail",
@@ -460,15 +525,15 @@
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于数据架构维护",
-							"systemId": 100,
+							"systemId": 101,
 							"configsystemid": 101,
-							"spaceId": "victop_core",
+							"spaceId": "feidao_core",
 							"actionCADName": "DataArchitecturePlugin",
 							"menuno": "20040",
 							"fitDataPath": [
 								{
 									"key": "datagridMaster",
-									"value": "PageFlowMachinePlatFormPlugin_Setting",
+									"value": "DataArchitecturePlugin_Setting",
 									"title": "工作区"
 								}, {
 									"key": "datagridDetail",
@@ -487,7 +552,7 @@
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于页面地图维护",
-							"systemId": 100,
+							"systemId": 904,
 							"configsystemid": 101,
 							"spaceId": "victop_core",
 							"actionCADName": "PageMapPlugin",
@@ -505,7 +570,7 @@
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于用例维护",
-							"systemId": 100,
+							"systemId": 904,
 							"configsystemid": 101,
 							"spaceId": "victop_core",
 							"actionCADName": "UseCaseDesignPlugin",
@@ -529,21 +594,49 @@
 					],
 					"children": [
 						{
+							"title": "开发工单项目机台",
+							"actionType": 1,
+							"actionName": "DevelopProjectWorkOrderPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "开发工单项目机台",
+							"systemId": 904,
+							"configsystemid": 101,
+							"spaceId": "feidao_core",
+							"actionCADName": "",
+							"menuno": "20060",
+							"fitDataPath": [
+								{
+									"key": "datagridMaster",
+									"value": "",
+									"title": "工作区"
+								}, {
+									"key": "datagridDetail",
+									"value": "",
+									"title": "业面明细"
+								}, {
+									"key": "datagridSubDetail",
+									"value": "",
+									"title": "APP明细"
+								}
+							]
+						}, {
 							"title": "状态图机台",
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于状态图维护",
-							"systemId": 100,
+							"systemId": 904,
 							"configsystemid": 101,
-							"spaceId": "victop_core",
+							"spaceId": "feidao_core",
 							"actionCADName": "StatePicturePlugin",
 							"menuno": "30020",
 							"fitDataPath": [
 								{
-									"key": "",
-									"value": ""
+									"key": "datagridMaster",
+									"value": "StatePicturePlugin_Setting",
+									"title": "工作区"
 								}
 							]
 						}, {
@@ -553,7 +646,7 @@
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于页面草图维护",
-							"systemId": 100,
+							"systemId": 904,
 							"configsystemid": 101,
 							"spaceId": "victop_core",
 							"actionCADName": "",
@@ -571,7 +664,7 @@
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于数据字典架构维护",
-							"systemId": 100,
+							"systemId": 904,
 							"configsystemid": 101,
 							"spaceId": "victop_core",
 							"actionCADName": "",
@@ -589,7 +682,7 @@
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于页面效果图维护",
-							"systemId": 100,
+							"systemId": 904,
 							"configsystemid": 101,
 							"spaceId": "victop_core",
 							"actionCADName": "",
@@ -607,7 +700,7 @@
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于页面定义维护",
-							"systemId": 100,
+							"systemId": 904,
 							"configsystemid": 101,
 							"spaceId": "victop_core",
 							"actionCADName": "PageCompinetProjectPlugin",
@@ -625,15 +718,24 @@
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于数据建模维护",
-							"systemId": 100,
+							"systemId": 904,
 							"configsystemid": 101,
-							"spaceId": "victop_core",
+							"spaceId": "feidao_core",
 							"actionCADName": "DataModelPlugin",
 							"menuno": "30060",
 							"fitDataPath": [
 								{
-									"key": "",
-									"value": ""
+									"key": "datagridMaster",
+									"value": "DataModelPlugin_Setting",
+									"title": "工作区"
+								}, {
+									"key": "datagridDetail",
+									"value": "",
+									"title": "页面明细"
+								}, {
+									"key": "datagridSubDetail",
+									"value": "",
+									"title": "APP明细"
 								}
 							]
 						}, {
@@ -643,7 +745,7 @@
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于页面组件分析机台维护",
-							"systemId": 100,
+							"systemId": 904,
 							"configsystemid": 101,
 							"spaceId": "victop_core",
 							"actionCADName": "PageDetinitionProjectPlugin",
@@ -661,7 +763,7 @@
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于组件定义机台维护",
-							"systemId": 100,
+							"systemId": 904,
 							"configsystemid": 101,
 							"spaceId": "victop_core",
 							"actionCADName": "ComponentDefinitionPlugin",
@@ -679,7 +781,7 @@
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于部件定义机台维护",
-							"systemId": 100,
+							"systemId": 904,
 							"configsystemid": 101,
 							"spaceId": "victop_core",
 							"actionCADName": "",
