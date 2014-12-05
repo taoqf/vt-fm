@@ -111,29 +111,32 @@ namespace Victop.Frame.DataChannel
                                 string tableName = pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString();
                                 itemDt = GetDataTableStructByModel(modelData, tableName, viewId, dataPath);
                             }
-                            switch (jsonDic[item].GetType().Name)
+                            if (jsonDic.ContainsKey(item) && jsonDic[item] != null)
                             {
-                                case "JArray":
-                                    List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonDic[item].ToString());
-                                    if (itemDt.Columns.Count <= 0)
-                                    {
-                                        itemDt = GetDataTableStruct(item, arrayList.Count > 0 ? arrayList[0] : null, newDs);
-                                    }
-                                    foreach (Dictionary<string, object> rowItem in arrayList)
-                                    {
-                                        UpdateDataTableRow(itemDt, rowItem);
-                                    }
-                                    break;
-                                case "JObject":
-                                    Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
-                                    if (itemDt.Columns.Count <= 0)
-                                    {
-                                        itemDt = GetDataTableStruct(item, itemDic, newDs);
-                                    }
-                                    UpdateDataTableRow(itemDt, itemDic);
-                                    break;
-                                default:
-                                    break;
+                                switch (jsonDic[item].GetType().Name)
+                                {
+                                    case "JArray":
+                                        List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonDic[item].ToString());
+                                        if (itemDt.Columns.Count <= 0)
+                                        {
+                                            itemDt = GetDataTableStruct(item, arrayList.Count > 0 ? arrayList[0] : null, newDs);
+                                        }
+                                        foreach (Dictionary<string, object> rowItem in arrayList)
+                                        {
+                                            UpdateDataTableRow(itemDt, rowItem);
+                                        }
+                                        break;
+                                    case "JObject":
+                                        Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
+                                        if (itemDt.Columns.Count <= 0)
+                                        {
+                                            itemDt = GetDataTableStruct(item, itemDic, newDs);
+                                        }
+                                        UpdateDataTableRow(itemDt, itemDic);
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                             itemDt.AcceptChanges();
                             if (!newDs.Tables.Contains(itemDt.TableName))
@@ -191,6 +194,10 @@ namespace Victop.Frame.DataChannel
 
         private static void UpdateDataTableRow(DataTable itemDt, Dictionary<string, object> rowItem)
         {
+            if (rowItem != null && rowItem.ContainsKey("_id") && string.IsNullOrEmpty(rowItem["_id"].ToString()))
+            {
+                return;
+            }
             DataRow arrayDr = itemDt.NewRow();
             foreach (DataColumn dtCol in itemDt.Columns)
             {
