@@ -209,7 +209,7 @@ namespace AutoUpdate
             {
                 updateModel.LoadingFilePath = string.Empty;
             }
-            tBlockNow.Text = string.Format("更新进度 {0}/{1}  [ {2} ]", updateModel.UpdatedNum + 1, updateModel.TotalCount, ConvertSize(updateModel.TotalSize));
+            tBlockNow.Text = string.Format("更新进度 {0}/{1}", updateModel.UpdatedNum + 1, updateModel.TotalCount);
             proBarTotal.Value = 0;
 
             string directoryPath = AppDomain.CurrentDomain.BaseDirectory + "\\AutoUpdater\\";

@@ -22,12 +22,15 @@ namespace VictopPartner
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            //string[] argsStr = Environment.GetCommandLineArgs();
-            //if (argsStr.Count() <= 1 || (argsStr.Count() > 1 && !Convert.ToBoolean(argsStr[1].ToString())))
-            //{
-            //    Process updatePro = Process.Start(ConfigurationManager.AppSettings["updateconfig"] + ".exe", Process.GetCurrentProcess().Id.ToString());
-            //    updatePro.WaitForExit();
-            //}
+            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+            {
+                string[] argsStr = Environment.GetCommandLineArgs();
+                if (argsStr.Count() <= 1 || (argsStr.Count() > 1 && !Convert.ToBoolean(argsStr[1].ToString())))
+                {
+                    Process updatePro = Process.Start(ConfigurationManager.AppSettings["updateconfig"] + ".exe", Process.GetCurrentProcess().Id.ToString());
+                    updatePro.WaitForExit();
+                }
+            }
             if (FrameInit.GetInstance().FrameRun())
             {
                 try
