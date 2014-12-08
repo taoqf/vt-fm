@@ -192,6 +192,7 @@ namespace AutoUpdate
                 config.AppSettings.Settings["UpDate"].Value = updateModel.ServerUpdateTimestamp.ToString();
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
+                MessageBox.Show("更新完成", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Close();
             }
         }
