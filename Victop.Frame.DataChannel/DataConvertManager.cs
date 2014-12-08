@@ -252,6 +252,10 @@ namespace Victop.Frame.DataChannel
                         arrayDr[dtCol.ColumnName] = DBNull.Value;
                     }
                 }
+                else
+                {
+                    arrayDr[dtCol.ColumnName] = DBNull.Value;
+                }
             }
             itemDt.Rows.Add(arrayDr);
         }
