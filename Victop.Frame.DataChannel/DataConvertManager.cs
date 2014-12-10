@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Victop.Frame.DataChannel.Enums;
 using Victop.Frame.DataChannel.MongoModel;
 using Victop.Frame.PublicLib.Helpers;
@@ -608,7 +609,10 @@ namespace Victop.Frame.DataChannel
                             {
                                 dc.Caption = JsonHelper.ReadJsonString(item["value"].ToString(), "label");
                             }
-                            newDt.Columns.Add(dc);
+                            if (!newDt.Columns.Contains(dc.ColumnName))
+                            {
+                                newDt.Columns.Add(dc);
+                            }
                         }
                     }
                 }
@@ -671,7 +675,10 @@ namespace Victop.Frame.DataChannel
                             {
                                 dc.ExtendedProperties.Add("ComboBox", ds.Tables["dataArray"]);
                             }
-                            newDt.Columns.Add(dc);
+                            if (!newDt.Columns.Contains(dc.ColumnName))
+                            {
+                                newDt.Columns.Add(dc);
+                            }
                         }
                     }
                 }
