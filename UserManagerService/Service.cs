@@ -80,6 +80,10 @@ namespace UserManagerService
                 userDic.Add("UserCode", loginUserInfo.UserCode);
                 userDic.Add("UserId", loginUserInfo.UserId);
                 userDic.Add("UserImg", loginUserInfo.UserImg);
+                if (loginUserInfo.UserFullInfo != null && loginUserInfo.UserFullInfo.Count > 0 && loginUserInfo.UserFullInfo[0].ContainsKey("staff_no"))
+                {
+                    userDic.Add("UserNo", loginUserInfo.UserFullInfo[0]["staff_no"].ToString());
+                }
                 returnDic.Add("ReplyContent", userDic);
                 returnDic.Add("ReplyMode", 1);
                 returnDic.Add("ReplyAlertMessage", null);

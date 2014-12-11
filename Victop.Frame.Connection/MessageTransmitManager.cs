@@ -334,11 +334,13 @@ namespace Victop.Frame.Connection
                         {
                             currentGallery.ClientInfo.UserId = userInfoList[0]["_id"].ToString();
                             currentGallery.ClientInfo.UserImg = userInfoList[0]["staff_picture"].ToString();
+                            currentGallery.ClientInfo.UserFullInfo = userInfoList;
                         }
                         else
                         {
                             currentGallery.ClientInfo.UserId = string.Empty;
                             currentGallery.ClientInfo.UserImg = string.Empty;
+                            currentGallery.ClientInfo.UserFullInfo = null;
                         }
                     }
                     catch (Exception ex)
@@ -346,6 +348,7 @@ namespace Victop.Frame.Connection
                         LoggerHelper.ErrorFormat("用户信息:{0}", userInfoStr);
                         currentGallery.ClientInfo.UserId = string.Empty;
                         currentGallery.ClientInfo.UserImg = string.Empty;
+                        currentGallery.ClientInfo.UserFullInfo = null;
                     }
                     #endregion
                 }

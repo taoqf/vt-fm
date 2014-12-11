@@ -48,6 +48,18 @@ namespace Victop.Frame.CoreLibrary.Models
             set { userPwd = value; }
 		}
         /// <summary>
+        /// 用户完整信息
+        /// </summary>
+        private List<Dictionary<string, object>> userFullInfo;
+        /// <summary>
+        /// 用户完整信息
+        /// </summary>
+        public List<Dictionary<string, object>> UserFullInfo
+        {
+            get { return userFullInfo; }
+            set { userFullInfo = value; }
+        }
+        /// <summary>
         /// 用户头像
         /// </summary>
         private string userImg;
