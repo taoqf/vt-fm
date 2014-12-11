@@ -193,11 +193,7 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo);
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        LoginWindow.Close();
-                    }
+                    LoginWindow.Close();
                 });
             }
         }
