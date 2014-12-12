@@ -10,7 +10,7 @@ namespace Victop.Component.Runtime
     /// <summary>
     /// view块实体
     /// </summary>
-    public class ViewsBlockModel
+    public class ViewsBlockModel:ICloneable
     {
         /// <summary>
         /// 块名称
@@ -93,6 +93,13 @@ namespace Victop.Component.Runtime
             get;
             set;
         }
-
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+        public ViewsBlockModel Copy()
+        {
+            return this.Clone() as ViewsBlockModel;
+        }
     }
 }
