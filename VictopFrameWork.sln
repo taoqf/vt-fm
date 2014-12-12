@@ -55,6 +55,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdate", "AutoUpdate\AutoUpdate.csproj", "{7F35D01D-D57A-4A4F-911C-95E47120C004}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Component.Runtime", "Victop.Component.Runtime\Victop.Component.Runtime.csproj", "{0DA7999A-5910-41A0-A515-41E871BA68F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -306,6 +308,17 @@ Global
 		{7F35D01D-D57A-4A4F-911C-95E47120C004}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7F35D01D-D57A-4A4F-911C-95E47120C004}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7F35D01D-D57A-4A4F-911C-95E47120C004}.Release|x86.ActiveCfg = Release|Any CPU
+		{0DA7999A-5910-41A0-A515-41E871BA68F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DA7999A-5910-41A0-A515-41E871BA68F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DA7999A-5910-41A0-A515-41E871BA68F2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0DA7999A-5910-41A0-A515-41E871BA68F2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0DA7999A-5910-41A0-A515-41E871BA68F2}.Debug|x86.ActiveCfg = Debug|x86
+		{0DA7999A-5910-41A0-A515-41E871BA68F2}.Debug|x86.Build.0 = Debug|x86
+		{0DA7999A-5910-41A0-A515-41E871BA68F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DA7999A-5910-41A0-A515-41E871BA68F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DA7999A-5910-41A0-A515-41E871BA68F2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0DA7999A-5910-41A0-A515-41E871BA68F2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0DA7999A-5910-41A0-A515-41E871BA68F2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -332,5 +345,6 @@ Global
 		{2352CC85-8DC7-482E-B864-B96E1F7DC18C} = {64ACB22B-54AA-431C-A4D9-5A0DC0BF0759}
 		{EBAF8D96-74A8-4D05-A2AA-C9F420DA6D0A} = {64ACB22B-54AA-431C-A4D9-5A0DC0BF0759}
 		{7F35D01D-D57A-4A4F-911C-95E47120C004} = {961360E6-BCB7-44D6-89DC-92250E45FD46}
+		{0DA7999A-5910-41A0-A515-41E871BA68F2} = {E08B6C01-721F-47CC-A936-30E2972C7895}
 	EndGlobalSection
 EndGlobal
