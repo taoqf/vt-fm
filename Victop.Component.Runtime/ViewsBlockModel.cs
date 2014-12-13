@@ -49,6 +49,14 @@ namespace Victop.Component.Runtime
             set;
         }
         /// <summary>
+        /// 12-13新增
+        /// </summary>
+        public DefinViewsModel ViewModel
+        {
+            get;
+            set;
+        }
+        /// <summary>
         /// 视图标识
         /// </summary>
         [JsonIgnore]

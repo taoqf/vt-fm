@@ -51,6 +51,9 @@ namespace Victop.Component.Runtime
                         if (blockDic.ContainsKey(blockitem.BlockName))
                         {
                             blockitem.TableName = JsonHelper.ReadJsonString(blockDic[blockitem.BlockName].ToString(), "tablename");
+                            #region 12-13新增
+                            blockitem.ViewModel = item;
+                            #endregion
                         }
                     }
                 }
