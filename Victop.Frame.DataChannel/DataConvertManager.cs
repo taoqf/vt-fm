@@ -563,8 +563,14 @@ namespace Victop.Frame.DataChannel
             #region 组织table中字段
             foreach (Dictionary<string, object> item in tableList)
             {
-                if (item["key"].ToString().Contains(string.Format("{0}.dataArray.", tableName)))
+                string tablePath = string.Format("{0}.dataArray.", tableName);
+                if (item["key"].ToString().Contains(tablePath))
                 {
+                    string tableFieldStr = item["key"].ToString().Substring(tablePath.Length);
+                    if (tableFieldStr.Contains("."))
+                    {
+                        continue;
+                    }
                     int keyIndex = item["key"].ToString().LastIndexOf('.');
                     string keyStr = item["key"].ToString().Substring(keyIndex + 1);
                     if (item.ContainsKey("value"))
