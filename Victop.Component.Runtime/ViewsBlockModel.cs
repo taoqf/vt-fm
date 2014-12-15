@@ -109,5 +109,14 @@ namespace Victop.Component.Runtime
         {
             return this.Clone() as ViewsBlockModel;
         }
+        /// <summary>
+        /// 数据块锁
+        /// </summary>
+        [JsonIgnore]
+        public bool BlockLock
+        {
+            get;
+            set;
+        }
     }
 }

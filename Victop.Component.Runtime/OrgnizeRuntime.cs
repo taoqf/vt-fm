@@ -128,11 +128,18 @@ namespace Victop.Component.Runtime
             foreach (DefinViewsModel item in runtime.CompntDefin.Views)
             {
                 ViewsBlockModel blockmodel = item.Blocks.Find(it => it.Superiors.Equals("root"));
-                blockmodel.BlockDataPath.Clear();
-                blockmodel.BlockDataPath.Add(blockmodel.TableName);
-                if (blockmodel != null)
+                if (blockmodel.BlockLock && blockmodel.BlockDataPath != null && blockmodel.BlockDataPath.Count > 0)
                 {
                     RebuildDataPath(item, blockmodel);
+                }
+                else
+                {
+                    blockmodel.BlockDataPath.Clear();
+                    blockmodel.BlockDataPath.Add(blockmodel.TableName);
+                    if (blockmodel != null)
+                    {
+                        RebuildDataPath(item, blockmodel);
+                    }
                 }
             }
         }
@@ -144,20 +151,27 @@ namespace Victop.Component.Runtime
         public static void RebuildViewDataPath(ComponentModel runtime, DefinViewsModel view)
         {
             ViewsBlockModel blockmodel = view.Blocks.Find(it => it.Superiors.Equals("root"));
-            if (blockmodel.BlockDataPath == null)
-                blockmodel.BlockDataPath = new List<object>();
-            blockmodel.BlockDataPath.Clear();
-            blockmodel.BlockDataPath.Add(blockmodel.TableName);
-            if (blockmodel.DataSetType.Equals("row"))
-            {
-                Dictionary<string, object> pathDic = new Dictionary<string, object>();
-                pathDic.Add("key", "_id");
-                pathDic.Add("value", (blockmodel.CurrentRow == null || !blockmodel.CurrentRow.ContainsKey("_id")) ? Guid.NewGuid().ToString() : blockmodel.CurrentRow["_id"]);
-                blockmodel.BlockDataPath.Add(pathDic);
-            }
-            if (blockmodel != null)
+            if (blockmodel.BlockLock && blockmodel.BlockDataPath != null && blockmodel.BlockDataPath.Count > 0)
             {
                 RebuildDataPath(view, blockmodel);
+            }
+            else
+            {
+                if (blockmodel.BlockDataPath == null)
+                    blockmodel.BlockDataPath = new List<object>();
+                blockmodel.BlockDataPath.Clear();
+                blockmodel.BlockDataPath.Add(blockmodel.TableName);
+                if (blockmodel.DataSetType.Equals("row"))
+                {
+                    Dictionary<string, object> pathDic = new Dictionary<string, object>();
+                    pathDic.Add("key", "_id");
+                    pathDic.Add("value", (blockmodel.CurrentRow == null || !blockmodel.CurrentRow.ContainsKey("_id")) ? Guid.NewGuid().ToString() : blockmodel.CurrentRow["_id"]);
+                    blockmodel.BlockDataPath.Add(pathDic);
+                }
+                if (blockmodel != null)
+                {
+                    RebuildDataPath(view, blockmodel);
+                }
             }
         }
         /// <summary>
@@ -172,31 +186,38 @@ namespace Victop.Component.Runtime
                 ViewsBlockModel block = definView.Blocks[i];
                 if (block.Superiors.Equals(blockModel.BlockName))
                 {
-                    Dictionary<string, object> pathDic = new Dictionary<string, object>();
-                    pathDic.Add("key", "_id");
-                    pathDic.Add("value", (blockModel.CurrentRow == null || !blockModel.CurrentRow.ContainsKey("_id")) ? Guid.NewGuid().ToString() : blockModel.CurrentRow["_id"]);
-                    if (block.BlockDataPath == null)
+                    if (block.BlockLock && block.BlockDataPath != null && block.BlockDataPath.Count > 0)
                     {
-                        block.BlockDataPath = new List<object>();
+                        RebuildDataPath(definView, block);
                     }
                     else
                     {
-                        block.BlockDataPath.Clear();
+                        Dictionary<string, object> pathDic = new Dictionary<string, object>();
+                        pathDic.Add("key", "_id");
+                        pathDic.Add("value", (blockModel.CurrentRow == null || !blockModel.CurrentRow.ContainsKey("_id")) ? Guid.NewGuid().ToString() : blockModel.CurrentRow["_id"]);
+                        if (block.BlockDataPath == null)
+                        {
+                            block.BlockDataPath = new List<object>();
+                        }
+                        else
+                        {
+                            block.BlockDataPath.Clear();
+                        }
+                        foreach (var item in blockModel.BlockDataPath)
+                        {
+                            block.BlockDataPath.Add(item);
+                        }
+                        if (!blockModel.DataSetType.Equals("row"))
+                        {
+                            block.BlockDataPath.Add(pathDic);
+                        }
+                        block.ViewId = blockModel.ViewId;
+                        if (block.DataSetType.Equals("table"))
+                        {
+                            block.BlockDataPath.Add(block.TableName);
+                        }
+                        RebuildDataPath(definView, block);
                     }
-                    foreach (var item in blockModel.BlockDataPath)
-                    {
-                        block.BlockDataPath.Add(item);
-                    }
-                    if (!blockModel.DataSetType.Equals("row"))
-                    {
-                        block.BlockDataPath.Add(pathDic);
-                    }
-                    block.ViewId = blockModel.ViewId;
-                    if (block.DataSetType.Equals("table"))
-                    {
-                        block.BlockDataPath.Add(block.TableName);
-                    }
-                    RebuildDataPath(definView, block);
                 }
             }
         }
