@@ -1162,7 +1162,33 @@ namespace Victop.Frame.DataChannel
             }
             return editFlag;
         }
+        /// <summary>
+        /// 释放数据
+        /// </summary>
+        /// <param name="viewId"></param>
+        /// <returns></returns>
+        public bool DisposeData(string viewId)
+        {
+            bool existFlag = false;
+            try
+            {
+                foreach (JsonMapKey item in JsonTableMap)
+                {
+                    if (item.ViewId.Equals(viewId))
+                    {
+                        JsonTableMap.Remove(item);
+                        existFlag = true;
+                    }
+                }
+                return existFlag;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
+
     internal class JsonMapKey
     {
         internal string ViewId { get; set; }

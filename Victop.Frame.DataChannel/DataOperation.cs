@@ -157,6 +157,16 @@ namespace Victop.Frame.DataChannel
             }
             return pluginList;
         }
+        /// <summary>
+        /// 释放数据
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <returns></returns>
+        public virtual bool DisposeData(string channelId)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.DisposeData(channelId);
+        }
     }
 }
 
