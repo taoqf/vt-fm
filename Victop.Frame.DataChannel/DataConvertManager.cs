@@ -566,7 +566,8 @@ namespace Victop.Frame.DataChannel
                 string tablePath = string.Format("{0}.dataArray.", tableName);
                 if (item["key"].ToString().Contains(tablePath))
                 {
-                    string tableFieldStr = item["key"].ToString().Substring(tablePath.Length);
+                    int index = item["key"].ToString().IndexOf(tablePath);
+                    string tableFieldStr = item["key"].ToString().Substring(index + tablePath.Length);
                     if (tableFieldStr.Contains("."))
                     {
                         continue;
