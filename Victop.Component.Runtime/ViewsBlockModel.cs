@@ -105,9 +105,13 @@ namespace Victop.Component.Runtime
         {
             return this.MemberwiseClone();
         }
-        public ViewsBlockModel Copy()
+        public ViewsBlockModel Copy(string blockName)
         {
-            return this.Clone() as ViewsBlockModel;
+            this.BlockLock = true;
+            ViewsBlockModel BlockModel= this.Clone() as ViewsBlockModel;
+            BlockModel.BlockName=blockName;
+            BlockModel.BlockDataPath.Clear();
+            return BlockModel;
         }
         /// <summary>
         /// 数据块锁
