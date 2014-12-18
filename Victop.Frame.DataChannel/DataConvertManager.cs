@@ -193,6 +193,17 @@ namespace Victop.Frame.DataChannel
             return newDs;
         }
 
+        /// <summary>
+        /// 获取Json数据
+        /// </summary>
+        /// <param name="viewId"></param>
+        /// <param name="dataPath"></param>
+        /// <returns></returns>
+        public string GetJsonData(string viewId, string dataPath)
+        {
+            return DataTool.GetDataByPath(viewId, dataPath);
+        }
+
         private static void UpdateDataTableRow(DataTable itemDt, Dictionary<string, object> rowItem)
         {
             if (rowItem != null && rowItem.ContainsKey("_id") && string.IsNullOrEmpty(rowItem["_id"].ToString()))

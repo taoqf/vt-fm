@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using System.Data;
+using Victop.Frame.DataChannel;
+using Victop.Frame.PublicLib.Helpers;
 
 namespace Victop.Component.Runtime
 {
@@ -121,6 +123,15 @@ namespace Victop.Component.Runtime
         {
             get;
             set;
+        }
+        /// <summary>
+        /// 获取JsonData
+        /// </summary>
+        /// <returns></returns>
+        public string GetJsonData()
+        {
+            DataOperation dataOp = new DataOperation();
+            return dataOp.GetJSONData(ViewId, JsonHelper.ToJson(BlockDataPath));
         }
     }
 }

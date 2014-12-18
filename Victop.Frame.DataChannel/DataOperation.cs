@@ -71,6 +71,17 @@ namespace Victop.Frame.DataChannel
             return channelData.JSONData;
         }
         /// <summary>
+        /// 获取指定路径下的Json数据
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="dataPath"></param>
+        /// <returns></returns>
+        public virtual string GetJSONData(string channelId, string dataPath)
+        {
+            DataConvertManager dataManager = new DataConvertManager();
+            return dataManager.GetJsonData(channelId, dataPath);
+        }
+        /// <summary>
         /// 获取简单引用数据
         /// </summary>
         /// <param name="channelId"></param>
