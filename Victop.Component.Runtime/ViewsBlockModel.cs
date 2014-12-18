@@ -130,8 +130,15 @@ namespace Victop.Component.Runtime
         /// <returns></returns>
         public string GetJsonData()
         {
-            DataOperation dataOp = new DataOperation();
-            return dataOp.GetJSONData(ViewId, JsonHelper.ToJson(BlockDataPath));
+            if (string.IsNullOrEmpty(ViewId) || BlockDataPath == null || BlockDataPath.Count <= 0)
+            {
+                return string.Empty;
+            }
+            else
+            {
+                DataOperation dataOp = new DataOperation();
+                return dataOp.GetJSONData(ViewId, JsonHelper.ToJson(BlockDataPath));
+            }
         }
     }
 }
