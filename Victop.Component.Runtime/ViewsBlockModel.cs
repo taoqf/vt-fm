@@ -112,7 +112,7 @@ namespace Victop.Component.Runtime
             this.BlockLock = true;
             ViewsBlockModel BlockModel= this.Clone() as ViewsBlockModel;
             BlockModel.BlockName=blockName;
-            BlockModel.BlockDataPath.Clear();
+            BlockModel.BlockDataPath = new List<object>();
             return BlockModel;
         }
         /// <summary>
