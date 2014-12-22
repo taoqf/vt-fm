@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\FileTypeHelper.cs" />
+    <Compile Include="Helpers\IPOperationHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\LoggerHelper.cs" />
     <Compile Include="Helpers\RegexHelper.cs" />
