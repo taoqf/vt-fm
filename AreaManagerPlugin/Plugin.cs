@@ -58,7 +58,6 @@ namespace AreaManagerPlugin
 
         public void Init()
         {
-            throw new NotImplementedException();
         }
 
         private Dictionary<string, object> paramDict;

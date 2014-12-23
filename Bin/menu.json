@@ -255,7 +255,7 @@
 						{
 							"title": "原始需求机台",
 							"actionType": 1,
-							"actionName": "OriginalDemandMachinePlatformPlugin",
+							"actionName": "AreaManagerPlugin",
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于策划机台维护",

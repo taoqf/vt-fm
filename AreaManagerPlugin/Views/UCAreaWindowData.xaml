@@ -12,211 +12,105 @@
     <UserControl.Resources>
         <vm:UCAreaWindowViewModel x:Key="areaViewModel"/>
     </UserControl.Resources>
-    <Grid DataContext="{StaticResource ResourceKey=areaViewModel}" Name="gridmain">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="24"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Visibility="Collapsed">
-            <ComboBox Margin="0,0,5,0" Name="cboxtable" ItemsSource="{Binding TableShowList,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="TableName" SelectedValuePath="TableId" SelectedItem="{Binding SelectedTable}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding cboxtableSelectionChangedCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ComboBox>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnGetMaster" Content="主档取数">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnGetMasterClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnGetMasterNew" Content="主档取数(新)">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnGetMasterNewClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnSave" Content="主档保存">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnSaveClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnSaveNew" Content="主档保存(新)">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnSaveNewClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnGetModel" Content="模型取数">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnGetModelClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnSaveModel" Content="模型保存">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnSaveModelClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button Margin="0,0,5,0" Width="100" Height="24" Name="btnDataReference" Content="数据引用">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding btnDataReferenceClickCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-        </DockPanel>
-        <TabControl Grid.Row="1">
-            <TabItem Header="数据集合" Visibility="Collapsed">
-                <ctrl:VicDataGrid Grid.Row="1" ItemsSource="{Binding MyDt, UpdateSourceTrigger=PropertyChanged}">
-                </ctrl:VicDataGrid>
-            </TabItem>
-            <TabItem Header="其他测试">
-                <Button Width="100" Height="24" Content="用户服务" Name="btnGetUserInfo" Margin="3,0,187,0">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding btnGetUserInfoClickCommand}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-            </TabItem>
-            <TabItem Header="文件服务">
-                <StackPanel Orientation="Horizontal">
-                    <Button Width="100" Height="24" Content="文件下载">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnDownloadFileClickCommand}" ></i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                    <Button Width="100" Height="24" Content="文件上传">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnUploadFileClickCommand}" ></i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-
-                    <Button Width="100" Height="24" Content="测试上传">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnUploadFile1ClickCommand}" ></i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                    <Button Width="100" Height="24" Content="测试下载">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnDownloadFile1ClickCommand}" ></i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                    <ProgressBar  Width="100" Height="24" Name="progressBar"></ProgressBar>
-                </StackPanel>
-
-            </TabItem>
-            <TabItem Header="JSON数据操作">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="25"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <DockPanel Grid.Row="0" HorizontalAlignment="Left">
-                        <Button Width="100" Height="25" Name="btnSearchJson" Content="JSON检索">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnSearchJsonClickCommand}" ></i:InvokeCommandAction>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button Width="100" Height="25" Name="btnAddJson" Content="JSON添加">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnAddJsonClickCommand}" ></i:InvokeCommandAction>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button Width="100" Height="25" Name="btnUpdateJson" Content="JSON修改">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnUpdateJsonClickCommand}" ></i:InvokeCommandAction>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button Width="100" Height="25" Name="btnDeleteJson" Content="JSON删除">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnDeleteJsonClickCommand}" ></i:InvokeCommandAction>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                    </DockPanel>
-                    <ctrl:VicDataGrid Grid.Row="1" Name="jsonDataGrid" ItemsSource="{Binding JsonDataTable}" IsShowContextMenu="True">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding jsonSelectionChangedCommand}" CommandParameter="{Binding ElementName=jsonDataGrid}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ctrl:VicDataGrid>
-                </Grid>
-            </TabItem>
-            <TabItem Header="组件测试" IsSelected="True">
-                <Grid>
-                    <Grid.RowDefinitions>
+    <ctrl:VicGridNormal DataContext="{StaticResource ResourceKey=areaViewModel}" Name="gridmain">
+        <ctrl:VicStackPanelNormal>
+            <ctrl:VicGroupBoxNormal Header="数据查询" MaxHeight="400" MinHeight="200">
+                <ctrl:VicGridNormal>
+                    <ctrl:VicGridNormal.RowDefinitions>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-                        <Button Width="100" Name="btnCpntClickCommand" Height="24" Content="附加组件配置">
+                    </ctrl:VicGridNormal.RowDefinitions>
+                    <ctrl:VicDockPanelNormal Grid.Row="0">
+                        <ctrl:VicLabelNormal>ModelId:</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="200" Height="24" Name="tBoxModelId" VicText="{Binding DataInfoModel.ModelId}"/>
+                        <ctrl:VicLabelNormal>SystemId:</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxSystemId" VicText="{Binding DataInfoModel.SystemId}"/>
+                        <ctrl:VicLabelNormal>ConfigsystemId</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxConfigsystemId" VicText="{Binding DataInfoModel.ConfigsystemId}"/>
+                        <ctrl:VicLabelNormal>SpaceId</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxSpaceId" VicText="{Binding DataInfoModel.SpaceId}"/>
+                        <ctrl:VicLabelNormal>TableName:</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxTableName" VicText="{Binding DataInfoModel.TableName}"/>
+                        <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSearch" Content="查询">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnCpntClickCommand}" CommandParameter="{Binding ElementName=cpntGrid}"/>
+                                    <i:InvokeCommandAction Command="{Binding btnSearchClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </Button>
-                    </DockPanel>
-                    <Grid Grid.Row="1">
-                        <DockPanel HorizontalAlignment="Left">
-                            <ComboBox Height="24" Width="100" Name="testCbox" Margin="0,0,5,0">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="DropDownOpened">
-                                        <i:InvokeCommandAction Command="{Binding testCboxDropDownOpenedCommand}" CommandParameter="{Binding ElementName=testCbox}"/>
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="SelectionChanged">
-                                        <i:InvokeCommandAction Command="{Binding testCboxSelectionChanged}" CommandParameter="{Binding ElementName=testCbox}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </ComboBox>
-                            <ComboBox Height="24" Width="100" Name="testCbox1" Margin="0,0,5,0">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="DropDownOpened">
-                                        <i:InvokeCommandAction Command="{Binding testCbox1DropDownOpenedCommand}" CommandParameter="{Binding ElementName=testCbox1}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </ComboBox>
-                        </DockPanel>
-                    </Grid>
-                </Grid>
-            </TabItem>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding datagridSelectionChangedCommand}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </TabControl>
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="Loaded">
-                <i:InvokeCommandAction Command="{Binding gridLoadedCommand}"/>
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
-    </Grid>
+                        </ctrl:VicButtonNormal>
+                        <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewJsonData" Content="查看Json数据">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding btnViewJsonDataClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ctrl:VicButtonNormal>
+                    </ctrl:VicDockPanelNormal>
+                    <ctrl:VicTabControlNormal Grid.Row="1">
+                        <ctrl:VicTabItemNormal Header="查询条件" AllowDelete="False">
+                            <ctrl:VicRichTextBoxNormal Name="rTBoxCondition" VicText="{Binding DataInfoModel.ConditionStr,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                        </ctrl:VicTabItemNormal>
+                        <ctrl:VicTabItemNormal Header="DataTable数据" AllowDelete="False">
+                            <ctrl:VicDataGrid AutoGenerateColumns="False" IsUserSetColumn="False" Name="dgridSearch" ItemsSource="{Binding DataInfoModel.ResultDataTable}"/>
+                        </ctrl:VicTabItemNormal>
+                        <ctrl:VicTabItemNormal Header="Json数据" AllowDelete="False">
+                            <ctrl:VicRichTextBoxNormal Name="rTBoxJsonData" VicText="{Binding DataInfoModel.JsonData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                        </ctrl:VicTabItemNormal>
+                    </ctrl:VicTabControlNormal>
+                </ctrl:VicGridNormal>
+            </ctrl:VicGroupBoxNormal>
+            <ctrl:VicGroupBoxNormal Header="编号服务" MaxHeight="400" MinHeight="200">
+                <ctrl:VicGridNormal>
+                    <ctrl:VicGridNormal.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </ctrl:VicGridNormal.RowDefinitions>
+                    <ctrl:VicDockPanelNormal Grid.Row="0">
+                        <ctrl:VicLabelNormal>SystemId:</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxCodeSystemId" VicText="{Binding CodeInfoModel.SystemId}"/>
+                        <ctrl:VicLabelNormal>ConfigsystemId:</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxCodeConfigSystemId" VicText="{Binding CodeInfoModel.ConfigsystemId}"/>
+                        <ctrl:VicLabelNormal>PName:</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxCodePname" VicText="{Binding CodeInfoModel.PName}"/>
+                        <ctrl:VicLabelNormal>SetInfo:</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxCodeSetInfo" VicText="{Binding CodeInfoModel.SetInfo}"/>
+                        <ctrl:VicButtonNormal Width="100" Height="24" Content="执行">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding btnExcuteCodeServiceClickCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ctrl:VicButtonNormal>
+                    </ctrl:VicDockPanelNormal>
+                    <ctrl:VicRichTextBoxNormal Grid.Row="1" VicText="{Binding CodeInfoModel.ResultData}"/>
+                </ctrl:VicGridNormal>
+            </ctrl:VicGroupBoxNormal>
+            <ctrl:VicGroupBoxNormal Header="用户信息及菜单" MaxHeight="400" MinHeight="200">
+                <ctrl:VicGridNormal>
+                    <ctrl:VicGridNormal.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </ctrl:VicGridNormal.RowDefinitions>
+                    <ctrl:VicDockPanelNormal Grid.Row="0">
+                        <ctrl:VicLabelNormal>SystemId:</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserSystemId" VicText="{Binding UserInfoModel.SystemId}" />
+                        <ctrl:VicLabelNormal>ConfigsystemId:</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserConfigsystemId" VicText="{Binding UserInfoModel.ConfigsystemId}"/>
+                        <ctrl:VicLabelNormal>客户端类型:</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserClientType" VicText="{Binding UserInfoModel.ClientType}"/>
+                        <ctrl:VicLabelNormal>用户名称:</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserName" VicText="{Binding UserInfoModel.UserCode}"/>
+                        <ctrl:VicButtonNormal Width="100" Height="24" Name="tBoxUserSearch" Content="检索">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding tBoxUserSearchClickCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ctrl:VicButtonNormal>
+                    </ctrl:VicDockPanelNormal>
+                    <ctrl:VicRichTextBoxNormal Grid.Row="1" Name="rBoxUserMenuInfo" VicText="{Binding UserInfoModel.ResultData}"/>
+                </ctrl:VicGridNormal>
+            </ctrl:VicGroupBoxNormal>
+        </ctrl:VicStackPanelNormal>
+    </ctrl:VicGridNormal>
 </UserControl>
