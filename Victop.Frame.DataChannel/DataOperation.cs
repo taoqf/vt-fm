@@ -169,6 +169,28 @@ namespace Victop.Frame.DataChannel
             return pluginList;
         }
         /// <summary>
+        /// 根据BusinessKey获取活动插件
+        /// </summary>
+        /// <param name="businessKey"></param>
+        /// <returns></returns>
+        public virtual Dictionary<string, object> GetPluginInfoByBusinessKey(string businessKey)
+        {
+            Dictionary<string, object> pluginDic = new Dictionary<string, object>();
+            ActivePluginManager pluginManager = new ActivePluginManager();
+            Dictionary<string, ActivePluginInfo> pluginInfoDic = pluginManager.GetActivePlugins();
+            foreach (string item in pluginInfoDic.Keys)
+            {
+                ActivePluginInfo pluginInfo = pluginInfoDic[item];
+                if (pluginInfo.BusinessKey.Equals(businessKey))
+                {
+                    pluginDic.Add("IPlugin", pluginInfo.PluginInstance);
+                    break;
+                }
+            }
+            return pluginDic;
+        }
+
+        /// <summary>
         /// 释放数据
         /// </summary>
         /// <param name="channelId"></param>

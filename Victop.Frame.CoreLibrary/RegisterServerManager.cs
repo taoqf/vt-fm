@@ -167,6 +167,16 @@ namespace Victop.Frame.CoreLibrary
                 setUserInfo.ServerStatus = ResourceEnum.NONE;
                 serverManager.RegisterServer(setUserInfo);
                 #endregion
+                #region 设置插件信息服务
+                RegisterServerInfo setPluginInfo = new RegisterServerInfo();
+                setPluginInfo.CloudGalleryId = item.ToString();
+                setPluginInfo.ServerName = "SetPluginInfo";
+                setPluginInfo.ReceiptMessageType.Add(ConfigurationManager.AppSettings.Get(setPluginInfo.ServerName.ToLower()));
+                setPluginInfo.ServerType = ServerTypeEnum.LOCAL;
+                setPluginInfo.ServerPath = string.Empty;
+                setPluginInfo.ServerStatus = ResourceEnum.NONE;
+                serverManager.RegisterServer(setPluginInfo);
+                #endregion
                 RegisterLocalServer(serverManager, item.ToString());
             }
         }

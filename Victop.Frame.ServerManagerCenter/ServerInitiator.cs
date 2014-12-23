@@ -74,12 +74,44 @@ namespace Victop.Frame.ServerManagerCenter
                 case "LoginService.setUserInfo":
                     ReplyContent = SetUserInfo(messageInfo);
                     break;
+                case "PluginService.SetPluginInfo":
+                    ReplyContent = SetPluginInfo(messageInfo);
+                    break;
                 default:
                     RegisterServerInfo serverInfo = JsonHelper.ToObject<RegisterServerInfo>(JsonHelper.ReadJsonString(messageInfo.MessageContent, "ServerInfo"));
                     ReplyContent = ServerRun(serverInfo,messageInfo);
                     break;
             }
             return ReplyContent;
+        }
+        /// <summary>
+        /// 设置插件信息
+        /// </summary>
+        /// <param name="messageInfo"></param>
+        /// <returns></returns>
+        private string SetPluginInfo(RequestMessage messageInfo)
+        {
+            Dictionary<string, object> returnDic = new Dictionary<string, object>();
+            try
+            {
+                Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
+                string ObjectId = contentDic["ObjectId"].ToString();
+                string BusinessKey = contentDic["BusinessKey"].ToString();
+                ActivePluginManager pluginManager = new ActivePluginManager();
+                ActivePluginInfo pluginInfo = pluginManager.GetActivePlugins().Values.FirstOrDefault(it => it.ObjectId.Equals(ObjectId));
+                pluginInfo.BusinessKey = BusinessKey;
+                pluginManager.AddPlugin(pluginInfo);
+                returnDic.Add("ReplyMode", "1");
+                returnDic.Add("ReplyContent", "更新当前插件信息成功");
+                return JsonHelper.ToJson(returnDic);
+            }
+            catch (Exception ex)
+            {
+                returnDic = new Dictionary<string, object>();
+                returnDic.Add("ReplyMode", "0");
+                returnDic.Add("ReplyContent", "更新当前插件信息失败");
+                return JsonHelper.ToJson(returnDic);
+            }
         }
         /// <summary>
         /// 设置用户信息
