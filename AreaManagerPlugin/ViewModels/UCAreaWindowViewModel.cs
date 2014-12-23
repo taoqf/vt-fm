@@ -39,6 +39,10 @@ namespace AreaManagerPlugin.ViewModels
         /// 用户信息实体实例
         /// </summary>
         private UserMenuInfoModel userInfoModel;
+        /// <summary>
+        /// 其他信息实体实例
+        /// </summary>
+        private OtherInfoModel otherInfoModel;
         #endregion
         #region 属性定义
         /// <summary>
@@ -98,6 +102,26 @@ namespace AreaManagerPlugin.ViewModels
                 {
                     userInfoModel = value;
                     RaisePropertyChanged("UserInfoModel");
+                }
+            }
+        }
+        /// <summary>
+        /// 其他消息实体实例
+        /// </summary>
+        public OtherInfoModel OtherInfoModel
+        {
+            get
+            {
+                if (otherInfoModel == null)
+                    otherInfoModel = new OtherInfoModel();
+                return otherInfoModel;
+            }
+            set
+            {
+                if (otherInfoModel != value)
+                {
+                    otherInfoModel = value;
+                    RaisePropertyChanged("OtherInfoModel");
                 }
             }
         }
@@ -219,6 +243,22 @@ namespace AreaManagerPlugin.ViewModels
                     if (returnDic != null)
                     {
                         UserInfoModel.ResultData = returnDic["ReplyContent"].ToString();
+                    }
+                });
+            }
+        }
+
+        public ICommand btnOtherExcuteClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    MessageOperation messageOp = new MessageOperation();
+                    Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(OtherInfoModel.OtherConditionData);
+                    Dictionary<string, object> returnDic = messageOp.SendMessage(OtherInfoModel.MessageType, contentDic, "JSON");
+                    if (returnDic != null)
+                    {
+                        OtherInfoModel.OtherResultData = returnDic["ReplyContent"].ToString();
                     }
                 });
             }

@@ -111,6 +111,33 @@
                     <ctrl:VicRichTextBoxNormal Grid.Row="1" Name="rBoxUserMenuInfo" VicText="{Binding UserInfoModel.ResultData}"/>
                 </ctrl:VicGridNormal>
             </ctrl:VicGroupBoxNormal>
+            <ctrl:VicGroupBoxNormal Header="其他" MaxHeight="400" MinHeight="200">
+                <ctrl:VicGridNormal>
+                    <ctrl:VicGridNormal.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </ctrl:VicGridNormal.RowDefinitions>
+                    <ctrl:VicDockPanelNormal Grid.Row="0">
+                        <ctrl:VicLabelNormal>消息类型:</ctrl:VicLabelNormal>
+                        <ctrl:VicTextBoxNormal Width="300" Height="24" Name="tBoxMessageType" VicText="{Binding OtherInfoModel.MessageType}"/>
+                        <ctrl:VicButtonNormal Width="100" Height="24" Name="btnOtherExcute">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding btnOtherExcuteClickCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ctrl:VicButtonNormal>
+                    </ctrl:VicDockPanelNormal>
+                    <ctrl:VicTabControlNormal Grid.Row="1">
+                        <ctrl:VicTabItemNormal Header="条件" AllowDelete="False">
+                            <ctrl:VicRichTextBoxNormal Name="rBoxOtherCondition" VicText="{Binding OtherInfoModel.OtherConditionData}"/>
+                        </ctrl:VicTabItemNormal>
+                        <ctrl:VicTabItemNormal Header="结果" AllowDelete="False">
+                            <ctrl:VicRichTextBoxNormal Name="rBoxOtherResult" VicText="{Binding OtherInfoModel.OtherResultData}"/>
+                        </ctrl:VicTabItemNormal>
+                    </ctrl:VicTabControlNormal>
+                </ctrl:VicGridNormal>
+            </ctrl:VicGroupBoxNormal>
         </ctrl:VicStackPanelNormal>
     </ctrl:VicGridNormal>
 </UserControl>

@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\CodeServiceInfoModel.cs" />
+    <Compile Include="Models\OtherInfoModel.cs" />
     <Compile Include="Models\RequestMessageModel.cs" />
     <Compile Include="Models\DataSearchInfoModel.cs" />
     <Compile Include="Models\TableModel.cs" />
