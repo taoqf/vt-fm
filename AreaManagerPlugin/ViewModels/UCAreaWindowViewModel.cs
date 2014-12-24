@@ -188,6 +188,7 @@ namespace AreaManagerPlugin.ViewModels
                         DataInfoModel.VertifyMsg = "请输入TableName";
                         return false;
                     }
+                    DataInfoModel.VertifyMsg = string.Empty;
                     return result;
                 });
             }
@@ -248,6 +249,7 @@ namespace AreaManagerPlugin.ViewModels
                         CodeInfoModel.VertifyMsg = "请输入SetInfo";
                         return false;
                     }
+                    CodeInfoModel.VertifyMsg = string.Empty;
                     return result;
                 });
             }
@@ -295,6 +297,7 @@ namespace AreaManagerPlugin.ViewModels
                         UserInfoModel.VertifyMsg = "请输入UserCode";
                         return false;
                     }
+                    UserInfoModel.VertifyMsg = string.Empty;
                     return result;
                 });
             }
