@@ -104,10 +104,10 @@
                     </ctrl:VicDockPanelNormal>
                     <ctrl:VicTabControlNormal Grid.Row="1">
                         <ctrl:VicTabItemNormal Header="条件" AllowDelete="False">
-                            <ctrl:VicRichTextBoxNormal Name="rBoxOtherCondition" VicText="{Binding OtherInfoModel.OtherConditionData}"/>
+                            <ctrl:VicRichTextBoxNormal Name="rBoxOtherCondition" VicText="{Binding OtherInfoModel.OtherConditionData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
                         </ctrl:VicTabItemNormal>
                         <ctrl:VicTabItemNormal Header="结果" AllowDelete="False">
-                            <ctrl:VicRichTextBoxNormal Name="rBoxOtherResult" VicText="{Binding OtherInfoModel.OtherResultData}"/>
+                            <ctrl:VicRichTextBoxNormal Name="rBoxOtherResult" VicText="{Binding OtherInfoModel.OtherResultData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
                         </ctrl:VicTabItemNormal>
                     </ctrl:VicTabControlNormal>
                 </ctrl:VicGridNormal>

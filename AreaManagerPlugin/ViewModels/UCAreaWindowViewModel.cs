@@ -161,7 +161,8 @@ namespace AreaManagerPlugin.ViewModels
                     {
                         VicMessageBoxNormal.Show(ex.Message);
                     }
-                }, () => {
+                }, () =>
+                {
                     bool result = true;
                     if (string.IsNullOrEmpty(DataInfoModel.ModelId))
                     {
@@ -195,7 +196,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     try
                     {
                         DataOperation dataOp = new DataOperation();
@@ -205,6 +207,9 @@ namespace AreaManagerPlugin.ViewModels
                     {
                         VicMessageBoxNormal.Show(ex.Message);
                     }
+                }, () =>
+                {
+                    return !string.IsNullOrEmpty(DataInfoModel.ChannelId);
                 });
             }
         }
@@ -236,7 +241,8 @@ namespace AreaManagerPlugin.ViewModels
                     {
                         VicMessageBoxNormal.Show(ex.Message);
                     }
-                }, () => {
+                }, () =>
+                {
                     bool result = true;
                     if (string.IsNullOrEmpty(CodeInfoModel.SystemId))
                     {
@@ -291,7 +297,8 @@ namespace AreaManagerPlugin.ViewModels
                     {
                         VicMessageBoxNormal.Show(ex.Message);
                     }
-                }, () => {
+                }, () =>
+                {
                     bool result = true;
                     if (string.IsNullOrEmpty(UserInfoModel.SystemId))
                     {
@@ -325,7 +332,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     try
                     {
                         MessageOperation messageOp = new MessageOperation();
