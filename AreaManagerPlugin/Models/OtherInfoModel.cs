@@ -54,5 +54,21 @@ namespace AreaManagerPlugin.Models
                 }
             }
         }
+        /// <summary>
+        /// 验证信息
+        /// </summary>
+        private string vertifyMsg;
+        /// <summary>
+        /// 验证信息
+        /// </summary>
+        public string VertifyMsg
+        {
+            get { return vertifyMsg; }
+            set
+            {
+                vertifyMsg = value;
+                RaisePropertyChanged("VertifyMsg");
+            }
+        }
     }
 }

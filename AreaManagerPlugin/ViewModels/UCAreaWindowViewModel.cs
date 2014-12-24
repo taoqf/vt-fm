@@ -170,18 +170,22 @@ namespace AreaManagerPlugin.ViewModels
                     bool result = true;
                     if (string.IsNullOrEmpty(DataInfoModel.ModelId))
                     {
-                        result = false;
+                        DataInfoModel.VertifyMsg = "请输入ModelId";
+                        return false;
                     }
                     if (string.IsNullOrEmpty(DataInfoModel.SystemId))
                     {
+                        DataInfoModel.VertifyMsg = "请输入SystemId";
                         return false;
                     }
                     if (string.IsNullOrEmpty(DataInfoModel.ConfigsystemId))
                     {
+                        DataInfoModel.VertifyMsg = "请输入ConfigsystemId";
                         return false;
                     }
                     if (string.IsNullOrEmpty(DataInfoModel.TableName))
                     {
+                        DataInfoModel.VertifyMsg = "请输入TableName";
                         return false;
                     }
                     return result;
@@ -208,7 +212,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     MessageOperation messageOp = new MessageOperation();
                     string MessageType = "MongoDataChannelService.findDocCode";
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
@@ -221,6 +226,29 @@ namespace AreaManagerPlugin.ViewModels
                     {
                         CodeInfoModel.ResultData = returnDic["ReplyContent"].ToString();
                     }
+                }, () => {
+                    bool result = true;
+                    if (string.IsNullOrEmpty(CodeInfoModel.SystemId))
+                    {
+                        CodeInfoModel.VertifyMsg = "请输入SystemId";
+                        return false;
+                    }
+                    if (string.IsNullOrEmpty(CodeInfoModel.ConfigsystemId))
+                    {
+                        CodeInfoModel.VertifyMsg = "请输入ConfigsystemId";
+                        return false;
+                    }
+                    if (string.IsNullOrEmpty(CodeInfoModel.PName))
+                    {
+                        CodeInfoModel.VertifyMsg = "请输入PName";
+                        return false;
+                    }
+                    if (string.IsNullOrEmpty(CodeInfoModel.SetInfo))
+                    {
+                        CodeInfoModel.VertifyMsg = "请输入SetInfo";
+                        return false;
+                    }
+                    return result;
                 });
             }
         }
@@ -231,7 +259,8 @@ namespace AreaManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     MessageOperation messageOp = new MessageOperation();
                     string MessageType = "MongoDataChannelService.afterLogin";
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
@@ -244,10 +273,35 @@ namespace AreaManagerPlugin.ViewModels
                     {
                         UserInfoModel.ResultData = returnDic["ReplyContent"].ToString();
                     }
+                }, () => {
+                    bool result = true;
+                    if (string.IsNullOrEmpty(UserInfoModel.SystemId))
+                    {
+                        UserInfoModel.VertifyMsg = "请输入SystemId";
+                        return false;
+                    }
+                    if (string.IsNullOrEmpty(UserInfoModel.ConfigsystemId))
+                    {
+                        UserInfoModel.VertifyMsg = "请输入ConfigsystemId";
+                        return false;
+                    }
+                    if (string.IsNullOrEmpty(UserInfoModel.ClientType))
+                    {
+                        UserInfoModel.VertifyMsg = "请输入ClientType";
+                        return false;
+                    }
+                    if (string.IsNullOrEmpty(UserInfoModel.UserCode))
+                    {
+                        UserInfoModel.VertifyMsg = "请输入UserCode";
+                        return false;
+                    }
+                    return result;
                 });
             }
         }
-
+        /// <summary>
+        /// 其他信息
+        /// </summary>
         public ICommand btnOtherExcuteClickCommand
         {
             get
