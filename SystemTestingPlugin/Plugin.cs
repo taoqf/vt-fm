@@ -1,4 +1,4 @@
-﻿using AreaManagerPlugin.Views;
+﻿using SystemTestingPlugin.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Victop.Server.Controls;
 
-namespace AreaManagerPlugin
+namespace SystemTestingPlugin
 {
     public class Plugin:IPlugin
     {
@@ -18,7 +18,7 @@ namespace AreaManagerPlugin
 
         public string PluginName
         {
-            get { return "AreaManagerPlugin"; }
+            get { return "SystemTestingPlugin"; }
         }
 
         public List<string> ServiceReceiptMessageType

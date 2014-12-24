@@ -7,8 +7,8 @@
     <ProjectGuid>{ED4978F3-3E53-42D9-94D9-E053DA44475B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AreaManagerPlugin</RootNamespace>
-    <AssemblyName>AreaManagerPlugin</AssemblyName>
+    <RootNamespace>SystemTestingPlugin</RootNamespace>
+    <AssemblyName>SystemTestingPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>

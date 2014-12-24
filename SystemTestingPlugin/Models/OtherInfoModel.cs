@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Victop.Server.Controls.Models;
 
-namespace AreaManagerPlugin.Models
+namespace SystemTestingPlugin.Models
 {
     /// <summary>
     /// 其他信息实体

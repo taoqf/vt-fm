@@ -17,7 +17,7 @@ using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.WeChat;
 
-namespace AreaManagerPlugin.Views
+namespace SystemTestingPlugin.Views
 {
     /// <summary>
     /// UCSimpleDefWindow.xaml 的交互逻辑

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Victop.Server.Controls.Models;
 
-namespace AreaManagerPlugin.Models
+namespace SystemTestingPlugin.Models
 {
     public class TableModel:ModelBase
     {

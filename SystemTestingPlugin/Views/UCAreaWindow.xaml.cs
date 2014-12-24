@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Victop.Frame.PublicLib.Helpers;
 
-namespace AreaManagerPlugin.Views
+namespace SystemTestingPlugin.Views
 {
     /// <summary>
     /// UCAreaWindow.xaml 的交互逻辑

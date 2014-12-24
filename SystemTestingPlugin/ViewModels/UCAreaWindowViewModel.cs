@@ -1,4 +1,4 @@
-﻿using AreaManagerPlugin.Models;
+﻿using SystemTestingPlugin.Models;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 
-namespace AreaManagerPlugin.ViewModels
+namespace SystemTestingPlugin.ViewModels
 {
     public class UCAreaWindowViewModel : ModelBase
     {

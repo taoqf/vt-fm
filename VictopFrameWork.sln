@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemThemeManagerService",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThemeManagerPlugin", "ThemeManagerPlugin\ThemeManagerPlugin.csproj", "{221FD0B2-0AFF-4433-BCA4-5A2654432B6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AreaManagerPlugin", "AreaManagerPlugin\AreaManagerPlugin.csproj", "{ED4978F3-3E53-42D9-94D9-E053DA44475B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemTestingPlugin", "SystemTestingPlugin\SystemTestingPlugin.csproj", "{ED4978F3-3E53-42D9-94D9-E053DA44475B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateManagerService", "UpdateManagerService\UpdateManagerService.csproj", "{35072733-2AC6-4E7A-814F-AE142A997F22}"
 EndProject

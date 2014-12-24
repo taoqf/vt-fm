@@ -9,16 +9,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AreaManagerPlugin.Views
+namespace SystemTestingPlugin.Views
 {
     /// <summary>
-    /// AreaWindow.xaml 的交互逻辑
+    /// UCAreaWindowData.xaml 的交互逻辑
     /// </summary>
-    public partial class AreaWindow : Window
+    public partial class UCAreaWindowData : UserControl
     {
-        public AreaWindow()
+        public UCAreaWindowData()
         {
             InitializeComponent();
         }

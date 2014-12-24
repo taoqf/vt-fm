@@ -4,18 +4,21 @@ using System.Linq;
 using System.Text;
 using Victop.Server.Controls.Models;
 
-namespace AreaManagerPlugin.Models
+namespace SystemTestingPlugin.Models
 {
     /// <summary>
-    /// 用户信息菜单信息实体
+    /// 编码服务实体
     /// </summary>
-    public class UserMenuInfoModel:PropertyModelBase
+    public class CodeServiceInfoModel:PropertyModelBase
     {
         private string systemId;
 
         public string SystemId
         {
-            get { return systemId; }
+            get
+            {
+                return systemId;
+            }
             set
             {
                 if (systemId != value)
@@ -39,32 +42,32 @@ namespace AreaManagerPlugin.Models
                 }
             }
         }
-        private string clientType = "1";
+        private string pName;
 
-        public string ClientType
+        public string PName
         {
-            get { return clientType; }
+            get { return pName; }
             set
             {
-                if (clientType != value)
+                if (pName != value)
                 {
-                    clientType = value;
-                    RaisePropertyChanged("ClientType");
+                    pName = value;
+                    RaisePropertyChanged("PName");
                 }
             }
         }
 
-        private string userCode;
+        private string setInfo;
 
-        public string UserCode
+        public string SetInfo
         {
-            get { return userCode; }
+            get { return setInfo; }
             set
             {
-                if (userCode != value)
+                if (setInfo != value)
                 {
-                    userCode = value;
-                    RaisePropertyChanged("UserCode");
+                    setInfo = value;
+                    RaisePropertyChanged("SetInfo");
                 }
             }
         }

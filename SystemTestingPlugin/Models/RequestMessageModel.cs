@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AreaManagerPlugin.Models
+namespace SystemTestingPlugin.Models
 {
     public class RequestMessageModel
     {
