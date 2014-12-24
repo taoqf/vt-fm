@@ -134,7 +134,7 @@ namespace AreaManagerPlugin.Models
             }
         }
 
-        private string conditionStr;
+        private string conditionStr=string.Empty;
 
         public string ConditionStr
         {

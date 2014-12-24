@@ -26,7 +26,7 @@ namespace AreaManagerPlugin.Models
             }
         }
 
-        private string otherConditionData;
+        private string otherConditionData=string.Empty;
 
         public string OtherConditionData
         {
