@@ -1,5 +1,6 @@
 ﻿using AreaManagerPlugin.Models;
 using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Input;
@@ -7,6 +8,7 @@ using Victop.Frame.DataChannel;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.Models;
+using Victop.Wpf.Controls;
 
 namespace AreaManagerPlugin.ViewModels
 {
@@ -122,35 +124,42 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    string MessageType = "MongoDataChannelService.findBusiData";
-                    MessageOperation messageOp = new MessageOperation();
-                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    contentDic.Add("systemid", DataInfoModel.SystemId);
-                    contentDic.Add("configsystemid", DataInfoModel.ConfigsystemId);
-                    contentDic.Add("modelid", DataInfoModel.ModelId);
-                    if (!string.IsNullOrEmpty(DataInfoModel.SpaceId))
+                    try
                     {
-                        contentDic.Add("spaceId", DataInfoModel.SpaceId);
-                    }
-                    if (!string.IsNullOrEmpty(DataInfoModel.ConditionStr))
-                    {
-                        List<Dictionary<string, object>> conList = JsonHelper.ToObject<List<Dictionary<string, object>>>(DataInfoModel.ConditionStr);
-                        if (conList != null)
+                        string MessageType = "MongoDataChannelService.findBusiData";
+                        MessageOperation messageOp = new MessageOperation();
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        contentDic.Add("systemid", DataInfoModel.SystemId);
+                        contentDic.Add("configsystemid", DataInfoModel.ConfigsystemId);
+                        contentDic.Add("modelid", DataInfoModel.ModelId);
+                        if (!string.IsNullOrEmpty(DataInfoModel.SpaceId))
                         {
-                            contentDic.Add("conditions", conList);
+                            contentDic.Add("spaceId", DataInfoModel.SpaceId);
+                        }
+                        if (!string.IsNullOrEmpty(DataInfoModel.ConditionStr))
+                        {
+                            List<Dictionary<string, object>> conList = JsonHelper.ToObject<List<Dictionary<string, object>>>(DataInfoModel.ConditionStr);
+                            if (conList != null)
+                            {
+                                contentDic.Add("conditions", conList);
+                            }
+                        }
+                        Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        if (returnDic != null)
+                        {
+                            DataOperation dataOp = new DataOperation();
+                            DataInfoModel.ChannelId = returnDic["DataChannelId"].ToString();
+                            List<object> pathList = new List<object>();
+                            pathList.Add(DataInfoModel.TableName);
+                            string dataPath = JsonHelper.ToJson(pathList);
+                            DataSet mastDs = new DataSet();
+                            mastDs = dataOp.GetData(DataInfoModel.ChannelId, dataPath);
+                            DataInfoModel.ResultDataTable = mastDs.Tables["dataArray"];
                         }
                     }
-                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
-                    if (returnDic != null)
+                    catch (Exception ex)
                     {
-                        DataOperation dataOp = new DataOperation();
-                        DataInfoModel.ChannelId = returnDic["DataChannelId"].ToString();
-                        List<object> pathList = new List<object>();
-                        pathList.Add(DataInfoModel.TableName);
-                        string dataPath = JsonHelper.ToJson(pathList);
-                        DataSet mastDs = new DataSet();
-                        mastDs = dataOp.GetData(DataInfoModel.ChannelId, dataPath);
-                        DataInfoModel.ResultDataTable = mastDs.Tables["dataArray"];
+                        VicMessageBoxNormal.Show(ex.Message);
                     }
                 }, () => {
                     bool result = true;
@@ -187,8 +196,15 @@ namespace AreaManagerPlugin.ViewModels
             get
             {
                 return new RelayCommand(() => {
-                    DataOperation dataOp = new DataOperation();
-                    DataInfoModel.JsonData = dataOp.GetJSONData(DataInfoModel.ChannelId);
+                    try
+                    {
+                        DataOperation dataOp = new DataOperation();
+                        DataInfoModel.JsonData = dataOp.GetJSONData(DataInfoModel.ChannelId);
+                    }
+                    catch (Exception ex)
+                    {
+                        VicMessageBoxNormal.Show(ex.Message);
+                    }
                 });
             }
         }
@@ -201,17 +217,24 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    MessageOperation messageOp = new MessageOperation();
-                    string MessageType = "MongoDataChannelService.findDocCode";
-                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    contentDic.Add("systemid", CodeInfoModel.SystemId);
-                    contentDic.Add("configsystemid", CodeInfoModel.ConfigsystemId);
-                    contentDic.Add("pname", CodeInfoModel.PName);
-                    contentDic.Add("setinfo", CodeInfoModel.SetInfo);
-                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
-                    if (returnDic != null)
+                    try
                     {
-                        CodeInfoModel.ResultData = returnDic["ReplyContent"].ToString();
+                        MessageOperation messageOp = new MessageOperation();
+                        string MessageType = "MongoDataChannelService.findDocCode";
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        contentDic.Add("systemid", CodeInfoModel.SystemId);
+                        contentDic.Add("configsystemid", CodeInfoModel.ConfigsystemId);
+                        contentDic.Add("pname", CodeInfoModel.PName);
+                        contentDic.Add("setinfo", CodeInfoModel.SetInfo);
+                        Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        if (returnDic != null)
+                        {
+                            CodeInfoModel.ResultData = returnDic["ReplyContent"].ToString();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        VicMessageBoxNormal.Show(ex.Message);
                     }
                 }, () => {
                     bool result = true;
@@ -249,17 +272,24 @@ namespace AreaManagerPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    MessageOperation messageOp = new MessageOperation();
-                    string MessageType = "MongoDataChannelService.afterLogin";
-                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    contentDic.Add("systemid", UserInfoModel.SystemId);
-                    contentDic.Add("configsystemid", UserInfoModel.ConfigsystemId);
-                    contentDic.Add("client_type_val", UserInfoModel.ClientType);
-                    contentDic.Add("userCode", UserInfoModel.UserCode);
-                    Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
-                    if (returnDic != null)
+                    try
                     {
-                        UserInfoModel.ResultData = returnDic["ReplyContent"].ToString();
+                        MessageOperation messageOp = new MessageOperation();
+                        string MessageType = "MongoDataChannelService.afterLogin";
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        contentDic.Add("systemid", UserInfoModel.SystemId);
+                        contentDic.Add("configsystemid", UserInfoModel.ConfigsystemId);
+                        contentDic.Add("client_type_val", UserInfoModel.ClientType);
+                        contentDic.Add("userCode", UserInfoModel.UserCode);
+                        Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        if (returnDic != null)
+                        {
+                            UserInfoModel.ResultData = returnDic["ReplyContent"].ToString();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        VicMessageBoxNormal.Show(ex.Message);
                     }
                 }, () => {
                     bool result = true;
@@ -296,12 +326,19 @@ namespace AreaManagerPlugin.ViewModels
             get
             {
                 return new RelayCommand(() => {
-                    MessageOperation messageOp = new MessageOperation();
-                    Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(OtherInfoModel.OtherConditionData);
-                    Dictionary<string, object> returnDic = messageOp.SendMessage(OtherInfoModel.MessageType, contentDic, "JSON");
-                    if (returnDic != null)
+                    try
                     {
-                        OtherInfoModel.OtherResultData = returnDic["ReplyContent"].ToString();
+                        MessageOperation messageOp = new MessageOperation();
+                        Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(OtherInfoModel.OtherConditionData);
+                        Dictionary<string, object> returnDic = messageOp.SendMessage(OtherInfoModel.MessageType, contentDic, "JSON");
+                        if (returnDic != null)
+                        {
+                            OtherInfoModel.OtherResultData = returnDic["ReplyContent"].ToString();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        VicMessageBoxNormal.Show(ex.Message);
                     }
                 });
             }
