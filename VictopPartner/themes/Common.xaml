@@ -557,7 +557,7 @@
         </Setter>
     </Style>
     <!--VicTextBox样式结束-->
-    <!--机台“数据清单”页签内容样式开始-->
+    <!--机台“数据清单”页签内容竖排样式开始-->
     <Style x:Key="MachinePlatforBtnStyle" TargetType="{x:Type RadioButton}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Width" Value="30"/>
@@ -589,10 +589,62 @@
                             <Setter Property="Foreground" TargetName="cc" Value="{DynamicResource Plugin_TabItemSelectedForeground}"/>
                             <Setter Property="Margin" TargetName="Bd" Value="0,1,-1,0"/>
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemDisabledBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemDisabledBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" TargetName="cc" Value="{DynamicResource BtnDisableForeground}"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <!--机台“数据清单”页签内容样式结束-->
+    <!--机台“数据清单”页签内容竖排样式结束-->
+    <!--机台“数据清单”页签内容横排样式开始-->
+    <Style x:Key="MachinePlatforTopBtnStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Margin" Value="1,0,1,0"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="MinWidth" Value="105"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Border  x:Name="Bd"
+                                        CornerRadius="4,4,0,0"
+                                        Background="{DynamicResource Plugin_TabItemNormalBackground}"
+                                        BorderBrush="{DynamicResource Plugin_TabItemNormalBorderBrush}"
+                                        BorderThickness="1,1,1,0"
+										Margin="1,0,0,0"
+							            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid  Name="grid">
+                            <Path x:Name="path" Fill="{DynamicResource Plugin_TabItemShapeNormalBackground}" Stroke="{DynamicResource Plugin_TabItemShapeNormalBorderBrush}" Data="M-0.89510486,30.047619 L-0.29370627,0.5 79.692308,0.5 79.692308,34.5 44.811188,34.56746 z" Stretch="Fill"/>
+                            <TextBlock x:Name="cc" Height="14"  TextWrapping="Wrap" TextBlock.FontFamily="Calibri" TextAlignment="Center" TextBlock.FontSize="14" Text="{TemplateBinding Content}" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemSelectedBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemSelectedBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeSelectedBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemShapeSelectedBorderBrush}"/>
+                            <Setter Property="Foreground" TargetName="cc" Value="{DynamicResource Plugin_TabItemSelectedForeground}"/>
+                            <Setter Property="Margin" TargetName="Bd" Value="1,0,0,-1"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource Plugin_TabItemDisabledBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource Plugin_TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Fill" TargetName="path" Value="{DynamicResource Plugin_TabItemDisabledBackground}"/>
+                            <Setter Property="Stroke" TargetName="path" Value="{DynamicResource Plugin_TabItemDisabledBorderBrush}"/>
+                            <Setter Property="Foreground" TargetName="cc" Value="{DynamicResource BtnDisableForeground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--机台“数据清单”页签内容横排样式结束-->
 </ResourceDictionary>
