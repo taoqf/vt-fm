@@ -23,7 +23,7 @@ namespace Victop.Component.Runtime
         /// <summary>
         /// 插件集合
         /// </summary>
-        [JsonProperty(PropertyName = "plugins")]
+        [JsonProperty(PropertyName = "widgets")]
         public List<DefinPluginsModel> Plugins
         {
             get;

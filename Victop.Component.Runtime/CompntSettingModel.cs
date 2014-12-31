@@ -23,7 +23,7 @@ namespace Victop.Component.Runtime
         /// <summary>
         /// 插件配置信息
         /// </summary>
-        [JsonProperty(PropertyName = "pluginsSetting")]
+        [JsonProperty(PropertyName = "widgetsSetting")]
         public Dictionary<string, object> PluginsSetting
         {
             get;

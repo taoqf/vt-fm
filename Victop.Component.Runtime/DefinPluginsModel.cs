@@ -14,7 +14,7 @@ namespace Victop.Component.Runtime
         /// <summary>
         /// 插件名称
         /// </summary>
-        [JsonProperty(PropertyName = "pluginName")]
+        [JsonProperty(PropertyName = "widgetName")]
         public string PluginName
         {
             get;
@@ -23,7 +23,7 @@ namespace Victop.Component.Runtime
         /// <summary>
         /// 插件展示类型
         /// </summary>
-        [JsonProperty(PropertyName = "pluginType")]
+        [JsonProperty(PropertyName = "widgetType")]
         public string PluginType
         {
             get;
