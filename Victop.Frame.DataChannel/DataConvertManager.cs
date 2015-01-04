@@ -46,6 +46,7 @@ namespace Victop.Frame.DataChannel
             newDs.Clear();
             List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
             string modelData = DataTool.GetDataByPath(viewId, "[\"model\"]");
+            string simpleRefData = DataTool.GetDataByPath(viewId, "[\"simpleRef\"]");
             string jsonData = DataTool.GetDataByPath(viewId, dataPath);
             if (!string.IsNullOrEmpty(jsonData))
             {
@@ -53,20 +54,20 @@ namespace Victop.Frame.DataChannel
                 if (pathList.Count % 2 == 1)//获取表数据
                 {
                     #region 组织表数据
-                    OriginzeDataOfTable(newDs, pathList, modelData, jsonDic, viewId, dataPath);
+                    OriginzeDataOfTable(newDs, pathList, modelData, simpleRefData, jsonDic, viewId, dataPath);
                     #endregion
                 }
                 else//获取行数据
                 {
                     #region 组织行数据
-                    OriginzieDataOfRow(newDs, pathList, modelData, jsonDic, viewId);
+                    OriginzieDataOfRow(newDs, pathList, modelData,simpleRefData, jsonDic, viewId);
                     #endregion
                 }
             }
             else
             {
                 DataTable itemDt = new DataTable("dataArray");
-                itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
+                itemDt = GetDataTableStructByModel(modelData,simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                 itemDt.AcceptChanges();
                 if (!newDs.Tables.Contains("dataArray"))
                 {
@@ -98,6 +99,7 @@ namespace Victop.Frame.DataChannel
                 newDs = structDs == null ? new DataSet() : structDs.Copy();
                 List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
                 string modelData = DataTool.GetDataByPath(viewId, "[\"model\"]");
+                string simpleRefData = DataTool.GetDataByPath(viewId, "[\"simpleRef\"]");
                 string jsonData = DataTool.GetDataByPath(viewId, dataPath);
                 if (!string.IsNullOrEmpty(jsonData))
                 {
@@ -110,7 +112,7 @@ namespace Victop.Frame.DataChannel
                             if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
                             {
                                 string tableName = pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString();
-                                itemDt = GetDataTableStructByModel(modelData, tableName, viewId, dataPath);
+                                itemDt = GetDataTableStructByModel(modelData, simpleRefData,tableName, viewId, dataPath);
                             }
                             if (jsonDic.ContainsKey(item) && jsonDic[item] != null)
                             {
@@ -151,7 +153,7 @@ namespace Victop.Frame.DataChannel
                         DataTable itemDt = new DataTable("dataArray");
                         if (!string.IsNullOrEmpty(modelData))
                         {
-                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
+                            itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                         }
                         if (itemDt.Columns.Count <= 0)
                         {
@@ -168,7 +170,7 @@ namespace Victop.Frame.DataChannel
                 else if (structDs == null)
                 {
                     string tableName = pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString();
-                    DataTable itemDt = GetDataTableStructByModel(modelData, tableName, viewId, dataPath);
+                    DataTable itemDt = GetDataTableStructByModel(modelData, simpleRefData, tableName, viewId, dataPath);
                     if (!newDs.Tables.Contains(itemDt.TableName))
                     {
                         newDs.Tables.Add(itemDt);
@@ -279,12 +281,12 @@ namespace Victop.Frame.DataChannel
         /// <param name="pathList"></param>
         /// <param name="modelData"></param>
         /// <param name="jsonDic"></param>
-        private void OriginzieDataOfRow(DataSet newDs, List<object> pathList, string modelData, Dictionary<string, object> jsonDic, string viewId)
+        private void OriginzieDataOfRow(DataSet newDs, List<object> pathList, string modelData,string simpleRefData, Dictionary<string, object> jsonDic, string viewId)
         {
             DataTable itemDt = new DataTable("dataArray");
             if (!string.IsNullOrEmpty(modelData))
             {
-                itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, JsonHelper.ToJson(pathList));
+                itemDt = GetDataTableStructByModel(modelData,simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, JsonHelper.ToJson(pathList));
             }
             if (itemDt.Columns.Count <= 0)
             {
@@ -355,7 +357,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="pathList"></param>
         /// <param name="modelData"></param>
         /// <param name="jsonDic"></param>
-        private void OriginzeDataOfTable(DataSet newDs, List<object> pathList, string modelData, Dictionary<string, object> jsonDic, string viewId, string dataPath)
+        private void OriginzeDataOfTable(DataSet newDs, List<object> pathList, string modelData, string simpleRefData, Dictionary<string, object> jsonDic, string viewId, string dataPath)
         {
             foreach (string item in jsonDic.Keys)
             {
@@ -368,7 +370,7 @@ namespace Victop.Frame.DataChannel
                         itemDt = new DataTable(item);
                         if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
                         {
-                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
+                            itemDt = GetDataTableStructByModel(modelData, simpleRefData,pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                         }
                         if (itemDt.Columns.Count <= 0)
                         {
@@ -432,7 +434,7 @@ namespace Victop.Frame.DataChannel
                         Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
                         if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
                         {
-                            itemDt = GetDataTableStructByModel(modelData, pathList[pathList.Count - 1].GetType().Name.Equals("string") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
+                            itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("string") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                         }
                         if (itemDt.Columns.Count <= 0)
                         {
@@ -521,7 +523,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="modelJson"></param>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        private DataTable GetDataTableStructByModel(string modelJson, string tableName, string viewId, string dataPath)
+        private DataTable GetDataTableStructByModel(string modelJson, string simpleRefJson,string tableName, string viewId, string dataPath)
         {
             DataTable newDt = new DataTable("dataArray");
             if (!string.IsNullOrEmpty(modelJson))
@@ -531,6 +533,7 @@ namespace Victop.Frame.DataChannel
                 List<Dictionary<string, object>> clientrefList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "clientRef"));
                 List<Dictionary<string, object>> refList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "ref"));
                 List<Dictionary<string, object>> settingList = new List<Dictionary<string, object>>();
+                List<Dictionary<string, object>> simpleRefList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(simpleRefJson, "dataArray"));
                 string settingStr = JsonHelper.ReadJsonString(modelJson, "setting");
                 if (!string.IsNullOrEmpty(settingStr))
                 {
@@ -543,7 +546,7 @@ namespace Victop.Frame.DataChannel
                     if (tableListDic != null)
                     {
                         tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(tableList.Find(it => it["name"].ToString().Equals(tableName))["structure"].ToString());
-                        BuildColumnsOfDataTable(tableName, newDt, tableList, clientrefList, refList, viewId, dataPath);
+                        BuildColumnsOfDataTable(tableName, newDt, tableList, clientrefList, refList, simpleRefList, viewId, dataPath);
                     }
                     else
                     {
@@ -551,7 +554,7 @@ namespace Victop.Frame.DataChannel
                         {
                             newtableList.Clear();
                             newtableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(item["structure"].ToString());
-                            BuildColumnsOfDataTable(tableName, newDt, newtableList, clientrefList, refList, viewId, dataPath, false);
+                            BuildColumnsOfDataTable(tableName, newDt, newtableList, clientrefList, refList, simpleRefList, viewId, dataPath, false);
                         }
                     }
 
@@ -569,7 +572,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="viewId"></param>
         /// <param name="dataPath"></param>
         /// <param name="masterFlag"></param>
-        private void BuildColumnsOfDataTable(string tableName, DataTable newDt, List<Dictionary<string, object>> tableList, List<Dictionary<string, object>> clientrefList, List<Dictionary<string, object>> refList, string viewId, string dataPath, bool masterFlag = true)
+        private void BuildColumnsOfDataTable(string tableName, DataTable newDt, List<Dictionary<string, object>> tableList, List<Dictionary<string, object>> clientrefList, List<Dictionary<string, object>> refList, List<Dictionary<string, object>> simpleRefList, string viewId, string dataPath, bool masterFlag = true)
         {
             #region 组织table中字段
             foreach (Dictionary<string, object> item in tableList)
@@ -688,7 +691,7 @@ namespace Victop.Frame.DataChannel
                             {
                                 dc.Caption = JsonHelper.ReadJsonString(item["value"].ToString(), "label");
                             }
-                            DataSet ds = GetSimpleRef(viewId, dataPath, item["key"].ToString(), null);
+                            DataSet ds = GetSimpleRef(simpleRefList, dataPath, item["key"].ToString(), null);
                             if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
                             {
                                 dc.ExtendedProperties.Add("ComboBox", ds.Tables["dataArray"]);
@@ -749,7 +752,7 @@ namespace Victop.Frame.DataChannel
                                             break;
                                     }
                                 }
-                                DataSet ds = GetSimpleRef(viewId, dataPath, leftStr, null);
+                                DataSet ds = GetSimpleRef(simpleRefList, dataPath, leftStr, null);
                                 if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
                                 {
                                     dc.ExtendedProperties.Add("ComboBox", ds.Tables["dataArray"]);
@@ -816,6 +819,54 @@ namespace Victop.Frame.DataChannel
             return ds;
         }
 
+        /// <summary>
+        /// 获取简单引用数据
+        /// </summary>
+        /// <param name="viewId"></param>
+        private DataSet GetSimpleRef(List<Dictionary<string,object>> simpleRefList, string dataPath, string columnPath, Dictionary<string, object> dependDic)
+        {
+            DataSet ds = new DataSet();
+            string constructPath = string.Empty;
+            #region 构建结构Path
+            List<object> pathList = JsonHelper.ToObject<List<Object>>(dataPath);
+            for (int i = 0; i < pathList.Count; i++)
+            {
+                if (pathList[i].GetType().Name.Equals("String"))
+                {
+                    constructPath += pathList[i].ToString() + ".";
+                    if (i == pathList.Count - 1)
+                    {
+                        constructPath += "dataArray.";
+                    }
+                }
+                else
+                {
+                    constructPath += "dataArray.";
+                }
+            }
+            constructPath += columnPath;
+            #endregion
+            #region 获取简单引用定义
+
+            if (simpleRefList!=null)
+            {
+                foreach (Dictionary<string, object> item in simpleRefList)
+                {
+                    if (item.ContainsKey("property") && item.ContainsKey("valueList"))
+                    {
+                        List<SimRefPropertyModel> propertyModelList = JsonHelper.ToObject<List<SimRefPropertyModel>>(item["property"].ToString());
+                        SimRefPropertyModel propertyModel = propertyModelList.FirstOrDefault(it => it.key.Equals(constructPath));
+                        if (propertyModel == null)
+                            break;
+                        DataTable dt = GetDataByConsturctPath(propertyModel.value, propertyModel.value, item["valueList"].ToString(), dependDic);
+                        ds.Tables.Add(dt);
+                        break;
+                    }
+                } 
+            }
+            #endregion
+            return ds;
+        }
         /// <summary>
         /// 获取简单引用数据
         /// </summary>

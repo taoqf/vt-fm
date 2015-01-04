@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Collections;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.DataChannel.Enums;
+using System.Diagnostics;
 
 namespace Victop.Frame.DataChannel
 {
@@ -284,6 +285,8 @@ namespace Victop.Frame.DataChannel
         /// <returns></returns>
         public static string GetDataByPath(string viewId, string dataPath)
         {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             DataOperation dataOp = new DataOperation();
             string JsonData = dataOp.GetJSONData(viewId);
             JsonData = JsonHelper.ReadJsonString(JsonData, "docDataStore");
@@ -311,21 +314,30 @@ namespace Victop.Frame.DataChannel
                                 List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonData);
                                 if (arrayList != null)
                                 {
-                                    for (int j = 0; j < arrayList.Count; j++)
+                                    Dictionary<string, object> jsonDataDic = arrayList.FirstOrDefault(it => it.ContainsKey(pathDic["key"]) && it[pathDic["key"]].ToString().Equals(pathDic["value"]));
+                                    if (jsonDataDic != null)
                                     {
-                                        if (arrayList[j].ContainsKey(pathDic["key"]) && arrayList[j][pathDic["key"]].ToString().Equals(pathDic["value"]))
+                                        JsonData = JsonHelper.ToJson(jsonDataDic);
+                                        if (i == pathList.Count - 1)
                                         {
-                                            JsonData = JsonHelper.ToJson(arrayList[j]);
-                                            if (i == pathList.Count - 1)
-                                            {
-                                                return JsonData;
-                                            }
-                                            else
-                                            {
-                                                continue;
-                                            }
+                                            return JsonData;
                                         }
                                     }
+                                    //for (int j = 0; j < arrayList.Count; j++)
+                                    //{
+                                    //    if (arrayList[j].ContainsKey(pathDic["key"]) && arrayList[j][pathDic["key"]].ToString().Equals(pathDic["value"]))
+                                    //    {
+                                    //        JsonData = JsonHelper.ToJson(arrayList[j]);
+                                    //        if (i == pathList.Count - 1)
+                                    //        {
+                                    //            return JsonData;
+                                    //        }
+                                    //        else
+                                    //        {
+                                    //            continue;
+                                    //        }
+                                    //    }
+                                    //}
                                 }
                             }
                         }
@@ -333,10 +345,10 @@ namespace Victop.Frame.DataChannel
                 }
                 JsonData = string.Empty;
             }
-            catch (Exception ex)
+            finally
             {
-
-                throw;
+                watch.Stop();
+                LoggerHelper.InfoFormat("{0}GetDataByPath Time:{1}", dataPath, watch.ElapsedMilliseconds.ToString());
             }
             return JsonData;
         }
