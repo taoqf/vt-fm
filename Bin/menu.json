@@ -255,7 +255,7 @@
 						{
 							"title": "原始需求机台",
 							"actionType": 1,
-							"actionName": "AreaManagerPlugin",
+							"actionName": "SystemTestingPlugin",
 							"showType": 1,
 							"iconUrl": "\ue6a4",
 							"description": "用于策划机台维护",
@@ -1582,6 +1582,49 @@
 								{
 									"key": "",
 									"value": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		}, {
+			"title": "数据测试",
+			"iconUrl": "\ue6a4",
+			"fitDataPath": [
+				{
+					"key": "",
+					"value": ""
+				}
+			],
+			"children": [
+				{
+					"title": "数据测试页面",
+					"iconUrl": "\ue6a4",
+					"fitDataPath": [
+						{
+							"key": "",
+							"value": ""
+						}
+					],
+					"children": [
+						{
+							"title": "数据测试工具",
+							"actionType": 1,
+							"actionName": "SystemTestingPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6a4",
+							"description": "用于策划机台维护",
+							"systemId": 904,
+							"configsystemid": 101,
+							"spaceId": "feidao_core",
+							"actionCADName": "",
+							"menuno": "10010",
+							"fitDataPath": [
+								{
+									"key": "datagridMaster",
+									"value": "OriginalDemandMachinePlatformPlugin_Setting",
+									"title": "工作区"
 								}
 							]
 						}

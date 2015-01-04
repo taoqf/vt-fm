@@ -19,6 +19,6 @@
   <P2PClient Server="192.168.110.213:9999">
   </P2PClient>
   <!--用户信息-->
-  <UserInfo User="" Pwd="" ClientId="feidao_core">
+  <UserInfo User="wangzhaoguang" Pwd="111111" ClientId="feidao_core">
   </UserInfo>
 </Partner>
