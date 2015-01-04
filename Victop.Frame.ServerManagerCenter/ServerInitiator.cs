@@ -19,25 +19,25 @@ namespace Victop.Frame.ServerManagerCenter
     using System.Windows.Controls;
     using System.Threading;
     using Victop.Frame.CoreLibrary.Enums;
-	/// <summary>
-	/// 服务启动器
-	/// </summary>
-	/// <remarks>服务启动器</remarks>
-	public class ServerInitiator
-	{
+    /// <summary>
+    /// 服务启动器
+    /// </summary>
+    /// <remarks>服务启动器</remarks>
+    public class ServerInitiator
+    {
         private static Dictionary<string, ServerInfoEntity> serverInfoList;
-		/// <summary>
-		/// 启动服务信息集合
-		/// </summary>
+        /// <summary>
+        /// 启动服务信息集合
+        /// </summary>
         public static Dictionary<string, ServerInfoEntity> ServerInfoList
-		{
+        {
             get
             {
                 if (serverInfoList == null)
                     serverInfoList = new Dictionary<string, ServerInfoEntity>();
                 return serverInfoList;
             }
-		}
+        }
         private static ServerInitiator instance = null;
         /// <summary>
         /// 服务实例
@@ -79,7 +79,7 @@ namespace Victop.Frame.ServerManagerCenter
                     break;
                 default:
                     RegisterServerInfo serverInfo = JsonHelper.ToObject<RegisterServerInfo>(JsonHelper.ReadJsonString(messageInfo.MessageContent, "ServerInfo"));
-                    ReplyContent = ServerRun(serverInfo,messageInfo);
+                    ReplyContent = ServerRun(serverInfo, messageInfo);
                     break;
             }
             return ReplyContent;
@@ -198,7 +198,7 @@ namespace Victop.Frame.ServerManagerCenter
                     returnDic.Add("ReplyMode", "1");
                     returnDic.Add("ReplyContent", "更改当前通道成功");
                     return JsonHelper.ToJson(returnDic);
-        }
+                }
                 else
                 {
                     returnDic = new Dictionary<string, string>();
@@ -212,11 +212,11 @@ namespace Victop.Frame.ServerManagerCenter
             returnDic.Add("ReplyContent", "请传入通道信息");
             return JsonHelper.ToJson(returnDic);
         }
-		/// <summary>
-		/// 服务启动
-		/// </summary>
+        /// <summary>
+        /// 服务启动
+        /// </summary>
         public string ServerRun(RegisterServerInfo serverInfo, RequestMessage messageInfo)
-		{
+        {
             //通过注册服务信息，得到服务的路径，并通过反射方式将服务实例化
             //执行运行方法
             Dictionary<string, string> returnDic = new Dictionary<string, string>();
@@ -250,13 +250,13 @@ namespace Victop.Frame.ServerManagerCenter
                 }
             }
             return replyContent;
-		}
+        }
 
-		/// <summary>
-		/// 插件启动
-		/// </summary>
-		private string PluginRun(RequestMessage messageInfo)
-		{
+        /// <summary>
+        /// 插件启动
+        /// </summary>
+        private string PluginRun(RequestMessage messageInfo)
+        {
             try
             {
                 string pluginName = JsonHelper.ReadJsonString(messageInfo.MessageContent, "PluginName");
@@ -310,21 +310,21 @@ namespace Victop.Frame.ServerManagerCenter
                 return JsonHelper.ToJson(returnDic);
             }
 
-		}
+        }
 
-		/// <summary>
-		/// 发送服务消息
-		/// </summary>
-		public virtual ReplyMessage SendServerMessage(RequestMessage messageInfo)
-		{
-			throw new System.NotImplementedException(); //TODO:方法实现
-		}
+        /// <summary>
+        /// 发送服务消息
+        /// </summary>
+        public virtual ReplyMessage SendServerMessage(RequestMessage messageInfo)
+        {
+            throw new System.NotImplementedException(); //TODO:方法实现
+        }
 
-		/// <summary>
-		/// 插件关闭
-		/// </summary>
-		private string PluginStop(RequestMessage messageInfo)
-		{
+        /// <summary>
+        /// 插件关闭
+        /// </summary>
+        private string PluginStop(RequestMessage messageInfo)
+        {
             try
             {
                 string replyContent = string.Empty;
@@ -341,23 +341,23 @@ namespace Victop.Frame.ServerManagerCenter
             {
                 throw;
             }
-		}
+        }
 
-		/// <summary>
-		/// 服务运行完成(回调方法)
-		/// </summary>
-		private void ServerComplate(string replyMessage)
-		{
-			throw new System.NotImplementedException(); //TODO:方法实现
-		}
+        /// <summary>
+        /// 服务运行完成(回调方法)
+        /// </summary>
+        private void ServerComplate(string replyMessage)
+        {
+            throw new System.NotImplementedException(); //TODO:方法实现
+        }
         /// <summary>
         /// 更新活动插件列表
         /// </summary>
         /// <param name="messageInfo"></param>
-		private void UpdateActivePluginList(RequestMessage messageInfo)
-		{
-			throw new System.NotImplementedException(); //TODO:方法实现
-		}
+        private void UpdateActivePluginList(RequestMessage messageInfo)
+        {
+            throw new System.NotImplementedException(); //TODO:方法实现
+        }
         /// <summary>
         /// 是否为有效的插件
         /// </summary>
@@ -396,6 +396,6 @@ namespace Victop.Frame.ServerManagerCenter
             }
             return ret;
         }
-	}
+    }
 }
 
