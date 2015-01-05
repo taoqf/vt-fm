@@ -1250,6 +1250,24 @@ namespace Victop.Frame.DataChannel
                 return false;
             }
         }
+        /// <summary>
+        /// 获取模型关系
+        /// </summary>
+        /// <param name="viewId"></param>
+        /// <returns></returns>
+        public string GetModelRelation(string viewId)
+        {
+            string modelData = DataTool.GetDataByPath(viewId, "[\"model\"]");
+            if (!string.IsNullOrEmpty(modelData))
+            {
+                return JsonHelper.ReadJsonString(modelData, "relation");
+            }
+            else
+            {
+                return string.Empty;
+            }
+            
+        }
     }
 
     internal class JsonMapKey

@@ -200,6 +200,16 @@ namespace Victop.Frame.DataChannel
             DataConvertManager convertManager = new DataConvertManager();
             return convertManager.DisposeData(channelId);
         }
+        /// <summary>
+        /// 获取模型关系
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <returns></returns>
+        public virtual string GetModelRelation(string channelId)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.GetModelRelation(channelId);
+        }
     }
 }
 

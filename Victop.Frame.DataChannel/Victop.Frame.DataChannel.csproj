@@ -56,6 +56,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\VictopLib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -73,6 +77,16 @@
     <Compile Include="DataTool.cs" />
     <Compile Include="Enums\OpreateStateEnum.cs" />
     <Compile Include="Enums\SOADataTypeEnum.cs" />
+    <Compile Include="MongoModel\MongoModelInfoModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfClientRefModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfRefConditionContentModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfRefModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfRelationDetailModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfRelationMasterModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfRelationModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfTablesModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfTableStructureFieldValueModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfTableStructureModel.cs" />
     <Compile Include="MongoModel\RefViewModel.cs" />
     <Compile Include="MongoModel\SimRefPropertyModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
