@@ -149,11 +149,14 @@ namespace SystemTestingPlugin.ViewModels
                         {
                             DataOperation dataOp = new DataOperation();
                             DataInfoModel.ChannelId = returnDic["DataChannelId"].ToString();
-                            List<object> pathList = new List<object>();
-                            pathList.Add(DataInfoModel.TableName);
-                            string dataPath = JsonHelper.ToJson(pathList);
+                            if (string.IsNullOrEmpty(DataInfoModel.DataPath))
+                            {
+                                List<object> pathList = new List<object>();
+                                pathList.Add(DataInfoModel.TableName);
+                                DataInfoModel.DataPath = JsonHelper.ToJson(pathList);
+                            }
                             DataSet mastDs = new DataSet();
-                            mastDs = dataOp.GetData(DataInfoModel.ChannelId, dataPath);
+                            mastDs = dataOp.GetData(DataInfoModel.ChannelId, DataInfoModel.DataPath);
                             DataInfoModel.ResultDataTable = mastDs.Tables["dataArray"];
                         }
                     }

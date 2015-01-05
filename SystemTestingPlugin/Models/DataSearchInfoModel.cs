@@ -164,5 +164,27 @@ namespace SystemTestingPlugin.Models
                 RaisePropertyChanged("VertifyMsg");
             }
         }
+        /// <summary>
+        /// 数据路径
+        /// </summary>
+        private string dataPath = string.Empty;
+        /// <summary>
+        /// 数据路径
+        /// </summary>
+        public string DataPath
+        {
+            get
+            {
+                return dataPath;
+            }
+            set
+            {
+                if (dataPath != value)
+                {
+                    dataPath = value;
+                    RaisePropertyChanged("DataPath");
+                }
+            }
+        }
     }
 }

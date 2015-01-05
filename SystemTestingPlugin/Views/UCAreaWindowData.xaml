@@ -39,6 +39,9 @@
                         <ctrl:VicTabItemNormal Header="查询条件" AllowDelete="False">
                             <ctrl:VicRichTextBoxNormal Name="rTBoxCondition" VicText="{Binding DataInfoModel.ConditionStr,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
                         </ctrl:VicTabItemNormal>
+                        <ctrl:VicTabItemNormal Header="数据路径" AllowDelete="False">
+                            <ctrl:VicRichTextBoxNormal Name="rTBoxDataPath" VicText="{Binding DataInfoModel.DataPath,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                        </ctrl:VicTabItemNormal>
                         <ctrl:VicTabItemNormal Header="DataTable数据" AllowDelete="False">
                             <ctrl:VicDataGrid AutoGenerateColumns="False" IsUserSetColumn="False" Name="dgridSearch" ItemsSource="{Binding DataInfoModel.ResultDataTable}"/>
                         </ctrl:VicTabItemNormal>
