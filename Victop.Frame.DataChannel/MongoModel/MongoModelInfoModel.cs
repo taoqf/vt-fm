@@ -65,5 +65,38 @@ namespace Victop.Frame.DataChannel.MongoModel
             }
             set { modelRef = value; }
         }
+        /// <summary>
+        /// 数据引用
+        /// </summary>
+        private List<MongoModelInfoOfClientRefModel> modelClientRef;
+        [JsonProperty(PropertyName = "clientRef")]
+        public List<MongoModelInfoOfClientRefModel> ModelClientRef
+        {
+            get
+            {
+                if (modelClientRef == null)
+                    modelClientRef = new List<MongoModelInfoOfClientRefModel>();
+                return modelClientRef;
+            }
+            set { modelClientRef = value; }
+        }
+        /// <summary>
+        /// 模型设置
+        /// </summary>
+        private MongoModelInfoOfSettingModel modelSetting;
+        /// <summary>
+        /// 模型设置
+        /// </summary>
+        [JsonProperty(PropertyName = "setting")]
+        public MongoModelInfoOfSettingModel ModelSetting
+        {
+            get
+            {
+                if (modelSetting == null)
+                    modelSetting = new MongoModelInfoOfSettingModel();
+                return modelSetting;
+            }
+            set { modelSetting = value; }
+        }
     }
 }

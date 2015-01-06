@@ -47,7 +47,77 @@ namespace Victop.Frame.DataChannel.MongoModel
             get { return clientRefModel; }
             set { clientRefModel = value; }
         }
-
-
+        /// <summary>
+        /// 首选条件
+        /// </summary>
+        private List<MongoModelInfoOfClientRefConditionModel> clientRefConditionFirst;
+        /// <summary>
+        /// 首选条件
+        /// </summary>
+        [JsonProperty(PropertyName = "conditionFirst")]
+        public List<MongoModelInfoOfClientRefConditionModel> ClientRefConditionFirst
+        {
+            get
+            {
+                if (clientRefConditionFirst == null)
+                    clientRefConditionFirst = new List<MongoModelInfoOfClientRefConditionModel>();
+                return clientRefConditionFirst;
+            }
+            set { clientRefConditionFirst = value; }
+        }
+        /// <summary>
+        /// 次要条件
+        /// </summary>
+        private List<MongoModelInfoOfClientRefConditionModel> clientRefConditionSecond;
+        /// <summary>
+        /// 次要条件
+        /// </summary>
+        [JsonProperty(PropertyName = "conditionSecond")]
+        public List<MongoModelInfoOfClientRefConditionModel> ClientRefConditionSecond
+        {
+            get
+            {
+                if (clientRefConditionSecond == null)
+                    clientRefConditionSecond = new List<MongoModelInfoOfClientRefConditionModel>();
+                return clientRefConditionSecond;
+            }
+            set { clientRefConditionSecond = value; }
+        }
+        /// <summary>
+        /// 引用字段与引用数据
+        /// </summary>
+        private List<MongoModelInfoOfClientRefPropertyModel> clientRefProperty;
+        /// <summary>
+        /// 引用字段与引用数据
+        /// </summary>
+        [JsonProperty(PropertyName = "property")]
+        public List<MongoModelInfoOfClientRefPropertyModel> ClientRefProperty
+        {
+            get
+            {
+                if (clientRefProperty == null)
+                    clientRefProperty = new List<MongoModelInfoOfClientRefPropertyModel>();
+                return clientRefProperty;
+            }
+            set { clientRefProperty = value; }
+        }
+        /// <summary>
+        /// 引用装配
+        /// </summary>
+        private MongoModelInfoOfClientRefPopupSettingModel clientRefPopupSetting;
+        /// <summary>
+        /// 引用装配
+        /// </summary>
+        [JsonProperty(PropertyName="popupSetting")]
+        public MongoModelInfoOfClientRefPopupSettingModel ClientRefPopupSetting
+        {
+            get
+            {
+                if (clientRefPopupSetting == null)
+                    clientRefPopupSetting = new MongoModelInfoOfClientRefPopupSettingModel();
+                return clientRefPopupSetting;
+            }
+            set { clientRefPopupSetting = value; }
+        }
     }
 }

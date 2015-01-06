@@ -18,6 +18,7 @@ namespace Victop.Frame.DataChannel.MongoModel
         /// <summary>
         /// 关系主表信息
         /// </summary>
+        [JsonProperty(PropertyName="master")]
         public MongoModelInfoOfRelationMasterModel RelationMaster
         {
             get
@@ -38,6 +39,7 @@ namespace Victop.Frame.DataChannel.MongoModel
         /// <summary>
         /// 关系从表信息
         /// </summary>
+         [JsonProperty(PropertyName = "detail")]
         public MongoModelInfoOfRelationDetailModel RelationDetail
         {
             get
@@ -55,6 +57,7 @@ namespace Victop.Frame.DataChannel.MongoModel
         /// <summary>
         /// 定义从表查询模式
         /// </summary>
+        [JsonProperty(PropertyName = "detailMode")]
         public int RelationDetailMode
         {
             get { return relationDetailMode; }
