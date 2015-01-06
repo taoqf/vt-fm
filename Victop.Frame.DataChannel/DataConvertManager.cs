@@ -38,7 +38,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="dataPath"></param>
         /// <param name="structDs"></param>
         /// <returns></returns>
-        public DataSet GetDataSetEx(string viewId, string dataPath, DataSet structDs = null)
+        public DataSet GetDataSet(string viewId, string dataPath, DataSet structDs = null)
         {
             if (string.IsNullOrEmpty(dataPath))
                 return null;
@@ -72,109 +72,6 @@ namespace Victop.Frame.DataChannel
                 if (!newDs.Tables.Contains("dataArray"))
                 {
                     newDs.Tables.Add(itemDt);
-                }
-            }
-            bool checkFlag = false;
-            foreach (JsonMapKey item in JsonTableMap.Keys)
-            {
-                if (item.ViewId == viewId && item.DataPath == dataPath)
-                {
-                    JsonTableMap[item] = newDs;
-                    checkFlag = true;
-                    break;
-                }
-            }
-            if (!checkFlag)
-            {
-                JsonMapKey mapKey = new JsonMapKey() { ViewId = viewId, DataPath = dataPath };
-                JsonTableMap.Add(mapKey, newDs);
-            }
-            return newDs;
-        }
-        public DataSet GetDataSet(string viewId, string dataPath, DataSet structDs = null)
-        {
-            DataSet newDs = new DataSet();
-            if (!string.IsNullOrEmpty(dataPath))
-            {
-                newDs = structDs == null ? new DataSet() : structDs.Copy();
-                List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
-                string modelData = DataTool.GetDataByPath(viewId, "[\"model\"]");
-                string simpleRefData = DataTool.GetDataByPath(viewId, "[\"simpleRef\"]");
-                string jsonData = DataTool.GetDataByPath(viewId, dataPath);
-                if (!string.IsNullOrEmpty(jsonData))
-                {
-                    Dictionary<string, object> jsonDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
-                    if (pathList.Count % 2 == 1)
-                    {
-                        foreach (string item in jsonDic.Keys)
-                        {
-                            DataTable itemDt = new DataTable(item);
-                            if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
-                            {
-                                string tableName = pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString();
-                                itemDt = GetDataTableStructByModel(modelData, simpleRefData,tableName, viewId, dataPath);
-                            }
-                            if (jsonDic.ContainsKey(item) && jsonDic[item] != null)
-                            {
-                                switch (jsonDic[item].GetType().Name)
-                                {
-                                    case "JArray":
-                                        List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonDic[item].ToString());
-                                        if (itemDt.Columns.Count <= 0)
-                                        {
-                                            itemDt = GetDataTableStruct(item, arrayList.Count > 0 ? arrayList[0] : null, newDs);
-                                        }
-                                        foreach (Dictionary<string, object> rowItem in arrayList)
-                                        {
-                                            UpdateDataTableRow(itemDt, rowItem);
-                                        }
-                                        break;
-                                    case "JObject":
-                                        Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
-                                        if (itemDt.Columns.Count <= 0)
-                                        {
-                                            itemDt = GetDataTableStruct(item, itemDic, newDs);
-                                        }
-                                        UpdateDataTableRow(itemDt, itemDic);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            itemDt.AcceptChanges();
-                            if (!newDs.Tables.Contains(itemDt.TableName))
-                            {
-                                newDs.Tables.Add(itemDt);
-                            }
-                        }
-                    }
-                    else//获取行数据
-                    {
-                        DataTable itemDt = new DataTable("dataArray");
-                        if (!string.IsNullOrEmpty(modelData))
-                        {
-                            itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
-                        }
-                        if (itemDt.Columns.Count <= 0)
-                        {
-                            itemDt = GetDataTableStruct("dataArray", jsonDic, newDs);
-                        }
-                        UpdateDataTableRow(itemDt, jsonDic);
-                        itemDt.AcceptChanges();
-                        if (!newDs.Tables.Contains(itemDt.TableName))
-                        {
-                            newDs.Tables.Add(itemDt);
-                        }
-                    }
-                }
-                else if (structDs == null)
-                {
-                    string tableName = pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString();
-                    DataTable itemDt = GetDataTableStructByModel(modelData, simpleRefData, tableName, viewId, dataPath);
-                    if (!newDs.Tables.Contains(itemDt.TableName))
-                    {
-                        newDs.Tables.Add(itemDt);
-                    }
                 }
             }
             bool checkFlag = false;
