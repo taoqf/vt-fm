@@ -1533,8 +1533,6 @@ namespace Victop.Frame.Connection
             definition.Add("relation");
             definition.Add("clientRef");
             definition.Add("ref");
-            definition.Add("setting");
-            definition.Add("dummyRelation");
             if (dicContent.ContainsKey("modeldefinition"))
             {
                 dicContent["modeldefinition"] = definition;

@@ -34,6 +34,19 @@ namespace Victop.Frame.PublicLib.Helpers
             }
 
         }
+        public static T ToObject<T>(string jsonStr, int depthLength)
+        {
+            try
+            {
+                JsonSerializerSettings settings = new JsonSerializerSettings() { MaxDepth = depthLength };
+                T obj = JsonConvert.DeserializeObject<T>(jsonStr, settings);
+                return obj;
+            }
+            catch
+            {
+                return default(T);
+            }
+        }
         /// <summary>
         /// Json反序列化
         /// </summary>

@@ -18,6 +18,7 @@ namespace Victop.Frame.DataChannel
     using Victop.Frame.CoreLibrary.Enums;
     using Victop.Frame.CoreLibrary.Models;
     using Victop.Frame.DataChannel.Enums;
+    using Victop.Frame.DataChannel.MongoModel;
     using Victop.Frame.PublicLib.Helpers;
 
     /// <summary>
@@ -64,6 +65,8 @@ namespace Victop.Frame.DataChannel
                     channelData.JSONData = JsonData;
                     try
                     {
+                        channelData.ModelDefInfo = JsonHelper.ReadJsonObject<MongoModelInfoModel>(JsonHelper.ReadJsonString(JsonData, "docDataStore"), "model");
+                        channelData.SimpleRefInfo = JsonHelper.ReadJsonObject<MongoSimpleRefInfoModel>(JsonHelper.ReadJsonString(JsonData, "docDataStore"), "simpleRef");
                         //channelData.DataInfo = CreateDataSetByMongoJSON(JsonData);
                     }
                     catch (Exception ex)

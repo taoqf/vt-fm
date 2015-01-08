@@ -13,6 +13,7 @@ namespace Victop.Frame.DataChannel
     using System.Text;
     using Victop.Frame.CoreLibrary.Models;
     using Victop.Frame.CoreLibrary.Enums;
+    using Victop.Frame.DataChannel.MongoModel;
 
 	/// <summary>
 	/// 数据通道数据类
@@ -57,6 +58,22 @@ namespace Victop.Frame.DataChannel
         /// 调整的JSON数据信息
         /// </summary>
         public virtual List<object> CrudJSONData
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 模型定义信息
+        /// </summary>
+        public MongoModelInfoModel ModelDefInfo
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 简单引用信息
+        /// </summary>
+        public MongoSimpleRefInfoModel SimpleRefInfo
         {
             get;
             set;

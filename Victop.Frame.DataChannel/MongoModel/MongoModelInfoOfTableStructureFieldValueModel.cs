@@ -9,7 +9,7 @@ namespace Victop.Frame.DataChannel.MongoModel
     /// <summary>
     /// 表字段值实体
     /// </summary>
-    class MongoModelInfoOfTableStructureFieldValueModel
+    public class MongoModelInfoOfTableStructureFieldValueModel
     {
         /// <summary>
         /// 值类型

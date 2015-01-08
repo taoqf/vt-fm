@@ -12,6 +12,7 @@ using Victop.Frame.DataChannel.Enums;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Noesis.Javascript;
 
 namespace Victop.Frame.DataChannel
 {
@@ -287,72 +288,152 @@ namespace Victop.Frame.DataChannel
         /// <returns></returns>
         public static string GetDataByPath(string viewId, string dataPath)
         {
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
+
             DataOperation dataOp = new DataOperation();
             string JsonData = dataOp.GetJSONData(viewId);
             JsonData = JsonHelper.ReadJsonString(JsonData, "docDataStore");
             try
             {
-                List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
-                if (pathList != null)
+                #region Old代码
+                //                List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
+                //                if (pathList != null)
+                //                {
+                //                    for (int i = 0; i < pathList.Count; i++)
+                //                    {
+                //                        if (i % 2 == 0)
+                //                        {
+                //                            JsonData = JsonHelper.ReadJsonString(JsonData, pathList[i].ToString());
+                //                            if (i == pathList.Count - 1)
+                //                            {
+                //                                return JsonData;
+                //                            }
+                //                            JsonData = JsonHelper.ReadJsonString(JsonData, "dataArray");
+                //                        }
+                //                        else if (i % 2 == 1)
+                //                        {
+                //                            #region Js
+                ////                            using (JavascriptContext context = new JavascriptContext())
+                ////                            {
+                ////                                string paramWpf = string.Format("var tempArray={0};var path={1};", JsonData, pathList[i].ToString());
+                ////                                string paramScript = @"for (var j = 0; j < tempArray.length; j++) {
+                ////                                    for (var k in tempArray[j]) {
+                ////                                if (k === path['key'] && tempArray[j][k] === path['value']) 
+                ////                                {
+                ////                                    rowObj = tempArray[j];
+                ////                                }
+                ////                        }
+                ////                    }";
+                ////                                string script = paramWpf + paramScript;
+                ////                                context.Run(script);
+                ////                                JsonData = JsonHelper.ToJson(context.GetParameter("rowObj"));
+                ////                                if (i == pathList.Count - 1)
+                ////                                {
+                ////                                    return JsonData;
+                ////                                }
+                ////                            }
+                //                            #endregion
+                //                            #region C#
+                //                            Dictionary<string, string> pathDic = JsonHelper.ToObject<Dictionary<string, string>>(pathList[i].ToString());
+                //                            if (pathDic != null)
+                //                            {
+                //                                List<object> arrayList = JsonHelper.ToObject<List<object>>(JsonData);
+                //                                if (arrayList != null)
+                //                                {
+                //                                    foreach (object item in arrayList)
+                //                                    {
+                //                                        Dictionary<string, object> jsonDataDic = JsonHelper.ToObject<Dictionary<string, object>>(item.ToString());
+                //                                        if (jsonDataDic.ContainsKey(pathDic["key"]) && jsonDataDic[pathDic["key"]].ToString().Equals(pathDic["value"]))
+                //                                        {
+                //                                            JsonData = JsonHelper.ToJson(jsonDataDic);
+                //                                            if (i == pathList.Count - 1)
+                //                                            {
+                //                                                return JsonData;
+                //                                            }
+                //                                            break;
+                //                                        }
+                //                                    }
+                //                                }
+                //                            }
+                //                            #endregion
+                //                        }
+                //                    }
+                //                }
+                #endregion
+                #region JS代码
+                using (JavascriptContext context = new JavascriptContext())
                 {
-                    for (int i = 0; i < pathList.Count; i++)
-                    {
-                        if (i % 2 == 0)
-                        {
-                            JsonData = JsonHelper.ReadJsonString(JsonData, pathList[i].ToString());
-                            if (i == pathList.Count - 1)
-                            {
-                                return JsonData;
-                            }
-                            JsonData = JsonHelper.ReadJsonString(JsonData, "dataArray");
+                    string paramWpf = string.Format("var data={0};var path={1};", JsonData, dataPath);
+                    string paramScript = @"
+                        var result = (function (p_data, p_path) {
+                        if (!p_path || p_path.length === 0) {
+                        return null;
                         }
-                        else if (i % 2 == 1)
-                        {
-                            Dictionary<string, string> pathDic = JsonHelper.ToObject<Dictionary<string, string>>(pathList[i].ToString());
-                            if (pathDic != null)
-                            {
-                                List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonData);
-                                if (arrayList != null)
-                                {
-                                    Dictionary<string, object> jsonDataDic = arrayList.FirstOrDefault(it => it.ContainsKey(pathDic["key"]) && it[pathDic["key"]].ToString().Equals(pathDic["value"]));
-                                    if (jsonDataDic != null)
-                                    {
-                                        JsonData = JsonHelper.ToJson(jsonDataDic);
-                                        if (i == pathList.Count - 1)
-                                        {
-                                            return JsonData;
-                                        }
-                                    }
-                                    //for (int j = 0; j < arrayList.Count; j++)
-                                    //{
-                                    //    if (arrayList[j].ContainsKey(pathDic["key"]) && arrayList[j][pathDic["key"]].ToString().Equals(pathDic["value"]))
-                                    //    {
-                                    //        JsonData = JsonHelper.ToJson(arrayList[j]);
-                                    //        if (i == pathList.Count - 1)
-                                    //        {
-                                    //            return JsonData;
-                                    //        }
-                                    //        else
-                                    //        {
-                                    //            continue;
-                                    //        }
-                                    //    }
-                                    //}
-                                }
-                            }
-                        }
+                if (p_data) {
+                for (var i = 0; i < p_path.length; i++) {
+                if (i % 2 === 0) { //取对象根据对象返回dataArray(path偶数)
+                p_data = p_data[p_path[i]];
+                if (!p_data) {
+                    return null;
+                }
+                } else if (i % 2 === 1) { //取dataArray中node，即一行数据 (path奇数)
+                p_data = p_data.dataArray;
+                var key_val = p_path[i];
+                var bfind = false;
+                for (var j = p_data.length; j--;) {
+                    var p_item = p_data[j];
+                    if (key_val.key in p_item && key_val.value === p_item[key_val.key]) {
+                        p_data = p_item;
+                        bfind = true;
+                        break;
                     }
                 }
-                JsonData = string.Empty;
+                if (!bfind) {
+                    return null;
+                }
+                }
             }
-            finally
+        }
+        return p_data;
+        })(data, path);";
+                    string script = paramWpf + paramScript;
+                    context.Run(script);
+                    JsonData = JsonHelper.ToJson(context.GetParameter("result"));
+                    return JsonData;
+                }
+                #endregion
+            }
+            catch (Exception ex)
             {
-                watch.Stop();
-                LoggerHelper.InfoFormat("{0}GetDataByPath Time:{1}", dataPath, watch.ElapsedMilliseconds.ToString());
+                return string.Empty;
             }
-            return JsonData;
+        }
+        /// <summary>
+        /// 依据路径获取数据
+        /// </summary>
+        /// <param name="viewId"></param>
+        /// <param name="dataPath"></param>
+        /// <returns></returns>
+        public static object GetDataObjectByPath(string viewId, string dataPath)
+        {
+            DataOperation dataOp = new DataOperation();
+            string JsonData = dataOp.GetJSONData(viewId);
+            JsonData = JsonHelper.ReadJsonString(JsonData, "docDataStore");
+            try
+            {
+                #region JS代码
+                using (JavascriptContext context = new JavascriptContext())
+                {
+                    string paramWpf = string.Format("var data={0};var path={1};", JsonData, dataPath);
+                    string script = paramWpf + Properties.Resources.GetDataByPathScript;
+                    context.Run(script);
+                    return context.GetParameter("result");
+                }
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         /// <summary>

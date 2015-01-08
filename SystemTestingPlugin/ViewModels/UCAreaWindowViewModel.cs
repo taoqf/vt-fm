@@ -9,6 +9,7 @@ using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
+using System.Diagnostics;
 
 namespace SystemTestingPlugin.ViewModels
 {
@@ -156,7 +157,11 @@ namespace SystemTestingPlugin.ViewModels
                                 DataInfoModel.DataPath = JsonHelper.ToJson(pathList);
                             }
                             DataSet mastDs = new DataSet();
+                            Stopwatch watch = new Stopwatch();
+                            watch.Start();
                             mastDs = dataOp.GetData(DataInfoModel.ChannelId, DataInfoModel.DataPath);
+                            watch.Stop();
+                            VicMessageBoxNormal.Show(watch.ElapsedMilliseconds.ToString());
                             DataInfoModel.ResultDataTable = mastDs.Tables["dataArray"];
                         }
                     }

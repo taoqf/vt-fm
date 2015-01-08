@@ -11,6 +11,23 @@ namespace Victop.Frame.DataChannel.MongoModel
     /// </summary>
     public class MongoSimpleRefInfoModel
     {
-        
+        /// <summary>
+        /// 简单引用
+        /// </summary>
+        private List<MongoSimpleRefInfoOfArrayModel> simpleDataArray;
+        /// <summary>
+        /// 简单引用
+        /// </summary>
+        [JsonProperty(PropertyName = "dataArray")]
+        public List<MongoSimpleRefInfoOfArrayModel> SimpleDataArray
+        {
+            get
+            {
+                if (simpleDataArray == null)
+                    simpleDataArray = new List<MongoSimpleRefInfoOfArrayModel>();
+                return simpleDataArray;
+            }
+            set { simpleDataArray = value; }
+        }
     }
 }

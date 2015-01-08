@@ -14,17 +14,17 @@ namespace Victop.Frame.DataChannel.MongoModel
         /// <summary>
         /// 属性集合
         /// </summary>
-        private List<MongoSimpleRefInfoOfArrayModel> arrayProperty;
+        private List<MongoSimpleRefInfoOfArrayPropertyModel> arrayProperty;
         /// <summary>
         /// 属性集合
         /// </summary>
         [JsonProperty(PropertyName = "property")]
-        public List<MongoSimpleRefInfoOfArrayModel> ArrayProperty
+        public List<MongoSimpleRefInfoOfArrayPropertyModel> ArrayProperty
         {
             get
             {
                 if (arrayProperty == null)
-                    arrayProperty = new List<MongoSimpleRefInfoOfArrayModel>();
+                    arrayProperty = new List<MongoSimpleRefInfoOfArrayPropertyModel>();
                 return arrayProperty;
             }
             set { arrayProperty = value; }

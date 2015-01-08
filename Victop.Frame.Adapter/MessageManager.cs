@@ -216,6 +216,9 @@ namespace Victop.Frame.Adapter
                 case ReplyModeEnum.BREAK:
                     break;
                 case ReplyModeEnum.CAST:
+                    replyMessage.MessageId = message.MessageId;
+                    replyMessage.ReplyMode = (ReplyModeEnum)0;
+                    replyMessage.ReplyAlertMessage = "不可识别的消息类型";
                     break;
                 case ReplyModeEnum.ROUTER:
                     break;

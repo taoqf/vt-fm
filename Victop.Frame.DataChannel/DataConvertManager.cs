@@ -45,29 +45,34 @@ namespace Victop.Frame.DataChannel
             DataSet newDs = structDs == null ? new DataSet() : structDs.Copy();
             newDs.Clear();
             List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
-            string modelData = DataTool.GetDataByPath(viewId, "[\"model\"]");
-            string simpleRefData = DataTool.GetDataByPath(viewId, "[\"simpleRef\"]");
-            string jsonData = DataTool.GetDataByPath(viewId, dataPath);
-            if (!string.IsNullOrEmpty(jsonData))
+            #region 获取模型定义及简单引用
+            DataChannelManager dataChannelManager = new DataChannelManager();
+            Hashtable hashData = dataChannelManager.GetData(viewId);
+            ChannelData channelData = hashData["Data"] as ChannelData;
+            MongoModelInfoModel modelDefInfo = channelData.ModelDefInfo;
+            MongoSimpleRefInfoModel simpleRefInfo = channelData.SimpleRefInfo; 
+            #endregion
+            object jsonData = DataTool.GetDataObjectByPath(viewId, dataPath);
+            if (jsonData!=null)
             {
-                Dictionary<string, object> jsonDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
+                Dictionary<string, object> jsonDic = (Dictionary<string, object>)jsonData;
                 if (pathList.Count % 2 == 1)//获取表数据
                 {
                     #region 组织表数据
-                    OriginzeDataOfTable(newDs, pathList, modelData, simpleRefData, jsonDic, viewId, dataPath);
+                    OriginzeDataOfTable(newDs, pathList, modelDefInfo, simpleRefInfo, jsonDic, viewId, dataPath);
                     #endregion
                 }
                 else//获取行数据
                 {
                     #region 组织行数据
-                    OriginzieDataOfRow(newDs, pathList, modelData,simpleRefData, jsonDic, viewId);
+                    OriginzieDataOfRow(newDs, pathList, modelDefInfo, simpleRefInfo, jsonDic, viewId);
                     #endregion
                 }
             }
             else
             {
                 DataTable itemDt = new DataTable("dataArray");
-                itemDt = GetDataTableStructByModel(modelData,simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
+                itemDt = GetDataTableStructByModel(modelDefInfo, simpleRefInfo, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                 itemDt.AcceptChanges();
                 if (!newDs.Tables.Contains("dataArray"))
                 {
@@ -178,12 +183,12 @@ namespace Victop.Frame.DataChannel
         /// <param name="pathList"></param>
         /// <param name="modelData"></param>
         /// <param name="jsonDic"></param>
-        private void OriginzieDataOfRow(DataSet newDs, List<object> pathList, string modelData,string simpleRefData, Dictionary<string, object> jsonDic, string viewId)
+        private void OriginzieDataOfRow(DataSet newDs, List<object> pathList, MongoModelInfoModel modelData, MongoSimpleRefInfoModel simpleRefData, Dictionary<string, object> jsonDic, string viewId)
         {
             DataTable itemDt = new DataTable("dataArray");
-            if (!string.IsNullOrEmpty(modelData))
+            if (modelData != null)
             {
-                itemDt = GetDataTableStructByModel(modelData,simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, JsonHelper.ToJson(pathList));
+                itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, JsonHelper.ToJson(pathList));
             }
             if (itemDt.Columns.Count <= 0)
             {
@@ -254,7 +259,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="pathList"></param>
         /// <param name="modelData"></param>
         /// <param name="jsonDic"></param>
-        private void OriginzeDataOfTable(DataSet newDs, List<object> pathList, string modelData, string simpleRefData, Dictionary<string, object> jsonDic, string viewId, string dataPath)
+        private void OriginzeDataOfTable(DataSet newDs, List<object> pathList, MongoModelInfoModel modelData, MongoSimpleRefInfoModel simpleRefData, Dictionary<string, object> jsonDic, string viewId, string dataPath)
         {
             foreach (string item in jsonDic.Keys)
             {
@@ -263,11 +268,12 @@ namespace Victop.Frame.DataChannel
                 switch (jsonDic[item].GetType().Name)
                 {
                     case "JArray":
-                        List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonDic[item].ToString());
+                    case "Object[]":
+                        List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ToJson(jsonDic[item]));
                         itemDt = new DataTable(item);
-                        if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
+                        if (modelData!=null && item.Equals("dataArray"))
                         {
-                            itemDt = GetDataTableStructByModel(modelData, simpleRefData,pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
+                            itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                         }
                         if (itemDt.Columns.Count <= 0)
                         {
@@ -328,8 +334,9 @@ namespace Victop.Frame.DataChannel
                         }
                         break;
                     case "JObject":
+                    case "Object":
                         Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
-                        if (!string.IsNullOrEmpty(modelData) && item.Equals("dataArray"))
+                        if (modelData!=null && item.Equals("dataArray"))
                         {
                             itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("string") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                         }
@@ -420,38 +427,24 @@ namespace Victop.Frame.DataChannel
         /// <param name="modelJson"></param>
         /// <param name="tableName"></param>
         /// <returns></returns>
-        private DataTable GetDataTableStructByModel(string modelJson, string simpleRefJson,string tableName, string viewId, string dataPath)
+        private DataTable GetDataTableStructByModel(MongoModelInfoModel modelDefInfo, MongoSimpleRefInfoModel simpleRefInfo, string tableName, string viewId, string dataPath)
         {
             DataTable newDt = new DataTable("dataArray");
-            if (!string.IsNullOrEmpty(modelJson))
+            if (modelDefInfo != null)
             {
-                List<Dictionary<string, object>> newtableList = new List<Dictionary<string, object>>();
-                List<Dictionary<string, object>> tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "tables"));
-                List<Dictionary<string, object>> clientrefList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "clientRef"));
-                List<Dictionary<string, object>> refList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(modelJson, "ref"));
-                List<Dictionary<string, object>> settingList = new List<Dictionary<string, object>>();
-                List<Dictionary<string, object>> simpleRefList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(simpleRefJson, "dataArray"));
-                string settingStr = JsonHelper.ReadJsonString(modelJson, "setting");
-                if (!string.IsNullOrEmpty(settingStr))
+                MongoModelInfoOfTablesModel modelInfoOfTableInfo = null;
+                if (modelDefInfo.ModelTables != null && modelDefInfo.ModelTables.Count > 0)
                 {
-                    settingStr = JsonHelper.ReadJsonString(settingStr, "fieldSetting");
-                    settingList = JsonHelper.ToObject<List<Dictionary<string, object>>>(settingStr);
-                }
-                if (tableList != null && tableList.Count > 0)
-                {
-                    Dictionary<string, object> tableListDic = tableList.Find(it => it["name"].ToString().Equals(tableName));
-                    if (tableListDic != null)
+                    modelInfoOfTableInfo = modelDefInfo.ModelTables.FirstOrDefault(it => it.TableName.Equals(tableName));
+                    if (modelInfoOfTableInfo != null)
                     {
-                        tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(tableList.Find(it => it["name"].ToString().Equals(tableName))["structure"].ToString());
-                        BuildColumnsOfDataTable(tableName, newDt, tableList, clientrefList, refList, simpleRefList, viewId, dataPath);
+                        BuildColumnsOfDataTable(tableName, newDt, modelInfoOfTableInfo.TableStructure, modelDefInfo, simpleRefInfo, viewId, dataPath);
                     }
                     else
                     {
-                        foreach (Dictionary<string, object> item in tableList)
+                        foreach (MongoModelInfoOfTablesModel item in modelDefInfo.ModelTables)
                         {
-                            newtableList.Clear();
-                            newtableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(item["structure"].ToString());
-                            BuildColumnsOfDataTable(tableName, newDt, newtableList, clientrefList, refList, simpleRefList, viewId, dataPath, false);
+                            BuildColumnsOfDataTable(tableName, newDt, item.TableStructure, modelDefInfo, simpleRefInfo, viewId, dataPath, false);
                         }
                     }
 
@@ -469,29 +462,37 @@ namespace Victop.Frame.DataChannel
         /// <param name="viewId"></param>
         /// <param name="dataPath"></param>
         /// <param name="masterFlag"></param>
-        private void BuildColumnsOfDataTable(string tableName, DataTable newDt, List<Dictionary<string, object>> tableList, List<Dictionary<string, object>> clientrefList, List<Dictionary<string, object>> refList, List<Dictionary<string, object>> simpleRefList, string viewId, string dataPath, bool masterFlag = true)
+        private void BuildColumnsOfDataTable(string tableName, DataTable newDt, List<MongoModelInfoOfTableStructureModel> tableList, MongoModelInfoModel modelDefInfo, MongoSimpleRefInfoModel simpleRefList, string viewId, string dataPath, bool masterFlag = true)
         {
+            List<object> dataPathList = JsonHelper.ToObject<List<object>>(dataPath);
             #region 组织table中字段
-            foreach (Dictionary<string, object> item in tableList)
+            foreach (MongoModelInfoOfTableStructureModel item in tableList)
             {
                 string tablePath = string.Format("{0}.dataArray.", tableName);
-                if (item["key"].ToString().Contains(tablePath))
+                if (item.FieldKey.Contains(tablePath))
                 {
-                    int index = item["key"].ToString().IndexOf(tablePath);
-                    string tableFieldStr = item["key"].ToString().Substring(index + tablePath.Length);
+                    int index = item.FieldKey.ToString().IndexOf(tablePath);
+                    string tableFieldStr = item.FieldKey.ToString().Substring(index + tablePath.Length);
                     if (tableFieldStr.Contains("."))
                     {
                         continue;
                     }
-                    int keyIndex = item["key"].ToString().LastIndexOf('.');
-                    string keyStr = item["key"].ToString().Substring(keyIndex + 1);
-                    if (item.ContainsKey("value"))
+                    int keyIndex = item.FieldKey.ToString().LastIndexOf('.');
+                    string keyStr = item.FieldKey.ToString().Substring(keyIndex + 1);
+                    if (item.FieldValue != null)
                     {
-                        string selectFlag = JsonHelper.ReadJsonString(item["value"].ToString(), "selectFlag");
-                        if (string.IsNullOrEmpty(selectFlag) || (!string.IsNullOrEmpty(selectFlag) && selectFlag.Equals("1")))
+                        if (item.FieldValue.ValueSelectFlag == 1)
                         {
                             DataColumn dc = new DataColumn(keyStr);
-                            switch (JsonHelper.ReadJsonString(item["value"].ToString(), "type"))
+                            if (modelDefInfo.ModelClientRef != null)
+                            {
+                                MongoModelInfoOfClientRefModel clientRefModel = modelDefInfo.ModelClientRef.FirstOrDefault(it => (it.ClientRefField.Equals(string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), item.FieldKey))));
+                                if (clientRefModel != null)
+                                {
+                                    dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefModel));
+                                }
+                            }
+                            switch (item.FieldValue.ValueType)
                             {
                                 case "int":
                                     dc.DataType = typeof(Int32);
@@ -522,10 +523,6 @@ namespace Victop.Frame.DataChannel
                                     dc.DataType = typeof(String);
                                     dc.ExtendedProperties.Add("ColType", "string");
                                     break;
-                            }
-                            if (!string.IsNullOrEmpty(JsonHelper.ReadJsonString(item["value"].ToString(), "label")))
-                            {
-                                dc.Caption = JsonHelper.ReadJsonString(item["value"].ToString(), "label");
                             }
                             if (!newDt.Columns.Contains(dc.ColumnName))
                             {
@@ -536,23 +533,22 @@ namespace Victop.Frame.DataChannel
                 }
                 else
                 {
-                    if (!masterFlag || item["key"].ToString().Contains('.'))
+                    if (!masterFlag || item.FieldKey.Contains('.'))
                         continue;
-                    if (item.ContainsKey("value"))
+                    if (item.FieldValue != null)
                     {
-                        string selectFlag = JsonHelper.ReadJsonString(item["value"].ToString(), "selectFlag");
-                        if (string.IsNullOrEmpty(selectFlag) || (!string.IsNullOrEmpty(selectFlag) && selectFlag.Equals("1")))
+                        if (item.FieldValue.ValueSelectFlag == 1)
                         {
-                            DataColumn dc = new DataColumn(item["key"].ToString());
-                            if (clientrefList != null)
+                            DataColumn dc = new DataColumn(item.FieldKey);
+                            if (modelDefInfo.ModelClientRef != null)
                             {
-                                Dictionary<string, object> refDic = clientrefList.Find(it => (it.ContainsKey("field") && it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, item["key"].ToString()))) || (it.ContainsKey("refField") && it["refField"].ToString().Equals(string.Format("{0}.{1}", tableName, item["key"].ToString()))));
-                                if (refDic != null)
+                                MongoModelInfoOfClientRefModel clientRefModel = modelDefInfo.ModelClientRef.FirstOrDefault(it => (it.ClientRefField.Equals(string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), item.FieldKey))));
+                                if (clientRefModel != null)
                                 {
-                                    dc.ExtendedProperties.Add("DataReference", refDic);
+                                    dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefModel));
                                 }
                             }
-                            switch (JsonHelper.ReadJsonString(item["value"].ToString(), "type"))
+                            switch (item.FieldValue.ValueType)
                             {
                                 case "int":
                                     dc.DataType = typeof(Int32);
@@ -584,11 +580,7 @@ namespace Victop.Frame.DataChannel
                                     dc.ExtendedProperties.Add("ColType", "string");
                                     break;
                             }
-                            if (!string.IsNullOrEmpty(JsonHelper.ReadJsonString(item["value"].ToString(), "label")))
-                            {
-                                dc.Caption = JsonHelper.ReadJsonString(item["value"].ToString(), "label");
-                            }
-                            DataSet ds = GetSimpleRef(simpleRefList, dataPath, item["key"].ToString(), null);
+                            DataSet ds = GetSimpleRef(simpleRefList, dataPath, item.FieldKey, null);
                             if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
                             {
                                 dc.ExtendedProperties.Add("ComboBox", ds.Tables["dataArray"]);
@@ -603,33 +595,33 @@ namespace Victop.Frame.DataChannel
             }
             #endregion
             #region 组织ref中字段
-            if (refList != null && refList.Count > 0)
+            if (modelDefInfo.ModelRef != null && modelDefInfo.ModelRef.Count > 0)
             {
-                foreach (Dictionary<string, object> item in refList)
+                foreach (MongoModelInfoOfRefModel item in modelDefInfo.ModelRef)
                 {
-                    if (item.ContainsKey("view") && item["view"] != null)
+                    if (item.RefView != null)
                     {
-                        List<RefViewModel> refViewList = JsonHelper.ToObject<List<RefViewModel>>(item["view"].ToString());
-                        foreach (RefViewModel refitem in refViewList)
+                        foreach (MongoModelInfoOfRefConditionContentModel refitem in item.RefView)
                         {
-                            if (refitem.left.StartsWith(tableName))
+                            if (refitem.ContentLeft.StartsWith(tableName))
                             {
-                                string leftStr = refitem.left.Substring(refitem.left.IndexOf('.') + 1);
+                                string leftStr = refitem.ContentLeft.Substring(refitem.ContentLeft.IndexOf('.') + 1);
                                 if (newDt.Columns.Contains(leftStr))
                                     continue;
                                 DataColumn dc = new DataColumn(leftStr);
-                                if (clientrefList != null)
+                                if (modelDefInfo.ModelClientRef != null)
                                 {
-                                    Dictionary<string, object> refDic = clientrefList.Find(it => (it.ContainsKey("field") && it["field"].ToString().Equals(string.Format("{0}.{1}", tableName, leftStr))) || (it.ContainsKey("refField") && it["refField"].ToString().Equals(string.Format("{0}.{1}", tableName, leftStr))));
-                                    if (refDic != null)
+                                    MongoModelInfoOfClientRefModel clientRefInfo = modelDefInfo.ModelClientRef.Find(it => (
+                                    it.ClientRefField.Equals(string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), leftStr))));
+                                    if (clientRefInfo != null)
                                     {
-                                        dc.ExtendedProperties.Add("DataReference", refDic);
+                                        dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefInfo));
                                     }
                                 }
                                 dc.ExtendedProperties.Add("ColType", "ref");
-                                if (!string.IsNullOrEmpty(refitem.type))
+                                if (!string.IsNullOrEmpty(refitem.ContentType))
                                 {
-                                    switch (refitem.type)
+                                    switch (refitem.ContentType)
                                     {
                                         case "int":
                                             dc.DataType = typeof(Int32);
@@ -694,22 +686,20 @@ namespace Victop.Frame.DataChannel
             constructPath += "[" + target + ":" + columnPath + "]." + targetValue;
             #endregion
             #region 获取简单引用定义
-            string jsonData = DataTool.GetDataByPath(viewId, "[\"simpleRef\"]");
-            if (!string.IsNullOrEmpty(jsonData))
+            DataChannelManager dataChannelManager = new DataChannelManager();
+            Hashtable hashData = dataChannelManager.GetData(viewId);
+            ChannelData channelData = hashData["Data"] as ChannelData;
+            MongoSimpleRefInfoModel simpleRefInfo = channelData.SimpleRefInfo; 
+            if (simpleRefInfo != null)
             {
-                string dataArrayJson = JsonHelper.ReadJsonString(jsonData, "dataArray");
-                foreach (Dictionary<string, object> item in JsonHelper.ToObject<List<Dictionary<string, object>>>(dataArrayJson))
+                foreach (MongoSimpleRefInfoOfArrayModel item in simpleRefInfo.SimpleDataArray)
                 {
-                    if (item.ContainsKey("property") && item.ContainsKey("valueList"))
-                    {
-                        List<SimRefPropertyModel> propertyModelList = JsonHelper.ToObject<List<SimRefPropertyModel>>(item["property"].ToString());
-                        SimRefPropertyModel propertyModel = propertyModelList.FirstOrDefault(it => it.key.Equals(constructPath));
-                        if (propertyModel == null)
-                            break;
-                        DataTable dt = GetDataByConsturctPath(propertyModel.value, propertyModel.value, item["valueList"].ToString(), dependDic);
-                        ds.Tables.Add(dt);
+                    MongoSimpleRefInfoOfArrayPropertyModel propertyModel = item.ArrayProperty.FirstOrDefault(it => it.PropertyKey.Equals(constructPath));
+                    if (propertyModel == null)
                         break;
-                    }
+                    DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, dependDic);
+                    ds.Tables.Add(dt);
+                    break;
                 }
             }
             #endregion
@@ -720,7 +710,7 @@ namespace Victop.Frame.DataChannel
         /// 获取简单引用数据
         /// </summary>
         /// <param name="viewId"></param>
-        private DataSet GetSimpleRef(List<Dictionary<string,object>> simpleRefList, string dataPath, string columnPath, Dictionary<string, object> dependDic)
+        private DataSet GetSimpleRef(MongoSimpleRefInfoModel simpleRefList, string dataPath, string columnPath, Dictionary<string, object> dependDic)
         {
             DataSet ds = new DataSet();
             string constructPath = string.Empty;
@@ -745,69 +735,16 @@ namespace Victop.Frame.DataChannel
             #endregion
             #region 获取简单引用定义
 
-            if (simpleRefList!=null)
+            if (simpleRefList != null)
             {
-                foreach (Dictionary<string, object> item in simpleRefList)
+                foreach (MongoSimpleRefInfoOfArrayModel item in simpleRefList.SimpleDataArray)
                 {
-                    if (item.ContainsKey("property") && item.ContainsKey("valueList"))
-                    {
-                        List<SimRefPropertyModel> propertyModelList = JsonHelper.ToObject<List<SimRefPropertyModel>>(item["property"].ToString());
-                        SimRefPropertyModel propertyModel = propertyModelList.FirstOrDefault(it => it.key.Equals(constructPath));
-                        if (propertyModel == null)
-                            break;
-                        DataTable dt = GetDataByConsturctPath(propertyModel.value, propertyModel.value, item["valueList"].ToString(), dependDic);
-                        ds.Tables.Add(dt);
+                    MongoSimpleRefInfoOfArrayPropertyModel propertyModel = item.ArrayProperty.FirstOrDefault(it => it.PropertyKey.Equals(constructPath));
+                    if (propertyModel == null)
                         break;
-                    }
-                } 
-            }
-            #endregion
-            return ds;
-        }
-        /// <summary>
-        /// 获取简单引用数据
-        /// </summary>
-        /// <param name="viewId"></param>
-        public DataSet GetSimpleRef(string viewId, string dataPath, string columnPath, Dictionary<string, object> dependDic)
-        {
-            DataSet ds = new DataSet();
-            string constructPath = string.Empty;
-            #region 构建结构Path
-            List<object> pathList = JsonHelper.ToObject<List<Object>>(dataPath);
-            for (int i = 0; i < pathList.Count; i++)
-            {
-                if (pathList[i].GetType().Name.Equals("String"))
-                {
-                    constructPath += pathList[i].ToString() + ".";
-                    if (i == pathList.Count - 1)
-                    {
-                        constructPath += "dataArray.";
-                    }
-                }
-                else
-                {
-                    constructPath += "dataArray.";
-                }
-            }
-            constructPath += columnPath;
-            #endregion
-            #region 获取简单引用定义
-            string jsonData = DataTool.GetDataByPath(viewId, "[\"simpleRef\"]");
-            if (!string.IsNullOrEmpty(jsonData))
-            {
-                string dataArrayJson = JsonHelper.ReadJsonString(jsonData, "dataArray");
-                foreach (Dictionary<string, object> item in JsonHelper.ToObject<List<Dictionary<string, object>>>(dataArrayJson))
-                {
-                    if (item.ContainsKey("property") && item.ContainsKey("valueList"))
-                    {
-                        List<SimRefPropertyModel> propertyModelList = JsonHelper.ToObject<List<SimRefPropertyModel>>(item["property"].ToString());
-                        SimRefPropertyModel propertyModel = propertyModelList.FirstOrDefault(it => it.key.Equals(constructPath));
-                        if (propertyModel == null)
-                            break;
-                        DataTable dt = GetDataByConsturctPath(propertyModel.value, propertyModel.value, item["valueList"].ToString(), dependDic);
-                        ds.Tables.Add(dt);
-                        break;
-                    }
+                    DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, dependDic);
+                    ds.Tables.Add(dt);
+                    break;
                 }
             }
             #endregion
@@ -821,7 +758,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="jsonData"></param>
         /// <param name="dependDic"></param>
         /// <returns></returns>
-        private DataTable GetDataByConsturctPath(string constructPath, string valuePath, string jsonData, Dictionary<string, object> dependDic)
+        private DataTable GetDataByConsturctPath(string constructPath, string valuePath, Dictionary<string, object> jsonDataDic, Dictionary<string, object> dependDic)
         {
             DataTable dt = new DataTable("dataArray");
             dt.Columns.Add("txt");
@@ -838,7 +775,7 @@ namespace Victop.Frame.DataChannel
                 }
             }
             valuePath = valuePath.Substring(0, valuePath.LastIndexOf('.'));
-            jsonData = GetSimpeRefJsonData(jsonData, valuePath);
+            string jsonData = GetSimpeRefJsonData(jsonDataDic, valuePath);
             List<Dictionary<string, object>> valueList = new List<Dictionary<string, object>>();
             valueList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ReadJsonString(jsonData, "dataArray"));
             if (valueList == null)
@@ -863,7 +800,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="jsonData"></param>
         /// <param name="dataPath"></param>
         /// <returns></returns>
-        private string GetSimpeRefJsonData(string jsonData, string dataPath)
+        private string GetSimpeRefJsonData(Dictionary<string, object> jsonDataDic, string dataPath)
         {
             try
             {
@@ -871,7 +808,7 @@ namespace Victop.Frame.DataChannel
                 {
                     dataPath = dataPath.Remove(dataPath.LastIndexOf("dataArray") - 1);
                 }
-                jsonData = JsonHelper.ReadJsonString(jsonData, "dataArray");
+                string jsonData = jsonDataDic["dataArray"].ToString();
                 List<Dictionary<string, object>> valueList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
                 string[] pathList = dataPath.Split('.');
                 if (pathList != null)
@@ -927,7 +864,7 @@ namespace Victop.Frame.DataChannel
             }
             catch (Exception ex)
             {
-                return jsonData;
+                return string.Empty;
             }
         }
 
@@ -1163,7 +1100,7 @@ namespace Victop.Frame.DataChannel
             {
                 return string.Empty;
             }
-            
+
         }
     }
 

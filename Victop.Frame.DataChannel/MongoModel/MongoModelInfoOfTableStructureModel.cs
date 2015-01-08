@@ -32,7 +32,7 @@ namespace Victop.Frame.DataChannel.MongoModel
         /// 字段值
         /// </summary>
         [JsonProperty(PropertyName="value")]
-        internal MongoModelInfoOfTableStructureFieldValueModel FieldValue
+        public MongoModelInfoOfTableStructureFieldValueModel FieldValue
         {
             get
             {
