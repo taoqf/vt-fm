@@ -26,6 +26,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Media;
 using System.Drawing;
+using Victop.Frame.DataChannel;
 
 
 namespace PortalFramePlugin.ViewModels

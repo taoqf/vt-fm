@@ -11,6 +11,7 @@ namespace Victop.Frame.DataChannel
     using System.Data;
     using Victop.Frame.CoreLibrary;
     using Victop.Frame.CoreLibrary.Models;
+    using Victop.Frame.DataChannel.Models;
 
     /// <summary>
     /// 数据操作

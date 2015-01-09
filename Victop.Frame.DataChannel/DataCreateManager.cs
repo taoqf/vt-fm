@@ -18,6 +18,7 @@ namespace Victop.Frame.DataChannel
     using Victop.Frame.CoreLibrary.Enums;
     using Victop.Frame.CoreLibrary.Models;
     using Victop.Frame.DataChannel.Enums;
+    using Victop.Frame.DataChannel.Models;
     using Victop.Frame.DataChannel.MongoModel;
     using Victop.Frame.PublicLib.Helpers;
 

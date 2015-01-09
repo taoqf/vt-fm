@@ -4,7 +4,7 @@
 //     如果重新生成代码，将丢失对此文件所做的更改。
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Victop.Frame.DataChannel
+namespace Victop.Frame.DataChannel.Models
 {
     using System;
     using System.Collections.Generic;

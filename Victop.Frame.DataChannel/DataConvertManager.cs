@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Victop.Frame.DataChannel.Enums;
+using Victop.Frame.DataChannel.Models;
 using Victop.Frame.DataChannel.MongoModel;
 using Victop.Frame.PublicLib.Helpers;
 
@@ -319,7 +320,7 @@ namespace Victop.Frame.DataChannel
                                                     break;
                                                 case "date":
                                                 default:
-                                                    if (string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()))
+                                                    if (string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()))
                                                     {
                                                         arrayDr[dtCol.ColumnName] = DBNull.Value;
                                                     }
@@ -1161,11 +1162,5 @@ namespace Victop.Frame.DataChannel
             }
 
         }
-    }
-
-    internal class JsonMapKey
-    {
-        internal string ViewId { get; set; }
-        internal string DataPath { get; set; }
     }
 }

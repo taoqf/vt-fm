@@ -72,7 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChannelData.cs" />
+    <Compile Include="Models\ChannelData.cs" />
     <Compile Include="DataChannelManager.cs" />
     <Compile Include="DataConvertManager.cs" />
     <Compile Include="DataCreateManager.cs" />
@@ -80,6 +80,7 @@
     <Compile Include="DataTool.cs" />
     <Compile Include="Enums\OpreateStateEnum.cs" />
     <Compile Include="Enums\SOADataTypeEnum.cs" />
+    <Compile Include="Models\JsonMapKey.cs" />
     <Compile Include="MongoModel\MongoModelInfoModel.cs" />
     <Compile Include="MongoModel\MongoModelInfoOfClientRefConditionModel.cs" />
     <Compile Include="MongoModel\MongoModelInfoOfClientRefModel.cs" />
