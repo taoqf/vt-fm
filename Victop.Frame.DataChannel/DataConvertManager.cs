@@ -289,7 +289,7 @@ namespace Victop.Frame.DataChannel
                             }
                             foreach (Dictionary<string, object> rowItem in arrayList)
                             {
-                                if (string.IsNullOrEmpty(rowItem["_id"].ToString()))
+                                if (rowItem.ContainsKey("_id") && string.IsNullOrEmpty(rowItem["_id"].ToString()))
                                 {
                                     continue;
                                 }
@@ -750,7 +750,7 @@ namespace Victop.Frame.DataChannel
             Hashtable hashData = dataChannelManager.GetData(viewId);
             ChannelData channelData = hashData["Data"] as ChannelData;
             MongoSimpleRefInfoModel simpleRefInfo = channelData.SimpleRefInfo;
-            if (simpleRefInfo!=null)
+            if (simpleRefInfo != null)
             {
                 foreach (MongoSimpleRefInfoOfArrayModel item in simpleRefInfo.SimpleDataArray)
                 {
