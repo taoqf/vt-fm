@@ -52,10 +52,10 @@ namespace Victop.Frame.DataChannel
             MongoModelInfoModel modelDefInfo = channelData.ModelDefInfo;
             MongoSimpleRefInfoModel simpleRefInfo = channelData.SimpleRefInfo;
             #endregion
-            object jsonData = DataTool.GetDataObjectByPath(viewId, dataPath);
+            string jsonData = DataTool.GetDataObjectByPath(viewId, dataPath);
             if (jsonData != null)
             {
-                Dictionary<string, object> jsonDic = (Dictionary<string, object>)jsonData;
+                Dictionary<string, object> jsonDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
                 if (pathList.Count % 2 == 1)//获取表数据
                 {
                     #region 组织表数据
@@ -105,7 +105,7 @@ namespace Victop.Frame.DataChannel
         /// <returns></returns>
         public string GetJsonData(string viewId, string dataPath)
         {
-            return DataTool.GetDataByPath(viewId, dataPath);
+            return DataTool.GetDataObjectByPath(viewId, dataPath);
         }
 
         private static void UpdateDataTableRow(DataTable itemDt, Dictionary<string, object> rowItem)
@@ -1139,7 +1139,7 @@ namespace Victop.Frame.DataChannel
         /// <returns></returns>
         public string GetModelRelation(string viewId)
         {
-            string modelData = DataTool.GetDataByPath(viewId, "[\"model\"]");
+            string modelData = DataTool.GetDataObjectByPath(viewId, "[\"model\"]");
             if (!string.IsNullOrEmpty(modelData))
             {
                 return JsonHelper.ReadJsonString(modelData, "relation");
