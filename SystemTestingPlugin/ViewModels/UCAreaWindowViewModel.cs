@@ -132,6 +132,7 @@ namespace SystemTestingPlugin.ViewModels
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("systemid", DataInfoModel.SystemId);
                         contentDic.Add("configsystemid", DataInfoModel.ConfigsystemId);
+                        contentDic.Add("emptydataflag", DataInfoModel.EmptyFlag ? 0 : 1);
                         contentDic.Add("modelid", DataInfoModel.ModelId);
                         if (!string.IsNullOrEmpty(DataInfoModel.SpaceId))
                         {

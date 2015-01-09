@@ -8,7 +8,7 @@
              xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              xmlns:local="clr-namespace:SystemTestingPlugin.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="645" d:DesignWidth="876" Name="UCMain">
+             d:DesignHeight="645" d:DesignWidth="900" Name="UCMain">
     <UserControl.Resources>
         <vm:UCAreaWindowViewModel x:Key="areaViewModel"/>
     </UserControl.Resources>
@@ -17,10 +17,10 @@
             <ctrl:VicGroupBoxNormal Header="数据查询" MaxHeight="400" MinHeight="200">
                 <ctrl:VicGridNormal>
                     <ctrl:VicGridNormal.RowDefinitions>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </ctrl:VicGridNormal.RowDefinitions>
-                    <ctrl:VicDockPanelNormal Grid.Row="0">
+                    <ctrl:VicWrapPanelNormal Grid.Row="0">
                         <ctrl:VicLabelNormal>ModelId:</ctrl:VicLabelNormal>
                         <ctrl:VicTextBoxNormal Width="200" Height="24" Name="tBoxModelId" VicText="{Binding DataInfoModel.ModelId}"/>
                         <ctrl:VicLabelNormal>SystemId:</ctrl:VicLabelNormal>
@@ -31,10 +31,11 @@
                         <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxSpaceId" VicText="{Binding DataInfoModel.SpaceId}"/>
                         <ctrl:VicLabelNormal>TableName:</ctrl:VicLabelNormal>
                         <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxTableName" VicText="{Binding DataInfoModel.TableName}"/>
+                        <ctrl:VicCheckBoxNormal  Name="cBoxEmpty" Content="数据" IsChecked="{Binding DataInfoModel.EmptyFlag}"/>
                         <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSearch" Content="查询" Command="{Binding btnSearchClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
                         <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewJsonData" Content="查看Json数据" Command="{Binding btnViewJsonDataClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
                         <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding DataInfoModel.VertifyMsg}"/>
-                    </ctrl:VicDockPanelNormal>
+                    </ctrl:VicWrapPanelNormal>
                     <ctrl:VicTabControlNormal Grid.Row="1">
                         <ctrl:VicTabItemNormal Header="查询条件" AllowDelete="False">
                             <ctrl:VicRichTextBoxNormal Name="rTBoxCondition" VicText="{Binding DataInfoModel.ConditionStr,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>

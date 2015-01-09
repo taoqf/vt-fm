@@ -186,5 +186,16 @@ namespace SystemTestingPlugin.Models
                 }
             }
         }
+        private bool emptyFlag = true;
+
+        public bool EmptyFlag
+        {
+            get { return emptyFlag; }
+            set
+            {
+                emptyFlag = value;
+                RaisePropertyChanged("EmptyFlag");
+            }
+        }
     }
 }
