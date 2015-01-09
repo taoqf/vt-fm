@@ -89,6 +89,19 @@ namespace Victop.Frame.DataChannel
             return convertManager.GetSimpleRef(channelId, dataPath, columnName, target, targetValue, dependDic);
         }
         /// <summary>
+        /// 获取简单引用数据
+        /// </summary>
+        /// <param name="channelId"></param>
+        /// <param name="dataPath"></param>
+        /// <param name="columnName"></param>
+        /// <param name="dependValue"></param>
+        /// <returns></returns>
+        public virtual DataSet GetSimpDefData(string channelId, string dataPath, string columnName, Dictionary<string, object> dependDic = null)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.GetSimpleRef(channelId, dataPath, columnName, dependDic);
+        }
+        /// <summary>
         /// 根据通道号获取curdJSON数据
         /// </summary>
         /// <param name="channelId"></param>
@@ -141,6 +154,7 @@ namespace Victop.Frame.DataChannel
             foreach (string item in pluginInfoDic.Keys)
             {
                 ActivePluginInfo pluginInfo = pluginInfoDic[item];
+                
                 Dictionary<string, object> pluginDict = new Dictionary<string, object>();
                 pluginDict.Add("AppId", pluginInfo.AppId);
                 pluginDict.Add("IPlugin", pluginInfo.PluginInstance);

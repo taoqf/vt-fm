@@ -50,10 +50,10 @@ namespace Victop.Frame.DataChannel
             Hashtable hashData = dataChannelManager.GetData(viewId);
             ChannelData channelData = hashData["Data"] as ChannelData;
             MongoModelInfoModel modelDefInfo = channelData.ModelDefInfo;
-            MongoSimpleRefInfoModel simpleRefInfo = channelData.SimpleRefInfo; 
+            MongoSimpleRefInfoModel simpleRefInfo = channelData.SimpleRefInfo;
             #endregion
             object jsonData = DataTool.GetDataObjectByPath(viewId, dataPath);
-            if (jsonData!=null)
+            if (jsonData != null)
             {
                 Dictionary<string, object> jsonDic = (Dictionary<string, object>)jsonData;
                 if (pathList.Count % 2 == 1)//获取表数据
@@ -271,7 +271,7 @@ namespace Victop.Frame.DataChannel
                     case "Object[]":
                         List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ToJson(jsonDic[item]));
                         itemDt = new DataTable(item);
-                        if (modelData!=null && item.Equals("dataArray"))
+                        if (modelData != null && item.Equals("dataArray"))
                         {
                             itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                         }
@@ -336,7 +336,7 @@ namespace Victop.Frame.DataChannel
                     case "JObject":
                     case "Object":
                         Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
-                        if (modelData!=null && item.Equals("dataArray"))
+                        if (modelData != null && item.Equals("dataArray"))
                         {
                             itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("string") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                         }
@@ -484,7 +484,7 @@ namespace Victop.Frame.DataChannel
                         if (item.FieldValue.ValueSelectFlag == 1)
                         {
                             DataColumn dc = new DataColumn(keyStr);
-                            if (modelDefInfo.ModelClientRef != null)
+                            if (modelDefInfo.ModelClientRef != null && modelDefInfo.ModelClientRef.Count > 0)
                             {
                                 MongoModelInfoOfClientRefModel clientRefModel = modelDefInfo.ModelClientRef.FirstOrDefault(it => (it.ClientRefField.Equals(string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), item.FieldKey))));
                                 if (clientRefModel != null)
@@ -540,7 +540,7 @@ namespace Victop.Frame.DataChannel
                         if (item.FieldValue.ValueSelectFlag == 1)
                         {
                             DataColumn dc = new DataColumn(item.FieldKey);
-                            if (modelDefInfo.ModelClientRef != null)
+                            if (modelDefInfo.ModelClientRef != null && modelDefInfo.ModelClientRef.Count > 0)
                             {
                                 MongoModelInfoOfClientRefModel clientRefModel = modelDefInfo.ModelClientRef.FirstOrDefault(it => (it.ClientRefField.Equals(string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), item.FieldKey))));
                                 if (clientRefModel != null)
@@ -609,7 +609,7 @@ namespace Victop.Frame.DataChannel
                                 if (newDt.Columns.Contains(leftStr))
                                     continue;
                                 DataColumn dc = new DataColumn(leftStr);
-                                if (modelDefInfo.ModelClientRef != null)
+                                if (modelDefInfo.ModelClientRef != null && modelDefInfo.ModelClientRef.Count > 0)
                                 {
                                     MongoModelInfoOfClientRefModel clientRefInfo = modelDefInfo.ModelClientRef.Find(it => (
                                     it.ClientRefField.Equals(string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), leftStr))));
@@ -689,8 +689,56 @@ namespace Victop.Frame.DataChannel
             DataChannelManager dataChannelManager = new DataChannelManager();
             Hashtable hashData = dataChannelManager.GetData(viewId);
             ChannelData channelData = hashData["Data"] as ChannelData;
-            MongoSimpleRefInfoModel simpleRefInfo = channelData.SimpleRefInfo; 
+            MongoSimpleRefInfoModel simpleRefInfo = channelData.SimpleRefInfo;
             if (simpleRefInfo != null)
+            {
+                foreach (MongoSimpleRefInfoOfArrayModel item in simpleRefInfo.SimpleDataArray)
+                {
+                    MongoSimpleRefInfoOfArrayPropertyModel propertyModel = item.ArrayProperty.FirstOrDefault(it => it.PropertyKey.Equals(constructPath));
+                    if (propertyModel == null)
+                        break;
+                    DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, dependDic);
+                    ds.Tables.Add(dt);
+                    break;
+                }
+            }
+            #endregion
+            return ds;
+        }
+
+        /// <summary>
+        /// 获取简单引用数据
+        /// </summary>
+        /// <param name="viewId"></param>
+        public DataSet GetSimpleRef(string viewId, string dataPath, string columnPath, Dictionary<string, object> dependDic)
+        {
+            DataSet ds = new DataSet();
+            string constructPath = string.Empty;
+            #region 构建结构Path
+            List<object> pathList = JsonHelper.ToObject<List<Object>>(dataPath);
+            for (int i = 0; i < pathList.Count; i++)
+            {
+                if (pathList[i].GetType().Name.Equals("String"))
+                {
+                    constructPath += pathList[i].ToString() + ".";
+                    if (i == pathList.Count - 1)
+                    {
+                        constructPath += "dataArray.";
+                    }
+                }
+                else
+                {
+                    constructPath += "dataArray.";
+                }
+            }
+            constructPath += columnPath;
+            #endregion
+            #region 获取简单引用定义
+            DataChannelManager dataChannelManager = new DataChannelManager();
+            Hashtable hashData = dataChannelManager.GetData(viewId);
+            ChannelData channelData = hashData["Data"] as ChannelData;
+            MongoSimpleRefInfoModel simpleRefInfo = channelData.SimpleRefInfo;
+            if (simpleRefInfo!=null)
             {
                 foreach (MongoSimpleRefInfoOfArrayModel item in simpleRefInfo.SimpleDataArray)
                 {
