@@ -53,7 +53,7 @@ namespace Victop.Frame.DataChannel
             MongoSimpleRefInfoModel simpleRefInfo = channelData.SimpleRefInfo;
             #endregion
             string jsonData = DataTool.GetDataObjectByPath(viewId, dataPath);
-            if (jsonData != null)
+            if (!string.IsNullOrEmpty(jsonData))
             {
                 Dictionary<string, object> jsonDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
                 if (pathList.Count % 2 == 1)//获取表数据
