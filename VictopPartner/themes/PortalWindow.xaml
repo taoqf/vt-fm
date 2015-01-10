@@ -417,7 +417,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type controls:VicTabItemNormal}">
-                                <Border x:Name="Bd"
+                                <Border x:Name="Bd" 
                                         Background="{DynamicResource MainFrm_TabItemNormalBackground}"
                                         BorderBrush="{DynamicResource MainFrm_TabItemNormalBorderBrush}"
 							            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
@@ -494,27 +494,28 @@
                                     </MultiTrigger>
                                     <Trigger Property="TabStripPlacement" Value="Top">
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1,1,1,0"/>
-                                        <Setter Property="CornerRadius" TargetName="Bd" Value="4,4,0,0"/>
+                                        <Setter Property="CornerRadius" TargetName="Bd" Value="25,0,0,0"/>
                                         <Setter Property="Margin" TargetName="Bd" Value="1,0,0,0"/>
                                     </Trigger>
 
                                     <Trigger Property="TabStripPlacement" Value="Bottom">
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1,0,1,1"/>
-                                        <Setter Property="CornerRadius" TargetName="Bd" Value="0,0,4,4"/>
+                                        <Setter Property="CornerRadius" TargetName="Bd" Value="0,0,0,25"/>
                                         <Setter Property="Margin" TargetName="Bd" Value="1,0,0,0"/>
                                     </Trigger>
 
                                     <Trigger Property="TabStripPlacement" Value="Left">
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1,1,0,1"/>
-                                        <Setter Property="CornerRadius" TargetName="Bd" Value="4,0,4,0"/>
+                                        <Setter Property="CornerRadius" TargetName="Bd" Value="0,0,25,0"/>
                                         <Setter Property="Margin" TargetName="Bd" Value="0,1,0,0"/>
                                     </Trigger>
 
                                     <Trigger Property="TabStripPlacement" Value="Right">
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="0,1,1,1"/>
-                                        <Setter Property="CornerRadius" TargetName="Bd" Value="0,4,0,4"/>
+                                        <Setter Property="CornerRadius" TargetName="Bd" Value="0,25,0,0"/>
                                         <Setter Property="Margin" TargetName="Bd" Value="0,1,0,0"/>
                                     </Trigger>
+                                    
                                     <MultiTrigger>
                                         <MultiTrigger.Conditions>
                                             <Condition Property="TabStripPlacement" Value="Top"/>
@@ -522,7 +523,7 @@
                                         </MultiTrigger.Conditions>
                                         <Setter Property="Panel.ZIndex" Value="2" />
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1,1,1,0"/>
-                                        <Setter Property="CornerRadius" TargetName="Bd" Value="4,4,0,0"/>
+                                        <Setter Property="CornerRadius" TargetName="Bd" Value="25,0,0,0"/>
                                         <Setter Property="Margin" TargetName="Bd" Value="1,0,0,-1"/>
                                     </MultiTrigger>
                                     <MultiTrigger>
@@ -532,7 +533,7 @@
                                         </MultiTrigger.Conditions>
                                         <Setter Property="Panel.ZIndex" Value="2" />
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1,0,1,1"/>
-                                        <Setter Property="CornerRadius" TargetName="Bd" Value="0,0,4,4"/>
+                                        <Setter Property="CornerRadius" TargetName="Bd" Value="0,0,0,25"/>
                                         <Setter Property="Margin" TargetName="Bd" Value="1,-1,0,0"/>
                                     </MultiTrigger>
 
@@ -543,7 +544,7 @@
                                         </MultiTrigger.Conditions>
                                         <Setter Property="Panel.ZIndex" Value="2" />
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1,1,0,1"/>
-                                        <Setter Property="CornerRadius" TargetName="Bd" Value="4,0,4,0"/>
+                                        <Setter Property="CornerRadius" TargetName="Bd" Value="0,0,25,0"/>
                                         <Setter Property="Margin" TargetName="Bd" Value="0,1,-1,0"/>
                                     </MultiTrigger>
 
@@ -554,7 +555,7 @@
                                         </MultiTrigger.Conditions>
                                         <Setter Property="Panel.ZIndex" Value="2" />
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="0,1,1,1"/>
-                                        <Setter Property="CornerRadius" TargetName="Bd" Value="0,4,0,4"/>
+                                        <Setter Property="CornerRadius" TargetName="Bd" Value="0,25,0,0"/>
                                         <Setter Property="Margin" TargetName="Bd" Value="-1,1,0,0"/>
                                     </MultiTrigger>
                                 </ControlTemplate.Triggers>
@@ -673,7 +674,7 @@
                 <ControlTemplate TargetType="{x:Type controls:VicRadioButtonNormal}">
                     <BulletDecorator Background="Transparent">
                         <Border>
-                            <StackPanel>
+                            <StackPanel >
                                 <controls:VicTextBlockNormal Margin="0,26,0,0"
                                                                  ToolTip="{Binding MenuName}" 
                                                                  Foreground="{TemplateBinding Foreground}"
@@ -682,15 +683,6 @@
                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                                  Text="{Binding IconUrl}"/>
-                                <controls:VicTextBlockNormal Margin="0,10,0,26"
-                                                                 Foreground="{TemplateBinding Foreground}"
-                                                                FontFamily="{TemplateBinding FontFamily}" 
-                                                                FontSize="{TemplateBinding FontSize}" 
-                                                                MaxWidth="60"
-                                                                TextWrapping="Wrap"
-                                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                                 Text="{Binding MenuName}"/>
                                 <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="46" Height="1" HorizontalAlignment="Center"/>
                                 <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="46" Height="1" HorizontalAlignment="Center"/>
                             </StackPanel>
@@ -705,7 +697,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="/Fonts/#iconfont"/>
     </Style>
-    
+
     <ControlTemplate x:Key="ExpanderToggleButton"
 		TargetType="{x:Type ToggleButton}">
         <Border x:Name="Border"
@@ -1036,6 +1028,9 @@
                                         <Setter Property="Background" Value="{DynamicResource FirstMenuItemNormalBackground}" TargetName="rBtn"/>
                                         <Setter Property="BorderBrush" Value="{DynamicResource FirstMenuItemNormalBorderBrush}" TargetName="rBtn"/>
                                     </Trigger>
+                                    <Trigger  Property="IsSelected" Value="true">
+                                        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
+                                    </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -1120,7 +1115,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ButtonFourthLevelMenu" TargetType="{x:Type controls:VicButtonNormal}">
+    <Style x:Key="ButtonFourthLevelMenu" TargetType="{x:Type controls:VicRadioButtonNormal}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FontSize" Value="30"></Setter>
@@ -1130,7 +1125,7 @@
         <Setter Property="Padding" Value="2,0,0,0"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
+                <ControlTemplate TargetType="{x:Type controls:VicRadioButtonNormal}">
                     <BulletDecorator Background="Transparent">
                         <Border x:Name="border"  
                             BorderBrush="{TemplateBinding BorderBrush}"
@@ -1138,7 +1133,7 @@
                                 Background="{TemplateBinding Background}">
                             <Grid>
                                 <controls:VicTextBlockNormal  
-                                                             Foreground="{TemplateBinding Foreground}"
+                                                             
                                                              Style="{DynamicResource TextBlockMenu}" 
                                                              FontSize="{TemplateBinding FontSize}"
                                                              Text="{Binding IconUrl}"
@@ -1156,102 +1151,50 @@
         <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
         <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="Cursor" Value="Hand"/>
-                    <Setter Property="Width" Value="160"/>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Width" Value="130"/>
                     <Setter Property="Height" Value="100"/>
                     <Setter Property="Margin" Value="10"/>
-                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <ControlTemplate.Resources>
-                                    <Storyboard x:Key="InStoryboard" BeginTime="00:00:0.2" Duration="00:00:01" SpeedRatio="6">
-                                        <DoubleAnimation To="120" Storyboard.TargetName="changedImage_translate1" Storyboard.TargetProperty="Y"/>
-                                        <DoubleAnimation To="0" Storyboard.TargetName="changedImage_translate2" Storyboard.TargetProperty="Y"/>
-                                        <!--<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="4" Storyboard.TargetProperty="Y">
-                                            <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
-                                            <LinearDoubleKeyFrame KeyTime="00:00:01" Value="120"/>
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="4" Storyboard.TargetProperty="Y">
-                                            <LinearDoubleKeyFrame KeyTime="00:00:00" Value="-120"/>
-                                            <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
-                                        </DoubleAnimationUsingKeyFrames>-->
-                                    </Storyboard>
-                                    <Storyboard x:Key="OutStoryboard" Duration="00:00:01" SpeedRatio="6">
-                                        <DoubleAnimation To="0" Storyboard.TargetName="changedImage_translate1" Storyboard.TargetProperty="Y"/>
-                                        <DoubleAnimation To="-120" Storyboard.TargetName="changedImage_translate2" Storyboard.TargetProperty="Y"/>
-                                        <!--<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate1" SpeedRatio="4" Storyboard.TargetProperty="Y">
-                                            <LinearDoubleKeyFrame KeyTime="00:00:00" Value="120"/>
-                                            <LinearDoubleKeyFrame KeyTime="00:00:01" Value="0"/>
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="changedImage_translate2" SpeedRatio="4" Storyboard.TargetProperty="Y">
-                                            <LinearDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
-                                            <LinearDoubleKeyFrame KeyTime="00:00:01" Value="-120"/>
-                                        </DoubleAnimationUsingKeyFrames>-->
-                                    </Storyboard>
-                                </ControlTemplate.Resources>
-                                <Border  BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"  Background="{TemplateBinding Background}">
-                                    <Grid x:Name="aa" ClipToBounds="True">
-                                        <Border x:Name="border1">
-                                            <Grid x:Name="logo" VerticalAlignment="Center">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <controls:VicButtonNormal Grid.Column="0" FontSize="55" FontWeight="Bold"
-                                                     Style="{DynamicResource ButtonFourthLevelMenu}"  Foreground="{TemplateBinding Foreground}"/>
-                                                <TextBlock Text="{Binding MenuName}" Grid.Column="1"  Margin="10,0,0,0" FontFamily="SimSun" FontSize="12" FontWeight="Bold"   Foreground="{TemplateBinding Foreground}"  TextWrapping="Wrap"/>
-                                            </Grid>
-                                            <Border.RenderTransform>
-                                                <TransformGroup>
-                                                    <TranslateTransform x:Name="changedImage_translate1"/>
-                                                </TransformGroup>
-                                            </Border.RenderTransform>
-                                        </Border>
-                                        <Border x:Name="border2" BorderBrush="{DynamicResource SkinColor}" BorderThickness="1" Background="{DynamicResource SkinBackground}">
-                                            <Grid x:Name="stap">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="*"/>
-                                                </Grid.RowDefinitions>
-                                                <TextBlock Text="{Binding MenuName}" FontFamily="SimSun" FontSize="12" FontWeight="Bold"  Margin="5"
-                                                        Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <TextBlock Text="{Binding Description}" Grid.Row="1" FontFamily="SimSun" FontSize="12"  Margin="5"
-                                                         Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                                <controls:VicButtonNormal  Grid.Row="2"   Name="btnPluginRun" BorderThickness="0"  Content="运行"
-                                                       Background="{DynamicResource SkinColor}" Width="{TemplateBinding Width}"
-                                                        Foreground="{DynamicResource SkinForeground}" Margin="0" VerticalAlignment="Bottom"
+                                <Border Name="Bd"  BorderBrush="Gray" BorderThickness="1"  Background="{TemplateBinding Background}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="80"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <controls:VicRadioButtonNormal 
+                                                                 FontWeight="Bold" 
+                                                                 Foreground="{TemplateBinding Foreground}"
+                                                                 Style="{DynamicResource ButtonFourthLevelMenu}" 
+                                                                 FontSize="45"
+                                                                 IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                 Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                                 CommandParameter="{Binding .}"/>
+                                        <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="12"
+                                                       Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
+                                                        Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"
                                                          Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                        CommandParameter="{Binding .}"/>
-                                            </Grid>
-                                            <Border.RenderTransform>
-                                                <TransformGroup>
-                                                    <TranslateTransform x:Name="changedImage_translate2" Y="-120"/>
-                                                </TransformGroup>
-                                            </Border.RenderTransform>
-                                        </Border>
+                                       
                                     </Grid>
                                 </Border>
                                 <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="true">
-                                        <Trigger.EnterActions>
-                                            <BeginStoryboard Storyboard="{StaticResource InStoryboard}"/>
-                                        </Trigger.EnterActions>
-                                        <Trigger.ExitActions>
-                                            <BeginStoryboard Storyboard="{StaticResource OutStoryboard}"/>
-                                        </Trigger.ExitActions>
+                                    <Trigger  Property="IsMouseOver" Value="true">
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
-
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -1261,7 +1204,6 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
-
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
                         <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
                     </ScrollViewer>

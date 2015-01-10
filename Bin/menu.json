@@ -2,7 +2,7 @@
 	"menu": [
 		{
 			"title": "权限管理系统",
-			"iconUrl": "\ue6a4",
+			"iconUrl": "\ue61a",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -12,7 +12,7 @@
 			"children": [
 				{
 					"title": "菜单信息管理",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -25,7 +25,7 @@
 							"actionType": 1,
 							"actionName": "MenuNecklacePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于菜单项管理维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -51,7 +51,7 @@
 					]
 				}, {
 					"title": "用户信息管理",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -64,7 +64,7 @@
 							"actionType": 1,
 							"actionName": "UserManagePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于用户维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -82,7 +82,7 @@
 					]
 				}, {
 					"title": "权限组信息管理",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -95,7 +95,7 @@
 							"actionType": 1,
 							"actionName": "AuthorityGroupManagePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于权限维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -112,7 +112,7 @@
 					]
 				}, {
 					"title": "用户权限组关系管理",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -125,7 +125,7 @@
 							"actionType": 1,
 							"actionName": "AuthorityUserGroupManagePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于用户权限组关系维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -142,7 +142,7 @@
 					]
 				}, {
 					"title": "权限菜单关系管理",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -155,7 +155,7 @@
 							"actionType": 1,
 							"actionName": "AuthorityMenuGroupPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于权限菜单关系维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -172,7 +172,7 @@
 					]
 				}, {
 					"title": "数据权限管理",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -185,7 +185,7 @@
 							"actionType": 1,
 							"actionName": "AuthorityDatapermPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于数据权限维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -202,7 +202,7 @@
 					]
 				}, {
 					"title": "权限码管理",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -215,7 +215,7 @@
 							"actionType": 1,
 							"actionName": "AuthorityYardManagePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于权限码维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -234,7 +234,7 @@
 			]
 		}, {
 			"title": "飞道机台体系",
-			"iconUrl": "\ue6a4",
+			"iconUrl": "\ue624",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -244,7 +244,7 @@
 			"children": [
 				{
 					"title": "客服相关机台",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -257,7 +257,7 @@
 							"actionType": 1,
 							"actionName": "SystemTestingPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue60d",
 							"description": "用于策划机台维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -276,7 +276,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue60f",
 							"description": "报价机台(初步)",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -303,7 +303,7 @@
 							"actionType": 1,
 							"actionName": "ServiceProjectWorkOrderPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "客户项目工单",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -330,7 +330,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": " ",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -357,7 +357,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue617",
 							"description": "业务调研报告",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -376,7 +376,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue612",
 							"description": "用于策划机台维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -403,7 +403,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于策划机台维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -430,7 +430,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue613",
 							"description": "解决方案机台",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -457,7 +457,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue60f",
 							"description": "用于策划机台维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -484,7 +484,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": " ",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -510,7 +510,7 @@
 					]
 				}, {
 					"title": "规划相关机台",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -523,7 +523,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于数据架构维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -550,7 +550,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于页面地图维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -568,7 +568,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于用例维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -585,7 +585,7 @@
 					]
 				}, {
 					"title": "设计相关机台",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -598,7 +598,7 @@
 							"actionType": 1,
 							"actionName": "DevelopProjectWorkOrderPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "开发工单项目机台",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -625,7 +625,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于状态图维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -644,7 +644,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于页面草图维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -662,7 +662,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于数据字典架构维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -680,7 +680,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于页面效果图维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -698,7 +698,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于页面定义维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -716,7 +716,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于数据建模维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -743,7 +743,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于页面组件分析机台维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -761,7 +761,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于组件定义机台维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -779,7 +779,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于部件定义机台维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -796,7 +796,7 @@
 					]
 				}, {
 					"title": "开发相关机台",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -809,7 +809,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于切图机台维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -827,7 +827,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于部件版式开发机台维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -845,7 +845,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于部件程序开发机维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -863,7 +863,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于组件版式开发机台维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -881,7 +881,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于组件程序开发机台维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -899,7 +899,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于页面版式开发机台维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -917,7 +917,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于页面程序开发机台维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -935,7 +935,7 @@
 							"actionType": 1,
 							"actionName": "MachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于页面装配机台维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -952,7 +952,7 @@
 					]
 				}, {
 					"title": "设置相关机台",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -965,7 +965,7 @@
 							"actionType": 1,
 							"actionName": "MenuMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于页面布局机台维护",
 							"systemId": 100,
 							"configsystemid": "",
@@ -983,7 +983,7 @@
 							"actionType": 1,
 							"actionName": "DataCruiseMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于数据巡航机台维护",
 							"systemId": 100,
 							"configsystemid": "",
@@ -1001,7 +1001,7 @@
 							"actionType": 1,
 							"actionName": "BaseDataMaintainMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于基础数据维护机台维护",
 							"systemId": 100,
 							"configsystemid": "",
@@ -1019,7 +1019,7 @@
 							"actionType": 1,
 							"actionName": "CMSMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于CMS机台维护",
 							"systemId": 100,
 							"configsystemid": "",
@@ -1037,7 +1037,7 @@
 							"actionType": 1,
 							"actionName": "AuthorityMaintainMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于权限维护机台维护",
 							"systemId": 100,
 							"configsystemid": "",
@@ -1054,7 +1054,7 @@
 					]
 				}, {
 					"title": "测试相关机台",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1067,7 +1067,7 @@
 							"actionType": 1,
 							"actionName": "TestMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于测试机台维护",
 							"systemId": 100,
 							"configsystemid": "",
@@ -1084,7 +1084,7 @@
 					]
 				}, {
 					"title": "部署相关机台",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1097,7 +1097,7 @@
 							"actionType": 1,
 							"actionName": "DeployMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于部署机台维护",
 							"systemId": 100,
 							"configsystemid": "",
@@ -1114,7 +1114,7 @@
 					]
 				}, {
 					"title": "系统相关机台",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1127,7 +1127,7 @@
 							"actionType": 1,
 							"actionName": "LayoutLibMachinePlatformPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于布局库开发维护",
 							"systemId": 100,
 							"configsystemid": "",
@@ -1146,7 +1146,7 @@
 			]
 		}, {
 			"title": "数据管理工具",
-			"iconUrl": "\ue6a4",
+			"iconUrl": "\ue618",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1156,7 +1156,7 @@
 			"children": [
 				{
 					"title": "数据架构设计",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1169,7 +1169,7 @@
 							"actionType": 1,
 							"actionName": "DataArchitecturePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于布局库开发维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -1187,7 +1187,7 @@
 							"actionType": 1,
 							"actionName": "DataArchitecturePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于布局库开发维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -1205,7 +1205,7 @@
 							"actionType": 1,
 							"actionName": "DataArchitecturePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于布局库开发维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -1222,7 +1222,7 @@
 					]
 				}, {
 					"title": "数据建模工具",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1235,7 +1235,7 @@
 							"actionType": 1,
 							"actionName": "",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于布局库开发维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -1252,7 +1252,7 @@
 					]
 				}, {
 					"title": "数据维护定义设计",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1265,7 +1265,7 @@
 							"actionType": 1,
 							"actionName": "DataMaintainDefDesPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于布局库开发维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -1282,7 +1282,7 @@
 					]
 				}, {
 					"title": "基础数据维护",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1295,7 +1295,7 @@
 							"actionType": 1,
 							"actionName": "DataMaintenancePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于基础数据维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -1313,7 +1313,7 @@
 							"actionType": 1,
 							"actionName": "DataMaintenancePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于基础数据维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -1331,7 +1331,7 @@
 							"actionType": 1,
 							"actionName": "DataMaintenancePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于基础数据维护",
 							"systemId": 906,
 							"configsystemid": 101,
@@ -1349,7 +1349,7 @@
 							"actionType": 1,
 							"actionName": "DataMaintenancePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于基础数据维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -1368,7 +1368,7 @@
 			]
 		}, {
 			"title": "天龙计划",
-			"iconUrl": "\ue6a4",
+			"iconUrl": "\ue60b",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1378,7 +1378,7 @@
 			"children": [
 				{
 					"title": "数据架构设计",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1391,7 +1391,7 @@
 							"actionType": 1,
 							"actionName": "DataArchitecturePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于布局库开发维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -1409,7 +1409,7 @@
 							"actionType": 1,
 							"actionName": "DataArchitecturePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于布局库开发维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -1427,7 +1427,7 @@
 							"actionType": 1,
 							"actionName": "DataArchitecturePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于布局库开发维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -1444,7 +1444,7 @@
 					]
 				}, {
 					"title": "数据建模工具",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1457,7 +1457,7 @@
 							"actionType": 1,
 							"actionName": "",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于布局库开发维护",
 							"systemId": 101,
 							"configsystemid": 101,
@@ -1474,7 +1474,7 @@
 					]
 				}, {
 					"title": "数据维护定义设计",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1487,7 +1487,7 @@
 							"actionType": 1,
 							"actionName": "DataMaintainDefDesPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于布局库开发维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -1504,7 +1504,7 @@
 					]
 				}, {
 					"title": "基础数据维护",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1517,7 +1517,7 @@
 							"actionType": 1,
 							"actionName": "DataMaintenancePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于基础数据维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -1535,7 +1535,7 @@
 							"actionType": 1,
 							"actionName": "DataMaintenancePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于基础数据维护",
 							"systemId": 100,
 							"configsystemid": 101,
@@ -1553,7 +1553,7 @@
 							"actionType": 1,
 							"actionName": "DataMaintenancePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于基础数据维护",
 							"systemId": 906,
 							"configsystemid": 101,
@@ -1571,7 +1571,7 @@
 							"actionType": 1,
 							"actionName": "DataMaintenancePlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于基础数据维护",
 							"systemId": 904,
 							"configsystemid": 101,
@@ -1590,7 +1590,7 @@
 			]
 		}, {
 			"title": "数据测试",
-			"iconUrl": "\ue6a4",
+			"iconUrl": "\ue601",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -1600,7 +1600,7 @@
 			"children": [
 				{
 					"title": "数据测试页面",
-					"iconUrl": "\ue6a4",
+					"iconUrl": "\ue618",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1613,7 +1613,7 @@
 							"actionType": 1,
 							"actionName": "SystemTestingPlugin",
 							"showType": 1,
-							"iconUrl": "\ue6a4",
+							"iconUrl": "\ue618",
 							"description": "用于策划机台维护",
 							"systemId": 904,
 							"configsystemid": 101,

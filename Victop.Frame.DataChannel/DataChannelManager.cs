@@ -13,6 +13,7 @@ namespace Victop.Frame.DataChannel
     using System.Linq;
     using System.Text;
     using Victop.Frame.CoreLibrary.Models;
+    using Victop.Frame.DataChannel.Models;
     using Victop.Frame.PublicLib.Helpers;
 
     /// <summary>

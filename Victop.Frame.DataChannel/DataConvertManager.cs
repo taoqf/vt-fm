@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Victop.Frame.DataChannel.Enums;
+using Victop.Frame.DataChannel.Models;
 using Victop.Frame.DataChannel.MongoModel;
 using Victop.Frame.PublicLib.Helpers;
 
@@ -53,7 +54,7 @@ namespace Victop.Frame.DataChannel
             MongoSimpleRefInfoModel simpleRefInfo = channelData.SimpleRefInfo;
             #endregion
             string jsonData = DataTool.GetDataObjectByPath(viewId, dataPath);
-            if (jsonData != null)
+            if (!string.IsNullOrEmpty(jsonData))
             {
                 Dictionary<string, object> jsonDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
                 if (pathList.Count % 2 == 1)//获取表数据
@@ -288,7 +289,7 @@ namespace Victop.Frame.DataChannel
                             }
                             foreach (Dictionary<string, object> rowItem in arrayList)
                             {
-                                if (string.IsNullOrEmpty(rowItem["_id"].ToString()))
+                                if (rowItem.ContainsKey("_id") && string.IsNullOrEmpty(rowItem["_id"].ToString()))
                                 {
                                     continue;
                                 }
@@ -319,7 +320,7 @@ namespace Victop.Frame.DataChannel
                                                     break;
                                                 case "date":
                                                 default:
-                                                    if (string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()))
+                                                    if (string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()))
                                                     {
                                                         arrayDr[dtCol.ColumnName] = DBNull.Value;
                                                     }
@@ -749,7 +750,7 @@ namespace Victop.Frame.DataChannel
             Hashtable hashData = dataChannelManager.GetData(viewId);
             ChannelData channelData = hashData["Data"] as ChannelData;
             MongoSimpleRefInfoModel simpleRefInfo = channelData.SimpleRefInfo;
-            if (simpleRefInfo!=null)
+            if (simpleRefInfo != null)
             {
                 foreach (MongoSimpleRefInfoOfArrayModel item in simpleRefInfo.SimpleDataArray)
                 {
@@ -1161,11 +1162,5 @@ namespace Victop.Frame.DataChannel
             }
 
         }
-    }
-
-    internal class JsonMapKey
-    {
-        internal string ViewId { get; set; }
-        internal string DataPath { get; set; }
     }
 }

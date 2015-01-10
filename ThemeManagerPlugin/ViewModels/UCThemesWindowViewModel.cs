@@ -99,6 +99,17 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
 
+        public ICommand gridMainUnloadedCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) => {
+                    PluginOperation pluginOp = new PluginOperation();
+                    pluginOp.StopPlugin(x as string);
+                });
+            }
+        }
+
         #region 窗体关闭命令
         public ICommand btnCloseClickCommand
         {
