@@ -98,6 +98,31 @@ namespace Victop.Frame.DataChannel
             return newDs;
         }
 
+        private DataTable CreateRefDataTable(MongoModelInfoModel modelInfoModel, MongoSimpleRefInfoModel simpleRefModel,string tableName)
+        {
+            JsonMapKey MapKey = new JsonMapKey();
+            if (modelInfoModel != null && modelInfoModel.ModelClientRef.Count > 0)
+            {
+                foreach (MongoModelInfoOfClientRefModel item in modelInfoModel.ModelClientRef)
+                {
+                    DataRow dr = MapKey.RefMapTable.NewRow();
+                    dr["_id"] = Guid.NewGuid().ToString();
+                    dr["triggertable"] = tableName;
+                    dr["rowkey"] = string.Empty;
+                    dr["triggerfield"] = item.ClientRefField;
+                    dr["value"] = string.Empty;
+                    dr["dependid"] = string.Empty;
+                    MapKey.RefMapTable.Rows.Add(dr);
+                }
+                if (simpleRefModel.SimpleDataArray.Count > 0)
+                {
+ 
+                }
+            }
+            return MapKey.RefMapTable;
+        }
+
+
         /// <summary>
         /// 获取Json数据
         /// </summary>

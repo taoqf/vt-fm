@@ -137,6 +137,7 @@ namespace Victop.Frame.Connection
                 currentGallery.ClientInfo.SessionId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "sessionID");
                 currentGallery.ClientInfo.UserName = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userName");
                 currentGallery.ClientInfo.UserPwd = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userpw");
+                currentGallery.ClientInfo.ChannelId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "channelID");
                 currentGallery.ClientInfo.UserCode = replyMessage.ReplyContent.Contains("usercode") ? JsonHelper.ReadJsonString(replyMessage.ReplyContent, "usercode") : JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode");
                 messageInfo.MessageContent = replyMessage.ReplyContent;
                 if (dataForm == DataFormEnum.DATASET)
