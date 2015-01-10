@@ -132,7 +132,7 @@ namespace Victop.Frame.Connection
                         }
                         else
                         {
-                            dicContent.Add("clientId", cloudGallyInfo.ClientId);
+                            //dicContent.Add("clientId", cloudGallyInfo.ClientId);
                         }
                         break;
                     case DataFormEnum.JSON:
@@ -1010,7 +1010,9 @@ namespace Victop.Frame.Connection
                 LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
                 #region 处理消息体
                 messageInfo.ToRole = "victop-task-role";
-                messageInfo.MessageControl = cloudGallyInfo.ControlId;
+                Dictionary<string, object> dicMessageControl = new Dictionary<string, object>();
+                dicMessageControl.Add("sessionid", loginUserInfo.SessionId);
+                messageInfo.MessageControl = JsonHelper.ToJson(dicMessageControl);
                 #endregion
                 #region 处理Content
                 Dictionary<string, object> result = new Dictionary<string, object>();
@@ -1038,6 +1040,9 @@ namespace Victop.Frame.Connection
                 result.Add("reply", 1);
                 result.Add("stamp", null);
                 result.Add("summary", null);
+                result.Add("runbegintime", null);
+                result.Add("runendtime", null);
+                result.Add("taskstatus", null);
                 result.Add("prioritycontrol", "取任务类型优先级");
                 result.Add("replystatus", null);
                 result.Add("replyresult", null);
@@ -1054,23 +1059,40 @@ namespace Victop.Frame.Connection
                 runMessage.Add("reply", true);
                 runMessage.Add("argBeans", null);
                 runMessage.Add("jbossUrl", null);
-                runMessage.Add("ejbInterfaceName", "com.victop.platform.ejb.postlogic.PostingLogic");
+                runMessage.Add("ejbInterfaceName", "com.victop.platform.core.ejb.postlogic.PostingLogic");
                 argValues.Add("controlid", dicContent.ContainsKey("ControlId") ? dicContent["ControlId"] : null);
-                argValues.Add("modelId", dicContent.ContainsKey("ModelId") ? dicContent["ModelId"] : null);
-                argValues.Add("clientId", cloudGallyInfo.ClientId);
+                argValues.Add("modelid", dicContent.ContainsKey("ModelId") ? dicContent["ModelId"] : null);
+                argValues.Add("clientid", cloudGallyInfo.ClientId);
                 argValues.Add("doccode", dicContent.ContainsKey("DocCode") ? dicContent["DocCode"] : null);
                 Dictionary<string, string> dataparam = new Dictionary<string, string>();
                 dataparam.Add("companyid", null);
                 dataparam.Add("username", loginUserInfo.UserName);
                 dataparam.Add("usercode", loginUserInfo.UserCode);
-                dataparam.Add("prdoccode", null);
-                dataparam.Add("accountsid", null);
-                dataparam.Add("flex", dicContent.ContainsKey("FlexObj") ? dicContent["FlexObj"].ToString() : null);
+                dataparam.Add("prdoccode", "1");
+                dataparam.Add("accountsid", "getMasterName()");
                 argValues.Add("dataparam", dataparam);
                 argValues.Add("reportcasejson", null);
-                argValues.Add("runUser", loginUserInfo.UserCode);
-                argValues.Add("bzsystemid", dicContent.ContainsKey("SystemId") ? dicContent["SystemId"] : null);
+                argValues.Add("runuser", loginUserInfo.UserCode);
                 argValues.Add("formid", dicContent.ContainsKey("FormId") ? dicContent["FormId"] : null);
+                argValues.Add("systemid", dicContent.ContainsKey("SystemId") ? dicContent["SystemId"] : null);
+                argValues.Add("opentype", null);
+                argValues.Add("datasetid", null);
+                argValues.Add("tableid", null);
+                argValues.Add("reportid", null);
+                argValues.Add("fieldname", null);
+                argValues.Add("masteronly", false);
+                argValues.Add("wherearr", null);
+                argValues.Add("masterparam", null);
+                argValues.Add("delta", null);
+                argValues.Add("treestr", null);
+                argValues.Add("savetype", null);
+                argValues.Add("shareflag", null);
+                argValues.Add("detail", null);
+                argValues.Add("modeltype", null);
+                argValues.Add("formattype", null);
+                argValues.Add("ispage", 0);
+                argValues.Add("pageno", -1);
+                argValues.Add("pagesize", 10);
                 List<string> list = new List<string>();
                 list.Add(JsonHelper.ToJson(argValues));
                 runMessage.Add("argValues", list);
