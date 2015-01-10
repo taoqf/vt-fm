@@ -1165,7 +1165,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border Name="Bd"  BorderBrush="Gray" BorderThickness="1"  Background="{TemplateBinding Background}">
+                                <Border Name="Bd"  BorderThickness="0"  Background="{TemplateBinding Background}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="80"/>
@@ -1191,8 +1191,13 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
+                                        <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
                                         <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
+                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>                                      
+                                    </Trigger>
+                                    <Trigger  Property="IsSelected" Value="true">
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
+                                        <Setter Property="Foreground" Value="Yellow"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
