@@ -266,161 +266,168 @@ namespace Victop.Frame.DataChannel
             {
                 List<string> delColList = new List<string>();
                 DataTable itemDt = new DataTable();
-                try
+                if (jsonDic[item] != null)
                 {
-                    switch (jsonDic[item].GetType().Name)
+                    try
                     {
-                        case "JArray":
-                        case "Object[]":
-                            List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ToJson(jsonDic[item]));
-                            itemDt = new DataTable(item);
-                            if (modelData != null && item.Equals("dataArray"))
-                            {
-                                itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
-                            }
-                            if (itemDt.Columns.Count <= 0)
-                            {
-                                itemDt = GetDataTableStruct(item, arrayList.Count > 0 ? arrayList[0] : null, newDs);
-                            }
-                            itemDt.AcceptChanges();
-                            if (!newDs.Tables.Contains(item))
-                            {
-                                newDs.Tables.Add(itemDt);
-                            }
-                            foreach (Dictionary<string, object> rowItem in arrayList)
-                            {
-                                if (rowItem.ContainsKey("_id") && string.IsNullOrEmpty(rowItem["_id"].ToString()))
+                        switch (jsonDic[item].GetType().Name)
+                        {
+                            case "JArray":
+                            case "Object[]":
+                                List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ToJson(jsonDic[item]));
+                                itemDt = new DataTable(item);
+                                if (modelData != null && item.Equals("dataArray"))
                                 {
-                                    continue;
+                                    itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
                                 }
-                                DataRow arrayDr = itemDt.NewRow();
+                                if (itemDt.Columns.Count <= 0)
+                                {
+                                    itemDt = GetDataTableStruct(item, arrayList.Count > 0 ? arrayList[0] : null, newDs);
+                                }
+                                itemDt.AcceptChanges();
+                                if (!newDs.Tables.Contains(item))
+                                {
+                                    newDs.Tables.Add(itemDt);
+                                }
+                                foreach (Dictionary<string, object> rowItem in arrayList)
+                                {
+                                    if (rowItem.ContainsKey("_id") && string.IsNullOrEmpty(rowItem["_id"].ToString()))
+                                    {
+                                        continue;
+                                    }
+                                    DataRow arrayDr = itemDt.NewRow();
+                                    foreach (DataColumn dtCol in itemDt.Columns)
+                                    {
+                                        if (rowItem.ContainsKey(dtCol.ColumnName))
+                                        {
+                                            if (rowItem[dtCol.ColumnName] == null)
+                                            {
+                                                arrayDr[dtCol.ColumnName] = DBNull.Value;
+                                            }
+                                            else if (dtCol.DataType == typeof(DateTime) && dtCol.ExtendedProperties["ColType"] != null)
+                                            {
+                                                switch (dtCol.ExtendedProperties["ColType"].ToString())
+                                                {
+                                                    case "timestamp":
+                                                        if (Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()) == 0)
+                                                        {
+                                                            arrayDr[dtCol.ColumnName] = DBNull.Value;
+                                                        }
+                                                        else
+                                                        {
+                                                            DateTime dt = new DateTime(1970, 1, 1);
+                                                            dt = dt.AddMilliseconds(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()));
+                                                            arrayDr[dtCol.ColumnName] = dt;
+                                                        }
+                                                        break;
+                                                    case "date":
+                                                    default:
+                                                        if (string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()))
+                                                        {
+                                                            arrayDr[dtCol.ColumnName] = DBNull.Value;
+                                                        }
+                                                        else
+                                                        {
+                                                            arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                                        }
+                                                        break;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                            }
+                                        }
+                                    }
+                                    itemDt.Rows.Add(arrayDr);
+                                }
+                                break;
+                            case "JObject":
+                            case "Object":
+                                Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
+                                if (modelData != null && item.Equals("dataArray"))
+                                {
+                                    itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("string") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
+                                }
+                                if (itemDt.Columns.Count <= 0)
+                                {
+                                    itemDt = GetDataTableStruct(item, itemDic != null ? itemDic : null, newDs);
+                                }
+                                itemDt.AcceptChanges();
+                                if (!newDs.Tables.Contains(item))
+                                {
+                                    newDs.Tables.Add(itemDt);
+                                }
+                                DataRow objectDr = itemDt.NewRow();
                                 foreach (DataColumn dtCol in itemDt.Columns)
                                 {
-                                    if (rowItem.ContainsKey(dtCol.ColumnName))
+                                    if (itemDic.ContainsKey(dtCol.ColumnName))
                                     {
-                                        if (rowItem[dtCol.ColumnName] == null)
+                                        if (itemDic[dtCol.ColumnName] != null && !itemDic[dtCol.ColumnName].GetType().Name.Equals("String"))
                                         {
-                                            arrayDr[dtCol.ColumnName] = DBNull.Value;
+                                            if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
+                                            {
+                                                dtCol.ExtendedProperties.Add("ColType", itemDic[dtCol.ColumnName].GetType().Name);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
+                                            {
+                                                dtCol.ExtendedProperties.Add("ColType", "string");
+                                            }
+                                        }
+                                        if (itemDic[dtCol.ColumnName] == null)
+                                        {
+                                            objectDr[dtCol.ColumnName] = DBNull.Value;
                                         }
                                         else if (dtCol.DataType == typeof(DateTime) && dtCol.ExtendedProperties["ColType"] != null)
                                         {
                                             switch (dtCol.ExtendedProperties["ColType"].ToString())
                                             {
                                                 case "timestamp":
-                                                    if (Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()) == 0)
+                                                    if (Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()) == 0)
                                                     {
-                                                        arrayDr[dtCol.ColumnName] = DBNull.Value;
+                                                        objectDr[dtCol.ColumnName] = DBNull.Value;
                                                     }
                                                     else
                                                     {
                                                         DateTime dt = new DateTime(1970, 1, 1);
-                                                        dt = dt.AddMilliseconds(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()));
-                                                        arrayDr[dtCol.ColumnName] = dt;
+                                                        dt = dt.AddMilliseconds(Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()));
+                                                        objectDr[dtCol.ColumnName] = dt;
                                                     }
                                                     break;
                                                 case "date":
                                                 default:
-                                                    if (string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()))
+                                                    if (string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()))
                                                     {
-                                                        arrayDr[dtCol.ColumnName] = DBNull.Value;
+                                                        objectDr[dtCol.ColumnName] = DBNull.Value;
                                                     }
                                                     else
                                                     {
-                                                        arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                                        objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
                                                     }
                                                     break;
                                             }
                                         }
                                         else
                                         {
-                                            arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                            objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
                                         }
                                     }
                                 }
-                                itemDt.Rows.Add(arrayDr);
-                            }
-                            break;
-                        case "JObject":
-                        case "Object":
-                            Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
-                            if (modelData != null && item.Equals("dataArray"))
-                            {
-                                itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("string") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
-                            }
-                            if (itemDt.Columns.Count <= 0)
-                            {
-                                itemDt = GetDataTableStruct(item, itemDic != null ? itemDic : null, newDs);
-                            }
-                            itemDt.AcceptChanges();
-                            if (!newDs.Tables.Contains(item))
-                            {
-                                newDs.Tables.Add(itemDt);
-                            }
-                            DataRow objectDr = itemDt.NewRow();
-                            foreach (DataColumn dtCol in itemDt.Columns)
-                            {
-                                if (itemDic.ContainsKey(dtCol.ColumnName))
-                                {
-                                    if (itemDic[dtCol.ColumnName] != null && !itemDic[dtCol.ColumnName].GetType().Name.Equals("String"))
-                                    {
-                                        if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
-                                        {
-                                            dtCol.ExtendedProperties.Add("ColType", itemDic[dtCol.ColumnName].GetType().Name);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
-                                        {
-                                            dtCol.ExtendedProperties.Add("ColType", "string");
-                                        }
-                                    }
-                                    if (itemDic[dtCol.ColumnName] == null)
-                                    {
-                                        objectDr[dtCol.ColumnName] = DBNull.Value;
-                                    }
-                                    else if (dtCol.DataType == typeof(DateTime) && dtCol.ExtendedProperties["ColType"] != null)
-                                    {
-                                        switch (dtCol.ExtendedProperties["ColType"].ToString())
-                                        {
-                                            case "timestamp":
-                                                if (Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()) == 0)
-                                                {
-                                                    objectDr[dtCol.ColumnName] = DBNull.Value;
-                                                }
-                                                else
-                                                {
-                                                    DateTime dt = new DateTime(1970, 1, 1);
-                                                    dt = dt.AddMilliseconds(Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()));
-                                                    objectDr[dtCol.ColumnName] = dt;
-                                                }
-                                                break;
-                                            case "date":
-                                            default:
-                                                if (string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()))
-                                                {
-                                                    objectDr[dtCol.ColumnName] = DBNull.Value;
-                                                }
-                                                else
-                                                {
-                                                    objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
-                                                }
-                                                break;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
-                                    }
-                                }
-                            }
-                            itemDt.Rows.Add(objectDr);
-                            break;
-                        default:
-                            break;
+                                itemDt.Rows.Add(objectDr);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        itemDt.TableName = item;
                     }
                 }
-                catch (Exception ex)
+                else
                 {
                     itemDt.TableName = item;
                 }
