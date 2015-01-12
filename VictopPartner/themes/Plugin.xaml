@@ -342,7 +342,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
                     <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -444,7 +444,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Height" Value="32"/>
-        <Setter Property="MinWidth" Value="180"/>
+        <Setter Property="MinWidth" Value="100"/>
         <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeColor}"/>
         <Setter Property="Background" Value="{DynamicResource DataGridHeaderBgColor}"/>
     </Style>
