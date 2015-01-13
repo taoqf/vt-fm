@@ -27,6 +27,8 @@ using System.Text;
 using System.Windows.Media;
 using System.Drawing;
 using Victop.Frame.DataChannel;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -36,6 +38,9 @@ namespace PortalFramePlugin.ViewModels
         #region 字段
         private Window mainWindow;
         private Grid gridTitle;
+        private VicButtonNormal btnPluginList;
+        private Window win_PluginList;
+        private List<Dictionary<string, object>> pluginList;
         private ObservableCollection<MenuModel> systemMenuListEnterprise;
         private ObservableCollection<MenuModel> systemMenuListLocal;
         private ObservableCollection<MenuModel> systemThirdLevelMenuList;
@@ -283,6 +288,7 @@ namespace PortalFramePlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     mainWindow = (Window)x;
+                    btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
                     Rect rect = SystemParameters.WorkArea;
                     mainWindow.MaxWidth = rect.Width;
@@ -295,6 +301,60 @@ namespace PortalFramePlugin.ViewModels
                 });
             }
         }
+
+        #region 插件按钮鼠标进入事件命令
+        /// 
+        /// <summary>
+        /// 插件按钮鼠标进入事件命令 
+        /// </summary>
+        public ICommand btnPluginListMouseEnterCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    //获取插件信息
+                    DataOperation dataop = new DataOperation();
+                    pluginList = dataop.GetPluginInfo();
+                    //创建窗体
+                    if (win_PluginList == null)
+                    {
+                        win_PluginList = new Window();
+                        //状态栏不显示
+                        win_PluginList.ShowInTaskbar = false;
+                        //窗体大小自适应其内容
+                        win_PluginList.MouseLeave += win_PluginList_MouseLeave;
+                        win_PluginList.SizeToContent = SizeToContent.Manual;
+                        win_PluginList.SizeToContent = SizeToContent.Width;
+                        win_PluginList.SizeToContent = SizeToContent.Height;
+                        win_PluginList.SizeToContent = SizeToContent.WidthAndHeight;
+                        win_PluginList.WindowStyle = WindowStyle.None;
+                        win_PluginList.ResizeMode = ResizeMode.NoResize;
+                        win_PluginList.Visibility = Visibility.Visible;
+                    }
+                    win_PluginList.Content = GetActivePluginInfo();
+                    this.win_PluginList.Visibility = Visibility.Visible;
+                    if (!win_PluginList.IsActive)
+                    {
+                        //设置相对于“新单”按钮的位置
+                        System.Windows.Point point = btnPluginList.PointToScreen(new System.Windows.Point(0, 0));//当前组件相对屏幕左上角的坐标               
+
+                        win_PluginList.Left = point.X;
+
+                        win_PluginList.Top = point.Y + btnPluginList.Height + 5;
+
+                        win_PluginList.Show();
+                        win_PluginList.Activate();
+                    } 
+                });
+            }
+        }
+        private void win_PluginList_MouseLeave(object sender, MouseEventArgs e)
+        {
+            this.win_PluginList.Visibility = Visibility.Collapsed;
+        }
+        #endregion
+
         private void ChangeFrameWorkTheme()
         {
             string messageType = "ServerCenterService.ChangeTheme";
@@ -973,6 +1033,7 @@ namespace PortalFramePlugin.ViewModels
             PluginModel pluginModel = pluginOp.StratPlugin("ThemeManagerPlugin");
             IPlugin PluginInstance = pluginModel.PluginInterface;
             Window themeWin = PluginInstance.StartWindow;
+            themeWin.Uid = pluginModel.ObjectId;
             themeWin.Owner = mainWindow;
             themeWin.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             themeWin.ShowDialog();
@@ -980,11 +1041,79 @@ namespace PortalFramePlugin.ViewModels
 
         #endregion
 
-        #region 获取活动插件信息
-        private void GetActivePluginInfo()
+        #region 弹窗显示获取的插件信息
+        /// <summary>
+        /// 弹窗显示获取的插件信息
+        /// </summary>
+        /// <param name="PluginInfoList"></param>
+        /// <returns></returns>
+        private VicStackPanelNormal GetActivePluginInfo()
         {
-
+            VicStackPanelNormal PluginListContent = new VicStackPanelNormal();
+            PluginListContent.Orientation = Orientation.Vertical;
+            PluginListContent.Width = 120;
+            foreach (Dictionary<string, object> PluginInfo in pluginList)
+            {
+                VicButtonNormal btn = new VicButtonNormal();
+                btn.Width = 120;
+                IPlugin Plugin = PluginInfo["IPlugin"] as IPlugin;
+                if (Plugin.ShowType == 0)
+                {                  
+                    btn.Content = Plugin.StartWindow.Title;
+                    btn.Click += btn_Click;
+                    PluginListContent.Children.Add(btn);
+                }
+                else
+                {
+                    btn.Content = Plugin.PluginTitle;
+                    btn.Click += btn_Click;
+                    PluginListContent.Children.Add(btn);
+                }
+            }
+            return PluginListContent;
         }
+
+        private void btn_Click(object sender, RoutedEventArgs e)
+        {
+            VicButtonNormal btn = sender as VicButtonNormal;
+            foreach (Dictionary<string, object> PluginInfo in pluginList)
+            { 
+                 IPlugin Plugin = PluginInfo["IPlugin"] as IPlugin;
+                 try
+                 {
+
+                     if (Plugin.ShowType == 0)
+                     {
+                         Plugin.StartWindow.Activate();
+                         if (Plugin.StartWindow.Title == btn.Content.ToString())
+                         {
+                             if (Plugin.StartWindow.WindowState == WindowState.Normal || Plugin.StartWindow.WindowState == WindowState.Minimized)
+                             {
+                                 Plugin.StartWindow.WindowState = WindowState.Maximized;
+                                 break;
+                             }
+                         }
+                     }
+                     else
+                     {
+                         if (Plugin.PluginTitle == btn.Content.ToString())
+                         {
+                             if (Plugin.StartWindow.WindowState == WindowState.Normal || Plugin.StartWindow.WindowState == WindowState.Minimized)
+                             {
+                                 Plugin.StartWindow.WindowState = WindowState.Maximized;
+                                 break;
+                             }
+                         }
+                     }
+
+                 }
+                 catch (Exception)
+                 {
+                     continue;
+                 }
+            }
+        }
+        
         #endregion
 
         #region 设置当前通道信息
