@@ -349,6 +349,7 @@ namespace PortalFramePlugin.ViewModels
                 });
             }
         }
+
         private void win_PluginList_MouseLeave(object sender, MouseEventArgs e)
         {
             this.win_PluginList.Visibility = Visibility.Collapsed;
@@ -934,7 +935,7 @@ namespace PortalFramePlugin.ViewModels
                         pluginCtrl.Uid = pluginModel.ObjectId;
                         VicTabItemNormal tabItem = new VicTabItemNormal();
                         tabItem.Name = pluginModel.AppId;
-                        tabItem.Header = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle;
+                        tabItem.Header = pluginModel.PluginInterface.PluginTitle;
                         tabItem.Content = pluginCtrl;
                         tabItem.AllowDelete = true;
                         tabItem.IsSelected = true;
@@ -1060,12 +1061,14 @@ namespace PortalFramePlugin.ViewModels
                 if (Plugin.ShowType == 0)
                 {                  
                     btn.Content = Plugin.StartWindow.Title;
+                    btn.Tag = Plugin;
                     btn.Click += btn_Click;
                     PluginListContent.Children.Add(btn);
                 }
                 else
                 {
                     btn.Content = Plugin.PluginTitle;
+                    btn.Tag = Plugin;
                     btn.Click += btn_Click;
                     PluginListContent.Children.Add(btn);
                 }
@@ -1076,41 +1079,24 @@ namespace PortalFramePlugin.ViewModels
         private void btn_Click(object sender, RoutedEventArgs e)
         {
             VicButtonNormal btn = sender as VicButtonNormal;
-            foreach (Dictionary<string, object> PluginInfo in pluginList)
-            { 
-                 IPlugin Plugin = PluginInfo["IPlugin"] as IPlugin;
-                 try
-                 {
+            IPlugin pluginInfo = (IPlugin)btn.Tag;
+            try
+            {
+                if (pluginInfo.ShowType == 0)//窗口
+                {
 
-                     if (Plugin.ShowType == 0)
-                     {
-                         Plugin.StartWindow.Activate();
-                         if (Plugin.StartWindow.Title == btn.Content.ToString())
-                         {
-                             if (Plugin.StartWindow.WindowState == WindowState.Normal || Plugin.StartWindow.WindowState == WindowState.Minimized)
-                             {
-                                 Plugin.StartWindow.WindowState = WindowState.Maximized;
-                                 break;
-                             }
-                         }
-                     }
-                     else
-                     {
-                         if (Plugin.PluginTitle == btn.Content.ToString())
-                         {
-                             if (Plugin.StartWindow.WindowState == WindowState.Normal || Plugin.StartWindow.WindowState == WindowState.Minimized)
-                             {
-                                 Plugin.StartWindow.WindowState = WindowState.Maximized;
-                                 break;
-                             }
-                         }
-                     }
-
-                 }
-                 catch (Exception)
-                 {
-                     continue;
-                 }
+                }
+                else
+                {
+                    if (TabItemList.FirstOrDefault(it => it.Header.Equals(pluginInfo.PluginTitle)) != null)
+                    {
+                        TabItemList.FirstOrDefault(it => it.Header.Equals(pluginInfo.PluginTitle)).IsSelected = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.ErrorFormat("活动插件激活异常:{0}", ex.Message);
             }
         }
         

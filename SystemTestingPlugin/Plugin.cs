@@ -13,7 +13,7 @@ namespace SystemTestingPlugin
     {
         public string PluginTitle
         {
-            get { return "区域管理"; }
+            get { return "测试数据工具"; }
         }
 
         public string PluginName
