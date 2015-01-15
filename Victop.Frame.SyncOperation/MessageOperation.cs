@@ -25,14 +25,7 @@ namespace Victop.Frame.SyncOperation
         public Dictionary<string, object> SendMessage(string messageType, Dictionary<string, object> messageContent, int waiteTime = 16)
         {
             Dictionary<string, object> returnDic;
-            Dictionary<string, object> messageDic = new Dictionary<string, object>();
-            messageDic.Add("MessageType", messageType);
-            if (messageContent == null)
-            {
-                messageContent = new Dictionary<string, object>();
-            }
-            messageDic.Add("MessageContent", messageContent);
-            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(MessageBack));
+            new PluginMessage().SendMessage(messageType,messageContent, new WaitCallback(MessageBack));
             if (waiteTime > 0)
             {
                 bool flag = false;
@@ -81,14 +74,7 @@ namespace Victop.Frame.SyncOperation
         public Dictionary<string, object> SendMessage(string messageType, Dictionary<string, object> messageContent,string dataForm,int waiteTime = 16)
         {
             Dictionary<string, object> returnDic;
-            Dictionary<string, object> messageDic = new Dictionary<string, object>();
-            messageDic.Add("MessageType", messageType);
-            if (messageContent == null)
-            {
-                messageContent = new Dictionary<string, object>();
-            }
-            messageDic.Add("MessageContent", messageContent);
-            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic), new WaitCallback(MessageBack), dataForm.Equals("JSON") ? DataFormEnum.JSON : DataFormEnum.DATASET, waiteTime);
+            new PluginMessage().SendMessage(messageType,messageContent, new WaitCallback(MessageBack), dataForm.Equals("JSON") ? DataFormEnum.JSON : DataFormEnum.DATASET, waiteTime);
             if (waiteTime > 0)
             {
                 bool flag = false;

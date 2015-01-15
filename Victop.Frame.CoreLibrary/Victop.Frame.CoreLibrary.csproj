@@ -56,6 +56,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\VictopLib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -70,6 +74,7 @@
     <Compile Include="AbsClasses\Base.cs" />
     <Compile Include="ActivePluginManager.cs" />
     <Compile Include="Enums\DataFormEnum.cs" />
+    <Compile Include="Enums\RefTypeEnum.cs" />
     <Compile Include="Factorys\AdapterFactory.cs" />
     <Compile Include="AutoDiscover.cs" />
     <Compile Include="BaseResourceManager.cs" />
@@ -95,15 +100,46 @@
     <Compile Include="Interfaces\IResponse.cs" />
     <Compile Include="Models\ActivePluginInfo.cs" />
     <Compile Include="Models\BaseResourceInfo.cs" />
+    <Compile Include="Models\ChannelData.cs" />
     <Compile Include="Models\CloudGalleryInfo.cs" />
+    <Compile Include="Models\DataStoreInfo.cs" />
     <Compile Include="Models\IPInfo.cs" />
+    <Compile Include="Models\JsonMapKey.cs" />
     <Compile Include="Models\LoginUserInfo.cs" />
     <Compile Include="Models\MenuInfo.cs" />
+    <Compile Include="Models\RefRelationInfo.cs" />
     <Compile Include="Models\RequestMessage.cs" />
     <Compile Include="Models\P2PGroupInfo.cs" />
     <Compile Include="Models\RegisterServerInfo.cs" />
     <Compile Include="Models\ReplyMessage.cs" />
     <Compile Include="Models\ServerRouterInfo.cs" />
+    <Compile Include="MongoModel\MongoModelInfoModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfClientRefConditionModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfClientRefForeRunnerModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfClientRefModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfClientRefPopupSettingColumnsModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfClientRefPopupSettingModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfClientRefPropertyModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfDataArrayModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfDummyRelationDetailModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfDummyRelationMasterModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfDummyRelationModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfRefConditionContentModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfRefModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfRelationDetailModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfRelationMasterModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfRelationModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfSettingFieldSettingFieldModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfSettingFieldSettingModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfSettingModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfTablesModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfTableStructureFieldValueModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfTableStructureModel.cs" />
+    <Compile Include="MongoModel\MongoSimpleRefInfoModel.cs" />
+    <Compile Include="MongoModel\MongoSimpleRefInfoOfArrayModel.cs" />
+    <Compile Include="MongoModel\MongoSimpleRefInfoOfArrayPropertyModel.cs" />
+    <Compile Include="MongoModel\RefViewModel.cs" />
+    <Compile Include="MongoModel\SimRefPropertyModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterServerManager.cs" />
     <Compile Include="VicException\NoReceiptException.cs" />

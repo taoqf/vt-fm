@@ -4,12 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Windows.Input;
-using Victop.Frame.DataChannel;
 using Victop.Frame.PublicLib.Helpers;
-using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 using System.Diagnostics;
+using Victop.Frame.DataMessageManager;
 
 namespace SystemTestingPlugin.ViewModels
 {
@@ -32,6 +31,10 @@ namespace SystemTestingPlugin.ViewModels
         /// 其他信息实体实例
         /// </summary>
         private OtherInfoModel otherInfoModel;
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        private VicDataGrid searchDataGrid;
         #endregion
         #region 属性定义
         /// <summary>
@@ -123,12 +126,16 @@ namespace SystemTestingPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand<Object>((x) =>
                 {
                     try
                     {
+                        searchDataGrid = (VicDataGrid)x;
+                        searchDataGrid.DataGridComboBoxOpened += searchDataGrid_DataGridComboBoxOpened;
+                        searchDataGrid.DataGridComboBoxClosed += searchDataGrid_DataGridComboBoxClosed;
+                        searchDataGrid.DataReferenceColumnClick += searchDataGrid_DataReferenceColumnClick;
                         string MessageType = "MongoDataChannelService.findBusiData";
-                        MessageOperation messageOp = new MessageOperation();
+                        DataMessageOperation messageOp = new DataMessageOperation();
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("systemid", DataInfoModel.SystemId);
                         contentDic.Add("configsystemid", DataInfoModel.ConfigsystemId);
@@ -146,10 +153,9 @@ namespace SystemTestingPlugin.ViewModels
                                 contentDic.Add("conditions", conList);
                             }
                         }
-                        Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
                         if (returnDic != null)
                         {
-                            DataOperation dataOp = new DataOperation();
                             DataInfoModel.ChannelId = returnDic["DataChannelId"].ToString();
                             if (string.IsNullOrEmpty(DataInfoModel.DataPath))
                             {
@@ -160,7 +166,7 @@ namespace SystemTestingPlugin.ViewModels
                             DataSet mastDs = new DataSet();
                             Stopwatch watch = new Stopwatch();
                             watch.Start();
-                            mastDs = dataOp.GetData(DataInfoModel.ChannelId, DataInfoModel.DataPath);
+                            mastDs = messageOp.GetData(DataInfoModel.ChannelId, DataInfoModel.DataPath);
                             watch.Stop();
                             VicMessageBoxNormal.Show(watch.ElapsedMilliseconds.ToString());
                             DataInfoModel.ResultDataTable = mastDs.Tables["dataArray"];
@@ -170,7 +176,7 @@ namespace SystemTestingPlugin.ViewModels
                     {
                         VicMessageBoxNormal.Show(ex.Message);
                     }
-                }, () =>
+                }, (x) =>
                 {
                     bool result = true;
                     if (string.IsNullOrEmpty(DataInfoModel.ModelId))
@@ -198,6 +204,52 @@ namespace SystemTestingPlugin.ViewModels
                 });
             }
         }
+
+        void searchDataGrid_DataReferenceColumnClick(object sender, string columnName, string columnCaption)
+        {
+            DataMessageOperation dataOp = new DataMessageOperation();
+            DataSet ds = new DataSet();
+            string resultMessage = dataOp.GetRefData(DataInfoModel.ChannelId, DataInfoModel.DataPath, columnName, DataInfoModel.GridSelectedValue.ToString(), out ds, DataInfoModel.SystemId, DataInfoModel.ConfigsystemId);
+            Dictionary<string, object> resultDic = JsonHelper.ToObject<Dictionary<string, object>>(resultMessage);
+            if (resultDic["ReplyMode"].ToString().Equals("2"))
+            {
+                DataInfoModel.RefDataTable = ds.Tables["dataArray"];
+            }
+            if (resultDic["ReplyMode"].ToString().Equals("0"))
+            {
+                VicMessageBoxNormal.Show(resultDic["ReplyAlertMessage"].ToString());
+            }
+            if (resultDic["ReplyMode"].ToString().Equals("3"))
+            {
+                VicMessageBoxNormal.Show("自行检索数据引用:" + resultDic["ReplyContent"].ToString());
+            }
+        }
+
+        void searchDataGrid_DataGridComboBoxClosed(object sender, string columnName)
+        {
+            //TODO:回填数据
+            VicComboBoxNormal boxCol = (VicComboBoxNormal)sender;
+            DataMessageOperation dataOp = new DataMessageOperation();
+            string resultMessage = dataOp.SetRefData(DataInfoModel.ChannelId, DataInfoModel.DataPath, columnName, DataInfoModel.GridSelectedValue.ToString(), boxCol.SelectedValue);
+        }
+
+        void searchDataGrid_DataGridComboBoxOpened(object sender, string columnName)
+        {
+            VicComboBoxNormal boxCol = (VicComboBoxNormal)sender;
+            DataMessageOperation dataOp = new DataMessageOperation();
+            DataSet ds = new DataSet();
+            string resultMessage = dataOp.GetRefData(DataInfoModel.ChannelId, DataInfoModel.DataPath, columnName, DataInfoModel.GridSelectedValue.ToString(), out ds);
+            Dictionary<string, object> resultDic = JsonHelper.ToObject<Dictionary<string, object>>(resultMessage);
+            if (resultDic["ReplyMode"].ToString().Equals("2"))
+            {
+                DataInfoModel.RefDataTable = ds.Tables["dataArray"];
+            }
+            if (resultDic["ReplyMode"].ToString().Equals("0"))
+            {
+                VicMessageBoxNormal.Show(resultDic["ReplyAlertMessage"].ToString());
+            }
+            
+        }
         /// <summary>
         /// 查看Json数据
         /// </summary>
@@ -209,7 +261,7 @@ namespace SystemTestingPlugin.ViewModels
                 {
                     try
                     {
-                        DataOperation dataOp = new DataOperation();
+                        DataMessageOperation dataOp = new DataMessageOperation();
                         DataInfoModel.JsonData = dataOp.GetJSONData(DataInfoModel.ChannelId);
                     }
                     catch (Exception ex)
@@ -233,14 +285,14 @@ namespace SystemTestingPlugin.ViewModels
                 {
                     try
                     {
-                        MessageOperation messageOp = new MessageOperation();
+                        DataMessageOperation messageOp = new DataMessageOperation();
                         string MessageType = "MongoDataChannelService.findDocCode";
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("systemid", CodeInfoModel.SystemId);
                         contentDic.Add("configsystemid", CodeInfoModel.ConfigsystemId);
                         contentDic.Add("pname", CodeInfoModel.PName);
                         contentDic.Add("setinfo", CodeInfoModel.SetInfo);
-                        Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
                         if (returnDic != null)
                         {
                             CodeInfoModel.ResultData = returnDic["ReplyContent"].ToString();
@@ -289,14 +341,14 @@ namespace SystemTestingPlugin.ViewModels
                 {
                     try
                     {
-                        MessageOperation messageOp = new MessageOperation();
+                        DataMessageOperation messageOp = new DataMessageOperation();
                         string MessageType = "MongoDataChannelService.afterLogin";
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("systemid", UserInfoModel.SystemId);
                         contentDic.Add("configsystemid", UserInfoModel.ConfigsystemId);
                         contentDic.Add("client_type_val", UserInfoModel.ClientType);
                         contentDic.Add("userCode", UserInfoModel.UserCode);
-                        Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic, "JSON");
+                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
                         if (returnDic != null)
                         {
                             UserInfoModel.ResultData = returnDic["ReplyContent"].ToString();
@@ -345,9 +397,9 @@ namespace SystemTestingPlugin.ViewModels
                 {
                     try
                     {
-                        MessageOperation messageOp = new MessageOperation();
+                        DataMessageOperation messageOp = new DataMessageOperation();
                         Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(OtherInfoModel.OtherConditionData);
-                        Dictionary<string, object> returnDic = messageOp.SendMessage(OtherInfoModel.MessageType, contentDic, "JSON");
+                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(OtherInfoModel.MessageType, contentDic, "JSON");
                         if (returnDic != null)
                         {
                             OtherInfoModel.OtherResultData = returnDic["ReplyContent"].ToString();

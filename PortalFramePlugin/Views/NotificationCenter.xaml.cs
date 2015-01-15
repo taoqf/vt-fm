@@ -108,12 +108,10 @@ namespace PortalFramePlugin.Views
         private void GetNotifyMessage()
         {
             PluginMessage pluginMessage = new PluginMessage();
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "TaskNotifyService.GetNoifyInfo");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
+            string messageType="TaskNotifyService.GetNoifyInfo";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("ObjectId", Guid.NewGuid().ToString());
-            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-            pluginMessage.SendMessage("", JsonHelper.ToJson(messageDic), new WaitCallback(SaveDataSuccess));
+            pluginMessage.SendMessage(messageType, contentDic, new WaitCallback(SaveDataSuccess));
         }
         private void SaveDataSuccess(object message)
         {

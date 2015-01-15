@@ -12,9 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Victop.Frame.DataChannel;
 using Victop.Frame.PublicLib.Helpers;
-using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.WeChat;
 
 namespace SystemTestingPlugin.Views

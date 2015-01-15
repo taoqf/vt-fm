@@ -32,7 +32,7 @@
                         <ctrl:VicLabelNormal>TableName:</ctrl:VicLabelNormal>
                         <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxTableName" VicText="{Binding DataInfoModel.TableName}"/>
                         <ctrl:VicCheckBoxNormal  Name="cBoxEmpty" Content="数据" IsChecked="{Binding DataInfoModel.EmptyFlag}"/>
-                        <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSearch" Content="查询" Command="{Binding btnSearchClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
+                        <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSearch" Content="查询" Command="{Binding btnSearchClickCommand,UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=dgridSearch}"/>
                         <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewJsonData" Content="查看Json数据" Command="{Binding btnViewJsonDataClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
                         <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding DataInfoModel.VertifyMsg}"/>
                     </ctrl:VicWrapPanelNormal>
@@ -44,7 +44,14 @@
                             <ctrl:VicRichTextBoxNormal Name="rTBoxDataPath" VicText="{Binding DataInfoModel.DataPath,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
                         </ctrl:VicTabItemNormal>
                         <ctrl:VicTabItemNormal Header="DataTable数据" AllowDelete="False">
-                            <ctrl:VicDataGrid AutoGenerateColumns="False" IsUserSetColumn="False" Name="dgridSearch" ItemsSource="{Binding DataInfoModel.ResultDataTable}"/>
+                            <ctrl:VicGridNormal>
+                                <ctrl:VicGridNormal.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </ctrl:VicGridNormal.ColumnDefinitions>
+                                <ctrl:VicDataGrid Grid.Column="0" AutoGenerateColumns="False" IsUserSetColumn="False" Name="dgridSearch" ItemsSource="{Binding DataInfoModel.ResultDataTable}" SelectedValue="{Binding DataInfoModel.GridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="_id"/>
+                                <ctrl:VicDataGrid Grid.Column="1" AutoGenerateColumns="False" Name="dgridRef" ItemsSource="{Binding DataInfoModel.RefDataTable}"/>
+                            </ctrl:VicGridNormal>
                         </ctrl:VicTabItemNormal>
                         <ctrl:VicTabItemNormal Header="Json数据" AllowDelete="False">
                             <ctrl:VicRichTextBoxNormal Name="rTBoxJsonData" VicText="{Binding DataInfoModel.JsonData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>

@@ -11,7 +11,7 @@ namespace Victop.Frame.DataChannel
     using System.Data;
     using Victop.Frame.CoreLibrary;
     using Victop.Frame.CoreLibrary.Models;
-    using Victop.Frame.DataChannel.Models;
+    using Victop.Frame.CoreLibrary.MongoModel;
 
     /// <summary>
     /// 数据操作
@@ -155,7 +155,7 @@ namespace Victop.Frame.DataChannel
             foreach (string item in pluginInfoDic.Keys)
             {
                 ActivePluginInfo pluginInfo = pluginInfoDic[item];
-                
+
                 Dictionary<string, object> pluginDict = new Dictionary<string, object>();
                 pluginDict.Add("AppId", pluginInfo.AppId);
                 pluginDict.Add("IPlugin", pluginInfo.PluginInstance);
@@ -205,6 +205,18 @@ namespace Victop.Frame.DataChannel
         {
             DataConvertManager convertManager = new DataConvertManager();
             return convertManager.GetModelRelation(channelId);
+        }
+        /// <summary>
+        /// 获取通道数据
+        /// </summary>
+        /// <param name="viewId"></param>
+        /// <returns></returns>
+        public virtual ChannelData GetChannelData(string viewId)
+        {
+            DataChannelManager dataChannelManager = new DataChannelManager();
+            Hashtable hashData = dataChannelManager.GetData(viewId);
+            ChannelData channelData = hashData["Data"] as ChannelData;
+            return channelData;
         }
     }
 }

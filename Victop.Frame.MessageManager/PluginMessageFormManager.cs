@@ -29,16 +29,16 @@ namespace Victop.Frame.MessageManager
         /// <param name="callBack">消息回调方法</param>
         /// <param name="validTime">有效时间</param>
         /// </summary>
-        public virtual void CheckMessageFormat(string messageInfo, WaitCallback callBack, long validTime, DataFormEnum dataForm)
+        public virtual void CheckMessageFormat(string messageType,Dictionary<string,object> messageContent,WaitCallback callBack, long validTime, DataFormEnum dataForm)
         {
             PluginMessageManager pluginMessageManager = new PluginMessageManager();
-            if (CheckMessageValid(messageInfo))//验证成功
+            if (true)//验证成功
             {
                 RequestMessage message = new RequestMessage()
                 {
                     MessageId = Guid.NewGuid().ToString(),
-                    MessageType = JsonHelper.ReadJsonString(messageInfo, "MessageType"),
-                    MessageContent = JsonHelper.ReadJsonString(messageInfo, "MessageContent")
+                    MessageType = messageType,
+                    MessageContent = JsonHelper.ToJson(messageContent)
                 };
                 bool result = pluginMessageManager.InsertPluginMessage(message.MessageId, new PluginMessageInfo()
                 {
@@ -54,16 +54,12 @@ namespace Victop.Frame.MessageManager
                 }
                 else
                 {
-                    ReturnReplyMessageToPlugin(messageInfo, callBack,MesssageStatusEnum.EXIST);
+                    ReturnReplyMessageToPlugin(callBack,MesssageStatusEnum.EXIST);
                 }
-            }
-            else//验证失败
-            {
-                ReturnReplyMessageToPlugin(messageInfo, callBack, MesssageStatusEnum.FORMATERROR);
             }
         }
 
-        private void ReturnReplyMessageToPlugin(string messageInfo, WaitCallback callBack,MesssageStatusEnum messageStatus)
+        private void ReturnReplyMessageToPlugin(WaitCallback callBack,MesssageStatusEnum messageStatus)
         {
             RequestMessage message = CreateMessage(callBack);
             //1.调用自身方法创建对应的消息格式信息。
@@ -105,20 +101,6 @@ namespace Victop.Frame.MessageManager
                 MessageCallBack = callBack
             });
             return message;
-        }
-        /// <summary>
-        /// 验证消息格式的完整性
-        /// </summary>
-        /// <param name="messageInfo"></param>
-        /// <returns></returns>
-        private bool CheckMessageValid(string messageInfo)
-        {
-            //TODO : 根据消息类型MessageType判断MessageContent中参数是否完整.
-            if (string.IsNullOrEmpty(JsonHelper.ReadJsonString(messageInfo, "MessageType")) || string.IsNullOrEmpty(JsonHelper.ReadJsonString(messageInfo, "MessageContent")))
-            {
-                return false;
-            }
-            return true;
         }
 
         /// <summary>

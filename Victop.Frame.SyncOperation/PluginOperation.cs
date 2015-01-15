@@ -18,7 +18,6 @@ namespace Victop.Frame.SyncOperation
     /// </summary>
     public class PluginOperation
     {
-        private PluginModel PluginInfo;
         /// <summary>
         /// 启动窗口插件
         /// </summary>
@@ -26,52 +25,41 @@ namespace Victop.Frame.SyncOperation
         /// <param name="paramDic">参数键值对</param>
         /// <param name="waitTime">同步等待时间(秒)</param>
         /// <returns></returns>
-        public PluginModel StratPlugin(string PluginName, Dictionary<string, object> paramDic = null, int waitTime = 15)
+        public PluginModel StratPlugin(string PluginName, Dictionary<string, object> paramDic = null, long waitTime = 15)
         {
-            PluginModel returnModel = null;
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "PluginService.PluginRun");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
+            PluginModel pluginModel = new PluginModel();
+            MessageOperation messageOp = new MessageOperation();
+            string messageType = "PluginService.PluginRun";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("PluginName", PluginName);
             contentDic.Add("PluginPath", "");
             contentDic.Add("PluginParam", JsonHelper.ToJson(paramDic));
-            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-            new PluginMessage().SendMessage(Guid.NewGuid().ToString(), JsonHelper.ToJson(messageDic),new WaitCallback(PluginShow));
-            if (waitTime > 0)
+            Dictionary<string, object> resultDic = messageOp.SendMessage(messageType, contentDic);
+            if (!resultDic["ReplyMode"].ToString().Equals("0"))
             {
-                bool flag = false;
-                UserTimeThread timeoutThread = new UserTimeThread((int)waitTime);
-                Thread thread = new Thread(new ThreadStart(timeoutThread.Sleep));
-                thread.Start();
-                while (!timeoutThread.Done)
+                string messageId = resultDic["MessageId"].ToString();
+                DataOperation PluginOper = new DataOperation();
+                List<Dictionary<string, object>> pluginList = PluginOper.GetPluginInfo();
+                foreach (var item in pluginList)
                 {
-                    if (PluginInfo != null)
+                    if (item["ObjectId"].ToString().Equals(messageId))
                     {
-                        returnModel = PluginInfo;
-                        lock (this)
-                        {
-                            timeoutThread.Stop();
-                        }
-                        flag = true;
+                        pluginModel.PluginInterface = item["IPlugin"] as IPlugin;
+                        pluginModel.AppId = item["AppId"].ToString();
+                        pluginModel.ObjectId = item["ObjectId"].ToString();
                         break;
                     }
-                    try
-                    {
-                        Thread.Sleep(1);
-                    }
-                    catch (ThreadInterruptedException)
-                    {
-                        lock (this)
-                        {
-                            timeoutThread.Stop();
-                        }
-                    }
-                }
-                if (!flag)
-                {
                 }
             }
-            return returnModel;
+            else
+            {
+                pluginModel = new PluginModel()
+                {
+                    ErrorMsg = resultDic["ReplyAlertMessage"].ToString(),
+                    ObjectId = string.Empty
+                };
+            }
+            return pluginModel;
         }
         /// <summary>
         /// 释放插件
@@ -111,35 +99,6 @@ namespace Victop.Frame.SyncOperation
                 PluginList.Add(pluginModel);
             }
             return PluginList;
-        }
-
-        private void PluginShow(object message)
-        {
-            if (!JsonHelper.ReadJsonString(message.ToString(), "ReplyMode").Equals("0"))
-            {
-                string messageId = JsonHelper.ReadJsonString(message.ToString(), "MessageId");
-                DataOperation PluginOper = new DataOperation();
-                List<Dictionary<string, object>> pluginList = PluginOper.GetPluginInfo();
-                foreach (var item in pluginList)
-                {
-                    if (item["ObjectId"].ToString().Equals(messageId))
-                    {
-                        PluginModel pluginModel = new PluginModel();
-                        pluginModel.PluginInterface = item["IPlugin"] as IPlugin;
-                        pluginModel.AppId = item["AppId"].ToString();
-                        pluginModel.ObjectId = item["ObjectId"].ToString();
-                        PluginInfo = pluginModel;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                PluginInfo = new PluginModel() {
-                    ErrorMsg = JsonHelper.ReadJsonString(message.ToString(), "ReplyAlertMessage"),
-                    ObjectId=string.Empty
-                };
-            }
         }
     }
 }

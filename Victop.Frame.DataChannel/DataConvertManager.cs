@@ -5,9 +5,10 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Victop.Frame.CoreLibrary.Enums;
+using Victop.Frame.CoreLibrary.Models;
+using Victop.Frame.CoreLibrary.MongoModel;
 using Victop.Frame.DataChannel.Enums;
-using Victop.Frame.DataChannel.Models;
-using Victop.Frame.DataChannel.MongoModel;
 using Victop.Frame.PublicLib.Helpers;
 
 namespace Victop.Frame.DataChannel
@@ -19,7 +20,7 @@ namespace Victop.Frame.DataChannel
     {
         private static Hashtable jsonTableMap;
 
-        internal static Hashtable JsonTableMap
+        public static Hashtable JsonTableMap
         {
             get
             {
@@ -85,7 +86,9 @@ namespace Victop.Frame.DataChannel
             {
                 if (item.ViewId == viewId && item.DataPath == dataPath)
                 {
-                    JsonTableMap[item] = newDs;
+                    DataStoreInfo storeInfo = JsonTableMap[item] as DataStoreInfo;
+                    storeInfo.ActualDataInfo = newDs;
+                    JsonTableMap[item] = storeInfo;
                     checkFlag = true;
                     break;
                 }
@@ -93,36 +96,10 @@ namespace Victop.Frame.DataChannel
             if (!checkFlag)
             {
                 JsonMapKey mapKey = new JsonMapKey() { ViewId = viewId, DataPath = dataPath };
-                JsonTableMap.Add(mapKey, newDs);
+                JsonTableMap.Add(mapKey, new DataStoreInfo() { ActualDataInfo = newDs });
             }
             return newDs;
         }
-
-        private DataTable CreateRefDataTable(MongoModelInfoModel modelInfoModel, MongoSimpleRefInfoModel simpleRefModel,string tableName)
-        {
-            JsonMapKey MapKey = new JsonMapKey();
-            if (modelInfoModel != null && modelInfoModel.ModelClientRef.Count > 0)
-            {
-                foreach (MongoModelInfoOfClientRefModel item in modelInfoModel.ModelClientRef)
-                {
-                    DataRow dr = MapKey.RefMapTable.NewRow();
-                    dr["_id"] = Guid.NewGuid().ToString();
-                    dr["triggertable"] = tableName;
-                    dr["rowkey"] = string.Empty;
-                    dr["triggerfield"] = item.ClientRefField;
-                    dr["value"] = string.Empty;
-                    dr["dependid"] = string.Empty;
-                    MapKey.RefMapTable.Rows.Add(dr);
-                }
-                if (simpleRefModel.SimpleDataArray.Count > 0)
-                {
- 
-                }
-            }
-            return MapKey.RefMapTable;
-        }
-
-
         /// <summary>
         /// 获取Json数据
         /// </summary>

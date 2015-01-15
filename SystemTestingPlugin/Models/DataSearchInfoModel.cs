@@ -197,5 +197,37 @@ namespace SystemTestingPlugin.Models
                 RaisePropertyChanged("EmptyFlag");
             }
         }
+        private object gridSelectedValue;
+
+        public object GridSelectedValue
+        {
+            get { return gridSelectedValue; }
+            set
+            {
+                gridSelectedValue = value;
+                RaisePropertyChanged("GridSelectedValue");
+            }
+        }
+        /// <summary>
+        /// 引用表
+        /// </summary>
+        private DataTable refDataTable;
+        /// <summary>
+        /// 引用表
+        /// </summary>
+        public DataTable RefDataTable
+        {
+            get
+            {
+                if (refDataTable == null)
+                    refDataTable = new DataTable();
+                return refDataTable;
+            }
+            set
+            {
+                refDataTable = value;
+                RaisePropertyChanged("RefDataTable");
+            }
+        }
     }
 }

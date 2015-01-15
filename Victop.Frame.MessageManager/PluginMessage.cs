@@ -28,10 +28,10 @@ using Victop.Frame.PublicLib.Helpers;
         /// <param name="replyCallBack">应答回调</param>
         /// <param name="validTime">消息有效时间(秒)</param>
 		/// </summary>
-        public virtual void SendMessage(string objectId, string messageInfo, WaitCallback replyCallBack, long validTime = 15)
+        public virtual void SendMessage(string messageType, Dictionary<string, object> messageContent, WaitCallback replyCallBack, long validTime = 15)
         {
             PluginMessageFormManager pluginMessageFormManager = new PluginMessageFormManager();
-            pluginMessageFormManager.CheckMessageFormat(messageInfo, replyCallBack, validTime,DataFormEnum.DATASET);
+            pluginMessageFormManager.CheckMessageFormat(messageType, messageContent, replyCallBack, validTime, DataFormEnum.DATASET);
         }
         /// <summary>
         /// 发送消息(JSON数据)
@@ -41,10 +41,10 @@ using Victop.Frame.PublicLib.Helpers;
         /// <param name="replyCallBack"></param>
         /// <param name="validTime"></param>
         /// <param name="dataForm"></param>
-        public virtual void SendMessage(string objectId, string messageInfo, WaitCallback replyCallBack, DataFormEnum dataForm, long validTime = 15)
+        public virtual void SendMessage(string messageType, Dictionary<string,object> messageContent, WaitCallback replyCallBack, DataFormEnum dataForm, long validTime = 15)
         {
             PluginMessageFormManager pluginMessageFormManager = new PluginMessageFormManager();
-            pluginMessageFormManager.CheckMessageFormat(messageInfo, replyCallBack, validTime, dataForm);
+            pluginMessageFormManager.CheckMessageFormat(messageType, messageContent, replyCallBack, validTime, dataForm);
         }
         /// <summary>
         /// 执行插件回调
