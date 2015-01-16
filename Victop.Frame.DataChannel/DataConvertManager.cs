@@ -507,7 +507,10 @@ namespace Victop.Frame.DataChannel
                             DataColumn dc = new DataColumn(keyStr);
                             if (modelDefInfo.ModelClientRef != null && modelDefInfo.ModelClientRef.Count > 0)
                             {
-                                MongoModelInfoOfClientRefModel clientRefModel = modelDefInfo.ModelClientRef.FirstOrDefault(it => (it.ClientRefField.Equals(string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), item.FieldKey))));
+                                string refFieldStr = string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), item.FieldKey);
+                                string fieldStr = refFieldStr.Substring(refFieldStr.LastIndexOf(".") + 1);
+                                string replaceStr = refFieldStr.Substring(0, refFieldStr.LastIndexOf("dataArray"));
+                                MongoModelInfoOfClientRefModel clientRefModel = modelDefInfo.ModelClientRef.FirstOrDefault(it => (it.ClientRefField.StartsWith(replaceStr) && it.ClientRefField.EndsWith(fieldStr)));
                                 if (clientRefModel != null)
                                 {
                                     dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefModel));
@@ -563,7 +566,10 @@ namespace Victop.Frame.DataChannel
                             DataColumn dc = new DataColumn(item.FieldKey);
                             if (modelDefInfo.ModelClientRef != null && modelDefInfo.ModelClientRef.Count > 0)
                             {
-                                MongoModelInfoOfClientRefModel clientRefModel = modelDefInfo.ModelClientRef.FirstOrDefault(it => (it.ClientRefField.Equals(string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), item.FieldKey))));
+                                string refFieldStr = string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), item.FieldKey);
+                                string fieldStr = refFieldStr.Substring(refFieldStr.LastIndexOf(".") + 1);
+                                string replaceStr = refFieldStr.Substring(0, refFieldStr.LastIndexOf("dataArray"));
+                                MongoModelInfoOfClientRefModel clientRefModel = modelDefInfo.ModelClientRef.FirstOrDefault(it => (it.ClientRefField.StartsWith(replaceStr) && it.ClientRefField.EndsWith(fieldStr)));
                                 if (clientRefModel != null)
                                 {
                                     dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefModel));

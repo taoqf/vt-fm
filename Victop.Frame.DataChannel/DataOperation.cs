@@ -20,17 +20,6 @@ namespace Victop.Frame.DataChannel
     public class DataOperation
     {
         /// <summary>
-        /// 根据通道号获取数据集
-        /// </summary>
-        /// <param name="channelId">通道号</param>
-        public virtual DataSet GetData(string channelId)
-        {
-            DataChannelManager dataChannelManager = new DataChannelManager();
-            Hashtable hashData = dataChannelManager.GetData(channelId);
-            ChannelData channelData = hashData["Data"] as ChannelData;
-            return channelData.DataInfo;
-        }
-        /// <summary>
         /// 获取数据集
         /// </summary>
         /// <param name="channelId"></param>
