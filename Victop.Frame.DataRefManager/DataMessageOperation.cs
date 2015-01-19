@@ -12,6 +12,8 @@ using Victop.Frame.MessageManager;
 using Victop.Frame.PublicLib;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.SyncOperation;
+using Victop.Server.Controls;
+using Victop.Server.Controls.Models;
 
 namespace Victop.Frame.DataMessageManager
 {
@@ -92,7 +94,7 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="dataForm">数据格式(JSON/DATASET)</param>
         /// <param name="waiteTime">同步等待时间</param>
         /// <returns>应答消息内容</returns>
-        public Dictionary<string, object> SendSyncMessage(string messageType, Dictionary<string, object> messageContent, string dataForm, int waiteTime = 15)
+        public Dictionary<string, object> SendSyncMessage(string messageType, Dictionary<string, object> messageContent, string dataForm="JSON", int waiteTime = 15)
         {
             MessageOperation messageOp = new MessageOperation();
             return messageOp.SendMessage(messageType, messageContent, dataForm, waiteTime);
@@ -105,7 +107,7 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="replyCallBack">回调方法</param>
         /// <param name="dataForm">数据格式</param>
         /// <param name="validTime">超时时间</param>
-        public void SendAsyncMessage(string messageType, Dictionary<string, object> messageContent, WaitCallback replyCallBack, string dataForm, long validTime = 15)
+        public void SendAsyncMessage(string messageType, Dictionary<string, object> messageContent, WaitCallback replyCallBack=null, string dataForm="JSON", long validTime = 15)
         {
             PluginMessage pluginMessage = new PluginMessage();
             pluginMessage.SendMessage(messageType, messageContent, replyCallBack, dataForm.Equals("JSON") ? DataFormEnum.JSON : DataFormEnum.DATASET, validTime);
@@ -420,7 +422,69 @@ namespace Victop.Frame.DataMessageManager
             return resultMessage;
         }
 
-
+        /// <summary>
+        /// 启动窗口插件
+        /// </summary>
+        /// <param name="PluginName">插件名称</param>
+        /// <param name="paramDic">参数键值对</param>
+        /// <param name="waitTime">同步等待时间(秒)</param>
+        /// <returns></returns>
+        public PluginModel StratPlugin(string PluginName, Dictionary<string, object> paramDic = null, long waitTime = 15)
+        {
+            PluginModel pluginModel = new PluginModel();
+            MessageOperation messageOp = new MessageOperation();
+            string messageType = "PluginService.PluginRun";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("PluginName", PluginName);
+            contentDic.Add("PluginPath", "");
+            contentDic.Add("PluginParam", JsonHelper.ToJson(paramDic));
+            Dictionary<string, object> resultDic = messageOp.SendMessage(messageType, contentDic);
+            if (!resultDic["ReplyMode"].ToString().Equals("0"))
+            {
+                string messageId = resultDic["MessageId"].ToString();
+                DataOperation PluginOper = new DataOperation();
+                List<Dictionary<string, object>> pluginList = PluginOper.GetPluginInfo();
+                foreach (var item in pluginList)
+                {
+                    if (item["ObjectId"].ToString().Equals(messageId))
+                    {
+                        pluginModel.PluginInterface = item["IPlugin"] as IPlugin;
+                        pluginModel.AppId = item["AppId"].ToString();
+                        pluginModel.ObjectId = item["ObjectId"].ToString();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                pluginModel = new PluginModel()
+                {
+                    ErrorMsg = resultDic["ReplyAlertMessage"].ToString(),
+                    ObjectId = string.Empty
+                };
+            }
+            return pluginModel;
+        }
+        /// <summary>
+        /// 释放插件
+        /// </summary>
+        /// <param name="ObjectId"></param>
+        /// <param name="waitTime"></param>
+        /// <returns></returns>
+        public bool StopPlugin(string ObjectId, int waitTime = 15)
+        {
+            bool result = false;
+            MessageOperation messageOp = new MessageOperation();
+            string messageType = "PluginService.PluginStop";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("ObjectId", ObjectId);
+            Dictionary<string, object> resultDic = messageOp.SendMessage(messageType, contentDic, waitTime);
+            if (resultDic != null)
+            {
+                result = resultDic["ReplyMode"].ToString().Equals("0") ? false : true;
+            }
+            return result;
+        }
         /// <summary>
         /// 获取活动插件信息
         /// </summary>

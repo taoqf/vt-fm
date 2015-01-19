@@ -11,12 +11,12 @@ using System.Windows.Media.Animation;
 using GalaSoft.MvvmLight.Command;
 using ThemeManagerPlugin.Models;
 using Victop.Frame.PublicLib.Helpers;
-using Victop.Frame.SyncOperation;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
+using Victop.Frame.DataMessageManager;
 
 namespace ThemeManagerPlugin.ViewModels
 {
@@ -104,7 +104,7 @@ namespace ThemeManagerPlugin.ViewModels
             get
             {
                 return new RelayCommand<object>((x) => {
-                    PluginOperation pluginOp = new PluginOperation();
+                    DataMessageOperation pluginOp = new DataMessageOperation();
                     pluginOp.StopPlugin(x as string);
                 });
             }
@@ -187,8 +187,8 @@ namespace ThemeManagerPlugin.ViewModels
             ServiceParams.Add("SourceName", this.SelectedListBoxItem.ThemeName);
             ServiceParams.Add("SkinPath", this.SelectedListBoxItem.SkinPath);
             contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
-            MessageOperation messageOp = new MessageOperation();
-            messageOp.SendMessage(messageType, contentDic);
+            DataMessageOperation messageOp = new DataMessageOperation();
+            messageOp.SendAsyncMessage(messageType, contentDic);
 
         }
 

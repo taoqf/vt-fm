@@ -58,7 +58,7 @@ namespace Victop.Frame.CoreLibrary
 		public virtual ActivePluginInfo GetPlugin(ActivePluginInfo pluginInfo)
 		{
             ActivePluginInfo activPluginInfo = null;
-            if (activPluginInfo != null && CoreDataCollection.ActivePluginList.Count > 0)
+            if (pluginInfo != null && CoreDataCollection.ActivePluginList.Count > 0)
             {
                 activPluginInfo = CoreDataCollection.ActivePluginList.Values.FirstOrDefault(it => it.BusinessKey == pluginInfo.BusinessKey);
             }

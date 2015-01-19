@@ -16,7 +16,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using Victop.Frame.MessageManager;
+using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Wpf.Controls;
 
@@ -107,11 +107,11 @@ namespace PortalFramePlugin.Views
 
         private void GetNotifyMessage()
         {
-            PluginMessage pluginMessage = new PluginMessage();
+            DataMessageOperation pluginMessage = new DataMessageOperation();
             string messageType="TaskNotifyService.GetNoifyInfo";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("ObjectId", Guid.NewGuid().ToString());
-            pluginMessage.SendMessage(messageType, contentDic, new WaitCallback(SaveDataSuccess));
+            pluginMessage.SendAsyncMessage(messageType, contentDic, new WaitCallback(SaveDataSuccess));
         }
         private void SaveDataSuccess(object message)
         {

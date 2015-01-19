@@ -7,7 +7,6 @@ using GalaSoft.MvvmLight.Command;
 using Victop.Frame.CoreLibrary;
 using Victop.Frame.CoreLibrary.Models;
 using Victop.Frame.PublicLib.Helpers;
-using Victop.Frame.MessageManager;
 using System.Data;
 using System.Windows;
 using System.Configuration;
@@ -20,15 +19,14 @@ using System.Collections.ObjectModel;
 using System.Xml.Linq;
 using System.Reflection;
 using PortalFramePlugin.Views;
-using Victop.Frame.SyncOperation;
 using System.Windows.Navigation;
 using System.IO;
 using System.Text;
 using System.Windows.Media;
 using System.Drawing;
-using Victop.Frame.DataChannel;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
+using Victop.Frame.DataMessageManager;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -314,7 +312,7 @@ namespace PortalFramePlugin.ViewModels
                 return new RelayCommand(() =>
                 {
                     //获取插件信息
-                    DataOperation dataop = new DataOperation();
+                    DataMessageOperation dataop = new DataMessageOperation();
                     pluginList = dataop.GetPluginInfo();
                     //创建窗体
                     if (win_PluginList == null)
@@ -361,8 +359,8 @@ namespace PortalFramePlugin.ViewModels
             string messageType = "ServerCenterService.ChangeTheme";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("ServiceParams", "");
-            MessageOperation messageOp = new MessageOperation();
-            messageOp.SendMessage(messageType, contentDic);
+            DataMessageOperation messageOp = new DataMessageOperation();
+            messageOp.SendAsyncMessage(messageType, contentDic);
             ChangeFrameWorkLanguage();
         }
         private void ChangeFrameWorkLanguage()
@@ -370,8 +368,8 @@ namespace PortalFramePlugin.ViewModels
             string messageType = "ServerCenterService.ChangeLanguage";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("ServiceParams", "");
-            MessageOperation messageOp = new MessageOperation();
-            messageOp.SendMessage(messageType, contentDic);
+            DataMessageOperation messageOp = new DataMessageOperation();
+            messageOp.SendAsyncMessage(messageType, contentDic);
         }
         #endregion
 
@@ -619,16 +617,15 @@ namespace PortalFramePlugin.ViewModels
                 return new RelayCommand(() =>
                 {
                     UserControl tabCtrl = (UserControl)(SelectedTabItem.Content);
+                    DataMessageOperation messageOp = new DataMessageOperation();
                     if (!string.IsNullOrEmpty(tabCtrl.Uid))
                     {
-                        MessageOperation messageOp = new MessageOperation();
                         string messageType = "PluginService.PluginStop";
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("ObjectId", tabCtrl.Uid);
-                        messageOp.SendMessage(messageType, contentDic);
+                        messageOp.SendAsyncMessage(messageType, contentDic);
                     }
-                    PluginOperation pluginOp = new PluginOperation();
-                    ActivePluginNum = pluginOp.GetActivePluginList().Count;
+                    ActivePluginNum = messageOp.GetPluginInfo().Count;
                 });
             }
         }
@@ -837,7 +834,7 @@ namespace PortalFramePlugin.ViewModels
             {
                 if (selectedFourthMenu.ActionType == "1")//启动插件
                 {
-                    PluginOperation pluginOp = new PluginOperation();
+                    DataMessageOperation pluginOp = new DataMessageOperation();
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
                     paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
                     paramDic.Add("configsystemid", selectedFourthMenu.ConfigSystemId);
@@ -919,14 +916,14 @@ namespace PortalFramePlugin.ViewModels
         {
             try
             {
-                PluginOperation pluginOp = new PluginOperation();
+                DataMessageOperation pluginOp = new DataMessageOperation();
                 switch (pluginModel.PluginInterface.ShowType)
                 {
                     case 0:
                         Window pluginWin = pluginModel.PluginInterface.StartWindow;
                         pluginWin.Uid = pluginModel.ObjectId;
                         pluginWin.Owner = mainWindow;
-                        ActivePluginNum = pluginOp.GetActivePluginList().Count;
+                        ActivePluginNum = pluginOp.GetPluginInfo().Count;
                         pluginWin.ShowDialog();
                         SendPluginCloseMessage(pluginModel);
                         break;
@@ -944,7 +941,7 @@ namespace PortalFramePlugin.ViewModels
                     default:
                         break;
                 }
-                ActivePluginNum = pluginOp.GetActivePluginList().Count;
+                ActivePluginNum = pluginOp.GetPluginInfo().Count;
             }
             catch (Exception ex)
             {
@@ -957,7 +954,7 @@ namespace PortalFramePlugin.ViewModels
         /// <param name="pluginModel"></param>
         private static void SendPluginCloseMessage(PluginModel pluginModel)
         {
-            PluginOperation pluginOp = new PluginOperation();
+            DataMessageOperation pluginOp = new DataMessageOperation();
             pluginOp.StopPlugin(pluginModel.ObjectId);
         }
         #endregion
@@ -965,7 +962,7 @@ namespace PortalFramePlugin.ViewModels
         #region 用户登录
         private void UserLogin()
         {
-            PluginOperation pluginOp = new PluginOperation();
+            DataMessageOperation pluginOp = new DataMessageOperation();
             string loginPlugin = ConfigurationManager.AppSettings["loginWindow"];
             PluginModel pluginModel = pluginOp.StratPlugin(loginPlugin);
             IPlugin PluginInstance = pluginModel.PluginInterface;
@@ -975,8 +972,7 @@ namespace PortalFramePlugin.ViewModels
             bool? result = loginWin.ShowDialog();
             if (result == true)
             {
-                MessageOperation messageOp = new MessageOperation();
-                Dictionary<string, object> userDic = messageOp.SendMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                Dictionary<string, object> userDic = pluginOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                 if (userDic != null)
                 {
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
@@ -1007,13 +1003,13 @@ namespace PortalFramePlugin.ViewModels
 
             if (string.IsNullOrWhiteSpace(fileInfo) == false)
             {
-                MessageOperation messageOperation = new MessageOperation();
+                DataMessageOperation messageOperation = new DataMessageOperation();
                 Dictionary<string, object> messageContent = new Dictionary<string, object>();
                 Dictionary<string, string> address = new Dictionary<string, string>();
                 address.Add("DownloadFileId", fileInfo);
                 address.Add("DownloadToPath", path);
                 messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
-                Dictionary<string, object> downResult = messageOperation.SendMessage("ServerCenterService.DownloadDocument", messageContent);
+                Dictionary<string, object> downResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument", messageContent);
                 if (downResult != null)
                 {
                     if (downResult["ReplyMode"].ToString() == "1")
@@ -1030,7 +1026,7 @@ namespace PortalFramePlugin.ViewModels
         #region 换肤
         private void ChangeTheme()
         {
-            PluginOperation pluginOp = new PluginOperation();
+            DataMessageOperation pluginOp = new DataMessageOperation();
             PluginModel pluginModel = pluginOp.StratPlugin("ThemeManagerPlugin");
             IPlugin PluginInstance = pluginModel.PluginInterface;
             Window themeWin = PluginInstance.StartWindow;
@@ -1112,8 +1108,8 @@ namespace PortalFramePlugin.ViewModels
             string messageType = "GalleryService.SetGalleryInfo";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("GalleryKey", GaleryKey);
-            MessageOperation messageOp = new MessageOperation();
-            messageOp.SendMessage(messageType, contentDic);
+            DataMessageOperation messageOp = new DataMessageOperation();
+            messageOp.SendAsyncMessage(messageType, contentDic);
         }
         #endregion
 

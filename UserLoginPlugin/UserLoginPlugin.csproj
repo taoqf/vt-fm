@@ -141,19 +141,13 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Victop.Frame.MessageManager\Victop.Frame.MessageManager.csproj">
-      <Project>{e2066a80-e481-488d-a260-5c0ac9b7eff0}</Project>
-      <Name>Victop.Frame.MessageManager</Name>
-      <Private>False</Private>
+    <ProjectReference Include="..\Victop.Frame.DataRefManager\Victop.Frame.DataMessageManager.csproj">
+      <Project>{d3ee684e-9600-460b-a3e3-39bf32180f9f}</Project>
+      <Name>Victop.Frame.DataMessageManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.PublicLib\Victop.Frame.PublicLib.csproj">
       <Project>{90c4d04f-f952-4c63-8a69-0c9d12e050fb}</Project>
       <Name>Victop.Frame.PublicLib</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Victop.Frame.SyncOperation\Victop.Frame.SyncOperation.csproj">
-      <Project>{d852f8b6-0ff8-4637-bdaa-9cd145d1aa65}</Project>
-      <Name>Victop.Frame.SyncOperation</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\Victop.Server.Controls\Victop.Server.Controls.csproj">

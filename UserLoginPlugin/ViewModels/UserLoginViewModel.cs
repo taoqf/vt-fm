@@ -14,12 +14,11 @@ using System.Windows;
 using System.Windows.Controls;
 using Victop.Server.Controls.Models;
 using Victop.Frame.PublicLib.Managers;
-using Victop.Frame.MessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using System.Threading;
 using System.Data;
-using Victop.Frame.SyncOperation;
 using Victop.Wpf.Controls;
+using Victop.Frame.DataMessageManager;
 
 namespace UserLoginPlugin.ViewModels
 {
@@ -134,11 +133,11 @@ namespace UserLoginPlugin.ViewModels
             get
             {
                 return new RelayCommand(() => {
-                    MessageOperation messageOp = new MessageOperation();
+                    DataMessageOperation messageOp = new DataMessageOperation();
                     string messageType = "PluginService.PluginStop";
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                     contentDic.Add("ObjectId", LoginWindow.Uid);
-                    messageOp.SendMessage(messageType,contentDic);
+                    messageOp.SendAsyncMessage(messageType,contentDic);
                 });
             }
         }
@@ -261,8 +260,8 @@ namespace UserLoginPlugin.ViewModels
             string messageType = "GalleryService.GetGalleryInfo";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("usercode", "test7");
-            MessageOperation messageOp = new MessageOperation();
-            Dictionary<string, object> returnDic = messageOp.SendMessage(messageType, contentDic);
+            DataMessageOperation messageOp = new DataMessageOperation();
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(messageType, contentDic);
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {
                 GalleryList = JsonHelper.ReadJsonObject<Dictionary<string, string>>(returnDic["ReplyContent"].ToString());
@@ -281,8 +280,8 @@ namespace UserLoginPlugin.ViewModels
             string messageType = "GalleryService.SetGalleryInfo";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("GalleryKey", SelectedGallery);
-            MessageOperation messageOp = new MessageOperation();
-            messageOp.SendMessage(messageType, contentDic);
+            DataMessageOperation messageOp = new DataMessageOperation();
+            messageOp.SendAsyncMessage(messageType, contentDic);
         }
         #endregion
 
@@ -296,8 +295,8 @@ namespace UserLoginPlugin.ViewModels
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
                 string MessageType = "LoginService.userLoginNew";
-                MessageOperation messageOp = new MessageOperation();
-                Dictionary<string, object> returnDic = messageOp.SendMessage(MessageType, contentDic);
+                DataMessageOperation messageOp = new DataMessageOperation();
+                Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                 if (returnDic != null)
                 {
                     if (!returnDic["ReplyMode"].ToString().Equals("0"))
