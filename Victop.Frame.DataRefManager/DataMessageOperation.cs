@@ -67,6 +67,34 @@ namespace Victop.Frame.DataMessageManager
             return dataOp.GetJSONData(viewId, dataPath);
         }
         /// <summary>
+        /// 获取简单引用数据
+        /// </summary>
+        /// <param name="viewId">通道标识</param>
+        /// <param name="dataPath">路径</param>
+        /// <param name="columnName">列名</param>
+        /// <param name="target">目标列</param>
+        /// <param name="targetValue">目标值</param>
+        /// <param name="dependDic">依赖值</param>
+        /// <returns></returns>
+        public virtual DataSet GetSimpDefData(string viewId, string dataPath, string columnName, string target, string targetValue, Dictionary<string, object> dependDic = null)
+        {
+            DataOperation dataOp = new DataOperation();
+            return dataOp.GetSimpDefData(viewId, viewId, columnName, target, targetValue, dependDic);
+        }
+        /// <summary>
+        /// 获取简单引用数据
+        /// </summary>
+        /// <param name="viewId">通道标识</param>
+        /// <param name="dataPath">路径</param>
+        /// <param name="columnName">列名</param>
+        /// <param name="dependDic">依赖值</param>
+        /// <returns></returns>
+        public virtual DataSet GetSimpDefData(string viewId, string dataPath, string columnName, Dictionary<string, object> dependDic = null)
+        {
+            DataOperation dataOp = new DataOperation();
+            return dataOp.GetSimpDefData(viewId, dataPath, columnName, dependDic);
+        }
+        /// <summary>
         /// 释放数据
         /// </summary>
         /// <param name="channelId">通道标识</param>

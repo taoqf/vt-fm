@@ -93,14 +93,6 @@
     <Compile Include="Models\PropertyModelBase.cs" />
     <Compile Include="Models\TemplateControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Runtime\CompntDefinModel.cs" />
-    <Compile Include="Runtime\CompntSettingModel.cs" />
-    <Compile Include="Runtime\ComponentModel.cs" />
-    <Compile Include="Runtime\DefinParamMapModel.cs" />
-    <Compile Include="Runtime\DefinPluginsModel.cs" />
-    <Compile Include="Runtime\DefinViewsModel.cs" />
-    <Compile Include="Runtime\OrgnizeRuntime.cs" />
-    <Compile Include="Runtime\ViewsBlockModel.cs" />
     <Compile Include="WeChat\WeChatAPIReturnModel.cs" />
     <Compile Include="WeChat\LoginInfo.cs" />
     <Compile Include="WeChat\LoginUser.cs" />

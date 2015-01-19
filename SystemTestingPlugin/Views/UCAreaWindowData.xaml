@@ -35,7 +35,6 @@
                         <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSearch" Content="查询" Command="{Binding btnSearchClickCommand,UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=dgridSearch}" TabIndex="6"/>
                         <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewJsonData" Content="查看Json数据" Command="{Binding btnViewJsonDataClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
                         <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding DataInfoModel.VertifyMsg}"/>
-                        <ctrl:VicTextBox Width="100" Height="24" IsReadOnly="False"/>
                     </ctrl:VicWrapPanelNormal>
                     <ctrl:VicTabControlNormal Grid.Row="1">
                         <ctrl:VicTabItemNormal Header="查询条件" AllowDelete="False">
