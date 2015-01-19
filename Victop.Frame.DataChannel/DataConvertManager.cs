@@ -486,6 +486,20 @@ namespace Victop.Frame.DataChannel
         private void BuildColumnsOfDataTable(string tableName, DataTable newDt, List<MongoModelInfoOfTableStructureModel> tableList, MongoModelInfoModel modelDefInfo, MongoSimpleRefInfoModel simpleRefList, string viewId, string dataPath, bool masterFlag = true)
         {
             List<object> dataPathList = JsonHelper.ToObject<List<object>>(dataPath);
+            string RebuildPath = string.Empty;
+            #region 构建Path
+            for (int i = 0; i < dataPathList.Count; i++)
+            {
+                if (dataPathList[i].GetType().Name.Equals("String"))
+                {
+                    RebuildPath += dataPathList[i].ToString() + ".";
+                }
+            }
+            if (dataPathList.Count != 1)
+            {
+                RebuildPath += "dataArray.";
+            }
+            #endregion
             #region 组织table中字段
             foreach (MongoModelInfoOfTableStructureModel item in tableList)
             {
@@ -630,9 +644,9 @@ namespace Victop.Frame.DataChannel
                     {
                         foreach (MongoModelInfoOfRefConditionContentModel refitem in item.RefView)
                         {
-                            if (refitem.ContentLeft.StartsWith(tableName))
+                            if (refitem.ContentLeft.StartsWith(RebuildPath)&&!refitem.ContentLeft.Substring(RebuildPath.Length).Contains("."))
                             {
-                                string leftStr = refitem.ContentLeft.Substring(refitem.ContentLeft.IndexOf('.') + 1);
+                                string leftStr = refitem.ContentLeft.Substring(refitem.ContentLeft.LastIndexOf('.') + 1);
                                 if (newDt.Columns.Contains(leftStr))
                                     continue;
                                 DataColumn dc = new DataColumn(leftStr);
