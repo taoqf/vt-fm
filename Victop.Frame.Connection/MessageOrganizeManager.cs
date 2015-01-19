@@ -1012,6 +1012,7 @@ namespace Victop.Frame.Connection
                 messageInfo.ToRole = "victop-task-role";
                 Dictionary<string, object> dicMessageControl = new Dictionary<string, object>();
                 dicMessageControl.Add("sessionid", loginUserInfo.SessionId);
+                dicMessageControl.Add("BusinessKey", dicContent.ContainsKey("DocCode") ? dicContent["DocCode"] : null);
                 messageInfo.MessageControl = JsonHelper.ToJson(dicMessageControl);
                 #endregion
                 #region 处理Content
