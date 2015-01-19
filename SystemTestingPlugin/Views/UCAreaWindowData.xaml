@@ -22,19 +22,20 @@
                     </ctrl:VicGridNormal.RowDefinitions>
                     <ctrl:VicWrapPanelNormal Grid.Row="0">
                         <ctrl:VicLabelNormal>ModelId:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="200" Height="24" Name="tBoxModelId" VicText="{Binding DataInfoModel.ModelId}"/>
+                        <ctrl:VicTextBoxNormal Width="200" Height="24" Name="tBoxModelId" VicText="{Binding DataInfoModel.ModelId}" TabIndex="1"/>
                         <ctrl:VicLabelNormal>SystemId:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxSystemId" VicText="{Binding DataInfoModel.SystemId}"/>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxSystemId" VicText="{Binding DataInfoModel.SystemId}" TabIndex="2"/>
                         <ctrl:VicLabelNormal>ConfigsystemId</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxConfigsystemId" VicText="{Binding DataInfoModel.ConfigsystemId}"/>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxConfigsystemId" VicText="{Binding DataInfoModel.ConfigsystemId}" TabIndex="3"/>
                         <ctrl:VicLabelNormal>SpaceId</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxSpaceId" VicText="{Binding DataInfoModel.SpaceId}"/>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxSpaceId" VicText="{Binding DataInfoModel.SpaceId}" TabIndex="4"/>
                         <ctrl:VicLabelNormal>TableName:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxTableName" VicText="{Binding DataInfoModel.TableName}"/>
+                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxTableName" VicText="{Binding DataInfoModel.TableName}" TabIndex="5"/>
                         <ctrl:VicCheckBoxNormal  Name="cBoxEmpty" Content="数据" IsChecked="{Binding DataInfoModel.EmptyFlag}"/>
-                        <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSearch" Content="查询" Command="{Binding btnSearchClickCommand,UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=dgridSearch}"/>
+                        <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSearch" Content="查询" Command="{Binding btnSearchClickCommand,UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=dgridSearch}" TabIndex="6"/>
                         <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewJsonData" Content="查看Json数据" Command="{Binding btnViewJsonDataClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
                         <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding DataInfoModel.VertifyMsg}"/>
+                        <ctrl:VicTextBox Width="100" Height="24" IsReadOnly="False"/>
                     </ctrl:VicWrapPanelNormal>
                     <ctrl:VicTabControlNormal Grid.Row="1">
                         <ctrl:VicTabItemNormal Header="查询条件" AllowDelete="False">
@@ -44,14 +45,7 @@
                             <ctrl:VicRichTextBoxNormal Name="rTBoxDataPath" VicText="{Binding DataInfoModel.DataPath,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
                         </ctrl:VicTabItemNormal>
                         <ctrl:VicTabItemNormal Header="DataTable数据" AllowDelete="False">
-                            <ctrl:VicGridNormal>
-                                <ctrl:VicGridNormal.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </ctrl:VicGridNormal.ColumnDefinitions>
-                                <ctrl:VicDataGrid Grid.Column="0" AutoGenerateColumns="False" IsUserSetColumn="False" Name="dgridSearch" ItemsSource="{Binding DataInfoModel.ResultDataTable}" SelectedValue="{Binding DataInfoModel.GridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="_id"/>
-                                <ctrl:VicDataGrid Grid.Column="1" AutoGenerateColumns="False" Name="dgridRef" ItemsSource="{Binding DataInfoModel.RefDataTable}"/>
-                            </ctrl:VicGridNormal>
+                            <ctrl:VicDataGrid AutoGenerateColumns="False" IsUserSetColumn="False" Name="dgridSearch" ItemsSource="{Binding DataInfoModel.ResultDataTable}" SelectedValue="{Binding DataInfoModel.GridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="_id"/>
                         </ctrl:VicTabItemNormal>
                         <ctrl:VicTabItemNormal Header="Json数据" AllowDelete="False">
                             <ctrl:VicRichTextBoxNormal Name="rTBoxJsonData" VicText="{Binding DataInfoModel.JsonData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>

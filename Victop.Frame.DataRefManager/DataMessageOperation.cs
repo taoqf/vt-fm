@@ -25,11 +25,23 @@ namespace Victop.Frame.DataMessageManager
         /// </summary>
         /// <param name="viewId">通道标识</param>
         /// <param name="dataPath">路径</param>
+        /// <param name="structDs">结构Dataset</param>
         /// <returns></returns>
-        public DataSet GetData(string viewId, string dataPath)
+        public DataSet GetData(string viewId, string dataPath, DataSet structDs = null)
         {
             DataOperation dataOp = new DataOperation();
-            return dataOp.GetData(viewId, dataPath);
+            return dataOp.GetData(viewId, dataPath, structDs);
+        }
+        /// <summary>
+        /// 保存数据到数据通道
+        /// </summary>
+        /// <param name="channelId">通道标识</param>
+        /// <param name="dataPath">路径</param>
+        /// <returns></returns>
+        public virtual bool SaveData(string channelId, string dataPath)
+        {
+            DataOperation dataOp = new DataOperation();
+            return dataOp.SaveData(channelId, dataPath);
         }
         /// <summary>
         /// 获取JSON数据
@@ -40,6 +52,17 @@ namespace Victop.Frame.DataMessageManager
         {
             DataOperation dataOp = new DataOperation();
             return dataOp.GetJSONData(viewId);
+        }
+        /// <summary>
+        /// 依据路径获取JSON数据
+        /// </summary>
+        /// <param name="viewId">通道标识</param>
+        /// <param name="dataPath">路径</param>
+        /// <returns></returns>
+        public string GetJSONData(string viewId, string dataPath)
+        {
+            DataOperation dataOp = new DataOperation();
+            return dataOp.GetJSONData(viewId, dataPath);
         }
         /// <summary>
         /// 释放数据
@@ -96,8 +119,11 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="fieldName">字段名称</param>
         /// <param name="rowValue">行值</param>
         /// <param name="RefDataSet">返回</param>
+        /// <param name="systemId">系统Id</param>
+        /// <param name="configsystemId">配置系统Id</param>
+        /// <param name="foreRunnerFlag">前导标签</param>
         /// <returns>引用消息</returns>
-        public string GetRefData(string viewId, string dataPath, string fieldName, string rowValue, out DataSet RefDataSet, string systemId = null, string configsystemId = null)
+        public string GetRefData(string viewId, string dataPath, string fieldName, string rowValue, out DataSet RefDataSet, string systemId = null, string configsystemId = null, bool foreRunnerFlag = true)
         {
             RefDataSet = new DataSet();
             string resultMessage = string.Empty;
@@ -234,7 +260,7 @@ namespace Victop.Frame.DataMessageManager
                         if (clientRefModel != null)
                         {
                             relationInfo = new RefRelationInfo() { Id = Guid.NewGuid().ToString(), TriggerField = clientRefModel.ClientRefField, RefType = RefTypeEnum.CLIENTREF, RowId = rowValue };
-                            if (clientRefModel.ClientRefForeRunner != null && !string.IsNullOrEmpty(clientRefModel.ClientRefForeRunner.RefModel))
+                            if (clientRefModel.ClientRefForeRunner != null && !string.IsNullOrEmpty(clientRefModel.ClientRefForeRunner.RefModel) && !foreRunnerFlag)
                             {
                                 //TODO:根据前导决定是否自动查询
                                 ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.ROUTER, ReplyContent = JsonHelper.ToJson(clientRefModel) };
@@ -396,7 +422,7 @@ namespace Victop.Frame.DataMessageManager
 
 
         /// <summary>
-        /// 根据对象Id获取插件信息
+        /// 获取活动插件信息
         /// </summary>
         /// <param name="objectId">对象id</param>
         /// <returns></returns>
@@ -534,7 +560,7 @@ namespace Victop.Frame.DataMessageManager
             {
                 return string.Empty;
             }
-        } 
+        }
         #endregion
     }
 }

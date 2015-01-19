@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="SystemTestingPlugin.Views.UCUniversalRefWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:units="clr-namespace:Victop.Frame.Units;assembly=Victop.Frame.Units"
+             xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:SystemTestingPlugin.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Name="mainView">
+    <UserControl.Resources>
+        <vm:UCUniversalRefWindowViewModel x:Key="refwinViewModel"/>
+    </UserControl.Resources>
+    <ctrl:VicGridNormal DataContext="{StaticResource ResourceKey=refwinViewModel}">
+        <ctrl:VicGridNormal.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </ctrl:VicGridNormal.ColumnDefinitions>
+        <ctrl:VicTreeView Name="tViewType" Grid.Column="0" ItemsSource="{Binding ForerunnerTreeList}" Visibility="{Binding TreeVisibility}" MinWidth="200">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=ForerunnerTreeList,Mode=TwoWay}">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                        <TextBlock TextBlock.Text="{Binding Path=TreeDisplay,Mode=TwoWay}" />
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedItemChanged">
+                    <i:InvokeCommandAction Command="{Binding tViewTypeSelectedItemChangedCommand}" CommandParameter="{Binding ElementName=tViewType, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ctrl:VicTreeView>
+        <ctrl:VicGridSplitterNormal Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="2" Background="#00FFFFFF"/>
+        <ctrl:VicGridNormal Grid.Column="2">
+            <ctrl:VicGridNormal.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </ctrl:VicGridNormal.RowDefinitions>
+            <ctrl:VicDockPanelNormal Grid.Row="0" HorizontalAlignment="Left">
+                <ctrl:VicTextBlockNormal Width="auto" Name="tBlock" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding SearchFieldCaption}"></ctrl:VicTextBlockNormal>
+                <ctrl:VicTextBoxNormal Width="100" Height="24" />
+                <ctrl:VicButtonNormal Width="100" Height="24" Content="查询" Name="btnSearch" Command="{Binding btnSearchClickCommand}"/>
+            </ctrl:VicDockPanelNormal>
+            <ctrl:VicDataGrid Grid.Row="1" IsReadOnly="True" Name="dgridData" ItemsSource="{Binding GridDataTable}" SelectionMode="{Binding GridSelectionMode}"></ctrl:VicDataGrid>
+            <units:UnitPager Grid.Row="2" Name="unitPage"></units:UnitPager>
+        </ctrl:VicGridNormal>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding mainViewLoadedCommand}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+    </ctrl:VicGridNormal>
+</UserControl>

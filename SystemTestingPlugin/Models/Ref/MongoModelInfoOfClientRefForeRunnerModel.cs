@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Victop.Frame.CoreLibrary.MongoModel
+namespace SystemTestingPlugin.Models
 {
     /// <summary>
     /// 引用前导

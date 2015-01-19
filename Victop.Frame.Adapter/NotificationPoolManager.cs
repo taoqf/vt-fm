@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Victop.Frame.CoreLibrary;
 using Victop.Frame.CoreLibrary.Models;
 using Victop.Frame.PublicLib.Helpers;
+using Victop.Server.Controls;
 namespace Victop.Frame.Adapter
 {
     public class NotificationPoolManager
@@ -45,6 +47,14 @@ namespace Victop.Frame.Adapter
                     if (iCollection != null)
                     {
                         flag = true;
+                        ActivePluginManager pluginManager = new ActivePluginManager();
+                        ActivePluginInfo pluginInfo = new ActivePluginInfo();
+                        pluginInfo = pluginManager.GetPlugin(pluginInfo);
+                        if (pluginInfo != null)
+                        {
+                            IPlugin pluginInstance = pluginInfo.PluginInstance as IPlugin;
+                            pluginInstance.Init();
+                        }
                     }
                 }
             }
