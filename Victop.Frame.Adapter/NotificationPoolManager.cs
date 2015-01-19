@@ -41,6 +41,11 @@ namespace Victop.Frame.Adapter
                     {
                         notificationList = new LinkedList<String>();
                     }
+                    string buinessKey = string.Empty;
+                    if (!string.IsNullOrEmpty(requestMessage.MessageControl))
+                    {
+                        buinessKey = JsonHelper.ReadJsonString(requestMessage.MessageControl, "BusinessKey");
+                    }
                     string result = JsonHelper.ReadJsonString(requestMessage.MessageContent, "result");
                     notificationList.AddLast(result);
                     ICollection<String> iCollection = NotificationPool.Add(requestMessage.ToId, notificationList);
@@ -49,10 +54,12 @@ namespace Victop.Frame.Adapter
                         flag = true;
                         ActivePluginManager pluginManager = new ActivePluginManager();
                         ActivePluginInfo pluginInfo = new ActivePluginInfo();
+                        pluginInfo.BusinessKey = buinessKey;
                         pluginInfo = pluginManager.GetPlugin(pluginInfo);
                         if (pluginInfo != null)
                         {
                             IPlugin pluginInstance = pluginInfo.PluginInstance as IPlugin;
+                            pluginInstance.ParamDict["result"] = result;
                             pluginInstance.Init();
                         }
                     }
