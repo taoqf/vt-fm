@@ -1051,7 +1051,7 @@ namespace Victop.Frame.Connection
                 Dictionary<string, object> runMessage = new Dictionary<string, object>();
                 Dictionary<string, object> argValues = new Dictionary<string, object>();
                 Dictionary<string, object> connectserver = new Dictionary<string, object>();
-                connectserver.Add("reply", 1);
+                connectserver.Add("reply", 0);
                 runMessage.Add("methodName", "execute");
                 runMessage.Add("ejbJNDIName", "过账总控EJB");
                 List<string> listaryTypes = new List<string>();
