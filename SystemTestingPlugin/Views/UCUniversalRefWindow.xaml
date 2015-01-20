@@ -41,12 +41,18 @@
             </ctrl:VicGridNormal.RowDefinitions>
             <ctrl:VicDockPanelNormal Grid.Row="0" HorizontalAlignment="Left">
                 <ctrl:VicTextBlockNormal Width="auto" Name="tBlock" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding SearchFieldCaption}"></ctrl:VicTextBlockNormal>
-                <ctrl:VicTextBoxNormal Width="100" Height="24" />
+                <ctrl:VicTextBoxNormal Width="100" Height="24" VicText="{Binding ConditionValue}" WaterMark="{Binding SearchFieldCaption}"/>
                 <ctrl:VicButtonNormal Width="100" Height="24" Content="查询" Name="btnSearch" Command="{Binding btnSearchClickCommand}"/>
                 <ctrl:VicButtonNormal Width="100" Height="24" Content="确定" Name="btnConfirm" Command="{Binding btnConfirmClickCommand}" CommandParameter="{Binding ElementName=dgridData}"/>
             </ctrl:VicDockPanelNormal>
             <ctrl:VicDataGrid Grid.Row="1" IsReadOnly="True" Name="dgridData" ItemsSource="{Binding GridDataTable}" SelectionMode="{Binding GridSelectionMode}"></ctrl:VicDataGrid>
-            <units:UnitPager Grid.Row="2" Name="unitPage"></units:UnitPager>
+            <units:UnitPager Grid.Row="2" Name="unitPage">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding unitPageLoadedCommand}" CommandParameter="{Binding ElementName=unitPage}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </units:UnitPager>
         </ctrl:VicGridNormal>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">

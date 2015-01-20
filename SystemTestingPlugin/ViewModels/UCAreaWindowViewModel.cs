@@ -209,7 +209,8 @@ namespace SystemTestingPlugin.ViewModels
 
         void searchDataGrid_DataReferenceColumnClick(object sender, string columnName, string columnCaption)
         {
-            RefDataModel refData = new RefDataModel() { SystemId = DataInfoModel.SystemId, ConfigSystemId = DataInfoModel.ConfigsystemId, RefFieldCaption = columnCaption, ViewId = DataInfoModel.ChannelId, DataPath = DataInfoModel.DataPath, FieldName = columnName, RowValue = DataInfoModel.GridSelectedValue.ToString(), RefCallBack = new WaitCallback(SetData) };
+            VicTextBox vicTbox = (VicTextBox)sender;
+            RefDataModel refData = new RefDataModel() { SystemId = DataInfoModel.SystemId, ConfigSystemId = DataInfoModel.ConfigsystemId, RefFieldCaption = columnCaption, ViewId = DataInfoModel.ChannelId, DataPath = DataInfoModel.DataPath, FieldName = columnName, RowValue = DataInfoModel.GridSelectedValue.ToString(), RefCallBack = new WaitCallback(SetData),RefFieldValue=vicTbox.VicText };
             UCUniversalRefWindow refWndow = new UCUniversalRefWindow(refData);
             VicWindowNormal window = new VicWindowNormal();
             window.Title = columnCaption + "数据引用";

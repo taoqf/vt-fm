@@ -719,10 +719,6 @@ namespace Victop.Frame.DataChannel
                         constructPath += pathList[i].ToString() + ".dataArray.";
                     }
                 }
-                else
-                {
-                    constructPath += "dataArray.";
-                }
             }
             constructPath += "[" + target + ":" + columnPath + "]." + targetValue;
             #endregion

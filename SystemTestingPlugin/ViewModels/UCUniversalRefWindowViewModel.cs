@@ -14,6 +14,7 @@ using Victop.Frame.PublicLib.Helpers;
 using System.Windows;
 using System.Windows.Controls;
 using Victop.Wpf.Controls;
+using Victop.Frame.Units;
 
 namespace SystemTestingPlugin.ViewModels
 {
@@ -26,6 +27,8 @@ namespace SystemTestingPlugin.ViewModels
         private RefDataModel refDataInfo;
 
         private VicWindowNormal refWindow;
+
+        UnitPager unitPage;
         /// <summary>
         /// 前导树显示状态
         /// </summary>
@@ -39,24 +42,6 @@ namespace SystemTestingPlugin.ViewModels
         /// 前导树选定节点
         /// </summary>
         private RefForerunnerTreeModel foreTreeSelectedNode;
-        /// <summary>
-        /// 前导树选定节点
-        /// </summary>
-        public RefForerunnerTreeModel ForeTreeSelectedNode
-        {
-            get
-            {
-                return foreTreeSelectedNode;
-            }
-            set
-            {
-                if (foreTreeSelectedNode != value)
-                {
-                    foreTreeSelectedNode = value;
-                    RaisePropertyChanged("ForeTreeSelectedNode");
-                }
-            }
-        }
 
         /// <summary>
         /// 前导树信息
@@ -70,6 +55,11 @@ namespace SystemTestingPlugin.ViewModels
         /// 数据列表选择模式
         /// </summary>
         private SelectionMode gridSelectionMode = SelectionMode.Single;
+
+        /// <summary>
+        /// 条件值
+        /// </summary>
+        private string conditionValue;
 
         /// <summary>
         /// 查询字段标题
@@ -133,6 +123,24 @@ namespace SystemTestingPlugin.ViewModels
             }
         }
         /// <summary>
+        /// 前导树选定节点
+        /// </summary>
+        public RefForerunnerTreeModel ForeTreeSelectedNode
+        {
+            get
+            {
+                return foreTreeSelectedNode;
+            }
+            set
+            {
+                if (foreTreeSelectedNode != value)
+                {
+                    foreTreeSelectedNode = value;
+                    RaisePropertyChanged("ForeTreeSelectedNode");
+                }
+            }
+        }
+        /// <summary>
         /// 前导树信息
         /// </summary>
         public ObservableCollection<RefForerunnerTreeModel> ForerunnerTreeList
@@ -170,6 +178,25 @@ namespace SystemTestingPlugin.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// 条件值
+        /// </summary>
+        public string ConditionValue
+        {
+            get
+            {
+                return conditionValue;
+            }
+            set
+            {
+                if (conditionValue != value)
+                {
+                    conditionValue = value;
+                    RaisePropertyChanged("ConditionValue");
+                }
+            }
+        }
         #endregion
         #region 命令
         /// <summary>
@@ -182,6 +209,7 @@ namespace SystemTestingPlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     refDataInfo = UCUniversalRefWindow.RefDataInfo;
+                    ConditionValue = refDataInfo.RefFieldValue;
                     DataMessageOperation dataOp = new DataMessageOperation();
                     DataSet tempDs = new DataSet();
                     string resultMessage = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out tempDs, null, refDataInfo.SystemId, refDataInfo.ConfigSystemId, false);
@@ -190,8 +218,11 @@ namespace SystemTestingPlugin.ViewModels
                     {
                         refDataInfo.RefDataSet = tempDs;
                         refDataInfo.RefContent = resultDic["ReplyContent"].ToString();
-
                         clientRefInfo = JsonHelper.ToObject<MongoModelInfoOfClientRefModel>(refDataInfo.RefContent);
+                        List<Dictionary<string, object>> defaultCondition = OrganizeDefaultCondition(1);
+                        resultMessage = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out tempDs, defaultCondition, refDataInfo.SystemId, refDataInfo.ConfigSystemId, false);
+                        refDataInfo.RefDataSet = tempDs;
+                        refDataInfo.RefContent = resultDic["ReplyContent"].ToString();
                         GridSelectionMode = clientRefInfo.ClientRefPopupSetting.SettingSingleRow == 0 ? SelectionMode.Single : SelectionMode.Multiple;
                         SearchFieldCaption = refDataInfo.RefFieldCaption;
                         if (clientRefInfo.ClientRefForeRunner != null && !string.IsNullOrEmpty(clientRefInfo.ClientRefForeRunner.RefModel))
@@ -229,6 +260,68 @@ namespace SystemTestingPlugin.ViewModels
                 });
             }
         }
+
+        private List<Dictionary<string, object>> OrganizeDefaultCondition(int currentPage)
+        {
+            List<Dictionary<string, object>> defaultCondition = new List<Dictionary<string, object>>();
+            MongoModelInfoOfClientRefPropertyModel propertyModel = clientRefInfo.ClientRefProperty.FirstOrDefault(it => it.PropertyKey.Equals(clientRefInfo.ClientRefField));
+            if (propertyModel != null)
+            {
+                string refTableName = propertyModel.PropertyValue.Substring(0,propertyModel.PropertyValue.IndexOf("."));
+                string refFiledName = propertyModel.PropertyValue.Substring(propertyModel.PropertyValue.LastIndexOf(".") + 1);
+                Dictionary<string, object> tableDic = new Dictionary<string, object>();
+                tableDic.Add("name", refTableName);
+                List<object> tableConditionList = new List<object>();
+                Dictionary<string, object> conditionDic = new Dictionary<string, object>();
+                conditionDic.Add(refFiledName, RegexHelper.Contains(ConditionValue));
+                if (ForeTreeSelectedNode != null)
+                {
+                    foreach (MongoModelInfoOfClientRefPropertyModel item in clientRefInfo.ClientRefForeRunner.ForeRunnerProperty)
+                    {
+                        string filedStr = item.PropertyKey.Substring(item.PropertyKey.LastIndexOf(".") + 1);
+                        string fileldValue = item.PropertyValue.Substring(item.PropertyValue.LastIndexOf(".") + 1);
+                        conditionDic.Add(filedStr, ForeTreeSelectedNode.TreeValue[fileldValue]);
+                    }
+                }
+                tableConditionList.Add(conditionDic);
+                tableDic.Add("tablecondition", tableConditionList);
+                Dictionary<string, object> pageDic = new Dictionary<string, object>();
+                pageDic.Add("size", 20);
+                pageDic.Add("index", currentPage);
+                tableDic.Add("paging", pageDic);
+                defaultCondition.Add(tableDic);
+            }
+            return defaultCondition;
+        }
+        /// <summary>
+        /// 分页部件加载命令
+        /// </summary>
+        public ICommand unitPageLoadedCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                    unitPage = (UnitPager)x;
+                    if (refDataInfo.RefDataSet.Tables.Contains("summary") && refDataInfo.RefDataSet.Tables["summary"] != null && refDataInfo.RefDataSet.Tables["summary"].Rows.Count > 0)
+                    {
+                        unitPage.ParamsModel.TotalNum = int.Parse(refDataInfo.RefDataSet.Tables["summary"].Rows[0]["totalRow"].ToString());
+                        unitPage.ParamsModel.TotalPage = int.Parse(refDataInfo.RefDataSet.Tables["summary"].Rows[0]["totalPage"].ToString());
+                    }
+                    if (refDataInfo.RefDataSet.Tables.Contains("pagingCurrent") && refDataInfo.RefDataSet.Tables["pagingCurrent"] != null && refDataInfo.RefDataSet.Tables["pagingCurrent"].Rows.Count > 0)
+                    {
+                        unitPage.ParamsModel.PageSize = int.Parse(refDataInfo.RefDataSet.Tables["pagingCurrent"].Rows[0]["size"].ToString());
+                        unitPage.ParamsModel.CurrentPage = int.Parse(refDataInfo.RefDataSet.Tables["pagingCurrent"].Rows[0]["index"].ToString());
+                    }
+                    unitPage.ParamsModel.PagerButtonClick += ParamsModel_PagerButtonClick;
+                });
+            }
+        }
+
+        void ParamsModel_PagerButtonClick(int currentPage)
+        {
+            SearchData(currentPage);
+        }
         /// <summary>
         /// 树节点选中事件
         /// </summary>
@@ -252,38 +345,34 @@ namespace SystemTestingPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    List<Dictionary<string, object>> defaultCondition = new List<Dictionary<string, object>>();
-                    #region 整理前导参数
-                    if (clientRefInfo.ClientRefForeRunner != null && !string.IsNullOrEmpty(clientRefInfo.ClientRefForeRunner.RefModel) && ForeTreeSelectedNode != null)
-                    {
-                        Dictionary<string, object> tableDic = new Dictionary<string, object>();
-                        string tableName = clientRefInfo.ClientRefForeRunner.ForeRunnerProperty[0].PropertyKey.Split('.')[0];
-                        tableDic.Add("name", tableName);
-                        List<object> tableConditionList = new List<object>();
-                        foreach (MongoModelInfoOfClientRefPropertyModel item in clientRefInfo.ClientRefForeRunner.ForeRunnerProperty)
-                        {
-                            Dictionary<string, object> conditionDic = new Dictionary<string, object>();
-                            string filedStr = item.PropertyKey.Substring(item.PropertyKey.LastIndexOf(".") + 1);
-                            string fileldValue = item.PropertyValue.Substring(item.PropertyValue.LastIndexOf(".") + 1);
-                            conditionDic.Add(filedStr, ForeTreeSelectedNode.TreeValue[fileldValue]);
-                            tableConditionList.Add(conditionDic);
-                        }
-                        tableDic.Add("tablecondition", tableConditionList);
-                        defaultCondition.Add(tableDic);
-                    }
-                    #endregion
-                    DataMessageOperation dataOp = new DataMessageOperation();
-                    DataSet ds = new DataSet();
-                    string resultStr = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out ds, defaultCondition.Count > 0 ? defaultCondition : null, refDataInfo.SystemId, refDataInfo.ConfigSystemId, true);
-                    Dictionary<string, object> resultDic = JsonHelper.ToObject<Dictionary<string, object>>(resultStr);
-                    if (!resultDic["ReplyMode"].ToString().Equals("0"))
-                    {
-                        if (ds != null && ds.Tables.Contains("dataArray"))
-                        {
-                            GridDataTable = ds.Tables["dataArray"];
-                        }
-                    }
+                    SearchData();
                 });
+            }
+        }
+
+        private void SearchData(int currentPage = 1)
+        {
+            List<Dictionary<string, object>> defaultCondition = OrganizeDefaultCondition(currentPage);
+            DataMessageOperation dataOp = new DataMessageOperation();
+            DataSet ds = new DataSet();
+            string resultStr = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out ds, defaultCondition.Count > 0 ? defaultCondition : null, refDataInfo.SystemId, refDataInfo.ConfigSystemId, true);
+            Dictionary<string, object> resultDic = JsonHelper.ToObject<Dictionary<string, object>>(resultStr);
+            if (!resultDic["ReplyMode"].ToString().Equals("0"))
+            {
+                if (ds != null && ds.Tables.Contains("dataArray"))
+                {
+                    GridDataTable = ds.Tables["dataArray"];
+                }
+                if (ds.Tables.Contains("summary") && ds.Tables["summary"] != null && ds.Tables["summary"].Rows.Count > 0)
+                {
+                    unitPage.ParamsModel.TotalNum = int.Parse(ds.Tables["summary"].Rows[0]["totalRow"].ToString());
+                    unitPage.ParamsModel.TotalPage = int.Parse(ds.Tables["summary"].Rows[0]["totalPage"].ToString());
+                }
+                if (ds.Tables.Contains("pagingCurrent") && ds.Tables["pagingCurrent"] != null && ds.Tables["pagingCurrent"].Rows.Count > 0)
+                {
+                    unitPage.ParamsModel.PageSize = int.Parse(ds.Tables["pagingCurrent"].Rows[0]["size"].ToString());
+                    unitPage.ParamsModel.CurrentPage = int.Parse(ds.Tables["pagingCurrent"].Rows[0]["index"].ToString());
+                }
             }
         }
         /// <summary>
@@ -308,7 +397,8 @@ namespace SystemTestingPlugin.ViewModels
                     {
                         refDataInfo.RefCallBack(resultDic);
                     }
-                }, (x) => {
+                }, (x) =>
+                {
                     //if (x != null)
                     //{
                     //    VicDataGrid dgrid = (VicDataGrid)x;

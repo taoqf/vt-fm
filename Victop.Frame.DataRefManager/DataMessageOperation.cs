@@ -79,7 +79,7 @@ namespace Victop.Frame.DataMessageManager
         public virtual DataSet GetSimpDefData(string viewId, string dataPath, string columnName, string target, string targetValue, Dictionary<string, object> dependDic = null)
         {
             DataOperation dataOp = new DataOperation();
-            return dataOp.GetSimpDefData(viewId, viewId, columnName, target, targetValue, dependDic);
+            return dataOp.GetSimpDefData(viewId, dataPath, columnName, target, targetValue, dependDic);
         }
         /// <summary>
         /// 获取简单引用数据
@@ -388,6 +388,14 @@ namespace Victop.Frame.DataMessageManager
                                         }
                                     }
                                     //TODO:去取数
+                                    if (string.IsNullOrEmpty(refTableName))
+                                    {
+                                        refTableName = clientRefModel.ClientRefProperty[0].PropertyValue.Substring(0, clientRefModel.ClientRefProperty[0].PropertyValue.IndexOf('.'));
+                                    }
+                                    if (defaultCondition != null && !contentDic.ContainsKey("conditions"))
+                                    {
+                                        contentDic.Add("conditions", defaultCondition);
+                                    }
                                     Dictionary<string, object> returnDic = messageOp.SendMessage(messageType, contentDic, "JSON");
                                     if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
                                     {
@@ -399,6 +407,10 @@ namespace Victop.Frame.DataMessageManager
                                         if (storeInfo.RefDataInfo.FirstOrDefault(it => it.RowId.Equals(rowValue) && it.TriggerField.Equals(RebuildPath)) == null)
                                         {
                                             storeInfo.RefDataInfo.Add(relationInfo);
+                                        }
+                                        else
+                                        {
+                                            storeInfo.RefDataInfo.FirstOrDefault(it => it.RowId.Equals(rowValue) && it.TriggerField.Equals(RebuildPath)).DataChannelId = returnDic["DataChannelId"].ToString();
                                         }
                                     }
                                     else
