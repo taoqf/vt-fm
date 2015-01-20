@@ -1,9 +1,10 @@
-﻿<Window x:Class="SystemTestingPlugin.Views.AreaWindow"
+﻿<ctrl:VicWindowNormal x:Class="SystemTestingPlugin.Views.AreaWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:SystemTestingPlugin.Views"
-        Title="AreaWindow" Height="300" Width="300">
+        xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+        Title="AreaWindow" Height="300" Width="300" ResizeMode="CanResize">
     <Grid>
-        <local:UCSimpleDefWindow/>
+        <local:UCAreaWindowData/>
     </Grid>
-</Window>
+</ctrl:VicWindowNormal>

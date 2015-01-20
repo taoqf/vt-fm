@@ -122,7 +122,7 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="dataForm">数据格式(JSON/DATASET)</param>
         /// <param name="waiteTime">同步等待时间</param>
         /// <returns>应答消息内容</returns>
-        public Dictionary<string, object> SendSyncMessage(string messageType, Dictionary<string, object> messageContent, string dataForm="JSON", int waiteTime = 15)
+        public Dictionary<string, object> SendSyncMessage(string messageType, Dictionary<string, object> messageContent, string dataForm = "JSON", int waiteTime = 15)
         {
             MessageOperation messageOp = new MessageOperation();
             return messageOp.SendMessage(messageType, messageContent, dataForm, waiteTime);
@@ -135,7 +135,7 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="replyCallBack">回调方法</param>
         /// <param name="dataForm">数据格式</param>
         /// <param name="validTime">超时时间</param>
-        public void SendAsyncMessage(string messageType, Dictionary<string, object> messageContent, WaitCallback replyCallBack=null, string dataForm="JSON", long validTime = 15)
+        public void SendAsyncMessage(string messageType, Dictionary<string, object> messageContent, WaitCallback replyCallBack = null, string dataForm = "JSON", long validTime = 15)
         {
             PluginMessage pluginMessage = new PluginMessage();
             pluginMessage.SendMessage(messageType, messageContent, replyCallBack, dataForm.Equals("JSON") ? DataFormEnum.JSON : DataFormEnum.DATASET, validTime);
@@ -149,11 +149,12 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="fieldName">字段名称</param>
         /// <param name="rowValue">行值</param>
         /// <param name="RefDataSet">返回</param>
+        /// <param name="defaultCondition">默认条件</param>
         /// <param name="systemId">系统Id</param>
         /// <param name="configsystemId">配置系统Id</param>
         /// <param name="foreRunnerFlag">前导标签</param>
         /// <returns>引用消息</returns>
-        public string GetRefData(string viewId, string dataPath, string fieldName, string rowValue, out DataSet RefDataSet, string systemId = null, string configsystemId = null, bool foreRunnerFlag = true)
+        public string GetRefData(string viewId, string dataPath, string fieldName, string rowValue, out DataSet RefDataSet, List<Dictionary<string, object>> defaultCondition = null, string systemId = null, string configsystemId = null, bool foreRunnerFlag = true)
         {
             RefDataSet = new DataSet();
             string resultMessage = string.Empty;
@@ -191,7 +192,7 @@ namespace Victop.Frame.DataMessageManager
                 RebuildPath += fieldName;
                 #endregion
                 RefRelationInfo relationInfo = storeInfo.RefDataInfo.FirstOrDefault(it => it.TriggerField.Equals(RebuildPath) && it.RowId.Equals(rowValue));
-                if (relationInfo != null)
+                if (relationInfo != null && defaultCondition == null)
                 {
                     //TODO:已存在于引用映射关系中，对简单引用和标准引用进行分别处理
                     switch (relationInfo.RefType)
@@ -315,13 +316,17 @@ namespace Victop.Frame.DataMessageManager
                                     if (clientRefModel.ClientRefConditionFirst.Count > 0)
                                     {
                                         refTableName = clientRefModel.ClientRefConditionFirst[0].ConditionRight.Substring(0, clientRefModel.ClientRefConditionFirst[0].ConditionRight.IndexOf('.'));
-                                        List<Dictionary<string, object>> conditionList = new List<Dictionary<string, object>>();
+                                        List<Dictionary<string, object>> conditionList = defaultCondition == null ? new List<Dictionary<string, object>>() : defaultCondition;
                                         DataRow[] drs = storeInfo.ActualDataInfo.Tables["dataArray"].Select(string.Format("_id='{0}'", rowValue));
                                         if (drs != null && drs.Count() > 0)
                                         {
-                                            Dictionary<string, object> tableDic = new Dictionary<string, object>();
-                                            tableDic.Add("name", refTableName);
-                                            List<Dictionary<string, object>> tableconditionList = new List<Dictionary<string, object>>();
+
+                                            Dictionary<string, object> tableDic = conditionList.FirstOrDefault(it => it["name"].Equals(refTableName)) == null ? new Dictionary<string, object>() : conditionList.FirstOrDefault(it => it["name"].Equals(refTableName));
+                                            if (!tableDic.ContainsKey("name"))
+                                            {
+                                                tableDic.Add("name", refTableName);
+                                            }
+                                            List<Dictionary<string, object>> tableconditionList = tableDic.ContainsKey("tablecondition") ? JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ToJson(tableDic["tablecondition"])) : new List<Dictionary<string, object>>();
                                             foreach (MongoModelInfoOfClientRefConditionModel item in clientRefModel.ClientRefConditionFirst)
                                             {
                                                 string refRightField = item.ConditionRight.Substring(item.ConditionRight.LastIndexOf('.') + 1);
@@ -331,9 +336,16 @@ namespace Victop.Frame.DataMessageManager
                                                     //TODO:处理依赖关系
                                                     if (drs[0].Table.Columns.Contains(refLeftField) && drs[0][refLeftField] != null)
                                                     {
-                                                        Dictionary<string, object> itemDic = new Dictionary<string, object>();
-                                                        itemDic.Add(refRightField, drs[0][refLeftField]);
-                                                        tableconditionList.Add(itemDic);
+                                                        if (tableconditionList.FirstOrDefault(it => it.ContainsKey(refLeftField)) != null)
+                                                        {
+                                                            tableconditionList.FirstOrDefault(it => it.ContainsKey(refLeftField))[refLeftField] = drs[0][refLeftField];
+                                                        }
+                                                        else
+                                                        {
+                                                            Dictionary<string, object> itemDic = new Dictionary<string, object>();
+                                                            itemDic.Add(refRightField, drs[0][refLeftField]);
+                                                            tableconditionList.Add(itemDic);
+                                                        }
                                                     }
                                                     else
                                                     {
@@ -343,13 +355,30 @@ namespace Victop.Frame.DataMessageManager
                                                 }
                                                 else
                                                 {
-                                                    Dictionary<string, object> itemDic = new Dictionary<string, object>();
-                                                    itemDic.Add(refRightField, drs[0][refLeftField]);
-                                                    tableconditionList.Add(itemDic);
+                                                    if (tableconditionList.FirstOrDefault(it => it.ContainsKey(refLeftField)) != null)
+                                                    {
+                                                        tableconditionList.FirstOrDefault(it => it.ContainsKey(refLeftField))[refLeftField] = drs[0][refLeftField];
+                                                    }
+                                                    else
+                                                    {
+                                                        Dictionary<string, object> itemDic = new Dictionary<string, object>();
+                                                        itemDic.Add(refRightField, drs[0][refLeftField]);
+                                                        tableconditionList.Add(itemDic);
+                                                    }
                                                 }
                                             }
-                                            tableDic.Add("tablecondition", tableconditionList);
-                                            conditionList.Add(tableDic);
+                                            if (tableDic.ContainsKey("tablecondition"))
+                                            {
+                                                tableDic["tablecondition"] = tableconditionList;
+                                            }
+                                            else
+                                            {
+                                                tableDic.Add("tablecondition", tableconditionList);
+                                            }
+                                            if (defaultCondition == null)
+                                            {
+                                                conditionList.Add(tableDic);
+                                            }
                                             contentDic.Add("conditions", conditionList);
                                         }
                                         else

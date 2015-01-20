@@ -522,7 +522,7 @@ namespace Victop.Frame.DataChannel
                             if (modelDefInfo.ModelClientRef != null && modelDefInfo.ModelClientRef.Count > 0)
                             {
                                 string refFieldStr = string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), item.FieldKey);
-                                string fieldStr = refFieldStr.Substring(refFieldStr.LastIndexOf(".") + 1);
+                                string fieldStr = refFieldStr.Substring(refFieldStr.LastIndexOf("."));
                                 string replaceStr = refFieldStr.Substring(0, refFieldStr.LastIndexOf("dataArray"));
                                 MongoModelInfoOfClientRefModel clientRefModel = modelDefInfo.ModelClientRef.FirstOrDefault(it => (it.ClientRefField.StartsWith(replaceStr) && it.ClientRefField.EndsWith(fieldStr)));
                                 if (clientRefModel != null)
@@ -581,7 +581,7 @@ namespace Victop.Frame.DataChannel
                             if (modelDefInfo.ModelClientRef != null && modelDefInfo.ModelClientRef.Count > 0)
                             {
                                 string refFieldStr = string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), item.FieldKey);
-                                string fieldStr = refFieldStr.Substring(refFieldStr.LastIndexOf(".") + 1);
+                                string fieldStr = refFieldStr.Substring(refFieldStr.LastIndexOf("."));
                                 string replaceStr = refFieldStr.Substring(0, refFieldStr.LastIndexOf("dataArray"));
                                 MongoModelInfoOfClientRefModel clientRefModel = modelDefInfo.ModelClientRef.FirstOrDefault(it => (it.ClientRefField.StartsWith(replaceStr) && it.ClientRefField.EndsWith(fieldStr)));
                                 if (clientRefModel != null)

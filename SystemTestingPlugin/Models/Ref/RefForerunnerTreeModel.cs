@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using Victop.Server.Controls.Models;
@@ -81,11 +82,11 @@ namespace SystemTestingPlugin.Models
         /// <summary>
         /// 树节点值
         /// </summary>
-        private string treeValue;
+        private DataRow treeValue;
         /// <summary>
         /// 树节点值
         /// </summary>
-        public string TreeValue
+        public DataRow TreeValue
         {
             get
             {

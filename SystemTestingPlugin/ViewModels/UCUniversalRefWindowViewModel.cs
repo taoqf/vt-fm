@@ -13,6 +13,7 @@ using SystemTestingPlugin.Views;
 using Victop.Frame.PublicLib.Helpers;
 using System.Windows;
 using System.Windows.Controls;
+using Victop.Wpf.Controls;
 
 namespace SystemTestingPlugin.ViewModels
 {
@@ -23,6 +24,8 @@ namespace SystemTestingPlugin.ViewModels
         /// 引用数据信息
         /// </summary>
         private RefDataModel refDataInfo;
+
+        private VicWindowNormal refWindow;
         /// <summary>
         /// 前导树显示状态
         /// </summary>
@@ -176,41 +179,52 @@ namespace SystemTestingPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand<object>((x) =>
                 {
                     refDataInfo = UCUniversalRefWindow.RefDataInfo;
-                    clientRefInfo = JsonHelper.ToObject<MongoModelInfoOfClientRefModel>(refDataInfo.RefContent);
-                    GridSelectionMode = clientRefInfo.ClientRefPopupSetting.SettingSingleRow == 0 ? SelectionMode.Single : SelectionMode.Multiple;
-                    SearchFieldCaption = refDataInfo.RefFieldCaption;
-                    if (clientRefInfo.ClientRefForeRunner != null && !string.IsNullOrEmpty(clientRefInfo.ClientRefForeRunner.RefModel))
+                    DataMessageOperation dataOp = new DataMessageOperation();
+                    DataSet tempDs = new DataSet();
+                    string resultMessage = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out tempDs, null, refDataInfo.SystemId, refDataInfo.ConfigSystemId, false);
+                    Dictionary<string, object> resultDic = JsonHelper.ToObject<Dictionary<string, object>>(resultMessage);
+                    if (!resultDic["ReplyMode"].ToString().Equals("0"))
                     {
-                        string treeTableName = clientRefInfo.ClientRefForeRunner.ForeRunnerProperty[0].PropertyValue.Substring(0, clientRefInfo.ClientRefForeRunner.ForeRunnerProperty[0].PropertyValue.IndexOf("."));
-                        DataSet ds = FindDataTable(refDataInfo.SystemId, refDataInfo.ConfigSystemId, clientRefInfo.ClientRefForeRunner.RefModel, treeTableName, null);
-                        if (ds != null && ds.Tables.Contains("dataArray"))
+                        refDataInfo.RefDataSet = tempDs;
+                        refDataInfo.RefContent = resultDic["ReplyContent"].ToString();
+
+                        clientRefInfo = JsonHelper.ToObject<MongoModelInfoOfClientRefModel>(refDataInfo.RefContent);
+                        GridSelectionMode = clientRefInfo.ClientRefPopupSetting.SettingSingleRow == 0 ? SelectionMode.Single : SelectionMode.Multiple;
+                        SearchFieldCaption = refDataInfo.RefFieldCaption;
+                        if (clientRefInfo.ClientRefForeRunner != null && !string.IsNullOrEmpty(clientRefInfo.ClientRefForeRunner.RefModel))
                         {
-                            DataRow[] drs = ds.Tables["dataArray"].Select(string.Format("{0} is null", clientRefInfo.ClientRefForeRunner.TreeParentId));
-                            if (drs != null && drs.Count() > 0)
+                            string treeTableName = clientRefInfo.ClientRefForeRunner.ForeRunnerProperty[0].PropertyValue.Substring(0, clientRefInfo.ClientRefForeRunner.ForeRunnerProperty[0].PropertyValue.IndexOf("."));
+                            DataSet ds = FindDataTable(refDataInfo.SystemId, refDataInfo.ConfigSystemId, clientRefInfo.ClientRefForeRunner.RefModel, treeTableName, null);
+                            if (ds != null && ds.Tables.Contains("dataArray"))
                             {
-                                foreach (DataRow item in drs)
+                                DataRow[] drs = ds.Tables["dataArray"].Select(string.Format("{0} is null", clientRefInfo.ClientRefForeRunner.TreeParentId));
+                                if (drs != null && drs.Count() > 0)
                                 {
-                                    RefForerunnerTreeModel treeModel = new RefForerunnerTreeModel();
-                                    treeModel.TreeId = item[clientRefInfo.ClientRefForeRunner.TreeId].ToString();
-                                    treeModel.TreeParentId = item[clientRefInfo.ClientRefForeRunner.TreeParentId].ToString();
-                                    treeModel.TreeDisplay = item[clientRefInfo.ClientRefForeRunner.TreeDisplay].ToString();
-                                    CreateTreeData(ds.Tables["dataArray"], treeModel.TreeId, treeModel);
-                                    ForerunnerTreeList.Add(treeModel);
+                                    foreach (DataRow item in drs)
+                                    {
+                                        RefForerunnerTreeModel treeModel = new RefForerunnerTreeModel();
+                                        treeModel.TreeId = item[clientRefInfo.ClientRefForeRunner.TreeId].ToString();
+                                        treeModel.TreeParentId = item[clientRefInfo.ClientRefForeRunner.TreeParentId].ToString();
+                                        treeModel.TreeDisplay = item[clientRefInfo.ClientRefForeRunner.TreeDisplay].ToString();
+                                        treeModel.TreeValue = item;
+                                        CreateTreeData(ds.Tables["dataArray"], treeModel.TreeId, treeModel);
+                                        ForerunnerTreeList.Add(treeModel);
+                                    }
                                 }
                             }
+                            TreeVisibility = Visibility.Visible;
                         }
-                        TreeVisibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        if (refDataInfo.RefDataSet != null && refDataInfo.RefDataSet.Tables.Contains("dataArray"))
+                        else
                         {
-                            GridDataTable = refDataInfo.RefDataSet.Tables["dataArray"];
+                            if (refDataInfo.RefDataSet != null && refDataInfo.RefDataSet.Tables.Contains("dataArray"))
+                            {
+                                GridDataTable = refDataInfo.RefDataSet.Tables["dataArray"];
+                            }
+                            TreeVisibility = Visibility.Collapsed;
                         }
-                        TreeVisibility = Visibility.Collapsed;
                     }
                 });
             }
@@ -238,9 +252,29 @@ namespace SystemTestingPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    List<Dictionary<string, object>> defaultCondition = new List<Dictionary<string, object>>();
+                    #region 整理前导参数
+                    if (clientRefInfo.ClientRefForeRunner != null && !string.IsNullOrEmpty(clientRefInfo.ClientRefForeRunner.RefModel) && ForeTreeSelectedNode != null)
+                    {
+                        Dictionary<string, object> tableDic = new Dictionary<string, object>();
+                        string tableName = clientRefInfo.ClientRefForeRunner.ForeRunnerProperty[0].PropertyKey.Split('.')[0];
+                        tableDic.Add("name", tableName);
+                        List<object> tableConditionList = new List<object>();
+                        foreach (MongoModelInfoOfClientRefPropertyModel item in clientRefInfo.ClientRefForeRunner.ForeRunnerProperty)
+                        {
+                            Dictionary<string, object> conditionDic = new Dictionary<string, object>();
+                            string filedStr = item.PropertyKey.Substring(item.PropertyKey.LastIndexOf(".") + 1);
+                            string fileldValue = item.PropertyValue.Substring(item.PropertyValue.LastIndexOf(".") + 1);
+                            conditionDic.Add(filedStr, ForeTreeSelectedNode.TreeValue[fileldValue]);
+                            tableConditionList.Add(conditionDic);
+                        }
+                        tableDic.Add("tablecondition", tableConditionList);
+                        defaultCondition.Add(tableDic);
+                    }
+                    #endregion
                     DataMessageOperation dataOp = new DataMessageOperation();
                     DataSet ds = new DataSet();
-                    string resultStr = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out ds, refDataInfo.SystemId, refDataInfo.ConfigSystemId, false);
+                    string resultStr = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out ds, defaultCondition.Count > 0 ? defaultCondition : null, refDataInfo.SystemId, refDataInfo.ConfigSystemId, true);
                     Dictionary<string, object> resultDic = JsonHelper.ToObject<Dictionary<string, object>>(resultStr);
                     if (!resultDic["ReplyMode"].ToString().Equals("0"))
                     {
@@ -249,6 +283,45 @@ namespace SystemTestingPlugin.ViewModels
                             GridDataTable = ds.Tables["dataArray"];
                         }
                     }
+                });
+            }
+        }
+        /// <summary>
+        /// 确定按钮
+        /// </summary>
+        public ICommand btnConfirmClickCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                    VicDataGrid dgrid = (VicDataGrid)x;
+                    DataRowView dr = (DataRowView)dgrid.SelectedItem;
+                    Dictionary<string, object> resultDic = new Dictionary<string, object>();
+                    foreach (MongoModelInfoOfClientRefPropertyModel item in clientRefInfo.ClientRefProperty)
+                    {
+                        string keyField = item.PropertyKey.Substring(item.PropertyKey.LastIndexOf(".") + 1);
+                        string valueField = item.PropertyValue.Substring(item.PropertyValue.LastIndexOf(".") + 1);
+                        resultDic.Add(keyField, dr[valueField]);
+                    }
+                    if (refDataInfo.RefCallBack != null)
+                    {
+                        refDataInfo.RefCallBack(resultDic);
+                    }
+                }, (x) => {
+                    //if (x != null)
+                    //{
+                    //    VicDataGrid dgrid = (VicDataGrid)x;
+                    //    if (GridSelectionMode == SelectionMode.Single && dgrid.SelectedItem != null)
+                    //    {
+                    //        return true;
+                    //    }
+                    //    if (GridSelectionMode == SelectionMode.Multiple && dgrid.GetCheckedDataRows() != null)
+                    //    {
+                    //        return true;
+                    //    }
+                    //}
+                    return true;
                 });
             }
         }
@@ -302,6 +375,7 @@ namespace SystemTestingPlugin.ViewModels
                     childTreeModel.TreeId = item[clientRefInfo.ClientRefForeRunner.TreeId].ToString();
                     childTreeModel.TreeParentId = item[clientRefInfo.ClientRefForeRunner.TreeParentId].ToString();
                     childTreeModel.TreeDisplay = item[clientRefInfo.ClientRefForeRunner.TreeDisplay].ToString();
+                    childTreeModel.TreeValue = item;
                     CreateTreeData(sourceDt, childTreeModel.TreeId, treeModel);
                     treeModel.ForerunnerTreeList.Add(childTreeModel);
                 }

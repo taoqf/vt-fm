@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace SystemTestingPlugin.Models
 {
@@ -65,6 +66,18 @@ namespace SystemTestingPlugin.Models
             get { return refFieldCaption; }
             set { refFieldCaption = value; }
         }
+        /// <summary>
+        /// 引用字段值
+        /// </summary>
+        private string refFieldValue;
+        /// <summary>
+        /// 引用字段值
+        /// </summary>
+        public string RefFieldValue
+        {
+            get { return refFieldValue; }
+            set { refFieldValue = value; }
+        }
         private string viewId;
         /// <summary>
         /// 通道标识
@@ -96,6 +109,15 @@ namespace SystemTestingPlugin.Models
         {
             get { return rowValue; }
             set { rowValue = value; }
+        }
+        private WaitCallback refCallBack;
+        /// <summary>
+        /// 引用回调
+        /// </summary>
+        public WaitCallback RefCallBack
+        {
+            get { return refCallBack; }
+            set { refCallBack = value; }
         }
     }
 }

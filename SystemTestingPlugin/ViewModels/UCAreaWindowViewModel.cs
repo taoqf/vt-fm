@@ -10,6 +10,7 @@ using Victop.Wpf.Controls;
 using System.Diagnostics;
 using Victop.Frame.DataMessageManager;
 using SystemTestingPlugin.Views;
+using System.Threading;
 
 namespace SystemTestingPlugin.ViewModels
 {
@@ -208,24 +209,19 @@ namespace SystemTestingPlugin.ViewModels
 
         void searchDataGrid_DataReferenceColumnClick(object sender, string columnName, string columnCaption)
         {
-            DataMessageOperation dataOp = new DataMessageOperation();
-            DataSet ds = new DataSet();
-            string resultMessage = dataOp.GetRefData(DataInfoModel.ChannelId, DataInfoModel.DataPath, columnName, DataInfoModel.GridSelectedValue.ToString(), out ds, DataInfoModel.SystemId, DataInfoModel.ConfigsystemId);
-            Dictionary<string, object> resultDic = JsonHelper.ToObject<Dictionary<string, object>>(resultMessage);
-            if (!resultDic["ReplyMode"].ToString().Equals("0"))
-            {
-                RefDataModel refData = new RefDataModel() { SystemId = DataInfoModel.SystemId, ConfigSystemId = DataInfoModel.ConfigsystemId, RefDataSet = ds, RefContent = resultDic["ReplyContent"].ToString(), RefFieldCaption = columnCaption, ViewId = DataInfoModel.ChannelId, DataPath = DataInfoModel.DataPath, FieldName = columnName,RowValue=DataInfoModel.GridSelectedValue.ToString() };
-                UCUniversalRefWindow refWndow = new UCUniversalRefWindow(refData);
-                VicWindowNormal window = new VicWindowNormal();
-                window.Title = columnCaption+"数据引用";
-                window.Content = refWndow;
-                window.ShowDialog();
-            }
-            else
-            {
-                VicMessageBoxNormal.Show(resultDic["ReplyAlertMessage"].ToString());
-            }
+            RefDataModel refData = new RefDataModel() { SystemId = DataInfoModel.SystemId, ConfigSystemId = DataInfoModel.ConfigsystemId, RefFieldCaption = columnCaption, ViewId = DataInfoModel.ChannelId, DataPath = DataInfoModel.DataPath, FieldName = columnName, RowValue = DataInfoModel.GridSelectedValue.ToString(), RefCallBack = new WaitCallback(SetData) };
+            UCUniversalRefWindow refWndow = new UCUniversalRefWindow(refData);
+            VicWindowNormal window = new VicWindowNormal();
+            window.Title = columnCaption + "数据引用";
+            window.Content = refWndow;
+            window.Show();
         }
+
+        private void SetData(object refData)
+        {
+            VicMessageBoxNormal.Show(JsonHelper.ToJson(refData));
+        }
+
 
         void searchDataGrid_DataGridComboBoxClosed(object sender, string columnName)
         {
