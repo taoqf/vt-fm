@@ -996,7 +996,8 @@ namespace Victop.Frame.DataChannel
             {
                 if (item.ViewId.Equals(viewId) && item.DataPath.Equals(dataPath))
                 {
-                    dt = ((DataSet)JsonTableMap[item]).Tables["dataArray"];
+                    DataStoreInfo storeInfo = JsonTableMap[item] as DataStoreInfo;
+                    dt = storeInfo.ActualDataInfo.Tables["dataArray"];
                     break;
                 }
             }
