@@ -1055,16 +1055,16 @@ namespace PortalFramePlugin.ViewModels
                 btn.Width = 120;
                 IPlugin Plugin = PluginInfo["IPlugin"] as IPlugin;
                 if (Plugin.ShowType == 0)
-                {                  
-                    btn.Content = Plugin.StartWindow.Title;
-                    btn.Tag = Plugin;
+                {
+                    btn.Content = Plugin.ParamDict["Title"];
+                    btn.Tag = PluginInfo;
                     btn.Click += btn_Click;
                     PluginListContent.Children.Add(btn);
                 }
                 else
                 {
                     btn.Content = Plugin.PluginTitle;
-                    btn.Tag = Plugin;
+                    btn.Tag = PluginInfo;
                     btn.Click += btn_Click;
                     PluginListContent.Children.Add(btn);
                 }
@@ -1075,18 +1075,34 @@ namespace PortalFramePlugin.ViewModels
         private void btn_Click(object sender, RoutedEventArgs e)
         {
             VicButtonNormal btn = sender as VicButtonNormal;
-            IPlugin pluginInfo = (IPlugin)btn.Tag;
+            Dictionary<string, object> pluginInfo = (Dictionary<string, object>)btn.Tag;
+            IPlugin Plugin = pluginInfo["IPlugin"] as IPlugin;
+            string PluginUid = pluginInfo["ObjectId"].ToString();
             try
             {
-                if (pluginInfo.ShowType == 0)//窗口
+                if (Plugin.ShowType == 0)//窗口
                 {
+                    WindowCollection wc = Application.Current.Windows;
 
+                    for (int i = 0; i < wc.Count; i++)
+                    {
+                        if (wc[i].Uid.Equals(PluginUid))
+                        {
+                            wc[i].Activate();
+                            //if (wc[i].WindowState != WindowState.Maximized)
+                            //{
+                            //    wc[i].WindowState = WindowState.Maximized;
+                            //    wc[i].Activate();
+                            //}
+                            break;
+                        }
+                    }
                 }
                 else
                 {
-                    if (TabItemList.FirstOrDefault(it => it.Header.Equals(pluginInfo.PluginTitle)) != null)
+                    if (TabItemList.FirstOrDefault(it => it.Header.Equals(Plugin.PluginTitle)) != null)
                     {
-                        TabItemList.FirstOrDefault(it => it.Header.Equals(pluginInfo.PluginTitle)).IsSelected = true;
+                        TabItemList.FirstOrDefault(it => it.Header.Equals(Plugin.PluginTitle)).IsSelected = true;
                     }
                 }
             }
@@ -1095,7 +1111,6 @@ namespace PortalFramePlugin.ViewModels
                 LoggerHelper.ErrorFormat("活动插件激活异常:{0}", ex.Message);
             }
         }
-        
         #endregion
 
         #region 设置当前通道信息
