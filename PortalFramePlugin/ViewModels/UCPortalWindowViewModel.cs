@@ -1058,21 +1058,21 @@ namespace PortalFramePlugin.ViewModels
                 {
                     btn.Content = Plugin.ParamDict["Title"];
                     btn.Tag = PluginInfo;
-                    btn.Click += btn_Click;
+                    btn.Click += ActivatePlugin_Click;
                     PluginListContent.Children.Add(btn);
                 }
                 else
                 {
                     btn.Content = Plugin.PluginTitle;
                     btn.Tag = PluginInfo;
-                    btn.Click += btn_Click;
+                    btn.Click += ActivatePlugin_Click;
                     PluginListContent.Children.Add(btn);
                 }
             }
             return PluginListContent;
         }
 
-        private void btn_Click(object sender, RoutedEventArgs e)
+        private void ActivatePlugin_Click(object sender, RoutedEventArgs e)
         {
             VicButtonNormal btn = sender as VicButtonNormal;
             Dictionary<string, object> pluginInfo = (Dictionary<string, object>)btn.Tag;
@@ -1089,11 +1089,6 @@ namespace PortalFramePlugin.ViewModels
                         if (wc[i].Uid.Equals(PluginUid))
                         {
                             wc[i].Activate();
-                            //if (wc[i].WindowState != WindowState.Maximized)
-                            //{
-                            //    wc[i].WindowState = WindowState.Maximized;
-                            //    wc[i].Activate();
-                            //}
                             break;
                         }
                     }
