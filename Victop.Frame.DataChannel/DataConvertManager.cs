@@ -734,6 +734,39 @@ namespace Victop.Frame.DataChannel
                     MongoSimpleRefInfoOfArrayPropertyModel propertyModel = item.ArrayProperty.FirstOrDefault(it => it.PropertyKey.Equals(constructPath));
                     if (propertyModel == null)
                         break;
+                    Dictionary<string, object> newDependDic = new Dictionary<string, object>();
+                    if (!string.IsNullOrEmpty(propertyModel.PropertyDepend))
+                    {
+                        string dependColumn = propertyModel.PropertyDepend.Substring(propertyModel.PropertyDepend.IndexOf(":") + 1);
+                        dependColumn = dependColumn.Substring(0, dependColumn.IndexOf("]"));
+
+                        string parentConstructPath = propertyModel.PropertyDepend.Substring(0, propertyModel.PropertyDepend.IndexOf(":") + 1) + dependColumn + propertyModel.PropertyDepend.Substring(propertyModel.PropertyDepend.IndexOf("]"));
+                        MongoSimpleRefInfoOfArrayPropertyModel parentPropertyModel = item.ArrayProperty.FirstOrDefault(it => it.PropertyKey.Equals(parentConstructPath));
+                        if (parentPropertyModel != null)
+                        {
+                            if (!string.IsNullOrEmpty(parentPropertyModel.PropertyDepend))
+                            {
+                                string parentDependColumn = parentPropertyModel.PropertyDepend.Substring(parentPropertyModel.PropertyDepend.IndexOf(":") + 1);
+                                parentDependColumn = parentDependColumn.Substring(0, parentDependColumn.IndexOf("]"));
+                                if (dependDic.ContainsKey(parentDependColumn))
+                                {
+                                    newDependDic.Add(parentDependColumn, dependDic[parentDependColumn]);
+                                }
+                                else
+                                {
+                                    return null;
+                                }
+                            }
+                        }
+                        if (dependDic.ContainsKey(dependColumn))
+                        {
+                            newDependDic.Add(dependColumn, dependDic[dependColumn]);
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
                     DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, dependDic);
                     ds.Tables.Add(dt);
                     break;
