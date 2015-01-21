@@ -330,6 +330,11 @@ namespace PortalFramePlugin.ViewModels
                         win_PluginList.ResizeMode = ResizeMode.NoResize;
                         win_PluginList.Visibility = Visibility.Visible;
                     }
+                    if (pluginList.Count < 1)
+                    {
+                        win_PluginList.Visibility = Visibility.Hidden;
+                        return;
+                    }
                     win_PluginList.Content = GetActivePluginInfo();
                     this.win_PluginList.Visibility = Visibility.Visible;
                     if (!win_PluginList.IsActive)
@@ -1056,7 +1061,15 @@ namespace PortalFramePlugin.ViewModels
                 IPlugin Plugin = PluginInfo["IPlugin"] as IPlugin;
                 if (Plugin.ShowType == 0)
                 {
-                    btn.Content = Plugin.ParamDict["Title"];
+                    if (Plugin.ParamDict["Title"].ToString().Length > 8)
+                    {
+                        btn.Content = Plugin.ParamDict["Title"].ToString().Substring(0, 6) + "...";
+                        btn.ToolTip = Plugin.ParamDict["Title"];
+                    }
+                    else
+                    {
+                        btn.Content = Plugin.ParamDict["Title"];
+                    }                  
                     btn.Tag = PluginInfo;
                     btn.Click += ActivatePlugin_Click;
                     PluginListContent.Children.Add(btn);
