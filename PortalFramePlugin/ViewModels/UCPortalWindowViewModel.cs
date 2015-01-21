@@ -1082,13 +1082,24 @@ namespace PortalFramePlugin.ViewModels
             {
                 if (Plugin.ShowType == 0)//窗口
                 {
-                    WindowCollection wc = Application.Current.Windows;
+                    WindowCollection WinCollection = Application.Current.Windows;
 
-                    for (int i = 0; i < wc.Count; i++)
+                    for (int i = 0; i < WinCollection.Count; i++)
                     {
-                        if (wc[i].Uid.Equals(PluginUid))
+                        if (WinCollection[i].Uid.Equals(PluginUid))
                         {
-                            wc[i].Activate();
+                            switch (WinCollection[i].ResizeMode)
+                            {
+                                case ResizeMode.NoResize:
+                                case ResizeMode.CanMinimize:
+                                    WinCollection[i].WindowState = WindowState.Normal;
+                                    break;
+                                case ResizeMode.CanResize:
+                                case ResizeMode.CanResizeWithGrip:
+                                    WinCollection[i].WindowState = WindowState.Maximized;
+                                    break;
+                            }
+                            WinCollection[i].Activate();
                             break;
                         }
                     }
