@@ -446,14 +446,14 @@ namespace PortalFramePlugin.ViewModels
                     Button btnMax = (Button)x;
                     if (mainWindow.WindowState == WindowState.Normal)
                     {
-                        btnMax.SetResourceReference(Button.StyleProperty, "btnMaxiStyle");
+                        btnMax.SetResourceReference(Button.StyleProperty, "btnMaxRestoreStyle");
                         mainWindow.WindowState = WindowState.Maximized;
                         mainWindow.Left = 0;
                         mainWindow.Top = 0;
                     }
                     else
                     {
-                        btnMax.SetResourceReference(Button.StyleProperty, "btnMaxiStyle");
+                        btnMax.SetResourceReference(Button.StyleProperty, "btnMaxRestoreStyle");
                         mainWindow.WindowState = WindowState.Normal;
                     }
                 });
