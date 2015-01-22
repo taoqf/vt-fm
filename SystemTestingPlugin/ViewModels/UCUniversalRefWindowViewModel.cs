@@ -310,8 +310,8 @@ namespace SystemTestingPlugin.ViewModels
                     }
                     if (refDataInfo.RefDataSet.Tables.Contains("pagingCurrent") && refDataInfo.RefDataSet.Tables["pagingCurrent"] != null && refDataInfo.RefDataSet.Tables["pagingCurrent"].Rows.Count > 0)
                     {
-                        unitPage.ParamsModel.PageSize = int.Parse(refDataInfo.RefDataSet.Tables["pagingCurrent"].Rows[0]["size"].ToString());
-                        unitPage.ParamsModel.CurrentPage = int.Parse(refDataInfo.RefDataSet.Tables["pagingCurrent"].Rows[0]["index"].ToString());
+                        unitPage.ParamsModel.PageSize = refDataInfo.RefDataSet.Tables["pagingCurrent"].Columns.Contains("size") ? int.Parse(refDataInfo.RefDataSet.Tables["pagingCurrent"].Rows[0]["size"].ToString()) : 20;
+                        unitPage.ParamsModel.CurrentPage = refDataInfo.RefDataSet.Tables["pagingCurrent"].Columns.Contains("index") ? int.Parse(refDataInfo.RefDataSet.Tables["pagingCurrent"].Rows[0]["index"].ToString()) : 1;
                     }
                     unitPage.ParamsModel.PagerButtonClick += ParamsModel_PagerButtonClick;
                 });
@@ -370,8 +370,8 @@ namespace SystemTestingPlugin.ViewModels
                 }
                 if (ds.Tables.Contains("pagingCurrent") && ds.Tables["pagingCurrent"] != null && ds.Tables["pagingCurrent"].Rows.Count > 0)
                 {
-                    unitPage.ParamsModel.PageSize = int.Parse(ds.Tables["pagingCurrent"].Rows[0]["size"].ToString());
-                    unitPage.ParamsModel.CurrentPage = int.Parse(ds.Tables["pagingCurrent"].Rows[0]["index"].ToString());
+                    unitPage.ParamsModel.PageSize = ds.Tables["pagingCurrent"].Columns.Contains("size") ? int.Parse(ds.Tables["pagingCurrent"].Rows[0]["size"].ToString()) : 20;
+                    unitPage.ParamsModel.CurrentPage = ds.Tables["pagingCurrent"].Columns.Contains("index") ? int.Parse(ds.Tables["pagingCurrent"].Rows[0]["index"].ToString()) : 1;
                 }
             }
         }

@@ -229,5 +229,62 @@ namespace SystemTestingPlugin.Models
                 RaisePropertyChanged("RefDataTable");
             }
         }
+        #region 窄表相关
+        /// <summary>
+        /// 窄表行值
+        /// </summary>
+        private string narrowRowValue;
+        /// <summary>
+        /// 窄表行值
+        /// </summary>
+        public string NarrowRowValue
+        {
+            get
+            {
+                return narrowRowValue;
+            }
+            set
+            {
+                if (narrowRowValue != value)
+                {
+                    narrowRowValue = value;
+                    RaisePropertyChanged("NarrowRowValue");
+                }
+            }
+        }
+        /// <summary>
+        /// 窄表引用字段
+        /// </summary>
+        private string narrowRefField;
+        /// <summary>
+        /// 窄表引用字段
+        /// </summary>
+        public string NarrowRefField
+        {
+            get
+            {
+                return narrowRefField;
+            }
+            set
+            {
+                if (narrowRefField != value)
+                {
+                    narrowRefField = value;
+                    RaisePropertyChanged("NarrowRefField");
+                }
+            }
+        }
+        private object narrowGridSelectedValue;
+
+        public object NarrowGridSelectedValue
+        {
+            get { return narrowGridSelectedValue; }
+            set
+            {
+                narrowGridSelectedValue = value;
+                RaisePropertyChanged("NarrowGridSelectedValue");
+            }
+        }
+        #endregion
     }
 }

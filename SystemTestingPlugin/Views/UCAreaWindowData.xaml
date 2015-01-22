@@ -14,7 +14,7 @@
     </UserControl.Resources>
     <ctrl:VicGridNormal DataContext="{StaticResource ResourceKey=areaViewModel}" Name="gridmain">
         <ctrl:VicStackPanelNormal>
-            <ctrl:VicGroupBoxNormal Header="数据查询" MaxHeight="400" MinHeight="200">
+            <ctrl:VicGroupBoxNormal Header="数据查询" MaxHeight="400" MinHeight="300">
                 <ctrl:VicGridNormal>
                     <ctrl:VicGridNormal.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -48,6 +48,23 @@
                         </ctrl:VicTabItemNormal>
                         <ctrl:VicTabItemNormal Header="Json数据" AllowDelete="False">
                             <ctrl:VicRichTextBoxNormal Name="rTBoxJsonData" VicText="{Binding DataInfoModel.JsonData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                        </ctrl:VicTabItemNormal>
+                        <ctrl:VicTabItemNormal Header="窄表引用测试" AllowDelete="False">
+                            <ctrl:VicGridNormal>
+                                <ctrl:VicGridNormal.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="*"/>
+                                </ctrl:VicGridNormal.RowDefinitions>
+                                <ctrl:VicWrapPanelNormal Grid.Row="0">
+                                    <ctrl:VicLabelNormal>RowValue:</ctrl:VicLabelNormal>
+                                    <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxRowValue" VicText="{Binding DataInfoModel.NarrowRowValue}"/>
+                                    <ctrl:VicLabelNormal>RefField:</ctrl:VicLabelNormal>
+                                    <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxRefField" VicText="{Binding DataInfoModel.NarrowRefField}"/>
+                                    <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewNarrowData" Content="查看窄表引用" Command="{Binding btnViewNarrowDataClickCommand}"/>
+                                    <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSetNarrowData" Content="回填数据" Command="{Binding btnSetNarrowDataClickCommand}"/>
+                                </ctrl:VicWrapPanelNormal>
+                                <ctrl:VicDataGrid AutoGenerateColumns="False" Grid.Row="1" IsUserSetColumn="False" Name="dgridNarrowRefData" ItemsSource="{Binding DataInfoModel.RefDataTable}" SelectedValue="{Binding DataInfoModel.NarrowGridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="val"/>
+                            </ctrl:VicGridNormal>
                         </ctrl:VicTabItemNormal>
                     </ctrl:VicTabControlNormal>
                 </ctrl:VicGridNormal>

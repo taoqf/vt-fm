@@ -156,7 +156,7 @@ namespace SystemTestingPlugin.ViewModels
                             }
                         }
                         Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
-                        if (returnDic != null)
+                        if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
                         {
                             DataInfoModel.ChannelId = returnDic["DataChannelId"].ToString();
                             if (string.IsNullOrEmpty(DataInfoModel.DataPath))
@@ -173,6 +173,14 @@ namespace SystemTestingPlugin.ViewModels
                             VicMessageBoxNormal.Show(watch.ElapsedMilliseconds.ToString());
                             DataInfoModel.ResultDataTable = mastDs.Tables["dataArray"];
                         }
+                        else
+                        {
+                            if (returnDic != null && returnDic.ContainsKey("ReplyAlertMessage"))
+                            {
+                                VicMessageBoxNormal.Show(returnDic["ReplyAlertMessage"].ToString());
+                            }
+                        }
+
                     }
                     catch (Exception ex)
                     {
@@ -273,6 +281,44 @@ namespace SystemTestingPlugin.ViewModels
                 });
             }
         }
+        /// <summary>
+        /// 窄表引用
+        /// </summary>
+        public ICommand btnViewNarrowDataClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    DataMessageOperation dataOp = new DataMessageOperation();
+                    DataSet ds = new DataSet();
+                    string resultMessage = dataOp.GetRefData(DataInfoModel.ChannelId, DataInfoModel.DataPath, DataInfoModel.NarrowRefField, DataInfoModel.NarrowRowValue, out ds);
+                    Dictionary<string, object> resultDic = JsonHelper.ToObject<Dictionary<string, object>>(resultMessage);
+                    if (resultDic["ReplyMode"].ToString().Equals("2"))
+                    {
+                        DataInfoModel.RefDataTable = ds.Tables["dataArray"];
+                    }
+                    if (resultDic["ReplyMode"].ToString().Equals("0"))
+                    {
+                        VicMessageBoxNormal.Show(resultDic["ReplyAlertMessage"].ToString());
+                    }
+                }, () => {
+                    return !string.IsNullOrEmpty(DataInfoModel.ChannelId);
+                });
+            }
+        }
+
+        public ICommand btnSetNarrowDataClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    DataMessageOperation dataOp = new DataMessageOperation();
+                    dataOp.SetRefData(DataInfoModel.ChannelId, DataInfoModel.DataPath, DataInfoModel.NarrowRefField, DataInfoModel.NarrowRowValue, DataInfoModel.NarrowGridSelectedValue);
+                });
+            }
+        }
+
         /// <summary>
         /// 执行编码服务
         /// </summary>
