@@ -157,9 +157,12 @@ namespace Victop.Frame.DataMessageManager
         public string GetRefData(string viewId, string dataPath, string fieldName, string rowValue, out DataSet RefDataSet, List<Dictionary<string, object>> defaultCondition = null, string systemId = null, string configsystemId = null, bool foreRunnerFlag = true)
         {
             RefDataSet = new DataSet();
+            bool wideRefFlag = true;
             string resultMessage = string.Empty;
             DataStoreInfo storeInfo = null;
             string RebuildPath = string.Empty;
+            string wideFieldFullName = string.Empty;
+            string narrowFieldFullName = string.Empty;
             DataOperation dataOp = new DataOperation();
             ChannelData channelData = dataOp.GetChannelData(viewId);
             foreach (JsonMapKey item in DataConvertManager.JsonTableMap.Keys)
@@ -189,105 +192,31 @@ namespace Victop.Frame.DataMessageManager
                         RebuildPath += "dataArray.";
                     }
                 }
-                RebuildPath += fieldName;
+                wideFieldFullName = RebuildPath + fieldName;
+                narrowFieldFullName = RebuildPath.Substring(0, RebuildPath.LastIndexOf("dataArray")) + string.Format("[target:{0}].target_value", fieldName);
                 #endregion
-                RefRelationInfo relationInfo = storeInfo.RefDataInfo.FirstOrDefault(it => it.TriggerField.Equals(RebuildPath) && it.RowId.Equals(rowValue));
+                RefRelationInfo relationInfo = storeInfo.RefDataInfo.FirstOrDefault(it => it.TriggerField.Equals(wideFieldFullName) && it.RowId.Equals(rowValue));
+                if (relationInfo == null)
+                {
+                    wideRefFlag = false;
+                    relationInfo = storeInfo.RefDataInfo.FirstOrDefault(it => it.TriggerField.Equals(narrowFieldFullName) && it.RowId.Equals(rowValue));
+                }
                 if (relationInfo != null && defaultCondition == null)
                 {
-                    //TODO:已存在于引用映射关系中，对简单引用和标准引用进行分别处理
-                    switch (relationInfo.RefType)
-                    {
-                        case RefTypeEnum.SIMPLEREF:
-                            foreach (MongoSimpleRefInfoOfArrayModel item in channelData.SimpleRefInfo.SimpleDataArray)
-                            {
-                                MongoSimpleRefInfoOfArrayPropertyModel propertyModel = item.ArrayProperty.FirstOrDefault(it => it.PropertyKey.Equals(RebuildPath));
-                                if (propertyModel != null)
-                                {
-                                    if (string.IsNullOrEmpty(propertyModel.PropertyDepend))
-                                    {
-                                        DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, null);
-                                        RefDataSet.Tables.Add(dt);
-                                        ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC };
-                                        resultMessage = JsonHelper.ToJson(replyMessage);
-                                    }
-                                    else
-                                    {
-                                        RefRelationInfo dependRelationInfo = storeInfo.RefDataInfo.FirstOrDefault(it => it.TriggerField.Equals(propertyModel.PropertyKey) && it.RowId.Equals(rowValue));
-                                        if (dependRelationInfo != null && dependRelationInfo.FieldValue != null)
-                                        {
-                                            Dictionary<string, object> dependDic = new Dictionary<string, object>();
-                                            dependDic.Add(dependRelationInfo.TriggerField, dependRelationInfo.FieldValue);
-                                            DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, dependDic);
-                                            RefDataSet.Tables.Add(dt);
-                                            ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC };
-                                            resultMessage = JsonHelper.ToJson(replyMessage);
-                                        }
-                                        else
-                                        {
-                                            ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.CAST, ReplyAlertMessage = "依赖字段无值" };
-                                            resultMessage = JsonHelper.ToJson(replyMessage);
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
-                            break;
-                        case RefTypeEnum.CLIENTREF:
-                            RefDataSet = dataOp.GetData(relationInfo.DataChannelId, string.Format("[\"{0}\"]", relationInfo.TriggerTable));
-                            MongoModelInfoOfClientRefModel clientRefModel = channelData.ModelDefInfo.ModelClientRef.FirstOrDefault(it => it.ClientRefField == relationInfo.TriggerField);
-                            resultMessage = JsonHelper.ToJson(new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC, ReplyContent = JsonHelper.ToJson(clientRefModel) });
-                            break;
-                        default:
-                            break;
-                    }
+                    GetExistRefData(rowValue, ref RefDataSet, ref wideRefFlag, ref resultMessage, storeInfo, wideFieldFullName, narrowFieldFullName, dataOp, channelData, relationInfo);
                 }
                 else
                 {
                     bool simpleRefFlag = false;
-                    foreach (MongoSimpleRefInfoOfArrayModel item in channelData.SimpleRefInfo.SimpleDataArray)
-                    {
-                        MongoSimpleRefInfoOfArrayPropertyModel propertyModel = item.ArrayProperty.FirstOrDefault(it => it.PropertyKey.Equals(RebuildPath));
-                        //TODO:检索简单引用，判断是否有依赖，无依赖则检索简单引用数据，有依赖则检索实际表中的依赖字段是否有值，若无值则返回依赖无值提示，有值，则根据依赖值获取数据
-                        if (propertyModel != null)
-                        {
-                            relationInfo = new RefRelationInfo() { Id = Guid.NewGuid().ToString(), RowId = rowValue, RefType = RefTypeEnum.SIMPLEREF, TriggerField = propertyModel.PropertyKey };
-                            if (string.IsNullOrEmpty(propertyModel.PropertyDepend))
-                            {
-                                DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, null);
-                                RefDataSet.Tables.Add(dt);
-                                ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC };
-                                resultMessage = JsonHelper.ToJson(replyMessage);
-                            }
-                            else
-                            {
-                                RefRelationInfo dependRelationInfo = storeInfo.RefDataInfo.FirstOrDefault(it => it.TriggerField.Equals(propertyModel.PropertyKey) && it.RowId.Equals(rowValue));
-                                if (dependRelationInfo != null && dependRelationInfo.FieldValue != null)
-                                {
-                                    relationInfo.DependId = dependRelationInfo.Id;
-                                    Dictionary<string, object> dependDic = new Dictionary<string, object>();
-                                    dependDic.Add(dependRelationInfo.TriggerField, dependRelationInfo.FieldValue);
-                                    DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, dependDic);
-                                    RefDataSet.Tables.Add(dt);
-                                    ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC };
-                                    resultMessage = JsonHelper.ToJson(replyMessage);
-                                }
-                                else
-                                {
-                                    ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.CAST, ReplyAlertMessage = "依赖字段无值" };
-                                    resultMessage = JsonHelper.ToJson(replyMessage);
-                                }
-                            }
-                            if (storeInfo.RefDataInfo.FirstOrDefault(it => it.RowId.Equals(rowValue) && it.TriggerField.Equals(RebuildPath)) == null)
-                            {
-                                storeInfo.RefDataInfo.Add(relationInfo);
-                            }
-                            simpleRefFlag = true;
-                            break;
-                        }
-                    }
+                    GetNoExistSimpleRefData(rowValue, RefDataSet, ref wideRefFlag, ref resultMessage, storeInfo, wideFieldFullName, narrowFieldFullName, channelData, ref relationInfo, ref simpleRefFlag);
                     if (!simpleRefFlag)//当简单引用判断为不存在是，判定是否有标准引用
                     {
-                        MongoModelInfoOfClientRefModel clientRefModel = channelData.ModelDefInfo.ModelClientRef.FirstOrDefault(it => it.ClientRefField.Equals(RebuildPath));
+                        MongoModelInfoOfClientRefModel clientRefModel = channelData.ModelDefInfo.ModelClientRef.FirstOrDefault(it => it.ClientRefField.Equals(wideFieldFullName));
+                        if (clientRefModel == null)
+                        {
+                            wideRefFlag = false;
+                            clientRefModel = channelData.ModelDefInfo.ModelClientRef.FirstOrDefault(it => it.ClientRefField.Equals(narrowFieldFullName));
+                        }
                         if (clientRefModel != null)
                         {
                             relationInfo = new RefRelationInfo() { Id = Guid.NewGuid().ToString(), TriggerField = clientRefModel.ClientRefField, RefType = RefTypeEnum.CLIENTREF, RowId = rowValue };
@@ -355,9 +284,12 @@ namespace Victop.Frame.DataMessageManager
                                                 }
                                                 else
                                                 {
-                                                    if (tableconditionList.FirstOrDefault(it => it.ContainsKey(refLeftField)) != null)
+                                                    if (tableconditionList.FirstOrDefault(it => it.ContainsKey(refRightField)) != null)
                                                     {
-                                                        tableconditionList.FirstOrDefault(it => it.ContainsKey(refLeftField))[refLeftField] = drs[0][refLeftField];
+                                                        if (!clientRefModel.ClientRefField.Equals(item.ConditionLeft))
+                                                        {
+                                                            tableconditionList.FirstOrDefault(it => it.ContainsKey(refRightField))[refRightField] = drs[0][refLeftField];
+                                                        }
                                                     }
                                                     else
                                                     {
@@ -404,13 +336,13 @@ namespace Victop.Frame.DataMessageManager
                                         RefDataSet = dataOp.GetData(returnDic["DataChannelId"].ToString(), string.Format("[\"{0}\"]", refTableName));
                                         ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC, ReplyContent = JsonHelper.ToJson(clientRefModel) };
                                         resultMessage = JsonHelper.ToJson(replyMessage);
-                                        if (storeInfo.RefDataInfo.FirstOrDefault(it => it.RowId.Equals(rowValue) && it.TriggerField.Equals(RebuildPath)) == null)
+                                        if (storeInfo.RefDataInfo.FirstOrDefault(it => it.RowId.Equals(rowValue) && it.TriggerField.Equals(clientRefModel.ClientRefField)) == null)
                                         {
                                             storeInfo.RefDataInfo.Add(relationInfo);
                                         }
                                         else
                                         {
-                                            storeInfo.RefDataInfo.FirstOrDefault(it => it.RowId.Equals(rowValue) && it.TriggerField.Equals(RebuildPath)).DataChannelId = returnDic["DataChannelId"].ToString();
+                                            storeInfo.RefDataInfo.FirstOrDefault(it => it.RowId.Equals(rowValue) && it.TriggerField.Equals(clientRefModel.ClientRefField)).DataChannelId = returnDic["DataChannelId"].ToString();
                                         }
                                     }
                                     else
@@ -431,6 +363,157 @@ namespace Victop.Frame.DataMessageManager
             return resultMessage;
         }
         /// <summary>
+        /// 获取映射表中不存在的数据引用数据
+        /// </summary>
+        /// <param name="rowValue">行值</param>
+        /// <param name="RefDataSet">引用数据集合</param>
+        /// <param name="wideRefFlag">宽表引用标识</param>
+        /// <param name="resultMessage">返回消息</param>
+        /// <param name="storeInfo">数据集存储信息</param>
+        /// <param name="wideFieldFullName">宽表字符全名</param>
+        /// <param name="narrowFieldFullName">窄表字符全名</param>
+        /// <param name="dataOp">数据操作对象</param>
+        /// <param name="channelData">数据集合</param>
+        /// <param name="relationInfo">关系信息</param>
+        /// <param name="simpleRefFlag">简单引用标识</param>
+        private void GetNoExistSimpleRefData(string rowValue, DataSet RefDataSet, ref bool wideRefFlag, ref string resultMessage, DataStoreInfo storeInfo, string wideFieldFullName, string narrowFieldFullName, ChannelData channelData, ref RefRelationInfo relationInfo, ref bool simpleRefFlag)
+        {
+            foreach (MongoSimpleRefInfoOfArrayModel item in channelData.SimpleRefInfo.SimpleDataArray)
+            {
+                MongoSimpleRefInfoOfArrayPropertyModel propertyModel = item.ArrayProperty.FirstOrDefault(it => it.PropertyKey.Equals(wideFieldFullName));
+                if (propertyModel == null)
+                {
+                    wideRefFlag = false;
+                    propertyModel = item.ArrayProperty.FirstOrDefault(it => it.PropertyKey.Equals(narrowFieldFullName));
+                }
+                //TODO:检索简单引用，判断是否有依赖，无依赖则检索简单引用数据，有依赖则检索实际表中的依赖字段是否有值，若无值则返回依赖无值提示，有值，则根据依赖值获取数据
+                if (propertyModel != null)
+                {
+                    relationInfo = new RefRelationInfo() { Id = Guid.NewGuid().ToString(), RowId = rowValue, RefType = RefTypeEnum.SIMPLEREF, TriggerField = propertyModel.PropertyKey };
+                    if (string.IsNullOrEmpty(propertyModel.PropertyDepend))
+                    {
+                        DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, null);
+                        RefDataSet.Tables.Add(dt);
+                        ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC };
+                        resultMessage = JsonHelper.ToJson(replyMessage);
+                    }
+                    else
+                    {
+                        //TODO:relationInfo的DependId赋值
+                        Dictionary<string, object> dependDic = new Dictionary<string, object>();
+                        if (GetSimpleRefDependDic(storeInfo, relationInfo, propertyModel.PropertyDepend, rowValue, dependDic))
+                        {
+                            DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, dependDic);
+                            RefDataSet.Tables.Add(dt);
+                            ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC };
+                            resultMessage = JsonHelper.ToJson(replyMessage);
+                        }
+                        else
+                        {
+                            ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.CAST, ReplyAlertMessage = "依赖字段无值" };
+                            resultMessage = JsonHelper.ToJson(replyMessage);
+                        }
+                    }
+                    if (storeInfo.RefDataInfo.FirstOrDefault(it => it.RowId.Equals(rowValue) && it.TriggerField.Equals(propertyModel.PropertyKey)) == null)
+                    {
+                        storeInfo.RefDataInfo.Add(relationInfo);
+                    }
+                    simpleRefFlag = true;
+                    break;
+                }
+            }
+        }
+        /// <summary>
+        /// 获取存在的数据引用
+        /// </summary>
+        /// <param name="rowValue">行值</param>
+        /// <param name="RefDataSet">引用数据集合</param>
+        /// <param name="wideRefFlag">宽表引用标识</param>
+        /// <param name="resultMessage">返回消息</param>
+        /// <param name="storeInfo">数据集存储信息</param>
+        /// <param name="wideFieldFullName">宽表字符全名</param>
+        /// <param name="narrowFieldFullName">窄表字符全名</param>
+        /// <param name="dataOp">数据操作对象</param>
+        /// <param name="channelData">数据集合</param>
+        /// <param name="relationInfo">关系信息</param>
+        private void GetExistRefData(string rowValue, ref DataSet RefDataSet, ref bool wideRefFlag, ref string resultMessage, DataStoreInfo storeInfo, string wideFieldFullName, string narrowFieldFullName, DataOperation dataOp, ChannelData channelData, RefRelationInfo relationInfo)
+        {
+            switch (relationInfo.RefType)
+            {
+                case RefTypeEnum.SIMPLEREF:
+                    foreach (MongoSimpleRefInfoOfArrayModel item in channelData.SimpleRefInfo.SimpleDataArray)
+                    {
+                        MongoSimpleRefInfoOfArrayPropertyModel propertyModel = item.ArrayProperty.FirstOrDefault(it => it.PropertyKey.Equals(wideFieldFullName));
+                        if (propertyModel == null)
+                        {
+                            wideRefFlag = false;
+                            propertyModel = item.ArrayProperty.FirstOrDefault(it => it.PropertyKey.Equals(narrowFieldFullName));
+                        }
+                        if (propertyModel != null)
+                        {
+                            if (string.IsNullOrEmpty(propertyModel.PropertyDepend))
+                            {
+                                DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, null);
+                                RefDataSet.Tables.Add(dt);
+                                ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC };
+                                resultMessage = JsonHelper.ToJson(replyMessage);
+                            }
+                            else
+                            {
+                                Dictionary<string, object> dependDic = new Dictionary<string, object>();
+                                if (GetSimpleRefDependDic(storeInfo, relationInfo, propertyModel.PropertyDepend, rowValue, dependDic))
+                                {
+                                    DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, dependDic);
+                                    RefDataSet.Tables.Add(dt);
+                                    ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC };
+                                    resultMessage = JsonHelper.ToJson(replyMessage);
+                                }
+                                else
+                                {
+                                    ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.CAST, ReplyAlertMessage = "依赖字段无值" };
+                                    resultMessage = JsonHelper.ToJson(replyMessage);
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                case RefTypeEnum.CLIENTREF:
+                    RefDataSet = dataOp.GetData(relationInfo.DataChannelId, string.Format("[\"{0}\"]", relationInfo.TriggerTable));
+                    MongoModelInfoOfClientRefModel clientRefModel = channelData.ModelDefInfo.ModelClientRef.FirstOrDefault(it => it.ClientRefField == relationInfo.TriggerField);
+                    resultMessage = JsonHelper.ToJson(new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC, ReplyContent = JsonHelper.ToJson(clientRefModel) });
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private bool GetSimpleRefDependDic(DataStoreInfo datastoreInfo,RefRelationInfo relationInfo, string propertyDepend, string rowValue,Dictionary<string,object> dependDic)
+        {
+            if (dependDic == null)
+                dependDic = new Dictionary<string, object>();
+            RefRelationInfo dependRelationInfo = datastoreInfo.RefDataInfo.FirstOrDefault(it => it.TriggerField.Equals(propertyDepend) && it.RowId.Equals(rowValue));
+            if (dependRelationInfo != null && dependRelationInfo.FieldValue != null)
+            {
+                bool result = true;
+                if (dependRelationInfo.DependId != null)
+                {
+                    RefRelationInfo dependInfo = datastoreInfo.RefDataInfo.Find(it => it.Id.Equals(dependRelationInfo.DependId));
+                    result = GetSimpleRefDependDic(datastoreInfo, dependRelationInfo, dependInfo.TriggerField, rowValue, dependDic);
+                }
+                else
+                {
+                    relationInfo.DependId = dependRelationInfo.Id;
+                }
+                dependDic.Add(dependRelationInfo.TriggerField, dependRelationInfo.FieldValue);
+                return result;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        /// <summary>
         /// 回填引用数据
         /// </summary>
         /// <param name="viewId">通道标识</param>
@@ -443,6 +526,8 @@ namespace Victop.Frame.DataMessageManager
         {
             string resultMessage = string.Empty;
             string RebuildPath = string.Empty;
+            string wideFieldFullName = string.Empty;
+            string narrowFieldFullName = string.Empty;
             DataStoreInfo storeInfo = null;
             DataOperation dataOp = new DataOperation();
             ChannelData channelData = dataOp.GetChannelData(viewId);
@@ -473,9 +558,14 @@ namespace Victop.Frame.DataMessageManager
                         RebuildPath += "dataArray.";
                     }
                 }
-                RebuildPath += fieldName;
+                wideFieldFullName = RebuildPath + fieldName;
+                narrowFieldFullName = RebuildPath.Substring(0, RebuildPath.LastIndexOf("dataArray")) + string.Format("[target:{0}].target_value", fieldName);
                 #endregion
-                RefRelationInfo relationInfo = storeInfo.RefDataInfo.FirstOrDefault(it => it.TriggerField.Equals(RebuildPath) && it.RowId.Equals(rowValue));
+                RefRelationInfo relationInfo = storeInfo.RefDataInfo.FirstOrDefault(it => it.TriggerField.Equals(wideFieldFullName) && it.RowId.Equals(rowValue));
+                if (relationInfo == null)
+                {
+                    relationInfo = storeInfo.RefDataInfo.FirstOrDefault(it => it.TriggerField.Equals(narrowFieldFullName) && it.RowId.Equals(rowValue));
+                }
                 if (relationInfo != null)
                 {
                     relationInfo.FieldValue = fieldValue;
