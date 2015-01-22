@@ -767,7 +767,7 @@ namespace Victop.Frame.DataChannel
                             return null;
                         }
                     }
-                    DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, dependDic);
+                    DataTable dt = GetDataByConsturctPath(propertyModel.PropertyValue, propertyModel.PropertyValue, item.ArrayValueList, newDependDic);
                     ds.Tables.Add(dt);
                     break;
                 }
