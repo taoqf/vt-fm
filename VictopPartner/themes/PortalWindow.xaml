@@ -1259,7 +1259,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="btnMaxRestoreStyle" TargetType="{x:Type controls:VicButtonNormal}">
+    <Style x:Key="btnMaxStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Width" Value="34"/>
         <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
@@ -1267,9 +1267,53 @@
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border Name="PART_Border"   BorderThickness="0" Padding="2" >
                         <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Border x:Name="PART_Border1" BorderBrush="{DynamicResource MainFrmWinBtnForeColor}" BorderThickness="1" Width="15" Height="15">
-                               <Rectangle x:Name="PART_Path1" Width="8" Height="8" Stroke="{DynamicResource MainFrmWinBtnForeColor}"  StrokeThickness="2"  />
+                            <Border x:Name="PART_Border1" BorderBrush="{DynamicResource MainFrmWinBtnForeColor}" Margin="5,0,0,0" BorderThickness="0,1,1,0" Width="18" Height="18">
+                                <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Border x:Name="PART_Border2" BorderBrush="{DynamicResource MainFrmWinBtnForeColor}"  BorderThickness="1" Width="15"/>
+                                    <Rectangle x:Name="PART_Path1" Width="15" Height="12" Stroke="{DynamicResource MainFrmWinBtnForeColor}"  StrokeThickness="1"  />
+
+                                </StackPanel>
                             </Border>
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="PART_Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                        <GradientStop Color="White" Offset="0.5" />
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Stroke" TargetName="PART_Path1" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
+                            <Setter Property="BorderBrush" TargetName="PART_Border1" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
+                            <Setter Property="BorderBrush" TargetName="PART_Border2" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="UIElement.Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="btnRestoreStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="Width" Value="34"/>
+        <Setter Property="Height" Value="34"/>
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
+                    <Border Name="PART_Border"   BorderThickness="0" Padding="2" >
+                        <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Border x:Name="PART_Border1" BorderBrush="{DynamicResource MainFrmWinBtnForeColor}"  BorderThickness="1" Width="15"/>
+                            <Rectangle x:Name="PART_Path1" Width="15" Height="12" Stroke="{DynamicResource MainFrmWinBtnForeColor}"  StrokeThickness="2"  />
+                            
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>

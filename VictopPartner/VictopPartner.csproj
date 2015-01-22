@@ -222,10 +222,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="FeiD.png" />
+    <Resource Include="victop.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Fonts\iconfont.ttf" />
-    <Resource Include="victop.ico" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
