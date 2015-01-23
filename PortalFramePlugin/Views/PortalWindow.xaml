@@ -87,7 +87,7 @@
                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <!--<Button Name="btnFeedBack" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>-->
                     <!--插件集合-->
-                    <controls:VicButtonNormal Name="btnPluginList" Style="{DynamicResource btnActivePluginStyle}" ToolTip="活动插件列表">
+                    <controls:VicButtonNormal Name="btnPluginList" Style="{DynamicResource btnActivePluginStyle}" ToolTip="窗体切换">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseEnter">
                                 <i:InvokeCommandAction Command="{Binding btnPluginListMouseEnterCommand}"/>
