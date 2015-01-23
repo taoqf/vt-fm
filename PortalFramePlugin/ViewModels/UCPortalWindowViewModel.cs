@@ -1119,9 +1119,11 @@ namespace PortalFramePlugin.ViewModels
                 }
                 else
                 {
-                    if (TabItemList.FirstOrDefault(it => it.Header.Equals(Plugin.PluginTitle)) != null)
+                    VicTabItemNormal tabItem = TabItemList.FirstOrDefault(it => it.Header.Equals(Plugin.PluginTitle));
+                    if (tabItem != null)
                     {
-                        TabItemList.FirstOrDefault(it => it.Header.Equals(Plugin.PluginTitle)).IsSelected = true;
+                        tabItem.IsSelected = true;
+                        tabItem.Focus();
                     }
                 }
             }
