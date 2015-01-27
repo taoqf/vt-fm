@@ -221,6 +221,7 @@ namespace SystemTestingPlugin.ViewModels
             RefDataModel refData = new RefDataModel() { SystemId = DataInfoModel.SystemId, ConfigSystemId = DataInfoModel.ConfigsystemId, RefFieldCaption = columnCaption, ViewId = DataInfoModel.ChannelId, DataPath = DataInfoModel.DataPath, FieldName = columnName, RowValue = DataInfoModel.GridSelectedValue.ToString(), RefCallBack = new WaitCallback(SetData),RefFieldValue=vicTbox.VicText };
             UCUniversalRefWindow refWndow = new UCUniversalRefWindow(refData);
             VicWindowNormal window = new VicWindowNormal();
+            window.SetResourceReference(VicWindowNormal.StyleProperty, "WindowMessageSkin");
             window.Title = columnCaption + "数据引用";
             window.Content = refWndow;
             window.Show();
@@ -292,7 +293,7 @@ namespace SystemTestingPlugin.ViewModels
                 {
                     DataMessageOperation dataOp = new DataMessageOperation();
                     DataSet ds = new DataSet();
-                    string resultMessage = dataOp.GetRefData(DataInfoModel.ChannelId, DataInfoModel.DataPath, DataInfoModel.NarrowRefField, DataInfoModel.NarrowRowValue, out ds);
+                    string resultMessage = dataOp.GetRefData(DataInfoModel.ChannelId, DataInfoModel.DataPath, DataInfoModel.NarrowRefField, DataInfoModel.NarrowRowValue, out ds, null, DataInfoModel.SystemId, DataInfoModel.ConfigsystemId);
                     Dictionary<string, object> resultDic = JsonHelper.ToObject<Dictionary<string, object>>(resultMessage);
                     if (resultDic["ReplyMode"].ToString().Equals("2"))
                     {
