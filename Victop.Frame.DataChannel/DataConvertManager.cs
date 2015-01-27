@@ -544,6 +544,18 @@ namespace Victop.Frame.DataChannel
                                     dc.DataType = typeof(Int64);
                                     dc.ExtendedProperties.Add("ColType", "long");
                                     break;
+                                case "double":
+                                    dc.DataType = typeof(double);
+                                    dc.ExtendedProperties.Add("ColType", "double");
+                                    break;
+                                case "float":
+                                    dc.DataType = typeof(float);
+                                    dc.ExtendedProperties.Add("ColType", "float");
+                                    break;
+                                case "boolean":
+                                    dc.DataType = typeof(Boolean);
+                                    dc.ExtendedProperties.Add("ColType", "boolean");
+                                    break;
                                 case "date":
                                     dc.DataType = typeof(DateTime);
                                     dc.ExtendedProperties.Add("ColType", "date");
@@ -602,6 +614,18 @@ namespace Victop.Frame.DataChannel
                                 case "long":
                                     dc.DataType = typeof(Int64);
                                     dc.ExtendedProperties.Add("ColType", "long");
+                                    break;
+                                case "double":
+                                    dc.DataType = typeof(double);
+                                    dc.ExtendedProperties.Add("ColType", "double");
+                                    break;
+                                case "float":
+                                    dc.DataType = typeof(float);
+                                    dc.ExtendedProperties.Add("ColType", "float");
+                                    break;
+                                case "boolean":
+                                    dc.DataType = typeof(Boolean);
+                                    dc.ExtendedProperties.Add("ColType", "boolean");
                                     break;
                                 case "date":
                                     dc.DataType = typeof(DateTime);
@@ -673,6 +697,15 @@ namespace Victop.Frame.DataChannel
                                             break;
                                         case "long":
                                             dc.DataType = typeof(Int64);
+                                            break;
+                                        case "double":
+                                            dc.DataType = typeof(double);
+                                            break;
+                                        case "float":
+                                            dc.DataType = typeof(float);
+                                            break;
+                                        case "boolean":
+                                            dc.DataType = typeof(Boolean);
                                             break;
                                         case "date":
                                             dc.DataType = typeof(DateTime);
