@@ -171,7 +171,8 @@ namespace SystemTestingPlugin.ViewModels
                             mastDs = messageOp.GetData(DataInfoModel.ChannelId, DataInfoModel.DataPath);
                             watch.Stop();
                             VicMessageBoxNormal.Show(watch.ElapsedMilliseconds.ToString());
-                            DataInfoModel.ResultDataTable = mastDs.Tables["dataArray"];
+                            DataTable dt = mastDs.Tables["dataArray"];
+                            DataInfoModel.ResultDataTable = dt;
                         }
                         else
                         {

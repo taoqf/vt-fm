@@ -699,7 +699,7 @@ namespace Victop.Frame.DataChannel
                                             dc.DataType = typeof(Int64);
                                             break;
                                         case "double":
-                                            dc.DataType = typeof(double);
+                                            dc.DataType = typeof(Double);
                                             break;
                                         case "float":
                                             dc.DataType = typeof(float);
