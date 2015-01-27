@@ -493,11 +493,15 @@ namespace Victop.Frame.DataChannel
                 if (dataPathList[i].GetType().Name.Equals("String"))
                 {
                     RebuildPath += dataPathList[i].ToString() + ".";
+                    if (i == dataPathList.Count - 1)
+                    {
+                        RebuildPath += "dataArray.";
+                    }
                 }
-            }
-            if (dataPathList.Count != 1)
-            {
-                RebuildPath += "dataArray.";
+                else
+                {
+                    RebuildPath += "dataArray.";
+                }
             }
             #endregion
             #region 组织table中字段
