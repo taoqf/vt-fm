@@ -1096,7 +1096,12 @@ namespace Victop.Frame.DataChannel
                                         switch (dc.ExtendedProperties["ColType"].ToString())
                                         {
                                             case "int":
+                                            case "long":
                                                 addDic.Add(dc.ColumnName, (dr[dc.ColumnName] == null || string.IsNullOrEmpty(dr[dc.ColumnName].ToString())) ? 0 : dr[dc.ColumnName]);
+                                                break;
+                                            case "double":
+                                            case "float":
+                                                addDic.Add(dc.ColumnName, (dr[dc.ColumnName] == null || string.IsNullOrEmpty(dr[dc.ColumnName].ToString())) ? 0 : Convert.ToDecimal(dr[dc.ColumnName]));
                                                 break;
                                             case "date":
                                                 addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? DateTime.Now : dr[dc.ColumnName]);
@@ -1118,6 +1123,9 @@ namespace Victop.Frame.DataChannel
                                                 break;
                                             case "document":
                                                 addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? new Dictionary<string, object>() : dr[dc.ColumnName]);
+                                                break;
+                                            case "boolean":
+                                                addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? false : Convert.ToBoolean(dr[dc.ColumnName]));
                                                 break;
                                             case "string":
                                             default:
@@ -1156,7 +1164,12 @@ namespace Victop.Frame.DataChannel
                                         switch (dc.ExtendedProperties["ColType"].ToString())
                                         {
                                             case "int":
+                                            case "long":
                                                 modDic.Add(dc.ColumnName, (dr[dc.ColumnName] == null || string.IsNullOrEmpty(dr[dc.ColumnName].ToString())) ? 0 : dr[dc.ColumnName]);
+                                                break;
+                                            case "double":
+                                            case "float":
+                                                modDic.Add(dc.ColumnName, (dr[dc.ColumnName] == null || string.IsNullOrEmpty(dr[dc.ColumnName].ToString())) ? 0 : Convert.ToDecimal(dr[dc.ColumnName]));
                                                 break;
                                             case "date":
                                                 modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? DateTime.Now : dr[dc.ColumnName]);
@@ -1179,6 +1192,9 @@ namespace Victop.Frame.DataChannel
                                                 break;
                                             case "document":
                                                 modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? new Dictionary<string, object>() : dr[dc.ColumnName]);
+                                                break;
+                                            case "boolean":
+                                                modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? false : Convert.ToBoolean(dr[dc.ColumnName]));
                                                 break;
                                             case "string":
                                             default:
