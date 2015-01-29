@@ -64,6 +64,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ActiproSoftware.Ribbon.Wpf, Version=14.2.611.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL" />
+    <Reference Include="ActiproSoftware.Shared.Wpf, Version=14.2.611.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9, processorArchitecture=MSIL" />
     <Reference Include="GalaSoft.MvvmLight.Extras.WPF4">
       <HintPath>..\VictopLib\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
       <Private>False</Private>
@@ -95,6 +97,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="Victop.Wpf.Controls">
       <HintPath>..\Bin\Victop.Wpf.Controls.dll</HintPath>
       <Private>False</Private>
@@ -123,9 +127,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\OverlayWindowViewModel.cs" />
     <Compile Include="ViewModels\UCPortalWindowViewModel.cs" />
     <Compile Include="Views\NotificationCenter.xaml.cs">
       <DependentUpon>NotificationCenter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OverlayWindow.xaml.cs">
+      <DependentUpon>OverlayWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PortalWindow.xaml.cs">
       <DependentUpon>PortalWindow.xaml</DependentUpon>
@@ -164,11 +172,17 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\FeiD.png" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Views\NotificationCenter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\OverlayWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PortalWindow.xaml">
       <SubType>Designer</SubType>
@@ -178,6 +192,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\victop.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
