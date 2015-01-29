@@ -932,8 +932,8 @@ namespace PortalFramePlugin.ViewModels
                         pluginWin.Uid = pluginModel.ObjectId;
                         pluginWin.Owner = mainWindow;
                         ActivePluginNum = pluginOp.GetPluginInfo().Count;
-                        pluginWin.ShowDialog();
-                        SendPluginCloseMessage(pluginModel);
+                        pluginWin.Show();
+                        //SendPluginCloseMessage(pluginModel);
                         break;
                     case 1:
                         UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;
@@ -1064,15 +1064,22 @@ namespace PortalFramePlugin.ViewModels
                 IPlugin Plugin = PluginInfo["IPlugin"] as IPlugin;
                 if (Plugin.ShowType == 0)
                 {
-                    if (Plugin.ParamDict["Title"].ToString().Length > 8)
+                    if (Plugin.ParamDict.ContainsKey("Title"))
                     {
-                        btn.Content = Plugin.ParamDict["Title"].ToString().Substring(0, 6) + "...";
-                        btn.ToolTip = Plugin.ParamDict["Title"];
+                        if (Plugin.ParamDict["Title"].ToString().Length > 8)
+                        {
+                            btn.Content = Plugin.ParamDict["Title"].ToString().Substring(0, 6) + "...";
+                            btn.ToolTip = Plugin.ParamDict["Title"];
+                        }
+                        else
+                        {
+                            btn.Content = Plugin.ParamDict["Title"];
+                        }
                     }
                     else
                     {
-                        btn.Content = Plugin.ParamDict["Title"];
-                    }                  
+                        btn.Content = Plugin.PluginTitle;
+                    }
                     btn.Tag = PluginInfo;
                     btn.Click += ActivatePlugin_Click;
                     PluginListContent.Children.Add(btn);

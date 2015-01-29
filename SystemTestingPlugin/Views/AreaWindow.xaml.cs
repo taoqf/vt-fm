@@ -17,7 +17,7 @@ namespace SystemTestingPlugin.Views
     /// <summary>
     /// AreaWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class AreaWindow : VicWindowNormal
+    public partial class AreaWindow : Window
     {
         public AreaWindow()
         {

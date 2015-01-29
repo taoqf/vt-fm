@@ -19,6 +19,15 @@
         <ctrl:VicGridNormal.Background>
             <ImageBrush ImageSource="/PortalFramePlugin;component/Images/victop.ico"/>
         </ctrl:VicGridNormal.Background>
+        <ctrl:VicGridNormal.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </ctrl:VicGridNormal.RowDefinitions>
+        <ctrl:VicPopup Grid.Row="0" Margin="0,60,0,0" Name="popPluginList" StaysOpen="False" IsOpen="{Binding PluginListShow,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+            <Border BorderThickness="1" BorderBrush="{DynamicResource SkinColor}"  Width="100" Height="Auto" Background="{DynamicResource MainBackgroundImage}" >
+                <ctrl:VicGridNormal Background="{DynamicResource WhiteShade}" Name="girPluginList">
+                </ctrl:VicGridNormal>
+            </Border>
+        </ctrl:VicPopup>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">
                 <i:InvokeCommandAction Command="{Binding mainWindowLoadedCommand}" CommandParameter="{Binding ElementName=mainWindow}"/>
