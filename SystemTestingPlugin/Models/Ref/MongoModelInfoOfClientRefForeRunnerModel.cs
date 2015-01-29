@@ -25,6 +25,19 @@ namespace SystemTestingPlugin.Models
             set { refModel = value; }
         }
         /// <summary>
+        /// 引用表名
+        /// </summary>
+        private string refTableName;
+        /// <summary>
+        /// 引用表名
+        /// </summary>
+        [JsonProperty(PropertyName = "refTableName")]
+        public string RefTableName
+        {
+            get { return refTableName; }
+            set { refTableName = value; }
+        }
+        /// <summary>
         /// 树标识
         /// </summary>
         private string treeId;

@@ -231,17 +231,24 @@ namespace SystemTestingPlugin.ViewModels
                             DataSet ds = FindDataTable(refDataInfo.SystemId, refDataInfo.ConfigSystemId, clientRefInfo.ClientRefForeRunner.RefModel, treeTableName, null);
                             if (ds != null && ds.Tables.Contains("dataArray"))
                             {
-                                DataRow[] drs = ds.Tables["dataArray"].Select(string.Format("{0} is null", clientRefInfo.ClientRefForeRunner.TreeParentId));
+                                DataRow[] drs = string.IsNullOrEmpty(clientRefInfo.ClientRefForeRunner.TreeParentId) ? ds.Tables["dataArray"].Select() : ds.Tables["dataArray"].Select(string.Format("{0} is null", clientRefInfo.ClientRefForeRunner.TreeParentId));
                                 if (drs != null && drs.Count() > 0)
                                 {
                                     foreach (DataRow item in drs)
                                     {
                                         RefForerunnerTreeModel treeModel = new RefForerunnerTreeModel();
                                         treeModel.TreeId = item[clientRefInfo.ClientRefForeRunner.TreeId].ToString();
-                                        treeModel.TreeParentId = item[clientRefInfo.ClientRefForeRunner.TreeParentId].ToString();
                                         treeModel.TreeDisplay = item[clientRefInfo.ClientRefForeRunner.TreeDisplay].ToString();
                                         treeModel.TreeValue = item;
-                                        CreateTreeData(ds.Tables["dataArray"], treeModel.TreeId, treeModel);
+                                        if (!string.IsNullOrEmpty(clientRefInfo.ClientRefForeRunner.TreeParentId))
+                                        {
+                                            treeModel.TreeParentId = item[clientRefInfo.ClientRefForeRunner.TreeParentId].ToString();
+                                            CreateTreeData(ds.Tables["dataArray"], treeModel.TreeId, treeModel);
+                                        }
+                                        else
+                                        {
+                                            treeModel.TreeParentId = string.Empty;
+                                        }
                                         ForerunnerTreeList.Add(treeModel);
                                     }
                                 }
@@ -436,6 +443,10 @@ namespace SystemTestingPlugin.ViewModels
                 List<object> tableCondition = new List<object>();
                 tableCondition.Add(conditionDic);
                 conditionsDic.Add("tablecondition", tableCondition);
+            }
+            else
+            {
+                conditionsDic.Add("tablecondition", new List<object>());
             }
             conditionsList.Add(conditionsDic);
             contentDic.Add("conditions", conditionsList);

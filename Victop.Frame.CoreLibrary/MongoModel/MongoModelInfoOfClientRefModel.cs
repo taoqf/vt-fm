@@ -25,6 +25,20 @@ namespace Victop.Frame.CoreLibrary.MongoModel
             set { clientRefField = value; }
         }
         /// <summary>
+        /// 引用表名
+        /// </summary>
+        private string clientRefTableName;
+        /// <summary>
+        /// 引用表名
+        /// </summary>
+        [JsonProperty(PropertyName = "refTableName")]
+        public string ClientRefTableName
+        {
+            get { return clientRefTableName; }
+            set { clientRefTableName = value; }
+        }
+
+        /// <summary>
         /// 引用字段的正则匹配查询
         /// </summary>
         private string clientRefRegStrategy;

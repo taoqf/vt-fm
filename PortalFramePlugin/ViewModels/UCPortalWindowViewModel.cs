@@ -286,6 +286,7 @@ namespace PortalFramePlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     mainWindow = (Window)x;
+                    mainWindow.Uid = "mainWindow";
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
                     Rect rect = SystemParameters.WorkArea;
@@ -295,6 +296,8 @@ namespace PortalFramePlugin.ViewModels
                     ChangeFrameWorkTheme();
                     //LoadMenuListLocal();
                     LoadJsonMenuListLocal();
+                    OverlayWindow overlayWin = new OverlayWindow();
+                    overlayWin.Show();
                     UserLogin();
                 });
             }

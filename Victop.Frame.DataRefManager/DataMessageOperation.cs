@@ -244,7 +244,7 @@ namespace Victop.Frame.DataMessageManager
                                     contentDic.Add("modelid", clientRefModel.ClientRefModel);
                                     if (clientRefModel.ClientRefConditionFirst.Count > 0)
                                     {
-                                        refTableName = clientRefModel.ClientRefConditionFirst[0].ConditionRight.Substring(0, clientRefModel.ClientRefConditionFirst[0].ConditionRight.IndexOf('.'));
+                                        refTableName = string.IsNullOrEmpty(clientRefModel.ClientRefTableName) ? clientRefModel.ClientRefConditionFirst[0].ConditionRight.Substring(0, clientRefModel.ClientRefConditionFirst[0].ConditionRight.IndexOf('.')) : clientRefModel.ClientRefTableName;
                                         List<Dictionary<string, object>> conditionList = defaultCondition == null ? new List<Dictionary<string, object>>() : defaultCondition;
                                         DataRow[] drs = storeInfo.ActualDataInfo.Tables["dataArray"].Select(string.Format("_id='{0}'", rowValue));
                                         if (drs != null && drs.Count() > 0)
@@ -322,7 +322,7 @@ namespace Victop.Frame.DataMessageManager
                                     //TODO:去取数
                                     if (string.IsNullOrEmpty(refTableName))
                                     {
-                                        refTableName = clientRefModel.ClientRefProperty[0].PropertyValue.Substring(0, clientRefModel.ClientRefProperty[0].PropertyValue.IndexOf('.'));
+                                        refTableName = string.IsNullOrEmpty(clientRefModel.ClientRefTableName) ? clientRefModel.ClientRefProperty[0].PropertyValue.Substring(0, clientRefModel.ClientRefProperty[0].PropertyValue.IndexOf('.')) : clientRefModel.ClientRefTableName;
                                     }
                                     if (defaultCondition != null && !contentDic.ContainsKey("conditions"))
                                     {

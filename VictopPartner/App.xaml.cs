@@ -22,6 +22,7 @@ namespace VictopPartner
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            #region 自动更新
             if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             {
                 string[] argsStr = Environment.GetCommandLineArgs();
@@ -30,7 +31,8 @@ namespace VictopPartner
                     Process updatePro = Process.Start(ConfigurationManager.AppSettings["updateconfig"] + ".exe", Process.GetCurrentProcess().Id.ToString());
                     updatePro.WaitForExit();
                 }
-            }
+            } 
+            #endregion
             if (FrameInit.GetInstance().FrameRun())
             {
                 try
@@ -59,16 +61,6 @@ namespace VictopPartner
                     Environment.Exit(0);
                 }
             }
-        }
-
-        private string AnonymousLogin()
-        {
-            Dictionary<string, string> messageDic = new Dictionary<string, string>();
-            messageDic.Add("MessageType", "LoginService.getCurrentLinker");
-            Dictionary<string, string> contentDic = new Dictionary<string, string>();
-            contentDic.Add("usercode", "test7");
-            messageDic.Add("MessageContent", JsonHelper.ToJson(contentDic));
-            return JsonHelper.ToJson(messageDic);
         }
 
         /// <summary>

@@ -1,0 +1,28 @@
+﻿<ctrl:VicWindowNormal x:Class="PortalFramePlugin.Views.OverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:vm="clr-namespace:PortalFramePlugin.ViewModels"
+        Title="OverlayWindow" Height="60" Width="60" Name="mainWindow" Opacity="0.5" Style="{DynamicResource ShadowWindow}" ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="None" Topmost="True">
+    <Window.Resources>
+        <vm:OverlayWindowViewModel x:Key="overlayVewModel"/>
+    </Window.Resources>
+    <ctrl:VicGridNormal DataContext="{StaticResource overlayVewModel}">
+        <ctrl:VicGridNormal.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="显示主窗口" Name="menuItemActiveWin" Command="{Binding menuItemActiveWinClickCommand}"/>
+                <MenuItem Header="活动窗口" Name="menuItemPluginList" Command="{Binding menuItemPluginListClickCommand}"/>
+                <MenuItem Header="退出" Name="menuItemExit" Command="{Binding menuItemExitClickCommand}"/>
+            </ContextMenu>
+        </ctrl:VicGridNormal.ContextMenu>
+        <ctrl:VicGridNormal.Background>
+            <ImageBrush ImageSource="/PortalFramePlugin;component/Images/victop.ico"/>
+        </ctrl:VicGridNormal.Background>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding mainWindowLoadedCommand}" CommandParameter="{Binding ElementName=mainWindow}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+    </ctrl:VicGridNormal>
+</ctrl:VicWindowNormal>

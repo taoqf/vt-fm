@@ -315,8 +315,32 @@ namespace SystemTestingPlugin.ViewModels
             get
             {
                 return new RelayCommand(() => {
-                    DataMessageOperation dataOp = new DataMessageOperation();
-                    dataOp.SetRefData(DataInfoModel.ChannelId, DataInfoModel.DataPath, DataInfoModel.NarrowRefField, DataInfoModel.NarrowRowValue, DataInfoModel.NarrowGridSelectedValue);
+
+                    //DataMessageOperation dataOp = new DataMessageOperation();
+                    //dataOp.SetRefData(DataInfoModel.ChannelId, DataInfoModel.DataPath, DataInfoModel.NarrowRefField, DataInfoModel.NarrowRowValue, DataInfoModel.NarrowGridSelectedValue);
+                    DataTable dt = new DataTable();
+                    
+                    DataColumn dcprice1 = new DataColumn("price1");
+                    dcprice1.DataType = typeof(decimal);
+                    dt.Columns.Add(dcprice1);
+                    
+                    DataColumn dcprice2 = new DataColumn("price2");
+                    dcprice2.DataType = typeof(decimal);
+                    dt.Columns.Add(dcprice2);
+
+                    DataColumn dcprice3 = new DataColumn("price3");
+                    dcprice3.DataType = typeof(decimal);
+                    dcprice3.Expression = "IIF(price1>price2,price2,price1)";
+                    dt.Columns.Add(dcprice3);
+
+                    DataRow dr = dt.NewRow();
+                    dr["price1"] = 0;
+                    dr["price2"] = 0;
+                    dr["price3"] = 0;
+                    dt.Rows.Add(dr);
+
+                    DataInfoModel.RefDataTable = dt;
+
                 });
             }
         }
