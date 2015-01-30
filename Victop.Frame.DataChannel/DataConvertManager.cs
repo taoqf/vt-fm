@@ -1115,7 +1115,7 @@ namespace Victop.Frame.DataChannel
                                                 }
                                                 else
                                                 {
-                                                    addDic.Add(dc.ColumnName, 0);
+                                                    addDic.Add(dc.ColumnName, (long)0);
                                                 }
                                                 break;
                                             case "array":
@@ -1184,7 +1184,7 @@ namespace Victop.Frame.DataChannel
                                                 }
                                                 else
                                                 {
-                                                    modDic.Add(dc.ColumnName, 0);
+                                                    modDic.Add(dc.ColumnName, (long)0);
                                                 }
                                                 break;
                                             case "array":
