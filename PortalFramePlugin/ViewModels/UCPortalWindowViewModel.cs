@@ -930,7 +930,7 @@ namespace PortalFramePlugin.ViewModels
                     case 0:
                         Window pluginWin = pluginModel.PluginInterface.StartWindow;
                         pluginWin.Uid = pluginModel.ObjectId;
-                        pluginWin.Owner = mainWindow;
+                        //pluginWin.Owner = mainWindow;
                         ActivePluginNum = pluginOp.GetPluginInfo().Count;
                         pluginWin.Show();
                         //SendPluginCloseMessage(pluginModel);

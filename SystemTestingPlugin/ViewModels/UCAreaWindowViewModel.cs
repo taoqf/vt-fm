@@ -259,6 +259,26 @@ namespace SystemTestingPlugin.ViewModels
             }
             
         }
+        public ICommand btnAddDataClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    DataRow dr = DataInfoModel.ResultDataTable.NewRow();
+                    DataInfoModel.ResultDataTable.Rows.Add(dr);
+                });
+            }
+        }
+        public ICommand btnSaveDataClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() => {
+                    DataMessageOperation dataOp = new DataMessageOperation();
+                    dataOp.SaveData(DataInfoModel.ChannelId, DataInfoModel.DataPath);
+                });
+            }
+        }
         /// <summary>
         /// 查看Json数据
         /// </summary>

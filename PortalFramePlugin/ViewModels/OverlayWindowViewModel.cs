@@ -150,10 +150,13 @@ namespace PortalFramePlugin.ViewModels
                 VicButtonNormal btn = new VicButtonNormal();
                 btn.Width = 120;
                 IPlugin Plugin = PluginInfo["IPlugin"] as IPlugin;
-                btn.Content = Plugin.PluginTitle;
-                btn.Tag = PluginInfo;
-                btn.Click += ActivatePlugin_Click;
-                PluginListContent.Children.Add(btn);
+                if (Plugin.ShowType.Equals(0))
+                {
+                    btn.Content = Plugin.PluginTitle;
+                    btn.Tag = PluginInfo;
+                    btn.Click += ActivatePlugin_Click;
+                    PluginListContent.Children.Add(btn);
+                }
             }
             return PluginListContent;
         }
@@ -175,17 +178,17 @@ namespace PortalFramePlugin.ViewModels
                     {
                         if (WinCollection[i].Uid.Equals(PluginUid))
                         {
-                            switch (WinCollection[i].ResizeMode)
-                            {
-                                case ResizeMode.NoResize:
-                                case ResizeMode.CanMinimize:
-                                    WinCollection[i].WindowState = WindowState.Normal;
-                                    break;
-                                case ResizeMode.CanResize:
-                                case ResizeMode.CanResizeWithGrip:
-                                    WinCollection[i].WindowState = WindowState.Maximized;
-                                    break;
-                            }
+                            //switch (WinCollection[i].ResizeMode)
+                            //{
+                            //    case ResizeMode.NoResize:
+                            //    case ResizeMode.CanMinimize:
+                            //        WinCollection[i].WindowState = WindowState.Normal;
+                            //        break;
+                            //    case ResizeMode.CanResize:
+                            //    case ResizeMode.CanResizeWithGrip:
+                            //        WinCollection[i].WindowState = WindowState.Maximized;
+                            //        break;
+                            //}
                             WinCollection[i].Activate();
                             pluginExistFlag = true;
                             break;

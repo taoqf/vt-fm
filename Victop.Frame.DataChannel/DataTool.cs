@@ -542,12 +542,11 @@ namespace Victop.Frame.DataChannel
                         {
                             jsonData = fullDataDic["docDataStore"].ToString();
                         }
-
-                        if (i % 2 == 0)
+                        if (i % 2 == 0)//表名
                         {
+                            Dictionary<string, object> frontJsonDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
                             if (i == pathList.Count - 1)
                             {
-                                Dictionary<string, object> frontJsonDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
                                 if (frontJsonDic.ContainsKey(pathList[i].ToString()))
                                 {
                                     jsonData = frontJsonDic[pathList[i].ToString()].ToString();
@@ -591,157 +590,86 @@ namespace Victop.Frame.DataChannel
                             }
                             else
                             {
-                                DataList.Add(JsonHelper.ToObject<Dictionary<string, object>>(jsonData));
+                                DataList.Add(frontJsonDic);
                                 jsonData = JsonHelper.ReadJsonString(jsonData, pathList[i].ToString());
                             }
                         }
-                        else if (i % 2 == 1)
+                        else//KeyValue键值对
                         {
-                            Dictionary<string, object> tableDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonData);
-                            DataList.Add(tableDic);
-                            jsonData = tableDic["dataArray"].ToString();
-                            if (i == pathList.Count - 1)
+                            Dictionary<string, object> pathDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(pathList[i]));
+                            jsonData = JsonHelper.ReadJsonString(jsonData, "dataArray");
+                            List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
+                            if (arrayList != null && arrayList.Count > 0)
                             {
-                                List<object> arrayList = JsonHelper.ToObject<List<object>>(jsonData);
-                                if (arrayList != null && arrayList.Count > 0)
+                                Dictionary<string, object> itemDic = arrayList.FirstOrDefault(it => it[pathDic["key"].ToString()].Equals(pathDic["value"]));
+                                if (i == pathList.Count - 1)
                                 {
-                                    for (int j = 0; j < arrayList.Count; j++)
+                                    if (itemDic != null)
                                     {
-                                        Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(arrayList[j].ToString());
-                                        switch (rowState)
+                                        foreach (string savekey in saveData.Keys)
                                         {
-                                            case OpreateStateEnum.Added:
-                                                break;
-                                            case OpreateStateEnum.Modified:
-                                                if (itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i]), "value")))
-                                                {
-                                                    Dictionary<string, object> saveDic = saveData;
-                                                    foreach (string savekey in saveDic.Keys)
-                                                    {
-                                                        if (itemDic.ContainsKey(savekey))
-                                                        {
-                                                            itemDic[savekey] = saveDic[savekey];
-                                                        }
-                                                        else
-                                                        {
-                                                            itemDic.Add(savekey, saveDic[savekey]);
-                                                        }
-                                                    }
-                                                }
-                                                break;
-                                            case OpreateStateEnum.Deleted:
-                                                break;
-                                            case OpreateStateEnum.None:
-                                                break;
-                                            default:
-                                                break;
+                                            if (itemDic.ContainsKey(savekey))
+                                            {
+                                                itemDic[savekey] = saveData[savekey];
+                                            }
+                                            else
+                                            {
+                                                itemDic.Add(savekey, saveData[savekey]);
+                                            }
                                         }
-                                        arrayList[j] = itemDic;
+                                    }
+                                    else
+                                    {
+                                        arrayList.Add(saveData);
                                     }
                                 }
                                 else
                                 {
-                                    arrayList = new List<object>();
-                                    arrayList.Add(saveData);
+                                    if (itemDic == null)
+                                    {
+                                        itemDic = saveData;
+                                        arrayList.Add(itemDic);
+                                    }
+                                    Dictionary<string, object> keyValueDic = new Dictionary<string, object>();
+                                    keyValueDic.Add("dataArray", arrayList);
+                                    DataList.Add(keyValueDic);
+                                    jsonData = JsonHelper.ToJson(itemDic);
                                 }
-                                tableDic["dataArray"] = arrayList;
                             }
                             else
                             {
-                                if (tableDic.Keys.Count > 1)
-                                {
-                                    Dictionary<string, object> tmpDic = new Dictionary<string, object>();
-                                    tmpDic.Add("dataArray", jsonData);
-                                    DataList.Add(tmpDic);
-                                }
-                                List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(jsonData);
-                                Dictionary<string, object> itemDic = arrayList.FirstOrDefault(it => it["_id"].ToString().Equals(JsonHelper.ReadJsonString(pathList[i].ToString(), "value")));
-                                if (itemDic != null)
-                                {
-                                    jsonData = JsonHelper.ToJson(itemDic);
-                                }
-                                else
-                                {
-                                    jsonData = JsonHelper.ToJson(arrayList[0]);
-                                }
+                                arrayList = new List<Dictionary<string, object>>();
+                                arrayList.Add(saveData);
+                                DataList.Add(saveData);
+                                jsonData = JsonHelper.ToJson(saveData);
                             }
                         }
+
                     }
                     //保存原始数据
                     for (int i = DataList.Count - 1; i > 0; i--)
                     {
-                        if (i % 2 == 1)
+                        if (i % 2 == 0)
                         {
-                            if (i - 1 == 0)
+                            Dictionary<string, object> arrayDic = (Dictionary<string, object>)DataList[i];
+                            Dictionary<string, object> dataArrayDic = (Dictionary<string, object>)DataList[i - 1];
+                            List<Dictionary<string, object>> dataArrayList = (List<Dictionary<string, object>>)dataArrayDic["dataArray"];
+                            for (int j = 0; j < dataArrayList.Count; j++)
                             {
-                                DataList[i - 1][pathList[i - 1].ToString()] = DataList[i];
-                            }
-                            else
-                            {
-                                List<object> tempList = JsonHelper.ToObject<List<object>>(DataList[i - 1]["dataArray"].ToString());
-                                for (int j = 0; j < tempList.Count; j++)
+                                if (dataArrayList[j]["_id"].Equals(arrayDic["_id"]))
                                 {
-                                    Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(tempList[j].ToString());
-                                    if (itemDic["_id"].ToString().Equals(JsonHelper.ReadJsonString(pathList[i - 2].ToString(), "value")))
-                                    {
-                                        tempList[j] = DataList[i];
-                                        break;
-                                    }
+                                    dataArrayList[j] = arrayDic;
+                                    break;
                                 }
-                                DataList[i - 1]["dataArray"] = tempList;
                             }
+                            dataArrayDic["dataArray"] = dataArrayList;
                         }
                         else
                         {
-                            if (i == 1)
-                            {
-                                Dictionary<string, object> fullDic = new Dictionary<string, object>();
-                                fullDic.Add(pathList[i - 1].ToString(), DataList[i]);
-                                DataList[i - 1] = fullDic;
-                            }
-                            else
-                            {
-                                Dictionary<string, object> dataDic = new Dictionary<string, object>();
-                                List<object> tempList = new List<object>();
-                                if (DataList[i - 1].ContainsKey("dataArray"))
-                                {
-                                    if (i - 1 == 1)
-                                    {
-                                        DataList[i - 1]["dataArray"] = DataList[i]["dataArray"];
-                                    }
-                                    else
-                                    {
-                                        dataDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(DataList[i - 1]));
-                                        tempList = JsonHelper.ToObject<List<object>>(dataDic["dataArray"].ToString());
-                                        for (int j = 0; j < tempList.Count; j++)
-                                        {
-                                            Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(tempList[j].ToString());
-                                            if (itemDic.ContainsKey(JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i - 1]), "key")) && itemDic[JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i - 1]), "key")].ToString().Equals(JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i - 1]), "value")))
-                                            {
-                                                dataDic = DataList[i];
-                                                break;
-                                            }
-                                        }
-                                        DataList[i - 1] = dataDic;
-                                    }
-                                }
-                                else
-                                {
-                                    dataDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(DataList[i - 1][pathList[i - 2].ToString()]));
-                                    tempList = JsonHelper.ToObject<List<object>>(dataDic["dataArray"].ToString());
-                                    for (int j = 0; j < tempList.Count; j++)
-                                    {
-                                        Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(tempList[j].ToString());
-                                        if (itemDic.ContainsKey(JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i - 1]), "key")) && itemDic[JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i - 1]), "key")].ToString().Equals(JsonHelper.ReadJsonString(JsonHelper.ToJson(pathList[i - 1]), "value")))
-                                        {
-                                            dataDic = DataList[i];
-                                            break;
-                                        }
-                                    }
-                                    DataList[i - 1][pathList[i - 2].ToString()] = dataDic;
-                                }
-
-                            }
+                            Dictionary<string, object> dataArrayDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(DataList[i - 1][pathList[i - 1].ToString()]));
+                            string temp = JsonHelper.ToJson(dataArrayDic["dataArray"]);
+                            dataArrayDic["dataArray"] = DataList[i]["dataArray"];
+                            DataList[i - 1][pathList[i - 1].ToString()]=dataArrayDic;
                         }
                     }
                     Dictionary<string, object> tempDic = new Dictionary<string, object>();
