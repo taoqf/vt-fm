@@ -666,6 +666,54 @@ namespace Victop.Frame.DataMessageManager
             return pluginOper.GetPluginInfoByBusinessKey(businessKey);
         }
 
+        /// <summary>
+        /// 获取字段值
+        /// </summary>
+        /// <typeparam name="T">字段数据类型</typeparam>
+        /// <param name="viewId">通道标识</param>
+        /// <param name="dataPath">数据路径</param>
+        /// <param name="rowKey">行主键值</param>
+        /// <param name="fieldPath">字段路径</param>
+        /// <returns></returns>
+        public virtual T GetFieldValue<T>(string viewId, string dataPath, string rowKey, string fieldPath)
+        {
+            try
+            {
+                DataStoreInfo storeInfo = new DataStoreInfo();
+                DataOperation dataOp = new DataOperation();
+                ChannelData channelData = dataOp.GetChannelData(viewId);
+                foreach (JsonMapKey item in DataConvertManager.JsonTableMap.Keys)
+                {
+                    if (item.ViewId.Equals(viewId) && item.DataPath.Equals(dataPath))
+                    {
+                        storeInfo = DataConvertManager.JsonTableMap[item] as DataStoreInfo;
+                        break;
+                    }
+                }
+                if (storeInfo.RefDataInfo != null)
+                {
+                    RefRelationInfo relationInfo = storeInfo.RefDataInfo.FirstOrDefault(it => it.TriggerField.Equals(fieldPath) && it.RowId.Equals(rowKey));
+                    if (relationInfo != null)
+                    {
+                        return (T)relationInfo.FieldValue;
+                    }
+                    else
+                    {
+                        return default(T);
+                    }
+                }
+                else
+                {
+                    return default(T);
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.ErrorFormat("获取默认值出错：{0}", ex.Message);
+                return default(T);
+            }
+        }
+
         #region 私有方法
         /// <summary>
         /// 根据结构Path获取数据Table
