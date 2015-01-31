@@ -1064,6 +1064,7 @@ namespace PortalFramePlugin.ViewModels
                 IPlugin Plugin = PluginInfo["IPlugin"] as IPlugin;
                 if (Plugin.ShowType == 0)
                 {
+
                     if (Plugin.ParamDict.ContainsKey("Title"))
                     {
                         if (Plugin.ParamDict["Title"].ToString().Length > 8)
@@ -1074,12 +1075,10 @@ namespace PortalFramePlugin.ViewModels
                         else
                         {
                             btn.Content = Plugin.ParamDict["Title"];
-                        }
+                        } 
                     }
                     else
-                    {
                         btn.Content = Plugin.PluginTitle;
-                    }
                     btn.Tag = PluginInfo;
                     btn.Click += ActivatePlugin_Click;
                     PluginListContent.Children.Add(btn);
