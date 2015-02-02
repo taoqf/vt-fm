@@ -525,13 +525,11 @@ namespace Victop.Frame.DataChannel
                             DataColumn dc = new DataColumn(keyStr);
                             if (modelDefInfo.ModelClientRef != null && modelDefInfo.ModelClientRef.Count > 0)
                             {
-                                string refFieldStr = string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), item.FieldKey);
-                                string fieldStr = refFieldStr.Substring(refFieldStr.LastIndexOf("."));
-                                string replaceStr = refFieldStr.Substring(0, refFieldStr.LastIndexOf("dataArray"));
-                                MongoModelInfoOfClientRefModel clientRefModel = modelDefInfo.ModelClientRef.FirstOrDefault(it => (it.ClientRefField.StartsWith(replaceStr) && it.ClientRefField.EndsWith(fieldStr)));
-                                if (clientRefModel != null)
+                                MongoModelInfoOfClientRefModel clientRefInfo = modelDefInfo.ModelClientRef.Find(it => (
+                                    it.ClientRefField.Equals(RebuildPath + keyStr)));
+                                if (clientRefInfo != null)
                                 {
-                                    dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefModel));
+                                    dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefInfo));
                                 }
                             }
                             switch (item.FieldValue.ValueType)
@@ -596,13 +594,11 @@ namespace Victop.Frame.DataChannel
                             DataColumn dc = new DataColumn(item.FieldKey);
                             if (modelDefInfo.ModelClientRef != null && modelDefInfo.ModelClientRef.Count > 0)
                             {
-                                string refFieldStr = string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), item.FieldKey);
-                                string fieldStr = refFieldStr.Substring(refFieldStr.LastIndexOf("."));
-                                string replaceStr = refFieldStr.Substring(0, refFieldStr.LastIndexOf("dataArray"));
-                                MongoModelInfoOfClientRefModel clientRefModel = modelDefInfo.ModelClientRef.FirstOrDefault(it => (it.ClientRefField.StartsWith(replaceStr) && it.ClientRefField.EndsWith(fieldStr)));
-                                if (clientRefModel != null)
+                                MongoModelInfoOfClientRefModel clientRefInfo = modelDefInfo.ModelClientRef.Find(it => (
+                                   it.ClientRefField.Equals(RebuildPath + item.FieldKey)));
+                                if (clientRefInfo != null)
                                 {
-                                    dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefModel));
+                                    dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefInfo));
                                 }
                             }
                             switch (item.FieldValue.ValueType)
@@ -672,7 +668,7 @@ namespace Victop.Frame.DataChannel
                     {
                         foreach (MongoModelInfoOfRefConditionContentModel refitem in item.RefView)
                         {
-                            if (refitem.ContentLeft.StartsWith(RebuildPath)&&!refitem.ContentLeft.Substring(RebuildPath.Length).Contains("."))
+                            if (refitem.ContentLeft.StartsWith(RebuildPath) && !refitem.ContentLeft.Substring(RebuildPath.Length).Contains("."))
                             {
                                 string leftStr = refitem.ContentLeft.Substring(refitem.ContentLeft.LastIndexOf('.') + 1);
                                 if (newDt.Columns.Contains(leftStr))
