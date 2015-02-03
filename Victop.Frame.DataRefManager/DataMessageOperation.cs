@@ -40,10 +40,10 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="channelId">通道标识</param>
         /// <param name="dataPath">路径</param>
         /// <returns></returns>
-        public virtual bool SaveData(string channelId, string dataPath)
+        public virtual bool SaveData(string viewId, string dataPath)
         {
             DataOperation dataOp = new DataOperation();
-            return dataOp.SaveData(channelId, dataPath);
+            return dataOp.SaveData(viewId, dataPath);
         }
         /// <summary>
         /// 获取JSON数据
@@ -99,20 +99,20 @@ namespace Victop.Frame.DataMessageManager
         /// </summary>
         /// <param name="channelId">通道标识</param>
         /// <returns></returns>
-        public virtual bool DisposeData(string channelId)
+        public virtual bool DisposeData(string viewId)
         {
             DataOperation dataOp = new DataOperation();
-            return dataOp.DisposeData(channelId);
+            return dataOp.DisposeData(viewId);
         }
         /// <summary>
         /// 获取模型关系
         /// </summary>
         /// <param name="channelId">通道标识</param>
         /// <returns></returns>
-        public virtual string GetModelRelation(string channelId)
+        public virtual string GetModelRelation(string viewId)
         {
             DataOperation dataOp = new DataOperation();
-            return dataOp.GetModelRelation(channelId);
+            return dataOp.GetModelRelation(viewId);
         }
         /// <summary>
         /// 同步消息发送
