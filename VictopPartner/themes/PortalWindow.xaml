@@ -4,7 +4,49 @@
                     xmlns:local="clr-namespace:VictopPartner"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
     <local:HorizontalOffsetConverter x:Key="HorizontalOffsetConverter"/>
+    <LinearGradientBrush x:Key="borStyle" EndPoint="0,1" StartPoint="0,0">
+        <GradientStop Color="#F510A7" Offset="1" />
+        <GradientStop Color="#10F556" Offset="0" />
+        <GradientStop Color="#1026F5" Offset="1" />
+    </LinearGradientBrush>
 
+    <Style x:Key="FloatWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="Background" Value="Blue" />
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate  TargetType="{x:Type Window}">
+                    <Border Name="Bd" Background="{StaticResource borStyle}"  BorderThickness="2"  CornerRadius="50,50,50,50" >
+                        <Ellipse Stroke="Transparent" Margin="2" x:Name="emllipse" StrokeThickness="1">
+                            <Ellipse.Fill>
+                                <VisualBrush >
+                                    <VisualBrush.Visual>
+                                        <Image Source="/VictopPartner;component/victop.ico"/>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger  Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="Transparent"/>
+                            <Setter Property="Background" TargetName="Bd">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="#B8EA09" Offset="1" />
+                                        <GradientStop Color="#E8381B" Offset="0" />
+                                        <GradientStop Color="#0FDEF1" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="ShadowWindow" TargetType="{x:Type Window}">
         <Setter Property="ResizeMode" Value="NoResize"/>
         <Setter Property="WindowStyle" Value="None"/>

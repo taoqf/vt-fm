@@ -4,7 +4,7 @@
         xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:PortalFramePlugin.ViewModels"
-        Title="OverlayWindow" Height="60" Width="60" Name="mainWindow" Opacity="0.5" Style="{DynamicResource ShadowWindow}" ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="None" Topmost="True">
+        Title="OverlayWindow" Height="80" Width="80" Name="mainWindow" Opacity="0.5" Style="{DynamicResource FloatWindowStyle}" ShowInTaskbar="False" ResizeMode="NoResize" WindowStyle="None" Topmost="True">
     <Window.DataContext>
         <vm:OverlayWindowViewModel/>
     </Window.DataContext>
