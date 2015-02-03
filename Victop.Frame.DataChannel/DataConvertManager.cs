@@ -211,10 +211,25 @@ namespace Victop.Frame.DataChannel
                     {
                         objectDr[dtCol.ColumnName] = DBNull.Value;
                     }
-                    else if (dtCol.DataType == typeof(DateTime) && dtCol.ExtendedProperties["ColType"] != null)
+                    else if (dtCol.ExtendedProperties["ColType"] != null)
                     {
                         switch (dtCol.ExtendedProperties["ColType"].ToString())
                         {
+                            case "int":
+                                objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()) ? (int)0 : Convert.ToInt32(jsonDic[dtCol.ColumnName].ToString());
+                                break;
+                            case "long":
+                                objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()) ? (long)0 : Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString());
+                                break;
+                            case "double":
+                                objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()) ? (double)0.00 : Convert.ToDouble(jsonDic[dtCol.ColumnName].ToString());
+                                break;
+                            case "float":
+                                objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()) ? (decimal)0.00 : Convert.ToDecimal(jsonDic[dtCol.ColumnName].ToString());
+                                break;
+                            case "boolean":
+                                objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(jsonDic[dtCol.ColumnName].ToString());
+                                break;
                             case "timestamp":
                                 if (Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) == 0)
                                 {
@@ -228,7 +243,6 @@ namespace Victop.Frame.DataChannel
                                 }
                                 break;
                             case "date":
-                            default:
                                 if (string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()))
                                 {
                                     objectDr[dtCol.ColumnName] = DBNull.Value;
@@ -238,11 +252,11 @@ namespace Victop.Frame.DataChannel
                                     objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
                                 }
                                 break;
+                            case "string":
+                            default:
+                                objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
+                                break;
                         }
-                    }
-                    else
-                    {
-                        objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
                     }
                 }
             }
@@ -306,10 +320,25 @@ namespace Victop.Frame.DataChannel
                                             {
                                                 arrayDr[dtCol.ColumnName] = DBNull.Value;
                                             }
-                                            else if (dtCol.DataType == typeof(DateTime) && dtCol.ExtendedProperties["ColType"] != null)
+                                            else if (dtCol.ExtendedProperties["ColType"] != null)
                                             {
                                                 switch (dtCol.ExtendedProperties["ColType"].ToString())
                                                 {
+                                                    case "int":
+                                                        arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? (int)0 : Convert.ToInt32(rowItem[dtCol.ColumnName].ToString());
+                                                        break;
+                                                    case "long":
+                                                        arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? (long)0 : Convert.ToInt64(rowItem[dtCol.ColumnName].ToString());
+                                                        break;
+                                                    case "double":
+                                                        arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? (double)0.00 : Convert.ToDouble(rowItem[dtCol.ColumnName].ToString());
+                                                        break;
+                                                    case "float":
+                                                        arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? (decimal)0.00 : Convert.ToDecimal(rowItem[dtCol.ColumnName].ToString());
+                                                        break;
+                                                    case "boolean":
+                                                        arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(rowItem[dtCol.ColumnName].ToString());
+                                                        break;
                                                     case "timestamp":
                                                         if (Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()) == 0)
                                                         {
@@ -323,7 +352,6 @@ namespace Victop.Frame.DataChannel
                                                         }
                                                         break;
                                                     case "date":
-                                                    default:
                                                         if (string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()))
                                                         {
                                                             arrayDr[dtCol.ColumnName] = DBNull.Value;
@@ -333,11 +361,11 @@ namespace Victop.Frame.DataChannel
                                                             arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
                                                         }
                                                         break;
+                                                    case "string":
+                                                    default:
+                                                        arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
+                                                        break;
                                                 }
-                                            }
-                                            else
-                                            {
-                                                arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
                                             }
                                         }
                                     }
@@ -383,10 +411,25 @@ namespace Victop.Frame.DataChannel
                                         {
                                             objectDr[dtCol.ColumnName] = DBNull.Value;
                                         }
-                                        else if (dtCol.DataType == typeof(DateTime) && dtCol.ExtendedProperties["ColType"] != null)
+                                        else if (dtCol.ExtendedProperties["ColType"] != null)
                                         {
                                             switch (dtCol.ExtendedProperties["ColType"].ToString())
                                             {
+                                                case "int":
+                                                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (int)0 : Convert.ToInt32(itemDic[dtCol.ColumnName].ToString());
+                                                    break;
+                                                case "long":
+                                                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (long)0 : Convert.ToInt64(itemDic[dtCol.ColumnName].ToString());
+                                                    break;
+                                                case "double":
+                                                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (double)0.00 : Convert.ToDouble(itemDic[dtCol.ColumnName].ToString());
+                                                    break;
+                                                case "float":
+                                                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (decimal)0.00 : Convert.ToDecimal(itemDic[dtCol.ColumnName].ToString());
+                                                    break;
+                                                case "boolean":
+                                                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(itemDic[dtCol.ColumnName].ToString());
+                                                    break;
                                                 case "timestamp":
                                                     if (Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()) == 0)
                                                     {
@@ -400,7 +443,6 @@ namespace Victop.Frame.DataChannel
                                                     }
                                                     break;
                                                 case "date":
-                                                default:
                                                     if (string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()))
                                                     {
                                                         objectDr[dtCol.ColumnName] = DBNull.Value;
@@ -410,11 +452,11 @@ namespace Victop.Frame.DataChannel
                                                         objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
                                                     }
                                                     break;
+                                                case "string":
+                                                default:
+                                                    objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
+                                                    break;
                                             }
-                                        }
-                                        else
-                                        {
-                                            objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
                                         }
                                     }
                                 }
