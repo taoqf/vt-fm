@@ -166,11 +166,7 @@ namespace SystemTestingPlugin.ViewModels
                                 DataInfoModel.DataPath = JsonHelper.ToJson(pathList);
                             }
                             DataSet mastDs = new DataSet();
-                            Stopwatch watch = new Stopwatch();
-                            watch.Start();
                             mastDs = messageOp.GetData(DataInfoModel.ChannelId, DataInfoModel.DataPath);
-                            watch.Stop();
-                            VicMessageBoxNormal.Show(watch.ElapsedMilliseconds.ToString());
                             DataTable dt = mastDs.Tables["dataArray"];
                             DataInfoModel.ResultDataTable = dt;
                         }
