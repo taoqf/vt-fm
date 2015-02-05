@@ -1071,6 +1071,7 @@ namespace Victop.Frame.Connection
                 dataparam.Add("usercode", loginUserInfo.UserCode);
                 dataparam.Add("prdoccode", "1");
                 dataparam.Add("accountsid", "getMasterName()");
+                dataparam.Add("acSystemId", dicContent.ContainsKey("acSystemId") ? Convert.ToString(dicContent["acSystemId"]) : null);
                 argValues.Add("dataparam", dataparam);
                 argValues.Add("reportcasejson", null);
                 argValues.Add("runuser", loginUserInfo.UserCode);
