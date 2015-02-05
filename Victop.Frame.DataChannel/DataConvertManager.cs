@@ -346,7 +346,7 @@ namespace Victop.Frame.DataChannel
                                                         }
                                                         else
                                                         {
-                                                            DateTime dt = new DateTime(1970, 1, 1);
+                                                            DateTime dt = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0));
                                                             dt = dt.AddMilliseconds(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()));
                                                             arrayDr[dtCol.ColumnName] = dt;
                                                         }
@@ -437,7 +437,7 @@ namespace Victop.Frame.DataChannel
                                                     }
                                                     else
                                                     {
-                                                        DateTime dt = new DateTime(1970, 1, 1);
+                                                        DateTime dt = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0));
                                                         dt = dt.AddMilliseconds(Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()));
                                                         objectDr[dtCol.ColumnName] = dt;
                                                     }
@@ -1149,7 +1149,7 @@ namespace Victop.Frame.DataChannel
                                                 if (dr[dc.ColumnName] != null && !string.IsNullOrWhiteSpace(dr[dc.ColumnName].ToString()))
                                                 {
                                                     DateTime currentTime = (DateTime)dr[dc.ColumnName];
-                                                    addDic.Add(dc.ColumnName, (long)(currentTime - startTime).TotalMilliseconds);
+                                                    addDic.Add(dc.ColumnName, (long)(currentTime.ToUniversalTime() - startTime.ToUniversalTime()).TotalMilliseconds);
                                                 }
                                                 else
                                                 {
@@ -1218,7 +1218,7 @@ namespace Victop.Frame.DataChannel
                                                 if (dr[dc.ColumnName] != null && !string.IsNullOrWhiteSpace(dr[dc.ColumnName].ToString()))
                                                 {
                                                     DateTime currentTime = (DateTime)dr[dc.ColumnName];
-                                                    modDic.Add(dc.ColumnName, (long)(currentTime - startTime).TotalMilliseconds);
+                                                    modDic.Add(dc.ColumnName, (long)(currentTime.ToUniversalTime() - startTime.ToUniversalTime()).TotalMilliseconds);
                                                 }
                                                 else
                                                 {

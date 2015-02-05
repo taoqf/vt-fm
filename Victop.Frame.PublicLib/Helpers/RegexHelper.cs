@@ -65,8 +65,8 @@ namespace Victop.Frame.PublicLib.Helpers
             DateTime zeroTime = new DateTime(1970, 1, 1);
             DateTime startTime = Convert.ToDateTime(startTimeStr);
             DateTime endTime = Convert.ToDateTime(endTimeStr);
-            resultDic.Add("$gte", (long)(startTime-zeroTime).TotalMilliseconds);
-            resultDic.Add("$lte", (long)(endTime - zeroTime).TotalMilliseconds);
+            resultDic.Add("$gte", (long)(startTime.ToUniversalTime() - zeroTime.ToUniversalTime()).TotalMilliseconds);
+            resultDic.Add("$lte", (long)(endTime.ToUniversalTime() - zeroTime.ToUniversalTime()).TotalMilliseconds);
             return resultDic;
         }
         /// <summary>
