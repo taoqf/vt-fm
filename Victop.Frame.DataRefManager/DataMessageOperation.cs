@@ -334,6 +334,21 @@ namespace Victop.Frame.DataMessageManager
                                         relationInfo.DataChannelId = returnDic["DataChannelId"].ToString();
                                         relationInfo.TriggerTable = refTableName;
                                         RefDataSet = dataOp.GetData(returnDic["DataChannelId"].ToString(), string.Format("[\"{0}\"]", refTableName));
+                                        if (RefDataSet != null && RefDataSet.Tables.Count > 0 && RefDataSet.Tables.Contains("dataArray") && RefDataSet.Tables["dataArray"].Columns.Count > 0 && clientRefModel.ClientRefPopupSetting.SettingColumns.Count > 0)
+                                        {
+                                            foreach (DataColumn item in RefDataSet.Tables["dataArray"].Columns)
+                                            {
+                                                MongoModelInfoOfClientRefPopupSettingColumnsModel columnModel = clientRefModel.ClientRefPopupSetting.SettingColumns.FirstOrDefault(it => it.ColumnField.Equals(item.ColumnName));
+                                                if (columnModel != null && !string.IsNullOrEmpty(columnModel.ColumnLabel))
+                                                {
+                                                    item.Caption = columnModel.ColumnLabel;
+                                                }
+                                                else
+                                                {
+                                                    item.ExtendedProperties.Add("Visible", "false");
+                                                }
+                                            }
+                                        }
                                         ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC, ReplyContent = JsonHelper.ToJson(clientRefModel) };
                                         resultMessage = JsonHelper.ToJson(replyMessage);
                                         if (storeInfo.RefDataInfo.FirstOrDefault(it => it.RowId.Equals(rowValue) && it.TriggerField.Equals(clientRefModel.ClientRefField)) == null)
@@ -482,13 +497,28 @@ namespace Victop.Frame.DataMessageManager
                     RefDataSet = dataOp.GetData(relationInfo.DataChannelId, string.Format("[\"{0}\"]", relationInfo.TriggerTable));
                     MongoModelInfoOfClientRefModel clientRefModel = channelData.ModelDefInfo.ModelClientRef.FirstOrDefault(it => it.ClientRefField == relationInfo.TriggerField);
                     resultMessage = JsonHelper.ToJson(new ReplyMessage() { ReplyMode = ReplyModeEnum.ASYNC, ReplyContent = JsonHelper.ToJson(clientRefModel) });
+                    if (RefDataSet != null && RefDataSet.Tables.Count > 0 && RefDataSet.Tables.Contains("dataArray") && RefDataSet.Tables["dataArray"].Columns.Count > 0 && clientRefModel.ClientRefPopupSetting.SettingColumns.Count > 0)
+                    {
+                        foreach (DataColumn item in RefDataSet.Tables["dataArray"].Columns)
+                        {
+                            MongoModelInfoOfClientRefPopupSettingColumnsModel columnModel=clientRefModel.ClientRefPopupSetting.SettingColumns.FirstOrDefault(it => it.ColumnField.Equals(item.ColumnName));
+                            if (columnModel != null && !string.IsNullOrEmpty(columnModel.ColumnLabel))
+                            {
+                                item.Caption = columnModel.ColumnLabel;
+                            }
+                            else
+                            {
+                                item.ExtendedProperties.Add("Visible", "false");
+                            }
+                        }
+                    }
                     break;
                 default:
                     break;
             }
         }
 
-        private bool GetSimpleRefDependDic(DataStoreInfo datastoreInfo,RefRelationInfo relationInfo, string propertyDepend, string rowValue,Dictionary<string,object> dependDic)
+        private bool GetSimpleRefDependDic(DataStoreInfo datastoreInfo, RefRelationInfo relationInfo, string propertyDepend, string rowValue, Dictionary<string, object> dependDic)
         {
             if (dependDic == null)
                 dependDic = new Dictionary<string, object>();
