@@ -141,7 +141,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Victop.Frame.DataRefManager\Victop.Frame.DataMessageManager.csproj">
+    <ProjectReference Include="..\Victop.Frame.DataMessageManager\Victop.Frame.DataMessageManager.csproj">
       <Project>{d3ee684e-9600-460b-a3e3-39bf32180f9f}</Project>
       <Name>Victop.Frame.DataMessageManager</Name>
     </ProjectReference>

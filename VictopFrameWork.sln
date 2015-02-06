@@ -57,7 +57,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdate", "AutoUpdate\Au
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Component.Runtime", "Victop.Component.Runtime\Victop.Component.Runtime.csproj", "{0DA7999A-5910-41A0-A515-41E871BA68F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.DataMessageManager", "Victop.Frame.DataRefManager\Victop.Frame.DataMessageManager.csproj", "{D3EE684E-9600-460B-A3E3-39BF32180F9F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.DataMessageManager", "Victop.Frame.DataMessageManager\Victop.Frame.DataMessageManager.csproj", "{D3EE684E-9600-460B-A3E3-39BF32180F9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
