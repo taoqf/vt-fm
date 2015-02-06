@@ -1163,7 +1163,7 @@ namespace Victop.Frame.DataChannel
                                                 addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? new Dictionary<string, object>() : dr[dc.ColumnName]);
                                                 break;
                                             case "boolean":
-                                                addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? false : Convert.ToBoolean(dr[dc.ColumnName]));
+                                                addDic.Add(dc.ColumnName, (dr[dc.ColumnName] == null || string.IsNullOrEmpty(dr[dc.ColumnName].ToString())) ? false : Convert.ToBoolean(dr[dc.ColumnName]));
                                                 break;
                                             case "string":
                                             default:
@@ -1232,7 +1232,7 @@ namespace Victop.Frame.DataChannel
                                                 modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? new Dictionary<string, object>() : dr[dc.ColumnName]);
                                                 break;
                                             case "boolean":
-                                                modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? false : Convert.ToBoolean(dr[dc.ColumnName]));
+                                                modDic.Add(dc.ColumnName, (dr[dc.ColumnName] == null || string.IsNullOrEmpty(dr[dc.ColumnName].ToString())) ? false : Convert.ToBoolean(dr[dc.ColumnName]));
                                                 break;
                                             case "string":
                                             default:
