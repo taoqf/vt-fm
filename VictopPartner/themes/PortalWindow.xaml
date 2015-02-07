@@ -1235,7 +1235,8 @@
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
                                         <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
-                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>                                      
+                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>   
+                                        <Setter Property="Cursor" Value="Hand"/>
                                     </Trigger>
                                     <Trigger  Property="IsSelected" Value="true">
                                         <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
