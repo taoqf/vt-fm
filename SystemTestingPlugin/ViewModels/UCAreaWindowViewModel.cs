@@ -485,7 +485,7 @@ namespace SystemTestingPlugin.ViewModels
                     try
                     {
                         DataMessageOperation messageOp = new DataMessageOperation();
-                        Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(OtherInfoModel.OtherConditionData);
+                        Dictionary<string, object> contentDic =string.IsNullOrEmpty(OtherInfoModel.OtherConditionData)? new Dictionary<string,object>(): JsonHelper.ToObject<Dictionary<string, object>>(OtherInfoModel.OtherConditionData);
                         Dictionary<string, object> returnDic = messageOp.SendSyncMessage(OtherInfoModel.MessageType, contentDic, "JSON");
                         if (returnDic != null)
                         {
