@@ -1145,7 +1145,7 @@ namespace Victop.Frame.DataChannel
                                                 addDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? DateTime.Now : dr[dc.ColumnName]);
                                                 break;
                                             case "timestamp":
-                                                DateTime startTime = new DateTime(1970, 1, 1);
+                                                DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0));
                                                 if (dr[dc.ColumnName] != null && !string.IsNullOrWhiteSpace(dr[dc.ColumnName].ToString()))
                                                 {
                                                     DateTime currentTime = (DateTime)dr[dc.ColumnName];
@@ -1213,8 +1213,7 @@ namespace Victop.Frame.DataChannel
                                                 modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? DateTime.Now : dr[dc.ColumnName]);
                                                 break;
                                             case "timestamp":
-                                                DateTime startTime = new DateTime(1970, 1, 1);
-
+                                                DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0));
                                                 if (dr[dc.ColumnName] != null && !string.IsNullOrWhiteSpace(dr[dc.ColumnName].ToString()))
                                                 {
                                                     DateTime currentTime = (DateTime)dr[dc.ColumnName];
