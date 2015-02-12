@@ -22,7 +22,8 @@
                             <Ellipse.Fill>
                                 <VisualBrush >
                                     <VisualBrush.Visual>
-                                        <Image Source="/VictopPartner;component/victop.ico"/>
+                                        <!--<Image Source="/VictopPartner;component/victop.ico"/>-->
+                                        <Grid  Width="20" Height="20" Background="{DynamicResource Logo}"  HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     </VisualBrush.Visual>
                                 </VisualBrush>
                             </Ellipse.Fill>
