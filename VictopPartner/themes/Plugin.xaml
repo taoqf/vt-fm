@@ -515,7 +515,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="left_TabControlStyle" TargetType="{x:Type controls:VicTabControlNormal}">
         <Setter Property="Foreground" Value="{DynamicResource Plugin_TabControlNormalForeground}"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle"/>
@@ -939,4 +939,51 @@
         </Setter>
     </Style>
     <!--左TabControl样式结束-->
+    <!--面板滚动条样式开始>-->
+    <Style x:Key="Panel_ScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter" Grid.Row="0" Grid.Column="0">
+                            <DataGridColumnHeadersPresenter.Visibility>
+                                <Binding Path="HeadersVisibility" RelativeSource="{RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type DataGrid}}">
+                                    <Binding.ConverterParameter>
+                                        <DataGridHeadersVisibility>Column</DataGridHeadersVisibility>
+                                    </Binding.ConverterParameter>
+                                </Binding>
+                            </DataGridColumnHeadersPresenter.Visibility>
+                        </DataGridColumnHeadersPresenter>
+                        <ScrollContentPresenter Grid.Row="1" Grid.Column="0"/>
+                        <ScrollBar Name="PART_VerticalScrollBar"
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Style="{DynamicResource DG_VerticalScrollBar}"
+                                                    Value="{TemplateBinding VerticalOffset}"
+                                                    Maximum="{TemplateBinding ScrollableHeight}"
+                                                    ViewportSize="{TemplateBinding ViewportHeight}"
+                                                    Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                        <ScrollBar Name="PART_HorizontalScrollBar"
+                                                   Style="{DynamicResource DG_HorizontalScrollBar}" 
+                                                    Grid.Row="2"
+                                                    Grid.Column="0"
+                                                    Value="{TemplateBinding HorizontalOffset}"
+                                                    Maximum="{TemplateBinding ScrollableWidth}"
+                                                    ViewportSize="{TemplateBinding ViewportWidth}"
+                                                    Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--面板滚动条样式开始>-->
 </ResourceDictionary>
