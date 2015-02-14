@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Victop.Frame.PublicLib.Helpers;
@@ -35,19 +36,21 @@ namespace Victop.Component.Runtime
         /// <summary>
         /// 重建Views
         /// </summary>
-        /// <param name="runtime"></param>
+        /// <param name="runtime">2015-02-13 马晓宝</param>
         private static void RebulidViews(ComponentModel runtime)
         {
+            Dictionary<string, object> viewDic = JsonHelper.ToObject<Dictionary<string, object>>(runtime.CompntSettings.ViewSetting["views"].ToString());
             foreach (DefinViewsModel item in runtime.CompntDefin.Views)
-            {
-                Dictionary<string, object> viewDic = JsonHelper.ToObject<Dictionary<string, object>>(runtime.CompntSettings.ViewSetting["views"].ToString());
+            {              
                 if (viewDic.ContainsKey(item.ViewName))
                 {
                     item.ModelId = JsonHelper.ReadJsonString(viewDic[item.ViewName].ToString(), "modelid");
                     item.DataFileName = JsonHelper.ReadJsonString(viewDic[item.ViewName].ToString(), "datafilename");
+
+                    Dictionary<string, object> blockDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ReadJsonString(viewDic[item.ViewName].ToString(), "blocks"));
+                     
                     foreach (ViewsBlockModel blockitem in item.Blocks)
                     {
-                        Dictionary<string, object> blockDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ReadJsonString(viewDic[item.ViewName].ToString(), "blocks"));
                         if (blockDic.ContainsKey(blockitem.BlockName))
                         {
                             blockitem.TableName = JsonHelper.ReadJsonString(blockDic[blockitem.BlockName].ToString(), "tablename");
@@ -146,9 +149,8 @@ namespace Victop.Component.Runtime
         /// <summary>
         /// 重构 View下的Block的DataPath
         /// </summary>
-        /// <param name="runtime"></param>
         /// <param name="view"></param>
-        public static void RebuildViewDataPath(ComponentModel runtime, DefinViewsModel view)
+        public static void RebuildViewDataPath(DefinViewsModel view)
         {
             ViewsBlockModel blockmodel = view.Blocks.Find(it => it.Superiors.Equals("root"));
             if (blockmodel.BlockLock && blockmodel.BlockDataPath != null && blockmodel.BlockDataPath.Count > 0)
