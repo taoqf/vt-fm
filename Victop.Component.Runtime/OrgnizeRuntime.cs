@@ -150,7 +150,7 @@ namespace Victop.Component.Runtime
         /// 重构 View下的Block的DataPath
         /// </summary>
         /// <param name="view"></param>
-        public static void RebuildViewDataPath(DefinViewsModel view)
+        public static void RebuildViewDataPath(ComponentModel runtime, DefinViewsModel view)
         {
             ViewsBlockModel blockmodel = view.Blocks.Find(it => it.Superiors.Equals("root"));
             if (blockmodel.BlockLock && blockmodel.BlockDataPath != null && blockmodel.BlockDataPath.Count > 0)
