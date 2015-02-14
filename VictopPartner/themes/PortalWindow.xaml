@@ -35,6 +35,10 @@
             <Trigger Property="Role" Value="SubmenuHeader">
                 <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
             </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="White"></Setter>
+                <Setter Property="BorderBrush" Value="#EEE1E1"></Setter>
+            </Trigger>
         </Style.Triggers>
     </Style>
     <!--凭证详情Button引用图标样式-->
@@ -42,6 +46,7 @@
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="MinHeight" Value="30"></Setter>
         <Setter Property="MinWidth" Value="30"></Setter>
+        <Setter Property="FontSize" Value="25"></Setter>
         <Setter Property="Foreground" Value="Black"/>
         <!--修改模板属性-->
         <Setter Property="Template">
@@ -87,7 +92,7 @@
                     <!--触发器-->
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#EEE1E1"></Setter>
+                            <Setter Property="Background" Value="White"></Setter>
                             <Setter Property="BorderBrush" Value="#EEE1E1"></Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
