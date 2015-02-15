@@ -46,7 +46,7 @@
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="MinHeight" Value="30"></Setter>
         <Setter Property="MinWidth" Value="30"></Setter>
-        <Setter Property="FontSize" Value="25"></Setter>
+        <Setter Property="FontSize" Value="20"></Setter>
         <Setter Property="Foreground" Value="Black"/>
         <!--修改模板属性-->
         <Setter Property="Template">
