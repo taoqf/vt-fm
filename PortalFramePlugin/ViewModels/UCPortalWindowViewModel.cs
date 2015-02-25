@@ -1100,6 +1100,7 @@ namespace PortalFramePlugin.ViewModels
             Dictionary<string, object> pluginInfo = (Dictionary<string, object>)btn.Tag;
             IPlugin Plugin = pluginInfo["IPlugin"] as IPlugin;
             string PluginUid = pluginInfo["ObjectId"].ToString();
+            bool pluginExistFlag = false;
             try
             {
                 if (Plugin.ShowType == 0)//窗口
@@ -1122,7 +1123,17 @@ namespace PortalFramePlugin.ViewModels
                                     break;
                             }
                             WinCollection[i].Activate();
+                            pluginExistFlag = true;
                             break;
+                        }
+                    }
+                    if (!pluginExistFlag)
+                    {
+                        MessageBoxResult result = VicMessageBoxNormal.Show("插件不可用，是否卸载？", "提醒", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            DataMessageOperation dataOp = new DataMessageOperation();
+                            dataOp.StopPlugin(PluginUid);
                         }
                     }
                 }
