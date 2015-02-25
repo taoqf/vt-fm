@@ -180,6 +180,7 @@ namespace Victop.Frame.Adapter
                                 {
                                     long codeInt = Convert.ToInt32(replyCode);
                                     replyMessage.ReplyMode = (ReplyModeEnum)codeInt;
+                                    replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(returnMessage.MessageContent, "msg");
                                 }
                                 else
                                 {
