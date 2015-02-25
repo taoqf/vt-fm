@@ -500,6 +500,24 @@ namespace SystemTestingPlugin.ViewModels
             }
         }
 
+        public ICommand UCMainUnloadedCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) => {
+                    string Uid = (string)x;
+                    DataMessageOperation messageOp = new DataMessageOperation();
+                    if (!string.IsNullOrEmpty(Uid))
+                    {
+                        string messageType = "PluginService.PluginStop";
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        contentDic.Add("ObjectId", Uid);
+                        messageOp.SendAsyncMessage(messageType, contentDic);
+                    }
+                });
+            }
+        }
+
         #endregion
     }
 }

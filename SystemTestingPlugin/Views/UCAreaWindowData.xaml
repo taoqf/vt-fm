@@ -136,5 +136,10 @@
                 </ctrl:VicGridNormal>
             </ctrl:VicGroupBoxNormal>
         </ctrl:VicStackPanelNormal>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Unloaded">
+                <i:InvokeCommandAction Command="{Binding UCMainUnloadedCommand}" CommandParameter="{Binding ElementName=UCMain, Path=Uid}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
     </ctrl:VicGridNormal>
 </UserControl>
