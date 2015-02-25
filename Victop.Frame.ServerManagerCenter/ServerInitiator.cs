@@ -332,7 +332,8 @@ namespace Victop.Frame.ServerManagerCenter
                 if (!string.IsNullOrEmpty(pluginObjectId))
                 {
                     ActivePluginManager pluginManager = new ActivePluginManager();
-                    pluginManager.RemovePlugin(new ActivePluginInfo() { ObjectId = pluginObjectId });
+                    ActivePluginInfo pluginInfo = new ActivePluginInfo() { ObjectId = pluginObjectId };
+                    pluginManager.RemovePlugin(pluginInfo);
                     replyContent = "插件移除成功";
                 }
                 return replyContent;

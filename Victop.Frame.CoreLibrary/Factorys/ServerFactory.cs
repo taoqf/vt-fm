@@ -18,6 +18,7 @@ namespace Victop.Frame.CoreLibrary
     /// </summary>
     public class ServerFactory
     {
+        private static Dictionary<string, object> assemblyInfoList = new Dictionary<string, object>();
         /// <summary>
         /// 反射启动插件
         /// <param name="serverName">服务名称</param>
@@ -29,24 +30,31 @@ namespace Victop.Frame.CoreLibrary
             {
                 return null;
             }
-            if (string.IsNullOrWhiteSpace(serverPath) && userPathFlag)
+            if (!assemblyInfoList.ContainsKey(serverName))
             {
-                serverPath = "Plugin";
-            }
-            serverName = string.Concat(serverName, ".dll");
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, serverPath, serverName);
-            if (File.Exists(filePath))
-            {
-                byte[] fileBytes = LoadServerFile(filePath);
-                Assembly assemblyLoad = AppDomain.CurrentDomain.Load(fileBytes);
-                return assemblyLoad;
+                if (string.IsNullOrWhiteSpace(serverPath) && userPathFlag)
+                {
+                    serverPath = "Plugin";
+                }
+                string serverFullName = string.Concat(serverName, ".dll");
+                string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, serverPath, serverFullName);
+                if (File.Exists(filePath))
+                {
+                    byte[] fileBytes = LoadServerFile(filePath);
+                    Assembly assemblyLoad = AppDomain.CurrentDomain.Load(fileBytes);
+                    assemblyInfoList.Add(serverName, assemblyLoad);
+                    return assemblyLoad;
+                }
+                else
+                {
+                    throw new Exception("插件不存在");
+                }
             }
             else
             {
-                throw new Exception("插件不存在");
+                return (Assembly)assemblyInfoList[serverName];
             }
         }
-
         /// <summary>
         /// 加载服务文件
         /// <param name="fileName">文件名称</param>
