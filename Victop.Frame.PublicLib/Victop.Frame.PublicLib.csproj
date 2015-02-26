@@ -72,6 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\FTPManagerCommon.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\FileTypeHelper.cs" />
     <Compile Include="Helpers\IPOperationHelper.cs" />
@@ -83,7 +84,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common\" />
     <Folder Include="流程图\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

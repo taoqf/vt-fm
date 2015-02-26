@@ -18,11 +18,11 @@ using Victop.Server.Controls.WeChat;
 namespace SystemTestingPlugin.Views
 {
     /// <summary>
-    /// UCSimpleDefWindow.xaml 的交互逻辑
+    /// UCWebChatWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class UCSimpleDefWindow : UserControl
+    public partial class UCWebChatWindow : UserControl
     {
-        public UCSimpleDefWindow()
+        public UCWebChatWindow()
         {
             InitializeComponent();
         }

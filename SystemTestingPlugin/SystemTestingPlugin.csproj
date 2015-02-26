@@ -139,8 +139,8 @@
     <Compile Include="Views\UCAreaWindowData.xaml.cs">
       <DependentUpon>UCAreaWindowData.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UCSimpleDefWindow.xaml.cs">
-      <DependentUpon>UCSimpleDefWindow.xaml</DependentUpon>
+    <Compile Include="Views\UCWebChatWindow.xaml.cs">
+      <DependentUpon>UCWebChatWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UCUniversalRefWindow.xaml.cs">
       <DependentUpon>UCUniversalRefWindow.xaml</DependentUpon>
@@ -175,7 +175,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UCSimpleDefWindow.xaml">
+    <Page Include="Views\UCWebChatWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
