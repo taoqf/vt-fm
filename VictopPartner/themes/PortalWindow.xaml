@@ -100,26 +100,36 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
     <Style x:Key="FloatWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Background" Value="Blue" />
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="AllowsTransparency" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate  TargetType="{x:Type Window}">
-                    <Border Name="Bd" Background="{StaticResource borStyle}"  BorderThickness="2"  CornerRadius="50,50,50,50">
-                        <Ellipse Stroke="Transparent" Margin="2" x:Name="emllipse" StrokeThickness="1">
-                            <Ellipse.Fill>
-                                <VisualBrush >
-                                    <VisualBrush.Visual>
-                                        <Grid  Width="20" Height="20" Background="{DynamicResource Logo}"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Ellipse.Fill>
-                        </Ellipse>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Border Name="Bd" Background="{StaticResource borStyle}" BorderThickness="2" CornerRadius="50,50,50,50" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="0.1"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Ellipse Stroke="Transparent" Grid.Row="0" Margin="2" x:Name="emllipse" StrokeThickness="1">
+                                <Ellipse.Fill>
+                                    <VisualBrush >
+                                        <VisualBrush.Visual>
+                                            <Grid Width="20" Height="20" Background="{DynamicResource Logo}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <ContentPresenter Grid.Row="1"/>
+                        </Grid>
+                      
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger  Property="IsMouseOver" Value="true">
+                        <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="BorderBrush" TargetName="Bd" Value="Transparent"/>
                             <Setter Property="Background" TargetName="Bd">
                                 <Setter.Value>
@@ -136,7 +146,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style x:Key="FloatWindow" TargetType="{x:Type Window}">
         <Setter Property="ResizeMode" Value="NoResize"/>
         <Setter Property="WindowStyle" Value="None"/>
@@ -146,13 +155,25 @@
                 <ControlTemplate TargetType="{x:Type Window}">
                     <Grid>
                         <Border Name="Bd" BorderThickness="2" CornerRadius="50,50,50,50" Background="{DynamicResource Logo}" Padding="{TemplateBinding Margin}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                            <ContentPresenter />
+                            
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="0.1"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Ellipse Grid.Row="0" x:Name="ellipse" Fill="Transparent"   Width="70"  Height="70" Stroke="{DynamicResource borStyle}" StrokeThickness="3" StrokeDashArray="1.1" RenderTransformOrigin="0.5,0.5">
+
+
+                                </Ellipse>
+                              <ContentPresenter Grid.Row="1"/>
+                            </Grid>
+                            
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger  Property="IsMouseOver" Value="true">
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="Transparent"/>
-                            <Setter Property="Background" TargetName="Bd">
+                            <!--<Setter Property="BorderBrush" TargetName="Bd" Value="Transparent"/>-->
+                            <Setter Property="Stroke" TargetName="ellipse">
                                 <Setter.Value>
                                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                         <GradientStop Color="#B8EA09" Offset="1" />
