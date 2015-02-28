@@ -941,7 +941,7 @@ namespace PortalFramePlugin.ViewModels
                         pluginCtrl.Uid = pluginModel.ObjectId;
                         VicTabItemNormal tabItem = new VicTabItemNormal();
                         tabItem.Name = pluginModel.AppId;
-                        tabItem.Header = pluginModel.PluginInterface.PluginTitle;
+                        tabItem.Header = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle;
                         tabItem.Content = pluginCtrl;
                         tabItem.AllowDelete = true;
                         tabItem.IsSelected = true;

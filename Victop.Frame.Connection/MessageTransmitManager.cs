@@ -263,7 +263,10 @@ namespace Victop.Frame.Connection
                         break;
                 }
             }
-            replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "Result");
+            if (string.IsNullOrEmpty(replyMessage.ReplyAlertMessage))
+            {
+                replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "Result");
+            }
             replyMessage.MessageId = messageInfo.MessageId;
             return replyMessage;
         }
