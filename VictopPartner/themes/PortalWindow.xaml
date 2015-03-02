@@ -9,6 +9,17 @@
         <GradientStop Color="#10F556" Offset="0" />
         <GradientStop Color="#1026F5" Offset="1" />
     </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ellipseOuter" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#D68FF1" Offset="0.1" />
+        <GradientStop Color="#B316ED" Offset="0.25" />
+        <GradientStop Color="#3BEFE4" Offset="0.5"/>
+        <GradientStop Color="#1842F5" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ellipseCore" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#B8EA09" Offset="1" />
+        <GradientStop Color="#E8381B" Offset="0" />
+        <GradientStop Color="#0FDEF1" Offset="1" />
+    </LinearGradientBrush>
     <!--凭证定义MenuItem引用图标样式-->
     <Style x:Key="FontAweSome" TargetType="{x:Type MenuItem}">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont" />
@@ -100,9 +111,14 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Storyboard x:Key="Storyboard2">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ellipse2">
+            <EasingDoubleKeyFrame KeyTime="0" Value="480"/>
+            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="722.49"/>
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
 
-
-    <Style x:Key="FloatWindowStyle" TargetType="{x:Type Window}">
+    <Style x:Key="FloatWindowStyle2" TargetType="{x:Type Window}">
         <Setter Property="Background" Value="Blue" />
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="AllowsTransparency" Value="True" />
@@ -126,7 +142,6 @@
                             </Ellipse>
                             <ContentPresenter Grid.Row="1"/>
                         </Grid>
-                      
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -146,6 +161,74 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <Style x:Key="FloatWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="Background" Value="Blue" />
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="AllowsTransparency" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <!--<Border Name="Bd" Background="{StaticResource borStyle}" BorderThickness="2" CornerRadius="50,50,50,50" >-->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="0.1"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Ellipse x:Name="ellipse2" Stroke="{StaticResource ellipseOuter}" Grid.Row="0" StrokeDashArray="1.1" HorizontalAlignment="Left" Height="80" StrokeThickness="12" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.5,0.5">
+                        <Ellipse.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Ellipse.RenderTransform>
+                        <Ellipse.Fill>
+                            <VisualBrush >
+                                <VisualBrush.Visual>
+                                        <Ellipse Stroke="{StaticResource ellipseCore}" x:Name="ellipse3" HorizontalAlignment="Left" Height="61" Margin="323,121,0,0" StrokeThickness="5" VerticalAlignment="Top" Width="61" RenderTransformOrigin="0.5,0.5">
+                                            <Ellipse.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </Ellipse.RenderTransform>
+                                            <Ellipse.Fill>
+                                                <VisualBrush >
+                                                    <VisualBrush.Visual>
+                                                        <Grid Width="20" Height="20" Background="{DynamicResource Logo}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </VisualBrush.Visual>
+                                                </VisualBrush>
+                                            </Ellipse.Fill>
+                                            <!--<Ellipse.Stroke>
+                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                    <GradientStop Color="#B8EA09" Offset="1" />
+                                                    <GradientStop Color="#E8381B" Offset="0" />
+                                                    <GradientStop Color="#0FDEF1" Offset="1" />
+                                                </LinearGradientBrush>
+                                            </Ellipse.Stroke>-->
+                                        </Ellipse>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                        <ContentPresenter Grid.Row="1"/>
+                    </Grid>
+                    <!--</Border>-->
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
+                            <BeginStoryboard Storyboard="{StaticResource Storyboard2}"/>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    
     <Style x:Key="FloatWindow" TargetType="{x:Type Window}">
         <Setter Property="ResizeMode" Value="NoResize"/>
         <Setter Property="WindowStyle" Value="None"/>
