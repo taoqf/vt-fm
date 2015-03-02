@@ -782,18 +782,10 @@ namespace PortalFramePlugin.ViewModels
             }
             this.SystemMenuListLocal = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             localMenuListEx = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
-            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
-            {
-                this.SystemMenuListLocal.Clear();
-            }
-            #region 手动解析树型Json(暂不使用)
-            //List<object> objList = JsonHelper.ToObject<List<object>>(menuList);
-            //foreach (object obj in objList)
+            //if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             //{
-            //    MenuModel model = CreateMenuModel(obj.ToString());
-            //    SystemMenuListLocal.Add(model);
+            //    this.SystemMenuListLocal.Clear();
             //}
-            #endregion
         }
         #endregion
 
