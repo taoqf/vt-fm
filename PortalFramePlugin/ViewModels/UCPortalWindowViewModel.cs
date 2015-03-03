@@ -934,6 +934,7 @@ namespace PortalFramePlugin.ViewModels
                         VicTabItemNormal tabItem = new VicTabItemNormal();
                         tabItem.Name = pluginModel.AppId;
                         tabItem.Header = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle;
+                        tabItem.Uid = pluginModel.ObjectId;
                         tabItem.Content = pluginCtrl;
                         tabItem.AllowDelete = true;
                         tabItem.IsSelected = true;
@@ -1132,7 +1133,7 @@ namespace PortalFramePlugin.ViewModels
                 }
                 else
                 {
-                    VicTabItemNormal tabItem = TabItemList.FirstOrDefault(it => it.Header.Equals(Plugin.PluginTitle));
+                    VicTabItemNormal tabItem = TabItemList.FirstOrDefault(it => it.Uid.Equals(PluginUid));
                     if (tabItem != null)
                     {
                         tabItem.IsSelected = true;
