@@ -1,8 +1,8 @@
 {
 	"menu": [
 		{
-			"title": "权限管理系统",
-			"iconUrl": "\ue61a",
+			"title": "飞道内部工具",
+			"iconUrl": "\ue69d",
 			"fitDataPath": [
 				{
 					"key": "",
@@ -11,8 +11,8 @@
 			],
 			"children": [
 				{
-					"title": "菜单信息管理",
-					"iconUrl": "\ue618",
+					"title": "数据部工具",
+					"iconUrl": "\ue6b8",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -21,87 +21,125 @@
 					],
 					"children": [
 						{
-							"title": "菜单项管理",
+							"title": "属性库",
 							"actionType": 1,
-							"actionName": "MenuNecklacePlugin",
+							"actionName": "PropertyBankPlugin",
 							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于菜单项管理维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "tianlong",
+							"iconUrl": "\ue6b8",
+							"description": "属性库",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
 							"actionCADName": "",
-							"menuno": "10150",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "",
-									"title": "工作区"
-								}, {
-									"key": "datagridDetail",
-									"value": "",
-									"title": "页面明细"
-								}, {
-									"key": "datagridSubDetail",
-									"value": "",
-									"title": "APP明细"
-								}
-							]
-						}
-					]
-				}, {
-					"title": "用户信息管理",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "用户管理",
-							"actionType": 1,
-							"actionName": "UserManagePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于用户维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "tianlong",
-							"actionCADName": "",
-							"menuno": "20040",
+							"menuno": " ",
 							"fitDataPath": [
 								{
 									"key": "",
-									"value": "",
-									"title": ""
+									"value": ""
 								}
 							]
-						}
-					]
-				}, {
-					"title": "权限组信息管理",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "权限组管理",
+						}, {
+							"title": "属性分类",
 							"actionType": 1,
-							"actionName": "AuthorityGroupManagePlugin",
+							"actionName": "PropertyCategoryPlugin",
 							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于权限维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "tianlong",
+							"iconUrl": "\ue6b8",
+							"description": "属性分类",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
 							"actionCADName": "",
-							"menuno": "30020",
+							"menuno": " ",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "表库",
+							"actionType": 1,
+							"actionName": "TableBankPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6b8",
+							"description": "表库",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
+							"actionCADName": "",
+							"menuno": " ",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "表分类",
+							"actionType": 1,
+							"actionName": "TableCategoryPlugin",
+							"showType": 1,
+							"iconUrl": "\ue6b8",
+							"description": "表分类",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
+							"actionCADName": "",
+							"menuno": " ",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "数据架构设计",
+							"actionType": 1,
+							"actionName": "DataArchitectureAllPlugin",
+							"showType": 1,
+							"iconUrl": "\ue683",
+							"description": "数据架构设计",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
+							"actionCADName": "",
+							"menuno": " ",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "数据维护定义",
+							"actionType": 1,
+							"actionName": "DataMaintainDefDesPlugin",
+							"showType": 1,
+							"iconUrl": "\ue68e",
+							"description": "数据维护定义",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
+							"actionCADName": "",
+							"menuno": " ",
+							"fitDataPath": [
+								{
+									"key": "",
+									"value": ""
+								}
+							]
+						}, {
+							"title": "数据维护",
+							"actionType": 1,
+							"actionName": "DataMaintenancePlugin",
+							"showType": 1,
+							"iconUrl": "\ue692",
+							"description": "数据维护",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
+							"actionCADName": "",
+							"menuno": " ",
 							"fitDataPath": [
 								{
 									"key": "",
@@ -111,8 +149,8 @@
 						}
 					]
 				}, {
-					"title": "用户权限组关系管理",
-					"iconUrl": "\ue618",
+					"title": "客服部工具",
+					"iconUrl": "\ue6b1",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -121,47 +159,17 @@
 					],
 					"children": [
 						{
-							"title": "用户权限组关系",
+							"title": "查看字段",
 							"actionType": 1,
-							"actionName": "AuthorityUserGroupManagePlugin",
+							"actionName": "DataSearchPlugin",
 							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于用户权限组关系维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "tianlong",
-							"menuno": "40010",
+							"iconUrl": "\ue6a2",
+							"description": "查看字段",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
 							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "权限菜单关系管理",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "权限菜单关系",
-							"actionType": 1,
-							"actionName": "AuthorityMenuGroupPlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于权限菜单关系维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "tianlong",
 							"menuno": "",
-							"actionCADName": "",
 							"fitDataPath": [
 								{
 									"key": "",
@@ -171,8 +179,8 @@
 						}
 					]
 				}, {
-					"title": "数据权限管理",
-					"iconUrl": "\ue618",
+					"title": "运营中心工具",
+					"iconUrl": "\ue78f",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -181,382 +189,17 @@
 					],
 					"children": [
 						{
-							"title": "数据权限",
+							"title": "飞道调度中心展示",
 							"actionType": 1,
-							"actionName": "AuthorityDatapermPlugin",
+							"actionName": "ScheduleMonitorPlugin",
 							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于数据权限维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "tianlong",
-							"menuno": "40110",
+							"iconUrl": "\ue679",
+							"description": "用于展示公司调度中心页面",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
 							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "权限码管理",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "权限码",
-							"actionType": 1,
-							"actionName": "AuthorityYardManagePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于权限码维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "tianlong",
-							"menuno": "50030",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}
-			]
-		}, {
-			"title": "飞道机台体系",
-			"iconUrl": "\ue624",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
-					"title": "客服相关机台",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "原始需求机台",
-							"actionType": 1,
-							"actionName": "SystemTestingPlugin",
-							"showType": 1,
-							"iconUrl": "\ue60d",
-							"description": "用于策划机台维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "",
-							"menuno": "10010",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "OriginalDemandMachinePlatformPlugin_Setting",
-									"title": "工作区"
-								}
-							]
-						}, {
-							"title": "报价机台(初步)",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue60f",
-							"description": "报价机台(初步)",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "",
-							"menuno": "10050",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "",
-									"title": "工作区"
-								}, {
-									"key": "datagridDetail",
-									"value": "",
-									"title": "页面明细"
-								}, {
-									"key": "datagridSubDetail",
-									"value": "",
-									"title": "APP明细"
-								}
-							]
-						}, {
-							"title": "客户项目工单",
-							"actionType": 1,
-							"actionName": "ServiceProjectWorkOrderPlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "客服项目工单",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "",
-							"menuno": "10070",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "",
-									"title": "工作区"
-								}, {
-									"key": "datagridDetail",
-									"value": "",
-									"title": "页面明细"
-								}, {
-									"key": "datagridSubDetail",
-									"value": "",
-									"title": "APP明细"
-								}
-							]
-						}, {
-							"title": "产品综述机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue611",
-							"description": "产品综述机台",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "ProductReviewMachinePlatformPlugin",
-							"menuno": "10080",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "ProductSummaryMachinePlatFormPlugin_Setting",
-									"title": "工作区"
-								}, {
-									"key": "datagridDetail",
-									"value": "",
-									"title": "页面明细"
-								}, {
-									"key": "datagridSubDetail",
-									"value": "",
-									"title": "APP明细"
-								}
-							]
-						}, {
-							"title": "业务调研报告机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue617",
-							"description": "业务调研报告",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "BusinessArchitectureDiagramPlugin",
-							"menuno": "10020",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "BusinessArchitectureDiagramPlugin_Setting",
-									"title": "工作区"
-								}
-							]
-						}, {
-							"title": "非业务调研报告机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue612",
-							"description": "用于策划机台维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "NonBusineSurveyReportMachinePlatformPlugin",
-							"menuno": "10030",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "ProductSummaryMachinePlatFormPlugin_Setting",
-									"title": "工作区"
-								}, {
-									"key": "datagridDetail",
-									"value": "",
-									"title": "页面明细"
-								}, {
-									"key": "datagridSubDetail",
-									"value": "",
-									"title": "APP明细"
-								}
-							]
-						}, {
-							"title": "页面流程图机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于策划机台维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "PageFlowPlugin",
-							"menuno": "20020",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "PageFlowPlugin_Setting",
-									"title": "工作区"
-								}, {
-									"key": "datagridDetail",
-									"value": "",
-									"title": "页面明细"
-								}, {
-									"key": "datagridSubDetail",
-									"value": "",
-									"title": "APP明细"
-								}
-							]
-						}, {
-							"title": "解决方案机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue613",
-							"description": "解决方案机台",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "SolutionMachinePlatformPlugin",
-							"menuno": "10040",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "SolutionMachinePlatformPlugin_Setting",
-									"title": "工作区"
-								}, {
-									"key": "datagridDetail",
-									"value": "",
-									"title": "页面明细"
-								}, {
-									"key": "datagridSubDetail",
-									"value": "",
-									"title": "APP明细"
-								}
-							]
-						}, {
-							"title": "报价机台（详细）",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue60f",
-							"description": "用于策划机台维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "",
-							"menuno": "10050",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "PageFlowMachinePlatFormPlugin_Setting",
-									"title": "工作区"
-								}, {
-									"key": "datagridDetail",
-									"value": "",
-									"title": "页面明细"
-								}, {
-									"key": "datagridSubDetail",
-									"value": "",
-									"title": "APP明细"
-								}
-							]
-						}, {
-							"title": "报表机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": " 报表机台",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "ReportMachinePlatformPlugin",
-							"menuno": "10090",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "ProductSummaryMachinePlatFormPlugin_Setting",
-									"title": "工作区"
-								}, {
-									"key": "datagridDetail",
-									"value": "",
-									"title": "页面明细"
-								}, {
-									"key": "datagridSubDetail",
-									"value": "",
-									"title": "APP明细"
-								}
-							]
-						}
-					]
-				}, {
-					"title": "规划相关机台",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "数据架构机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue60b",
-							"description": "用于数据架构维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "DataArchitecturePlugin",
-							"menuno": "20040",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "DataArchitecturePlugin_Setting",
-									"title": "工作区"
-								}, {
-									"key": "datagridDetail",
-									"value": "",
-									"title": "页面明细"
-								}, {
-									"key": "datagridSubDetail",
-									"value": "",
-									"title": "APP明细"
-								}
-							]
-						}, {
-							"title": "页面地图机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue625",
-							"description": "用于页面地图维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"actionCADName": "PageMapPlugin",
-							"menuno": "20030",
+							"menuno": "",
 							"fitDataPath": [
 								{
 									"key": "",
@@ -564,109 +207,15 @@
 								}
 							]
 						}, {
-							"title": "用例机台",
+							"title": "飞道调度中心项目查询",
 							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue61a",
-							"description": "用于用例维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"actionCADName": "UseCaseDesignPlugin",
-							"menuno": "20050",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "设计相关机台",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "开发工单项目机台",
-							"actionType": 1,
-							"actionName": "DevelopProjectWorkOrderPlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "开发工单项目机台",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "",
-							"menuno": "20060",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "",
-									"title": "工作区"
-								}, {
-									"key": "datagridDetail",
-									"value": "",
-									"title": "业面明细"
-								}, {
-									"key": "datagridSubDetail",
-									"value": "",
-									"title": "APP明细"
-								}
-							]
-						}, {
-							"title": "状态图机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
+							"actionName": "ConditionQueryPlugin",
 							"showType": 1,
 							"iconUrl": "\ue61b",
-							"description": "用于状态图维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "StatePicturePlugin",
-							"menuno": "30020",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "StatePicturePlugin_Setting",
-									"title": "工作区"
-								}
-							]
-						}, {
-							"title": "页面草图机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue608",
-							"description": "用于页面草图维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"actionCADName": "",
-							"menuno": "30030",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "数据字典架构机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于数据字典架构维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
+							"description": "用于查询公司各部门调度",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
 							"actionCADName": "",
 							"menuno": "",
 							"fitDataPath": [
@@ -676,302 +225,17 @@
 								}
 							]
 						}, {
-							"title": "页面效果图机台",
+							"title": "飞道调度中心部门查询",
 							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
+							"actionName": "DepartmentQueryPlugin",
 							"showType": 1,
-							"iconUrl": "\ue609",
-							"description": "用于页面效果图维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
+							"iconUrl": "\ue60d",
+							"description": "用于公司各部门调度",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
 							"actionCADName": "",
-							"menuno": "30040",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "页面定义机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue604",
-							"description": "用于页面定义维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"actionCADName": "PageCompinetProjectPlugin",
-							"menuno": "30050",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "数据建模机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue626",
-							"description": "用于数据建模维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"actionCADName": "DataModelPlugin",
-							"menuno": "30060",
-							"fitDataPath": [
-								{
-									"key": "datagridMaster",
-									"value": "DataModelPlugin_Setting",
-									"title": "工作区"
-								}, {
-									"key": "datagridDetail",
-									"value": "",
-									"title": "页面明细"
-								}, {
-									"key": "datagridSubDetail",
-									"value": "",
-									"title": "APP明细"
-								}
-							]
-						}, {
-							"title": "页面组件分析机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于页面组件分析机台维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"actionCADName": "PageDetinitionProjectPlugin",
-							"menuno": "30070",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "组件定义机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue607",
-							"description": "用于组件定义机台维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"actionCADName": "ComponentDefinitionPlugin",
-							"menuno": "30080",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "部件定义机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue607",
-							"description": "用于部件定义机台维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"actionCADName": "",
-							"menuno": "30090",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "开发相关机台",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "切图机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue60a",
-							"description": "用于切图机台维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": "40010",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "部件版式开发机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue620",
-							"description": "用于部件版式开发机台维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": "40020",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "部件程序开发机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue629",
-							"description": "用于部件程序开发机维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": "40040",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "组件版式开发机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue605",
-							"description": "用于组件版式开发机台维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": "40030",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "组件程序开发机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue628",
-							"description": "用于组件程序开发机台维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": "40050",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "页面版式开发机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue602",
-							"description": "用于页面版式开发机台维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": "40060",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "页面程序开发机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue603",
-							"description": "用于页面程序开发机台维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": "40070",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "页面装配机台",
-							"actionType": 1,
-							"actionName": "MachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue600",
-							"description": "用于页面装配机台维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": "40080",
-							"actionCADName": "PageAssemblyPlugin",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "设置相关机台",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "菜单设置机台",
-							"actionType": 1,
-							"actionName": "MenuMachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于页面布局机台维护",
-							"systemId": 100,
-							"configsystemid": "",
-							"spaceId": "",
 							"menuno": "",
-							"actionCADName": "",
 							"fitDataPath": [
 								{
 									"key": "",
@@ -979,71 +243,17 @@
 								}
 							]
 						}, {
-							"title": "巡航任务机台",
+							"title": "飞道调度中心任务维护",
 							"actionType": 1,
-							"actionName": "DataCruiseMachinePlatformPlugin",
+							"actionName": "TaskMaintainPlugin",
 							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于数据巡航机台维护",
-							"systemId": 100,
-							"configsystemid": "",
-							"spaceId": "",
+							"iconUrl": "\ue61f",
+							"description": "用于公司任务维护",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
+							"actionCADName": "",
 							"menuno": "",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "基础数据维护机台",
-							"actionType": 1,
-							"actionName": "BaseDataMaintainMachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue61c",
-							"description": "用于基础数据维护机台维护",
-							"systemId": 100,
-							"configsystemid": "",
-							"spaceId": "",
-							"menuno": "50040",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "CMS机台（内容管理）",
-							"actionType": 1,
-							"actionName": "CMSMachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于CMS机台维护",
-							"systemId": 100,
-							"configsystemid": "",
-							"spaceId": "",
-							"menuno": "",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "权限维护机台",
-							"actionType": 1,
-							"actionName": "AuthorityMaintainMachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue614",
-							"description": "用于权限维护机台维护",
-							"systemId": 100,
-							"configsystemid": "",
-							"spaceId": "",
-							"menuno": "50050",
-							"actionCADName": "",
 							"fitDataPath": [
 								{
 									"key": "",
@@ -1053,8 +263,8 @@
 						}
 					]
 				}, {
-					"title": "测试相关机台",
-					"iconUrl": "\ue618",
+					"title": "WPF部测试工具",
+					"iconUrl": "\ue6e2",
 					"fitDataPath": [
 						{
 							"key": "",
@@ -1063,568 +273,21 @@
 					],
 					"children": [
 						{
-							"title": "测试机台",
-							"actionType": 1,
-							"actionName": "TestMachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue601",
-							"description": "用于测试机台维护",
-							"systemId": 100,
-							"configsystemid": "",
-							"spaceId": "",
-							"menuno": "40110",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "部署相关机台",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "部署机台",
-							"actionType": 1,
-							"actionName": "DeployMachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue610",
-							"description": "用于部署机台维护",
-							"systemId": 100,
-							"configsystemid": "",
-							"spaceId": "",
-							"menuno": "50030",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "系统相关机台",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "布局库开发机台",
-							"actionType": 1,
-							"actionName": "LayoutLibMachinePlatformPlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于布局库开发维护",
-							"systemId": 100,
-							"configsystemid": "",
-							"spaceId": "",
-							"menuno": "",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}
-			]
-		}, {
-			"title": "数据管理工具",
-			"iconUrl": "\ue618",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
-					"title": "数据架构设计",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "数据架构设计",
-							"actionType": 1,
-							"actionName": "DataArchitecturePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于布局库开发维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "属性库管理",
-							"actionType": 1,
-							"actionName": "DataArchitecturePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于布局库开发维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "表库管理",
-							"actionType": 1,
-							"actionName": "DataArchitecturePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于布局库开发维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "数据建模工具",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "数据建模工具",
-							"actionType": 1,
-							"actionName": "",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于布局库开发维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "数据维护定义设计",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "数据维护定义设计",
-							"actionType": 1,
-							"actionName": "DataMaintainDefDesPlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于布局库开发维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "基础数据维护",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "天龙",
-							"actionType": 1,
-							"actionName": "DataMaintenancePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于基础数据维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "tianlong",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "飞道",
-							"actionType": 1,
-							"actionName": "DataMaintenancePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于基础数据维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "victop_core",
-							"actionType": 1,
-							"actionName": "DataMaintenancePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于基础数据维护",
-							"systemId": 906,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "招聘",
-							"actionType": 1,
-							"actionName": "DataMaintenancePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于基础数据维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "fd_hiring",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}
-			]
-		}, {
-			"title": "天龙计划",
-			"iconUrl": "\ue60b",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
-					"title": "数据架构设计",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "数据架构设计",
-							"actionType": 1,
-							"actionName": "DataArchitecturePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于布局库开发维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "属性库管理",
-							"actionType": 1,
-							"actionName": "DataArchitecturePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于布局库开发维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "表库管理",
-							"actionType": 1,
-							"actionName": "DataArchitecturePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于布局库开发维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "数据建模工具",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "数据建模工具",
-							"actionType": 1,
-							"actionName": "",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于布局库开发维护",
-							"systemId": 101,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "数据维护定义设计",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "数据维护定义设计",
-							"actionType": 1,
-							"actionName": "DataMaintainDefDesPlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于布局库开发维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}, {
-					"title": "基础数据维护",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "天龙",
-							"actionType": 1,
-							"actionName": "DataMaintenancePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于基础数据维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "tianlong",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "飞道",
-							"actionType": 1,
-							"actionName": "DataMaintenancePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于基础数据维护",
-							"systemId": 100,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "victop_core",
-							"actionType": 1,
-							"actionName": "DataMaintenancePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于基础数据维护",
-							"systemId": 906,
-							"configsystemid": 101,
-							"spaceId": "victop_core",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}, {
-							"title": "招聘",
-							"actionType": 1,
-							"actionName": "DataMaintenancePlugin",
-							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于基础数据维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "fd_hiring",
-							"menuno": " ",
-							"actionCADName": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
-						}
-					]
-				}
-			]
-		}, {
-			"title": "数据测试",
-			"iconUrl": "\ue601",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
-			"children": [
-				{
-					"title": "数据测试页面",
-					"iconUrl": "\ue618",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
-					"children": [
-						{
-							"title": "数据测试工具",
+							"title": "数据测试",
 							"actionType": 1,
 							"actionName": "SystemTestingPlugin",
 							"showType": 1,
-							"iconUrl": "\ue618",
-							"description": "用于策划机台维护",
-							"systemId": 904,
-							"configsystemid": 101,
-							"spaceId": "feidao_core",
+							"iconUrl": "\ue6e2",
+							"description": "用于测试数据是否正常",
+							"systemId": 18,
+							"configsystemid": 11,
+							"spaceId": "feidao::feidao",
 							"actionCADName": "",
-							"menuno": "10010",
+							"menuno": "",
 							"fitDataPath": [
 								{
-									"key": "datagridMaster",
-									"value": "OriginalDemandMachinePlatformPlugin_Setting",
-									"title": "工作区"
+									"key": "",
+									"value": ""
 								}
 							]
 						}
