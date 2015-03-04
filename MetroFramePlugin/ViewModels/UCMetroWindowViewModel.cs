@@ -9,13 +9,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Configuration;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using System.Xml.Linq;
 using GalaSoft.MvvmLight.Command;
 using MetroFramePlugin.Models;
 using MetroFramePlugin.Views;
 using Victop.Frame.CoreLibrary;
-using Victop.Frame.CoreLibrary.Models;
 using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls;
@@ -28,7 +28,7 @@ namespace MetroFramePlugin.ViewModels
     {
         #region 字段
         private Window mainWindow;
-        private Grid gridTitle;
+        private Style _addStyle;
         private VicButtonNormal btnPluginList;
         private Window win_PluginList;
         private List<Dictionary<string, object>> pluginList;
@@ -175,10 +175,12 @@ namespace MetroFramePlugin.ViewModels
                     VicTabItemNormal homeItem = new VicTabItemNormal();
                     homeItem.Name = "homeItem";
                     homeItem.AllowDelete = false;
-                    homeItem.Header = "飞道科技";
-                    WebBrowser browser = new WebBrowser();
-                    //browser.Source = new Uri("http://www.baidu.com");
-                    homeItem.Content = browser;
+                    homeItem.Header = "l";
+                    ListBox canvas = new ListBox();
+                    canvas.Style = (Style)mainWindow.FindResource("addLogo");
+                    ListBoxItem item = new ListBoxItem();
+                    canvas.Items.Add(item);
+                    homeItem.Content = canvas;
                     tabItemList.Add(homeItem);
                 }
                 return tabItemList;
@@ -280,6 +282,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
+                   
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
                     Rect rect = SystemParameters.WorkArea;
@@ -287,7 +290,7 @@ namespace MetroFramePlugin.ViewModels
                     mainWindow.MaxHeight = rect.Height;
                     mainWindow.WindowState = WindowState.Maximized;
                     ChangeFrameWorkTheme();
-                    //LoadMenuListLocal();
+                  //  LoadMenuListLocal();
                     LoadJsonMenuListLocal();
                     //OverlayWindow overlayWin = new OverlayWindow();
                     //overlayWin.Show();
@@ -641,83 +644,83 @@ namespace MetroFramePlugin.ViewModels
         /// <summary>加载标准化菜单</summary>
         private void LoadStandardMenu()
         {
-            LoadMenuListEnterprise();
+            //LoadMenuListEnterprise();
         }
         /// <summary>加载企业云菜单集合 </summary>
-        private void LoadMenuListEnterprise()
-        {
-            BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
-            SystemMenuListEnterprise.Clear();
-            if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
-            {
-                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.ParentMenu.Equals("0")))
-                {
-                    MenuModel menuModel = GetMenuModel(item);
-                    menuModel = CreateMenuList(item.MenuId, resourceInfo.ResourceMnenus, menuModel);
-                    SystemMenuListEnterprise.Add(menuModel);
-                }
-            }
-            GetStandardMenuList(SystemMenuListEnterprise);
-        }
+        //private void LoadMenuListEnterprise()
+        //{
+        //    BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
+        //    SystemMenuListEnterprise.Clear();
+        //    if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
+        //    {
+        //        foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.ParentMenu.Equals("0")))
+        //        {
+        //            MenuModel menuModel = GetMenuModel(item);
+        //            menuModel = CreateMenuList(item.MenuId, resourceInfo.ResourceMnenus, menuModel);
+        //            SystemMenuListEnterprise.Add(menuModel);
+        //        }
+        //    }
+        //    GetStandardMenuList(SystemMenuListEnterprise);
+        //}
         /// <summary>创建完整的菜单模型 </summary>
-        private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
-        {
-            foreach (MenuInfo item in fullMenuList.Where(it => it.ParentMenu.Equals(parentMenu)))
-            {
-                MenuModel menuModel = GetMenuModel(item);
-                menuModel = CreateMenuList(item.MenuId, fullMenuList, menuModel);
-                parentModel.SystemMenuList.Add(menuModel);
-            }
-            return parentModel;
-        }
+        //private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
+        //{
+        //    foreach (MenuInfo item in fullMenuList.Where(it => it.ParentMenu.Equals(parentMenu)))
+        //    {
+        //        MenuModel menuModel = GetMenuModel(item);
+        //        menuModel = CreateMenuList(item.MenuId, fullMenuList, menuModel);
+        //        parentModel.SystemMenuList.Add(menuModel);
+        //    }
+        //    return parentModel;
+        //}
         /// <summary>获得菜单模型实例</summary>
-        private MenuModel GetMenuModel(MenuInfo item)
-        {
-            MenuModel menuModel = new MenuModel();
-            menuModel.MenuId = item.MenuId;
-            menuModel.MenuName = item.MenuName;
-            menuModel.Actived = item.Actived;
-            menuModel.AutoOpenFlag = item.AutoOpenFlag;
-            menuModel.BzSystemId = item.BzSystemId;
-            menuModel.Compatible = item.Compatible;
-            menuModel.DataFormId = item.DataFormId;
-            menuModel.DefaultPrintTemplate = item.DefaultPrintTemplate;
-            menuModel.DisplayType = item.DisplayType;
-            menuModel.DocStatus = item.DocStatus;
-            menuModel.EndPoint = item.EndPoint;
-            menuModel.EndPointParam = item.EndPointParam;
-            menuModel.ConfigSystemId = item.FormId;
-            menuModel.FormMemo = item.FormMemo;
-            menuModel.FormName = item.FormName;
-            menuModel.HomeId = item.HomeId;
-            menuModel.Id = item.Id;
-            menuModel.MaxPrintCount = item.MaxPrintCount;
-            menuModel.Memo = item.Memo;
-            menuModel.OpenType = item.OpenType;
-            menuModel.ParentMenu = item.ParentMenu;
-            menuModel.PredocStatus = item.PredocStatus;
-            menuModel.ResourceName = item.ResourceName;
-            menuModel.ResourceTree = item.ResourceTree;
-            menuModel.ResourceType = item.ResourceType;
-            menuModel.SaveProject = item.SaveProject;
-            menuModel.Sequence = item.Sequence;
-            menuModel.Stamp = item.Stamp;
-            menuModel.MenuCode = item.menuCode;
-            MenuModel localModel = GetLocalMenuResoureName(item.menu_name, localMenuListEx);
-            if (localModel != null)
-            {
-                menuModel.ResourceName = localModel.ResourceName;
-                menuModel.ActionType = localModel.ActionType;
-                menuModel.BzSystemId = localModel.BzSystemId;
-                menuModel.FitDataPath = localModel.FitDataPath;
-                menuModel.ActionCADName = localModel.ActionCADName;
-                menuModel.ConfigSystemId = localModel.ConfigSystemId;
-                menuModel.SpaceId = localModel.SpaceId;
-                menuModel.MenuNo = localModel.MenuNo;
+        //private MenuModel GetMenuModel(MenuInfo item)
+        //{
+        //    MenuModel menuModel = new MenuModel();
+        //    menuModel.MenuId = item.MenuId;
+        //    menuModel.MenuName = item.MenuName;
+        //    menuModel.Actived = item.Actived;
+        //    menuModel.AutoOpenFlag = item.AutoOpenFlag;
+        //    menuModel.BzSystemId = item.BzSystemId;
+        //    menuModel.Compatible = item.Compatible;
+        //    menuModel.DataFormId = item.DataFormId;
+        //    menuModel.DefaultPrintTemplate = item.DefaultPrintTemplate;
+        //    menuModel.DisplayType = item.DisplayType;
+        //    menuModel.DocStatus = item.DocStatus;
+        //    menuModel.EndPoint = item.EndPoint;
+        //    menuModel.EndPointParam = item.EndPointParam;
+        //    menuModel.ConfigSystemId = item.FormId;
+        //    menuModel.FormMemo = item.FormMemo;
+        //    menuModel.FormName = item.FormName;
+        //    menuModel.HomeId = item.HomeId;
+        //    menuModel.Id = item.Id;
+        //    menuModel.MaxPrintCount = item.MaxPrintCount;
+        //    menuModel.Memo = item.Memo;
+        //    menuModel.OpenType = item.OpenType;
+        //    menuModel.ParentMenu = item.ParentMenu;
+        //    menuModel.PredocStatus = item.PredocStatus;
+        //    menuModel.ResourceName = item.ResourceName;
+        //    menuModel.ResourceTree = item.ResourceTree;
+        //    menuModel.ResourceType = item.ResourceType;
+        //    menuModel.SaveProject = item.SaveProject;
+        //    menuModel.Sequence = item.Sequence;
+        //    menuModel.Stamp = item.Stamp;
+        //    menuModel.MenuCode = item.menuCode;
+        //    MenuModel localModel = GetLocalMenuResoureName(item.menu_name, localMenuListEx);
+        //    if (localModel != null)
+        //    {
+        //        menuModel.ResourceName = localModel.ResourceName;
+        //        menuModel.ActionType = localModel.ActionType;
+        //        menuModel.BzSystemId = localModel.BzSystemId;
+        //        menuModel.FitDataPath = localModel.FitDataPath;
+        //        menuModel.ActionCADName = localModel.ActionCADName;
+        //        menuModel.ConfigSystemId = localModel.ConfigSystemId;
+        //        menuModel.SpaceId = localModel.SpaceId;
+        //        menuModel.MenuNo = localModel.MenuNo;
 
-            }
-            return menuModel;
-        }
+        //    }
+        //    return menuModel;
+        //}
         #endregion
 
         private MenuModel GetLocalMenuResoureName(string MenuName, ObservableCollection<MenuModel> MenuList)
