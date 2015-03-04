@@ -354,32 +354,35 @@ namespace UserLoginPlugin.ViewModels
             userDic.Add("Pwd", LoginInfoModel.UserPwd);
             userDic.Add("ProductId", LoginInfoModel.ProductId);
             ConfigManager.SaveAttributeOfNodeByName("UserInfo", userDic);
-            #region 获取ClientNo
-            string MessageType = "MongoDataChannelService.findBusiData";
             DataMessageOperation messageOp = new DataMessageOperation();
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "18");
-            contentDic.Add("configsystemid", "11");
-            contentDic.Add("modelid", "feidao-model-pub_product-0001");
-            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> conDic = new Dictionary<string, object>();
-            conDic.Add("name", "pub_product");
-            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConDic.Add("productid", LoginInfoModel.ProductId);
-            tableConList.Add(tableConDic);
-            conDic.Add("tablecondition", tableConList);
-            conList.Add(conDic);
-            contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
-            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            #region 获取ClientNo
+            if (LoginInfoModel.ClientId.Equals("feidao"))
             {
-                string channelId = returnDic["DataChannelId"].ToString();
-                DataSet mastDs = messageOp.GetData(channelId, "[\"pub_product\"]");
-                if (mastDs != null && mastDs.Tables.Contains("dataArray") && mastDs.Tables["dataArray"].Rows.Count > 0)
+                string MessageType = "MongoDataChannelService.findBusiData";
+                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                contentDic.Add("systemid", "18");
+                contentDic.Add("configsystemid", "11");
+                contentDic.Add("modelid", "feidao-model-pub_product-0001");
+                List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+                Dictionary<string, object> conDic = new Dictionary<string, object>();
+                conDic.Add("name", "pub_product");
+                List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+                Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+                tableConDic.Add("productid", LoginInfoModel.ProductId);
+                tableConList.Add(tableConDic);
+                conDic.Add("tablecondition", tableConList);
+                conList.Add(conDic);
+                contentDic.Add("conditions", conList);
+                Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+                if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
                 {
-                    LoginInfoModel.ClientNo = mastDs.Tables["dataArray"].Rows[0]["client_no"].ToString();
-                }
+                    string channelId = returnDic["DataChannelId"].ToString();
+                    DataSet mastDs = messageOp.GetData(channelId, "[\"pub_product\"]");
+                    if (mastDs != null && mastDs.Tables.Contains("dataArray") && mastDs.Tables["dataArray"].Rows.Count > 0)
+                    {
+                        LoginInfoModel.ClientNo = mastDs.Tables["dataArray"].Rows[0]["client_no"].ToString();
+                    }
+                } 
             }
             #endregion
             #region 更新通道信息
