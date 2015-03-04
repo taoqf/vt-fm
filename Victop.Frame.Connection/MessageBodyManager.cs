@@ -67,7 +67,7 @@ namespace Victop.Frame.Connection
             switch (serverInfo.ServerType)
             {
                 case ServerTypeEnum.LOCAL:
-                    Dictionary<string, string> contentDic = JsonHelper.ToObject<Dictionary<string, string>>(messageInfo.MessageContent);
+                    Dictionary<string, object> contentDic = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
                     string serverInfoStr = JsonHelper.ToJson(serverInfo);
                     contentDic.Add("ServerInfo", serverInfoStr);
                     messageInfo.MessageContent = JsonHelper.ToJson(contentDic);

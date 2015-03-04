@@ -238,14 +238,14 @@ namespace Victop.Frame.PublicLib.Common
         /// <summary>
         /// 获取文件大小
         /// </summary>
-        /// <param name="filename">文件名称</param>
+        /// <param name="fileName">文件名称</param>
         /// <returns></returns>
-        public long GetFileSize(string filename)
+        public long GetFileSize(string fileName)
         {
             long fileSize = 0;
             try
             {
-                FileInfo fileInf = new FileInfo(filename);
+                FileInfo fileInf = new FileInfo(fileName);
                 string uri = "ftp://" + ftpServerIP + "/" + fileInf.Name;
                 Connect(uri);//连接 
                 reqFTP.Method = WebRequestMethods.Ftp.GetFileSize;
@@ -258,6 +258,25 @@ namespace Victop.Frame.PublicLib.Common
                 LoggerHelper.ErrorFormat("获取文件大小错误:{0}", ex.Message);
             }
             return fileSize;
+        }
+        public DateTime GetFileTime(string fileName)
+        {
+            DateTime fileTime = DateTime.Now;
+            try
+            {
+                FileInfo fileInf = new FileInfo(fileName);
+                string uri = "ftp://" + ftpServerIP + "/" + fileInf.Name;
+                Connect(uri);//连接 
+                reqFTP.Method = WebRequestMethods.Ftp.GetDateTimestamp;
+                FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
+                fileTime = response.LastModified;
+                response.Close();
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.ErrorFormat("获取文件大小错误:{0}", ex.Message);
+            }
+            return fileTime;
         }
         /// <summary>
         /// 修改文件名称

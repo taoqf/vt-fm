@@ -139,7 +139,7 @@ namespace Victop.Frame.Connection
                         if (dicContent.ContainsKey("clientId"))
                         {
                             dicContent.Remove("clientId");
-                            dicContent.Add("spaceId", cloudGallyInfo.ClientId);
+                            dicContent.Add("spaceId", string.Format("{0}::{1}", cloudGallyInfo.ClientId, cloudGallyInfo.ProductId));
                         }
                         #region 暂时支持以请求消息中的SpaceId为准，没有时则使用配置文件中的SpaceId
                         //if (dicContent.ContainsKey("spaceId"))
@@ -149,7 +149,7 @@ namespace Victop.Frame.Connection
                         #endregion
                         if (!dicContent.ContainsKey("spaceId"))
                         {
-                            dicContent.Add("spaceId", cloudGallyInfo.ClientId);
+                            dicContent.Add("spaceId", string.Format("{0}::{1}", cloudGallyInfo.ClientId, cloudGallyInfo.ProductId));
                         }
                         break;
                     default:

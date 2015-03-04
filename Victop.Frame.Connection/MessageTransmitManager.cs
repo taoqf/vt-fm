@@ -73,29 +73,24 @@ namespace Victop.Frame.Connection
             DataFormEnum dataForm = ConfigurationManager.AppSettings["SystemType"].Equals("JSON") ? DataFormEnum.JSON : DataFormEnum.DATASET;
             switch (dataForm)
             {
-                case DataFormEnum.DATASET:
-                    if (contentDic.ContainsKey("clientId"))
-                    {
-                        contentDic["clientId"] = currentGallery.ClientId;
-                    }
-                    else
-                    {
-                        contentDic.Add("clientId", currentGallery.ClientId);
-                    }
-                    break;
                 case DataFormEnum.JSON:
-                    if (contentDic.ContainsKey("clientId"))
-                    {
-                        contentDic.Remove("clientId");
-                        contentDic.Add("spaceId", currentGallery.ClientId);
-                    }
                     if (contentDic.ContainsKey("spaceId"))
                     {
-                        contentDic["spaceId"] = currentGallery.ClientId;
+                        if (string.IsNullOrEmpty(contentDic["spaceId"].ToString()))
+                        {
+                            contentDic["spaceId"] = string.Format("{0}::{1}", currentGallery.ClientId, currentGallery.ProductId);
+                        }
+                        else
+                        {
+                            if (contentDic["spaceId"].ToString().Contains("::"))
+                            {
+                                currentGallery.ProductId = contentDic["spaceId"].ToString().Substring(contentDic["spaceId"].ToString().IndexOf("::") + 2);
+                            }
+                        }
                     }
                     else
                     {
-                        contentDic.Add("spaceId", currentGallery.ClientId);
+                        contentDic.Add("spaceId", string.Format("{0}::{1}", currentGallery.ClientId, currentGallery.ProductId));
                     }
                     if (contentDic.ContainsKey("usercode"))
                     {
@@ -282,7 +277,7 @@ namespace Victop.Frame.Connection
             messageInfo.MessageType = "MongoDataChannelService.afterLogin";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             string afterLoginStr = ConfigurationManager.AppSettings["afterlogin"];
-            contentDic.Add("systemid", JsonHelper.ReadJsonString(afterLoginStr,"systemid"));
+            contentDic.Add("systemid", JsonHelper.ReadJsonString(afterLoginStr, "systemid"));
             contentDic.Add("client_type_val", "1");
             contentDic.Add("configsystemid", JsonHelper.ReadJsonString(afterLoginStr, "configsystemid"));
             string userCode = messageInfo.MessageContent.Contains("usercode") ? JsonHelper.ReadJsonString(messageInfo.MessageContent, "usercode") : JsonHelper.ReadJsonString(messageInfo.MessageContent, "userCode");
@@ -326,7 +321,7 @@ namespace Victop.Frame.Connection
                     }
                     baseResourceInfo.ResourceMnenus = menuInfo;
                     BaseResourceManager baseResourceManager = new BaseResourceManager();
-                    bool result = baseResourceManager.AddResouce(baseResourceInfo); 
+                    bool result = baseResourceManager.AddResouce(baseResourceInfo);
                     #endregion
                     #region 用户信息管理
                     string userInfoStr = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userInfo");

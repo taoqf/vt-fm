@@ -32,6 +32,39 @@ namespace UserLoginPlugin.Models
                 }
             }
         }
+        private string clientId;
+
+        public string ClientId
+        {
+            get { return clientId; }
+            set { clientId = value; }
+        }
+
+        private string clientNo;
+
+        public string ClientNo
+        {
+            get { return clientNo; }
+            set { clientNo = value; }
+        }
+
+        private string productId;
+
+        public string ProductId
+        {
+            get
+            {
+                return productId;
+            }
+            set
+            {
+                if (productId != value)
+                {
+                    productId = value;
+                    RaisePropertyChanged("ProductId");
+                }
+            }
+        }
         /// <summary>
         /// 企业SOA
         /// </summary>
@@ -61,7 +94,8 @@ namespace UserLoginPlugin.Models
         public string MiniSOAIP
         {
             get { return _MiniSOAIP; }
-            set {
+            set
+            {
                 if (_MiniSOAIP != value)
                 {
                     _MiniSOAIP = value;
@@ -70,5 +104,5 @@ namespace UserLoginPlugin.Models
             }
         }
     }
-      
+
 }

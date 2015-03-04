@@ -8,7 +8,7 @@
              xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              xmlns:convert="clr-namespace:UserLoginPlugin.Convert"
              mc:Ignorable="d" 
-             d:DesignHeight="292" d:DesignWidth="389" Name="ucSystemConfig">
+             d:DesignHeight="350" d:DesignWidth="450" Name="ucSystemConfig">
     <UserControl.Resources>
         <convert:CheckboxBoolConverter x:Key="CheckboxBoolConverter"/>
     </UserControl.Resources>
@@ -164,10 +164,12 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock VerticalAlignment="Center" Text="用户名"/>
                             <controls:VicTextBoxNormal Grid.Column="1" VicText="{Binding SysConfigModel.UserName}"/>
-                            <TextBlock VerticalAlignment="Center" Grid.Column="2" Margin="20,0,0,0" Text="密码"/>
+                            <TextBlock VerticalAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" Text="密码"/>
                             <controls:VicTextBoxNormal Grid.Column="3" VicText="{Binding SysConfigModel.PassWord}"/>
                             <TextBlock VerticalAlignment="Center" Grid.Row="1" Text="客户端ID"/>
                             <controls:VicTextBoxNormal Grid.Row="1" Grid.Column="1" VicText="{Binding SysConfigModel.ClientId}"/>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2" Text="产品ID"/>
+                            <controls:VicTextBoxNormal Grid.Row="1" Grid.Column="3" VicText="{Binding SysConfigModel.ProductId}"/>
                         </controls:VicGridNormal>
                     </controls:VicGroupBoxNormal>
                 </controls:VicGridNormal>

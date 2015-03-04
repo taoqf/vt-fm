@@ -9,7 +9,7 @@ using Victop.Server.Controls;
 
 namespace UserManagerService
 {
-    public class Service:IService
+    public class Service : IService
     {
         public int AutoInit
         {
@@ -33,7 +33,7 @@ namespace UserManagerService
                     serviceReceiptMessageType.Add("ServerCenterService.GetUserInfo");
                 }
                 return serviceReceiptMessageType;
-                
+
             }
         }
         private string currentMessageType;
@@ -78,6 +78,8 @@ namespace UserManagerService
                 Dictionary<string, object> userDic = new Dictionary<string, object>();
                 userDic.Add("UserName", loginUserInfo.UserName);
                 userDic.Add("UserCode", loginUserInfo.UserCode);
+                userDic.Add("ClientNo", cloudGallyInfo.ClientNo);
+                userDic.Add("ProductId", cloudGallyInfo.ProductId);
                 userDic.Add("UserId", loginUserInfo.UserId);
                 userDic.Add("UserImg", loginUserInfo.UserImg);
                 if (loginUserInfo.UserFullInfo != null && loginUserInfo.UserFullInfo.Count > 0 && loginUserInfo.UserFullInfo[0].ContainsKey("staff_no"))

@@ -1,0 +1,108 @@
+﻿<UserControl x:Class="SystemTestingPlugin.Views.UCVictopFTP"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:vm="clr-namespace:SystemTestingPlugin.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Name="mainView">
+    <ctrl:VicGridNormal>
+        <ctrl:VicGridNormal.DataContext>
+            <vm:UCVictopFTPViewModel/>
+        </ctrl:VicGridNormal.DataContext>
+        <ctrl:VicGridNormal.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </ctrl:VicGridNormal.RowDefinitions>
+        <ctrl:VicDockPanelNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <ctrl:VicLabelNormal>主机:</ctrl:VicLabelNormal>
+            <ctrl:VicTextBoxNormal Width="150" Height="24" Name="tBoxUrl" TabIndex="1" VicText="{Binding SiteInfoModel.HostUrl,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+            <ctrl:VicLabelNormal>用户名:</ctrl:VicLabelNormal>
+            <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserName" TabIndex="2" VicText="{Binding SiteInfoModel.UserName,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+            <ctrl:VicLabelNormal>密码:</ctrl:VicLabelNormal>
+            <ctrl:VicPasswordBoxNormal Width="100" Height="24" Name="tBoxPwd" TabIndex="3" Password="{Binding SiteInfoModel.UserPwd,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+            <ctrl:VicLabelNormal>端口:</ctrl:VicLabelNormal>
+            <ctrl:VicTextBoxNormal Width="50" Height="24" Name="tBoxPort" TabIndex="4" VicText="{Binding SiteInfoModel.HostPort,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+            <ctrl:VicButtonNormal Width="100" Height="24" Name="btnConnection" Content="连接" TabIndex="5" Command="{Binding btnConnectionClickCommand}"/>
+        </ctrl:VicDockPanelNormal>
+        <ctrl:VicGridNormal Grid.Row="1">
+            <ctrl:VicGridNormal.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="0.5*"/>
+            </ctrl:VicGridNormal.ColumnDefinitions>
+            <ctrl:VicGridNormal Grid.Column="0">
+                <ctrl:VicGridNormal.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </ctrl:VicGridNormal.RowDefinitions>
+                <ctrl:VicGridNormal.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </ctrl:VicGridNormal.ColumnDefinitions>
+                <ctrl:VicLabelNormal Grid.Column="0" Grid.Row="0">本地站点:</ctrl:VicLabelNormal>
+                <ctrl:VicTextBoxNormal Grid.Column="1" Grid.Row="0" Height="24" Name="tBoxLocalSite" VicText="{Binding SiteInfoModel.LocalPath,UpdateSourceTrigger=PropertyChanged}"/>
+                <ctrl:VicListViewNormal Grid.Row="1" Grid.ColumnSpan="3" Name="lviewLocal" ItemsSource="{Binding LocalFileList,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedLocalFile,UpdateSourceTrigger=PropertyChanged}">
+                    <ListView.View>
+                        <GridView x:Name="localGridView">
+                            <GridViewColumn Header="文件名" DisplayMemberBinding="{Binding Path=FileName}"></GridViewColumn>
+                            <GridViewColumn Header="文件大小" DisplayMemberBinding="{Binding Path=FileSize}"></GridViewColumn>
+                            <GridViewColumn Header="文件类型" DisplayMemberBinding="{Binding Path=FileType}"></GridViewColumn>
+                            <GridViewColumn Header="修改时间" DisplayMemberBinding="{Binding Path=LastModifyTime}"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <i:InvokeCommandAction Command="{Binding lviewLocalMouseDoubleClickCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ctrl:VicListViewNormal>
+                <ctrl:VicButtonNormal Grid.Column="2" Grid.Row="0" Height="24" Content="浏览" Name="btnLocalView" Command="{Binding btnLocalViewClickCommand}"/>
+            </ctrl:VicGridNormal>
+            <ctrl:VicGridSplitterNormal Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="2"/>
+            <ctrl:VicGridNormal Grid.Column="2">
+                <ctrl:VicGridNormal.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </ctrl:VicGridNormal.RowDefinitions>
+                <ctrl:VicGridNormal.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </ctrl:VicGridNormal.ColumnDefinitions>
+                <ctrl:VicLabelNormal Grid.Column="0" Grid.Row="0">远程站点:</ctrl:VicLabelNormal>
+                <ctrl:VicTextBoxNormal Grid.Column="1" Grid.Row="0" Height="24" Name="tBoRemoteSite" VicText="{Binding SiteInfoModel.RemotePath,UpdateSourceTrigger=PropertyChanged}"/>
+                <ctrl:VicButtonNormal Grid.Column="2" Grid.Row="0" Height="24" Content="查看" Name="btnRemoteView" Command="{Binding btnRemoteViewClickCommand}"/>
+                <ctrl:VicListViewNormal Grid.Row="1" Grid.ColumnSpan="3" Name="lviewRemote" ItemsSource="{Binding RemoteFileList,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedRmoteFile,UpdateSourceTrigger=PropertyChanged}">
+                    <ListView.View>
+                        <GridView x:Name="gridView">
+                            <GridViewColumn Header="文件名" DisplayMemberBinding="{Binding Path=FileName}"></GridViewColumn>
+                            <GridViewColumn Header="文件大小" DisplayMemberBinding="{Binding Path=FileSize}"></GridViewColumn>
+                            <GridViewColumn Header="文件类型" DisplayMemberBinding="{Binding Path=FileType}"></GridViewColumn>
+                            <GridViewColumn Header="修改时间" DisplayMemberBinding="{Binding Path=LastModifyTime}"></GridViewColumn>
+                            <GridViewColumn Header="拥有者" DisplayMemberBinding="{Binding Path=FileOwner}"></GridViewColumn>
+                            <GridViewColumn Header="分组" DisplayMemberBinding="{Binding Path=FileGroup}"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <i:InvokeCommandAction Command="{Binding lviewRemoteMouseDoubleClickCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ctrl:VicListViewNormal>
+            </ctrl:VicGridNormal>
+        </ctrl:VicGridNormal>
+        <StatusBar Grid.Row="2">
+            <TextBlock Text="{Binding ErrorMsg,UpdateSourceTrigger=PropertyChanged}"/>
+        </StatusBar>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding mainViewLoadedCommand}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+    </ctrl:VicGridNormal>
+</UserControl>

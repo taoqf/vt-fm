@@ -22,7 +22,7 @@ using Victop.Frame.DataMessageManager;
 
 namespace UserLoginPlugin.ViewModels
 {
-    public class UserLoginViewModel:ModelBase
+    public class UserLoginViewModel : ModelBase
     {
         #region 字段
         private Window LoginWindow;
@@ -132,12 +132,13 @@ namespace UserLoginPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     DataMessageOperation messageOp = new DataMessageOperation();
                     string messageType = "PluginService.PluginStop";
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                     contentDic.Add("ObjectId", LoginWindow.Uid);
-                    messageOp.SendAsyncMessage(messageType,contentDic);
+                    messageOp.SendAsyncMessage(messageType, contentDic);
                 });
             }
         }
@@ -149,7 +150,7 @@ namespace UserLoginPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => 
+                return new RelayCommand(() =>
                 {
                     SetCurrentGallery();
                 });
@@ -219,7 +220,7 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    LoginWindow.Hide();
+                    LoginWindow.Close();
                 });
             }
         }
@@ -234,6 +235,8 @@ namespace UserLoginPlugin.ViewModels
             string versionString = ConfigManager.GetAttributeOfNodeByName("System", "Mode");
             LoginInfoModel.UserName = ConfigManager.GetAttributeOfNodeByName("UserInfo", "User");
             LoginInfoModel.UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
+            LoginInfoModel.ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
+            LoginInfoModel.ProductId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ProductId");
             switch (versionString)
             {
                 case null:
@@ -294,6 +297,7 @@ namespace UserLoginPlugin.ViewModels
                 Dictionary<string, object> contentDic = new Dictionary<string, object>();
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
+                contentDic.Add("spaceId", string.Format("{0}::{1}", LoginInfoModel.ClientId, string.IsNullOrEmpty(LoginInfoModel.ProductId) ? LoginInfoModel.ClientId : LoginInfoModel.ProductId));
                 string MessageType = "LoginService.userLoginNew";
                 DataMessageOperation messageOp = new DataMessageOperation();
                 Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
@@ -348,10 +352,50 @@ namespace UserLoginPlugin.ViewModels
             Dictionary<string, string> userDic = new Dictionary<string, string>();
             userDic.Add("User", LoginInfoModel.UserName);
             userDic.Add("Pwd", LoginInfoModel.UserPwd);
+            userDic.Add("ProductId", LoginInfoModel.ProductId);
             ConfigManager.SaveAttributeOfNodeByName("UserInfo", userDic);
+            #region 获取ClientNo
+            string MessageType = "MongoDataChannelService.findBusiData";
+            DataMessageOperation messageOp = new DataMessageOperation();
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", "18");
+            contentDic.Add("configsystemid", "11");
+            contentDic.Add("modelid", "feidao-model-pub_product-0001");
+            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> conDic = new Dictionary<string, object>();
+            conDic.Add("name", "pub_product");
+            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+            tableConDic.Add("productid", LoginInfoModel.ProductId);
+            tableConList.Add(tableConDic);
+            conDic.Add("tablecondition", tableConList);
+            conList.Add(conDic);
+            contentDic.Add("conditions", conList);
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            {
+                string channelId = returnDic["DataChannelId"].ToString();
+                DataSet mastDs = messageOp.GetData(channelId, "[\"pub_product\"]");
+                if (mastDs != null && mastDs.Tables.Contains("dataArray") && mastDs.Tables["dataArray"].Rows.Count > 0)
+                {
+                    LoginInfoModel.ClientNo = mastDs.Tables["dataArray"].Rows[0]["client_no"].ToString();
+                }
+            }
+            #endregion
+            #region 更新通道信息
+            string messageType = "LoginService.setUserInfo";
+            Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
+            setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
+            setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
+            setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
+            setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
+            setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
+            messageOp.SendAsyncMessage(messageType, setUserContentDic);
+            #endregion
+
         }
         #endregion
-      
+
         #endregion
     }
 }

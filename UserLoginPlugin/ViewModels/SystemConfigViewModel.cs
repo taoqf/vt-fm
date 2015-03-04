@@ -183,6 +183,7 @@ namespace UserLoginPlugin.ViewModels
             SysConfigModel.UserName = userDic["User"];
             SysConfigModel.PassWord = userDic["Pwd"];
             SysConfigModel.ClientId = userDic["ClientId"];
+            SysConfigModel.ProductId = userDic["ProductId"];
         }
         #endregion
 

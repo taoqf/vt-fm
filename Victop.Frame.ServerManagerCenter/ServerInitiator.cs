@@ -128,6 +128,8 @@ namespace Victop.Frame.ServerManagerCenter
                 galleryList = new GalleryManager().GetAllGalleryInfo();
                 CloudGalleryInfo galleryInfo = galleryList.FirstOrDefault(it => it.Key.Equals(GalleryManager.GetCurrentGalleryId().ToString())).Value;
                 galleryInfo.ClientId = contentDic["ClientId"].ToString();
+                galleryInfo.ProductId = contentDic["ProductId"].ToString();
+                galleryInfo.ClientNo = contentDic["ClientNo"].ToString();
                 galleryInfo.ClientInfo.UserCode = contentDic["UserCode"].ToString();
                 galleryInfo.ClientInfo.UserPwd = contentDic["UserPwd"].ToString();
                 returnDic.Add("ReplyMode", "1");

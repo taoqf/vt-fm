@@ -527,6 +527,34 @@ namespace UserLoginPlugin.Models
                 }
             }
         }
+        private string clientNo;
+        /// <summary>
+        /// 客户端编号
+        /// </summary>
+        public string ClientNo
+        {
+            get { return clientNo; }
+            set { clientNo = value; }
+        }
+        private string productId;
+        /// <summary>
+        /// 产品Id
+        /// </summary>
+        public string ProductId
+        {
+            get
+            {
+                return productId;
+            }
+            set
+            {
+                if (productId != value)
+                {
+                    productId = value;
+                    RaisePropertyChanged("ProductId");
+                }
+            }
+        }
         #endregion
 
     }

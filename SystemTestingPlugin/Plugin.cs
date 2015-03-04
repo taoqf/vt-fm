@@ -53,6 +53,7 @@ namespace SystemTestingPlugin
                 //return new UCAreaWindow();
                 //return new UCSimpleDefWindow();
                 return new UCAreaWindowData();
+                //return new UCVictopFTP();
             }
         }
 

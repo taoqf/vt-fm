@@ -137,6 +137,30 @@ namespace Victop.Frame.CoreLibrary.Models
             get { return clientId; }
             set { clientId = value; }
         }
+        /// <summary>
+        /// 客户编号
+        /// </summary>
+        private string clientNo;
+        /// <summary>
+        /// 客户编号
+        /// </summary>
+        public string ClientNo
+        {
+            get { return clientNo; }
+            set { clientNo = value; }
+        }
+        /// <summary>
+        /// 产品Id
+        /// </summary>
+        private string productId;
+        /// <summary>
+        /// 产品Id
+        /// </summary>
+        public string ProductId
+        {
+            get { return productId; }
+            set { productId = value; }
+        }
 	}
 }
 
