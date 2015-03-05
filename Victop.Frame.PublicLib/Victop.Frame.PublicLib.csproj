@@ -82,7 +82,7 @@
     <Compile Include="Helpers\IPOperationHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\LoggerHelper.cs" />
-    <Compile Include="Helpers\ReflectionService.cs" />
+    <Compile Include="Helpers\WebBrowserHelperClass\ReflectionService.cs" />
     <Compile Include="Helpers\RegexHelper.cs" />
     <Compile Include="Helpers\SpellCodeHelper.cs" />
     <Compile Include="Helpers\WebBrowserHelper.cs" />
