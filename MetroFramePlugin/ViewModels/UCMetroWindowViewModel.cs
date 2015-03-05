@@ -1140,7 +1140,7 @@ namespace MetroFramePlugin.ViewModels
         
         /// <summary>
         /// 添加应用弹窗是否显示
-        /// </summary>cai
+        /// </summary>
         private bool popupIsShow;
         public bool PopupIsShow
         {
@@ -1165,6 +1165,47 @@ namespace MetroFramePlugin.ViewModels
                     {
                         PopupIsShow = true;
                     });
+            }
+        }
+        /// <summary>
+        /// 菜单全选
+        /// </summary>
+        public ICommand btnAllSelectClickCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                   
+                  PopupIsShow = false;
+                });
+            }
+        }
+        /// <summary>
+        /// 应用弹窗确定
+        /// </summary>
+        public ICommand btnAffirmClickCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                   
+                  PopupIsShow = false;
+                });
+            }
+        }
+        /// <summary>
+        /// 应用弹窗关闭
+        /// </summary>
+        public ICommand btnAddApplyCloseClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    PopupIsShow = false;
+                });
             }
         }
         #endregion

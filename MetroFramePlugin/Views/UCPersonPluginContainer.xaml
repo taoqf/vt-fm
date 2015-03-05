@@ -87,7 +87,7 @@
                                         </Trigger>
                                         <Trigger  Property="IsSelected" Value="true">
                                             <Setter Property="Background" TargetName="Bd" Value="#19bb9b"/>
-                                            <Setter Property="Foreground" Value="#19bb9b"/>
+                                            <Setter Property="BorderThickness" TargetName="logo" Value="0"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -127,18 +127,21 @@
                         <RowDefinition Height="40"/>
                     </controls:VicGridNormal.RowDefinitions>
                     <controls:VicTextBlockNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" Text="添加应用"/>
-                    <controls:VicTextBoxNormal Grid.Row="0" VerticalAlignment="Center" VerticalContentAlignment="Center" WaterMark="   输入应用名称"  Width="150" HorizontalAlignment="Right" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <controls:VicTextBoxNormal Grid.Row="0" VerticalAlignment="Center" VerticalContentAlignment="Center" WaterMark="   输入应用名称"  Width="150"/>
+                    <controls:VicButtonNormal Name="btnPopupClose" Style="{DynamicResource btnCloseStyle}" Margin="8,0,0,0" Grid.Row="0" Width="24" Height="24" Command="{Binding btnAddApplyCloseClickCommand}"/>
+                    </StackPanel>
                     <controls:VicRichTextBoxNormal Name="rTboxAddApply" Grid.Row="1" VicText="{Binding ProductLogContent,UpdateSourceTrigger=PropertyChanged}"/>
                     <!--主界面第三行-->
                     <controls:VicStackPanelNormal Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
                         <!--确认按钮-->
-                        <controls:VicButtonNormal x:Name="btnAllSelect"  Content="全选" Width="75" Margin="2.5,5" Height="30" Command="{Binding btnIssueAffirmClickCommand}" CommandParameter="{Binding ElementName=tboxDesSuggest}">
+                        <controls:VicButtonNormal x:Name="btnAllSelect"  Content="全选" Width="75" Margin="2.5,5" Height="30" Command="{Binding btnAllSelectClickCommand}" CommandParameter="{Binding ElementName=tboxDesSuggest}">
                         </controls:VicButtonNormal>
                         <!--确认按钮-->
-                        <controls:VicButtonNormal x:Name="btnIssueAffirm"  Content="确定" Width="75" Margin="2.5,5" Height="30" Command="{Binding btnIssueAffirmClickCommand}" CommandParameter="{Binding ElementName=tboxDesSuggest}">
+                        <controls:VicButtonNormal x:Name="btnIssueAffirm"  Content="确定" Width="75" Margin="2.5,5" Height="30" Command="{Binding btnAffirmClickCommand}" CommandParameter="{Binding ElementName=tboxDesSuggest}">
                         </controls:VicButtonNormal>
                         <!--取消按钮-->
-                        <controls:VicButtonNormal x:Name="btnIssueCancel" Content="取消" Width="75" Margin="2.5,5" Height="30" Command="{Binding btnIssueCancelClickCommand}">
+                        <controls:VicButtonNormal x:Name="btnIssueCancel" Content="取消" Width="75" Margin="2.5,5" Height="30" Command="{Binding btnAddApplyCloseClickCommand}">
                         </controls:VicButtonNormal>
                     </controls:VicStackPanelNormal>
                 </controls:VicGridNormal>
