@@ -8,7 +8,7 @@ using Victop.Server.Controls.Models;
 
 namespace MetroFramePlugin.Models
 {
-   public class MenuModel : ModelBase
+   public class MenuModel : ModelBase,ICloneable
     {
         #region 暂未使用
         private string id;
@@ -440,5 +440,18 @@ namespace MetroFramePlugin.Models
             set;
         }
         #endregion
+/// <summary>
+/// 浅克隆类属性
+/// </summary>
+/// <returns></returns>
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
+       public MenuModel Copy()
+       {
+           return Clone() as MenuModel;
+       }
     }
 }

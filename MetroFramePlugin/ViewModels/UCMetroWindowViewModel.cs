@@ -33,6 +33,7 @@ namespace MetroFramePlugin.ViewModels
         private List<Dictionary<string, object>> pluginList;
         private ObservableCollection<MenuModel> systemMenuListEnterprise;
         private ObservableCollection<MenuModel> systemMenuListLocal;
+        private ObservableCollection<MenuModel> newMenuListLocal;
         private ObservableCollection<MenuModel> systemThirdLevelMenuList;
         private ObservableCollection<MenuModel> systemFourthLevelMenuList;
         private MenuModel selectedSecondMenuModel;
@@ -80,7 +81,24 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-
+        /// <summary>添加应用弹框菜单列表 </summary>
+        public ObservableCollection<MenuModel> NewMenuListLocal
+        {
+            get
+            {
+                if (newMenuListLocal == null)
+                    newMenuListLocal = new ObservableCollection<MenuModel>();
+                return newMenuListLocal;
+            }
+            set
+            {
+                if (newMenuListLocal != value)
+                {
+                    systemMenuListLocal = value;
+                    RaisePropertyChanged("NewMenuListLocal");
+                }
+            }
+        }
         /// <summary>企业菜单列表 </summary>
         public ObservableCollection<MenuModel> SystemMenuListEnterprise
         {
@@ -663,47 +681,7 @@ namespace MetroFramePlugin.ViewModels
         }
         #endregion
 
-        private MenuModel GetLocalMenuResoureName(string MenuName, ObservableCollection<MenuModel> MenuList)
-        {
-            MenuModel menuModel = MenuList.FirstOrDefault(it => it.MenuName.Equals(MenuName));
-            if (menuModel == null)
-            {
-                foreach (MenuModel item in MenuList)
-                {
-                    menuModel = GetLocalMenuResoureName(MenuName, item.SystemMenuList);
-                    if (menuModel != null)
-                        break;
-                }
-            }
-            return menuModel;
-        }
-
-        #region 加载本地菜单集合
-        private MenuModel CreatLocalMenuModel(XElement element, MenuModel menuModel)
-        {
-            foreach (var item in element.Elements())
-            {
-                MenuModel childMenuModel = GetPluginInfoModel(item);
-                if (item.Name.LocalName.Equals("Trade"))
-                {
-                    localMenuList.Add(childMenuModel);
-                }
-                childMenuModel = CreatLocalMenuModel(item, childMenuModel);
-                menuModel.SystemMenuList.Add(childMenuModel);
-            }
-            return menuModel;
-        }
-        /// <summary>根据节点信息获取菜单实例</summary>
-        private MenuModel GetPluginInfoModel(XElement element)
-        {
-            MenuModel plugin = new MenuModel();
-            plugin.MenuName = element.Attribute("title").Value;
-            plugin.IconUrl = element.Attribute("imageurl").Value;
-            plugin.ResourceName = element.Attribute("action").Value;
-            return plugin;
-        }
-        #endregion
-
+       
         #region 加载本地Json菜单集合 (2014-08-29 新增)
         /// <summary>加载本地Json菜单集合 </summary>
         private void LoadJsonMenuListLocal()
@@ -714,45 +692,30 @@ namespace MetroFramePlugin.ViewModels
             if (File.Exists(menuPath))
             {
                 menuList = File.ReadAllText(menuPath, Encoding.GetEncoding("gb2312"));
-                menuList = JsonHelper.ReadJsonString(menuList, "menu");
+                menuList = JsonHelper.ReadJsonString(menuList, "menu" );
             }
             this.SystemMenuListLocal = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             localMenuListEx = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             //if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             //{
             //    this.SystemMenuListLocal.Clear();
-            //}
-        }
-        #endregion
 
-        #region 手动解析树型Json(2014-08-29 暂不使用)
-        private ObservableCollection<MenuModel> CreateChildrenMenuList(string childStr)
-        {
-            ObservableCollection<MenuModel> childrenMenuList = new ObservableCollection<MenuModel>();
-            if (string.IsNullOrEmpty(childStr)) return childrenMenuList;
-            List<object> strList = JsonHelper.ToObject<List<object>>(childStr);
-            foreach (object obj in strList)
+            ///得到弹窗中一、二级树型菜单并绑定到前台
+            foreach (MenuModel menuModel in SystemMenuListLocal)
             {
-                MenuModel model = CreateMenuModel(obj.ToString());
-                childrenMenuList.Add(model);
+                MenuModel newModel = menuModel.Copy();
+                newModel.SystemMenuList=new ObservableCollection<MenuModel>();
+                if (menuModel.SystemMenuList.Count > 0)
+                {
+                    foreach (MenuModel childModel in menuModel.SystemMenuList)
+                    {
+                        MenuModel childNewModel = childModel.Copy();
+                        childNewModel.SystemMenuList=new ObservableCollection<MenuModel>();
+                        newModel.SystemMenuList.Add(childNewModel);
+                    }
+                }
+                NewMenuListLocal.Add(newModel);
             }
-            return childrenMenuList;
-        }
-        private MenuModel CreateMenuModel(string str)
-        {
-            MenuModel model = new MenuModel();
-            model.MenuName = JsonHelper.ReadJsonString(str, "title");
-            model.ActionType = JsonHelper.ReadJsonString(str, "actionType");
-            model.ResourceName = JsonHelper.ReadJsonString(str, "actionName");
-            model.ShowType = JsonHelper.ReadJsonString(str, "showType");
-            model.IconUrl = JsonHelper.ReadJsonString(str, "iconUrl");
-            model.BzSystemId = JsonHelper.ReadJsonString(str, "systemId");
-            model.ConfigSystemId = JsonHelper.ReadJsonString(str, "formId");
-            model.SpaceId = JsonHelper.ReadJsonString(str, "modelId");
-            model.MenuNo = JsonHelper.ReadJsonString(str, "masterName");
-            model.FitDataPath = JsonHelper.ReadJsonObject<List<Dictionary<string, object>>>(str, "fitDataPath");
-            model.SystemMenuList = CreateChildrenMenuList(JsonHelper.ReadJsonString(str, "children"));
-            return model;
         }
         #endregion
 
@@ -796,57 +759,7 @@ namespace MetroFramePlugin.ViewModels
         }
         #endregion
 
-        #region 转换为标准的四级菜单
-        /// <summary>获取标准的菜单集合 </summary>
-        private void GetStandardMenuList(ObservableCollection<MenuModel> disStandardMenuList)
-        {
-            foreach (MenuModel secondLevelMenu in disStandardMenuList)
-            {
-                GetStandardSecondLevelMenu(secondLevelMenu);
-            }
-        }
-        /// <summary>获取标准的二级菜单</summary>
-        private void GetStandardSecondLevelMenu(MenuModel secondLevelMenu)
-        {
-            MenuModel newThirdLevelMenu = new MenuModel();
-            newThirdLevelMenu.MenuId = new Guid().ToString();
-            for (int i = secondLevelMenu.SystemMenuList.Count - 1; i >= 0; i--)
-            {
-                MenuModel thirdLevelMenu = secondLevelMenu.SystemMenuList[i];
-                if (thirdLevelMenu.SystemMenuList.Count == 0)
-                {
-                    secondLevelMenu.SystemMenuList.Remove(thirdLevelMenu);
 
-                    thirdLevelMenu.ParentMenu = newThirdLevelMenu.MenuId;
-                    newThirdLevelMenu.SystemMenuList.Add(thirdLevelMenu);
-                }
-                else
-                {
-                    GetStandardThirdLevelMenu(thirdLevelMenu);
-                }
-            }
-            if (newThirdLevelMenu.SystemMenuList.Count > 0)
-            {
-                newThirdLevelMenu.Id = new Guid().ToString();
-                newThirdLevelMenu.MenuName = "其他";
-            }
-            secondLevelMenu.SystemMenuList.Add(newThirdLevelMenu);
-        }
-        /// <summary>获取标准的三级菜单</summary>
-        private void GetStandardThirdLevelMenu(MenuModel thirdLevelMenu)
-        {
-            for (int i = thirdLevelMenu.SystemMenuList.Count - 1; i >= 0; i--)
-            {
-                MenuModel fourthLevelMenu = thirdLevelMenu.SystemMenuList[i];
-                foreach (MenuModel item in fourthLevelMenu.SystemMenuList)
-                {
-                    thirdLevelMenu.SystemMenuList.Remove(fourthLevelMenu);
-                    item.ParentMenu = thirdLevelMenu.MenuId;
-                    thirdLevelMenu.SystemMenuList.Add(item);
-                }
-            }
-        }
-        #endregion
 
         #region 加载插件
         private void PluginShow(PluginModel pluginModel, string HeaderTitle = null)
@@ -886,15 +799,7 @@ namespace MetroFramePlugin.ViewModels
                 VicMessageBoxNormal.Show(ex.Message);
             }
         }
-        /// <summary>
-        /// 发送关闭插件消息
-        /// </summary>
-        /// <param name="pluginModel"></param>
-        private static void SendPluginCloseMessage(PluginModel pluginModel)
-        {
-            DataMessageOperation pluginOp = new DataMessageOperation();
-            pluginOp.StopPlugin(pluginModel.ObjectId);
-        }
+      
         #endregion
 
         #region 用户登录
@@ -1083,22 +988,6 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         #endregion
-
-        #region 设置当前通道信息
-        /// <summary>
-        /// 设置当前通道信息
-        /// </summary>
-        /// <param name="GaleryKey">通道key值</param>
-        private void SetCurrentGallery(string GaleryKey)
-        {
-            string messageType = "GalleryService.SetGalleryInfo";
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("GalleryKey", GaleryKey);
-            DataMessageOperation messageOp = new DataMessageOperation();
-            messageOp.SendAsyncMessage(messageType, contentDic);
-        }
-        #endregion
-
         #endregion
 
         #region 关于WebBrowser相关的操作

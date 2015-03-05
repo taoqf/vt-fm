@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels"
+             xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels" xmlns:models="clr-namespace:MetroFramePlugin.Models"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -38,7 +38,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style  TargetType="{x:Type ListBox}">
+        <Style x:Key="addApply" TargetType="{x:Type ListBox}">
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -113,10 +113,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Label x:Name="title" Content="我的常用功能" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Gainsboro"></Label>
-          <ListBox Grid.Row="1">
-            <ListBoxItem x:Name="addApplication1">
-                
-            </ListBoxItem>
+        <ListBox Style="{StaticResource addApply}" Grid.Row="1">
+            <ListBoxItem x:Name="addApplication1"/>
           </ListBox>
         <controls:VicPopup x:Name="AddApply" Grid.Row="1"  Margin="0,10,0,0"   StaysOpen="True" Placement="Center" IsOpen="{Binding PopupIsShow,UpdateSourceTrigger=PropertyChanged}">
             <Border BorderThickness="2" BorderBrush="{DynamicResource SkinColor}"  Width="600" Height="500" Background="{DynamicResource MainBackgroundImage}" >
@@ -126,12 +124,39 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="40"/>
                     </controls:VicGridNormal.RowDefinitions>
-                    <controls:VicTextBlockNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" Text="添加应用"/>
+                    <controls:VicTextBlockNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Bold" FontSize="18" Margin="5" Text="添加应用"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <controls:VicTextBoxNormal Grid.Row="0" VerticalAlignment="Center" VerticalContentAlignment="Center" WaterMark="   输入应用名称"  Width="150"/>
                     <controls:VicButtonNormal Name="btnPopupClose" Style="{DynamicResource btnCloseStyle}" Margin="8,0,0,0" Grid.Row="0" Width="24" Height="24" Command="{Binding btnAddApplyCloseClickCommand}"/>
                     </StackPanel>
-                    <controls:VicRichTextBoxNormal Name="rTboxAddApply" Grid.Row="1" VicText="{Binding ProductLogContent,UpdateSourceTrigger=PropertyChanged}"/>
+                   <Grid Grid.Row="1">
+                       <Grid.ColumnDefinitions>
+                           <ColumnDefinition Width="200"/>
+                           <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0"  Background="White" CanVerticallyScroll="True" CanHorizontallyScroll="True">
+                            <TreeView  Name="treeviewView" ItemsSource="{Binding NewMenuListLocal}">
+                                <ItemsControl.ItemTemplate>
+                                    <HierarchicalDataTemplate HierarchicalDataTemplate.ItemsSource="{Binding SystemMenuList}">
+                                        <TextBlock VerticalAlignment="Center" TextBlock.Text="{Binding MenuName}" />
+                                    </HierarchicalDataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectedItemChanged">
+                                        <i:InvokeCommandAction Command="{Binding treeviewViewSelectedItemChangedCommand}" CommandParameter="{Binding ElementName=treeviewView,Path=SelectedItem}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TreeView>
+                            <!--<ListBox Name="listBoxThirdMenuList"  SelectedItem="{Binding SelectedThirdMenuModel,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"  ItemsSource="{Binding SystemThirdLevelMenuList,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="MenuName">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding listBoxThirdMenuListSelectionChangedCommand}" CommandParameter="{Binding SelectedThirdMenuModel}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ListBox>-->
+                        </StackPanel>
+                        <ListBox Background="White" Opacity="0.8" Grid.Column="1"  Name="listBoxFourthMenuList" SelectedIndex="0" Style="{DynamicResource ListBoxFourthMenuListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
                     <!--主界面第三行-->
                     <controls:VicStackPanelNormal Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
                         <!--确认按钮-->
