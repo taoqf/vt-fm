@@ -95,9 +95,17 @@
     <Compile Include="Models\AreaMenu.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DisplayOverlayWindowPluginViewModel.cs" />
+    <Compile Include="ViewModels\OverlayWindowViewModel.cs" />
     <Compile Include="ViewModels\UCMetroWindowViewModel.cs" />
+    <Compile Include="Views\DisplayOverlayWindowPlugin.xaml.cs">
+      <DependentUpon>DisplayOverlayWindowPlugin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MetroWindow.xaml.cs">
       <DependentUpon>MetroWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OverlayWindow.xaml.cs">
+      <DependentUpon>OverlayWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UCPersonPluginContainer.xaml.cs">
       <DependentUpon>UCPersonPluginContainer.xaml</DependentUpon>
@@ -125,7 +133,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\DisplayOverlayWindowPlugin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MetroWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\OverlayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
