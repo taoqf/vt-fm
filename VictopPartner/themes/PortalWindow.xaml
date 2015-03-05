@@ -114,7 +114,7 @@
         </Setter>
     </Style>
     <Storyboard x:Key="Storyboard2">
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ellipse2">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ellipseOuter">
             <EasingDoubleKeyFrame KeyTime="0" Value="480"/>
             <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="722.49"/>
         </DoubleAnimationUsingKeyFrames>
@@ -177,8 +177,8 @@
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="0.1"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Ellipse x:Name="ellipse2" Stroke="{StaticResource ellipseOuter}" Grid.Row="0"  HorizontalAlignment="Left" Height="80" StrokeThickness="5" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.5,0.5">
-                        <Ellipse.RenderTransform>
+                        <Ellipse x:Name="ellipseOuter"  Stroke="{StaticResource ellipseOuter}" Grid.Row="0"  HorizontalAlignment="Left" Height="80"  VerticalAlignment="Top" Width="80" StrokeThickness="5" RenderTransformOrigin="0.5,0.5">
+                            <Ellipse.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
                                 <SkewTransform/>
@@ -189,7 +189,7 @@
                         <Ellipse.Fill>
                             <VisualBrush >
                                 <VisualBrush.Visual>
-                                        <Ellipse Stroke="{StaticResource ellipseCore}" x:Name="ellipse3" HorizontalAlignment="Left" Height="61" Margin="323,121,0,0" StrokeThickness="5" VerticalAlignment="Top" Width="61" RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse Stroke="{StaticResource ellipseCore}" x:Name="ellipseCore" HorizontalAlignment="Left" Height="61" Margin="323,121,0,0" StrokeThickness="5" VerticalAlignment="Top" Width="61" RenderTransformOrigin="0.5,0.5">
                                             <Ellipse.RenderTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform/>
@@ -224,7 +224,11 @@
                         <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
                             <BeginStoryboard Storyboard="{StaticResource Storyboard2}"/>
                         </EventTrigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="StrokeThickness" Value="5" TargetName="ellipseCore"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
+                    
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
