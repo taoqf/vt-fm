@@ -169,7 +169,7 @@ namespace SystemTestingPlugin.ViewModels
                 return new RelayCommand(() =>
                 {
                     SiteInfoModel.LocalPath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
-                    SiteInfoModel.RemotePath = string.Empty;
+                    SiteInfoModel.RemotePath = "/";
                     GetLocalFileInfo();
                 });
             }
@@ -209,17 +209,29 @@ namespace SystemTestingPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (SelectedLocalFile != null && SelectedLocalFile.IsDirectory)
+                    if (SelectedLocalFile != null)
                     {
-                        if (!SelectedLocalFile.FileName.Equals(".."))
+                        if (SelectedLocalFile.IsDirectory)
                         {
-                            SiteInfoModel.LocalPath = Path.Combine(SiteInfoModel.LocalPath, SelectedLocalFile.FileName);
+                            if (!SelectedLocalFile.FileName.Equals(".."))
+                            {
+                                SiteInfoModel.LocalPath = Path.Combine(SiteInfoModel.LocalPath.EndsWith(":") ? SiteInfoModel.LocalPath + "\\" : SiteInfoModel.LocalPath, SelectedLocalFile.FileName);
+                            }
+                            else
+                            {
+                                SiteInfoModel.LocalPath = SiteInfoModel.LocalPath.Contains("\\") ? SiteInfoModel.LocalPath.Substring(0, SiteInfoModel.LocalPath.LastIndexOf("\\")) : AppDomain.CurrentDomain.BaseDirectory;
+                            }
+                            GetLocalFileInfo();
                         }
                         else
                         {
-                            SiteInfoModel.LocalPath = SiteInfoModel.LocalPath.Contains("\\") ? SiteInfoModel.LocalPath.Substring(0, SiteInfoModel.LocalPath.LastIndexOf("\\")) : AppDomain.CurrentDomain.BaseDirectory;
+                            FTPManagerCommon ftpMgr = new FTPManagerCommon(SiteInfoModel.HostUrl, SiteInfoModel.UserName, SiteInfoModel.UserPwd);
+                            bool result = ftpMgr.Upload(Path.Combine(SiteInfoModel.LocalPath.EndsWith(":") ? SiteInfoModel.LocalPath + "\\" : SiteInfoModel.LocalPath, SelectedLocalFile.FileName), SiteInfoModel.RemotePath.EndsWith("/") ? SiteInfoModel.RemotePath : SiteInfoModel.RemotePath + "/");
+                            if (result)
+                            {
+                                ConnectFTP();
+                            }
                         }
-                        GetLocalFileInfo();
                     }
                 });
             }
@@ -240,23 +252,108 @@ namespace SystemTestingPlugin.ViewModels
                         {
                             if (!SelectedRmoteFile.FileName.Equals(".."))
                             {
-                                SiteInfoModel.RemotePath = Path.Combine(SiteInfoModel.RemotePath, SelectedRmoteFile.FileName);
+                                if (SiteInfoModel.RemotePath.EndsWith("/"))
+                                {
+                                    SiteInfoModel.RemotePath = string.Format("{0}{1}", SiteInfoModel.RemotePath, SelectedRmoteFile.FileName);
+                                }
+                                else
+                                {
+                                    SiteInfoModel.RemotePath = string.Format("{0}/{1}", SiteInfoModel.RemotePath, SelectedRmoteFile.FileName);
+                                }
                             }
                             else
                             {
-                                SiteInfoModel.RemotePath = SiteInfoModel.RemotePath.Contains("\\") ? SiteInfoModel.RemotePath.Substring(0, SiteInfoModel.RemotePath.LastIndexOf("\\")) : string.Empty;
+                                SiteInfoModel.RemotePath = SiteInfoModel.RemotePath.Contains("/") ? SiteInfoModel.RemotePath.Substring(0, SiteInfoModel.RemotePath.LastIndexOf("/")) : "/";
                             }
                             ConnectFTP();
                         }
                         else
                         {
                             FTPManagerCommon ftpMgr = new FTPManagerCommon(SiteInfoModel.HostUrl, SiteInfoModel.UserName, SiteInfoModel.UserPwd);
-                            bool result = ftpMgr.Download(SiteInfoModel.LocalPath, SiteInfoModel.RemotePath, SelectedRmoteFile.FileName, out errorMsg);
-                            if (!result)
+                            bool result = ftpMgr.Download(SiteInfoModel.LocalPath, SiteInfoModel.RemotePath.EndsWith("/") ? SiteInfoModel.RemotePath : SiteInfoModel.RemotePath + "/", SelectedRmoteFile.FileName, out errorMsg);
+                            if (result)
                             {
-
+                                GetLocalFileInfo();
                             }
                         }
+                    }
+                });
+            }
+        }
+        /// <summary>
+        /// 远程下载
+        /// </summary>
+        public ICommand mItemRemoteDownLoadClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    FTPManagerCommon ftpMgr = new FTPManagerCommon(SiteInfoModel.HostUrl, SiteInfoModel.UserName, SiteInfoModel.UserPwd);
+                    bool result = ftpMgr.Download(SiteInfoModel.LocalPath, SiteInfoModel.RemotePath.EndsWith("/") ? SiteInfoModel.RemotePath : SiteInfoModel.RemotePath + "/", SelectedRmoteFile.FileName, out errorMsg);
+                    if (result)
+                    {
+                        GetLocalFileInfo();
+                    }
+                }, () =>
+                {
+                    if (SelectedRmoteFile != null && !SelectedRmoteFile.IsDirectory)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                });
+            }
+        }
+        /// <summary>
+        /// 远程删除
+        /// </summary>
+        public ICommand mItemRemoteDelClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    FTPManagerCommon ftpMgr = new FTPManagerCommon(SiteInfoModel.HostUrl, SiteInfoModel.UserName, SiteInfoModel.UserPwd);
+                    ftpMgr.DeleteFileName(SiteInfoModel.RemotePath.EndsWith("/") ? SiteInfoModel.RemotePath : SiteInfoModel.RemotePath + "/", SelectedRmoteFile.FileName);
+                    ConnectFTP();
+                }, () =>
+                {
+                    if (SelectedRmoteFile != null && !SelectedRmoteFile.IsDirectory)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                });
+            }
+        }
+        /// <summary>
+        /// 远程重命名
+        /// </summary>
+        public ICommand mItemRemoteReNameClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    FTPManagerCommon ftpMgr = new FTPManagerCommon(SiteInfoModel.HostUrl, SiteInfoModel.UserName, SiteInfoModel.UserPwd);
+                    ftpMgr.Rename(SiteInfoModel.RemotePath.EndsWith("/") ? SiteInfoModel.RemotePath : SiteInfoModel.RemotePath + "/", SelectedRmoteFile.FileName, SelectedRmoteFile.FileName);
+                    ConnectFTP();
+                }, () =>
+                {
+                    if (SelectedRmoteFile != null && !SelectedRmoteFile.IsDirectory)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 });
             }
@@ -285,7 +382,7 @@ namespace SystemTestingPlugin.ViewModels
             if (!string.IsNullOrEmpty(SiteInfoModel.LocalPath))
             {
                 LocalFileList.Clear();
-                DirectoryInfo localInfo = new DirectoryInfo(SiteInfoModel.LocalPath);
+                DirectoryInfo localInfo = new DirectoryInfo(SiteInfoModel.LocalPath.EndsWith(":") ? SiteInfoModel.LocalPath + "\\" : SiteInfoModel.LocalPath);
                 foreach (DirectoryInfo dirItem in localInfo.GetDirectories())
                 {
                     FTPFileInfoModel dirInfo = new FTPFileInfoModel();

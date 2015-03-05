@@ -93,9 +93,8 @@ namespace Victop.Frame.PublicLib.Common
             try
             {
                 FileInfo fileInf = new FileInfo(localpath);
-                ftppath = ftppath.Replace("\\", "/");
-                string uri = "ftp://" + ftppath + "/" + fileInf.Name;
-                Connect(uri);
+                string url = "ftp://" + ftpServerIP + "/" + (string.IsNullOrEmpty(ftppath) ? "/" : ftppath) + fileInf.Name;
+                Connect(url);
                 reqFTP.KeepAlive = false;
                 reqFTP.Method = WebRequestMethods.Ftp.UploadFile;
                 reqFTP.ContentLength = fileInf.Length;
@@ -135,19 +134,18 @@ namespace Victop.Frame.PublicLib.Common
         /// <param name="fileName">文件名</param>
         /// <param name="errorinfo">错误信息</param>
         /// <returns></returns>
-        public bool Download(string localpath, string ftpPath,string fileName, out string errorinfo)
+        public bool Download(string localpath, string ftpPath, string fileName, out string errorinfo)
         {
             try
             {
                 String onlyFileName = Path.GetFileName(fileName);
                 string newFileName = localpath + "\\" + onlyFileName;
-
                 if (File.Exists(newFileName))
                 {
                     errorinfo = string.Format("本地文件{0}已存在,无法下载", newFileName);
                     return false;
                 }
-                string url = "ftp://" + ftpServerIP + ftpPath + fileName;
+                string url = "ftp://" + ftpServerIP + "/" + (string.IsNullOrEmpty(ftpPath) ? "/" : ftpPath) + fileName;
                 Connect(url);//连接 
                 reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
@@ -180,13 +178,12 @@ namespace Victop.Frame.PublicLib.Common
         /// 删除文件
         /// </summary>
         /// <param name="fileName">文件名称</param>
-        public void DeleteFileName(string fileName)
+        public void DeleteFileName(string remotePath, string fileName)
         {
             try
             {
-                FileInfo fileInf = new FileInfo(fileName);
-                string uri = "ftp://" + ftpServerIP + "/" + fileInf.Name;
-                Connect(uri);
+                string url = "ftp://" + ftpServerIP + (string.IsNullOrEmpty(remotePath) ? "/" : remotePath) + fileName;
+                Connect(url);
                 reqFTP.KeepAlive = false;
                 reqFTP.Method = WebRequestMethods.Ftp.DeleteFile;
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
@@ -201,12 +198,12 @@ namespace Victop.Frame.PublicLib.Common
         /// 创建目录
         /// </summary>
         /// <param name="dirName">目录名称</param>
-        public void MakeDir(string dirName)
+        public void MakeDir(string remotePath, string dirName)
         {
             try
             {
-                string uri = "ftp://" + ftpServerIP + "/" + dirName;
-                Connect(uri);//连接 
+                string url = "ftp://" + ftpServerIP + "/" + (string.IsNullOrEmpty(remotePath) ? "/" : remotePath) + dirName;
+                Connect(url);//连接 
                 reqFTP.Method = WebRequestMethods.Ftp.MakeDirectory;
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
                 response.Close();
@@ -220,12 +217,12 @@ namespace Victop.Frame.PublicLib.Common
         /// 删除目录
         /// </summary>
         /// <param name="dirName">目录名称</param>
-        public void delDir(string dirName)
+        public void DelDir(string remotePath, string dirName)
         {
             try
             {
-                string uri = "ftp://" + ftpServerIP + "/" + dirName;
-                Connect(uri);
+                string url = "ftp://" + ftpServerIP + "/" + (string.IsNullOrEmpty(remotePath) ? "/" : remotePath) + dirName;
+                Connect(url);
                 reqFTP.Method = WebRequestMethods.Ftp.RemoveDirectory;
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
                 response.Close();
@@ -283,13 +280,12 @@ namespace Victop.Frame.PublicLib.Common
         /// </summary>
         /// <param name="currentFilename">当前名称</param>
         /// <param name="newFilename">新文件名</param>
-        public void Rename(string currentFilename, string newFilename)
+        public void Rename(string remotePath, string currentFilename, string newFilename)
         {
             try
             {
-                FileInfo fileInf = new FileInfo(currentFilename);
-                string uri = "ftp://" + ftpServerIP + "/" + fileInf.Name;
-                Connect(uri);
+                string url = "ftp://" + ftpServerIP + "/" + (string.IsNullOrEmpty(remotePath) ? "/" : remotePath) + currentFilename;
+                Connect(url);
                 reqFTP.Method = WebRequestMethods.Ftp.Rename;
                 reqFTP.RenameTo = newFilename;
                 FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();

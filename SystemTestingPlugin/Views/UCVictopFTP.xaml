@@ -78,6 +78,13 @@
                 <ctrl:VicTextBoxNormal Grid.Column="1" Grid.Row="0" Height="24" Name="tBoRemoteSite" VicText="{Binding SiteInfoModel.RemotePath,UpdateSourceTrigger=PropertyChanged}"/>
                 <ctrl:VicButtonNormal Grid.Column="2" Grid.Row="0" Height="24" Content="查看" Name="btnRemoteView" Command="{Binding btnRemoteViewClickCommand}"/>
                 <ctrl:VicListViewNormal Grid.Row="1" Grid.ColumnSpan="3" Name="lviewRemote" ItemsSource="{Binding RemoteFileList,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedRmoteFile,UpdateSourceTrigger=PropertyChanged}">
+                    <ctrl:VicListViewNormal.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="下载" Name="mItemRemoteDownLoad" Command="{Binding mItemRemoteDownLoadClickCommand}"/>
+                            <MenuItem Header="删除" Name="mItemRemoteDel" Command="{Binding mItemRemoteDelClickCommand}"/>
+                            <MenuItem Header="重命名" Name="mItemRemoteReName" Command="{Binding btnRemoteViewClickCommand}"/>
+                        </ContextMenu>
+                    </ctrl:VicListViewNormal.ContextMenu>
                     <ListView.View>
                         <GridView x:Name="gridView">
                             <GridViewColumn Header="文件名" DisplayMemberBinding="{Binding Path=FileName}"></GridViewColumn>
