@@ -36,6 +36,7 @@ namespace MetroFramePlugin.ViewModels
         private ObservableCollection<MenuModel> newMenuListLocal;
         private ObservableCollection<MenuModel> systemThirdLevelMenuList;
         private ObservableCollection<MenuModel> systemFourthLevelMenuList;
+        private ObservableCollection<MenuModel> newSystemFourthLevelMenuList;
         private MenuModel selectedSecondMenuModel;
         private MenuModel selectedThirdMenuModel;
         private ObservableCollection<VicTabItemNormal> tabItemList;
@@ -154,7 +155,24 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-
+        /// <summary>添加应用弹窗四级菜单列表 </summary>
+        public ObservableCollection<MenuModel> NewSystemFourthLevelMenuList
+        {
+            get
+            {
+                if (newSystemFourthLevelMenuList == null)
+                    newSystemFourthLevelMenuList = new ObservableCollection<MenuModel>();
+                return newSystemFourthLevelMenuList;
+            }
+            set
+            {
+                if (newSystemFourthLevelMenuList != value)
+                {
+                    newSystemFourthLevelMenuList = value;
+                    RaisePropertyChanged("NewSystemFourthLevelMenuList");
+                }
+            }
+        }
         /// <summary>当前选中的二级菜单 </summary>
         public MenuModel SelectedSecondMenuModel
         {
@@ -1024,7 +1042,7 @@ namespace MetroFramePlugin.ViewModels
 
         #region
         ///<summary>
-        /// 20150305添加菜单应用弹窗
+        /// 20150305添加菜单应用弹窗相关代码
         /// </summary> 
         
         /// <summary>
@@ -1095,6 +1113,36 @@ namespace MetroFramePlugin.ViewModels
                 {
                     PopupIsShow = false;
                 });
+            }
+        }
+
+        
+        /// <summary>
+        /// 应用弹窗树型菜单选项改变
+        /// </summary>
+        public ICommand treeviewViewSelectedItemChangedCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                    {
+                        MenuModel   _menuName =(MenuModel)x;
+                        foreach (MenuModel menuModel in SystemMenuListLocal)
+                        {
+                          MenuModel childNewModel = new MenuModel();
+                          childNewModel =menuModel.SystemMenuList.FirstOrDefault(it => it.MenuName.Equals(_menuName.MenuName));
+                            if (childNewModel != null)
+                              {
+                                  NewSystemFourthLevelMenuList = childNewModel.SystemMenuList;
+                                  break;
+                              }
+                            else
+                            {
+                                NewSystemFourthLevelMenuList =null;
+                                break;
+                            }
+                        }
+                    });
             }
         }
         #endregion

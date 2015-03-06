@@ -707,4 +707,35 @@
         </Setter>
     </Style>
     <!--机台“数据清单”页签内容横排样式结束-->
+<!--数据建模相关样式开始-->
+    <Style x:Key="DelBtnStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="Height" Value="18"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
+                    <Border x:Name="back" Background="{DynamicResource SkinColor}" CornerRadius="30" BorderThickness="0" Margin="0,0,10,0">
+                        <Line X1="0" X2="10" Y1="0" Y2="0" Stroke="White" StrokeThickness="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="AddBtnStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="Height" Value="18"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
+                    <Border x:Name="back" Background="{DynamicResource SkinColor}" CornerRadius="30" BorderThickness="0" Margin="0,0,10,0">
+                        <Grid>
+                            <Line X1="0" X2="10" Y1="0" Y2="0" Stroke="White" StrokeThickness="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <Line X1="0" X2="0" Y1="0" Y2="12" Stroke="White" StrokeThickness="3" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,0,0"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--数据建模相关样式结束-->
 </ResourceDictionary>
