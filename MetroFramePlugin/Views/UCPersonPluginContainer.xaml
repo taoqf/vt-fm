@@ -177,11 +177,11 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <Canvas>
+    <Canvas >
         <Canvas.ContextMenu>
             <controls:VicContextMenu>
                 <controls:VicMenuItemNormal Header="新建区域">
-                    <controls:VicMenuItemNormal Header="按钮区域"/>
+                    <controls:VicMenuItemNormal x:Name="addBtnArea" Header="按钮区域" Command="{Binding btnAddAreaClickCommand}"></controls:VicMenuItemNormal>
                     <controls:VicMenuItemNormal Header="图片区域" IsEnabled="False"/>
                     <controls:VicMenuItemNormal Header="列表区域" IsEnabled="False"/>
                     <controls:VicMenuItemNormal Header="综合区域" IsEnabled="False"/>
@@ -192,10 +192,9 @@
                 <controls:VicMenuItemNormal Header="显示常用网址"/>
             </controls:VicContextMenu>
         </Canvas.ContextMenu>
-        <StackPanel Width="400" >
+       <StackPanel MinWidth="900" >
             <Label x:Name="title" Content="我的常用功能" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Gainsboro"/>
             <ListBox Style="{StaticResource addApply}">
-               
                 <ListBoxItem x:Name="addApplication1"/>
             </ListBox>
         </StackPanel>

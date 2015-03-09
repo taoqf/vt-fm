@@ -59,8 +59,6 @@ namespace MetroFramePlugin.ViewModels
         /// <summary>
         /// 本地插件集合
         /// </summary>
-        private List<MenuModel> localMenuList = new List<MenuModel>();
-
         private ObservableCollection<MenuModel> localMenuListEx = new ObservableCollection<MenuModel>();
         #endregion
 
@@ -308,6 +306,32 @@ namespace MetroFramePlugin.ViewModels
         #region 命令
 
         #region 窗体加载命令
+        ///// <summary>窗体加载命令 </summary>
+        //public ICommand gridMainLoadedCommand
+        //{
+        //    get
+        //    {
+        //        return new RelayCommand<object>((x) =>
+        //        {
+        //            mainWindow = (Window)x;
+        //            mainWindow.Uid = "mainWindow";
+        //            mainTabControl =(VicTabControlNormal) mainWindow.FindName("MainTabControl");
+        //            btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
+        //            mainWindow.MouseDown += mainWindow_MouseDown;
+        //            Rect rect = SystemParameters.WorkArea;
+        //            mainWindow.MaxWidth = rect.Width;
+        //            mainWindow.MaxHeight = rect.Height;
+        //            mainWindow.WindowState = WindowState.Maximized;
+        //            ChangeFrameWorkTheme();
+        //          //  LoadMenuListLocal();
+        //            LoadJsonMenuListLocal();
+        //            OverlayWindow overlayWin = new OverlayWindow();
+        //            overlayWin.mainTabItem = this.selectedTabItem;
+        //            overlayWin.Show();
+        //            UserLogin();
+        //        });
+        //    }
+        //}
         /// <summary>窗体加载命令 </summary>
         public ICommand gridMainLoadedCommand
         {
@@ -317,7 +341,6 @@ namespace MetroFramePlugin.ViewModels
                 {
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
-                    mainTabControl =(VicTabControlNormal) mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
                     Rect rect = SystemParameters.WorkArea;
@@ -325,16 +348,14 @@ namespace MetroFramePlugin.ViewModels
                     mainWindow.MaxHeight = rect.Height;
                     mainWindow.WindowState = WindowState.Maximized;
                     ChangeFrameWorkTheme();
-                  //  LoadMenuListLocal();
+                    //LoadMenuListLocal();
                     LoadJsonMenuListLocal();
                     OverlayWindow overlayWin = new OverlayWindow();
-                    overlayWin.mainTabItem = this.selectedTabItem;
                     overlayWin.Show();
                     UserLogin();
                 });
             }
         }
-
         #region 插件按钮鼠标进入事件命令
         /// 
         /// <summary>
@@ -500,6 +521,7 @@ namespace MetroFramePlugin.ViewModels
         /// <summary>窗体关闭命令 </summary>
         public ICommand btnCloseClickCommand
         {
+        
             get
             {
                 return new RelayCommand(() =>
@@ -507,7 +529,7 @@ namespace MetroFramePlugin.ViewModels
                     MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
                     {
-                        TabItemList.Clear();
+                        //TabItemList.Clear();
                         mainWindow.Close();
                         FrameInit.GetInstance().FrameUnload();
                         GC.Collect();
@@ -1139,6 +1161,22 @@ namespace MetroFramePlugin.ViewModels
                     });
             }
         }
+
+        
+        /// <summary>
+        /// 新建区域
+        /// </summary>
+        public ICommand btnAddAreaClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    
+                });
+            }
+        }
+
         #endregion
     }
 }
