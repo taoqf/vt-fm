@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels"
-        xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+        xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
         xmlns:local="clr-namespace:MetroFramePlugin"
         Name="mainWindow" Style="{DynamicResource ShadowWindow}">
     <Window.Resources>

@@ -1097,8 +1097,15 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                   
-                  PopupIsShow = false;
+                    //string menuList = string.Empty;
+                    //string menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";
+                    //if (File.Exists(menuPath))
+                    //{
+                    //    menuList = File.ReadAllText(menuPath, Encoding.GetEncoding("gb2312"));
+                    //    menuList = JsonHelper.ReadJsonString(menuList, "Mymenu");
+                    //}
+                    //this.NewSystemMenuListLocal = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
+                    PopupIsShow = false;
                 });
             }
         }
