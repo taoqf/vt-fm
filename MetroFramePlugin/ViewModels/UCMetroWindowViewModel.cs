@@ -41,6 +41,7 @@ namespace MetroFramePlugin.ViewModels
         private MenuModel selectedThirdMenuModel;
         private ObservableCollection<VicTabItemNormal> tabItemList;
         private VicTabItemNormal selectedTabItem;
+        private VicTabControlNormal mainTabControl;
         /// <summary>是否首次登录 </summary>
         private bool isFirstLogin = true;
         /// <summary>
@@ -328,7 +329,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
-                   
+                    mainTabControl =(VicTabControlNormal) mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
                     Rect rect = SystemParameters.WorkArea;
@@ -339,6 +340,7 @@ namespace MetroFramePlugin.ViewModels
                   //  LoadMenuListLocal();
                     LoadJsonMenuListLocal();
                     OverlayWindow overlayWin = new OverlayWindow();
+                    overlayWin.mainTabItem = this.selectedTabItem;
                     overlayWin.Show();
                     UserLogin();
                 });

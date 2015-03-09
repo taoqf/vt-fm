@@ -25,5 +25,6 @@ namespace MetroFramePlugin.Views
         {
             InitializeComponent();
         }
+        public VicTabItemNormal mainTabItem = new VicTabItemNormal();
     }
 }
