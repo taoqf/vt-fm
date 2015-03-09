@@ -212,23 +212,11 @@ namespace MetroFramePlugin.ViewModels
                     homeItem.Name = "homeItem";
                     homeItem.AllowDelete = false;
                     homeItem.Header = "飞道科技";
-                    VicTabItemNormal homeItem1 = new VicTabItemNormal();
-                    homeItem1.Name = "homeItem1";
-                    homeItem1.AllowDelete = false;
-                    homeItem1.Header = "个人收藏";
                     WebBrowser browser = new WebBrowser();
                     //browser.Source = new Uri("http://www.baidu.com");
                     homeItem.Content = browser;
-                    homeItem1.Content = browser;
                     tabItemList.Add(homeItem);
-                    tabItemList.Add(homeItem1);
-                    //homeItem.Header = "l";
-                    //ListBox canvas = new ListBox();
-                    //canvas.Style = (Style)mainWindow.FindResource("addLogo");
-                    //ListBoxItem item = new ListBoxItem();
-                    //canvas.Items.Add(item);
-                    //homeItem.Content = canvas;
-                    //tabItemList.Add(homeItem);
+                  
                 }
                 return tabItemList;
             }
@@ -566,12 +554,9 @@ namespace MetroFramePlugin.ViewModels
         {
             if (TabItemList[0].Content.GetType().Name.Equals("WebBrowser"))
             {
-                UCPluginContainer pluginContainer = new UCPluginContainer();
+                UCPersonPluginContainer pluginContainer = new UCPersonPluginContainer();
                 TabItemList[0].Content = pluginContainer;
-                TabItemList[0].Header = "功能列表";
-                UCPersonPluginContainer personPluginContainer = new UCPersonPluginContainer();
-                TabItemList[1].Content = personPluginContainer;
-                TabItemList[1].Header = "个人收藏";
+                TabItemList[0].Header = "个人收藏";
             }
             
             MenuModel menuModel = (MenuModel)x;
