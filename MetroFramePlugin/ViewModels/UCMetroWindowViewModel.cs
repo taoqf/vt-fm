@@ -338,8 +338,8 @@ namespace MetroFramePlugin.ViewModels
                     ChangeFrameWorkTheme();
                   //  LoadMenuListLocal();
                     LoadJsonMenuListLocal();
-                    //OverlayWindow overlayWin = new OverlayWindow();
-                    //overlayWin.Show();
+                    OverlayWindow overlayWin = new OverlayWindow();
+                    overlayWin.Show();
                     UserLogin();
                 });
             }

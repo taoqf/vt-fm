@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MetroFramePlugin.ViewModels
 {
-    class DisplayOverlayWindowPluginViewModel
+   public class DisplayOverlayWindowPluginViewModel
     {
     }
 }

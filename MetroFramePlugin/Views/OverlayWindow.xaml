@@ -5,7 +5,30 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels"
         Title="OverlayWindow" Height="80" Width="80" Name="mainWindow" Opacity="0.5" Style="{DynamicResource FloatWindowStyle}" ShowInTaskbar="False" Topmost="True">
-    <Grid>
-        
-    </Grid>
+    <Window.DataContext>
+        <vm:OverlayWindowViewModel/>
+    </Window.DataContext>
+    <ctrl:VicWindowNormal.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="显示主窗口" Name="menuItemActiveWin" Command="{Binding menuItemActiveWinClickCommand}"/>
+            <MenuItem Header="活动窗口" Name="menuItemPluginList" Command="{Binding menuItemPluginListClickCommand}"/>
+            <MenuItem Header="退出" Name="menuItemExit" Command="{Binding menuItemExitClickCommand}"/>
+        </ContextMenu>
+    </ctrl:VicWindowNormal.ContextMenu>
+    <ctrl:VicGridNormal>
+        <ctrl:VicGridNormal.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </ctrl:VicGridNormal.RowDefinitions>
+        <ctrl:VicPopup Grid.Row="0" Margin="0,60,0,0" Name="popPluginList" StaysOpen="False" IsOpen="{Binding PluginListShow,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+            <Border BorderThickness="1" BorderBrush="{DynamicResource SkinColor}"  Width="100" Height="Auto" Background="{DynamicResource MainBackgroundImage}" >
+                <ctrl:VicGridNormal Background="{DynamicResource WhiteShade}" Name="girPluginList">
+                </ctrl:VicGridNormal>
+            </Border>
+        </ctrl:VicPopup>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding mainWindowLoadedCommand}" CommandParameter="{Binding ElementName=mainWindow}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+    </ctrl:VicGridNormal>
 </ctrl:VicWindowNormal>
