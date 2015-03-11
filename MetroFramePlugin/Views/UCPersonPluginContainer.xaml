@@ -106,10 +106,11 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="MenuListStyle" TargetType="{x:Type ListBox}">
+        <Style x:Key="PopupMenuListStyle" TargetType="{x:Type ListBox}">
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
             <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="SelectionMode" Value="Multiple"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="ItemContainerStyle">
@@ -124,7 +125,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                    <Border Name="Bd"  BorderThickness="0"  Background="{TemplateBinding Background}">
+                                    <Border Name="Bd"  BorderThickness="{TemplateBinding BorderThickness}"  Background="{TemplateBinding Background}">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="80"/>
@@ -138,21 +139,16 @@
                                                                  IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                                 Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                                 CommandParameter="{Binding .}"/>
+                                                                />
                                             <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="12"
                                                        Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
-                                                        Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"
-                                                         Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                       CommandParameter="{Binding .}"/>
-
+                                                        Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"/>
                                         </Grid>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger  Property="IsMouseOver" Value="true">
                                             <Setter Property="BorderBrush" TargetName="Bd" Value="LightGray"/>
                                             <Setter Property="Foreground" Value="#19bb9b"/>
-                                            <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
                                             <Setter Property="Cursor" Value="Hand"/>
                                         </Trigger>
                                         <Trigger  Property="IsSelected" Value="true">
@@ -192,12 +188,6 @@
                 <controls:VicMenuItemNormal Header="显示常用网址"/>
             </controls:VicContextMenu>
         </Canvas.ContextMenu>
-        <StackPanel MinWidth="900" MinHeight="700" Canvas.Left="10" Canvas.Top="30" >
-            <TextBox x:Name="title" Text="{Binding AddNewArea.AreaName}" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Gainsboro"/>
-            <ListBox Style="{StaticResource addApply}">
-                <ListBoxItem x:Name="addApplication1"/>
-            </ListBox>
-        </StackPanel>
         <controls:VicPopup x:Name="AddApply"   Margin="0,10,0,0"   StaysOpen="True" Placement="Center" IsOpen="{Binding PopupIsShow,UpdateSourceTrigger=PropertyChanged}">
             <Border BorderThickness="2" BorderBrush="{DynamicResource SkinColor}"  Width="600" Height="500" Background="{DynamicResource MainBackgroundImage}" >
                 <controls:VicGridNormal Background="{DynamicResource WhiteShade}">
@@ -230,7 +220,7 @@
                                 </i:Interaction.Triggers>
                             </TreeView>
                         </StackPanel>
-                        <ListBox  Grid.Column="1" Background="GhostWhite" Name="listBoxFourthMenuList" SelectedIndex="0" Style="{StaticResource MenuListStyle}" ItemsSource="{Binding NewSystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>
+                        <ListBox  Grid.Column="1" Background="GhostWhite" Name="listBoxFourthMenuList" SelectedIndex="0" Style="{StaticResource PopupMenuListStyle}" ItemsSource="{Binding NewSystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                     <!--主界面第三行-->
                     <controls:VicStackPanelNormal Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">

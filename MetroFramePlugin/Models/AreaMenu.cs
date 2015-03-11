@@ -7,7 +7,7 @@ using Victop.Server.Controls.Models;
 
 namespace MetroFramePlugin.Models
 {
-    public class AreaMenu:ModelBase
+    public class AreaMenu : PropertyModelBase
     {
         /// <summary>
         ///区域名称
@@ -44,15 +44,15 @@ namespace MetroFramePlugin.Models
         /// <summary>
         ///区域距左侧宽度
         /// </summary>
-        private int leftSpan =300;
+        private int leftSpan = 300;
         public int LeftSpan
         {
             get { return leftSpan; }
             set
             {
-                    leftSpan = value;
-                    RaisePropertyChanged("LeftSpan");
-                
+                leftSpan = value;
+                RaisePropertyChanged("LeftSpan");
+
             }
         }
         /// <summary>
@@ -72,29 +72,29 @@ namespace MetroFramePlugin.Models
         /// <summary>
         ///区域宽度
         /// </summary>
-        private int areaWidth=300;
+        private int areaWidth = 300;
         public int AreaWidth
         {
             get { return areaWidth; }
             set
             {
-               areaWidth = value;
-               RaisePropertyChanged("AreaWidth");
-                
+                areaWidth = value;
+                RaisePropertyChanged("AreaWidth");
+
             }
         }
         /// <summary>
         ///区域高度
         /// </summary>
-        private int areaHeight=300;
+        private int areaHeight = 300;
         public int AreaHeight
         {
             get { return areaHeight; }
             set
             {
-               areaHeight = value;
-               RaisePropertyChanged("AreaHeight");
-               
+                areaHeight = value;
+                RaisePropertyChanged("AreaHeight");
+
             }
         }
         /// <summary>

@@ -1026,14 +1026,16 @@ namespace MetroFramePlugin.ViewModels
         }
         #endregion
 
-        #region
-
         ///<summary>
         /// 20150305添加菜单应用弹窗相关代码
         /// </summary> 
-       
+        #region
+
+        #region 字段&属性
         private UserControl area;
-        private Canvas _panel;
+        private Canvas _panel;//主区域面板
+        private string menuPath;
+       
         /// <summary>添加新区域 </summary>
         private AreaMenu addNewArea;
         public AreaMenu AddNewArea
@@ -1053,6 +1055,9 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
+        /// <summary>
+        /// 新区域集合
+        /// </summary>
         private ObservableCollection<AreaMenu> newArea;
         public ObservableCollection<AreaMenu> NewArea
         {
@@ -1067,7 +1072,6 @@ namespace MetroFramePlugin.ViewModels
                 if (newArea != value)
                 {
                     newArea = value;
-                    RaisePropertyChanged("NewArea");
                 }
             }
         }
@@ -1090,6 +1094,7 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
+        #endregion
         /// <summary>区域加载命令 </summary>
         public ICommand PersonAreaLoadedCommand
         {
@@ -1099,6 +1104,36 @@ namespace MetroFramePlugin.ViewModels
                 {
                     area = (UserControl)x;
                     _panel = area.FindName("bigPanel") as Canvas;//添加新区域面板
+                    //读取myMenu.json文件并展示
+                   string areaMenuList = string.Empty;
+                    menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";
+                     if (File.Exists(menuPath))
+                     {
+                         areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("gb2312"));
+                     }
+                     this.NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
+                    for (int i = 0; i < NewArea.Count; i++)
+                    {
+                        TextBox _title = new TextBox();
+                        DockPanel.SetDock(_title, Dock.Top);
+                        _title.Text = NewArea[i].AreaName;
+                        _title.VerticalContentAlignment = VerticalAlignment.Center;
+                        _title.HorizontalContentAlignment = HorizontalAlignment.Center;
+                        _title.Height = 30;
+                        _title.Background = Brushes.Gainsboro;
+                        ListBox menuList = new ListBox();
+                        ListBoxItem _item = new ListBoxItem();
+                        menuList.Items.Add(_item);
+                        menuList.Style = area.FindResource("addApply") as Style;
+                        DockPanel _newPanel = new DockPanel();
+                        _newPanel.MinWidth = NewArea[i].AreaWidth;
+                        _newPanel.MinHeight = NewArea[i].AreaHeight;
+                        _newPanel.Children.Add(_title);
+                        _newPanel.Children.Add(menuList);
+                        Canvas.SetLeft(_newPanel, NewArea[i].LeftSpan);
+                        Canvas.SetTop(_newPanel, NewArea[i].TopSpan);
+                        _panel.Children.Add(_newPanel);
+                    }
                 });
             }
         }
@@ -1199,42 +1234,30 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    //把区域写到菜单中
-                    string areaMenuList = string.Empty;
-                    string menuPath = AppDomain.CurrentDomain.BaseDirectory + "Mymenu.json";
-                    //if (File.Exists(menuPath))
-                    //{
-                    //    areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("gb2312"));
-                    //    areaMenuList = JsonHelper.ReadJsonString(areaMenuList, "menu");
-                    //}
-                    //this.NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
-
                     TextBox _title = new TextBox();
-                    _title.Text = "fun1";
+                    DockPanel.SetDock(_title, Dock.Top);
+                    _title.Text =AddNewArea.AreaName;
                     _title.VerticalContentAlignment=VerticalAlignment.Center;
                     _title.HorizontalContentAlignment=HorizontalAlignment.Center;
                     _title.Height = 30;
                     _title.Background = Brushes.Gainsboro;
                     ListBox menuList=new ListBox();
                     ListBoxItem _item=new ListBoxItem();
-                    menuList.HorizontalAlignment = HorizontalAlignment.Stretch;
                     menuList.Items.Add(_item);
                     menuList.Style = area.FindResource("addApply") as Style;
-                    StackPanel _newPanel=new StackPanel();
+                    DockPanel _newPanel = new DockPanel();
                     _newPanel.Width = AddNewArea.AreaWidth;
                     _newPanel.Height = AddNewArea.AreaHeight;
                     _newPanel.Children.Add(_title);
                     _newPanel.Children.Add(menuList);
-                    _newPanel.Background = Brushes.LightYellow;
-                    Canvas.SetLeft(_newPanel,AddNewArea.LeftSpan);
-                    Canvas.SetTop(_newPanel,AddNewArea.TopSpan);
+                    Canvas.SetLeft(_newPanel,AddNewArea.LeftSpan+NewArea.Count*10);
+                    Canvas.SetTop(_newPanel,AddNewArea.TopSpan+NewArea.Count*10);
                     _panel.Children.Add(_newPanel);
 
-                    //写到JSON文件中
+                    //把添加的区域写到JSON文件中
                     AddNewArea.AreaName=_title.Text.ToString();
-                  
                     NewArea.Add(AddNewArea);
-                    StreamWriter sw = new StreamWriter(menuPath, true);
+                    StreamWriter sw = new StreamWriter(menuPath, false);
                     sw.Write(JsonHelper.ToJson(NewArea));
                     sw.Flush();
                     sw.Close();
