@@ -29,6 +29,7 @@ namespace MetroFramePlugin.ViewModels
         #region 字段
         private Window mainWindow;
         private VicButtonNormal btnPluginList;
+      
         private Window win_PluginList;
         private List<Dictionary<string, object>> pluginList;
         private ObservableCollection<MenuModel> systemMenuListEnterprise;
@@ -306,32 +307,7 @@ namespace MetroFramePlugin.ViewModels
         #region 命令
 
         #region 窗体加载命令
-        ///// <summary>窗体加载命令 </summary>
-        //public ICommand gridMainLoadedCommand
-        //{
-        //    get
-        //    {
-        //        return new RelayCommand<object>((x) =>
-        //        {
-        //            mainWindow = (Window)x;
-        //            mainWindow.Uid = "mainWindow";
-        //            mainTabControl =(VicTabControlNormal) mainWindow.FindName("MainTabControl");
-        //            btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
-        //            mainWindow.MouseDown += mainWindow_MouseDown;
-        //            Rect rect = SystemParameters.WorkArea;
-        //            mainWindow.MaxWidth = rect.Width;
-        //            mainWindow.MaxHeight = rect.Height;
-        //            mainWindow.WindowState = WindowState.Maximized;
-        //            ChangeFrameWorkTheme();
-        //          //  LoadMenuListLocal();
-        //            LoadJsonMenuListLocal();
-        //            OverlayWindow overlayWin = new OverlayWindow();
-        //            overlayWin.mainTabItem = this.selectedTabItem;
-        //            overlayWin.Show();
-        //            UserLogin();
-        //        });
-        //    }
-        //}
+      
         /// <summary>窗体加载命令 </summary>
         public ICommand gridMainLoadedCommand
         {
@@ -341,6 +317,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
+                    _panel = mainWindow.FindName("bigPanel") as Canvas;//添加新区域面板
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
                     Rect rect = SystemParameters.WorkArea;
@@ -1050,10 +1027,50 @@ namespace MetroFramePlugin.ViewModels
         #endregion
 
         #region
+
         ///<summary>
         /// 20150305添加菜单应用弹窗相关代码
         /// </summary> 
-        
+       
+        private UserControl area;
+        private Canvas _panel;
+        /// <summary>添加新区域 </summary>
+        private AreaMenu addNewArea;
+        public AreaMenu AddNewArea
+        {
+            get
+            {
+                if (addNewArea == null)
+                    addNewArea = new AreaMenu();
+                return addNewArea;
+            }
+            set
+            {
+                if (addNewArea != value)
+                {
+                    addNewArea = value;
+                    RaisePropertyChanged("AddNewArea");
+                }
+            }
+        }
+        private ObservableCollection<AreaMenu> newArea;
+        public ObservableCollection<AreaMenu> NewArea
+        {
+            get
+            {
+                if (newArea == null)
+                    newArea = new ObservableCollection<AreaMenu>();
+                return newArea;
+            }
+            set
+            {
+                if (newArea != value)
+                {
+                    newArea = value;
+                    RaisePropertyChanged("NewArea");
+                }
+            }
+        }
         /// <summary>
         /// 添加应用弹窗是否显示
         /// </summary>
@@ -1071,6 +1088,18 @@ namespace MetroFramePlugin.ViewModels
                     popupIsShow = value;
                     RaisePropertyChanged("PopupIsShow");
                 }
+            }
+        }
+        /// <summary>区域加载命令 </summary>
+        public ICommand PersonAreaLoadedCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                    area = (UserControl)x;
+                    _panel = area.FindName("bigPanel") as Canvas;//添加新区域面板
+                });
             }
         }
         public ICommand btnAddApplyClickCommand
@@ -1161,8 +1190,6 @@ namespace MetroFramePlugin.ViewModels
                     });
             }
         }
-
-        
         /// <summary>
         /// 新建区域
         /// </summary>
@@ -1172,7 +1199,47 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    
+                    //把区域写到菜单中
+                    string areaMenuList = string.Empty;
+                    string menuPath = AppDomain.CurrentDomain.BaseDirectory + "Mymenu.json";
+                    //if (File.Exists(menuPath))
+                    //{
+                    //    areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("gb2312"));
+                    //    areaMenuList = JsonHelper.ReadJsonString(areaMenuList, "menu");
+                    //}
+                    //this.NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
+
+                    TextBox _title = new TextBox();
+                    _title.Text = "fun1";
+                    _title.VerticalContentAlignment=VerticalAlignment.Center;
+                    _title.HorizontalContentAlignment=HorizontalAlignment.Center;
+                    _title.Height = 30;
+                    _title.Background = Brushes.Gainsboro;
+                    ListBox menuList=new ListBox();
+                    ListBoxItem _item=new ListBoxItem();
+                    menuList.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    menuList.Items.Add(_item);
+                    menuList.Style = area.FindResource("addApply") as Style;
+                    StackPanel _newPanel=new StackPanel();
+                    _newPanel.Width = AddNewArea.AreaWidth;
+                    _newPanel.Height = AddNewArea.AreaHeight;
+                    _newPanel.Children.Add(_title);
+                    _newPanel.Children.Add(menuList);
+                    _newPanel.Background = Brushes.LightYellow;
+                    Canvas.SetLeft(_newPanel,AddNewArea.LeftSpan);
+                    Canvas.SetTop(_newPanel,AddNewArea.TopSpan);
+                    _panel.Children.Add(_newPanel);
+
+                    //写到JSON文件中
+                    AddNewArea.AreaName=_title.Text.ToString();
+                  
+                    NewArea.Add(AddNewArea);
+                    StreamWriter sw = new StreamWriter(menuPath, true);
+                    sw.Write(JsonHelper.ToJson(NewArea));
+                    sw.Flush();
+                    sw.Close();
+                    sw.Dispose(); 
+                   
                 });
             }
         }

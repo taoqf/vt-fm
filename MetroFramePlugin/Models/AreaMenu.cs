@@ -9,8 +9,10 @@ namespace MetroFramePlugin.Models
 {
     public class AreaMenu:ModelBase
     {
-        [JsonProperty(PropertyName = "areaName")]
-        private string areaName = "我的常用功能";
+        /// <summary>
+        ///区域名称
+        /// </summary>
+        private string areaName = "oftenFun1";
         public string AreaName
         {
             get { return areaName; }
@@ -23,24 +25,9 @@ namespace MetroFramePlugin.Models
                 }
             }
         }
-        [JsonProperty(PropertyName = "oftenFun")]
-        private string areaTitle = "oftenFun";
-        public string AreaTitle
-        {
-            get { return areaTitle; }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value) == false)
-                {
-                    areaTitle = value;
-                    RaisePropertyChanged("AreaTitle");
-                }
-            }
-        }
         /// <summary>
-        ///区域插件展示方式（大、中、小）
+        ///区域插件展示方式（big、normal、small）
         /// </summary>
-        [JsonProperty(PropertyName = "menuForm")]
         private string menuForm = "normal";
         public string MenuForm
         {
@@ -55,43 +42,64 @@ namespace MetroFramePlugin.Models
             }
         }
         /// <summary>
+        ///区域距左侧宽度
+        /// </summary>
+        private int leftSpan =300;
+        public int LeftSpan
+        {
+            get { return leftSpan; }
+            set
+            {
+                    leftSpan = value;
+                    RaisePropertyChanged("LeftSpan");
+                
+            }
+        }
+        /// <summary>
+        ///区域距顶部高度
+        /// </summary>
+        private int topSpan = 300;
+        public int TopSpan
+        {
+            get { return topSpan; }
+            set
+            {
+                topSpan = value;
+                RaisePropertyChanged("TopSpan");
+
+            }
+        }
+        /// <summary>
         ///区域宽度
         /// </summary>
-        [JsonProperty(PropertyName = "areaWidth")]
-        private string areaWidth;
-        public string AreaWidth
+        private int areaWidth=300;
+        public int AreaWidth
         {
             get { return areaWidth; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value) == false)
-                {
-                    areaWidth = value;
-                    RaisePropertyChanged("AreaWidth");
-                }
+               areaWidth = value;
+               RaisePropertyChanged("AreaWidth");
+                
             }
         }
         /// <summary>
         ///区域高度
         /// </summary>
-        [JsonProperty(PropertyName = "areaHeight")]
-        private string areaHeight;
-        public string AreaHeight
+        private int areaHeight=300;
+        public int AreaHeight
         {
             get { return areaHeight; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value) == false)
-                {
-                    areaHeight = value;
-                    RaisePropertyChanged("AreaHeight");
-                }
+               areaHeight = value;
+               RaisePropertyChanged("AreaHeight");
+               
             }
         }
         /// <summary>
         /// 插件列表
         /// </summary>
-        [JsonProperty(PropertyName = "pluginList")]
         public List<Dictionary<string, object>> PluginList
         {
             get;

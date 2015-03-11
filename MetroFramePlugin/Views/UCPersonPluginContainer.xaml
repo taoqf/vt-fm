@@ -7,7 +7,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels" xmlns:models="clr-namespace:MetroFramePlugin.Models"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             Name="mainArea" d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <vm:UCMetroWindowViewModel x:Key="metroViewModel"/>
         <Style x:Key="AddMenu" TargetType="{x:Type controls:VicRadioButtonNormal}">
@@ -177,7 +177,7 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <Canvas >
+    <Canvas x:Name="bigPanel" Background="{DynamicResource WhiteShade}">
         <Canvas.ContextMenu>
             <controls:VicContextMenu>
                 <controls:VicMenuItemNormal Header="新建区域">
@@ -192,8 +192,8 @@
                 <controls:VicMenuItemNormal Header="显示常用网址"/>
             </controls:VicContextMenu>
         </Canvas.ContextMenu>
-       <StackPanel MinWidth="900" >
-            <Label x:Name="title" Content="我的常用功能" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Gainsboro"/>
+        <StackPanel MinWidth="900" MinHeight="700" Canvas.Left="10" Canvas.Top="30" >
+            <TextBox x:Name="title" Text="{Binding AddNewArea.AreaName}" Height="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Gainsboro"/>
             <ListBox Style="{StaticResource addApply}">
                 <ListBoxItem x:Name="addApplication1"/>
             </ListBox>
@@ -252,5 +252,10 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </controls:VicPopup>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding PersonAreaLoadedCommand}"  CommandParameter="{Binding ElementName=mainArea}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
     </Canvas>
 </UserControl>
