@@ -23,5 +23,17 @@ namespace MetroFramePlugin.Views
         {
             InitializeComponent();
         }
+        //private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        //{
+        //    Canvas.SetLeft(thumb, Canvas.GetLeft(thumb) + e.HorizontalChange);
+        //    Canvas.SetTop(thumb, Canvas.GetTop(thumb) + e.VerticalChange);
+        //}
+        private void thumb_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            //left.Text = Canvas.GetLeft(thumb).ToString();
+            //top.Text = Canvas.GetTop(thumb).ToString();
+            //width.Text = thumb.Width.ToString();
+            //height.Text = thumb.Height.ToString();
+        }
     }
 }
