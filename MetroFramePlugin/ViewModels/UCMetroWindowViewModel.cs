@@ -29,17 +29,18 @@ namespace MetroFramePlugin.ViewModels
         #region 字段
         private Window mainWindow;
         private VicButtonNormal btnPluginList;
-      
+
         private Window win_PluginList;
         private List<Dictionary<string, object>> pluginList;
         private ObservableCollection<MenuModel> systemMenuListEnterprise;
         private ObservableCollection<MenuModel> systemMenuListLocal;
-        private ObservableCollection<MenuModel> newMenuListLocal;
+
         private ObservableCollection<MenuModel> systemThirdLevelMenuList;
         private ObservableCollection<MenuModel> systemFourthLevelMenuList;
-        private ObservableCollection<MenuModel> newSystemFourthLevelMenuList;
+
         private MenuModel selectedSecondMenuModel;
         private MenuModel selectedThirdMenuModel;
+
         private ObservableCollection<VicTabItemNormal> tabItemList;
         private VicTabItemNormal selectedTabItem;
         private VicTabControlNormal mainTabControl;
@@ -82,24 +83,7 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-        /// <summary>添加应用弹框菜单列表 </summary>
-        public ObservableCollection<MenuModel> NewMenuListLocal
-        {
-            get
-            {
-                if (newMenuListLocal == null)
-                    newMenuListLocal = new ObservableCollection<MenuModel>();
-                return newMenuListLocal;
-            }
-            set
-            {
-                if (newMenuListLocal != value)
-                {
-                    systemMenuListLocal = value;
-                    RaisePropertyChanged("NewMenuListLocal");
-                }
-            }
-        }
+
         /// <summary>企业菜单列表 </summary>
         public ObservableCollection<MenuModel> SystemMenuListEnterprise
         {
@@ -155,24 +139,7 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-        /// <summary>添加应用弹窗四级菜单列表 </summary>
-        public ObservableCollection<MenuModel> NewSystemFourthLevelMenuList
-        {
-            get
-            {
-                if (newSystemFourthLevelMenuList == null)
-                    newSystemFourthLevelMenuList = new ObservableCollection<MenuModel>();
-                return newSystemFourthLevelMenuList;
-            }
-            set
-            {
-                if (newSystemFourthLevelMenuList != value)
-                {
-                    newSystemFourthLevelMenuList = value;
-                    RaisePropertyChanged("NewSystemFourthLevelMenuList");
-                }
-            }
-        }
+
         /// <summary>当前选中的二级菜单 </summary>
         public MenuModel SelectedSecondMenuModel
         {
@@ -215,7 +182,7 @@ namespace MetroFramePlugin.ViewModels
                     //browser.Source = new Uri("http://www.baidu.com");
                     homeItem.Content = browser;
                     tabItemList.Add(homeItem);
-                  
+
                 }
                 return tabItemList;
             }
@@ -307,7 +274,7 @@ namespace MetroFramePlugin.ViewModels
         #region 命令
 
         #region 窗体加载命令
-      
+
         /// <summary>窗体加载命令 </summary>
         public ICommand gridMainLoadedCommand
         {
@@ -498,7 +465,7 @@ namespace MetroFramePlugin.ViewModels
         /// <summary>窗体关闭命令 </summary>
         public ICommand btnCloseClickCommand
         {
-        
+
             get
             {
                 return new RelayCommand(() =>
@@ -557,14 +524,14 @@ namespace MetroFramePlugin.ViewModels
                 TabItemList[0].Content = pluginContainer;
                 TabItemList[0].Header = "个人收藏";
             }
-            
+
             MenuModel menuModel = (MenuModel)x;
             SystemThirdLevelMenuList = menuModel.SystemMenuList;
             if (SystemThirdLevelMenuList.Count > 0)
             {
                 SelectedThirdMenuModel = SystemThirdLevelMenuList[0];
                 SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
-               
+
             }
 
             SelectedTabItem = TabItemList[0];
@@ -685,7 +652,7 @@ namespace MetroFramePlugin.ViewModels
         }
         #endregion
 
-       
+
         #region 加载本地Json菜单集合 (2014-08-29 新增)
         /// <summary>加载本地Json菜单集合 </summary>
         private void LoadJsonMenuListLocal()
@@ -696,7 +663,7 @@ namespace MetroFramePlugin.ViewModels
             if (File.Exists(menuPath))
             {
                 menuList = File.ReadAllText(menuPath, Encoding.GetEncoding("gb2312"));
-                menuList = JsonHelper.ReadJsonString(menuList, "menu" );
+                menuList = JsonHelper.ReadJsonString(menuList, "menu");
             }
             this.SystemMenuListLocal = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             localMenuListEx = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
@@ -704,17 +671,17 @@ namespace MetroFramePlugin.ViewModels
             //{
             //    this.SystemMenuListLocal.Clear();
 
-            ///得到弹窗中一、二级树型菜单并绑定到前台
+            ///2015-03-05:得到弹窗中一、二级树型菜单并绑定到前台
             foreach (MenuModel menuModel in SystemMenuListLocal)
             {
                 MenuModel newModel = menuModel.Copy();
-                newModel.SystemMenuList=new ObservableCollection<MenuModel>();
+                newModel.SystemMenuList = new ObservableCollection<MenuModel>();
                 if (menuModel.SystemMenuList.Count > 0)
                 {
                     foreach (MenuModel childModel in menuModel.SystemMenuList)
                     {
                         MenuModel childNewModel = childModel.Copy();
-                        childNewModel.SystemMenuList=new ObservableCollection<MenuModel>();
+                        childNewModel.SystemMenuList = new ObservableCollection<MenuModel>();
                         newModel.SystemMenuList.Add(childNewModel);
                     }
                 }
@@ -745,7 +712,7 @@ namespace MetroFramePlugin.ViewModels
                     paramDic.Add("spaceid", selectedFourthMenu.SpaceId);
                     paramDic.Add("menuno", selectedFourthMenu.MenuNo);
                     paramDic.Add("menucode", selectedFourthMenu.MenuCode);
-                    paramDic.Add("authoritycode", selectedFourthMenu.HomeId);
+                    // paramDic.Add("authoritycode", selectedFourthMenu.HomeId);
                     paramDic.Add("fitdata", selectedFourthMenu.FitDataPath);
                     paramDic.Add("cadname", selectedFourthMenu.ActionCADName);
                     PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
@@ -803,7 +770,7 @@ namespace MetroFramePlugin.ViewModels
                 VicMessageBoxNormal.Show(ex.Message);
             }
         }
-      
+
         #endregion
 
         #region 用户登录
@@ -1034,27 +1001,88 @@ namespace MetroFramePlugin.ViewModels
         #region 字段&属性
         private UserControl area;
         private Canvas _panel;//主区域面板
-        private string menuPath;
-       
-        /// <summary>添加新区域 </summary>
-        private AreaMenu addNewArea;
-        public AreaMenu AddNewArea
+        private ListBox _listbox;//弹窗展示菜单列表
+        private string menuPath;//文件路径
+        private string selectAreaUid;//当前选中的要添加应用的区域
+        /// <summary>添加应用弹框菜单列表 </summary>
+        private ObservableCollection<MenuModel> newMenuListLocal;
+        public ObservableCollection<MenuModel> NewMenuListLocal
         {
             get
             {
-                if (addNewArea == null)
-                    addNewArea = new AreaMenu();
-                return addNewArea;
+                if (newMenuListLocal == null)
+                    newMenuListLocal = new ObservableCollection<MenuModel>();
+                return newMenuListLocal;
             }
             set
             {
-                if (addNewArea != value)
+                if (newMenuListLocal != value)
                 {
-                    addNewArea = value;
-                    RaisePropertyChanged("AddNewArea");
+                    systemMenuListLocal = value;
+                    RaisePropertyChanged("NewMenuListLocal");
                 }
             }
         }
+        /// <summary>添加应用弹窗四级菜单列表 </summary>
+        private ObservableCollection<MenuModel> newSystemFourthLevelMenuList;
+        public ObservableCollection<MenuModel> NewSystemFourthLevelMenuList
+        {
+            get
+            {
+                if (newSystemFourthLevelMenuList == null)
+                    newSystemFourthLevelMenuList = new ObservableCollection<MenuModel>();
+                return newSystemFourthLevelMenuList;
+            }
+            set
+            {
+                if (newSystemFourthLevelMenuList != value)
+                {
+                    newSystemFourthLevelMenuList = value;
+                    RaisePropertyChanged("NewSystemFourthLevelMenuList");
+                }
+            }
+        }
+
+        /// <summary>当前选中的应用弹窗菜单列表 </summary>
+        private ObservableCollection<MenuModel> selectPopupMenuList;
+        public ObservableCollection<MenuModel> SelectPopupMenuList
+        {
+            get
+            {
+                if (selectPopupMenuList == null)
+                    selectPopupMenuList = new ObservableCollection<MenuModel>();
+                return selectPopupMenuList;
+            }
+            set
+            {
+                if (selectPopupMenuList != value)
+                {
+                    selectPopupMenuList = value;
+                    RaisePropertyChanged("SelectPopupMenuList");
+                }
+            }
+        }
+
+
+        ///// <summary>添加新区域 </summary>
+        //private AreaMenu addNewArea;
+        //public AreaMenu AddNewArea
+        //{
+        //    get
+        //    {
+        //        if (addNewArea == null)
+        //            addNewArea = new AreaMenu();
+        //        return addNewArea;
+        //    }
+        //    set
+        //    {
+        //        if (addNewArea != value)
+        //        {
+        //            addNewArea = value;
+        //            RaisePropertyChanged("AddNewArea");
+        //        }
+        //    }
+        //}
         /// <summary>
         /// 新区域集合
         /// </summary>
@@ -1095,7 +1123,11 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         #endregion
-        /// <summary>区域加载命令 </summary>
+
+        #region 命令
+        /// <summary>
+        /// 区域加载命令
+        ///  </summary>
         public ICommand PersonAreaLoadedCommand
         {
             get
@@ -1103,61 +1135,52 @@ namespace MetroFramePlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     area = (UserControl)x;
-                    _panel = area.FindName("bigPanel") as Canvas;//添加新区域面板
+                    _panel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
+                    _listbox = area.FindName("listBoxPopupMenuList") as ListBox;
+
                     //读取myMenu.json文件并展示
-                   string areaMenuList = string.Empty;
+                    string areaMenuList = string.Empty;
                     menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";
-                     if (File.Exists(menuPath))
-                     {
-                         areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("gb2312"));
-                     }
-                     this.NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
-                    for (int i = 0; i < NewArea.Count; i++)
+                    if (File.Exists(menuPath))
                     {
-                        TextBox _title = new TextBox();
-                        DockPanel.SetDock(_title, Dock.Top);
-                        _title.Text = NewArea[i].AreaName;
-                        _title.VerticalContentAlignment = VerticalAlignment.Center;
-                        _title.HorizontalContentAlignment = HorizontalAlignment.Center;
-                        _title.Height = 30;
-                        _title.Background = Brushes.Gainsboro;
-                        ListBox menuList = new ListBox();
-                        ListBoxItem _item = new ListBoxItem();
-                        menuList.Items.Add(_item);
-                        menuList.Style = area.FindResource("addApply") as Style;
-                        DockPanel _newPanel = new DockPanel();
-                        _newPanel.MinWidth = NewArea[i].AreaWidth;
-                        _newPanel.MinHeight = NewArea[i].AreaHeight;
-                        _newPanel.Children.Add(_title);
-                        _newPanel.Children.Add(menuList);
-                        Canvas.SetLeft(_newPanel, NewArea[i].LeftSpan);
-                        Canvas.SetTop(_newPanel, NewArea[i].TopSpan);
-                        _panel.Children.Add(_newPanel);
+                        areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("UTF-8"));
                     }
+                    this.NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
+                    DrawingPanelArea();//渲染区域
                 });
             }
         }
+
+        /// <summary>
+        /// 单击“添加应用”
+        /// </summary>
         public ICommand btnAddApplyClickCommand
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand<object>((x) =>
                     {
+                        //Canvas canvas_panel = (Canvas) x;
+                        //foreach (DockPanel aa in canvas_panel.Children)
+                        //{
+                        //    selectAreaUid = aa.Children[1].Uid;
+                        //}
+                        _panel.IsEnabled = false;
                         PopupIsShow = true;
                     });
             }
         }
+
         /// <summary>
-        /// 菜单全选
+        ///弹框菜单全选
         /// </summary>
         public ICommand btnAllSelectClickCommand
         {
             get
             {
-                return new RelayCommand<object>((x) =>
+                return new RelayCommand(() =>
                 {
-                   
-                  PopupIsShow = false;
+                    //一下全部选中
                 });
             }
         }
@@ -1168,17 +1191,21 @@ namespace MetroFramePlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) =>
+                return new RelayCommand(() =>
                 {
-                    //string menuList = string.Empty;
-                    //string menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";
-                    //if (File.Exists(menuPath))
-                    //{
-                    //    menuList = File.ReadAllText(menuPath, Encoding.GetEncoding("gb2312"));
-                    //    menuList = JsonHelper.ReadJsonString(menuList, "Mymenu");
-                    //}
-                    //this.NewSystemMenuListLocal = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
                     PopupIsShow = false;
+                    _panel.IsEnabled = true;
+                   // foreach (MenuModel menuModel in _listbox.SelectedItems)
+                   // {
+                   //     SelectPopupMenuList.Add(menuModel);
+                   // }
+                   //NewArea[0].PluginList = SelectPopupMenuList;
+                   //StreamWriter sw = new StreamWriter(menuPath, false);
+                   //sw.Write(JsonHelper.ToJson(NewArea));
+                   //sw.Flush();
+                   //sw.Close();
+                   //sw.Dispose();
+
                 });
             }
         }
@@ -1192,11 +1219,10 @@ namespace MetroFramePlugin.ViewModels
                 return new RelayCommand(() =>
                 {
                     PopupIsShow = false;
+                    _panel.IsEnabled = true;
                 });
             }
         }
-
-        
         /// <summary>
         /// 应用弹窗树型菜单选项改变
         /// </summary>
@@ -1206,19 +1232,19 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                     {
-                        MenuModel   _menuName =(MenuModel)x;
+                        MenuModel _menuName = (MenuModel)x;
                         foreach (MenuModel menuModel in SystemMenuListLocal)
                         {
-                          MenuModel childNewModel = new MenuModel();
-                          childNewModel =menuModel.SystemMenuList.FirstOrDefault(it => it.MenuName.Equals(_menuName.MenuName));
+                            MenuModel childNewModel = new MenuModel();
+                            childNewModel = menuModel.SystemMenuList.FirstOrDefault(it => it.MenuName.Equals(_menuName.MenuName));
                             if (childNewModel != null)
-                              {
-                                  NewSystemFourthLevelMenuList = childNewModel.SystemMenuList;
-                                  break;
-                              }
+                            {
+                                NewSystemFourthLevelMenuList = childNewModel.SystemMenuList;
+                                break;
+                            }
                             else
                             {
-                                NewSystemFourthLevelMenuList =null;
+                                NewSystemFourthLevelMenuList = null;
                                 break;
                             }
                         }
@@ -1234,38 +1260,87 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    AreaMenu _areaMenu = new AreaMenu();
                     TextBox _title = new TextBox();
                     DockPanel.SetDock(_title, Dock.Top);
-                    _title.Text =AddNewArea.AreaName;
-                    _title.VerticalContentAlignment=VerticalAlignment.Center;
-                    _title.HorizontalContentAlignment=HorizontalAlignment.Center;
+                    _title.Text = "My often Fun";
+                    _title.VerticalContentAlignment = VerticalAlignment.Center;
+                    _title.HorizontalContentAlignment = HorizontalAlignment.Center;
                     _title.Height = 30;
                     _title.Background = Brushes.Gainsboro;
-                    ListBox menuList=new ListBox();
-                    ListBoxItem _item=new ListBoxItem();
+                    ListBox menuList = new ListBox();
+                    ListBoxItem _item = new ListBoxItem();
                     menuList.Items.Add(_item);
                     menuList.Style = area.FindResource("addApply") as Style;
                     DockPanel _newPanel = new DockPanel();
-                    _newPanel.Width = AddNewArea.AreaWidth;
-                    _newPanel.Height = AddNewArea.AreaHeight;
+                    _newPanel.Uid = Guid.NewGuid().ToString(); ;
+                    _newPanel.MouseLeftButtonDown += _newPanel_MouseLeftButtonDown;
+                    _newPanel.Width = _areaMenu.AreaWidth;
+                    _newPanel.Height = _areaMenu.AreaHeight;
                     _newPanel.Children.Add(_title);
                     _newPanel.Children.Add(menuList);
-                    Canvas.SetLeft(_newPanel,AddNewArea.LeftSpan+NewArea.Count*10);
-                    Canvas.SetTop(_newPanel,AddNewArea.TopSpan+NewArea.Count*10);
+
+                    Canvas.SetLeft(_newPanel, _areaMenu.LeftSpan + NewArea.Count * 10);
+                    Canvas.SetTop(_newPanel, _areaMenu.TopSpan + NewArea.Count * 10);
                     _panel.Children.Add(_newPanel);
 
                     //把添加的区域写到JSON文件中
-                    AddNewArea.AreaName=_title.Text.ToString();
-                    NewArea.Add(AddNewArea);
+                    _areaMenu.AreaName = _title.Text;
+                    _areaMenu.AreaID = _newPanel.Uid;
+                    _areaMenu.LeftSpan += NewArea.Count * 10;
+                    _areaMenu.TopSpan += NewArea.Count * 10;
+                    NewArea.Add(_areaMenu);
                     StreamWriter sw = new StreamWriter(menuPath, false);
                     sw.Write(JsonHelper.ToJson(NewArea));
                     sw.Flush();
                     sw.Close();
-                    sw.Dispose(); 
-                   
+                    sw.Dispose();                                                          
                 });
             }
         }
+        #endregion
+
+        #region  方法&事件
+        //渲染区域方法
+        private void DrawingPanelArea()
+        {
+            for (int i = 0; i < NewArea.Count; i++)
+            {
+                TextBox _title = new TextBox();
+                DockPanel.SetDock(_title, Dock.Top);
+                _title.Text = NewArea[i].AreaName;
+                _title.VerticalContentAlignment = VerticalAlignment.Center;
+                _title.HorizontalContentAlignment = HorizontalAlignment.Center;
+                _title.Height = 30;
+                _title.Background = Brushes.Gainsboro;
+                ListBox menuList = new ListBox();
+                ListBoxItem _item = new ListBoxItem();
+                menuList.Items.Add(_item);
+                menuList.Style = area.FindResource("addApply") as Style;
+                if (NewArea[i].PluginList.Count != 0)
+                {
+                   ListBox pluginlist=new ListBox();
+                   pluginlist.ItemsSource = NewArea[i].PluginList;
+                   pluginlist.Style = area.FindResource("PopupMenuListStyle") as Style;
+                   menuList.Items.Add(pluginlist);
+                }
+                
+                DockPanel _newPanel = new DockPanel();
+                _newPanel.MinWidth = NewArea[i].AreaWidth;
+                _newPanel.MinHeight = NewArea[i].AreaHeight;
+                _newPanel.Children.Add(_title);
+                _newPanel.Children.Add(menuList);
+                Canvas.SetLeft(_newPanel, NewArea[i].LeftSpan);
+                Canvas.SetTop(_newPanel, NewArea[i].TopSpan);
+                _panel.Children.Add(_newPanel);
+            }
+        }
+        void _newPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DockPanel _panel = sender as DockPanel;
+            selectAreaUid = _panel.Uid;
+        }
+        #endregion
 
         #endregion
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
@@ -24,6 +25,14 @@ namespace MetroFramePlugin.Models
                     RaisePropertyChanged("AreaName");
                 }
             }
+        }
+        /// <summary>
+        ///区域唯一ID
+        /// </summary>
+        public string AreaID
+        {
+            get; 
+            set;
         }
         /// <summary>
         ///区域插件展示方式（big、normal、small）
@@ -97,13 +106,27 @@ namespace MetroFramePlugin.Models
 
             }
         }
+
         /// <summary>
         /// 插件列表
         /// </summary>
-        public List<Dictionary<string, object>> PluginList
+        private ObservableCollection<MenuModel> pluginList;
+        public ObservableCollection<MenuModel> PluginList
         {
-            get;
-            set;
+            get
+            {
+                if (pluginList == null)
+                    pluginList = new ObservableCollection<MenuModel>();
+                return pluginList;
+            }
+            set
+            {
+                if (pluginList != value)
+                {
+                    pluginList = value;
+                    RaisePropertyChanged("PluginList");
+                }
+            }
         }
     }
 }

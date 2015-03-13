@@ -90,7 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convert\ImgeNameToBackgroundConverter.cs" />
-    <Compile Include="Models\AreaContentsMenu.cs" />
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\AreaMenu.cs" />
     <Compile Include="Plugin.cs" />
