@@ -153,8 +153,9 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="systemId">系统Id</param>
         /// <param name="configsystemId">配置系统Id</param>
         /// <param name="foreRunnerFlag">前导标签</param>
+        /// <param name="refsystemId">引用系统Id</param>
         /// <returns>引用消息</returns>
-        public string GetRefData(string viewId, string dataPath, string fieldName, string rowValue, out DataSet RefDataSet, List<Dictionary<string, object>> defaultCondition = null, string systemId = null, string configsystemId = null, bool foreRunnerFlag = true)
+        public string GetRefData(string viewId, string dataPath, string fieldName, string rowValue, out DataSet RefDataSet, List<Dictionary<string, object>> defaultCondition = null, string systemId = null, string configsystemId = null, bool foreRunnerFlag = true, string refsystemId = null)
         {
             RefDataSet = new DataSet();
             bool wideRefFlag = true;
@@ -241,6 +242,7 @@ namespace Victop.Frame.DataMessageManager
                                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                                     contentDic.Add("systemid", systemId);
                                     contentDic.Add("configsystemid", configsystemId);
+                                    contentDic.Add("refsystemid", string.IsNullOrEmpty(refsystemId) ? systemId : refsystemId);
                                     contentDic.Add("modelid", clientRefModel.ClientRefModel);
                                     if (clientRefModel.ClientRefConditionFirst.Count > 0)
                                     {
