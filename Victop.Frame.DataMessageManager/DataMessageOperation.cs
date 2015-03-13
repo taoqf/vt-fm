@@ -263,7 +263,7 @@ namespace Victop.Frame.DataMessageManager
                                                 if (item.ConditionDependFlag == 1)
                                                 {
                                                     //TODO:处理依赖关系
-                                                    if (drs[0].Table.Columns.Contains(refLeftField) && drs[0][refLeftField] != null)
+                                                    if (drs[0].Table.Columns.Contains(refLeftField) && !string.IsNullOrEmpty(drs[0][refLeftField].ToString()))
                                                     {
                                                         if (tableconditionList.FirstOrDefault(it => it.ContainsKey(refLeftField)) != null)
                                                         {
@@ -280,6 +280,7 @@ namespace Victop.Frame.DataMessageManager
                                                     {
                                                         ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.CAST, ReplyAlertMessage = "引用依赖字段" + refLeftField + "无值" };
                                                         resultMessage = JsonHelper.ToJson(replyMessage);
+                                                        return resultMessage;
                                                     }
                                                 }
                                                 else
@@ -317,6 +318,7 @@ namespace Victop.Frame.DataMessageManager
                                         {
                                             ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.CAST, ReplyAlertMessage = "数据不存在" };
                                             resultMessage = JsonHelper.ToJson(replyMessage);
+                                            return resultMessage;
                                         }
                                     }
                                     //TODO:去取数
@@ -501,7 +503,7 @@ namespace Victop.Frame.DataMessageManager
                     {
                         foreach (DataColumn item in RefDataSet.Tables["dataArray"].Columns)
                         {
-                            MongoModelInfoOfClientRefPopupSettingColumnsModel columnModel=clientRefModel.ClientRefPopupSetting.SettingColumns.FirstOrDefault(it => it.ColumnField.Equals(item.ColumnName));
+                            MongoModelInfoOfClientRefPopupSettingColumnsModel columnModel = clientRefModel.ClientRefPopupSetting.SettingColumns.FirstOrDefault(it => it.ColumnField.Equals(item.ColumnName));
                             if (columnModel != null && !string.IsNullOrEmpty(columnModel.ColumnLabel))
                             {
                                 item.Caption = columnModel.ColumnLabel;

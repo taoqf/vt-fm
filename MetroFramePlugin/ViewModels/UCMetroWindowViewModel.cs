@@ -1160,6 +1160,9 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                     {
+                        VicRadioButtonNormal btn = (VicRadioButtonNormal)x;
+                        DockPanel parentPanel = GetParentObject<DockPanel>(btn);
+                        string panelId = parentPanel.Uid;
                         //Canvas canvas_panel = (Canvas) x;
                         //foreach (DockPanel aa in canvas_panel.Children)
                         //{
@@ -1170,7 +1173,25 @@ namespace MetroFramePlugin.ViewModels
                     });
             }
         }
-
+        /// <summary>
+        /// 获取父级控件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        private T GetParentObject<T>(DependencyObject obj) where T : FrameworkElement
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(obj);
+            while (parent != null)
+            {
+                if (parent is T)
+                {
+                    return (T)parent;
+                }
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+            return null;
+        }
         /// <summary>
         ///弹框菜单全选
         /// </summary>
@@ -1326,6 +1347,7 @@ namespace MetroFramePlugin.ViewModels
                 }
                 
                 DockPanel _newPanel = new DockPanel();
+                _newPanel.Uid = NewArea[i].AreaID;
                 _newPanel.MinWidth = NewArea[i].AreaWidth;
                 _newPanel.MinHeight = NewArea[i].AreaHeight;
                 _newPanel.Children.Add(_title);

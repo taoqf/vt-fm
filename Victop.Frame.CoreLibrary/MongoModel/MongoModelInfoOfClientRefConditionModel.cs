@@ -51,7 +51,7 @@ namespace Victop.Frame.CoreLibrary.MongoModel
         /// <summary>
         /// 该条件是否引用字段的依赖条件，0：否；1：是
         /// </summary>
-        [JsonProperty(PropertyName = "dependFlags")]
+        [JsonProperty(PropertyName = "dependFlag")]
         public int ConditionDependFlag
         {
             get { return conditionDependFlag; }
