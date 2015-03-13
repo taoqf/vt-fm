@@ -141,6 +141,7 @@ namespace SystemTestingPlugin.ViewModels
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("systemid", DataInfoModel.SystemId);
                         contentDic.Add("configsystemid", DataInfoModel.ConfigsystemId);
+                        contentDic.Add("refsystemid", string.IsNullOrEmpty(DataInfoModel.RefSystemId) ? DataInfoModel.SystemId : DataInfoModel.RefSystemId);
                         contentDic.Add("emptydataflag", DataInfoModel.EmptyFlag ? 0 : 1);
                         contentDic.Add("modelid", DataInfoModel.ModelId);
                         if (!string.IsNullOrEmpty(DataInfoModel.SpaceId))
@@ -215,7 +216,7 @@ namespace SystemTestingPlugin.ViewModels
         void searchDataGrid_DataReferenceColumnClick(object sender, string columnName, string columnCaption)
         {
             VicTextBox vicTbox = (VicTextBox)sender;
-            RefDataModel refData = new RefDataModel() { SystemId = DataInfoModel.SystemId, ConfigSystemId = DataInfoModel.ConfigsystemId, RefFieldCaption = columnCaption, ViewId = DataInfoModel.ChannelId, DataPath = DataInfoModel.DataPath, FieldName = columnName, RowValue = DataInfoModel.GridSelectedValue.ToString(), RefCallBack = new WaitCallback(SetData),RefFieldValue=vicTbox.VicText };
+            RefDataModel refData = new RefDataModel() { SystemId = DataInfoModel.SystemId, RefSystemId = DataInfoModel.RefSystemId, ConfigSystemId = DataInfoModel.ConfigsystemId, RefFieldCaption = columnCaption, ViewId = DataInfoModel.ChannelId, DataPath = DataInfoModel.DataPath, FieldName = columnName, RowValue = DataInfoModel.GridSelectedValue.ToString(), RefCallBack = new WaitCallback(SetData), RefFieldValue = vicTbox.VicText };
             UCUniversalRefWindow refWndow = new UCUniversalRefWindow(refData);
             VicWindowNormal window = new VicWindowNormal();
             window.SetResourceReference(VicWindowNormal.StyleProperty, "WindowMessageSkin");
@@ -253,14 +254,16 @@ namespace SystemTestingPlugin.ViewModels
             {
                 VicMessageBoxNormal.Show(resultDic["ReplyAlertMessage"].ToString());
             }
-            
+
         }
         public ICommand btnAddDataClickCommand
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     DataRow dr = DataInfoModel.ResultDataTable.NewRow();
+                    dr["_id"] = Guid.NewGuid().ToString();
                     DataInfoModel.ResultDataTable.Rows.Add(dr);
                 });
             }
@@ -269,7 +272,8 @@ namespace SystemTestingPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     DataMessageOperation dataOp = new DataMessageOperation();
                     dataOp.SaveData(DataInfoModel.ChannelId, DataInfoModel.DataPath);
                 });
@@ -320,7 +324,8 @@ namespace SystemTestingPlugin.ViewModels
                     {
                         VicMessageBoxNormal.Show(resultDic["ReplyAlertMessage"].ToString());
                     }
-                }, () => {
+                }, () =>
+                {
                     return !string.IsNullOrEmpty(DataInfoModel.ChannelId);
                 });
             }
@@ -330,16 +335,17 @@ namespace SystemTestingPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
 
                     //DataMessageOperation dataOp = new DataMessageOperation();
                     //dataOp.SetRefData(DataInfoModel.ChannelId, DataInfoModel.DataPath, DataInfoModel.NarrowRefField, DataInfoModel.NarrowRowValue, DataInfoModel.NarrowGridSelectedValue);
                     DataTable dt = new DataTable();
-                    
+
                     DataColumn dcprice1 = new DataColumn("price1");
                     dcprice1.DataType = typeof(decimal);
                     dt.Columns.Add(dcprice1);
-                    
+
                     DataColumn dcprice2 = new DataColumn("price2");
                     dcprice2.DataType = typeof(decimal);
                     dt.Columns.Add(dcprice2);
@@ -485,7 +491,7 @@ namespace SystemTestingPlugin.ViewModels
                     try
                     {
                         DataMessageOperation messageOp = new DataMessageOperation();
-                        Dictionary<string, object> contentDic =string.IsNullOrEmpty(OtherInfoModel.OtherConditionData)? new Dictionary<string,object>(): JsonHelper.ToObject<Dictionary<string, object>>(OtherInfoModel.OtherConditionData);
+                        Dictionary<string, object> contentDic = string.IsNullOrEmpty(OtherInfoModel.OtherConditionData) ? new Dictionary<string, object>() : JsonHelper.ToObject<Dictionary<string, object>>(OtherInfoModel.OtherConditionData);
                         Dictionary<string, object> returnDic = messageOp.SendSyncMessage(OtherInfoModel.MessageType, contentDic, "JSON");
                         if (returnDic != null)
                         {
@@ -504,7 +510,8 @@ namespace SystemTestingPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) => {
+                return new RelayCommand<object>((x) =>
+                {
                     //string Uid = (string)x;
                     //DataMessageOperation messageOp = new DataMessageOperation();
                     //if (!string.IsNullOrEmpty(Uid))

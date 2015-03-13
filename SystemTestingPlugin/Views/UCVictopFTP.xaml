@@ -101,6 +101,12 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ctrl:VicListViewNormal>
+                <ctrl:VicPopup Grid.Row="1" Grid.ColumnSpan="3" Name="popUpReName" StaysOpen="False" Placement="Center" IsOpen="True">
+                    <Border BorderThickness="2" BorderBrush="{DynamicResource SkinColor}"  Width="400" Height="500" Background="{DynamicResource MainBackgroundImage}" >
+                        <ctrl:VicGridNormal Background="{DynamicResource WhiteShade}">
+                        </ctrl:VicGridNormal>
+                    </Border>
+                </ctrl:VicPopup>
             </ctrl:VicGridNormal>
         </ctrl:VicGridNormal>
         <StatusBar Grid.Row="2">

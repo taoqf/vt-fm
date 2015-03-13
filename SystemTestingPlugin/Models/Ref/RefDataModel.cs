@@ -33,6 +33,13 @@ namespace SystemTestingPlugin.Models
             get { return configSystemId; }
             set { configSystemId = value; }
         }
+        private string refSystemId;
+
+        public string RefSystemId
+        {
+            get { return refSystemId; }
+            set { refSystemId = value; }
+        }
         /// <summary>
         /// 引用数据集
         /// </summary>

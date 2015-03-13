@@ -65,6 +65,25 @@ namespace SystemTestingPlugin.Models
                 }
             }
         }
+        private string refSystemId;
+        /// <summary>
+        /// 引用Id
+        /// </summary>
+        public string RefSystemId
+        {
+            get
+            {
+                return refSystemId;
+            }
+            set
+            {
+                if (refSystemId != value)
+                {
+                    refSystemId = value;
+                    RaisePropertyChanged("RefSystemId");
+                }
+            }
+        }
         private string spaceId;
 
         public string SpaceId
