@@ -208,11 +208,12 @@ namespace SystemTestingPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                    //refWindow = (VicWindowNormal)x;
                     refDataInfo = UCUniversalRefWindow.RefDataInfo;
                     ConditionValue = refDataInfo.RefFieldValue;
                     DataMessageOperation dataOp = new DataMessageOperation();
                     DataSet tempDs = new DataSet();
-                    string resultMessage = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out tempDs, null, refDataInfo.SystemId, refDataInfo.ConfigSystemId, false);
+                    string resultMessage = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out tempDs, null, refDataInfo.SystemId, refDataInfo.ConfigSystemId, false, refDataInfo.RefSystemId);
                     Dictionary<string, object> resultDic = JsonHelper.ToObject<Dictionary<string, object>>(resultMessage);
                     if (!resultDic["ReplyMode"].ToString().Equals("0"))
                     {
@@ -220,7 +221,7 @@ namespace SystemTestingPlugin.ViewModels
                         refDataInfo.RefContent = resultDic["ReplyContent"].ToString();
                         clientRefInfo = JsonHelper.ToObject<MongoModelInfoOfClientRefModel>(refDataInfo.RefContent);
                         List<Dictionary<string, object>> defaultCondition = OrganizeDefaultCondition(1);
-                        resultMessage = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out tempDs, defaultCondition, refDataInfo.SystemId, refDataInfo.ConfigSystemId, false);
+                        resultMessage = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out tempDs, defaultCondition, refDataInfo.SystemId, refDataInfo.ConfigSystemId, false, refDataInfo.RefSystemId);
                         refDataInfo.RefDataSet = tempDs;
                         refDataInfo.RefContent = resultDic["ReplyContent"].ToString();
                         GridSelectionMode = clientRefInfo.ClientRefPopupSetting.SettingSingleRow == 0 ? SelectionMode.Single : SelectionMode.Multiple;
@@ -264,6 +265,11 @@ namespace SystemTestingPlugin.ViewModels
                             TreeVisibility = Visibility.Collapsed;
                         }
                     }
+                    else
+                    {
+                        VicMessageBoxNormal.Show(resultDic["ReplyAlertMessage"].ToString());
+                        //refWindow.Close();
+                    }
                 });
             }
         }
@@ -274,7 +280,7 @@ namespace SystemTestingPlugin.ViewModels
             MongoModelInfoOfClientRefPropertyModel propertyModel = clientRefInfo.ClientRefProperty.FirstOrDefault(it => it.PropertyKey.Equals(clientRefInfo.ClientRefField));
             if (propertyModel != null)
             {
-                string refTableName = propertyModel.PropertyValue.Substring(0,propertyModel.PropertyValue.IndexOf("."));
+                string refTableName = propertyModel.PropertyValue.Substring(0, propertyModel.PropertyValue.IndexOf("."));
                 string refFiledName = propertyModel.PropertyValue.Substring(propertyModel.PropertyValue.LastIndexOf(".") + 1);
                 Dictionary<string, object> tableDic = new Dictionary<string, object>();
                 tableDic.Add("name", refTableName);
@@ -362,7 +368,7 @@ namespace SystemTestingPlugin.ViewModels
             List<Dictionary<string, object>> defaultCondition = OrganizeDefaultCondition(currentPage);
             DataMessageOperation dataOp = new DataMessageOperation();
             DataSet ds = new DataSet();
-            string resultStr = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out ds, defaultCondition.Count > 0 ? defaultCondition : null, refDataInfo.SystemId, refDataInfo.ConfigSystemId, true);
+            string resultStr = dataOp.GetRefData(refDataInfo.ViewId, refDataInfo.DataPath, refDataInfo.FieldName, refDataInfo.RowValue, out ds, defaultCondition.Count > 0 ? defaultCondition : null, refDataInfo.SystemId, refDataInfo.ConfigSystemId, true,refDataInfo.RefSystemId);
             Dictionary<string, object> resultDic = JsonHelper.ToObject<Dictionary<string, object>>(resultStr);
             if (!resultDic["ReplyMode"].ToString().Equals("0"))
             {
