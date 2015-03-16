@@ -47,6 +47,13 @@
                 <ctrl:VicLabelNormal Grid.Column="0" Grid.Row="0">本地站点:</ctrl:VicLabelNormal>
                 <ctrl:VicTextBoxNormal Grid.Column="1" Grid.Row="0" Height="24" Name="tBoxLocalSite" VicText="{Binding SiteInfoModel.LocalPath,UpdateSourceTrigger=PropertyChanged}"/>
                 <ctrl:VicListViewNormal Grid.Row="1" Grid.ColumnSpan="3" Name="lviewLocal" ItemsSource="{Binding LocalFileList,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedLocalFile,UpdateSourceTrigger=PropertyChanged}">
+                    <ctrl:VicListViewNormal.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="打开" Name="mItemLocalOpen" Command="{Binding mItemLocalOpenClickCommand}"/>
+                            <MenuItem Header="上传" Name="mItemLocalUpload" Command="{Binding mItemLocalUploadClickCommand}"/>
+                            <MenuItem Header="打开文件位置" Name="mItemLocalOpenFolder" Command="{Binding mItemLocalOpenFolderClickCommand}"/>
+                        </ContextMenu>
+                    </ctrl:VicListViewNormal.ContextMenu>
                     <ListView.View>
                         <GridView x:Name="localGridView">
                             <GridViewColumn Header="文件名" DisplayMemberBinding="{Binding Path=FileName}"></GridViewColumn>

@@ -11,6 +11,9 @@ using Victop.Frame.PublicLib.Common;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.IO;
+using System.Diagnostics;
+using Victop.Frame.DataMessageManager;
+using Victop.Frame.PublicLib.Helpers;
 
 namespace SystemTestingPlugin.ViewModels
 {
@@ -170,6 +173,10 @@ namespace SystemTestingPlugin.ViewModels
                 {
                     SiteInfoModel.LocalPath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
                     SiteInfoModel.RemotePath = "/";
+                    #region 登陆用户名及FTP地址默认
+                    SiteInfoModel.HostUrl = "192.168.40.198";
+                    SiteInfoModel.UserName = GetLoginUserName();
+                    #endregion
                     GetLocalFileInfo();
                 });
             }
@@ -233,6 +240,104 @@ namespace SystemTestingPlugin.ViewModels
                             }
                         }
                     }
+                });
+            }
+        }
+
+        /// <summary>
+        /// 打开
+        /// </summary>
+        public ICommand mItemLocalOpenClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    try
+                    {
+                        Process openPro = new Process();
+                        openPro.EnableRaisingEvents = false;
+                        openPro.StartInfo.FileName = Path.Combine(SiteInfoModel.LocalPath, SelectedLocalFile.FileName);
+                        openPro.Start();
+                    }
+                    catch (Exception ex)
+                    {
+                        string temp = ex.Message;
+                    }
+                }, () =>
+                {
+                    bool result = true;
+                    if (SelectedLocalFile == null)
+                    {
+                        return false;
+                    }
+                    if (SelectedLocalFile.IsDirectory)
+                    {
+                        return false;
+                    }
+                    return result;
+                });
+            }
+        }
+        /// <summary>
+        /// 上传
+        /// </summary>
+        public ICommand mItemLocalUploadClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    FTPManagerCommon ftpMgr = new FTPManagerCommon(SiteInfoModel.HostUrl, SiteInfoModel.UserName, SiteInfoModel.UserPwd);
+                    bool result = ftpMgr.Upload(Path.Combine(SiteInfoModel.LocalPath.EndsWith(":") ? SiteInfoModel.LocalPath + "\\" : SiteInfoModel.LocalPath, SelectedLocalFile.FileName), SiteInfoModel.RemotePath.EndsWith("/") ? SiteInfoModel.RemotePath : SiteInfoModel.RemotePath + "/");
+                    if (result)
+                    {
+                        ConnectFTP();
+                    }
+                }, () =>
+                {
+                    bool result = true;
+                    if (SelectedLocalFile == null)
+                    {
+                        return false;
+                    }
+                    if (SelectedLocalFile.IsDirectory)
+                    {
+                        return false;
+                    }
+                    return result;
+                });
+            }
+        }
+        /// <summary>
+        /// 打开文件位置
+        /// </summary>
+        public ICommand mItemLocalOpenFolderClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    try
+                    {
+                        Process.Start("Explorer.exe", "/select," + Path.Combine(SiteInfoModel.LocalPath, SelectedLocalFile.FileName));
+                    }
+                    catch (Exception ex)
+                    {
+                        string temp = ex.Message;
+                    }
+                }, () =>
+                {
+                    bool result = true;
+                    if (SelectedLocalFile == null)
+                    {
+                        return false;
+                    }
+                    if (SelectedLocalFile.IsDirectory)
+                    {
+                        return false;
+                    }
+                    return result;
                 });
             }
         }
@@ -374,6 +479,19 @@ namespace SystemTestingPlugin.ViewModels
 
         #endregion
         #region 私有方法
+
+        private string GetLoginUserName()
+        {
+            string userName = string.Empty;
+            string messageType = "ServerCenterService.GetUserInfo";
+            DataMessageOperation dataOp = new DataMessageOperation();
+            Dictionary<string, object> resultDic = dataOp.SendSyncMessage(messageType, new Dictionary<string, object>());
+            if (resultDic != null && !resultDic["ReplyMode"].ToString().Equals("0!"))
+            {
+                userName = JsonHelper.ReadJsonString(resultDic["ReplyContent"].ToString(), "UserCode");
+            }
+            return userName;
+        }
         /// <summary>
         /// 获取本地文件列表
         /// </summary>

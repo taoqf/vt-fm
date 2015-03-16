@@ -13,131 +13,139 @@
         <vm:UCAreaWindowViewModel x:Key="areaViewModel"/>
     </UserControl.Resources>
     <ctrl:VicGridNormal DataContext="{StaticResource ResourceKey=areaViewModel}" Name="gridmain">
-        <ctrl:VicStackPanelNormal>
-            <ctrl:VicGroupBoxNormal Header="数据查询" MaxHeight="400" MinHeight="300">
-                <ctrl:VicGridNormal>
-                    <ctrl:VicGridNormal.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </ctrl:VicGridNormal.RowDefinitions>
-                    <ctrl:VicWrapPanelNormal Grid.Row="0">
-                        <ctrl:VicLabelNormal>ModelId:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="200" Height="24" Name="tBoxModelId" VicText="{Binding DataInfoModel.ModelId}" TabIndex="1"/>
-                        <ctrl:VicLabelNormal>SystemId:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxSystemId" VicText="{Binding DataInfoModel.SystemId}" TabIndex="2"/>
-                        <ctrl:VicLabelNormal>ConfigsystemId</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxConfigsystemId" VicText="{Binding DataInfoModel.ConfigsystemId}" TabIndex="3"/>
-                        <ctrl:VicLabelNormal>RefSystemId</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxRefSystemId" VicText="{Binding DataInfoModel.RefSystemId}" TabIndex="4"/>
-                        <ctrl:VicLabelNormal>SpaceId</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxSpaceId" VicText="{Binding DataInfoModel.SpaceId}" TabIndex="5"/>
-                        <ctrl:VicLabelNormal>TableName:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxTableName" VicText="{Binding DataInfoModel.TableName}" TabIndex="6"/>
-                        <ctrl:VicCheckBoxNormal  Name="cBoxEmpty" Content="数据" IsChecked="{Binding DataInfoModel.EmptyFlag}"/>
-                        <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSearch" Content="查询" Command="{Binding btnSearchClickCommand,UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=dgridSearch}" TabIndex="6"/>
-                        <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewJsonData" Content="查看Json数据" Command="{Binding btnViewJsonDataClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
-                        <ctrl:VicButtonNormal Width="100" Height="24" Name="btnAddData" Content="添加" Command="{Binding btnAddDataClickCommand}"/>
-                        <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSaveData" Content="保存" Command="{Binding btnSaveDataClickCommand}"/>
-                        <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding DataInfoModel.VertifyMsg}"/>
-                    </ctrl:VicWrapPanelNormal>
-                    <ctrl:VicTabControlNormal Grid.Row="1">
-                        <ctrl:VicTabItemNormal Header="查询条件" AllowDelete="False">
-                            <ctrl:VicRichTextBoxNormal Name="rTBoxCondition" VicText="{Binding DataInfoModel.ConditionStr,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
-                        </ctrl:VicTabItemNormal>
-                        <ctrl:VicTabItemNormal Header="数据路径" AllowDelete="False">
-                            <ctrl:VicRichTextBoxNormal Name="rTBoxDataPath" VicText="{Binding DataInfoModel.DataPath,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
-                        </ctrl:VicTabItemNormal>
-                        <ctrl:VicTabItemNormal Header="DataTable数据" AllowDelete="False">
-                            <ctrl:VicDataGrid AutoGenerateColumns="False" IsUserSetColumn="False" Name="dgridSearch" ItemsSource="{Binding DataInfoModel.ResultDataTable}" SelectedValue="{Binding DataInfoModel.GridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="_id"/>
-                        </ctrl:VicTabItemNormal>
-                        <ctrl:VicTabItemNormal Header="Json数据" AllowDelete="False">
-                            <ctrl:VicRichTextBoxNormal Name="rTBoxJsonData" VicText="{Binding DataInfoModel.JsonData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
-                        </ctrl:VicTabItemNormal>
-                        <ctrl:VicTabItemNormal Header="窄表引用测试" AllowDelete="False">
-                            <ctrl:VicGridNormal>
-                                <ctrl:VicGridNormal.RowDefinitions>
-                                    <RowDefinition Height="40"/>
-                                    <RowDefinition Height="*"/>
-                                </ctrl:VicGridNormal.RowDefinitions>
-                                <ctrl:VicWrapPanelNormal Grid.Row="0">
-                                    <ctrl:VicLabelNormal>RowValue:</ctrl:VicLabelNormal>
-                                    <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxRowValue" VicText="{Binding DataInfoModel.NarrowRowValue}"/>
-                                    <ctrl:VicLabelNormal>RefField:</ctrl:VicLabelNormal>
-                                    <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxRefField" VicText="{Binding DataInfoModel.NarrowRefField}"/>
-                                    <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewNarrowData" Content="查看窄表引用" Command="{Binding btnViewNarrowDataClickCommand}"/>
-                                    <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSetNarrowData" Content="回填数据" Command="{Binding btnSetNarrowDataClickCommand}"/>
-                                </ctrl:VicWrapPanelNormal>
-                                <DataGrid Grid.Row="1" Name="dgridNarrowRefData" ItemsSource="{Binding DataInfoModel.RefDataTable}" SelectedValue="{Binding DataInfoModel.NarrowGridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="val"/>
-                            </ctrl:VicGridNormal>
-                        </ctrl:VicTabItemNormal>
-                    </ctrl:VicTabControlNormal>
-                </ctrl:VicGridNormal>
-            </ctrl:VicGroupBoxNormal>
-            <ctrl:VicGroupBoxNormal Header="编号服务" MaxHeight="400" MinHeight="200">
-                <ctrl:VicGridNormal>
-                    <ctrl:VicGridNormal.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="*"/>
-                    </ctrl:VicGridNormal.RowDefinitions>
-                    <ctrl:VicDockPanelNormal Grid.Row="0">
-                        <ctrl:VicLabelNormal>SystemId:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxCodeSystemId" VicText="{Binding CodeInfoModel.SystemId}"/>
-                        <ctrl:VicLabelNormal>ConfigsystemId:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxCodeConfigSystemId" VicText="{Binding CodeInfoModel.ConfigsystemId}"/>
-                        <ctrl:VicLabelNormal>PName:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxCodePname" VicText="{Binding CodeInfoModel.PName}"/>
-                        <ctrl:VicLabelNormal>SetInfo:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxCodeSetInfo" VicText="{Binding CodeInfoModel.SetInfo}"/>
-                        <ctrl:VicButtonNormal Width="100" Height="24" Content="执行" Command="{Binding btnExcuteCodeServiceClickCommand}"/>
-                        <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding CodeInfoModel.VertifyMsg}"/>
-                    </ctrl:VicDockPanelNormal>
-                    <ctrl:VicRichTextBoxNormal Grid.Row="1" VicText="{Binding CodeInfoModel.ResultData}"/>
-                </ctrl:VicGridNormal>
-            </ctrl:VicGroupBoxNormal>
-            <ctrl:VicGroupBoxNormal Header="用户信息及菜单" MaxHeight="400" MinHeight="200">
-                <ctrl:VicGridNormal>
-                    <ctrl:VicGridNormal.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="*"/>
-                    </ctrl:VicGridNormal.RowDefinitions>
-                    <ctrl:VicDockPanelNormal Grid.Row="0">
-                        <ctrl:VicLabelNormal>SystemId:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserSystemId" VicText="{Binding UserInfoModel.SystemId}" />
-                        <ctrl:VicLabelNormal>ConfigsystemId:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserConfigsystemId" VicText="{Binding UserInfoModel.ConfigsystemId}"/>
-                        <ctrl:VicLabelNormal>客户端类型:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserClientType" VicText="{Binding UserInfoModel.ClientType}"/>
-                        <ctrl:VicLabelNormal>用户名称:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserName" VicText="{Binding UserInfoModel.UserCode}"/>
-                        <ctrl:VicButtonNormal Width="100" Height="24" Name="tBoxUserSearch" Content="检索" Command="{Binding tBoxUserSearchClickCommand}"/>
-                        <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding UserInfoModel.VertifyMsg}"/>
-                    </ctrl:VicDockPanelNormal>
-                    <ctrl:VicRichTextBoxNormal Grid.Row="1" Name="rBoxUserMenuInfo" VicText="{Binding UserInfoModel.ResultData}"/>
-                </ctrl:VicGridNormal>
-            </ctrl:VicGroupBoxNormal>
-            <ctrl:VicGroupBoxNormal Header="其他" MaxHeight="400" MinHeight="200">
-                <ctrl:VicGridNormal>
-                    <ctrl:VicGridNormal.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="*"/>
-                    </ctrl:VicGridNormal.RowDefinitions>
-                    <ctrl:VicDockPanelNormal Grid.Row="0">
-                        <ctrl:VicLabelNormal>消息类型:</ctrl:VicLabelNormal>
-                        <ctrl:VicTextBoxNormal Width="300" Height="24" Name="tBoxMessageType" VicText="{Binding OtherInfoModel.MessageType}"/>
-                        <ctrl:VicButtonNormal Width="100" Height="24" Name="btnOtherExcute" Content="执行" Command="{Binding btnOtherExcuteClickCommand}"/>
-                        <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding OtherInfoModel.VertifyMsg}"/>
-                    </ctrl:VicDockPanelNormal>
-                    <ctrl:VicTabControlNormal Grid.Row="1">
-                        <ctrl:VicTabItemNormal Header="条件" AllowDelete="False">
-                            <ctrl:VicRichTextBoxNormal Name="rBoxOtherCondition" VicText="{Binding OtherInfoModel.OtherConditionData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
-                        </ctrl:VicTabItemNormal>
-                        <ctrl:VicTabItemNormal Header="结果" AllowDelete="False">
-                            <ctrl:VicRichTextBoxNormal Name="rBoxOtherResult" VicText="{Binding OtherInfoModel.OtherResultData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
-                        </ctrl:VicTabItemNormal>
-                    </ctrl:VicTabControlNormal>
-                </ctrl:VicGridNormal>
-            </ctrl:VicGroupBoxNormal>
-        </ctrl:VicStackPanelNormal>
+        <ctrl:VicTabControlNormal Background="Transparent">
+            <ctrl:VicTabItemNormal Header="数据测试" AllowDelete="False">
+                <ctrl:VicStackPanelNormal>
+                    <ctrl:VicGroupBoxNormal Header="数据查询" MaxHeight="400" MinHeight="300">
+                        <ctrl:VicGridNormal>
+                            <ctrl:VicGridNormal.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </ctrl:VicGridNormal.RowDefinitions>
+                            <ctrl:VicWrapPanelNormal Grid.Row="0">
+                                <ctrl:VicLabelNormal>ModelId:</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="200" Height="24" Name="tBoxModelId" VicText="{Binding DataInfoModel.ModelId}" TabIndex="1"/>
+                                <ctrl:VicLabelNormal>SystemId:</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxSystemId" VicText="{Binding DataInfoModel.SystemId}" TabIndex="2"/>
+                                <ctrl:VicLabelNormal>ConfigsystemId</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxConfigsystemId" VicText="{Binding DataInfoModel.ConfigsystemId}" TabIndex="3"/>
+                                <ctrl:VicLabelNormal>RefSystemId</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxRefSystemId" VicText="{Binding DataInfoModel.RefSystemId}" TabIndex="4"/>
+                                <ctrl:VicLabelNormal>SpaceId</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxSpaceId" VicText="{Binding DataInfoModel.SpaceId}" TabIndex="5"/>
+                                <ctrl:VicLabelNormal>TableName:</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxTableName" VicText="{Binding DataInfoModel.TableName}" TabIndex="6"/>
+                                <ctrl:VicCheckBoxNormal  Name="cBoxEmpty" Content="数据" IsChecked="{Binding DataInfoModel.EmptyFlag}"/>
+                                <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSearch" Content="查询" Command="{Binding btnSearchClickCommand,UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=dgridSearch}" TabIndex="6"/>
+                                <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewJsonData" Content="查看Json数据" Command="{Binding btnViewJsonDataClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
+                                <ctrl:VicButtonNormal Width="100" Height="24" Name="btnAddData" Content="添加" Command="{Binding btnAddDataClickCommand}"/>
+                                <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSaveData" Content="保存" Command="{Binding btnSaveDataClickCommand}"/>
+                                <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding DataInfoModel.VertifyMsg}"/>
+                            </ctrl:VicWrapPanelNormal>
+                            <ctrl:VicTabControlNormal Grid.Row="1">
+                                <ctrl:VicTabItemNormal Header="查询条件" AllowDelete="False">
+                                    <ctrl:VicRichTextBoxNormal Name="rTBoxCondition" VicText="{Binding DataInfoModel.ConditionStr,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                                </ctrl:VicTabItemNormal>
+                                <ctrl:VicTabItemNormal Header="数据路径" AllowDelete="False">
+                                    <ctrl:VicRichTextBoxNormal Name="rTBoxDataPath" VicText="{Binding DataInfoModel.DataPath,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                                </ctrl:VicTabItemNormal>
+                                <ctrl:VicTabItemNormal Header="DataTable数据" AllowDelete="False">
+                                    <ctrl:VicDataGrid AutoGenerateColumns="False" IsUserSetColumn="False" Name="dgridSearch" ItemsSource="{Binding DataInfoModel.ResultDataTable}" SelectedValue="{Binding DataInfoModel.GridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="_id"/>
+                                </ctrl:VicTabItemNormal>
+                                <ctrl:VicTabItemNormal Header="Json数据" AllowDelete="False">
+                                    <ctrl:VicRichTextBoxNormal Name="rTBoxJsonData" VicText="{Binding DataInfoModel.JsonData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                                </ctrl:VicTabItemNormal>
+                                <ctrl:VicTabItemNormal Header="窄表引用测试" AllowDelete="False">
+                                    <ctrl:VicGridNormal>
+                                        <ctrl:VicGridNormal.RowDefinitions>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="*"/>
+                                        </ctrl:VicGridNormal.RowDefinitions>
+                                        <ctrl:VicWrapPanelNormal Grid.Row="0">
+                                            <ctrl:VicLabelNormal>RowValue:</ctrl:VicLabelNormal>
+                                            <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxRowValue" VicText="{Binding DataInfoModel.NarrowRowValue}"/>
+                                            <ctrl:VicLabelNormal>RefField:</ctrl:VicLabelNormal>
+                                            <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxRefField" VicText="{Binding DataInfoModel.NarrowRefField}"/>
+                                            <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewNarrowData" Content="查看窄表引用" Command="{Binding btnViewNarrowDataClickCommand}"/>
+                                            <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSetNarrowData" Content="回填数据" Command="{Binding btnSetNarrowDataClickCommand}"/>
+                                        </ctrl:VicWrapPanelNormal>
+                                        <DataGrid Grid.Row="1" Name="dgridNarrowRefData" ItemsSource="{Binding DataInfoModel.RefDataTable}" SelectedValue="{Binding DataInfoModel.NarrowGridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="val"/>
+                                    </ctrl:VicGridNormal>
+                                </ctrl:VicTabItemNormal>
+                            </ctrl:VicTabControlNormal>
+                        </ctrl:VicGridNormal>
+                    </ctrl:VicGroupBoxNormal>
+                    <ctrl:VicGroupBoxNormal Header="编号服务" MaxHeight="400" MinHeight="200">
+                        <ctrl:VicGridNormal>
+                            <ctrl:VicGridNormal.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </ctrl:VicGridNormal.RowDefinitions>
+                            <ctrl:VicDockPanelNormal Grid.Row="0">
+                                <ctrl:VicLabelNormal>SystemId:</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxCodeSystemId" VicText="{Binding CodeInfoModel.SystemId}"/>
+                                <ctrl:VicLabelNormal>ConfigsystemId:</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxCodeConfigSystemId" VicText="{Binding CodeInfoModel.ConfigsystemId}"/>
+                                <ctrl:VicLabelNormal>PName:</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxCodePname" VicText="{Binding CodeInfoModel.PName}"/>
+                                <ctrl:VicLabelNormal>SetInfo:</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxCodeSetInfo" VicText="{Binding CodeInfoModel.SetInfo}"/>
+                                <ctrl:VicButtonNormal Width="100" Height="24" Content="执行" Command="{Binding btnExcuteCodeServiceClickCommand}"/>
+                                <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding CodeInfoModel.VertifyMsg}"/>
+                            </ctrl:VicDockPanelNormal>
+                            <ctrl:VicRichTextBoxNormal Grid.Row="1" VicText="{Binding CodeInfoModel.ResultData}"/>
+                        </ctrl:VicGridNormal>
+                    </ctrl:VicGroupBoxNormal>
+                    <ctrl:VicGroupBoxNormal Header="用户信息及菜单" MaxHeight="400" MinHeight="200">
+                        <ctrl:VicGridNormal>
+                            <ctrl:VicGridNormal.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </ctrl:VicGridNormal.RowDefinitions>
+                            <ctrl:VicDockPanelNormal Grid.Row="0">
+                                <ctrl:VicLabelNormal>SystemId:</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserSystemId" VicText="{Binding UserInfoModel.SystemId}" />
+                                <ctrl:VicLabelNormal>ConfigsystemId:</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserConfigsystemId" VicText="{Binding UserInfoModel.ConfigsystemId}"/>
+                                <ctrl:VicLabelNormal>客户端类型:</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserClientType" VicText="{Binding UserInfoModel.ClientType}"/>
+                                <ctrl:VicLabelNormal>用户名称:</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxUserName" VicText="{Binding UserInfoModel.UserCode}"/>
+                                <ctrl:VicButtonNormal Width="100" Height="24" Name="tBoxUserSearch" Content="检索" Command="{Binding tBoxUserSearchClickCommand}"/>
+                                <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding UserInfoModel.VertifyMsg}"/>
+                            </ctrl:VicDockPanelNormal>
+                            <ctrl:VicRichTextBoxNormal Grid.Row="1" Name="rBoxUserMenuInfo" VicText="{Binding UserInfoModel.ResultData}"/>
+                        </ctrl:VicGridNormal>
+                    </ctrl:VicGroupBoxNormal>
+                    <ctrl:VicGroupBoxNormal Header="其他" MaxHeight="400" MinHeight="200">
+                        <ctrl:VicGridNormal>
+                            <ctrl:VicGridNormal.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </ctrl:VicGridNormal.RowDefinitions>
+                            <ctrl:VicDockPanelNormal Grid.Row="0">
+                                <ctrl:VicLabelNormal>消息类型:</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="300" Height="24" Name="tBoxMessageType" VicText="{Binding OtherInfoModel.MessageType}"/>
+                                <ctrl:VicButtonNormal Width="100" Height="24" Name="btnOtherExcute" Content="执行" Command="{Binding btnOtherExcuteClickCommand}"/>
+                                <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding OtherInfoModel.VertifyMsg}"/>
+                            </ctrl:VicDockPanelNormal>
+                            <ctrl:VicTabControlNormal Grid.Row="1">
+                                <ctrl:VicTabItemNormal Header="条件" AllowDelete="False">
+                                    <ctrl:VicRichTextBoxNormal Name="rBoxOtherCondition" VicText="{Binding OtherInfoModel.OtherConditionData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                                </ctrl:VicTabItemNormal>
+                                <ctrl:VicTabItemNormal Header="结果" AllowDelete="False">
+                                    <ctrl:VicRichTextBoxNormal Name="rBoxOtherResult" VicText="{Binding OtherInfoModel.OtherResultData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                                </ctrl:VicTabItemNormal>
+                            </ctrl:VicTabControlNormal>
+                        </ctrl:VicGridNormal>
+                    </ctrl:VicGroupBoxNormal>
+                </ctrl:VicStackPanelNormal>
+            </ctrl:VicTabItemNormal>
+            <ctrl:VicTabItemNormal Header="飞道FTP" AllowDelete="False">
+                <local:UCVictopFTP/>
+            </ctrl:VicTabItemNormal>
+        </ctrl:VicTabControlNormal>
+        
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Unloaded">
                 <i:InvokeCommandAction Command="{Binding UCMainUnloadedCommand}" CommandParameter="{Binding ElementName=UCMain, Path=Uid}"/>
