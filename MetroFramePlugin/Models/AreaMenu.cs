@@ -53,8 +53,8 @@ namespace MetroFramePlugin.Models
         /// <summary>
         ///区域距左侧宽度
         /// </summary>
-        private int leftSpan = 300;
-        public int LeftSpan
+        private double leftSpan = 300;
+        public double LeftSpan
         {
             get { return leftSpan; }
             set
@@ -67,8 +67,8 @@ namespace MetroFramePlugin.Models
         /// <summary>
         ///区域距顶部高度
         /// </summary>
-        private int topSpan = 300;
-        public int TopSpan
+        private double topSpan = 300;
+        public double TopSpan
         {
             get { return topSpan; }
             set
@@ -81,8 +81,8 @@ namespace MetroFramePlugin.Models
         /// <summary>
         ///区域宽度
         /// </summary>
-        private int areaWidth = 300;
-        public int AreaWidth
+        private double areaWidth = 300;
+        public double AreaWidth
         {
             get { return areaWidth; }
             set
@@ -95,8 +95,8 @@ namespace MetroFramePlugin.Models
         /// <summary>
         ///区域高度
         /// </summary>
-        private int areaHeight = 300;
-        public int AreaHeight
+        private double areaHeight = 300;
+        public double AreaHeight
         {
             get { return areaHeight; }
             set

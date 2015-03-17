@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Configuration;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
@@ -1117,6 +1118,7 @@ namespace MetroFramePlugin.ViewModels
                     _panel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
                     _listbox = area.FindName("listBoxPopupMenuList") as ListBox;
                     DrawingPanelArea();//读文件并渲染区域
+                    ThumbCanvas();//实现拖动
                 });
             }
         }
@@ -1162,7 +1164,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                   
+                   _listbox.SelectedItems.Clear();//每次打开弹框，去掉之前所选的
                     SelectPopupMenuList.Clear();
                     int k = 0;
                     for (int i = 0; i < NewArea.Count; i++)
@@ -1195,7 +1197,8 @@ namespace MetroFramePlugin.ViewModels
                     sw.Flush();
                     sw.Close();
                     sw.Dispose();
-                    DrawingPanelArea();
+                    DrawingPanelArea();//重绘
+                    ThumbCanvas();//实现拖动
 
                 });
             }
@@ -1261,6 +1264,7 @@ namespace MetroFramePlugin.ViewModels
                     _title.Background = Brushes.Gainsboro;
 
                     ListBox menuList = new ListBox();
+                    menuList.Background = Brushes.WhiteSmoke;
                     ListBoxItem _item = new ListBoxItem();
                     menuList.Items.Add(_item);
                     menuList.Style = area.FindResource("addApply") as Style;
@@ -1286,6 +1290,8 @@ namespace MetroFramePlugin.ViewModels
                     sw.Flush();
                     sw.Close();
                     sw.Dispose();
+
+                   ThumbCanvas(_newPanel);//实现拖动
                 });
             }
         }
@@ -1299,6 +1305,7 @@ namespace MetroFramePlugin.ViewModels
         private void DrawingPanelArea()
         {
             NewArea.Clear();
+            _panel.Children.Clear();
             //读取myMenu.json文件并展示
             string areaMenuList = string.Empty;
             menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";
@@ -1347,7 +1354,27 @@ namespace MetroFramePlugin.ViewModels
                 _panel.Children.Add(_newPanel);
             }
         }
-        /// <summary>
+        ///<summary>
+        /// 初始化拖动
+        /// </summary>
+
+        private void ThumbCanvas(UIElement lElementName=null)
+        {
+            //实现拖动
+            var layer = AdornerLayer.GetAdornerLayer(_panel);
+            if (lElementName==null)
+            {
+                foreach (UIElement ui in _panel.Children)
+                {
+                    layer.Add(new MyCanvasAdorner(ui, true));
+                }
+            }
+            else
+            {
+                layer.Add(new MyCanvasAdorner(lElementName, true));
+            }
+        }
+
         /// 获取父级控件
         /// </summary>
         /// <typeparam name="T"></typeparam>

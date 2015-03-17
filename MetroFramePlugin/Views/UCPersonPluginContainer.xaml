@@ -168,8 +168,10 @@
         </Style>
     </UserControl.Resources>
     <Grid>
+        <AdornerDecorator>
         <Canvas x:Name="bigPanel" Background="{DynamicResource WhiteShade}">
-            <Canvas.ContextMenu>
+                <Thumb Name="thumb"  Foreground="{x:Null}" ClipToBounds="False"  Width="906" Canvas.Left="10" Canvas.Top="10" Background="BlanchedAlmond"  RenderTransformOrigin="1.196,1.734" Visibility="Collapsed" Height="21"/>
+                <Canvas.ContextMenu>
                 <controls:VicContextMenu>
                     <controls:VicMenuItemNormal Header="新建区域">
                         <controls:VicMenuItemNormal x:Name="addBtnArea" Header="按钮区域" Command="{Binding btnAddAreaClickCommand}"></controls:VicMenuItemNormal>
@@ -184,6 +186,7 @@
                 </controls:VicContextMenu>
             </Canvas.ContextMenu>
         </Canvas>
+        </AdornerDecorator>
         <controls:VicPopup x:Name="AddApply"   Margin="0,10,0,0"   StaysOpen="True" Placement="Center" IsOpen="{Binding PopupIsShow,UpdateSourceTrigger=PropertyChanged}">
             <Border BorderThickness="2" BorderBrush="{DynamicResource SkinColor}"  Width="600" Height="500" Background="{DynamicResource MainBackgroundImage}" >
                 <controls:VicGridNormal Background="{DynamicResource WhiteShade}">
@@ -194,7 +197,7 @@
                     </controls:VicGridNormal.RowDefinitions>
                     <controls:VicTextBlockNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Bold" FontSize="18" Margin="5" Text="添加应用"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <controls:VicTextBoxNormal Grid.Row="0" VerticalAlignment="Center" VerticalContentAlignment="Center" WaterMark="   输入应用名称"  Width="150"/>
+                        <controls:VicTextBoxSeach Grid.Row="0" VerticalAlignment="Center" VerticalContentAlignment="Center" WaterMark="  输入应用名称"  Width="150"/>
                         <controls:VicButtonNormal Name="btnPopupClose" Style="{DynamicResource btnCloseStyle}" Margin="8,0,0,0" Grid.Row="0" Width="24" Height="24" Command="{Binding btnAddApplyCloseClickCommand}"/>
                     </StackPanel>
                     <Grid Grid.Row="1">

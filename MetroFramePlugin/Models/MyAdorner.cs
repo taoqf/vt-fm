@@ -121,9 +121,23 @@ namespace MetroFramePlugin.Models
                 var element = AdornedElement as FrameworkElement;
                 if (element == null)
                     return;
-
-                Canvas.SetLeft(element, Canvas.GetLeft(element) + e.HorizontalChange);
-                Canvas.SetTop(element, Canvas.GetTop(element) + e.VerticalChange);
+                if (Canvas.GetLeft(element) + e.HorizontalChange < 0)
+                {
+                    Canvas.SetLeft(element, 5);
+                }
+                else
+                {
+                    Canvas.SetLeft(element, Canvas.GetLeft(element) + e.HorizontalChange);
+                }
+                if (Canvas.GetTop(element) + e.VerticalChange < 0)
+                {
+                    Canvas.SetTop(element, 5);
+                }
+                else
+                {
+                    Canvas.SetTop(element, Canvas.GetTop(element) + e.VerticalChange);
+                }
+               
             };
             return thumb;
         }
