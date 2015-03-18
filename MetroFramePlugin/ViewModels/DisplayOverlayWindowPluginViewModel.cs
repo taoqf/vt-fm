@@ -14,6 +14,8 @@ using Victop.Server.Controls;
 using Victop.Frame.PublicLib.Helpers;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using MetroFramePlugin.Models;
+using MetroFramePlugin.Views;
 
 namespace MetroFramePlugin.ViewModels
 {
@@ -21,15 +23,53 @@ namespace MetroFramePlugin.ViewModels
    {
        #region 字段
        private Window displayOverlayWindow;
+       private ObservableCollection<MenuModel> systemFourthLevelMenuList;
+       private Grid grid;
        /// <summary>
        /// 存储插件信息
        /// </summary>
        private List<Dictionary<string, object>> pluginList;
        private ObservableCollection<VicTabItemNormal> tabItemList;
-       
+       private string tPid;
        #endregion
 
        #region 属性
+       /// <summary>
+       /// 活动插件数目
+       /// </summary>
+       private long activePluginNum;
+       public long ActivePluginNum
+       {
+           get
+           {
+               return activePluginNum;
+           }
+           set
+           {
+               if (activePluginNum != value)
+               {
+                   activePluginNum = value;
+                   RaisePropertyChanged("ActivePluginNum");
+               }
+           }
+       }
+       public ObservableCollection<MenuModel> SystemFourthLevelMenuList
+       {
+           get
+           {
+               if (systemFourthLevelMenuList == null)
+                   systemFourthLevelMenuList = new ObservableCollection<MenuModel>();
+               return systemFourthLevelMenuList;
+           }
+           set
+           {
+               if (systemFourthLevelMenuList != value)
+               {
+                   systemFourthLevelMenuList = value;
+                   RaisePropertyChanged("SystemFourthLevelMenuList");
+               }
+           }
+       }
        #endregion
 
        #region 命令
@@ -39,51 +79,177 @@ namespace MetroFramePlugin.ViewModels
                return new RelayCommand<object>((x) =>
                {
                    displayOverlayWindow = (Window)x;
-                   VicWrapPanelNormal PluginListContent = new VicWrapPanelNormal();
+                   grid =(Grid) displayOverlayWindow.FindName("grid");
                    //获取插件信息
                    DataMessageOperation dataop = new DataMessageOperation();
                    pluginList = dataop.GetPluginInfo();
                    foreach (Dictionary<string, object> PluginInfo in pluginList)
                    {
-                       VicButtonNormal btn = new VicButtonNormal();
-                       btn.Width = 160;
-                       btn.Height = 120;
-                       Thickness thick = new Thickness(10);
-                       btn.Margin = thick;
                        IPlugin Plugin = PluginInfo["IPlugin"] as IPlugin;
-                       if (Plugin.ShowType == 0)
+                       string pid = PluginInfo["ObjectId"].ToString();
+                       MenuModel menumodel = new MenuModel();
+                       if (Plugin.ShowType == 0)//窗口
                        {
 
                            if (Plugin.ParamDict.ContainsKey("Title"))
                            {
-                               if (Plugin.ParamDict["Title"].ToString().Length > 8)
+                               if (Plugin.ParamDict["Title"].ToString().Length > 10)
                                {
-                                   btn.Content = Plugin.ParamDict["Title"].ToString().Substring(0, 6) + "...";
-                                   btn.ToolTip = Plugin.ParamDict["Title"];
+                                   menumodel.MenuName = Plugin.ParamDict["Title"].ToString().Substring(0, 10) + "...";
+                                   
                                }
                                else
                                {
-                                   btn.Content = Plugin.ParamDict["Title"];
+                                   menumodel.MenuName = Plugin.ParamDict["Title"].ToString();
                                }
+                               SystemFourthLevelMenuList.Add(menumodel);
                            }
-                           else
-                               btn.Content = Plugin.PluginTitle;
-                           btn.Tag = PluginInfo;
-                           btn.Click += ActivatePlugin_Click;
-                           PluginListContent.Children.Add(btn);
                        }
                        else
                        {
-                           btn.Content = Plugin.PluginTitle;
-                           btn.Tag = PluginInfo;
-                           btn.Click += ActivatePlugin_Click;
-                           PluginListContent.Children.Add(btn);
+                           if (Plugin.PluginTitle.Length >= 10)
+                           {
+                               menumodel.MenuName = Plugin.PluginTitle.ToString().Substring(0, 10) + "...";
+                               menumodel.ActionType = Plugin.ShowType.ToString();
+                               menumodel.ResourceName = Plugin.PluginName;
+                               menumodel.Uid = PluginInfo["ObjectId"].ToString();
+                               menumodel.ShowType = Plugin.ShowType.ToString();
+                           }
+                           else
+                           {
+                               menumodel.MenuName = Plugin.PluginTitle;
+                               menumodel.ActionType = Plugin.ShowType.ToString();
+                               menumodel.ResourceName = Plugin.PluginName;
+                               menumodel.Uid = PluginInfo["ObjectId"].ToString();
+                               menumodel.ShowType = Plugin.ShowType.ToString();
+                           }
+                           SystemFourthLevelMenuList.Add(menumodel);
                        }
-                       displayOverlayWindow.Content = PluginListContent;
+                       
+                   }
+                    //<ListBox Grid.Row="1" Name="listBoxOverPlugin" SelectedIndex="0" Style="{DynamicResource OverlayPluginListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>
+                   for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
+                   {
+                       ListBox lbox = new ListBox();
+                       lbox.ItemsSource = SystemFourthLevelMenuList;
+                      
+                       lbox.Style = displayOverlayWindow.FindResource("OverlayPluginListStyle") as Style;
+                       grid.Children.Add(lbox);
+                   }
+                  
+               });
+           }
+       }
+
+       #region 单击插件运行命令
+       public ICommand btnPluginRunClickCommand
+       {
+           get
+           {
+               return new RelayCommand<object>((x) =>
+               {
+                   if (x != null)
+                   {
+                       MenuModel menuModel = (MenuModel)x;
+                       
+                       VicTabControlNormal tabCtr = OverlayWindow.VicTabCtrl;
+                       for (int i = 0; i < tabCtr.Items.Count; i++)
+                       {
+                           VicTabItemNormal tabItem = tabCtr.Items[i] as VicTabItemNormal;
+                           string res = tabItem.Uid;
+                           if (tabItem.Uid.Equals(menuModel.Uid))
+                           {
+                               tabItem.IsSelected = true;
+                               tabItem.Focus();
+                           }
+                       }
                    }
                });
            }
        }
+       #endregion
+
+       #region 打开Json菜单下的插件
+       /// <summary>
+       /// 打开Json菜单下的插件
+       /// </summary>
+       private void OpenJsonMenuPlugin(MenuModel selectedFourthMenu)
+       {
+           if (TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)) != null)
+           {
+               TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)).IsSelected = true;
+               return;
+           }
+           if (selectedFourthMenu.ResourceName != null)
+           {
+               if (selectedFourthMenu.ActionType == "1")//启动插件
+               {
+                   DataMessageOperation pluginOp = new DataMessageOperation();
+                   Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                   paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
+                   paramDic.Add("configsystemid", selectedFourthMenu.ConfigSystemId);
+                   paramDic.Add("spaceid", selectedFourthMenu.SpaceId);
+                   paramDic.Add("menuno", selectedFourthMenu.MenuNo);
+                   paramDic.Add("menucode", selectedFourthMenu.MenuCode);
+                   // paramDic.Add("authoritycode", selectedFourthMenu.HomeId);
+                   paramDic.Add("fitdata", selectedFourthMenu.FitDataPath);
+                   paramDic.Add("cadname", selectedFourthMenu.ActionCADName);
+                   PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
+                   if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
+                   {
+                       PluginShow(pluginModel, selectedFourthMenu.MenuName);
+                   }
+                   else
+                   {
+                       VicMessageBoxNormal.Show(pluginModel.ErrorMsg);
+                       return;
+                   }
+               }
+           }
+       }
+       #endregion
+
+       #region 加载插件
+       private void PluginShow(PluginModel pluginModel, string HeaderTitle = null)
+       {
+           try
+           {
+               DataMessageOperation pluginOp = new DataMessageOperation();
+               switch (pluginModel.PluginInterface.ShowType)
+               {
+                   case 0:
+                       Window pluginWin = pluginModel.PluginInterface.StartWindow;
+                       pluginWin.Uid = pluginModel.ObjectId;
+                       //pluginWin.Owner = mainWindow;
+                       //ActivePluginNum = pluginOp.GetPluginInfo().Count;
+                       pluginWin.Show();
+                       displayOverlayWindow.WindowState = WindowState.Minimized;
+                       //SendPluginCloseMessage(pluginModel);
+                       break;
+                   case 1:
+                       UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;
+                       pluginCtrl.Uid = pluginModel.ObjectId;
+                       VicTabItemNormal tabItem = new VicTabItemNormal();
+                       tabItem.Name = pluginModel.AppId;
+                       tabItem.Header = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle;
+                       tabItem.Uid = pluginModel.ObjectId;
+                       tabItem.Content = pluginCtrl;
+                       tabItem.AllowDelete = true;
+                       tabItem.IsSelected = true;
+                       TabItemList.Add(tabItem);
+                       break;
+                   default:
+                       break;
+               }
+               //ActivePluginNum = pluginOp.GetPluginInfo().Count;
+           }
+           catch (Exception ex)
+           {
+               VicMessageBoxNormal.Show(ex.Message);
+           }
+       }
+
+       #endregion
        #endregion
 
        #region 私方法

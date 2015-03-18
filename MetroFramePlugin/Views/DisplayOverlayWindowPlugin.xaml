@@ -8,12 +8,13 @@
     <Window.DataContext>
         <vm:DisplayOverlayWindowPluginViewModel/>
     </Window.DataContext>
+    
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding displayOverlayWindowPluginCommand}" CommandParameter="{Binding ElementName=DisplayOverlayWindow}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Grid>
-        
+    <Grid Name="grid">
+        <!--<ListBox Grid.Row="1" Name="listBoxOverPlugin" SelectedIndex="0" Style="{DynamicResource OverlayPluginListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>-->
     </Grid>
 </Window>

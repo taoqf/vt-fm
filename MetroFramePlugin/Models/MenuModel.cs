@@ -80,6 +80,17 @@ namespace MetroFramePlugin.Models
                 RaisePropertyChanged("BzSystemId");
             }
         }
+        private string uid;
+       [JsonProperty(PropertyName = "uid")]
+        public string Uid
+        {
+            get { return uid; }
+            set
+            {
+                uid = value;
+                RaisePropertyChanged("Uid");
+            }
+        }
 
         private ObservableCollection<MenuModel> systemMenuList;
         /// <summary>
