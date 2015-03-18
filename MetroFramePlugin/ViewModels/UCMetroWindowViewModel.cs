@@ -286,6 +286,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
+                    mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
                     _panel = mainWindow.FindName("bigPanel") as Canvas;//添加新区域面板
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
@@ -297,6 +298,7 @@ namespace MetroFramePlugin.ViewModels
                     //LoadMenuListLocal();
                     LoadJsonMenuListLocal();
                     OverlayWindow overlayWin = new OverlayWindow();
+                    OverlayWindow.VicTabCtrl = mainTabControl;
                     overlayWin.Show();
                     UserLogin();
                 });
