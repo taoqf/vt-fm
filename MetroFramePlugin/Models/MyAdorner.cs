@@ -30,9 +30,24 @@ namespace MetroFramePlugin.Models
         VisualCollection visCollec;
         FrameworkElement mDraggedElement = null;
 
+        #region 改变事件
+        public delegate void UIElementSizeChangedDelegate(object sender);
+
+        public event UIElementSizeChangedDelegate CurrentUElementSizeChanged;
+
+        internal void UIElementSizeChanged(object sender)
+        {
+            if (this.CurrentUElementSizeChanged != null)
+            {
+                this.CurrentUElementSizeChanged(sender);
+            }
+        }
+        #endregion
+
         public MyCanvasAdorner(UIElement adorned, bool flag) : base(adorned)
         {
             //画框架 
+            
             if (flag)
             {
                 visCollec = new VisualCollection(this);
@@ -102,6 +117,15 @@ namespace MetroFramePlugin.Models
                 ff.Width = ff.RenderSize.Width;
             if (Double.IsNaN(ff.Height))
                 ff.Height = ff.RenderSize.Height;
+            ff.MouseLeave += ff_MouseMove;
+        }
+
+        void ff_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Released)
+            {
+                this.UIElementSizeChanged(sender);
+            }
         }
 
         Thumb GetMoveThumb()
