@@ -170,7 +170,6 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <Resource Include="Fonts\iconfont.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -223,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="FeiD.png" />
+    <Resource Include="Fonts\iconfont.ttf" />
     <Resource Include="victop.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

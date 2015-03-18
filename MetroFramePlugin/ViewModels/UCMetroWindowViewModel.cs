@@ -1132,7 +1132,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                     {
-
+                        _listbox.SelectedItems.Clear();//每次打开弹框，去掉之前所选的
                         VicRadioButtonNormal btn = (VicRadioButtonNormal)x;
                         DockPanel parentPanel = GetParentObject<DockPanel>(btn);
                         selectAreaId = parentPanel.Uid;//得到选中区域ID
@@ -1164,39 +1164,29 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                   _listbox.SelectedItems.Clear();//每次打开弹框，去掉之前所选的
                     SelectPopupMenuList.Clear();
                     int k = 0;
-                    for (int i = 0; i < NewArea.Count; i++)
-                    {
-                        if (NewArea[i].AreaID == selectAreaId)
-                        {
+                     AreaMenu NowArea=NewArea.FirstOrDefault(it => it.AreaID.Equals(selectAreaId));
+                       
                             foreach (MenuModel menuModel in _listbox.SelectedItems)
                             {
-                                foreach (MenuModel addedPlugin in NewArea[i].PluginList)
+                                foreach (MenuModel addedPlugin in NowArea.PluginList)
                                 {
                                     if (addedPlugin.MenuName != menuModel.MenuName) k++;
                                 }
-                                if (k == NewArea[i].PluginList.Count) SelectPopupMenuList.Add(menuModel);
+                                if (k == NowArea.PluginList.Count) SelectPopupMenuList.Add(menuModel);
                             }
                             if (SelectPopupMenuList != null)
                             {
                                 foreach (MenuModel menuModel in SelectPopupMenuList)
                                 {
-                                    NewArea[i].PluginList.Add(menuModel);
+                                    NowArea.PluginList.Add(menuModel);
                                 }
                             }
-                            break;
-                        }
-                    }
-
                     PopupIsShow = false;
                     _panel.IsEnabled = true;
-                    StreamWriter sw = new StreamWriter(menuPath, false);
-                    sw.Write(JsonHelper.ToJson(NewArea));
-                    sw.Flush();
-                    sw.Close();
-                    sw.Dispose();
+                  
+                    WriteFile();
                     DrawingPanelArea();//重绘
                     ThumbCanvas();//实现拖动
 
@@ -1278,23 +1268,19 @@ namespace MetroFramePlugin.ViewModels
                     Canvas.SetLeft(_newPanel, _areaMenu.LeftSpan + NewArea.Count * 10);
                     Canvas.SetTop(_newPanel, _areaMenu.TopSpan + NewArea.Count * 10);
                     _panel.Children.Add(_newPanel);
-
-                    //把添加的区域写到JSON文件中
                     _areaMenu.AreaName = _title.Text;
                     _areaMenu.AreaID = _newPanel.Uid;
                     _areaMenu.LeftSpan += NewArea.Count * 10;
                     _areaMenu.TopSpan += NewArea.Count * 10;
                     NewArea.Add(_areaMenu);
-                    StreamWriter sw = new StreamWriter(menuPath, false);
-                    sw.Write(JsonHelper.ToJson(NewArea));
-                    sw.Flush();
-                    sw.Close();
-                    sw.Dispose();
 
-                   ThumbCanvas(_newPanel);//实现拖动
+                    WriteFile(); //把添加的区域写到JSON文件中
+                    ThumbCanvas(_newPanel);//实现拖动
                 });
             }
         }
+
+       
         #endregion
 
         #region  方法&事件
@@ -1345,6 +1331,7 @@ namespace MetroFramePlugin.ViewModels
                 menuListArea.Items.Add(pluginPanel);
                 DockPanel _newPanel = new DockPanel();
                 _newPanel.Uid = NewArea[i].AreaID;
+               
                 _newPanel.MinWidth = NewArea[i].AreaWidth;
                 _newPanel.MinHeight = NewArea[i].AreaHeight;
                 _newPanel.Children.Add(_title);
@@ -1355,24 +1342,40 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         ///<summary>
-        /// 初始化拖动
+        /// 区域改变大小和拖动
         /// </summary>
-
         private void ThumbCanvas(UIElement lElementName=null)
         {
-            //实现拖动
+            //实现拖动和改变大小
             var layer = AdornerLayer.GetAdornerLayer(_panel);
             if (lElementName==null)
             {
                 foreach (UIElement ui in _panel.Children)
                 {
-                    layer.Add(new MyCanvasAdorner(ui, true));
+                    MyCanvasAdorner MyCanvas = new MyCanvasAdorner(ui, true);
+                    MyCanvas.CurrentUElementSizeChanged += MyCanvas_CurrentUElementSizeChanged;
+                    layer.Add(MyCanvas);
+
                 }
             }
             else
             {
-                layer.Add(new MyCanvasAdorner(lElementName, true));
+                MyCanvasAdorner MyCanvas = new MyCanvasAdorner(lElementName, true);
+                MyCanvas.CurrentUElementSizeChanged += MyCanvas_CurrentUElementSizeChanged;
+                layer.Add(MyCanvas);
             }
+        }
+
+        ///<summary>
+        ///区域改变存入文件
+        /// </summary>
+        private void WriteFile()
+        {
+            StreamWriter sw = new StreamWriter(menuPath, false);
+            sw.Write(JsonHelper.ToJson(NewArea));
+            sw.Flush();
+            sw.Close();
+            sw.Dispose();
         }
 
         /// 获取父级控件
@@ -1392,6 +1395,19 @@ namespace MetroFramePlugin.ViewModels
                 parent = VisualTreeHelper.GetParent(parent);
             }
             return null;
+        }
+
+        ///<summary>
+        ///回调事件，存下区域改变的大小
+        /// </summary>
+        void MyCanvas_CurrentUElementSizeChanged(object sender)
+        {
+            DockPanel newArea = sender as DockPanel;
+            NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaWidth = newArea.ActualWidth;
+            NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaHeight = newArea.ActualHeight;
+            NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).LeftSpan = Canvas.GetLeft(newArea);
+            NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).TopSpan = Canvas.GetTop(newArea);
+            WriteFile();
         }
         #endregion
 
