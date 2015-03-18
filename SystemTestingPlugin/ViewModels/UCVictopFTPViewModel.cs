@@ -44,6 +44,7 @@ namespace SystemTestingPlugin.ViewModels
         /// 错误信息
         /// </summary>
         private string errorMsg;
+        private bool isFirstLoad = true;
         #endregion
         #region 属性
         /// <summary>
@@ -171,13 +172,17 @@ namespace SystemTestingPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    SiteInfoModel.LocalPath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
-                    SiteInfoModel.RemotePath = "/";
-                    #region 登陆用户名及FTP地址默认
-                    SiteInfoModel.HostUrl = "192.168.40.198";
-                    SiteInfoModel.UserName = GetLoginUserName();
-                    #endregion
-                    GetLocalFileInfo();
+                    if (isFirstLoad)
+                    {
+                        SiteInfoModel.LocalPath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
+                        SiteInfoModel.RemotePath = "/";
+                        #region 登陆用户名及FTP地址默认
+                        SiteInfoModel.HostUrl = "192.168.40.198";
+                        SiteInfoModel.UserName = GetLoginUserName();
+                        #endregion
+                        GetLocalFileInfo();
+                        isFirstLoad = false;
+                    }
                 });
             }
         }
