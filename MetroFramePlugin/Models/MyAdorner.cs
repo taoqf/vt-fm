@@ -64,8 +64,8 @@ namespace MetroFramePlugin.Models
             else
             {
                 //初始化子控件
-                IsHitTestVisible = false; // Seems Adorner is hit test visible?
-                mDraggedElement = adorned as FrameworkElement;
+                //IsHitTestVisible = false; // Seems Adorner is hit test visible?
+                //mDraggedElement = adorned as FrameworkElement;
             }    
         }
 

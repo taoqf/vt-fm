@@ -19,6 +19,7 @@ using MetroFramePlugin.Views;
 using Victop.Frame.CoreLibrary;
 using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
+using Victop.Frame.Units;
 using Victop.Server.Controls;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
@@ -1118,7 +1119,7 @@ namespace MetroFramePlugin.ViewModels
                     _panel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
                     _listbox = area.FindName("listBoxPopupMenuList") as ListBox;
                     DrawingPanelArea();//读文件并渲染区域
-                    ThumbCanvas();//实现拖动
+                    ThumbCanvas(null,false);//实现拖动
                 });
             }
         }
@@ -1166,29 +1167,29 @@ namespace MetroFramePlugin.ViewModels
                 {
                     SelectPopupMenuList.Clear();
                     int k = 0;
-                     AreaMenu NowArea=NewArea.FirstOrDefault(it => it.AreaID.Equals(selectAreaId));
-                       
-                            foreach (MenuModel menuModel in _listbox.SelectedItems)
-                            {
-                                foreach (MenuModel addedPlugin in NowArea.PluginList)
-                                {
-                                    if (addedPlugin.MenuName != menuModel.MenuName) k++;
-                                }
-                                if (k == NowArea.PluginList.Count) SelectPopupMenuList.Add(menuModel);
-                            }
-                            if (SelectPopupMenuList != null)
-                            {
-                                foreach (MenuModel menuModel in SelectPopupMenuList)
-                                {
-                                    NowArea.PluginList.Add(menuModel);
-                                }
-                            }
+                    AreaMenu NowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(selectAreaId));
+
+                    foreach (MenuModel menuModel in _listbox.SelectedItems)
+                    {
+                        foreach (MenuModel addedPlugin in NowArea.PluginList)
+                        {
+                            if (addedPlugin.MenuName != menuModel.MenuName) k++;
+                        }
+                        if (k == NowArea.PluginList.Count) SelectPopupMenuList.Add(menuModel);
+                    }
+                    if (SelectPopupMenuList != null)
+                    {
+                        foreach (MenuModel menuModel in SelectPopupMenuList)
+                        {
+                            NowArea.PluginList.Add(menuModel);
+                        }
+                    }
                     PopupIsShow = false;
                     _panel.IsEnabled = true;
-                  
+
                     WriteFile();
                     DrawingPanelArea();//重绘
-                    ThumbCanvas();//实现拖动
+                    ThumbCanvas(null,false);//实现拖动
 
                 });
             }
@@ -1245,12 +1246,15 @@ namespace MetroFramePlugin.ViewModels
                 return new RelayCommand(() =>
                 {
                     AreaMenu _areaMenu = new AreaMenu();
-                    TextBox _title = new TextBox();
+                    UnitAreaSeting _title = new UnitAreaSeting();
+                    _title.ParamsModel.TitleWidth = _areaMenu.AreaWidth;
                     DockPanel.SetDock(_title, Dock.Top);
-                    _title.Text = "My often Fun";
+                    _title.BtnDeblockingClick += BtnClick;
+                    _title.MenuItemIcoClick += MenuItemClick;
+                    _title.ParamsModel.AreaName = _areaMenu.AreaName;
                     _title.VerticalContentAlignment = VerticalAlignment.Center;
                     _title.HorizontalContentAlignment = HorizontalAlignment.Center;
-                    _title.Height = 30;
+                    _title.Height = 35;
                     _title.Background = Brushes.Gainsboro;
 
                     ListBox menuList = new ListBox();
@@ -1268,19 +1272,20 @@ namespace MetroFramePlugin.ViewModels
                     Canvas.SetLeft(_newPanel, _areaMenu.LeftSpan + NewArea.Count * 10);
                     Canvas.SetTop(_newPanel, _areaMenu.TopSpan + NewArea.Count * 10);
                     _panel.Children.Add(_newPanel);
-                    _areaMenu.AreaName = _title.Text;
+                    _areaMenu.AreaName = _title.ParamsModel.AreaName;
                     _areaMenu.AreaID = _newPanel.Uid;
+                    _title.Uid = _newPanel.Uid;
                     _areaMenu.LeftSpan += NewArea.Count * 10;
                     _areaMenu.TopSpan += NewArea.Count * 10;
                     NewArea.Add(_areaMenu);
 
                     WriteFile(); //把添加的区域写到JSON文件中
-                    ThumbCanvas(_newPanel);//实现拖动
+                    ThumbCanvas(_newPanel,false);//实现拖动
                 });
             }
         }
 
-       
+
         #endregion
 
         #region  方法&事件
@@ -1303,13 +1308,17 @@ namespace MetroFramePlugin.ViewModels
 
             for (int i = 0; i < NewArea.Count; i++)
             {
-                TextBox _title = new TextBox();
+                UnitAreaSeting _title = new UnitAreaSeting();
+                _title.ParamsModel.TitleWidth = NewArea[i].AreaWidth;
+                _title.Uid = NewArea[i].AreaID;
                 DockPanel.SetDock(_title, Dock.Top);
-                _title.Text = NewArea[i].AreaName;
+                _title.BtnDeblockingClick += BtnClick;
+                _title.MenuItemIcoClick += MenuItemClick;
+                _title.ParamsModel.AreaName = NewArea[i].AreaName;
                 _title.VerticalContentAlignment = VerticalAlignment.Center;
                 _title.HorizontalContentAlignment = HorizontalAlignment.Center;
-                _title.Height = 30;
                 _title.Background = Brushes.Gainsboro;
+
                 ListBox menuListArea = new ListBox();
                 menuListArea.Background = Brushes.WhiteSmoke;
 
@@ -1328,10 +1337,10 @@ namespace MetroFramePlugin.ViewModels
                     pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);
                 }
 
-                menuListArea.Items.Add(pluginPanel);
+                menuListArea.Items.Add(pluginPanel);//一个ListBox中添加了一个wrapPanel,一个ListBox
+
                 DockPanel _newPanel = new DockPanel();
                 _newPanel.Uid = NewArea[i].AreaID;
-               
                 _newPanel.MinWidth = NewArea[i].AreaWidth;
                 _newPanel.MinHeight = NewArea[i].AreaHeight;
                 _newPanel.Children.Add(_title);
@@ -1344,15 +1353,15 @@ namespace MetroFramePlugin.ViewModels
         ///<summary>
         /// 区域改变大小和拖动
         /// </summary>
-        private void ThumbCanvas(UIElement lElementName=null)
+        private void ThumbCanvas(UIElement lElementName = null,bool IsLock=false)
         {
             //实现拖动和改变大小
             var layer = AdornerLayer.GetAdornerLayer(_panel);
-            if (lElementName==null)
+            if (lElementName == null)
             {
                 foreach (UIElement ui in _panel.Children)
                 {
-                    MyCanvasAdorner MyCanvas = new MyCanvasAdorner(ui, true);
+                    MyCanvasAdorner MyCanvas = new MyCanvasAdorner(ui, !IsLock);
                     MyCanvas.CurrentUElementSizeChanged += MyCanvas_CurrentUElementSizeChanged;
                     layer.Add(MyCanvas);
 
@@ -1360,7 +1369,7 @@ namespace MetroFramePlugin.ViewModels
             }
             else
             {
-                MyCanvasAdorner MyCanvas = new MyCanvasAdorner(lElementName, true);
+                MyCanvasAdorner MyCanvas = new MyCanvasAdorner(lElementName, !IsLock);
                 MyCanvas.CurrentUElementSizeChanged += MyCanvas_CurrentUElementSizeChanged;
                 layer.Add(MyCanvas);
             }
@@ -1403,11 +1412,106 @@ namespace MetroFramePlugin.ViewModels
         void MyCanvas_CurrentUElementSizeChanged(object sender)
         {
             DockPanel newArea = sender as DockPanel;
-            NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaWidth = newArea.ActualWidth;
-            NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaHeight = newArea.ActualHeight;
-            NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).LeftSpan = Canvas.GetLeft(newArea);
-            NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).TopSpan = Canvas.GetTop(newArea);
-            WriteFile();
+            if (newArea != null)
+            {
+                NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaWidth = newArea.ActualWidth;
+                NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaHeight = newArea.ActualHeight;
+                NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).LeftSpan = Canvas.GetLeft(newArea);
+                NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).TopSpan = Canvas.GetTop(newArea);
+                WriteFile();
+            }
+        }
+
+        ///<summary>
+        ///区域title“设置”按钮回调事件
+        /// </summary>
+        private void MenuItemClick(object sender, RoutedEventArgs e)
+        {
+            string res = ((VicMenuItemNormal)sender).Tag.ToString();
+            //UnitAreaSeting areaParent = ((((((VicMenuItemNormal)sender).Parent as VicMenuItemNormal).Parent as VicMenuNormal).Parent as DockPanel)).Parent as UnitAreaSeting; 
+            if (res.Equals("Largeico"))
+            {
+                MessageBox.Show("大图标");
+            }
+            if (res.Equals("Mediamicl"))
+            {
+                MessageBox.Show("中图标");
+            }
+            if (res.Equals("Smallico"))
+            {
+                MessageBox.Show("小图标");
+            }
+            //重命名区域 
+            if (res.Equals("RenName"))
+            {
+                //areaParent.ParamsModel.AreaName = "111"; 
+                //areaParent.ParamsModel.TxtAreaName.VicText = "aaa"; 
+                MessageBox.Show("重命名区域");
+            }
+            //编辑 
+            if (res.Equals("Compile"))
+            {
+                MessageBox.Show("编辑");
+            }
+            //删除区域 
+            if (res.Equals("DeleteArea"))
+            {
+                MessageBox.Show("删除区域");
+            }
+        }
+
+        ///<summary>
+        ///区域title“锁定”按钮和“折叠/展开”回调事件
+        /// </summary>
+        private void BtnClick(object sender, RoutedEventArgs e)
+        {
+            string res = ((VicButtonNormal)sender).Tag.ToString();
+            UnitAreaSeting areaParent = ((((VicButtonNormal)sender).Parent as StackPanel).Parent as DockPanel).Parent as UnitAreaSeting;
+            if (res.Equals("btnDeblocking"))
+            {
+                areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
+                areaParent.ParamsModel.LockingState = Visibility.Visible;
+                ThumbCanvas(null, false);
+
+            }
+            if (res.Equals("btnLocking"))
+            {
+                areaParent.ParamsModel.DeblockingState = Visibility.Visible;
+                areaParent.ParamsModel.LockingState = Visibility.Collapsed;
+                ThumbCanvas(null, true);
+            }
+            if (res.Equals("btnFold"))
+            {
+                if (areaParent != null)
+                {
+                    foreach (DockPanel panel in _panel.Children)
+                    {
+                        if (panel.Uid == areaParent.Uid)
+                        {
+                            panel.Children[1].Visibility = Visibility.Collapsed;
+                            areaParent.ParamsModel.FoldState = Visibility.Collapsed;
+                            areaParent.ParamsModel.UnfoldState = Visibility.Visible;
+                            
+                        }
+
+                    }
+                }
+            }
+            if (res.Equals("btnUnfold"))
+            {
+                if (areaParent != null)
+                {
+                    foreach (DockPanel panel in _panel.Children)
+                    {
+                        if (panel.Uid == areaParent.Uid)
+                        {
+                            panel.Children[1].Visibility = Visibility.Visible;
+                            areaParent.ParamsModel.FoldState = Visibility.Visible;
+                            areaParent.ParamsModel.UnfoldState = Visibility.Collapsed;
+                        }
+                    }
+                }
+            }
         }
         #endregion
 

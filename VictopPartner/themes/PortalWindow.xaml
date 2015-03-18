@@ -52,7 +52,7 @@
     </Style>
     <Style x:Key="SetFontAweSome" TargetType="{x:Type controls:VicMenuItemNormal}">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont" />
-        <Setter Property="MenuItem.MinWidth" Value="80"/>
+        <Setter Property="MenuItem.MinWidth" Value="35"/>
         <Setter Property="MenuItem.MinHeight" Value="28"/>
         <Setter Property="MenuItem.FontSize" Value="20"/>
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
