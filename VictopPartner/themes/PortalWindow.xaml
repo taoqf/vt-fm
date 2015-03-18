@@ -11,10 +11,6 @@
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="ellipseOuter" Opacity="0.5" EndPoint="0.5,1" StartPoint="0.5,0">
         <GradientStop Color="White" Offset="0.1"  />
-        <!--<GradientStop Color="#B316ED" Offset="0.25" />
-        <GradientStop Color="#3BEFE4" Offset="0.5"/>
-        <GradientStop Color="#1842F5" Offset="1" />-->
-        <!--<GradientStop Color="YellowGreen"  Offset="0.25" />-->
     </LinearGradientBrush>
   
     <LinearGradientBrush x:Key="ellipseCore" Opacity="0.5" EndPoint="0.5,1" StartPoint="0.5,0">
