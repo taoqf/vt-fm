@@ -21,10 +21,10 @@ namespace MetroFramePlugin.Views
     /// </summary>
     public partial class OverlayWindow : VicWindowNormal
     {
+        public static VicTabControlNormal VicTabCtrl;
         public OverlayWindow()
         {
             InitializeComponent();
         }
-        public VicTabItemNormal mainTabItem = new VicTabItemNormal();
     }
 }

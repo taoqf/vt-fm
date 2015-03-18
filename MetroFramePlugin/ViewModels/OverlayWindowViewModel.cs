@@ -17,6 +17,7 @@ namespace MetroFramePlugin.ViewModels
    public class OverlayWindowViewModel:ModelBase
     {
         private OverlayWindow overlayWin;
+        private VicTabControlNormal mainTabCtrl;
         private bool exitFlag = false;
 
 
@@ -46,6 +47,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
+                    //mainTabCtrl
                     overlayWin = (OverlayWindow)x;
                     overlayWin.MouseDown += overlayWin_MouseDown;
                     overlayWin.Closing += overlayWin_Closing;
