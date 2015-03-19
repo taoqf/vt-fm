@@ -1121,7 +1121,7 @@ namespace MetroFramePlugin.ViewModels
                     _panel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
                     _listbox = area.FindName("listBoxPopupMenuList") as ListBox;
                     DrawingPanelArea();//读文件并渲染区域
-                    ThumbCanvas(null,false);//实现拖动
+                    ThumbCanvas(null, false);//实现拖动
                 });
             }
         }
@@ -1191,7 +1191,7 @@ namespace MetroFramePlugin.ViewModels
 
                     WriteFile();
                     DrawingPanelArea();//重绘
-                    ThumbCanvas(null,false);//实现拖动
+                    ThumbCanvas(null, false);//实现拖动
 
                 });
             }
@@ -1249,11 +1249,11 @@ namespace MetroFramePlugin.ViewModels
                 {
                     AreaMenu _areaMenu = new AreaMenu();
                     UnitAreaSeting _title = new UnitAreaSeting();
-                 
+
                     DockPanel.SetDock(_title, Dock.Top);
                     _title.BtnDeblockingClick += BtnClick;
                     _title.MenuItemIcoClick += MenuItemClick;
-                    _title.SecondMenuItemIcoClick+= SecondMenuItemClick; 
+                    _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                     _title.ParamsModel.TitleWidth = _areaMenu.AreaWidth;
                     _title.ParamsModel.AreaName = _areaMenu.AreaName;
                     _title.VerticalContentAlignment = VerticalAlignment.Center;
@@ -1283,7 +1283,7 @@ namespace MetroFramePlugin.ViewModels
                     NewArea.Add(_areaMenu);
 
                     WriteFile(); //把添加的区域写到JSON文件中
-                    ThumbCanvas(_newPanel,false);//实现拖动
+                    ThumbCanvas(_newPanel, false);//实现拖动
                 });
             }
         }
@@ -1317,7 +1317,7 @@ namespace MetroFramePlugin.ViewModels
                 DockPanel.SetDock(_title, Dock.Top);
                 _title.BtnDeblockingClick += BtnClick;
                 _title.MenuItemIcoClick += MenuItemClick;
-                _title.SecondMenuItemIcoClick += SecondMenuItemClick; 
+                _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                 _title.ParamsModel.AreaName = NewArea[i].AreaName;
                 _title.VerticalContentAlignment = VerticalAlignment.Center;
                 _title.HorizontalContentAlignment = HorizontalAlignment.Center;
@@ -1338,7 +1338,18 @@ namespace MetroFramePlugin.ViewModels
                 {
                     ListBox pluginlist = new ListBox();
                     pluginlist.ItemsSource = NewArea[i].PluginList;
-                    pluginlist.Style = mainWindow.FindResource("ListBoxFourthMenuListStyle") as Style;
+                    if (NewArea[i].MenuForm == "normal")
+                    {
+                        pluginlist.Style = mainWindow.FindResource("ListBoxFourthMenuListStyle") as Style;
+                    }
+                    else if (NewArea[i].MenuForm == "large")
+                    {
+                        pluginlist.Style = mainWindow.FindResource("LargeListBoxFourthMenuListStyle") as Style;
+                    }
+                    else if (NewArea[i].MenuForm == "small")
+                    {
+                        pluginlist.Style = mainWindow.FindResource("SmallListBoxFourthMenuListStyle") as Style;
+                    }
                     pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);
                 }
 
@@ -1358,7 +1369,7 @@ namespace MetroFramePlugin.ViewModels
         ///<summary>
         /// 区域改变大小和拖动
         /// </summary>
-        private void ThumbCanvas(UIElement lElementName = null,bool IsLock=false)
+        private void ThumbCanvas(UIElement lElementName = null, bool IsLock = false)
         {
             //实现拖动和改变大小
             var layer = AdornerLayer.GetAdornerLayer(_panel);
@@ -1418,15 +1429,13 @@ namespace MetroFramePlugin.ViewModels
         /// <param name="obj">当前控件名</param>
         /// <param name="name">要查询子控件名</param>
         /// <returns>要获得控件类名</returns>
-       private T GetChildObject<T>(DependencyObject obj, string name) where T : FrameworkElement
+        private T GetChildObject<T>(DependencyObject obj, string name) where T : FrameworkElement
         {
             DependencyObject child = null;
             T grandChild = null;
             for (int i = 0; i <= VisualTreeHelper.GetChildrenCount(obj) - 1; i++)
             {
                 child = VisualTreeHelper.GetChild(obj, i);
-
-
                 if (child is T && (((T)child).Uid == name | string.IsNullOrEmpty(name)))
                 {
                     return (T)child;
@@ -1439,7 +1448,7 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
             return null;
-        } 
+        }
 
         ///<summary>
         ///回调事件，存下区域改变的大小
@@ -1454,6 +1463,7 @@ namespace MetroFramePlugin.ViewModels
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).LeftSpan = Canvas.GetLeft(newArea);
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).TopSpan = Canvas.GetTop(newArea);
                 WriteFile();
+                DrawingPanelArea();
             }
         }
 
@@ -1463,7 +1473,7 @@ namespace MetroFramePlugin.ViewModels
         private void MenuItemClick(object sender, RoutedEventArgs e)
         {
             string res = ((VicMenuItemNormal)sender).Tag.ToString();
-            UnitAreaSeting areaParent = (((((((VicMenuItemNormal)sender).Parent as VicMenuItemNormal).Parent as VicMenuItemNormal).Parent as VicMenuNormal).Parent as DockPanel)).Parent as UnitAreaSeting; 
+            UnitAreaSeting areaParent = (((((((VicMenuItemNormal)sender).Parent as VicMenuItemNormal).Parent as VicMenuItemNormal).Parent as VicMenuNormal).Parent as DockPanel)).Parent as UnitAreaSeting;
             if (res.Equals("Largeico"))
             {
                 if (areaParent != null)
@@ -1472,24 +1482,49 @@ namespace MetroFramePlugin.ViewModels
                     {
                         if (panel.Uid == areaParent.Uid)
                         {
-                            WrapPanel aa = GetChildObject<WrapPanel>(panel, panel.Uid);
+                            WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
+                            ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                            pluginArea.Style = mainWindow.FindResource("LargeListBoxFourthMenuListStyle") as Style;
+                            NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).MenuForm = "large";
                         }
                     }
                 }
-               // MessageBox.Show("大图标");//BigListBoxFourthMenuListStyle
+
             }
             if (res.Equals("Mediamicl"))
             {
-                MessageBox.Show("中图标");
+                if (areaParent != null)
+                {
+                    foreach (DockPanel panel in _panel.Children)
+                    {
+                        if (panel.Uid == areaParent.Uid)
+                        {
+                            WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
+                            ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                            pluginArea.Style = mainWindow.FindResource("ListBoxFourthMenuListStyle") as Style;
+                            NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).MenuForm = "normal";
+                        }
+                    }
+                }
             }
             if (res.Equals("Smallico"))
             {
-               // MessageBox.Show("小图标");//SmallListBoxFourthMenuListStyle
+                if (areaParent != null)
+                {
+                    foreach (DockPanel panel in _panel.Children)
+                    {
+                        if (panel.Uid == areaParent.Uid)
+                        {
+                            WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
+                            ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                            pluginArea.Style = mainWindow.FindResource("SmallListBoxFourthMenuListStyle") as Style;
+                            NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).MenuForm = "small";
+                        }
+                    }
+                }
             }
-           
+            WriteFile();
         }
-
-
         private void SecondMenuItemClick(object sender, RoutedEventArgs e)
         {
             string res = ((VicMenuItemNormal)sender).Tag.ToString();
@@ -1497,9 +1532,7 @@ namespace MetroFramePlugin.ViewModels
             //重命名区域 
             if (res.Equals("RenName"))
             {
-                //areaParent.ParamsModel.AreaName = "111"; 
-                //areaParent.ParamsModel.TxtAreaName.VicText = "aaa"; 
-                MessageBox.Show("重命名区域");
+                NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).AreaName = areaParent.ParamsModel.AreaName;
             }
             //编辑 
             if (res.Equals("Compile"))
@@ -1509,8 +1542,17 @@ namespace MetroFramePlugin.ViewModels
             //删除区域 
             if (res.Equals("DeleteArea"))
             {
-                MessageBox.Show("删除区域");
+                foreach (AreaMenu area in NewArea)
+                {
+                    if (area.AreaID==NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).AreaID)
+                    {
+                        NewArea.Remove(area);
+                        break;
+                    }
+                }
             }
+            WriteFile();
+            DrawingPanelArea();
         }
 
         ///<summary>
@@ -1544,7 +1586,7 @@ namespace MetroFramePlugin.ViewModels
                             panel.Children[1].Visibility = Visibility.Collapsed;
                             areaParent.ParamsModel.FoldState = Visibility.Collapsed;
                             areaParent.ParamsModel.UnfoldState = Visibility.Visible;
-                            
+
                         }
 
                     }
