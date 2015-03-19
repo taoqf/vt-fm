@@ -1463,7 +1463,6 @@ namespace MetroFramePlugin.ViewModels
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaHeight = newArea.ActualHeight;
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).LeftSpan = Canvas.GetLeft(newArea);
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).TopSpan = Canvas.GetTop(newArea);
-
                 WriteFile();
                 DrawingPanelArea();
             }
@@ -1544,18 +1543,12 @@ namespace MetroFramePlugin.ViewModels
             //删除区域 
             if (res.Equals("DeleteArea"))
             {
-                foreach (AreaMenu area in NewArea)
-                {
-                    if (area.AreaID==NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).AreaID)
-                    {
-                        NewArea.Remove(area);
-                        break;
-                    }
-                }
+              AreaMenu area=new AreaMenu();
+              area= NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
+              NewArea.Remove(area);
             }
             WriteFile();
             DrawingPanelArea();
-           
         }
 
         ///<summary>
