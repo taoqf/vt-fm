@@ -1121,7 +1121,7 @@ namespace MetroFramePlugin.ViewModels
                     _panel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
                     _listbox = area.FindName("listBoxPopupMenuList") as ListBox;
                     DrawingPanelArea();//读文件并渲染区域
-                    ThumbCanvas(null, false);//实现拖动
+                    
                 });
             }
         }
@@ -1191,7 +1191,7 @@ namespace MetroFramePlugin.ViewModels
 
                     WriteFile();
                     DrawingPanelArea();//重绘
-                    ThumbCanvas(null, false);//实现拖动
+                   
 
                 });
             }
@@ -1357,14 +1357,15 @@ namespace MetroFramePlugin.ViewModels
 
                 DockPanel _newPanel = new DockPanel();
                 _newPanel.Uid = NewArea[i].AreaID;
-                _newPanel.MinWidth = NewArea[i].AreaWidth;
-                _newPanel.MinHeight = NewArea[i].AreaHeight;
+                _newPanel.Width = NewArea[i].AreaWidth;
+                _newPanel.Height = NewArea[i].AreaHeight;
                 _newPanel.Children.Add(_title);
                 _newPanel.Children.Add(menuListArea);
                 Canvas.SetLeft(_newPanel, NewArea[i].LeftSpan);
                 Canvas.SetTop(_newPanel, NewArea[i].TopSpan);
                 _panel.Children.Add(_newPanel);
             }
+            ThumbCanvas();
         }
         ///<summary>
         /// 区域改变大小和拖动
@@ -1462,9 +1463,9 @@ namespace MetroFramePlugin.ViewModels
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaHeight = newArea.ActualHeight;
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).LeftSpan = Canvas.GetLeft(newArea);
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).TopSpan = Canvas.GetTop(newArea);
+
                 WriteFile();
                 DrawingPanelArea();
-                ThumbCanvas(null, false);
             }
         }
 
@@ -1554,7 +1555,7 @@ namespace MetroFramePlugin.ViewModels
             }
             WriteFile();
             DrawingPanelArea();
-            ThumbCanvas(null, false);
+           
         }
 
         ///<summary>
@@ -1568,13 +1569,13 @@ namespace MetroFramePlugin.ViewModels
             {
                 areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
                 areaParent.ParamsModel.LockingState = Visibility.Visible;
-                ThumbCanvas(null, false);
+                ThumbCanvas(areaParent.Parent as DockPanel, false);
             }
             if (res.Equals("btnLocking"))
             {
                 areaParent.ParamsModel.DeblockingState = Visibility.Visible;
                 areaParent.ParamsModel.LockingState = Visibility.Collapsed;
-                ThumbCanvas(null, true);
+                ThumbCanvas(areaParent.Parent as DockPanel, true);
             }
             if (res.Equals("btnFold"))
             {
