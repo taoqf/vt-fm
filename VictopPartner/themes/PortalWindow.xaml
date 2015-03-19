@@ -871,7 +871,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="BigListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
+    <Style x:Key="LargeListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
         <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
         <Setter Property="BorderThickness" Value="0"/>

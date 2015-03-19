@@ -26,8 +26,7 @@
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
-                  
-                    <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                     <Setter Property="Margin"  Value="10"/>
                     <Setter Property="Template">
                         <Setter.Value>

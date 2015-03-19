@@ -1121,7 +1121,7 @@ namespace MetroFramePlugin.ViewModels
                     _panel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
                     _listbox = area.FindName("listBoxPopupMenuList") as ListBox;
                     DrawingPanelArea();//读文件并渲染区域
-                    
+
                 });
             }
         }
@@ -1191,7 +1191,7 @@ namespace MetroFramePlugin.ViewModels
 
                     WriteFile();
                     DrawingPanelArea();//重绘
-                   
+
 
                 });
             }
@@ -1332,8 +1332,20 @@ namespace MetroFramePlugin.ViewModels
                 ListBox addapplyStyle = new ListBox();
                 ListBoxItem _item = new ListBoxItem();
                 addapplyStyle.Items.Add(_item);
-                addapplyStyle.Style = area.FindResource("addApply") as Style;
+                if (NewArea[i].MenuForm == "normal")
+                {
+                    addapplyStyle.Style = area.FindResource("addApply") as Style;
+                }
+                else if (NewArea[i].MenuForm == "large")
+                {
+                    addapplyStyle.Style = area.FindResource("addLargeApply") as Style;
+                }
+                else if (NewArea[i].MenuForm == "small")
+                {
+                    addapplyStyle.Style = area.FindResource("addSmallApply") as Style;
+                }
                 pluginPanel.Children.Add(addapplyStyle);
+
                 if (NewArea[i].PluginList.Count != 0)
                 {
                     ListBox pluginlist = new ListBox();
@@ -1483,9 +1495,16 @@ namespace MetroFramePlugin.ViewModels
                     {
                         if (panel.Uid == areaParent.Uid)
                         {
+
                             WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
-                            ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                            pluginArea.Style = mainWindow.FindResource("LargeListBoxFourthMenuListStyle") as Style;
+                            if (wrapPanelArea != null)
+                            {
+                                ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                                if (pluginArea!=null) pluginArea.Style = mainWindow.FindResource("LargeListBoxFourthMenuListStyle") as Style;
+                                ListBox AddApplyArea = wrapPanelArea.Children[1] as ListBox;
+                                AddApplyArea.Style = area.FindResource("addLargeApply") as Style;
+                                
+                            }
                             NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).MenuForm = "large";
                         }
                     }
@@ -1501,8 +1520,13 @@ namespace MetroFramePlugin.ViewModels
                         if (panel.Uid == areaParent.Uid)
                         {
                             WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
-                            ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                            pluginArea.Style = mainWindow.FindResource("ListBoxFourthMenuListStyle") as Style;
+                            if (wrapPanelArea != null)
+                            {
+                                ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                                if (pluginArea!= null) pluginArea.Style = mainWindow.FindResource("ListBoxFourthMenuListStyle") as Style;
+                                ListBox AddApplyArea = wrapPanelArea.Children[1] as ListBox;
+                                AddApplyArea.Style = area.FindResource("addApply") as Style;
+                            }
                             NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).MenuForm = "normal";
                         }
                     }
@@ -1516,9 +1540,15 @@ namespace MetroFramePlugin.ViewModels
                     {
                         if (panel.Uid == areaParent.Uid)
                         {
+
                             WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
-                            ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                            pluginArea.Style = mainWindow.FindResource("SmallListBoxFourthMenuListStyle") as Style;
+                            if (wrapPanelArea != null)
+                            {
+                                ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                                if (pluginArea!= null)  pluginArea.Style = mainWindow.FindResource("SmallListBoxFourthMenuListStyle") as Style;
+                                ListBox AddApplyArea = wrapPanelArea.Children[1] as ListBox;
+                                AddApplyArea.Style = area.FindResource("addSmallApply") as Style;
+                            }
                             NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).MenuForm = "small";
                         }
                     }
@@ -1543,9 +1573,12 @@ namespace MetroFramePlugin.ViewModels
             //删除区域 
             if (res.Equals("DeleteArea"))
             {
-              AreaMenu area=new AreaMenu();
-              area= NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
-              NewArea.Remove(area);
+                if (VicMessageBoxNormal.Show("确定要删除当前区域吗？", "消息提示框", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    AreaMenu area = new AreaMenu();
+                    area = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
+                    NewArea.Remove(area);
+                }
             }
             WriteFile();
             DrawingPanelArea();
