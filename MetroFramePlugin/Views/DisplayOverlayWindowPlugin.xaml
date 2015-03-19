@@ -1,10 +1,10 @@
-﻿<Window x:Class="MetroFramePlugin.Views.DisplayOverlayWindowPlugin"
+﻿<controls:VicWindowNormal x:Class="MetroFramePlugin.Views.DisplayOverlayWindowPlugin"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
         xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels"
-        Title="DisplayOverlayWindowPlugin" Name="DisplayOverlayWindow" Height="350" Width="800" WindowStartupLocation="CenterScreen">
+        Title="活动插件" Name="DisplayOverlayWindow" Height="400" Width="850" Style="{DynamicResource WindowMessageSkin}" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:DisplayOverlayWindowPluginViewModel/>
     </Window.DataContext>
@@ -17,4 +17,4 @@
     <Grid Name="grid">
         <!--<ListBox Grid.Row="1" Name="listBoxOverPlugin" SelectedIndex="0" Style="{DynamicResource OverlayPluginListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>-->
     </Grid>
-</Window>
+</controls:VicWindowNormal>

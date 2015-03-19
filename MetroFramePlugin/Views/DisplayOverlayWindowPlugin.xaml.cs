@@ -12,13 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Victop.Wpf.Controls;
 
 namespace MetroFramePlugin.Views
 {
     /// <summary>
     /// DisplayOverlayWindowPlugin.xaml 的交互逻辑
     /// </summary>
-    public partial class DisplayOverlayWindowPlugin : Window
+    public partial class DisplayOverlayWindowPlugin : VicWindowNormal
     {
         public DisplayOverlayWindowPlugin()
         {

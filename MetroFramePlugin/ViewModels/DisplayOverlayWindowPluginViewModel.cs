@@ -90,20 +90,12 @@ namespace MetroFramePlugin.ViewModels
                        MenuModel menumodel = new MenuModel();
                        if (Plugin.ShowType == 0)//窗口
                        {
-
-                           if (Plugin.ParamDict.ContainsKey("Title"))
-                           {
-                               if (Plugin.ParamDict["Title"].ToString().Length > 10)
-                               {
-                                   menumodel.MenuName = Plugin.ParamDict["Title"].ToString().Substring(0, 10) + "...";
-                                   
-                               }
-                               else
-                               {
-                                   menumodel.MenuName = Plugin.ParamDict["Title"].ToString();
-                               }
-                               SystemFourthLevelMenuList.Add(menumodel);
-                           }
+                           menumodel.MenuName = Plugin.PluginTitle;
+                           menumodel.ActionType = Plugin.ShowType.ToString();
+                           menumodel.ResourceName = Plugin.PluginName;
+                           menumodel.Uid = PluginInfo["ObjectId"].ToString();
+                           menumodel.ShowType = Plugin.ShowType.ToString();
+                           SystemFourthLevelMenuList.Add(menumodel);
                        }
                        else
                        {
@@ -127,14 +119,22 @@ namespace MetroFramePlugin.ViewModels
                        }
                        
                    }
-                    //<ListBox Grid.Row="1" Name="listBoxOverPlugin" SelectedIndex="0" Style="{DynamicResource OverlayPluginListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>
-                   for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
+                   if (SystemFourthLevelMenuList.Count > 0)
                    {
-                       ListBox lbox = new ListBox();
-                       lbox.ItemsSource = SystemFourthLevelMenuList;
-                      
-                       lbox.Style = displayOverlayWindow.FindResource("OverlayPluginListStyle") as Style;
-                       grid.Children.Add(lbox);
+                       for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
+                       {
+                           ListBox lbox = new ListBox();
+                           lbox.ItemsSource = SystemFourthLevelMenuList;
+
+                           lbox.Style = displayOverlayWindow.FindResource("OverlayPluginListStyle") as Style;
+                           grid.Children.Add(lbox);
+                       }
+                   }
+                   else
+                   {
+                       VicLabelNormal lbl = new VicLabelNormal();
+                       lbl.Content = "暂无打开的活动插件";
+                       grid.Children.Add(lbl);
                    }
                   
                });
@@ -151,17 +151,83 @@ namespace MetroFramePlugin.ViewModels
                    if (x != null)
                    {
                        MenuModel menuModel = (MenuModel)x;
-                       
-                       VicTabControlNormal tabCtr = OverlayWindow.VicTabCtrl;
-                       for (int i = 0; i < tabCtr.Items.Count; i++)
+                       if (menuModel.ShowType == "0")//窗口
                        {
-                           VicTabItemNormal tabItem = tabCtr.Items[i] as VicTabItemNormal;
-                           string res = tabItem.Uid;
-                           if (tabItem.Uid.Equals(menuModel.Uid))
+                           WindowCollection WinCollection = Application.Current.Windows;
+
+                           for (int i = 0; i < WinCollection.Count; i++)
                            {
-                               tabItem.IsSelected = true;
-                               tabItem.Focus();
+                               if (WinCollection[i].Uid.Equals(menuModel.Uid))
+                               {
+                                   switch (WinCollection[i].ResizeMode)
+                                   {
+                                       case ResizeMode.NoResize:
+                                       case ResizeMode.CanMinimize:
+                                           WinCollection[i].WindowState = WindowState.Normal;
+                                           break;
+                                       case ResizeMode.CanResize:
+                                       case ResizeMode.CanResizeWithGrip:
+                                           WinCollection[i].WindowState = WindowState.Maximized;
+                                           break;
+                                   }
+                                   WinCollection[i].Activate();
+                                   break;
+                               }
                            }
+                           
+                       }
+                       else
+                       {
+                           WindowCollection WinCollection = Application.Current.Windows;
+                           foreach (Window item in WinCollection)
+                           {
+                               if (item.Uid.Equals("mainWindow"))
+                               {
+                                   if (item.IsActive == false)
+                                   {
+                                       item.WindowState = WindowState.Maximized;
+                                       item.Activate();
+                                       break;
+                                   }
+                               }
+                           }
+
+                           VicTabControlNormal tabCtr = OverlayWindow.VicTabCtrl;
+                           for (int i = 0; i < tabCtr.Items.Count; i++)
+                           {
+                               VicTabItemNormal tabItem = tabCtr.Items[i] as VicTabItemNormal;
+                               string res = tabItem.Uid;
+                               if (tabItem.Uid.Equals(menuModel.Uid))
+                               {
+                                   tabItem.IsSelected = true;
+                                   tabItem.Focus();
+                               }
+                           }
+                       }
+                   }
+               });
+           }
+       }
+       /// <summary>
+       /// 单击关闭
+       /// </summary>
+       public ICommand btnPluginCloseClickCommand
+       {
+           get
+           {
+               return new RelayCommand<object>((x) =>
+               {
+                   if (x != null)
+                   {
+                       MenuModel menuModel = (MenuModel)x;
+                       //UserControl tabCtrl = (UserControl)(SelectedTabItem.Content);
+                       DataMessageOperation messageOp = new DataMessageOperation();
+                       if (!string.IsNullOrEmpty(menuModel.Uid))
+                       {
+                           string messageType = "PluginService.PluginStop";
+                           Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                           contentDic.Add("ObjectId", menuModel.Uid);
+                           messageOp.SendAsyncMessage(messageType, contentDic);
                        }
                    }
                });
