@@ -1464,6 +1464,7 @@ namespace MetroFramePlugin.ViewModels
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).TopSpan = Canvas.GetTop(newArea);
                 WriteFile();
                 DrawingPanelArea();
+                ThumbCanvas(null, false);
             }
         }
 
@@ -1553,6 +1554,7 @@ namespace MetroFramePlugin.ViewModels
             }
             WriteFile();
             DrawingPanelArea();
+            ThumbCanvas(null, false);
         }
 
         ///<summary>
@@ -1567,7 +1569,6 @@ namespace MetroFramePlugin.ViewModels
                 areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
                 areaParent.ParamsModel.LockingState = Visibility.Visible;
                 ThumbCanvas(null, false);
-
             }
             if (res.Equals("btnLocking"))
             {
