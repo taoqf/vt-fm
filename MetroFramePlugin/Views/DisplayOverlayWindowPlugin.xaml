@@ -8,7 +8,7 @@
     <Window.DataContext>
         <vm:DisplayOverlayWindowPluginViewModel/>
     </Window.DataContext>
-    
+  
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding displayOverlayWindowPluginCommand}" CommandParameter="{Binding ElementName=DisplayOverlayWindow}"/>
@@ -16,5 +16,7 @@
     </i:Interaction.Triggers>
     <Grid Name="grid">
         <!--<ListBox Grid.Row="1" Name="listBoxOverPlugin" SelectedIndex="0" Style="{DynamicResource OverlayPluginListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>-->
+        <Button Content="上一页" Width="75" Height="25" Command="{Binding btnUpPageClickCommand}" Background="Transparent" Margin="10,340,757,4"></Button>
+        <Button Content="下一页" Width="75" Height="25" Command="{Binding btnNextPageClickCommand}" Background="Transparent" Margin="100,340,667,4"></Button>
     </Grid>
 </controls:VicWindowNormal>

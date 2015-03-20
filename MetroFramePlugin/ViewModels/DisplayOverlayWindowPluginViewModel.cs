@@ -31,6 +31,11 @@ namespace MetroFramePlugin.ViewModels
        private List<Dictionary<string, object>> pluginList;
        private ObservableCollection<VicTabItemNormal> tabItemList;
        private string tPid;
+       private int pageCount;
+       private int totalPage;
+       private int pageSize = 8;
+       private int currentPage=1;
+       private VicTabControlNormal tabCtr;
        #endregion
 
        #region 属性
@@ -79,6 +84,7 @@ namespace MetroFramePlugin.ViewModels
                return new RelayCommand<object>((x) =>
                {
                    displayOverlayWindow = (Window)x;
+                   tabCtr = OverlayWindow.VicTabCtrl;
                    grid =(Grid) displayOverlayWindow.FindName("grid");
                    //获取插件信息
                    DataMessageOperation dataop = new DataMessageOperation();
@@ -117,15 +123,20 @@ namespace MetroFramePlugin.ViewModels
                            }
                            SystemFourthLevelMenuList.Add(menumodel);
                        }
-                       
+                       pageCount = SystemFourthLevelMenuList.Count;
                    }
+                  
+                   if (pageCount % pageSize == 0)
+                       totalPage = pageCount / pageSize;
+                   else
+                       totalPage = pageCount / pageSize + 1;
+
                    if (SystemFourthLevelMenuList.Count > 0)
                    {
                        for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
                        {
                            ListBox lbox = new ListBox();
                            lbox.ItemsSource = SystemFourthLevelMenuList;
-
                            lbox.Style = displayOverlayWindow.FindResource("OverlayPluginListStyle") as Style;
                            grid.Children.Add(lbox);
                        }
@@ -151,6 +162,7 @@ namespace MetroFramePlugin.ViewModels
                    if (x != null)
                    {
                        MenuModel menuModel = (MenuModel)x;
+                       
                        if (menuModel.ShowType == "0")//窗口
                        {
                            WindowCollection WinCollection = Application.Current.Windows;
@@ -191,8 +203,6 @@ namespace MetroFramePlugin.ViewModels
                                    }
                                }
                            }
-
-                           VicTabControlNormal tabCtr = OverlayWindow.VicTabCtrl;
                            for (int i = 0; i < tabCtr.Items.Count; i++)
                            {
                                VicTabItemNormal tabItem = tabCtr.Items[i] as VicTabItemNormal;
@@ -222,6 +232,13 @@ namespace MetroFramePlugin.ViewModels
                        MenuModel menuModel = (MenuModel)x;
                        //UserControl tabCtrl = (UserControl)(SelectedTabItem.Content);
                        DataMessageOperation messageOp = new DataMessageOperation();
+                       foreach (TabItem item in tabCtr.Items)
+                       {
+                           if (item.Uid.Equals(menuModel.Uid))
+                           {
+                               tabCtr.Items.Remove(item);
+                           }
+                       }
                        if (!string.IsNullOrEmpty(menuModel.Uid))
                        {
                            string messageType = "PluginService.PluginStop";
@@ -229,7 +246,35 @@ namespace MetroFramePlugin.ViewModels
                            contentDic.Add("ObjectId", menuModel.Uid);
                            messageOp.SendAsyncMessage(messageType, contentDic);
                        }
+                     
+
                    }
+               });
+           }
+       }
+       /// <summary>
+       /// 上一页
+       /// </summary>
+       public ICommand btnUpPageClickCommand
+       {
+           get
+           {
+               return new RelayCommand<object>((x) =>
+               {
+                   
+               });
+           }
+       }
+
+       /// <summary>
+       /// 下一页
+       /// </summary>
+       public ICommand btnNextPageClickCommand
+       {
+           get {
+               return new RelayCommand<object>((x) =>
+               {
+                   
                });
            }
        }
@@ -319,6 +364,24 @@ namespace MetroFramePlugin.ViewModels
        #endregion
 
        #region 私方法
+       private void setPage(int currentPage)
+       {
+           //if (pageCount % pageSize == 0)
+           //    totalPage = pageCount / pageSize;
+           // else
+           //    totalPage = pageCount / pageSize + 1;
+           totalPage = pageCount / pageSize == 0 ? pageCount / pageSize : pageCount / pageSize + 1;
+
+           for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
+           {
+               ListBox lbox = new ListBox();
+               lbox.ItemsSource = SystemFourthLevelMenuList;
+
+               lbox.Style = displayOverlayWindow.FindResource("OverlayPluginListStyle") as Style;
+               grid.Children.Add(lbox);
+           }
+       }
+      
        private void ActivatePlugin_Click(object sender, RoutedEventArgs e)
        {
            VicButtonNormal btn = sender as VicButtonNormal;
@@ -407,6 +470,7 @@ namespace MetroFramePlugin.ViewModels
                }
            }
        }
+       
        #endregion
    }
 }
