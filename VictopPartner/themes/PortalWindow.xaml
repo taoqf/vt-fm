@@ -18,6 +18,32 @@
         <GradientStop Color="#E8381B" Offset="0" />
         <GradientStop Color="#0FDEF1" Offset="1" />
     </LinearGradientBrush>
+    <!--分页控件样式-->
+    <Style x:Key="btnNextPageStyle" TargetType="Button">
+        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+        <Setter Property="MinHeight" Value="30"></Setter>
+        <Setter Property="MinWidth" Value="30"></Setter>
+        <Setter Property="FontSize" Value="25"></Setter>
+        <Setter Property="Foreground" Value="Cyan"/>
+        <!--修改模板属性-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse x:Name="ellipse" StrokeThickness="2" Width="30" Height="30" Stroke="White"/>
+                        <ContentPresenter HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Stroke" Value="Cyan" TargetName="ellipse"></Setter>
+                            <!--<Setter Property="StrokeThickness" Value="2" TargetName="ellipse"></Setter>-->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <!--凭证定义MenuItem引用图标样式-->
     <Style x:Key="FontAweSome" TargetType="{x:Type MenuItem}">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont" />

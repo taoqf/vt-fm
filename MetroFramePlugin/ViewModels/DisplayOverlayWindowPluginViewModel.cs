@@ -16,6 +16,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using MetroFramePlugin.Models;
 using MetroFramePlugin.Views;
+using System.Windows.Media;
+
 
 namespace MetroFramePlugin.ViewModels
 {
@@ -33,7 +35,7 @@ namespace MetroFramePlugin.ViewModels
        private string tPid;
        private int pageCount;
        private int totalPage;
-       private int pageSize = 8;
+       private int pageSize = 2;
        private int currentPage=1;
        private VicTabControlNormal tabCtr;
        #endregion
@@ -125,11 +127,6 @@ namespace MetroFramePlugin.ViewModels
                        }
                        pageCount = SystemFourthLevelMenuList.Count;
                    }
-                  
-                   if (pageCount % pageSize == 0)
-                       totalPage = pageCount / pageSize;
-                   else
-                       totalPage = pageCount / pageSize + 1;
 
                    if (SystemFourthLevelMenuList.Count > 0)
                    {
@@ -145,9 +142,26 @@ namespace MetroFramePlugin.ViewModels
                    {
                        VicLabelNormal lbl = new VicLabelNormal();
                        lbl.Content = "暂无打开的活动插件";
+                       lbl.Foreground = Brushes.Red;
                        grid.Children.Add(lbl);
                    }
                   
+                    if (SystemFourthLevelMenuList.Count == 0) return;
+                  
+                    totalPage = SystemFourthLevelMenuList.Count / pageSize;
+                    if ((SystemFourthLevelMenuList.Count % pageSize) == 0)
+                    {
+                        totalPage = SystemFourthLevelMenuList.Count / pageSize; //正好8项是1页
+                    }
+                    else
+                    {
+                        totalPage = SystemFourthLevelMenuList.Count / pageSize + 1; ;// 非8项，
+                    }
+
+                    
+
+
+           
                });
            }
        }
@@ -230,22 +244,29 @@ namespace MetroFramePlugin.ViewModels
                    if (x != null)
                    {
                        MenuModel menuModel = (MenuModel)x;
-                       //UserControl tabCtrl = (UserControl)(SelectedTabItem.Content);
-                       DataMessageOperation messageOp = new DataMessageOperation();
-                       foreach (TabItem item in tabCtr.Items)
+                       for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
                        {
-                           if (item.Uid.Equals(menuModel.Uid))
+                           if (menuModel.MenuName.Equals(SystemFourthLevelMenuList[i].MenuName))
                            {
-                               tabCtr.Items.Remove(item);
+                               SystemFourthLevelMenuList.Remove(menuModel);
                            }
                        }
-                       if (!string.IsNullOrEmpty(menuModel.Uid))
-                       {
-                           string messageType = "PluginService.PluginStop";
-                           Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                           contentDic.Add("ObjectId", menuModel.Uid);
-                           messageOp.SendAsyncMessage(messageType, contentDic);
-                       }
+                       //UserControl tabCtrl = (UserControl)(SelectedTabItem.Content);
+                       //DataMessageOperation messageOp = new DataMessageOperation();
+                       //foreach (TabItem item in tabCtr.Items)
+                       //{
+                       //    if (item.Uid.Equals(menuModel.Uid))
+                       //    {
+                       //        tabCtr.Items.Remove(item);
+                       //    }
+                       //}
+                       //if (!string.IsNullOrEmpty(menuModel.Uid))
+                       //{
+                       //    string messageType = "PluginService.PluginStop";
+                       //    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                       //    contentDic.Add("ObjectId", menuModel.Uid);
+                       //    messageOp.SendAsyncMessage(messageType, contentDic);
+                       //}
                      
 
                    }
@@ -261,7 +282,7 @@ namespace MetroFramePlugin.ViewModels
            {
                return new RelayCommand<object>((x) =>
                {
-                   
+                   MessageBox.Show("上一页");
                });
            }
        }
