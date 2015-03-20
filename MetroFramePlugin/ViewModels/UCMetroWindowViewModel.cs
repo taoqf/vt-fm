@@ -1125,7 +1125,19 @@ namespace MetroFramePlugin.ViewModels
                 });
             }
         }
-
+        /// <summary>
+        /// 单击“编辑命令”删除某个显示插件
+        /// </summary>
+        public ICommand btnDelPlugin
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                    {
+                        VicMessageBoxNormal.Show("功能正在完善", "消息提示框");
+                    });
+            }
+        }
         /// <summary>
         /// 单击“添加应用”
         /// </summary>
@@ -1582,11 +1594,34 @@ namespace MetroFramePlugin.ViewModels
             if (res.Equals("RenName"))
             {
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).AreaName = areaParent.ParamsModel.AreaName;
+                WriteFile();
             }
             //编辑 
             if (res.Equals("Compile"))
             {
-                MessageBox.Show("编辑");
+                if (areaParent != null)
+                {
+                    foreach (DockPanel panel in _panel.Children)
+                    {
+                        if (panel.Uid == areaParent.Uid)
+                        {
+                            WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
+                            if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
+                            {
+                                ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                               
+                                pluginArea.Style = area.FindResource("PopupMenuDelListPluginStyle") as Style;
+                            }
+                            else
+                            {
+                                VicMessageBoxNormal.Show("当前没有要编辑的插件", "消息提示框");
+                            }
+                          
+                        }
+
+                    }
+                }
+                WriteFile();
             }
             //删除区域 
             if (res.Equals("DeleteArea"))
@@ -1597,9 +1632,9 @@ namespace MetroFramePlugin.ViewModels
                     area = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
                     NewArea.Remove(area);
                 }
+                WriteFile();
+                DrawingPanelArea();
             }
-            WriteFile();
-            DrawingPanelArea();
         }
 
         ///<summary>
