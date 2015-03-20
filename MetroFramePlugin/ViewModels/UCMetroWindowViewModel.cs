@@ -1497,13 +1497,19 @@ namespace MetroFramePlugin.ViewModels
                         {
 
                             WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
-                            if (wrapPanelArea != null)
+                            if (wrapPanelArea != null && wrapPanelArea.Children.Count==2)
                             {
                                 ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                                if (pluginArea!=null) pluginArea.Style = mainWindow.FindResource("LargeListBoxFourthMenuListStyle") as Style;
+                                if (pluginArea != null) pluginArea.Style = mainWindow.FindResource("LargeListBoxFourthMenuListStyle") as Style;
                                 ListBox AddApplyArea = wrapPanelArea.Children[1] as ListBox;
                                 AddApplyArea.Style = area.FindResource("addLargeApply") as Style;
                                 
+                            }
+                            else if (wrapPanelArea != null && wrapPanelArea.Children.Count == 1)
+                            {
+                               
+                                ListBox AddApplyArea = wrapPanelArea.Children[0] as ListBox;
+                                AddApplyArea.Style = area.FindResource("addLargeApply") as Style;
                             }
                             NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).MenuForm = "large";
                         }
@@ -1520,11 +1526,18 @@ namespace MetroFramePlugin.ViewModels
                         if (panel.Uid == areaParent.Uid)
                         {
                             WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
-                            if (wrapPanelArea != null)
+                            if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
                             {
                                 ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                                if (pluginArea!= null) pluginArea.Style = mainWindow.FindResource("ListBoxFourthMenuListStyle") as Style;
+                                if (pluginArea != null) pluginArea.Style = mainWindow.FindResource("ListBoxFourthMenuListStyle") as Style;
                                 ListBox AddApplyArea = wrapPanelArea.Children[1] as ListBox;
+                                AddApplyArea.Style = area.FindResource("addApply") as Style;
+
+                            }
+                            else if (wrapPanelArea != null && wrapPanelArea.Children.Count == 1)
+                            {
+
+                                ListBox AddApplyArea = wrapPanelArea.Children[0] as ListBox;
                                 AddApplyArea.Style = area.FindResource("addApply") as Style;
                             }
                             NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).MenuForm = "normal";
@@ -1540,13 +1553,18 @@ namespace MetroFramePlugin.ViewModels
                     {
                         if (panel.Uid == areaParent.Uid)
                         {
-
                             WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
-                            if (wrapPanelArea != null)
+                            if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
                             {
                                 ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                                if (pluginArea!= null)  pluginArea.Style = mainWindow.FindResource("SmallListBoxFourthMenuListStyle") as Style;
+                                if (pluginArea != null) pluginArea.Style = mainWindow.FindResource("SmallListBoxFourthMenuListStyle") as Style;
                                 ListBox AddApplyArea = wrapPanelArea.Children[1] as ListBox;
+                                AddApplyArea.Style = area.FindResource("addSmallApply") as Style;
+
+                            }
+                            else if (wrapPanelArea != null && wrapPanelArea.Children.Count == 1)
+                            {
+                                ListBox AddApplyArea = wrapPanelArea.Children[0] as ListBox;
                                 AddApplyArea.Style = area.FindResource("addSmallApply") as Style;
                             }
                             NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).MenuForm = "small";
