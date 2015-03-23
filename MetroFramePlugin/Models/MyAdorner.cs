@@ -60,13 +60,7 @@ namespace MetroFramePlugin.Models
                 visCollec.Add(cr = GetResizeThumb(Cursors.SizeWE, HorizontalAlignment.Right, VerticalAlignment.Center));
                 visCollec.Add(cb = GetResizeThumb(Cursors.SizeNS, HorizontalAlignment.Center, VerticalAlignment.Bottom));
                 visCollec.Add(mov = GetMoveThumb());
-            }
-            else
-            {
-                //初始化子控件
-                //IsHitTestVisible = false; // Seems Adorner is hit test visible?
-                //mDraggedElement = adorned as FrameworkElement;
-            }    
+            }  
         }
 
         protected override void OnRender(DrawingContext drawingContext)
@@ -113,10 +107,47 @@ namespace MetroFramePlugin.Models
 
         void Resize(FrameworkElement ff)
         {
+            if (Canvas.GetLeft(ff) < 0)
+            {
+                Canvas.SetLeft(ff, 5);
+            }
+            if (Canvas.GetTop(ff) < 0)
+            {
+                Canvas.SetTop(ff, 5);
+            }
             if (Double.IsNaN(ff.Width))
-                ff.Width = ff.RenderSize.Width;
+            {
+                if (ff.RenderSize.Width > (ff.Parent as Canvas).ActualWidth)
+                {
+                    ff.Width = (ff.Parent as Canvas).ActualWidth - 500;
+                }
+                else
+                {
+                    if (Canvas.GetLeft(ff) + ff.Width > (ff.Parent as Canvas).ActualWidth)
+                    {
+                        ff.Width = (ff.Parent as Canvas).ActualWidth - Canvas.GetLeft(ff) - 5;
+                    }
+                    else
+                        ff.Width = ff.RenderSize.Width;
+                }                   
+            }
+
             if (Double.IsNaN(ff.Height))
-                ff.Height = ff.RenderSize.Height;
+            {
+                if (ff.Height > (ff.Parent as Canvas).ActualHeight)
+                {
+                    ff.Height = (ff.Parent as Canvas).ActualHeight - 500;
+                }
+                else
+                {
+                    if (Canvas.GetTop(ff) + ff.Height > (ff.Parent as Canvas).ActualHeight)
+                    {
+                        ff.Height = (ff.Parent as Canvas).ActualHeight - Canvas.GetTop(ff) - 5;
+                    }
+                    else ff.Height = ff.RenderSize.Height;
+                }
+            }
+                
             ff.MouseLeave += ff_MouseMove;
         }
 
@@ -151,7 +182,11 @@ namespace MetroFramePlugin.Models
                 }
                 else
                 {
-                    Canvas.SetLeft(element, Canvas.GetLeft(element) + e.HorizontalChange);
+                    if (Canvas.GetLeft(element) + element.ActualWidth > (element.Parent as Canvas).ActualWidth)
+                    {
+                        Canvas.SetLeft(element, (element.Parent as Canvas).ActualWidth - element.ActualWidth);
+                    }
+                    else Canvas.SetLeft(element, Canvas.GetLeft(element) + e.HorizontalChange);
                 }
                 if (Canvas.GetTop(element) + e.VerticalChange < 0)
                 {
@@ -159,6 +194,7 @@ namespace MetroFramePlugin.Models
                 }
                 else
                 {
+
                     Canvas.SetTop(element, Canvas.GetTop(element) + e.VerticalChange);
                 }
                
