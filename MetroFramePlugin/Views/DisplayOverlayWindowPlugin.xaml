@@ -4,17 +4,29 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
         xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels"
-        Title="活动插件" Name="DisplayOverlayWindow" Height="400" Width="850" Style="{DynamicResource WindowMessageSkin}" WindowStartupLocation="CenterScreen">
+        Title="活动插件" Name="DisplayOverlayWindow" Height="420" Width="850" Style="{DynamicResource WindowMessageSkin}" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:DisplayOverlayWindowPluginViewModel/>
     </Window.DataContext>
-    
-    <i:Interaction.Triggers>
+        <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding displayOverlayWindowPluginCommand}" CommandParameter="{Binding ElementName=DisplayOverlayWindow}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Grid Name="grid">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="400"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+        </Grid.RowDefinitions>
+    <Grid Name="grid" Grid.Row="0">
+                <!--<Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>-->
+        
         <!--<ListBox Grid.Row="1" Name="listBoxOverPlugin" SelectedIndex="0" Style="{DynamicResource OverlayPluginListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>-->
+        
+    </Grid>
+        <Button Content="&#xe603;" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnUpPageClickCommand}" Margin="10,342,802,6" Background="Transparent"></Button>
+        <Button Content="&#xe622;" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnNextPageClickCommand}" Background="Transparent" Margin="68,342,741,6"></Button>
     </Grid>
 </controls:VicWindowNormal>
