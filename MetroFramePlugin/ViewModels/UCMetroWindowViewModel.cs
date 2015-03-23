@@ -1329,6 +1329,7 @@ namespace MetroFramePlugin.ViewModels
                 DockPanel.SetDock(_title, Dock.Top);
                 _title.BtnDeblockingClick += BtnClick;
                 _title.MenuItemIcoClick += MenuItemClick;
+                _title.ParamsModel.UnitMouseLeaveText += ParamsModel_UnitMouseLeaveText;
                 _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                 _title.ParamsModel.AreaName = NewArea[i].AreaName;
                 _title.VerticalContentAlignment = VerticalAlignment.Center;
@@ -1391,6 +1392,8 @@ namespace MetroFramePlugin.ViewModels
             }
             ThumbCanvas();
         }
+
+      
         ///<summary>
         /// 区域改变大小和拖动
         /// </summary>
@@ -1593,8 +1596,8 @@ namespace MetroFramePlugin.ViewModels
             //重命名区域 
             if (res.Equals("RenName"))
             {
-                NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid)).AreaName = areaParent.ParamsModel.AreaName;
-                WriteFile();
+               
+             //在此只是让文本框聚集和文本选中，不做任何事情
             }
             //编辑 
             if (res.Equals("Compile"))
@@ -1636,7 +1639,14 @@ namespace MetroFramePlugin.ViewModels
                 DrawingPanelArea();
             }
         }
-
+        void ParamsModel_UnitMouseLeaveText(object sender, MouseEventArgs e)
+        {
+            UnitAreaSeting areaParent = (((TextBox)sender).Parent as DockPanel).Parent as UnitAreaSeting;
+            AreaMenu nowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
+            nowArea.AreaName = areaParent.ParamsModel.AreaName;
+            WriteFile();
+            areaParent.Focus();
+        }
         ///<summary>
         ///区域title“锁定”按钮和“折叠/展开”回调事件
         /// </summary>
@@ -1690,12 +1700,11 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-        #endregion
         /// <summary>
         ///  重新渲染区域
         /// </summary>
         private void OverRideDrawingPanelArea(UIElement dockPanel)
-        {         
+        {
             //读取myMenu.json文件并展示
             string areaMenuList = string.Empty;
             menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";
@@ -1776,9 +1785,11 @@ namespace MetroFramePlugin.ViewModels
                     _panel.Children.Add(_newPanel);
                     _panel.Children.Remove(dockPanel);
                     break;
-                }               
+                }
             }
         }
+        #endregion
+       
         #endregion
     }
 }
