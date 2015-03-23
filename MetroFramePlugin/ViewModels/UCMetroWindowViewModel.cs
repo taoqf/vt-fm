@@ -1601,7 +1601,8 @@ namespace MetroFramePlugin.ViewModels
             {
                 areaParent.ParamsModel.DeblockingState = Visibility.Visible;
                 areaParent.ParamsModel.LockingState = Visibility.Collapsed;
-                ThumbCanvas(areaParent.Parent as DockPanel, true);
+                //重绘
+                OverRideDrawingPanelArea(areaParent.Parent as DockPanel);
             }
             if (res.Equals("btnFold"))
             {
@@ -1637,7 +1638,93 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         #endregion
+        /// <summary>
+        ///  重新渲染区域
+        /// </summary>
+        private void OverRideDrawingPanelArea(UIElement dockPanel)
+        {         
+            //读取myMenu.json文件并展示
+            string areaMenuList = string.Empty;
+            menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";
+            if (File.Exists(menuPath))
+            {
+                areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("UTF-8"));
+            }
+            this.NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
 
+            for (int i = 0; i < NewArea.Count; i++)
+            {
+                if (NewArea[i].AreaID == dockPanel.Uid)
+                {
+                    UnitAreaSeting _title = new UnitAreaSeting();
+                    _title.ParamsModel.TitleWidth = NewArea[i].AreaWidth;
+                    _title.Uid = NewArea[i].AreaID;
+                    DockPanel.SetDock(_title, Dock.Top);
+                    _title.BtnDeblockingClick += BtnClick;
+                    _title.MenuItemIcoClick += MenuItemClick;
+                    _title.SecondMenuItemIcoClick += SecondMenuItemClick;
+                    _title.ParamsModel.AreaName = NewArea[i].AreaName;
+                    _title.VerticalContentAlignment = VerticalAlignment.Center;
+                    _title.HorizontalContentAlignment = HorizontalAlignment.Center;
+                    _title.Background = Brushes.Gainsboro;
+
+                    ListBox menuListArea = new ListBox();
+                    menuListArea.Background = Brushes.WhiteSmoke;
+
+                    WrapPanel pluginPanel = new WrapPanel();
+                    pluginPanel.Uid = NewArea[i].AreaID;
+                    pluginPanel.Orientation = Orientation.Horizontal;
+                    ListBox addapplyStyle = new ListBox();
+                    ListBoxItem _item = new ListBoxItem();
+                    addapplyStyle.Items.Add(_item);
+                    if (NewArea[i].MenuForm == "normal")
+                    {
+                        addapplyStyle.Style = area.FindResource("addApply") as Style;
+                    }
+                    else if (NewArea[i].MenuForm == "large")
+                    {
+                        addapplyStyle.Style = area.FindResource("addLargeApply") as Style;
+                    }
+                    else if (NewArea[i].MenuForm == "small")
+                    {
+                        addapplyStyle.Style = area.FindResource("addSmallApply") as Style;
+                    }
+                    pluginPanel.Children.Add(addapplyStyle);
+
+                    if (NewArea[i].PluginList.Count != 0)
+                    {
+                        ListBox pluginlist = new ListBox();
+                        pluginlist.ItemsSource = NewArea[i].PluginList;
+                        if (NewArea[i].MenuForm == "normal")
+                        {
+                            pluginlist.Style = mainWindow.FindResource("ListBoxFourthMenuListStyle") as Style;
+                        }
+                        else if (NewArea[i].MenuForm == "large")
+                        {
+                            pluginlist.Style = mainWindow.FindResource("LargeListBoxFourthMenuListStyle") as Style;
+                        }
+                        else if (NewArea[i].MenuForm == "small")
+                        {
+                            pluginlist.Style = mainWindow.FindResource("SmallListBoxFourthMenuListStyle") as Style;
+                        }
+                        pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);
+                    }
+
+                    menuListArea.Items.Add(pluginPanel);//一个ListBox中添加了一个wrapPanel,一个ListBox
+
+                    DockPanel _newPanel = new DockPanel();
+                    _newPanel.Uid = NewArea[i].AreaID;
+                    _newPanel.Width = NewArea[i].AreaWidth;
+                    _newPanel.Height = NewArea[i].AreaHeight;
+                    _newPanel.Children.Add(_title);
+                    _newPanel.Children.Add(menuListArea);
+                    Canvas.SetLeft(_newPanel, NewArea[i].LeftSpan);
+                    Canvas.SetTop(_newPanel, NewArea[i].TopSpan);
+                    _panel.Children.Add(_newPanel);
+                    break;
+                }               
+            }
+        }
         #endregion
     }
 }
