@@ -1082,7 +1082,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="OverlayPluginListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
         <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>

@@ -27,6 +27,7 @@ namespace MetroFramePlugin.ViewModels
        private Window displayOverlayWindow;
        private ObservableCollection<MenuModel> systemFourthLevelMenuList;
        private Grid grid;
+       private VicStackPanelNormal statePanel;
        /// <summary>
        /// 存储插件信息
        /// </summary>
@@ -35,7 +36,7 @@ namespace MetroFramePlugin.ViewModels
        private string tPid;
        private int pageCount;
        private int totalPage;
-       private int pageSize = 2;
+       private int pageSize = 8;
        private int currentPage=1;
        private VicTabControlNormal tabCtr;
        #endregion
@@ -87,8 +88,7 @@ namespace MetroFramePlugin.ViewModels
                {
                    displayOverlayWindow = (Window)x;
                    tabCtr = OverlayWindow.VicTabCtrl;
-                   grid =(Grid) displayOverlayWindow.FindName("grid");
-                   //获取插件信息
+                   statePanel = (VicStackPanelNormal)displayOverlayWindow.FindName("statePanel");                   //获取插件信息
                    DataMessageOperation dataop = new DataMessageOperation();
                    pluginList = dataop.GetPluginInfo();
                    foreach (Dictionary<string, object> PluginInfo in pluginList)
@@ -127,41 +127,36 @@ namespace MetroFramePlugin.ViewModels
                        }
                        pageCount = SystemFourthLevelMenuList.Count;
                    }
+                   if (SystemFourthLevelMenuList.Count == 0) return;
 
-                   if (SystemFourthLevelMenuList.Count > 0)
+                   totalPage = SystemFourthLevelMenuList.Count / pageSize;
+                   if ((SystemFourthLevelMenuList.Count % pageSize) == 0)
                    {
-                       for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
-                       {
-                           ListBox lbox = new ListBox();
-                           lbox.ItemsSource = SystemFourthLevelMenuList;
-                           lbox.Style = displayOverlayWindow.FindResource("OverlayPluginListStyle") as Style;
-                           grid.Children.Add(lbox);
-                       }
+                       totalPage = SystemFourthLevelMenuList.Count / pageSize; //正好8项是1页
                    }
                    else
                    {
-                       VicLabelNormal lbl = new VicLabelNormal();
-                       lbl.Content = "暂无打开的活动插件";
-                       lbl.Foreground = Brushes.Red;
-                       grid.Children.Add(lbl);
+                       totalPage = SystemFourthLevelMenuList.Count / pageSize + 1; ;// 非8项，
                    }
-                  
-                    if (SystemFourthLevelMenuList.Count == 0) return;
-                  
-                    totalPage = SystemFourthLevelMenuList.Count / pageSize;
-                    if ((SystemFourthLevelMenuList.Count % pageSize) == 0)
-                    {
-                        totalPage = SystemFourthLevelMenuList.Count / pageSize; //正好8项是1页
-                    }
-                    else
-                    {
-                        totalPage = SystemFourthLevelMenuList.Count / pageSize + 1; ;// 非8项，
-                    }
-
-                    
-
-
-           
+                   
+                   setPage(currentPage);
+                   if (SystemFourthLevelMenuList.Count > 0)
+                   {
+                       //for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
+                       //{
+                       //    ListBox lbox = new ListBox();
+                       //    lbox.ItemsSource = SystemFourthLevelMenuList;
+                       //    lbox.SetResourceReference(ListBox.StyleProperty, "OverlayPluginListStyle");
+                       //    statePanel.Children.Add(lbox);
+                       //}
+                   }
+                   else
+                   {
+                       //VicLabelNormal lbl = new VicLabelNormal();
+                       //lbl.Content = "暂无打开的活动插件";
+                       //lbl.Foreground = Brushes.Red;
+                       //grid.Children.Add(lbl);
+                   }
                });
            }
        }
@@ -251,24 +246,8 @@ namespace MetroFramePlugin.ViewModels
                                SystemFourthLevelMenuList.Remove(menuModel);
                            }
                        }
-                       //UserControl tabCtrl = (UserControl)(SelectedTabItem.Content);
-                       //DataMessageOperation messageOp = new DataMessageOperation();
-                       //foreach (TabItem item in tabCtr.Items)
-                       //{
-                       //    if (item.Uid.Equals(menuModel.Uid))
-                       //    {
-                       //        tabCtr.Items.Remove(item);
-                       //    }
-                       //}
-                       //if (!string.IsNullOrEmpty(menuModel.Uid))
-                       //{
-                       //    string messageType = "PluginService.PluginStop";
-                       //    Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                       //    contentDic.Add("ObjectId", menuModel.Uid);
-                       //    messageOp.SendAsyncMessage(messageType, contentDic);
-                       //}
-                     
-
+                       statePanel.Children.Clear();
+                       setPage(currentPage);
                    }
                });
            }
@@ -300,6 +279,7 @@ namespace MetroFramePlugin.ViewModels
            }
        }
        #endregion
+       
 
        #region 打开Json菜单下的插件
        /// <summary>
@@ -387,20 +367,40 @@ namespace MetroFramePlugin.ViewModels
        #region 私方法
        private void setPage(int currentPage)
        {
-           //if (pageCount % pageSize == 0)
-           //    totalPage = pageCount / pageSize;
-           // else
-           //    totalPage = pageCount / pageSize + 1;
-           totalPage = pageCount / pageSize == 0 ? pageCount / pageSize : pageCount / pageSize + 1;
-
+           ObservableCollection<MenuModel> sumPageList = new ObservableCollection<MenuModel>();
            for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
            {
-               ListBox lbox = new ListBox();
-               lbox.ItemsSource = SystemFourthLevelMenuList;
-
-               lbox.Style = displayOverlayWindow.FindResource("OverlayPluginListStyle") as Style;
-               grid.Children.Add(lbox);
+               sumPageList.Add(SystemFourthLevelMenuList[i]);
            }
+           int articleWindowCount = sumPageList.Count;
+           for (int i = 0; i < totalPage; i++)
+           {
+               Grid gridPanel = new Grid();
+               gridPanel.Height = 300;
+               gridPanel.Background = Brushes.Red;
+               gridPanel.Margin = new Thickness(0, 20, 0, 20);
+
+               ObservableCollection<MenuModel> currentPageList = new ObservableCollection<MenuModel>();
+               for (int k = 0; k < articleWindowCount; k++)
+               {
+                   ListBox lbox = new ListBox();
+                   currentPageList.Add(sumPageList[0]);
+                   sumPageList.RemoveAt(0);
+                   articleWindowCount--;
+                   k--;
+                   lbox.ItemsSource = currentPageList;
+                   lbox.SetResourceReference(ListBox.StyleProperty, "OverlayPluginListStyle");
+                   gridPanel.Children.Add(lbox);
+
+               }
+               statePanel.Children.Add(gridPanel);
+               if (statePanel.Children.Count == pageSize) { break; }
+
+               
+
+           }
+           
+           
        }
       
        private void ActivatePlugin_Click(object sender, RoutedEventArgs e)
