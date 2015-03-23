@@ -1648,16 +1648,14 @@ namespace MetroFramePlugin.ViewModels
             {
                 areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
                 areaParent.ParamsModel.LockingState = Visibility.Visible;
-                OverRideDrawingPanelArea(areaParent.Parent as DockPanel);
-                //ThumbCanvas(areaParent.Parent as DockPanel, false);
+                ThumbCanvas(areaParent.Parent as DockPanel, false);
             }
             if (res.Equals("btnLocking"))
             {
                 areaParent.ParamsModel.DeblockingState = Visibility.Visible;
                 areaParent.ParamsModel.LockingState = Visibility.Collapsed;
                 //重绘
-                //OverRideDrawingPanelArea(areaParent.Parent as DockPanel);
-                ThumbCanvas(areaParent.Parent as DockPanel, false);
+                OverRideDrawingPanelArea(areaParent.Parent as DockPanel);
             }
             if (res.Equals("btnFold"))
             {
@@ -1776,7 +1774,7 @@ namespace MetroFramePlugin.ViewModels
                     Canvas.SetLeft(_newPanel, NewArea[i].LeftSpan);
                     Canvas.SetTop(_newPanel, NewArea[i].TopSpan);
                     _panel.Children.Add(_newPanel);
-                    _panel.Children.RemoveAt(i);
+                    _panel.Children.Remove(dockPanel);
                     break;
                 }               
             }
