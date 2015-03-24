@@ -36,7 +36,7 @@ namespace MetroFramePlugin.ViewModels
        private string tPid;
        private int pageCount;
        private int totalPage;
-       private int pageSize =1;
+       private int pageSize =8;
        private int currentPage=1;
        private VicTabControlNormal tabCtr;
        #endregion
@@ -157,7 +157,14 @@ namespace MetroFramePlugin.ViewModels
                            SystemFourthLevelMenuList.Add(menumodel);
                        }
                    }
-                   if (SystemFourthLevelMenuList.Count == 0) return;
+                   if (SystemFourthLevelMenuList.Count == 0)
+                   {
+                       VicLabelNormal lbl = new VicLabelNormal();
+                       lbl.Content = "暂无打开的活动插件";
+                       lbl.Foreground = Brushes.Red;
+                       statePanel.Children.Add(lbl);
+                       return; 
+                   }
 
                    totalPage = SystemFourthLevelMenuList.Count / pageSize;
                    if ((SystemFourthLevelMenuList.Count % pageSize) == 0)
@@ -168,24 +175,16 @@ namespace MetroFramePlugin.ViewModels
                    {
                        totalPage = SystemFourthLevelMenuList.Count / pageSize + 1; ;// 非8项，
                    }
-
-                   setPage(totalPage);
-                   if (SystemFourthLevelMenuList.Count <=0)
-                   {
-                       VicLabelNormal lbl = new VicLabelNormal();
-                       lbl.Content = "暂无打开的活动插件";
-                       lbl.Foreground = Brushes.Red;
-                       grid.Children.Add(lbl);
+                       
                        //for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
                        //{
                        //    ListBox lbox = new ListBox();
                        //    lbox.ItemsSource = SystemFourthLevelMenuList;
                        //    lbox.SetResourceReference(ListBox.StyleProperty, "OverlayPluginListStyle");
                        //    statePanel.Children.Add(lbox);
-                       
+
                        //}
-                   }
-                  
+                   setPage(totalPage);
                });
            }
        }
