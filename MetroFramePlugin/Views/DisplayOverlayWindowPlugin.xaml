@@ -4,7 +4,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
         xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels"
-        Title="活动插件" Name="DisplayOverlayWindow" Height="380" Width="860" Style="{DynamicResource WindowMessageSkin}" WindowStartupLocation="CenterScreen">
+        Title="活动插件" Name="DisplayOverlayWindow" Height="350" Width="900" Style="{DynamicResource WindowMessageSkin}" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:DisplayOverlayWindowPluginViewModel/>
     </Window.DataContext>
@@ -14,7 +14,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <!--上下显示-->
-    <Grid>
+    <!--<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="400"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
@@ -23,22 +23,22 @@
 
 
         </controls:VicStackPanelNormal>
-        <Button Content="&#xe603;" Background="Red" IsEnabled="{Binding UpPageVis}" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnUpPageClickCommand}" Margin="10,283,802,65" ></Button>
+        <Button Content="&#xe603;" IsEnabled="{Binding UpPageVis}" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnUpPageClickCommand}" Margin="10,283,802,65" ></Button>
         <Button Content="&#xe622;" IsEnabled="{Binding NextPageVis}" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnNextPageClickCommand}" Background="Transparent" Margin="68,283,744,65"></Button>
-    </Grid>
+    </Grid>-->
     <!--左右显示-->
-    <!--<Grid>
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="40"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="40"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Content="&#xe603;" HorizontalAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnUpPageClickCommand}" Margin="10,283,802,65" Background="Transparent"></Button>
-        <controls:VicStackPanelNormal Grid.Column="1" Orientation="Horizontal"  Name="statePanel">
+        <Button Content="&#xe6ab;" IsEnabled="{Binding UpPageVis}" Height="40" Width="40" HorizontalAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnUpPageClickCommand}" Background="Transparent"></Button>
+        <controls:VicStackPanelNormal Grid.Column="1" Orientation="Vertical"  Name="statePanel">
 
 
         </controls:VicStackPanelNormal>
 
-        <Button Content="&#xe622;" Grid.Column="2" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnNextPageClickCommand}" Background="Transparent" Margin="68,283,744,65"></Button>
-    </Grid>-->
+        <Button Content="&#xe6ae;" IsEnabled="{Binding NextPageVis}" Height="40" Width="40" HorizontalAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnNextPageClickCommand}" Background="Transparent"></Button>
+    </Grid>
 </controls:VicWindowNormal>

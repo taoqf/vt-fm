@@ -36,7 +36,7 @@ namespace MetroFramePlugin.ViewModels
        private string tPid;
        private int pageCount;
        private int totalPage;
-       private int pageSize =8;
+       private int pageSize =2;
        private int currentPage=1;
        private VicTabControlNormal tabCtr;
        #endregion
@@ -309,7 +309,6 @@ namespace MetroFramePlugin.ViewModels
                        else
                        {
                            Grid gridPanel = new Grid();
-
                            gridPanel.Height = 300;
                            gridPanel.Margin = new Thickness(0, 20, 0, 20);
                            ObservableCollection<MenuModel> currentPageList = new ObservableCollection<MenuModel>();
