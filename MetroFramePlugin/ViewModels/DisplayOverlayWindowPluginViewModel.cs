@@ -61,8 +61,8 @@ namespace MetroFramePlugin.ViewModels
                }
            }
        }
-       private Visibility nextPageVis;
-       public Visibility NextPageVis
+       private bool nextPageVis;
+       public bool NextPageVis
        {
            get 
            {
@@ -78,8 +78,8 @@ namespace MetroFramePlugin.ViewModels
           }
        }
 
-       private Visibility upPageVis;
-       public Visibility UpPageVis
+       private bool upPageVis;
+       public bool UpPageVis
        {
            get {
                return upPageVis;
@@ -291,11 +291,17 @@ namespace MetroFramePlugin.ViewModels
                {
                    if (currentPage == 1)
                    {
+                       UpPageVis = false;
+
+                       if (SystemFourthLevelMenuList.Count <= pageSize)
+                       {
+                           NextPageVis = false;
+                       }
+
                        return;
                    }
                    else if (currentPage > 1)
                    {
-
                        if (SystemFourthLevelMenuList.Count <= pageSize)
                        {
 
@@ -332,6 +338,24 @@ namespace MetroFramePlugin.ViewModels
                        //statePanel.Children.Insert(0,gridPanel);
 
                        currentPage--;
+                       //判断上一页按钮是否有效
+                       if (currentPage <= 1)
+                       {
+                           UpPageVis = false;
+                       }
+                       else
+                       {
+                           UpPageVis = true;
+                       }
+                       //判断下一页按钮是否有效
+                       if (currentPage < totalPage)
+                       {
+                           NextPageVis = true;
+                       }
+                       else
+                       {
+                           NextPageVis = false;
+                       }
 
                    }
                });
@@ -350,7 +374,6 @@ namespace MetroFramePlugin.ViewModels
                    {
                        return;
                    }
-
                    //if (SystemFourthLevelMenuList.Count <= pageSize)
                    //{
 
@@ -377,16 +400,21 @@ namespace MetroFramePlugin.ViewModels
                    //    statePanel.Children.Insert(0, gridPanel);
                    //}
 
-
-
-
                        if (statePanel.Children.Count > 0)
                        {
                            statePanel.Children.RemoveAt(0);
                        }
 
                        currentPage++;
-
+                       if (currentPage >= totalPage)
+                       {
+                           NextPageVis = false;
+                       }
+                       else
+                       {
+                           NextPageVis = true;
+                       }
+                       UpPageVis = true;
                    
                });
            }
@@ -486,12 +514,20 @@ namespace MetroFramePlugin.ViewModels
                sumPageList.Add(SystemFourthLevelMenuList[i]);
            }
            int articleWindowCount = sumPageList.Count;
+           UpPageVis = false;
+           if (articleWindowCount <= pageSize)
+           {
+               NextPageVis = false;
+           }
+           else
+           {
+               NextPageVis = true;
+           }
            for (int i = 0; i < totalPage; i++)
            {
                Grid gridPanel = new Grid();
                gridPanel.Height = 300;
                gridPanel.Margin = new Thickness(0, 20, 0, 20);
-
                ObservableCollection<MenuModel> currentPageList = new ObservableCollection<MenuModel>();
                for (int k = 0; k < articleWindowCount; k++)
                {
@@ -507,8 +543,6 @@ namespace MetroFramePlugin.ViewModels
                }
                statePanel.Children.Add(gridPanel);
            }
-           
-           
        }
       
        private void ActivatePlugin_Click(object sender, RoutedEventArgs e)
