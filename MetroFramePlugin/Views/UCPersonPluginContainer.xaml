@@ -584,7 +584,13 @@
                     </controls:VicGridNormal.RowDefinitions>
                     <controls:VicTextBlockNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Bold" FontSize="18" Margin="5" Text="添加应用"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <controls:VicTextBoxSeach Grid.Row="0" VerticalAlignment="Center" VerticalContentAlignment="Center" WaterMark="  输入应用名称"  Width="150"/>
+                        <controls:VicTextBoxSeach x:Name="txtSearch" Grid.Row="0" VerticalAlignment="Center" VerticalContentAlignment="Center" MaxLength="20" WaterMark="  输入应用名称"  Width="150">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="VicTextBoxSeachClick">
+                                    <i:InvokeCommandAction Command="{Binding VicTextBoxSeachClickCommand}"  CommandParameter="{Binding ElementName=txtSearch}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </controls:VicTextBoxSeach>
                         <controls:VicButtonNormal Name="btnPopupClose" Style="{DynamicResource btnCloseStyle}" Margin="8,0,0,0" Grid.Row="0" Width="24" Height="24" Command="{Binding btnAddApplyCloseClickCommand}"/>
                     </StackPanel>
                     <Grid Grid.Row="1">

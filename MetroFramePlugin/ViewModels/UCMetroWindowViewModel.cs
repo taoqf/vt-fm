@@ -1125,6 +1125,22 @@ namespace MetroFramePlugin.ViewModels
                 });
             }
         }
+
+        /// <summary>
+        /// 搜索框搜索实现
+        ///  </summary>
+        public ICommand VicTextBoxSeachClickCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                   
+
+                });
+            }
+        }
+
         /// <summary>
         /// 单击“编辑命令”删除某个显示插件
         /// </summary>
@@ -1175,9 +1191,9 @@ namespace MetroFramePlugin.ViewModels
             get
             {
                 return new RelayCommand(() =>
-                {
-                    //一下全部选中
-                });
+                    {
+                        _listbox.SelectAll();
+                    });
             }
         }
         /// <summary>
@@ -1212,9 +1228,14 @@ namespace MetroFramePlugin.ViewModels
                     _panel.IsEnabled = true;
 
                     WriteFile();
-                    DrawingPanelArea();//重绘
-
-
+                    foreach (DockPanel panel in _panel.Children)
+                    {
+                        if (panel.Uid == selectAreaId)
+                        {
+                            OverRideDrawingPanelArea(panel);
+                            break;
+                        }
+                    }
                 });
             }
         }
@@ -1662,13 +1683,13 @@ namespace MetroFramePlugin.ViewModels
         {
             string res = ((VicButtonNormal)sender).Tag.ToString();
             UnitAreaSeting areaParent = ((((VicButtonNormal)sender).Parent as StackPanel).Parent as DockPanel).Parent as UnitAreaSeting;
-            if (res.Equals("btnDeblocking"))
+            if (res.Equals("btnDeblocking"))//解锁
             {
                 areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
                 areaParent.ParamsModel.LockingState = Visibility.Visible;
                 ThumbCanvas(areaParent.Parent as DockPanel, false);
             }
-            if (res.Equals("btnLocking"))
+            if (res.Equals("btnLocking"))//锁定
             {
                 areaParent.ParamsModel.DeblockingState = Visibility.Visible;
                 areaParent.ParamsModel.LockingState = Visibility.Collapsed;
