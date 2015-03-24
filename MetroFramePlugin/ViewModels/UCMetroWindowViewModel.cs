@@ -1126,18 +1126,49 @@ namespace MetroFramePlugin.ViewModels
             }
         }
 
+        /// <summary>添加应用弹窗四级菜单列表 </summary>
+        private ObservableCollection<MenuModel> seachedFourthLevelMenuList;
+        public ObservableCollection<MenuModel> SeachedFourthLevelMenuList
+        {
+            get
+            {
+                if (seachedFourthLevelMenuList == null)
+                    seachedFourthLevelMenuList = new ObservableCollection<MenuModel>();
+                return seachedFourthLevelMenuList;
+            }
+            set
+            {
+                if (seachedFourthLevelMenuList != value)
+                {
+                    seachedFourthLevelMenuList = value;
+                    RaisePropertyChanged("SeachedFourthLevelMenuList");
+                }
+            }
+        }
         /// <summary>
-        /// 搜索框搜索实现
+        /// 根据搜索框搜索,实现弹窗列表四级菜单展示
         ///  </summary>
         public ICommand VicTextBoxSeachClickCommand
         {
             get
             {
                 return new RelayCommand<object>((x) =>
-                {
-                   
-
-                });
+                    {
+                        VicTextBoxSeach aa = (VicTextBoxSeach)x;
+                        string keyTxt = aa.VicText.ToString();
+                        if (!string.IsNullOrEmpty(keyTxt))
+                        {
+                            foreach (MenuModel pluginModel in _listbox.ItemsSource)
+                            {
+                               if (pluginModel.MenuName.Contains(keyTxt)) SeachedFourthLevelMenuList.Add(pluginModel);
+                            }
+                            _listbox.ItemsSource = SeachedFourthLevelMenuList;
+                        }
+                        else 
+                        {
+                            _listbox.ItemsSource = NewSystemFourthLevelMenuList;
+                        }
+                    });
             }
         }
 
@@ -1153,11 +1184,11 @@ namespace MetroFramePlugin.ViewModels
                         VicButtonNormal btn = (VicButtonNormal)x;
                         DockPanel parentPanel = GetParentObject<DockPanel>(btn);
                         ListBoxItem nowSelectDelPlugin = GetParentObject<ListBoxItem>(btn);
-                        MenuModel nowPlugin = (MenuModel) nowSelectDelPlugin.DataContext;
-                        string  eidtAreaId = parentPanel.Uid;//得到当前选中的区域ID
+                        MenuModel nowPlugin = (MenuModel)nowSelectDelPlugin.DataContext;
+                        string eidtAreaId = parentPanel.Uid;//得到当前选中的区域ID
                         AreaMenu NowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(eidtAreaId));
-                        MenuModel areaPlugin = new MenuModel(); 
-                        areaPlugin=NowArea.PluginList.FirstOrDefault(it => it.MenuName.Equals(nowPlugin.MenuName));
+                        MenuModel areaPlugin = new MenuModel();
+                        areaPlugin = NowArea.PluginList.FirstOrDefault(it => it.MenuName.Equals(nowPlugin.MenuName));
                         NowArea.PluginList.Remove(areaPlugin);
                         WriteFile();
                         OverRideDrawingPanelArea(parentPanel);
@@ -1424,7 +1455,7 @@ namespace MetroFramePlugin.ViewModels
             ThumbCanvas();
         }
 
-      
+
         ///<summary>
         /// 区域改变大小和拖动
         /// </summary>
@@ -1543,17 +1574,17 @@ namespace MetroFramePlugin.ViewModels
                         {
 
                             WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
-                            if (wrapPanelArea != null && wrapPanelArea.Children.Count==2)
+                            if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
                             {
                                 ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
                                 if (pluginArea != null) pluginArea.Style = mainWindow.FindResource("LargeListBoxFourthMenuListStyle") as Style;
                                 ListBox AddApplyArea = wrapPanelArea.Children[1] as ListBox;
                                 AddApplyArea.Style = area.FindResource("addLargeApply") as Style;
-                                
+
                             }
                             else if (wrapPanelArea != null && wrapPanelArea.Children.Count == 1)
                             {
-                               
+
                                 ListBox AddApplyArea = wrapPanelArea.Children[0] as ListBox;
                                 AddApplyArea.Style = area.FindResource("addLargeApply") as Style;
                             }
@@ -1627,7 +1658,7 @@ namespace MetroFramePlugin.ViewModels
             //重命名区域 
             if (res.Equals("RenName"))
             {
-             //在此只是让文本框聚集和文本选中，不做任何事情
+                //在此只是让文本框聚集和文本选中，不做任何事情
             }
             //编辑 
             if (res.Equals("Compile"))
@@ -1648,7 +1679,7 @@ namespace MetroFramePlugin.ViewModels
                             {
                                 VicMessageBoxNormal.Show("当前没有要编辑的插件", "消息提示框");
                             }
-                          
+
                         }
 
                     }
@@ -1818,7 +1849,7 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         #endregion
-       
+
         #endregion
     }
 }
