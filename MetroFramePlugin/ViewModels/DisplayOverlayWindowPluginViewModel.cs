@@ -36,7 +36,7 @@ namespace MetroFramePlugin.ViewModels
        private string tPid;
        private int pageCount;
        private int totalPage;
-       private int pageSize =2;
+       private int pageSize =8;
        private int currentPage=1;
        private VicTabControlNormal tabCtr;
        #endregion
