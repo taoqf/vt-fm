@@ -1128,13 +1128,23 @@ namespace MetroFramePlugin.ViewModels
         /// <summary>
         /// 单击“编辑命令”删除某个显示插件
         /// </summary>
-        public ICommand btnDelPlugin
+        public ICommand BtnDelPluginCommand
         {
             get
             {
                 return new RelayCommand<object>((x) =>
                     {
-                        VicMessageBoxNormal.Show("功能正在完善", "消息提示框");
+                        VicButtonNormal btn = (VicButtonNormal)x;
+                        DockPanel parentPanel = GetParentObject<DockPanel>(btn);
+                        ListBoxItem nowSelectDelPlugin = GetParentObject<ListBoxItem>(btn);
+                        MenuModel nowPlugin = (MenuModel) nowSelectDelPlugin.DataContext;
+                        string  eidtAreaId = parentPanel.Uid;//得到当前选中的区域ID
+                        AreaMenu NowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(eidtAreaId));
+                        MenuModel areaPlugin = new MenuModel(); 
+                        areaPlugin=NowArea.PluginList.FirstOrDefault(it => it.MenuName.Equals(nowPlugin.MenuName));
+                        NowArea.PluginList.Remove(areaPlugin);
+                        WriteFile();
+                        OverRideDrawingPanelArea(parentPanel);
                     });
             }
         }
@@ -1596,7 +1606,6 @@ namespace MetroFramePlugin.ViewModels
             //重命名区域 
             if (res.Equals("RenName"))
             {
-               
              //在此只是让文本框聚集和文本选中，不做任何事情
             }
             //编辑 
@@ -1612,7 +1621,6 @@ namespace MetroFramePlugin.ViewModels
                             if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
                             {
                                 ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                               
                                 pluginArea.Style = area.FindResource("PopupMenuDelListPluginStyle") as Style;
                             }
                             else
