@@ -36,7 +36,7 @@ namespace MetroFramePlugin.ViewModels
        private string tPid;
        private int pageCount;
        private int totalPage;
-       private int pageSize = 8;
+       private int pageSize =1;
        private int currentPage=1;
        private VicTabControlNormal tabCtr;
        #endregion
@@ -59,6 +59,37 @@ namespace MetroFramePlugin.ViewModels
                    activePluginNum = value;
                    RaisePropertyChanged("ActivePluginNum");
                }
+           }
+       }
+       private Visibility nextPageVis;
+       public Visibility NextPageVis
+       {
+           get 
+           {
+               return nextPageVis;
+           }
+           set 
+           { 
+            if(nextPageVis!=value)
+            {
+                nextPageVis = value;
+                RaisePropertyChanged("NextPageVis");
+            }
+          }
+       }
+
+       private Visibility upPageVis;
+       public Visibility UpPageVis
+       {
+           get {
+               return upPageVis;
+           }
+           set { 
+            if(upPageVis!=value)
+            {
+                upPageVis = value;
+                RaisePropertyChanged("UpPageVis");
+            }
            }
        }
        public ObservableCollection<MenuModel> SystemFourthLevelMenuList
@@ -125,7 +156,6 @@ namespace MetroFramePlugin.ViewModels
                            }
                            SystemFourthLevelMenuList.Add(menumodel);
                        }
-                       pageCount = SystemFourthLevelMenuList.Count;
                    }
                    if (SystemFourthLevelMenuList.Count == 0) return;
 
@@ -138,25 +168,24 @@ namespace MetroFramePlugin.ViewModels
                    {
                        totalPage = SystemFourthLevelMenuList.Count / pageSize + 1; ;// 非8项，
                    }
-                   
-                   setPage(currentPage);
-                   if (SystemFourthLevelMenuList.Count > 0)
+
+                   setPage(totalPage);
+                   if (SystemFourthLevelMenuList.Count <=0)
                    {
+                       VicLabelNormal lbl = new VicLabelNormal();
+                       lbl.Content = "暂无打开的活动插件";
+                       lbl.Foreground = Brushes.Red;
+                       grid.Children.Add(lbl);
                        //for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
                        //{
                        //    ListBox lbox = new ListBox();
                        //    lbox.ItemsSource = SystemFourthLevelMenuList;
                        //    lbox.SetResourceReference(ListBox.StyleProperty, "OverlayPluginListStyle");
                        //    statePanel.Children.Add(lbox);
+                       
                        //}
                    }
-                   else
-                   {
-                       //VicLabelNormal lbl = new VicLabelNormal();
-                       //lbl.Content = "暂无打开的活动插件";
-                       //lbl.Foreground = Brushes.Red;
-                       //grid.Children.Add(lbl);
-                   }
+                  
                });
            }
        }
@@ -247,7 +276,7 @@ namespace MetroFramePlugin.ViewModels
                            }
                        }
                        statePanel.Children.Clear();
-                       setPage(currentPage);
+                       setPage(totalPage);
                    }
                });
            }
@@ -261,7 +290,51 @@ namespace MetroFramePlugin.ViewModels
            {
                return new RelayCommand<object>((x) =>
                {
-                   MessageBox.Show("上一页");
+                   if (currentPage == 1)
+                   {
+                       return;
+                   }
+                   else if (currentPage > 1)
+                   {
+
+                       if (SystemFourthLevelMenuList.Count <= pageSize)
+                       {
+
+                       }
+                       else
+                       {
+                           Grid gridPanel = new Grid();
+
+                           gridPanel.Height = 300;
+                           gridPanel.Margin = new Thickness(0, 20, 0, 20);
+                           ObservableCollection<MenuModel> currentPageList = new ObservableCollection<MenuModel>();
+                           for (int i = 0; i < pageSize; i++)
+                           {
+                               currentPageList.Add(SystemFourthLevelMenuList[(((currentPage - 2) * pageSize)+i)]);
+                                
+                           }
+                           ListBox lbox = new ListBox();
+                           lbox.ItemsSource = currentPageList;
+                           lbox.SetResourceReference(ListBox.StyleProperty, "OverlayPluginListStyle");
+                           gridPanel.Children.Add(lbox);
+                           statePanel.Children.Insert(0, gridPanel);
+                       }
+
+                       //Grid gridPanel = new Grid();
+                       //gridPanel.Height = 300;
+                       //gridPanel.Background = Brushes.Red;
+                       //gridPanel.Margin = new Thickness(0, 20, 0, 20);
+                       //  ObservableCollection<MenuModel> currentPageList = new ObservableCollection<MenuModel>();
+                       //  currentPageList.Add(SystemFourthLevelMenuList[currentPage - 2]);
+                       //  ListBox lbox = new ListBox();
+                       //  lbox.ItemsSource = currentPageList;
+                       //  lbox.SetResourceReference(ListBox.StyleProperty, "OverlayPluginListStyle");
+                       //  gridPanel.Children.Add(lbox);
+                       //statePanel.Children.Insert(0,gridPanel);
+
+                       currentPage--;
+
+                   }
                });
            }
        }
@@ -274,6 +347,47 @@ namespace MetroFramePlugin.ViewModels
            get {
                return new RelayCommand<object>((x) =>
                {
+                   if (currentPage == totalPage)
+                   {
+                       return;
+                   }
+
+                   //if (SystemFourthLevelMenuList.Count <= pageSize)
+                   //{
+
+                   //}
+                   //else
+                   //{
+                   //    Grid gridPanel = new Grid();
+
+                   //    gridPanel.Height = 300;
+                   //    gridPanel.Background = Brushes.Red;
+                   //    gridPanel.Margin = new Thickness(0, 20, 0, 20);
+
+                   //    ObservableCollection<MenuModel> currentPageList = new ObservableCollection<MenuModel>();
+                   //    for (int i = 0; i < pageSize; i++)
+                   //    {
+                   //        currentPageList.Add(SystemFourthLevelMenuList[(((currentPage - 1) * pageSize) + i)]);
+
+                   //    }
+                   //    ListBox lbox = new ListBox();
+                   //    lbox.ItemsSource = currentPageList;
+                   //    lbox.SetResourceReference(ListBox.StyleProperty, "OverlayPluginListStyle");
+                   //    gridPanel.Children.Add(lbox);
+
+                   //    statePanel.Children.Insert(0, gridPanel);
+                   //}
+
+
+
+
+                       if (statePanel.Children.Count > 0)
+                       {
+                           statePanel.Children.RemoveAt(0);
+                       }
+
+                       currentPage++;
+
                    
                });
            }
@@ -365,7 +479,7 @@ namespace MetroFramePlugin.ViewModels
        #endregion
 
        #region 私方法
-       private void setPage(int currentPage)
+       private void setPage(int totalPage)
        {
            ObservableCollection<MenuModel> sumPageList = new ObservableCollection<MenuModel>();
            for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
@@ -377,7 +491,6 @@ namespace MetroFramePlugin.ViewModels
            {
                Grid gridPanel = new Grid();
                gridPanel.Height = 300;
-               gridPanel.Background = Brushes.Red;
                gridPanel.Margin = new Thickness(0, 20, 0, 20);
 
                ObservableCollection<MenuModel> currentPageList = new ObservableCollection<MenuModel>();
@@ -391,13 +504,9 @@ namespace MetroFramePlugin.ViewModels
                    lbox.ItemsSource = currentPageList;
                    lbox.SetResourceReference(ListBox.StyleProperty, "OverlayPluginListStyle");
                    gridPanel.Children.Add(lbox);
-
+                   if (gridPanel.Children.Count == pageSize) { break; }
                }
                statePanel.Children.Add(gridPanel);
-               if (statePanel.Children.Count == pageSize) { break; }
-
-               
-
            }
            
            

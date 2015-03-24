@@ -22,7 +22,7 @@
         <!--<ListBox Grid.Row="1" Name="listBoxOverPlugin" SelectedIndex="0" Style="{DynamicResource OverlayPluginListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>-->
 
    </controls:VicStackPanelNormal>
-        <Button Content="&#xe603;" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnUpPageClickCommand}" Margin="10,283,802,65" Background="Transparent"></Button>
+        <Button Content="&#xe603;" Visibility="{Binding NextPageVis}" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnUpPageClickCommand}" Margin="10,283,802,65" Background="Transparent"></Button>
         <Button Content="&#xe622;" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnNextPageClickCommand}" Background="Transparent" Margin="68,283,744,65"></Button>
     </Grid>
 </controls:VicWindowNormal>
