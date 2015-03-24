@@ -13,16 +13,32 @@
             <i:InvokeCommandAction Command="{Binding displayOverlayWindowPluginCommand}" CommandParameter="{Binding ElementName=DisplayOverlayWindow}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
+    <!--上下显示-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="400"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
     <controls:VicStackPanelNormal Orientation="Vertical"  Name="statePanel" Grid.Row="0">
-        <!--<ListBox Grid.Row="1" Name="listBoxOverPlugin" SelectedIndex="0" Style="{DynamicResource OverlayPluginListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>-->
 
-   </controls:VicStackPanelNormal>
-        <Button Content="&#xe603;" Visibility="{Binding NextPageVis}" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnUpPageClickCommand}" Margin="10,283,802,65" Background="Transparent"></Button>
-        <Button Content="&#xe622;" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnNextPageClickCommand}" Background="Transparent" Margin="68,283,744,65"></Button>
+
+        </controls:VicStackPanelNormal>
+        <Button Content="&#xe603;" Background="Red" IsEnabled="{Binding UpPageVis}" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnUpPageClickCommand}" Margin="10,283,802,65" ></Button>
+        <Button Content="&#xe622;" IsEnabled="{Binding NextPageVis}" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnNextPageClickCommand}" Background="Transparent" Margin="68,283,744,65"></Button>
     </Grid>
+    <!--左右显示-->
+    <!--<Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Content="&#xe603;" HorizontalAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnUpPageClickCommand}" Margin="10,283,802,65" Background="Transparent"></Button>
+        <controls:VicStackPanelNormal Grid.Column="1" Orientation="Horizontal"  Name="statePanel">
+
+
+        </controls:VicStackPanelNormal>
+
+        <Button Content="&#xe622;" Grid.Column="2" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnNextPageClickCommand}" Background="Transparent" Margin="68,283,744,65"></Button>
+    </Grid>-->
 </controls:VicWindowNormal>
