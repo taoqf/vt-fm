@@ -105,7 +105,7 @@ namespace MetroFramePlugin.Models
             return finalSize;
         }
 
-        void Resize(FrameworkElement ff)
+        private void Resize(FrameworkElement ff)
         {
             if (Canvas.GetLeft(ff) < 0)
             {
@@ -151,7 +151,7 @@ namespace MetroFramePlugin.Models
             ff.MouseLeave += ff_MouseMove;
         }
 
-        void ff_MouseMove(object sender, MouseEventArgs e)
+        private void ff_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Released)
             {
@@ -159,7 +159,7 @@ namespace MetroFramePlugin.Models
             }
         }
 
-        Thumb GetMoveThumb()
+        private Thumb GetMoveThumb()
         {
             var thumb = new Thumb()
             {
@@ -202,7 +202,7 @@ namespace MetroFramePlugin.Models
             return thumb;
         }
 
-        Thumb GetResizeThumb(Cursor cur, HorizontalAlignment hor, VerticalAlignment ver)
+        private Thumb GetResizeThumb(Cursor cur, HorizontalAlignment hor, VerticalAlignment ver)
         {
             var thumb = new Thumb()
             {
@@ -263,7 +263,7 @@ namespace MetroFramePlugin.Models
             return thumb;
         }
 
-        Brush GetMoveEllipseBack()
+        private Brush GetMoveEllipseBack()
         {
             string lan = "M 0,5 h 10 M 5,0 v 10";
             var converter = TypeDescriptor.GetConverter(typeof(Geometry));
@@ -273,7 +273,7 @@ namespace MetroFramePlugin.Models
             return bsh;
         }
 
-        FrameworkElementFactory GetFactory(Brush back)
+        private FrameworkElementFactory GetFactory(Brush back)
         {
             back.Opacity = 0.6;
             var fef = new FrameworkElementFactory(typeof(Ellipse));
