@@ -1325,7 +1325,7 @@ namespace MetroFramePlugin.ViewModels
                     UnitAreaSeting _title = new UnitAreaSeting();
 
                     DockPanel.SetDock(_title, Dock.Top);
-                    _title.BtnDeblockingClick += BtnClick;
+                    _title.ParamsModel.BtnDeblockingClick += BtnClick;
                     _title.MenuItemIcoClick += MenuItemClick;
                     _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                     _title.ParamsModel.TitleWidth = _areaMenu.AreaWidth;
@@ -1389,7 +1389,7 @@ namespace MetroFramePlugin.ViewModels
                 _title.ParamsModel.TitleWidth = NewArea[i].AreaWidth;
                 _title.Uid = NewArea[i].AreaID;
                 DockPanel.SetDock(_title, Dock.Top);
-                _title.BtnDeblockingClick += BtnClick;
+                _title.ParamsModel.BtnDeblockingClick += BtnClick;
                 _title.MenuItemIcoClick += MenuItemClick;
                 _title.ParamsModel.UnitMouseLeaveText += ParamsModel_UnitMouseLeaveText;
                 _title.SecondMenuItemIcoClick += SecondMenuItemClick;
@@ -1724,9 +1724,12 @@ namespace MetroFramePlugin.ViewModels
             {
                 areaParent.ParamsModel.DeblockingState = Visibility.Visible;
                 areaParent.ParamsModel.LockingState = Visibility.Collapsed;
+              
+               
                 //重绘
                 OverRideDrawingPanelArea(areaParent.Parent as DockPanel);
             }
+
             if (res.Equals("btnFold"))
             {
                 if (areaParent != null)
@@ -1782,7 +1785,7 @@ namespace MetroFramePlugin.ViewModels
                     _title.ParamsModel.TitleWidth = NewArea[i].AreaWidth;
                     _title.Uid = NewArea[i].AreaID;
                     DockPanel.SetDock(_title, Dock.Top);
-                    _title.BtnDeblockingClick += BtnClick;
+                    _title.ParamsModel.BtnDeblockingClick += BtnClick;
                     _title.MenuItemIcoClick += MenuItemClick;
                     _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                     _title.ParamsModel.AreaName = NewArea[i].AreaName;

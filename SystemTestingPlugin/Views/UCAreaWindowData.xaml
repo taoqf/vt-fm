@@ -50,7 +50,7 @@
                                     <ctrl:VicRichTextBoxNormal Name="rTBoxDataPath" VicText="{Binding DataInfoModel.DataPath,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
                                 </ctrl:VicTabItemNormal>
                                 <ctrl:VicTabItemNormal Header="DataTable数据" AllowDelete="False">
-                                    <ctrl:VicDataGrid AutoGenerateColumns="False" IsUserSetColumn="False" Name="dgridSearch" ItemsSource="{Binding DataInfoModel.ResultDataTable}" SelectedValue="{Binding DataInfoModel.GridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="_id"/>
+                                    <ctrl:VicDataGrid AutoGenerateColumns="False" IsShowCheckBox="True" IsUserSetColumn="False" Name="dgridSearch" ItemsSource="{Binding DataInfoModel.ResultDataTable}" SelectedValue="{Binding DataInfoModel.GridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="_id"/>
                                 </ctrl:VicTabItemNormal>
                                 <ctrl:VicTabItemNormal Header="Json数据" AllowDelete="False">
                                     <ctrl:VicRichTextBoxNormal Name="rTBoxJsonData" VicText="{Binding DataInfoModel.JsonData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
