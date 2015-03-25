@@ -1099,18 +1099,19 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
                     <Setter Property="VerticalContentAlignment" Value="Center"/>
                     <Setter Property="Width" Value="180"/>
-                    <Setter Property="Height" Value="100"/>
-                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="Height" Value="110"/>
+                    <Setter Property="Margin" Value="5"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <Border Name="Bd"  BorderThickness="0"  Background="{TemplateBinding Background}">
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="80"/>
-                                            <RowDefinition Height="25"/>
+                                            <RowDefinition Height="70"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="20"/>
                                         </Grid.RowDefinitions>
-                                        <controls:VicRadioButtonNormal 
+                                        <controls:VicRadioButtonNormal Grid.Row="0"
                                                                  FontWeight="Bold" 
                                                                  Foreground="{TemplateBinding Foreground}"
                                                                  Style="{DynamicResource ButtonFourthLevelMenu}" 
@@ -1120,21 +1121,11 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                                  Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                                  CommandParameter="{Binding .}"/>
-                                        <Grid Grid.Row="1" Visibility="Collapsed" Name="grid">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="150"/>
-                                                <ColumnDefinition Width="46"/>
-                                            </Grid.ColumnDefinitions>
-                                        <!--<controls:VicButtonNormal  Grid.Row="0"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="12"
-                                                       Width="{TemplateBinding Width}" Foreground="Red"
-                                                        Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"
-                                                         Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                       CommandParameter="{Binding .}"/>-->
-                                            <controls:VicLabelNormal Grid.Row="0"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="12"
+                                            <controls:VicLabelNormal Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="12"
                                                        Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground }"
                                                         Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"></controls:VicLabelNormal>
-
-                                            <Button Grid.Column="1" Style="{DynamicResource btnDeleteStyle}" 
+                                            <Grid Grid.Row="2" ToolTip="删除" HorizontalAlignment="Right" Visibility="Collapsed" Name="grid">
+                                                <Button Grid.Column="1" Style="{DynamicResource btnDeleteStyle}" 
                                                     Command="{Binding DataContext.btnPluginCloseClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                        CommandParameter="{Binding .}"/>
                                         </Grid>
