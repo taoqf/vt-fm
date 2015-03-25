@@ -1005,7 +1005,8 @@ namespace MetroFramePlugin.ViewModels
         #region
 
         #region 字段&属性
-        private bool isLocked = true;//控制是否能拖动插件
+        private ListBoxItem mListItem = null;
+        private ListBox DragListBox = null;
         private UserControl area;//当前用户控件
         private Canvas _panel;//主区域面板
         private ListBox _listbox;//弹窗展示菜单列表
@@ -1365,67 +1366,9 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         
-        private ListBoxItem mListItem = null;
-        private ListBox TestPanel = null;
-        /// <summary>
-        /// 鼠标拖动事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void menuList_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            TestPanel = sender as ListBox;
-            TestPanel.AllowDrop = true;
-            if (Mouse.LeftButton != MouseButtonState.Pressed)
-                return;
-            Point pos = e.GetPosition(TestPanel);
-            HitTestResult result = VisualTreeHelper.HitTest(TestPanel, pos);
-            if (result == null)
-                return;
-
-            mListItem = GetParentObject<ListBoxItem>(result.VisualHit); // Find your actual visual you want to drag
-            if (mListItem == null)
-                return;
-
-            DataObject dataObject = new DataObject(mListItem.Content);
-            // Here, we should notice that dragsource param will specify on which 
-            // control the drag&drop event will be fired
-            System.Windows.DragDrop.DoDragDrop(TestPanel, dataObject, DragDropEffects.Copy);//开始拖动
-
-        }
-        /// <summary>
-        /// 拖动后放下的位置
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void menuList_Drop(object sender, DragEventArgs e)
-        {
-            try
-            {
-                if (TestPanel == null)
-                    return;
-                Point pos = e.GetPosition(TestPanel);
-                HitTestResult result = VisualTreeHelper.HitTest(TestPanel, pos);
-                if (result == null)
-                    return;
-
-                ListBoxItem selectedItem = GetParentObject<ListBoxItem>(result.VisualHit);
-                if (selectedItem == null)
-                    return;
-                //把拖动控件移动到制定位置，且移除被拖动的项 操作数据源
-                ObservableCollection<MenuModel> DataSource = TestPanel.ItemsSource as ObservableCollection<MenuModel>;
-                DataSource.Insert(DataSource.IndexOf(selectedItem.Content as MenuModel), (mListItem.Content as MenuModel).Copy());
-                DataSource.Remove(mListItem.Content as MenuModel);
-                TestPanel.ItemsSource = null;
-                TestPanel.ItemsSource = DataSource;
-                mListItem = null;
-                WriteFile();              
-            }
-            catch (Exception)
-            {
-
-            }
-        }
+        
+       
+      
 
         #endregion
 
@@ -1925,6 +1868,66 @@ namespace MetroFramePlugin.ViewModels
                     _panel.Children.Remove(dockPanel);
                     break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 鼠标拖动事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuList_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            DragListBox = sender as ListBox;
+            DragListBox.AllowDrop = true;
+            if (Mouse.LeftButton != MouseButtonState.Pressed)
+                return;
+            Point pos = e.GetPosition(DragListBox);
+            HitTestResult result = VisualTreeHelper.HitTest(DragListBox, pos);
+            if (result == null)
+                return;
+
+            mListItem = GetParentObject<ListBoxItem>(result.VisualHit); // Find your actual visual you want to drag
+            if (mListItem == null)
+                return;
+
+            DataObject dataObject = new DataObject(mListItem.Content);
+            // Here, we should notice that dragsource param will specify on which 
+            // control the drag&drop event will be fired
+            System.Windows.DragDrop.DoDragDrop(DragListBox, dataObject, DragDropEffects.Copy);//开始拖动
+
+        }
+        /// <summary>
+        /// 拖动后放下的位置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuList_Drop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                if (DragListBox == null)
+                    return;
+                Point pos = e.GetPosition(DragListBox);
+                HitTestResult result = VisualTreeHelper.HitTest(DragListBox, pos);
+                if (result == null)
+                    return;
+
+                ListBoxItem selectedItem = GetParentObject<ListBoxItem>(result.VisualHit);
+                if (selectedItem == null)
+                    return;
+                //把拖动控件移动到制定位置，且移除被拖动的项 操作数据源
+                ObservableCollection<MenuModel> DataSource = DragListBox.ItemsSource as ObservableCollection<MenuModel>;
+                DataSource.Insert(DataSource.IndexOf(selectedItem.Content as MenuModel), (mListItem.Content as MenuModel).Copy());
+                DataSource.Remove(mListItem.Content as MenuModel);
+                DragListBox.ItemsSource = null;
+                DragListBox.ItemsSource = DataSource;
+                mListItem = null;
+                WriteFile();
+            }
+            catch (Exception)
+            {
+
             }
         }
         #endregion
