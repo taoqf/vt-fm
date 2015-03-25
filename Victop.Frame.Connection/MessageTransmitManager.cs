@@ -55,7 +55,7 @@ namespace Victop.Frame.Connection
                 ReplyMessage replyMessage = new ReplyMessage()
                 {
                     MessageId = messageInfo.MessageId,
-                    ReplyContent = ex.InnerException.Message
+                    ReplyContent = ex.InnerException == null ? ex.Message : ex.InnerException.Message
                 };
 
                 return replyMessage;

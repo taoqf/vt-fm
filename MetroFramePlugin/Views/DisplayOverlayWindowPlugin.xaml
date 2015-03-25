@@ -38,7 +38,7 @@
 
 
         </controls:VicStackPanelNormal>
-
+        
         <Button Content="&#xe6ae;" IsEnabled="{Binding NextPageVis}" Height="40" Width="40" HorizontalAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnNextPageClickCommand}" Background="Transparent"></Button>
     </Grid>
 </controls:VicWindowNormal>
