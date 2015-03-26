@@ -63,7 +63,6 @@
                 <ColumnDefinition x:Name="CenterGrid" Width="*"/>
                 <ColumnDefinition x:Name="RightGrid" Width="50"/>
             </Grid.ColumnDefinitions>
-            <!--MouseEnter="imageLeft_MouseEnter" MouseLeave="imageLeft_MouseLeave" MouseLeftButtonDown="imageLeft_MouseLeftButtonDown"-->
             <Image x:Name="imageLeft" Grid.Column="0"   Source="..\Images\left.png"  Stretch="Fill" RenderTransformOrigin="0.5,0.5" Height="73" Width="45"
                 Visibility="Hidden" >
                 <Image.RenderTransform>
@@ -75,7 +74,6 @@
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
-            <!--MouseEnter="imageRight_MouseEnter" MouseLeave="imageRight_MouseLeave" MouseLeftButtonDown="imageRight_MouseLeftButtonDown"-->
             <Image x:Name="imageRight" Grid.Column="2" Source="..\Images\right.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Height="73" Width="45"
              Visibility="Hidden" >
                 <Image.RenderTransform>
@@ -87,7 +85,6 @@
                     </TransformGroup>
                 </Image.RenderTransform>
             </Image>
-            <!--PreviewMouseLeftButtonDown="canvasPageContent_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="canvasPageContent_PreviewMouseLeftButtonUp" PreviewMouseMove="canvasPageContent_PreviewMouseMove" MouseLeave="canvasPageContent_MouseLeave" SizeChanged="canvasPageContent_SizeChanged"-->
             <Canvas Grid.Column="1"  Width="800" Height="350" Name="canvasPageContent" Margin="0,1" >
                 <Canvas.Clip>
                     <RectangleGeometry x:Name="canvasPageRectangle" RadiusX="0" RadiusY="0" Rect="0,0,800,350" />

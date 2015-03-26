@@ -54,7 +54,7 @@ namespace MetroFramePlugin.ViewModels
        private string tPid;
        private int pageCount;
        private int totalPage;
-       private int pageSize = 8;
+       private int pageSize = 2;
        private int currentPage = 1;
        private VicTabControlNormal tabCtr;
        #endregion
@@ -225,7 +225,7 @@ namespace MetroFramePlugin.ViewModels
                        VicLabelNormal lbl = new VicLabelNormal();
                        lbl.Content = "暂无打开的活动插件";
                        lbl.Foreground = Brushes.Red;
-                       statePanel.Children.Add(lbl);
+                       wrapPanelPages.Children.Add(lbl);
                        return;
                    }
 
