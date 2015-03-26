@@ -8,6 +8,9 @@ using Victop.Frame.CoreLibrary.Enums;
 using Victop.Frame.CoreLibrary.Models;
 using Victop.Frame.CoreLibrary.MongoModel;
 using Victop.Frame.DataChannel;
+using Victop.Frame.DataMessageManager.Enums;
+using Victop.Frame.DataMessageManager.Models;
+using Victop.Frame.DataMessageManager.StaticClass;
 using Victop.Frame.MessageManager;
 using Victop.Frame.PublicLib;
 using Victop.Frame.PublicLib.Helpers;
@@ -745,6 +748,66 @@ namespace Victop.Frame.DataMessageManager
             {
                 LoggerHelper.ErrorFormat("获取默认值出错：{0}", ex.Message);
                 return default(T);
+            }
+        }
+
+        /// <summary>
+        /// 发送数据锁定消息
+        /// </summary>
+        /// <param name="lockInfo"></param>
+        /// <returns></returns>
+        public virtual Dictionary<string, object> SendDataLockMessage(LockInfoModel lockInfo)
+        {
+            MessageOperation messageOp = new MessageOperation();
+            string messageType = "MongoDataChannelService.dataLock";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("_id", lockInfo.Id);
+            contentDic.Add("tablename", lockInfo.TableName);
+            contentDic.Add("locktimeout", lockInfo.LockTimeOut);
+            contentDic.Add("systemid", lockInfo.SystemId);
+            contentDic.Add("configsystemid", lockInfo.ConfigSystemId);
+            contentDic.Add("spaceId", lockInfo.SpaceId);
+            contentDic.Add("userCode", lockInfo.UserCode);
+            contentDic.Add("operflag", (int)lockInfo.OpenFlag);
+            Dictionary<string, object> returnDic = messageOp.SendMessage(messageType, contentDic, "JSON");
+            if (returnDic != null && returnDic["ReplyMode"].ToString() != "0")
+            {
+                switch (lockInfo.OpenFlag)
+                {
+                    case LockStatusEnum.锁定:
+                        DataLockInfoClass.LockInfoList.Add(lockInfo);
+                        break;
+                    case LockStatusEnum.解锁:
+                        LockInfoModel unLockInfo = DataLockInfoClass.LockInfoList.FirstOrDefault(it => it.Id.Equals(lockInfo.Id));
+                        if (unLockInfo != null)
+                        {
+                            DataLockInfoClass.LockInfoList.Remove(unLockInfo);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return returnDic;
+        }
+        /// <summary>
+        /// 移除数据锁定
+        /// </summary>
+        public virtual void RemoveDataLock()
+        {
+            foreach (LockInfoModel item in DataLockInfoClass.LockInfoList)
+            {
+                string messageType = "MongoDataChannelService.dataLock";
+                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                contentDic.Add("_id", item.Id);
+                contentDic.Add("tablename", item.TableName);
+                contentDic.Add("locktimeout", item.LockTimeOut);
+                contentDic.Add("systemid", item.SystemId);
+                contentDic.Add("configsystemid", item.ConfigSystemId);
+                contentDic.Add("spaceId", item.SpaceId);
+                contentDic.Add("userCode", item.UserCode);
+                contentDic.Add("operflag", LockStatusEnum.解锁);
+                SendAsyncMessage(messageType, contentDic);
             }
         }
 

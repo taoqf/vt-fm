@@ -475,7 +475,8 @@ namespace PortalFramePlugin.ViewModels
                     MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
                     {
-                        TabItemList.Clear();
+                        DataMessageOperation dataMsgOp = new DataMessageOperation();
+                        dataMsgOp.RemoveDataLock();
                         mainWindow.Close();
                         FrameInit.GetInstance().FrameUnload();
                         GC.Collect();
