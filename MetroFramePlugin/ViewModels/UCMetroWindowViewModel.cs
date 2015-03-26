@@ -50,6 +50,7 @@ namespace MetroFramePlugin.ViewModels
         private VicTabControlNormal mainTabControl;
         /// <summary>是否首次登录 </summary>
         private bool isFirstLogin = true;
+        private bool isFirstLoad = true;
         /// <summary>
         /// 用户名
         /// </summary>
@@ -798,7 +799,7 @@ namespace MetroFramePlugin.ViewModels
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
                     this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString
 
-(userDic["ReplyContent"].ToString(), "UserImg"));
+                    (userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 isFirstLogin = false;
                 LoadStandardMenu();
@@ -1124,6 +1125,9 @@ MessageBoxImage.Question);
             {
                 return new RelayCommand<object>((x) =>
                 {
+                    if (!isFirstLoad)
+                        return;
+                    isFirstLoad = false;
                     area = (UserControl)x;
                     _panel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
                     _listbox = area.FindName("listBoxPopupMenuList") as ListBox;
