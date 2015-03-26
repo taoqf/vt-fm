@@ -11,6 +11,7 @@
     <UserControl.Resources>
         <vm:UCMetroWindowViewModel x:Key="metroViewModel"/>
         <Style x:Key="PopupMenuDelListPluginStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
             <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
             <Setter Property="SelectionMode" Value="Multiple"/>
@@ -49,7 +50,7 @@
                                                                  IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                                               
+
                                             <controls:VicButtonNormal  Grid.Row="2"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="12"
                                                        Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
                                                         Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"/>
@@ -86,6 +87,7 @@
             </Setter>
         </Style>
         <Style x:Key="PopupMenuDelListLargePluginStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
             <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
             <Setter Property="SelectionMode" Value="Multiple"/>
@@ -160,6 +162,7 @@
             </Setter>
         </Style>
         <Style x:Key="PopupMenuDelListSmallPluginStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
             <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
             <Setter Property="SelectionMode" Value="Multiple"/>
@@ -254,12 +257,13 @@
                                 </Grid>
                             </Border>
                         </BulletDecorator>
-                        
+
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
         <Style x:Key="addApply" TargetType="{x:Type ListBox}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -344,6 +348,7 @@
             </Setter>
         </Style>
         <Style x:Key="addSmallApply" TargetType="{x:Type ListBox}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -428,6 +433,7 @@
             </Setter>
         </Style>
         <Style x:Key="addLargeApply" TargetType="{x:Type ListBox}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -485,7 +491,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style x:Key="PopupMenuListStyle" TargetType="{x:Type ListBox}">
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
             <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
@@ -526,15 +532,15 @@
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger  Property="IsMouseOver" Value="true">
-                                            <Setter Property="BorderBrush" TargetName="Bd" Value="GreenYellow"/>
-                                            <Setter Property="Background" TargetName="Bd" Value="GreenYellow"/>
+                                            <Setter Property="BorderBrush" TargetName="Bd" Value="DeepSkyBlue"/>
+                                            <Setter Property="Background" TargetName="Bd" Value="DeepSkyBlue"/>
                                             <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
-                                            <Setter Property="Foreground" Value="#19bb9b"/>
+                                            <Setter Property="Foreground" Value="White"/>
                                             <Setter Property="Cursor" Value="Hand"/>
                                         </Trigger>
                                         <Trigger  Property="IsSelected" Value="true">
-                                            <Setter Property="Background" TargetName="Bd" Value="GreenYellow"/>
-                                            <Setter Property="Foreground" Value="#19bb9b"/>
+                                            <Setter Property="Background" TargetName="Bd" Value="DeepSkyBlue"/>
+                                            <Setter Property="Foreground" Value="White"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -553,26 +559,43 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="PanelStyle"  TargetType="{x:Type ListBox}">
+            <Setter Property="Background" Value="WhiteSmoke"/>
+            <Setter Property="Template">
+            <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
+                            <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True" />
+                        </ScrollViewer>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="WhiteSmoke"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     </UserControl.Resources>
     <Grid>
         <AdornerDecorator>
-        <Canvas x:Name="bigPanel" Background="{DynamicResource WhiteShade}">
+            <Canvas x:Name="bigPanel" Background="{DynamicResource WhiteShade}">
                 <Thumb Name="thumb"  Foreground="{x:Null}" ClipToBounds="False"  Width="906" Canvas.Left="10" Canvas.Top="10" Background="BlanchedAlmond"  RenderTransformOrigin="1.196,1.734" Visibility="Collapsed" Height="21"/>
                 <Canvas.ContextMenu>
-                <controls:VicContextMenu>
-                    <controls:VicMenuItemNormal Header="新建区域">
-                        <controls:VicMenuItemNormal x:Name="addBtnArea" Header="按钮区域" Command="{Binding btnAddAreaClickCommand}"></controls:VicMenuItemNormal>
-                        <controls:VicMenuItemNormal Header="图片区域" IsEnabled="False"/>
-                        <controls:VicMenuItemNormal Header="列表区域" IsEnabled="False"/>
-                        <controls:VicMenuItemNormal Header="综合区域" IsEnabled="False"/>
-                    </controls:VicMenuItemNormal>
-                    <controls:VicMenuItemNormal Header="显示天气"/>
-                    <controls:VicMenuItemNormal Header="显示日历"/>
-                    <controls:VicMenuItemNormal Header="显示通知"/>
-                    <controls:VicMenuItemNormal Header="显示常用网址"/>
-                </controls:VicContextMenu>
-            </Canvas.ContextMenu>
-        </Canvas>
+                    <controls:VicContextMenu>
+                        <controls:VicMenuItemNormal Header="新建区域">
+                            <controls:VicMenuItemNormal x:Name="addBtnArea" Header="按钮区域" Command="{Binding btnAddAreaClickCommand}"></controls:VicMenuItemNormal>
+                            <controls:VicMenuItemNormal Header="图片区域" IsEnabled="False"/>
+                            <controls:VicMenuItemNormal Header="列表区域" IsEnabled="False"/>
+                            <controls:VicMenuItemNormal Header="综合区域" IsEnabled="False"/>
+                        </controls:VicMenuItemNormal>
+                        <controls:VicMenuItemNormal Header="显示天气"/>
+                        <controls:VicMenuItemNormal Header="显示日历"/>
+                        <controls:VicMenuItemNormal Header="显示通知"/>
+                        <controls:VicMenuItemNormal Header="显示常用网址"/>
+                    </controls:VicContextMenu>
+                </Canvas.ContextMenu>
+            </Canvas>
         </AdornerDecorator>
         <controls:VicPopup x:Name="AddApply"   Margin="0,10,0,0"   StaysOpen="True" Placement="Center" IsOpen="{Binding PopupIsShow,UpdateSourceTrigger=PropertyChanged}">
             <Border BorderThickness="2" BorderBrush="{DynamicResource SkinColor}"  Width="600" Height="500" Background="{DynamicResource MainBackgroundImage}" >

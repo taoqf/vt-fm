@@ -137,7 +137,7 @@ namespace MetroFramePlugin.Models
         /// <summary>
         /// 图标路径
         /// </summary>
-        private string iconUrl = "\ue6a4";
+        private string iconUrl = "\ue61f";
         public string IconUrl
         {
             get { return iconUrl; }

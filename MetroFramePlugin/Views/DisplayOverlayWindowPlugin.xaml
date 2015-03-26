@@ -4,8 +4,35 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
         xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels"
+        xmlns:Unit="clr-namespace:Victop.Frame.Units;assembly=Victop.Frame.Units"
         Title="活动插件" Name="DisplayOverlayWindow" Height="350" Width="900" Style="{DynamicResource WindowMessageSkin}" WindowStartupLocation="CenterScreen">
-    <Window.DataContext>
+    <Window.Resources>
+        <Storyboard x:Key="StoryboardRightImage">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="imageRight">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0.8"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="imageRight">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0.8"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="StoryboardLeftImage">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="imageLeft">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0.8"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="imageLeft">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0.8"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+        <Window.DataContext>
         <vm:DisplayOverlayWindowPluginViewModel/>
     </Window.DataContext>
         <i:Interaction.Triggers>
@@ -13,21 +40,8 @@
             <i:InvokeCommandAction Command="{Binding displayOverlayWindowPluginCommand}" CommandParameter="{Binding ElementName=DisplayOverlayWindow}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <!--上下显示-->
+    <!--没动画-->
     <!--<Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="400"></RowDefinition>
-            <RowDefinition Height="20"></RowDefinition>
-        </Grid.RowDefinitions>
-    <controls:VicStackPanelNormal Orientation="Vertical"  Name="statePanel" Grid.Row="0">
-
-
-        </controls:VicStackPanelNormal>
-        <Button Content="&#xe603;" IsEnabled="{Binding UpPageVis}" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnUpPageClickCommand}" Margin="10,283,802,65" ></Button>
-        <Button Content="&#xe622;" IsEnabled="{Binding NextPageVis}" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnNextPageClickCommand}" Background="Transparent" Margin="68,283,744,65"></Button>
-    </Grid>-->
-    <!--左右显示-->
-    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
@@ -38,7 +52,57 @@
 
 
         </controls:VicStackPanelNormal>
-
+        
         <Button Content="&#xe6ae;" IsEnabled="{Binding NextPageVis}" Height="40" Width="40" HorizontalAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnNextPageClickCommand}" Background="Transparent"></Button>
+    </Grid>-->
+    <!--动画分屏-->
+    <Grid>
+        <Grid Width="900">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftGrid" Width="50"/>
+                <ColumnDefinition x:Name="CenterGrid" Width="*"/>
+                <ColumnDefinition x:Name="RightGrid" Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="imageLeft" Grid.Column="0"   Source="..\Images\left.png"  Stretch="Fill" RenderTransformOrigin="0.5,0.5" Height="73" Width="45"
+                Visibility="Hidden" >
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Image x:Name="imageRight" Grid.Column="2" Source="..\Images\right.png" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Height="73" Width="45"
+             Visibility="Hidden" >
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+            <Canvas Grid.Column="1"  Width="800" Height="350" Name="canvasPageContent" Margin="0,1" >
+                <Canvas.Clip>
+                    <RectangleGeometry x:Name="canvasPageRectangle" RadiusX="0" RadiusY="0" Rect="0,0,800,350" />
+                </Canvas.Clip>
+                <WrapPanel Orientation="Vertical" Canvas.Left="0" Name="wrapPanelPages" Width="800" Height="350">
+                    <WrapPanel.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </WrapPanel.RenderTransform>
+                </WrapPanel>
+            </Canvas>
+        </Grid>
+        <Grid Height="20" VerticalAlignment="Bottom">
+            <Unit:UnitPageBar HorizontalAlignment="Center" x:Name="pageBar1" VerticalAlignment="Center" Visibility="Hidden"/>
+        </Grid>
     </Grid>
 </controls:VicWindowNormal>
