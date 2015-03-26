@@ -796,7 +796,9 @@ namespace MetroFramePlugin.ViewModels
                 if (userDic != null)
                 {
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
-                    this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
+                    this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString
+
+(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 isFirstLogin = false;
                 LoadStandardMenu();
@@ -941,7 +943,9 @@ namespace MetroFramePlugin.ViewModels
                     }
                     if (!pluginExistFlag)
                     {
-                        MessageBoxResult result = VicMessageBoxNormal.Show("插件不可用，是否卸载？", "提醒", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult result = VicMessageBoxNormal.Show("插件不可用，是否卸载？", "提醒", MessageBoxButton.YesNo,
+
+MessageBoxImage.Question);
                         if (result == MessageBoxResult.Yes)
                         {
                             DataMessageOperation dataOp = new DataMessageOperation();
@@ -1005,8 +1009,7 @@ namespace MetroFramePlugin.ViewModels
         #region
 
         #region 字段&属性
-        private ListBoxItem mListItem = null;
-        private ListBox DragListBox = null;
+        private bool isLocked = true;//控制是否能拖动插件
         private UserControl area;//当前用户控件
         private Canvas _panel;//主区域面板
         private ListBox _listbox;//弹窗展示菜单列表
@@ -1157,22 +1160,22 @@ namespace MetroFramePlugin.ViewModels
             get
             {
                 return new RelayCommand<object>((x) =>
+                {
+                    VicTextBoxSeach aa = (VicTextBoxSeach)x;
+                    string keyTxt = aa.VicText.ToString();
+                    if (!string.IsNullOrEmpty(keyTxt))
                     {
-                        VicTextBoxSeach aa = (VicTextBoxSeach)x;
-                        string keyTxt = aa.VicText.ToString();
-                        if (!string.IsNullOrEmpty(keyTxt))
+                        foreach (MenuModel pluginModel in _listbox.ItemsSource)
                         {
-                            foreach (MenuModel pluginModel in _listbox.ItemsSource)
-                            {
-                               if (pluginModel.MenuName.Contains(keyTxt)) SeachedFourthLevelMenuList.Add(pluginModel);
-                            }
-                            _listbox.ItemsSource = SeachedFourthLevelMenuList;
+                            if (pluginModel.MenuName.Contains(keyTxt)) SeachedFourthLevelMenuList.Add(pluginModel);
                         }
-                        else 
-                        {
-                            _listbox.ItemsSource = NewSystemFourthLevelMenuList;
-                        }
-                    });
+                        _listbox.ItemsSource = SeachedFourthLevelMenuList;
+                    }
+                    else
+                    {
+                        _listbox.ItemsSource = NewSystemFourthLevelMenuList;
+                    }
+                });
             }
         }
 
@@ -1184,19 +1187,19 @@ namespace MetroFramePlugin.ViewModels
             get
             {
                 return new RelayCommand<object>((x) =>
-                    {
-                        VicButtonNormal btn = (VicButtonNormal)x;
-                        DockPanel parentPanel = GetParentObject<DockPanel>(btn);
-                        ListBoxItem nowSelectDelPlugin = GetParentObject<ListBoxItem>(btn);
-                        MenuModel nowPlugin = (MenuModel)nowSelectDelPlugin.DataContext;
-                        string eidtAreaId = parentPanel.Uid;//得到当前选中的区域ID
-                        AreaMenu NowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(eidtAreaId));
-                        MenuModel areaPlugin = new MenuModel();
-                        areaPlugin = NowArea.PluginList.FirstOrDefault(it => it.MenuName.Equals(nowPlugin.MenuName));
-                        NowArea.PluginList.Remove(areaPlugin);
-                        WriteFile();
-                        OverRideDrawingPanelArea(parentPanel);
-                    });
+                {
+                    VicButtonNormal btn = (VicButtonNormal)x;
+                    DockPanel parentPanel = GetParentObject<DockPanel>(btn);
+                    ListBoxItem nowSelectDelPlugin = GetParentObject<ListBoxItem>(btn);
+                    MenuModel nowPlugin = (MenuModel)nowSelectDelPlugin.DataContext;
+                    string eidtAreaId = parentPanel.Uid;//得到当前选中的区域ID
+                    AreaMenu NowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(eidtAreaId));
+                    MenuModel areaPlugin = new MenuModel();
+                    areaPlugin = NowArea.PluginList.FirstOrDefault(it => it.MenuName.Equals(nowPlugin.MenuName));
+                    NowArea.PluginList.Remove(areaPlugin);
+                    WriteFile();
+                    OverRideDrawingPanelArea(parentPanel);
+                });
             }
         }
         /// <summary>
@@ -1207,14 +1210,14 @@ namespace MetroFramePlugin.ViewModels
             get
             {
                 return new RelayCommand<object>((x) =>
-                    {
-                        _listbox.SelectedItems.Clear();//每次打开弹框，去掉之前所选的
-                        VicRadioButtonNormal btn = (VicRadioButtonNormal)x;
-                        DockPanel parentPanel = GetParentObject<DockPanel>(btn);
-                        selectAreaId = parentPanel.Uid;//得到选中区域ID
-                        _panel.IsEnabled = false;
-                        PopupIsShow = true;
-                    });
+                {
+                    _listbox.SelectedItems.Clear();//每次打开弹框，去掉之前所选的
+                    VicRadioButtonNormal btn = (VicRadioButtonNormal)x;
+                    DockPanel parentPanel = GetParentObject<DockPanel>(btn);
+                    selectAreaId = parentPanel.Uid;//得到选中区域ID
+                    _panel.IsEnabled = false;
+                    PopupIsShow = true;
+                });
             }
         }
 
@@ -1226,9 +1229,9 @@ namespace MetroFramePlugin.ViewModels
             get
             {
                 return new RelayCommand(() =>
-                    {
-                        _listbox.SelectAll();
-                    });
+                {
+                    _listbox.SelectAll();
+                });
             }
         }
         /// <summary>
@@ -1267,10 +1270,27 @@ namespace MetroFramePlugin.ViewModels
                     {
                         if (panel.Uid == selectAreaId)
                         {
-                            OverRideDrawingPanelArea(panel);
-                            break;
+                            WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
+                            if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
+                            {
+                                ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                                pluginArea.ItemsSource = null;
+                                pluginArea.ItemsSource = NowArea.PluginList;
+                                break;
+                            }
                         }
                     }
+
+                    //之前考虑的重绘
+                    //foreach (DockPanel panel in _panel.Children)
+                    //{
+                    //    if (panel.Uid == selectAreaId)
+                    //    {
+                    //        OverRideDrawingPanelArea(panel);
+                    //        ThumbCanvas();
+                    //        break;
+                    //    }
+                    //}
                 });
             }
         }
@@ -1296,24 +1316,24 @@ namespace MetroFramePlugin.ViewModels
             get
             {
                 return new RelayCommand<object>((x) =>
+                {
+                    MenuModel _menuName = (MenuModel)x;
+                    foreach (MenuModel menuModel in SystemMenuListLocal)
                     {
-                        MenuModel _menuName = (MenuModel)x;
-                        foreach (MenuModel menuModel in SystemMenuListLocal)
+                        MenuModel childNewModel = new MenuModel();
+                        childNewModel = menuModel.SystemMenuList.FirstOrDefault(it => it.MenuName.Equals(_menuName.MenuName));
+                        if (childNewModel != null)
                         {
-                            MenuModel childNewModel = new MenuModel();
-                            childNewModel = menuModel.SystemMenuList.FirstOrDefault(it => it.MenuName.Equals(_menuName.MenuName));
-                            if (childNewModel != null)
-                            {
-                                NewSystemFourthLevelMenuList = childNewModel.SystemMenuList;
-                                break;
-                            }
-                            else
-                            {
-                                NewSystemFourthLevelMenuList = null;
-                                break;
-                            }
+                            NewSystemFourthLevelMenuList = childNewModel.SystemMenuList;
+                            break;
                         }
-                    });
+                        else
+                        {
+                            NewSystemFourthLevelMenuList = null;
+                            break;
+                        }
+                    }
+                });
             }
         }
         /// <summary>
@@ -1365,10 +1385,8 @@ namespace MetroFramePlugin.ViewModels
                 });
             }
         }
-        
-        
-       
-      
+
+
 
         #endregion
 
@@ -1406,10 +1424,8 @@ namespace MetroFramePlugin.ViewModels
                 _title.Background = Brushes.Gainsboro;
 
                 ListBox menuListArea = new ListBox();
-                menuListArea.Background = Brushes.WhiteSmoke;
-
+                menuListArea.Style = area.FindResource("PanelStyle") as Style;
                 WrapPanel pluginPanel = new WrapPanel();
-                pluginPanel.Height = 300;
                 pluginPanel.Uid = NewArea[i].AreaID;
                 pluginPanel.Orientation = Orientation.Horizontal;
                 ListBox addapplyStyle = new ListBox();
@@ -1465,6 +1481,67 @@ namespace MetroFramePlugin.ViewModels
             ThumbCanvas();
         }
 
+        private ListBoxItem mListItem = null;
+        private ListBox TestPanel = null;
+        /// <summary>
+        /// 鼠标拖动事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuList_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            TestPanel = sender as ListBox;
+            TestPanel.AllowDrop = true;
+            if (Mouse.LeftButton != MouseButtonState.Pressed)
+                return;
+            Point pos = e.GetPosition(TestPanel);
+            HitTestResult result = VisualTreeHelper.HitTest(TestPanel, pos);
+            if (result == null)
+                return;
+
+            mListItem = GetParentObject<ListBoxItem>(result.VisualHit); // Find your actual visual you want to drag
+            if (mListItem == null)
+                return;
+
+            DataObject dataObject = new DataObject(mListItem.Content);
+            // Here, we should notice that dragsource param will specify on which 
+            // control the drag&drop event will be fired
+            System.Windows.DragDrop.DoDragDrop(TestPanel, dataObject, DragDropEffects.Copy);//开始拖动
+
+        }
+        /// <summary>
+        /// 拖动后放下的位置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuList_Drop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                if (TestPanel == null)
+                    return;
+                Point pos = e.GetPosition(TestPanel);
+                HitTestResult result = VisualTreeHelper.HitTest(TestPanel, pos);
+                if (result == null)
+                    return;
+
+                ListBoxItem selectedItem = GetParentObject<ListBoxItem>(result.VisualHit);
+                if (selectedItem == null)
+                    return;
+                //把拖动控件移动到制定位置，且移除被拖动的项 操作数据源
+                ObservableCollection<MenuModel> DataSource = TestPanel.ItemsSource as ObservableCollection<MenuModel>;
+                DataSource.Insert(DataSource.IndexOf(selectedItem.Content as MenuModel), (mListItem.Content as MenuModel).Copy());
+                DataSource.Remove(mListItem.Content as MenuModel);
+                TestPanel.ItemsSource = null;
+                TestPanel.ItemsSource = DataSource;
+                mListItem = null;
+                WriteFile();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
 
         ///<summary>
         /// 区域改变大小和拖动
@@ -1573,7 +1650,9 @@ namespace MetroFramePlugin.ViewModels
         private void MenuItemClick(object sender, RoutedEventArgs e)
         {
             string res = ((VicMenuItemNormal)sender).Tag.ToString();
-            UnitAreaSeting areaParent = (((((((VicMenuItemNormal)sender).Parent as VicMenuItemNormal).Parent as VicMenuItemNormal).Parent as VicMenuNormal).Parent as DockPanel)).Parent as UnitAreaSeting;
+            UnitAreaSeting areaParent = (((((((VicMenuItemNormal)sender).Parent as VicMenuItemNormal).Parent as VicMenuItemNormal).Parent as
+
+VicMenuNormal).Parent as DockPanel)).Parent as UnitAreaSeting;
             if (res.Equals("Largeico"))
             {
                 if (areaParent != null)
@@ -1665,7 +1744,9 @@ namespace MetroFramePlugin.ViewModels
         private void SecondMenuItemClick(object sender, RoutedEventArgs e)
         {
             string res = ((VicMenuItemNormal)sender).Tag.ToString();
-            UnitAreaSeting areaParent = ((((((VicMenuItemNormal)sender).Parent as VicMenuItemNormal).Parent as VicMenuNormal).Parent as DockPanel)).Parent as UnitAreaSeting;
+            UnitAreaSeting areaParent = ((((((VicMenuItemNormal)sender).Parent as VicMenuItemNormal).Parent as VicMenuNormal).Parent as DockPanel)).Parent
+
+as UnitAreaSeting;
             //重命名区域 
             if (res.Equals("RenName"))
             {
@@ -1726,26 +1807,26 @@ namespace MetroFramePlugin.ViewModels
         {
             string res = ((VicButtonNormal)sender).Tag.ToString();
             UnitAreaSeting areaParent = ((((VicButtonNormal)sender).Parent as StackPanel).Parent as DockPanel).Parent as UnitAreaSeting;
-            if (res.Equals("btnDeblocking"))//解锁
+            if (res.Equals("btnDeblocking"))//单击解锁图标
             {
-                areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
-                areaParent.ParamsModel.LockingState = Visibility.Visible;
                 //添加拖动事件
                 WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(areaParent.Parent as DockPanel, (areaParent.Parent as DockPanel).Uid);
                 if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
                 {
                     ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
                     pluginArea.PreviewMouseMove += menuList_PreviewMouseMove;
-                   
                 }
-                ThumbCanvas(areaParent.Parent as DockPanel, false);
+                areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
+                areaParent.ParamsModel.LockingState = Visibility.Visible;
+                //重绘，去拖动
+                OverRideDrawingPanelArea(areaParent.Parent as DockPanel);
             }
-            if (res.Equals("btnLocking"))//锁定
+            if (res.Equals("btnLocking"))//单击锁定图标
             {
                 areaParent.ParamsModel.DeblockingState = Visibility.Visible;
-                areaParent.ParamsModel.LockingState = Visibility.Collapsed;  
-                //重绘
-                OverRideDrawingPanelArea(areaParent.Parent as DockPanel);
+                areaParent.ParamsModel.LockingState = Visibility.Collapsed;
+                //上拖动
+                ThumbCanvas(areaParent.Parent as DockPanel, false);
             }
 
             if (res.Equals("btnFold"))
@@ -1782,7 +1863,7 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         /// <summary>
-        ///  重新渲染区域
+        ///  重新渲染当前区域
         /// </summary>
         private void OverRideDrawingPanelArea(UIElement dockPanel)
         {
@@ -1799,9 +1880,12 @@ namespace MetroFramePlugin.ViewModels
             {
                 if (NewArea[i].AreaID == dockPanel.Uid)
                 {
+
                     UnitAreaSeting _title = new UnitAreaSeting();
                     _title.ParamsModel.TitleWidth = NewArea[i].AreaWidth;
                     _title.Uid = NewArea[i].AreaID;
+                    _title.ParamsModel.DeblockingState = Visibility.Collapsed;
+                    _title.ParamsModel.LockingState = Visibility.Visible;
                     DockPanel.SetDock(_title, Dock.Top);
                     _title.ParamsModel.BtnDeblockingClick += BtnClick;
                     _title.MenuItemIcoClick += MenuItemClick;
@@ -1812,8 +1896,7 @@ namespace MetroFramePlugin.ViewModels
                     _title.Background = Brushes.Gainsboro;
 
                     ListBox menuListArea = new ListBox();
-                    menuListArea.Background = Brushes.WhiteSmoke;
-
+                    menuListArea.Style = area.FindResource("PanelStyle") as Style;
                     WrapPanel pluginPanel = new WrapPanel();
                     pluginPanel.Uid = NewArea[i].AreaID;
                     pluginPanel.Orientation = Orientation.Horizontal;
@@ -1868,66 +1951,6 @@ namespace MetroFramePlugin.ViewModels
                     _panel.Children.Remove(dockPanel);
                     break;
                 }
-            }
-        }
-
-        /// <summary>
-        /// 鼠标拖动事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void menuList_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            DragListBox = sender as ListBox;
-            DragListBox.AllowDrop = true;
-            if (Mouse.LeftButton != MouseButtonState.Pressed)
-                return;
-            Point pos = e.GetPosition(DragListBox);
-            HitTestResult result = VisualTreeHelper.HitTest(DragListBox, pos);
-            if (result == null)
-                return;
-
-            mListItem = GetParentObject<ListBoxItem>(result.VisualHit); // Find your actual visual you want to drag
-            if (mListItem == null)
-                return;
-
-            DataObject dataObject = new DataObject(mListItem.Content);
-            // Here, we should notice that dragsource param will specify on which 
-            // control the drag&drop event will be fired
-            System.Windows.DragDrop.DoDragDrop(DragListBox, dataObject, DragDropEffects.Copy);//开始拖动
-
-        }
-        /// <summary>
-        /// 拖动后放下的位置
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void menuList_Drop(object sender, DragEventArgs e)
-        {
-            try
-            {
-                if (DragListBox == null)
-                    return;
-                Point pos = e.GetPosition(DragListBox);
-                HitTestResult result = VisualTreeHelper.HitTest(DragListBox, pos);
-                if (result == null)
-                    return;
-
-                ListBoxItem selectedItem = GetParentObject<ListBoxItem>(result.VisualHit);
-                if (selectedItem == null)
-                    return;
-                //把拖动控件移动到制定位置，且移除被拖动的项 操作数据源
-                ObservableCollection<MenuModel> DataSource = DragListBox.ItemsSource as ObservableCollection<MenuModel>;
-                DataSource.Insert(DataSource.IndexOf(selectedItem.Content as MenuModel), (mListItem.Content as MenuModel).Copy());
-                DataSource.Remove(mListItem.Content as MenuModel);
-                DragListBox.ItemsSource = null;
-                DragListBox.ItemsSource = DataSource;
-                mListItem = null;
-                WriteFile();
-            }
-            catch (Exception)
-            {
-
             }
         }
         #endregion
