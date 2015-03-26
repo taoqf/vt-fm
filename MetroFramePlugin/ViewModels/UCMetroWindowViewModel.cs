@@ -1009,7 +1009,7 @@ MessageBoxImage.Question);
         #region
 
         #region 字段&属性
-        private bool isLocked = true;//控制是否能拖动插件
+        private bool isOverRender = false;//控制重绘
         private UserControl area;//当前用户控件
         private Canvas _panel;//主区域面板
         private ListBox _listbox;//弹窗展示菜单列表
@@ -1198,7 +1198,22 @@ MessageBoxImage.Question);
                     areaPlugin = NowArea.PluginList.FirstOrDefault(it => it.MenuName.Equals(nowPlugin.MenuName));
                     NowArea.PluginList.Remove(areaPlugin);
                     WriteFile();
-                    OverRideDrawingPanelArea(parentPanel);
+
+                    foreach (DockPanel panel in _panel.Children)
+                    {
+                        if (panel.Uid == selectAreaId)
+                        {
+                            WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
+                            if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
+                            {
+                                ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                                pluginArea.ItemsSource = null;
+                                pluginArea.ItemsSource = NowArea.PluginList;
+                                break;
+                            }
+                        }
+                    }
+                    //  OverRideDrawingPanelArea(parentPanel);
                 });
             }
         }
@@ -1246,9 +1261,9 @@ MessageBoxImage.Question);
                     SelectPopupMenuList.Clear();
                     int k = 0;
                     AreaMenu NowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(selectAreaId));
-
                     foreach (MenuModel menuModel in _listbox.SelectedItems)
                     {
+                        k = 0;//马虎：万不能少，调试出来的
                         foreach (MenuModel addedPlugin in NowArea.PluginList)
                         {
                             if (addedPlugin.MenuName != menuModel.MenuName) k++;
@@ -1264,33 +1279,41 @@ MessageBoxImage.Question);
                     }
                     PopupIsShow = false;
                     _panel.IsEnabled = true;
-
                     WriteFile();
-                    foreach (DockPanel panel in _panel.Children)
-                    {
-                        if (panel.Uid == selectAreaId)
-                        {
-                            WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
-                            if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
-                            {
-                                ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                                pluginArea.ItemsSource = null;
-                                pluginArea.ItemsSource = NowArea.PluginList;
-                                break;
-                            }
-                        }
-                    }
-
-                    //之前考虑的重绘
                     //foreach (DockPanel panel in _panel.Children)
                     //{
                     //    if (panel.Uid == selectAreaId)
                     //    {
-                    //        OverRideDrawingPanelArea(panel);
-                    //        ThumbCanvas();
-                    //        break;
+                    //        WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
+                    //        if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
+                    //        {
+                    //            ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                    //            pluginArea.ItemsSource = null;
+                    //            pluginArea.ItemsSource = NowArea.PluginList;
+                    //            break;
+                    //        }
+                    //        else  if (wrapPanelArea != null && wrapPanelArea.Children.Count == 1)
+                    //        {
+                    //            ListBox pluginArea = new ListBox();
+                    //            pluginArea.ItemsSource = NowArea.PluginList;
+                    //            wrapPanelArea.Children.Insert(wrapPanelArea.Children.Count - 1, pluginArea);
+                    //            WriteFile();
+                    //            break;
+                    //        }
                     //    }
                     //}
+
+                    //之前考虑的重绘
+                    isOverRender = false;
+                    foreach (DockPanel panel in _panel.Children)
+                    {
+                        if (panel.Uid == selectAreaId)
+                        {
+                            OverRideDrawingPanelArea(panel);
+                            ThumbCanvas();
+                            break;
+                        }
+                    }
                 });
             }
         }
@@ -1809,6 +1832,7 @@ as UnitAreaSeting;
             UnitAreaSeting areaParent = ((((VicButtonNormal)sender).Parent as StackPanel).Parent as DockPanel).Parent as UnitAreaSeting;
             if (res.Equals("btnDeblocking"))//单击解锁图标
             {
+                isOverRender = true;
                 //添加拖动事件
                 WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(areaParent.Parent as DockPanel, (areaParent.Parent as DockPanel).Uid);
                 if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
@@ -1820,6 +1844,7 @@ as UnitAreaSeting;
                 areaParent.ParamsModel.LockingState = Visibility.Visible;
                 //重绘，去拖动
                 OverRideDrawingPanelArea(areaParent.Parent as DockPanel);
+
             }
             if (res.Equals("btnLocking"))//单击锁定图标
             {
@@ -1840,7 +1865,7 @@ as UnitAreaSeting;
                             panel.Children[1].Visibility = Visibility.Collapsed;
                             areaParent.ParamsModel.FoldState = Visibility.Collapsed;
                             areaParent.ParamsModel.UnfoldState = Visibility.Visible;
-
+                            break;
                         }
 
                     }
@@ -1857,6 +1882,7 @@ as UnitAreaSeting;
                             panel.Children[1].Visibility = Visibility.Visible;
                             areaParent.ParamsModel.FoldState = Visibility.Visible;
                             areaParent.ParamsModel.UnfoldState = Visibility.Collapsed;
+                            break;
                         }
                     }
                 }
@@ -1884,8 +1910,11 @@ as UnitAreaSeting;
                     UnitAreaSeting _title = new UnitAreaSeting();
                     _title.ParamsModel.TitleWidth = NewArea[i].AreaWidth;
                     _title.Uid = NewArea[i].AreaID;
-                    _title.ParamsModel.DeblockingState = Visibility.Collapsed;
-                    _title.ParamsModel.LockingState = Visibility.Visible;
+                    if (isOverRender)
+                    {
+                        _title.ParamsModel.DeblockingState = Visibility.Collapsed;
+                        _title.ParamsModel.LockingState = Visibility.Visible;
+                    }
                     DockPanel.SetDock(_title, Dock.Top);
                     _title.ParamsModel.BtnDeblockingClick += BtnClick;
                     _title.MenuItemIcoClick += MenuItemClick;
