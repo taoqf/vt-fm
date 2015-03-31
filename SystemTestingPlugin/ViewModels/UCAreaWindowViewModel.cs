@@ -11,6 +11,7 @@ using System.Diagnostics;
 using Victop.Frame.DataMessageManager;
 using SystemTestingPlugin.Views;
 using System.Threading;
+using System.IO;
 
 namespace SystemTestingPlugin.ViewModels
 {

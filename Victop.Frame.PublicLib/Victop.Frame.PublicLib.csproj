@@ -56,6 +56,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\VictopLib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\VictopLib\log4net.dll</HintPath>
     </Reference>
@@ -82,6 +85,7 @@
     <Compile Include="Helpers\IPOperationHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\LoggerHelper.cs" />
+    <Compile Include="Helpers\RAROperationHelper.cs" />
     <Compile Include="Helpers\WebBrowserHelperClass\ReflectionService.cs" />
     <Compile Include="Helpers\RegexHelper.cs" />
     <Compile Include="Helpers\SpellCodeHelper.cs" />
