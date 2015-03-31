@@ -97,6 +97,7 @@ namespace Victop.Frame.Connection
                         contentDic.Add("userCode", contentDic["usercode"]);
                         contentDic.Remove("usercode");
                     }
+                    contentDic.Add("logintypenew", "usercode");
                     break;
                 default:
                     break;
