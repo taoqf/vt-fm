@@ -112,7 +112,7 @@
                                                 <RowDefinition Height="100"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
-                                            <controls:VicButtonNormal x:Name="btnClose" Grid.Row="0" BorderThickness="0" Background="Transparent"   Command="{Binding DataContext.btnDelPlugin,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                            <controls:VicButtonNormal x:Name="btnClose" Grid.Row="0" BorderThickness="0" Background="Transparent"   Command="{Binding DataContext.BtnDelPluginCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                 CommandParameter="{Binding .}" HorizontalAlignment="Right"  VerticalAlignment="Top" Height="15" Width="15" FocusVisualStyle="{x:Null}" ToolTip="删除">
                                                 <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
                                   SnapsToDevicePixels="True"
@@ -187,7 +187,7 @@
                                                 <RowDefinition Height="60"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
-                                            <controls:VicButtonNormal x:Name="btnClose" Grid.Row="0" BorderThickness="0" Background="Transparent"   Command="{Binding DataContext.btnDelPlugin,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                            <controls:VicButtonNormal x:Name="btnClose" Grid.Row="0" BorderThickness="0" Background="Transparent"   Command="{Binding DataContext.BtnDelPluginCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                 CommandParameter="{Binding .}" HorizontalAlignment="Right"  VerticalAlignment="Top" Height="15" Width="15" FocusVisualStyle="{x:Null}" ToolTip="删除">
                                                 <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
                                   SnapsToDevicePixels="True"

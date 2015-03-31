@@ -1184,7 +1184,7 @@ MessageBoxImage.Question);
         }
 
         /// <summary>
-        /// 单击“编辑命令”删除某个显示插件
+        /// 单击“删除”某个显示插件
         /// </summary>
         public ICommand BtnDelPluginCommand
         {
@@ -1217,7 +1217,19 @@ MessageBoxImage.Question);
                             }
                         }
                     }
-                    //  OverRideDrawingPanelArea(parentPanel);
+                  
+                    //重绘当前面板
+                    isOverRender = false;
+                    foreach (DockPanel panel in _panel.Children)
+                    {
+                        if (panel.Uid == eidtAreaId)
+                        {
+                            OverRideDrawingPanelArea(panel);
+                            ThumbCanvas();
+                            break;
+                        }
+                    }
+                    
                 });
             }
         }
@@ -1307,7 +1319,7 @@ MessageBoxImage.Question);
                     //    }
                     //}
 
-                    //之前考虑的重绘
+                    //重绘当前面板
                     isOverRender = false;
                     foreach (DockPanel panel in _panel.Children)
                     {
@@ -1803,7 +1815,7 @@ as UnitAreaSeting;
 
                     }
                 }
-                WriteFile();
+             //   WriteFile();
             }
             //删除区域 
             if (res.Equals("DeleteArea"))
