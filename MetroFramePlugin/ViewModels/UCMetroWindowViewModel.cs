@@ -1202,7 +1202,7 @@ MessageBoxImage.Question);
                     areaPlugin = NowArea.PluginList.FirstOrDefault(it => it.MenuName.Equals(nowPlugin.MenuName));
                     NowArea.PluginList.Remove(areaPlugin);
                     WriteFile();
-
+                    //重新改变插件显示的数据源，还是编辑状态，想还原，单击大中小图标
                     foreach (DockPanel panel in _panel.Children)
                     {
                         if (panel.Uid == selectAreaId)
@@ -1217,19 +1217,6 @@ MessageBoxImage.Question);
                             }
                         }
                     }
-                  
-                    //重绘当前面板
-                    isOverRender = false;
-                    foreach (DockPanel panel in _panel.Children)
-                    {
-                        if (panel.Uid == eidtAreaId)
-                        {
-                            OverRideDrawingPanelArea(panel);
-                            ThumbCanvas();
-                            break;
-                        }
-                    }
-                    
                 });
             }
         }
