@@ -30,9 +30,15 @@
             <Border BorderThickness="1" BorderBrush="{DynamicResource SkinColor}"  Width="200" Height="Auto" Background="{DynamicResource MainBackgroundImage}" >
                 <ctrl:VicGridNormal Background="{DynamicResource WhiteShade}" Name="girdUserOnline">
                     <ctrl:VicDataGrid ItemsSource="{Binding UserOnlineDt,UpdateSourceTrigger=PropertyChanged}" IsUserSetColumn="True" AutoGenerateColumns="False">
+                        <ctrl:VicDataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="强制下线"/>
+                                <MenuItem Header="移除"/>
+                            </ContextMenu>
+                        </ctrl:VicDataGrid.ContextMenu>
                         <ctrl:VicDataGrid.Columns>
-                            <ctrl:VicDataGridTextColumn Header="用户名称" Binding="{Binding Path=userCode}"/>
-                            <ctrl:VicDataGridTextColumn Header="登陆IP地址" Binding="{Binding Path=userIp}"/>
+                            <ctrl:VicDataGridTextColumn Header="用户名称" Binding="{Binding Path=userCode}" IsReadOnly="True"/>
+                            <ctrl:VicDataGridTextColumn Header="登陆IP地址" Binding="{Binding Path=userIp}" IsReadOnly="True"/>
                         </ctrl:VicDataGrid.Columns>
                     </ctrl:VicDataGrid>
                 </ctrl:VicGridNormal>

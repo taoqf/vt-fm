@@ -45,7 +45,10 @@
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
         <Border Grid.RowSpan="6" BorderThickness="2" BorderBrush="Black" Margin="0,0,0,-34" Opacity="0.4"/>
-        <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" FontSize="15" Margin="5,10,0,0">自动更新</Label>
+        <DockPanel Grid.Row="0" Margin="5,3,0,0" >
+            <Image Source="victop.ico"/>
+        <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" FontSize="15" >自动更新</Label>
+        </DockPanel>
         <TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="tBlockProcess" Margin="5,12,0,0"/>
         <ProgressBar Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="proBarTotal"  Margin="0,5" Grid.RowSpan="2"/>
         <TextBlock Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Name="tBlockNow" Text="正在下载:" Margin="5,12,0,0"/>
