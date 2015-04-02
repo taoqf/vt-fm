@@ -12,16 +12,46 @@ using Victop.Wpf.Controls;
 using Victop.Server.Controls;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.DataMessageManager;
+using System.Data;
+using System.Xml;
+using System.IO;
 
 namespace PortalFramePlugin.ViewModels
 {
-    public class OverlayWindowViewModel:ModelBase
+    public class OverlayWindowViewModel : ModelBase
     {
         private OverlayWindow overlayWin;
         private bool exitFlag = false;
-
-
-        private bool pluginListShow=false;
+        /// <summary>
+        /// 插件列表显示
+        /// </summary>
+        private bool pluginListShow = false;
+        /// <summary>
+        /// 用户在线列表显示
+        /// </summary>
+        private bool userOnlineShow = false;
+        /// <summary>
+        /// 用户在线列表
+        /// </summary>
+        private DataTable userOnlineDt;
+        /// <summary>
+        /// 用户在线列表显示
+        /// </summary>
+        public bool UserOnlineShow
+        {
+            get
+            {
+                return userOnlineShow;
+            }
+            set
+            {
+                if (userOnlineShow != value)
+                {
+                    userOnlineShow = value;
+                    RaisePropertyChanged("UserOnlineShow");
+                }
+            }
+        }
         /// <summary>
         /// 插件列表显示
         /// </summary>
@@ -40,12 +70,33 @@ namespace PortalFramePlugin.ViewModels
                 }
             }
         }
+        /// <summary>
+        /// 在线用户列表
+        /// </summary>
+        public DataTable UserOnlineDt
+        {
+            get
+            {
+                if (userOnlineDt == null)
+                    userOnlineDt = new DataTable();
+                return userOnlineDt;
+            }
+            set
+            {
+                if (userOnlineDt != value)
+                {
+                    userOnlineDt = value;
+                    RaisePropertyChanged("UserOnlineDt");
+                }
+            }
+        }
 
         public ICommand mainWindowLoadedCommand
         {
             get
             {
-                return new RelayCommand<object>((x) => {
+                return new RelayCommand<object>((x) =>
+                {
                     overlayWin = (OverlayWindow)x;
                     overlayWin.MouseDown += overlayWin_MouseDown;
                     overlayWin.Closing += overlayWin_Closing;
@@ -62,7 +113,8 @@ namespace PortalFramePlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     WindowCollection WinCollection = Application.Current.Windows;
                     foreach (Window item in WinCollection)
                     {
@@ -76,13 +128,41 @@ namespace PortalFramePlugin.ViewModels
                 });
             }
         }
+        public ICommand menuItemViewOnlineClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    string MessageType = "MongoDataChannelService.findBusiData";
+                    DataMessageOperation messageOp = new DataMessageOperation();
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("systemid", "11");
+                    contentDic.Add("refsystemid","11");
+                    contentDic.Add("modelid", "listonlineuser::");
+                    Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+                    if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+                    {
+                        string ChannelId = returnDic["DataChannelId"].ToString();
+                        DataSet mastDs = new DataSet();
+                        mastDs = messageOp.GetData(ChannelId, "[\"onlineUser\"]");
+                        UserOnlineDt = mastDs.Tables["dataArray"];
+                    }
+                    if (UserOnlineDt != null && UserOnlineDt.Rows.Count > 0)
+                    {
+                        UserOnlineShow = true;
+                    }
+                });
+            }
+        }
 
         public ICommand menuItemPluginListClickCommand
         {
             get
             {
-                return new RelayCommand(() => {
-                    VicGridNormal gridNormal = (VicGridNormal)overlayWin.FindName("girPluginList");
+                return new RelayCommand(() =>
+                {
+                    VicGridNormal gridNormal = (VicGridNormal)overlayWin.FindName("girdPluginList");
                     gridNormal.Children.Clear();
                     gridNormal.Children.Add(GetActivePluginInfo());
                     PluginListShow = true;
@@ -96,7 +176,8 @@ namespace PortalFramePlugin.ViewModels
         {
             get
             {
-                return new RelayCommand(() => {
+                return new RelayCommand(() =>
+                {
                     WindowCollection WinCollection = Application.Current.Windows;
                     foreach (Window item in WinCollection)
                     {
@@ -141,7 +222,7 @@ namespace PortalFramePlugin.ViewModels
         private VicStackPanelNormal GetActivePluginInfo()
         {
             DataMessageOperation dataop = new DataMessageOperation();
-            List<Dictionary<string,object>> pluginList = dataop.GetPluginInfo();
+            List<Dictionary<string, object>> pluginList = dataop.GetPluginInfo();
             VicStackPanelNormal PluginListContent = new VicStackPanelNormal();
             PluginListContent.Orientation = Orientation.Vertical;
             PluginListContent.Width = 120;
@@ -178,17 +259,6 @@ namespace PortalFramePlugin.ViewModels
                     {
                         if (WinCollection[i].Uid.Equals(PluginUid))
                         {
-                            //switch (WinCollection[i].ResizeMode)
-                            //{
-                            //    case ResizeMode.NoResize:
-                            //    case ResizeMode.CanMinimize:
-                            //        WinCollection[i].WindowState = WindowState.Normal;
-                            //        break;
-                            //    case ResizeMode.CanResize:
-                            //    case ResizeMode.CanResizeWithGrip:
-                            //        WinCollection[i].WindowState = WindowState.Maximized;
-                            //        break;
-                            //}
                             WinCollection[i].Activate();
                             pluginExistFlag = true;
                             break;

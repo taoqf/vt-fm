@@ -122,7 +122,7 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </controls:VicButtonNormal>
-                    
+
                     <controls:VicButtonNormal Name="btnClose" Style="{DynamicResource btnCloseStyle}" ToolTip="关闭">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="Click">
@@ -133,14 +133,11 @@
                 </StackPanel>
             </Grid>
             <Grid Name="gridMid" Grid.Column="1" Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition ColumnDefinition.Width="0" />
-                    <ColumnDefinition ColumnDefinition.Width="*" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Width="10" Grid.Column="0" VerticalAlignment="Center">
-                    <controls:VicButtonNormal Name="btnStretch" Height="70" Width="10" Style="{DynamicResource btnStretchStyle}" Margin="-3,0,-4,0"></controls:VicButtonNormal>
-                </StackPanel>
-                <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0">
                     <controls:VicTabControlNormal Name="MainTabControl" Style="{DynamicResource MainVicTabControlStyle}" ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="TabItemClosing">
@@ -149,8 +146,8 @@
                         </i:Interaction.Triggers>
                     </controls:VicTabControlNormal>
                 </Grid>
+                <TextBlock Grid.Row="1" Text="{Binding AppVersionCode}" VerticalAlignment="Center" Foreground="Blue" HorizontalAlignment="Right" Margin="0,0,10,0"/>
             </Grid>
-            <!--<Label Name="tb"  Content="当前软件已是最新版本（2014-04-23）" Style="{DynamicResource MainFrmBottomGridStyle}"/>-->
         </Grid>
     </DockPanel>
     <i:Interaction.Triggers>

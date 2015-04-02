@@ -12,16 +12,29 @@
         <ContextMenu>
             <MenuItem Header="显示主窗口" Name="menuItemActiveWin" Command="{Binding menuItemActiveWinClickCommand}"/>
             <MenuItem Header="活动窗口" Name="menuItemPluginList" Command="{Binding menuItemPluginListClickCommand}"/>
+            <MenuItem Header="在线用户" Name="menuItemViewOnline" Command="{Binding menuItemViewOnlineClickCommand}"/>
             <MenuItem Header="退出" Name="menuItemExit" Command="{Binding menuItemExitClickCommand}"/>
         </ContextMenu>
     </ctrl:VicWindowNormal.ContextMenu>
-    <ctrl:VicGridNormal>   
+    <ctrl:VicGridNormal>
         <ctrl:VicGridNormal.RowDefinitions>
             <RowDefinition Height="*"/>
         </ctrl:VicGridNormal.RowDefinitions>
         <ctrl:VicPopup Grid.Row="0" Margin="0,60,0,0" Name="popPluginList" StaysOpen="False" IsOpen="{Binding PluginListShow,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
             <Border BorderThickness="1" BorderBrush="{DynamicResource SkinColor}"  Width="100" Height="Auto" Background="{DynamicResource MainBackgroundImage}" >
-                <ctrl:VicGridNormal Background="{DynamicResource WhiteShade}" Name="girPluginList">
+                <ctrl:VicGridNormal Background="{DynamicResource WhiteShade}" Name="girdPluginList">
+                </ctrl:VicGridNormal>
+            </Border>
+        </ctrl:VicPopup>
+        <ctrl:VicPopup Grid.Row="0" Margin="0,60,0,0" Name="popUserOnline" StaysOpen="False" IsOpen="{Binding UserOnlineShow,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+            <Border BorderThickness="1" BorderBrush="{DynamicResource SkinColor}"  Width="200" Height="Auto" Background="{DynamicResource MainBackgroundImage}" >
+                <ctrl:VicGridNormal Background="{DynamicResource WhiteShade}" Name="girdUserOnline">
+                    <ctrl:VicDataGrid ItemsSource="{Binding UserOnlineDt,UpdateSourceTrigger=PropertyChanged}" IsUserSetColumn="True" AutoGenerateColumns="False">
+                        <ctrl:VicDataGrid.Columns>
+                            <ctrl:VicDataGridTextColumn Header="用户名称" Binding="{Binding Path=userCode}"/>
+                            <ctrl:VicDataGridTextColumn Header="登陆IP地址" Binding="{Binding Path=userIp}"/>
+                        </ctrl:VicDataGrid.Columns>
+                    </ctrl:VicDataGrid>
                 </ctrl:VicGridNormal>
             </Border>
         </ctrl:VicPopup>

@@ -27,6 +27,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using Victop.Frame.DataMessageManager;
+using System.Xml;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -67,6 +68,10 @@ namespace PortalFramePlugin.ViewModels
         private List<MenuModel> localMenuList = new List<MenuModel>();
 
         private ObservableCollection<MenuModel> localMenuListEx = new ObservableCollection<MenuModel>();
+        /// <summary>
+        /// 应用程序版本编号
+        /// </summary>
+        private string appVersionCode;
         #endregion
 
         #region 属性
@@ -272,7 +277,24 @@ namespace PortalFramePlugin.ViewModels
                 }
             }
         }
-
+        /// <summary>
+        /// 应用程序版本编号
+        /// </summary>
+        public string AppVersionCode
+        {
+            get
+            {
+                return appVersionCode;
+            }
+            set
+            {
+                if (appVersionCode != value)
+                {
+                    appVersionCode = value;
+                    RaisePropertyChanged("AppVersionCode");
+                }
+            }
+        }
         #endregion
 
         #region 命令
@@ -294,11 +316,12 @@ namespace PortalFramePlugin.ViewModels
                     mainWindow.MaxHeight = rect.Height;
                     mainWindow.WindowState = WindowState.Maximized;
                     ChangeFrameWorkTheme();
-                    //LoadMenuListLocal();
+                    AppVersionCode = GetAppVersion();
                     LoadJsonMenuListLocal();
                     OverlayWindow overlayWin = new OverlayWindow();
                     overlayWin.Show();
                     UserLogin();
+
                 });
             }
         }
@@ -351,7 +374,7 @@ namespace PortalFramePlugin.ViewModels
 
                         win_PluginList.Show();
                         win_PluginList.Activate();
-                    } 
+                    }
                 });
             }
         }
@@ -1070,7 +1093,7 @@ namespace PortalFramePlugin.ViewModels
                         else
                         {
                             btn.Content = Plugin.ParamDict["Title"];
-                        } 
+                        }
                     }
                     else
                         btn.Content = Plugin.PluginTitle;
@@ -1195,6 +1218,39 @@ namespace PortalFramePlugin.ViewModels
             if (objComWebBrowser == null) return;
 
             objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { Hide });
+        }
+        #endregion
+
+        #region 版本相关
+        /// <summary>
+        /// 获取应用程序版本
+        /// </summary>
+        /// <returns></returns>
+        private string GetAppVersion()
+        {
+            string versionStr = "已是最新版本";
+            try
+            {
+                XmlDocument xml = new XmlDocument();
+                string appPath = AppDomain.CurrentDomain.BaseDirectory;
+                if (File.Exists(Path.Combine(appPath, "AutoUpdate.exe.config")))
+                {
+                    xml.Load(Path.Combine(appPath, "AutoUpdate.exe.config"));
+                    XmlElement xnode = (XmlElement)xml.SelectSingleNode("/configuration/appSettings/add[@key='UpDate']");
+                    string UpDate = xnode.GetAttribute("value");
+                    return string.Format("应用程序(版本号:{0}){1}", UpDate, versionStr);
+                }
+                else
+                {
+                    return string.Format("应用程序{0}", versionStr);
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.ErrorFormat("获取应用程序版本错误：{0}", ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                return string.Format("应用程序{0}", versionStr);
+            }
+
         }
         #endregion
     }

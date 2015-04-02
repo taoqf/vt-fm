@@ -145,7 +145,7 @@ namespace Victop.Frame.Adapter
         {
             if (message.MessageType == "LoginService.userLoginNew" || message.MessageType == "LoginService.getCurrentLinker")
             {
-                message = CreateMessage(MessageTargetEnum.MAIN,message);
+                message = CreateMessage(MessageTargetEnum.MAIN, message);
             }
             else if (message.MessageType == "LinkService.registAsync")
             {
@@ -153,7 +153,7 @@ namespace Victop.Frame.Adapter
             }
             else
             {
-                message = CreateMessage(MessageTargetEnum.NORMAL,message);
+                message = CreateMessage(MessageTargetEnum.NORMAL, message);
             }
             MessagePoolManager messagePoolManager = new MessagePoolManager();
             ReplyMessage replyMessage = FrameInit.GetInstance().ComlinkObject.SendMessage(message);
@@ -175,6 +175,7 @@ namespace Victop.Frame.Adapter
                             {
                                 replyMessage.ReplyControl = returnMessage.MessageControl;
                                 replyMessage.ReplyContent = returnMessage.MessageContent;
+                                LoggerHelper.InfoFormat("接收信息:{0}", returnMessage.MessageContent);
                                 string replyCode = JsonHelper.ReadJsonString(returnMessage.MessageContent, "code");
                                 if (!string.IsNullOrEmpty(replyCode))
                                 {
