@@ -92,6 +92,7 @@ namespace Victop.Frame.PublicLib.Common
             bool result = false;
             try
             {
+                FtpCheckDirectoryExist(ftppath);
                 FileInfo fileInf = new FileInfo(localpath);
                 string url = "ftp://" + ftpServerIP + "/" + (string.IsNullOrEmpty(ftppath) ? "/" : ftppath) + fileInf.Name;
                 Connect(url);
@@ -126,6 +127,35 @@ namespace Victop.Frame.PublicLib.Common
             }
             return result;
         }
+
+        private void FtpCheckDirectoryExist(string destFilePath)
+        {
+            string fullDir = FtpParseDirectory(destFilePath);
+            string[] dirs = fullDir.Split('/');
+            string curDir = "/";
+            for (int i = 0; i < dirs.Length; i++)
+            {
+                string dir = dirs[i];
+                if (!string.IsNullOrEmpty(dir))
+                {
+                    try
+                    {
+                        curDir += dir + "/";
+                        MakeDir(curDir);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+            }
+        }
+
+        private string FtpParseDirectory(string destFilePath)
+        {
+            return destFilePath.Substring(0, destFilePath.LastIndexOf("/"));
+        }
+
         /// <summary>
         ///下载文件
         /// </summary>
@@ -198,20 +228,23 @@ namespace Victop.Frame.PublicLib.Common
         /// 创建目录
         /// </summary>
         /// <param name="dirName">目录名称</param>
-        public void MakeDir(string remotePath, string dirName)
+        public bool MakeDir(string dirName)
         {
+            Connect(string.Format("ftp://{0}{1}", ftpServerIP, dirName));
+            reqFTP.KeepAlive = false;
+            reqFTP.Method = WebRequestMethods.Ftp.MakeDirectory;
             try
             {
-                string url = "ftp://" + ftpServerIP + "/" + (string.IsNullOrEmpty(remotePath) ? "/" : remotePath) + dirName;
-                Connect(url);//连接 
-                reqFTP.Method = WebRequestMethods.Ftp.MakeDirectory;
-                FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
-                response.Close();
+                FtpWebResponse reponse = (FtpWebResponse)reqFTP.GetResponse();
+                reponse.Close();
             }
             catch (Exception ex)
             {
-                LoggerHelper.ErrorFormat("创建目录错误:{0}", ex.Message);
+                reqFTP.Abort();
+                return false;
             }
+            reqFTP.Abort();
+            return true;
         }
         /// <summary>
         /// 删除目录
