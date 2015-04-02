@@ -807,7 +807,7 @@ namespace Victop.Frame.DataMessageManager
                 contentDic.Add("spaceId", item.SpaceId);
                 contentDic.Add("userCode", item.UserCode);
                 contentDic.Add("operflag", LockStatusEnum.解锁);
-                SendAsyncMessage(messageType, contentDic);
+                SendSyncMessage(messageType, contentDic);
             }
         }
 

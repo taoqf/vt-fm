@@ -18,6 +18,7 @@ namespace Victop.Frame.Connection
     using Victop.Frame.CoreLibrary;
     using Victop.Frame.PublicLib.Managers;
     using System.Configuration;
+    using System.Net;
 
     /// <summary>
     /// 消息转发器
@@ -97,7 +98,17 @@ namespace Victop.Frame.Connection
                         contentDic.Add("userCode", contentDic["usercode"]);
                         contentDic.Remove("usercode");
                     }
-                    contentDic.Add("logintypenew", "usercode");
+                    if (!contentDic.ContainsKey("logintypenew"))
+                    {
+                        contentDic.Add("logintypenew", "usercode");
+                    }
+                    if (!contentDic.ContainsKey("userIp"))
+                    {
+                        string hostname = Dns.GetHostName();//得到本机名   
+                        IPHostEntry localhost = Dns.GetHostEntry(hostname);
+                        IPAddress localaddr = localhost.AddressList.Last();
+                        contentDic.Add("userIp", localaddr.ToString());
+                    }
                     break;
                 default:
                     break;
