@@ -9,6 +9,7 @@
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
         <Style TargetType="{x:Type ProgressBar}">
+           
             <Setter Property="Background" Value="Gainsboro"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="Value" Value="20"/>
@@ -17,9 +18,9 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ProgressBar}">
-                        <Grid MinHeight="14" MinWidth="400">
-                            <Border Name="PART_Track"  CornerRadius="20"  BorderBrush="Black"  BorderThickness="1" Background="Black" />
-                            <Border x:Name="PART_Indicator"  CornerRadius="16" BorderBrush="MediumAquamarine" BorderThickness="1"  HorizontalAlignment="Left">
+                        <Grid MinHeight="14" MinWidth="400" Margin="10">
+                            <Border Name="PART_Track"  CornerRadius="20"  BorderBrush="Black"  BorderThickness="1"  Background="Black" />
+                            <Border x:Name="PART_Indicator"  CornerRadius="16" BorderBrush="MediumAquamarine"  BorderThickness="1"  HorizontalAlignment="Left">
                                 <Border.Background>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="MediumAquamarine" Offset="0"/>
@@ -44,7 +45,7 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.RowSpan="5" Background="Honeydew" />
         <TextBlock Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Name="tBlockProcess" Margin="0,12"/>
-        <ProgressBar Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="proBarTotal" Margin="0,5" Grid.RowSpan="2"/>
+        <ProgressBar Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="proBarTotal"  Margin="0,5" Grid.RowSpan="2"/>
         <TextBlock Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" Name="tBlockNow" Text="正在下载:" Margin="0,12"/>
         <ProgressBar Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="proBarNow" Margin="0,5"/>
 
