@@ -44,6 +44,18 @@ namespace AutoUpdate.Models
             set { serverUpdateTimestamp = value; }
         }
         /// <summary>
+        /// 服务端更新版本号
+        /// </summary>
+        private string serverUpdaterVersion;
+        /// <summary>
+        /// 服务端更新版本号
+        /// </summary>
+        public string ServerUpdaterVersion
+        {
+            get { return serverUpdaterVersion; }
+            set { serverUpdaterVersion = value; }
+        }
+        /// <summary>
         /// 下载文件名称
         /// </summary>
         private string loadingFileName;

@@ -1236,7 +1236,7 @@ namespace PortalFramePlugin.ViewModels
                 if (File.Exists(Path.Combine(appPath, "AutoUpdate.exe.config")))
                 {
                     xml.Load(Path.Combine(appPath, "AutoUpdate.exe.config"));
-                    XmlElement xnode = (XmlElement)xml.SelectSingleNode("/configuration/appSettings/add[@key='UpDate']");
+                    XmlElement xnode = (XmlElement)xml.SelectSingleNode("/configuration/appSettings/add[@key='Version']");
                     string UpDate = xnode.GetAttribute("value");
                     return string.Format("应用程序(版本号:{0}){1}", UpDate, versionStr);
                 }

@@ -165,7 +165,7 @@ namespace AutoUpdate
                 filePath = Path.Combine(filePath, updateModel.LoadingFileName);
                 if (File.Exists(filePath))
                 {
-                    File.Replace(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpdater", updateModel.LoadingFilePath,updateModel.LoadingFileName), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateModel.LoadingFilePath,updateModel.LoadingFileName), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp", updateModel.LoadingFileName), true);
+                    File.Replace(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AutoUpdater", updateModel.LoadingFilePath, updateModel.LoadingFileName), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, updateModel.LoadingFilePath, updateModel.LoadingFileName), Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "temp", updateModel.LoadingFileName), true);
                 }
                 else
                 {
@@ -190,6 +190,7 @@ namespace AutoUpdate
             {
                 Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 config.AppSettings.Settings["UpDate"].Value = updateModel.ServerUpdateTimestamp.ToString();
+                config.AppSettings.Settings["Version"].Value = updateModel.ServerUpdaterVersion;
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
                 MessageBox.Show("更新完成", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -273,6 +274,7 @@ namespace AutoUpdate
                         if (xml.Name == "UpdateTime")
                         {
                             updateModel.ServerUpdateTimestamp = Convert.ToInt64(xml.GetAttribute("Date"));
+                            updateModel.ServerUpdaterVersion = xml.GetAttribute("Version");
                             break;
                         }
                     }
