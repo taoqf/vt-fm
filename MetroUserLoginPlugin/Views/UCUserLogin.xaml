@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="MetroUserLoginPlugin.Views.UCUserLogin"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:helpers="clr-namespace:MetroUserLoginPlugin.Helpers"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:convert="clr-namespace:MetroUserLoginPlugin.Converts"
+             xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600" Name="ucUserLongin">
+    <UserControl.Resources>
+        <convert:ImgeNameToBackgroundConverter x:Key="imgeNameToBackgroundConverter"/>
+    </UserControl.Resources>
+    <Grid x:Name="gridMain" Style="{DynamicResource WindowChangeSkinBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Background="DodgerBlue"/>
+        <Grid Grid.Row="0" Name="titleBar" Style="{DynamicResource loginMainGridStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="3" VerticalAlignment="Top">
+                <controls:VicButtonNormal Content="" Name="btnSystemSet" HorizontalAlignment="Right"   Width="34" Style="{DynamicResource btnLoginSetStyle}" Height="34" Command="{Binding btnSystemSetClickCommand}"/>
+                <controls:VicButtonNormal Content="" Name="btnMini" HorizontalAlignment="Right"  Width="34" Style="{DynamicResource btnMiniStyle}" Height="34" Command="{Binding btnMiniClickCommand}" />
+                <controls:VicButtonNormal Content="" Name="btnClose" HorizontalAlignment="Right"  Width="34"  Style="{DynamicResource btnCloseStyle}" Height="34" Command="{Binding btnCloseClickCommand}"/>
+            </StackPanel>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="105"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Height="2"  Background="White"/>
+                <Label Grid.Column="1"  HorizontalAlignment="Left" VerticalAlignment="Center" Height="30"  FontSize="16" Foreground="White" FontFamily="Bold"  Content="飞道管理平台" />
+                <Border Height="2" Grid.Column="2" Background="White"/>
+            </Grid>
+        </Grid>
+        <Border Grid.Row="1" Background="DodgerBlue"/>
+        <Grid Grid.Row="1" Style="{DynamicResource loginMainGridStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--<controls:VicButtonImage Name="btnUserLogin" Background="{Binding UserImg, Converter={StaticResource imgeNameToBackgroundConverter}}"
+                                         Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}">
+            </controls:VicButtonImage>  圆头像-->
+            <Grid  Grid.Row="0"  HorizontalAlignment="Center" VerticalAlignment="Bottom"   Height="165" Width="130"    >
+                <Border BorderThickness="1" Background="White" BorderBrush="{DynamicResource SkinColor}" Margin="3">
+                    <Grid >
+                        <StackPanel Width="60" Height="80">
+                            <Ellipse Fill="{DynamicResource SkinColor}" Width="30" Height="30"/>
+                            <Ellipse Fill="{DynamicResource SkinColor}" Margin="0,3,0,0" Height="100" Width="60"/>
+                        </StackPanel>
+                        <Image Source="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}"  Stretch="UniformToFill"/>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="1" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="463*"/>
+                    <ColumnDefinition Width="117*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Orientation="Horizontal" Margin="194,4,77.381,3">
+                    <controls:VicTextBoxNormal WaterMark="用户名/手机号/飞道邮箱"  MinWidth="190"    Text="{Binding LoginInfoModel.UserName}"  VerticalContentAlignment="Center" Height="24"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Orientation="Horizontal" Margin="194,3,77.381,3">
+                    <PasswordBox  Name="pwBox"   MinWidth="192" Height="25"   
+                            helpers:PasswordBoxBindingHelper.Attach="True" helpers:PasswordBoxBindingHelper.Password=
+                    "{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            VerticalAlignment="Center"  BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
+                    </PasswordBox>
+                </StackPanel>
+                <StackPanel x:Name="高级设置" Visibility="Collapsed" Grid.ColumnSpan="2">
+                    <controls:VicComboBoxNormal Grid.Row="2" Height="24" Name="CloudSOAComboBox"  
+                        ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
+                        SelectedValue="{Binding SelectedGallery,UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding CloudSOAComboBoxSelectionChangedCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </controls:VicComboBoxNormal>
+                    <controls:VicTextBoxNormal Grid.Row="3" Height="24"  Name="toxProductId" VicText="{Binding LoginInfoModel.ProductId,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" Margin="0,10,0,16"/>
+                </StackPanel>
+                <Label  FontFamily="SimSun" Content="注册账号"  HorizontalAlignment="Left" VerticalContentAlignment="Bottom" RenderTransformOrigin="1.617,0.526" Margin="392,4,0,3"/>
+                <Label  FontFamily="SimSun" Content="找回密码" Margin="391,30,14.381,7"   Grid.RowSpan="2"/>
+            </Grid>
+            <TextBlock Grid.Row="2" Padding="5,0,0,0" HorizontalAlignment="Left" Name="ErrLabel"  Text="{Binding ErrMsg}" Foreground="Red" Height="22"/>
+            <Border Grid.Row="2" HorizontalAlignment="Center" BorderBrush="#024672" BorderThickness="0">
+                <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
+                    <controls:VicButtonNormal  x:Name="btnLogin"  Style="{DynamicResource LoginButtonStyle}" Background="DodgerBlue" Width="100" Content="{DynamicResource L_R_89}" Command="{Binding btnLoginClickCommand}" TabIndex="5" />
+                    <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Background="DodgerBlue" Width="100" Content="取消" IsCancel="True"  Command="{Binding btnCancelClickCommand}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding gridMainLoadedCommand}" CommandParameter="{Binding ElementName=ucUserLongin}"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="Unloaded">
+                <i:InvokeCommandAction Command="{Binding gridMainUnloadedCommand}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+    </Grid>
+</UserControl>
