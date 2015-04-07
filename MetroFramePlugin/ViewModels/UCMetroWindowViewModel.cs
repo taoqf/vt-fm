@@ -1536,7 +1536,12 @@ MessageBoxImage.Question);
                 {
                     Canvas.SetTop(parentPanel, Canvas.GetTop(parentPanel) + e.VerticalChange);
                 }
+                //保存拖动位置
+                NewArea.FirstOrDefault(it => it.AreaID.Equals(parentPanel.Uid)).LeftSpan = Canvas.GetLeft(parentPanel);
+                NewArea.FirstOrDefault(it => it.AreaID.Equals(parentPanel.Uid)).TopSpan = Canvas.GetTop(parentPanel);
+                WriteFile();
             }
+
         }
 
         private ListBoxItem mListItem = null;
