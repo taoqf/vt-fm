@@ -25,6 +25,7 @@ using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 using System.Windows.Markup;
 using System.Xml;
+using System.Windows.Controls.Primitives;
 
 namespace MetroFramePlugin.ViewModels
 {
@@ -1441,6 +1442,7 @@ MessageBoxImage.Question);
                 _title.Uid = NewArea[i].AreaID;
                 DockPanel.SetDock(_title, Dock.Top);
                 _title.ParamsModel.BtnDeblockingClick += BtnClick;
+                _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
                 _title.MenuItemIcoClick += MenuItemClick;
                 _title.ParamsModel.UnitMouseLeaveText += ParamsModel_UnitMouseLeaveText;
                 _title.SecondMenuItemIcoClick += SecondMenuItemClick;
@@ -1505,6 +1507,36 @@ MessageBoxImage.Question);
                 _panel.Children.Add(_newPanel);
             }
             ThumbCanvas();
+        }
+
+        private void ThumbDragMove(object sender, DragDeltaEventArgs e)
+        {
+            DockPanel parentPanel = GetParentObject<DockPanel>(sender as Thumb);
+           
+            if (!isOverRender)
+            {
+                Canvas.SetLeft(parentPanel, Canvas.GetLeft(parentPanel) + e.HorizontalChange);
+                if (Canvas.GetLeft(parentPanel) + e.HorizontalChange < 0)
+                {
+                    Canvas.SetLeft(parentPanel, 5);
+                }
+                else
+                {
+                    if (Canvas.GetLeft(parentPanel) + parentPanel.ActualWidth > (parentPanel.Parent as Canvas).ActualWidth)
+                    {
+                        Canvas.SetLeft(parentPanel, (parentPanel.Parent as Canvas).ActualWidth - parentPanel.ActualWidth);
+                    }
+                    else Canvas.SetLeft(parentPanel, Canvas.GetLeft(parentPanel) + e.HorizontalChange);
+                }
+                if (Canvas.GetTop(parentPanel) + e.VerticalChange < 0)
+                {
+                    Canvas.SetTop(parentPanel, 5);
+                }
+                else
+                {
+                    Canvas.SetTop(parentPanel, Canvas.GetTop(parentPanel) + e.VerticalChange);
+                }
+            }
         }
 
         private ListBoxItem mListItem = null;
@@ -1676,9 +1708,7 @@ MessageBoxImage.Question);
         private void MenuItemClick(object sender, RoutedEventArgs e)
         {
             string res = ((VicMenuItemNormal)sender).Tag.ToString();
-            UnitAreaSeting areaParent = (((((((VicMenuItemNormal)sender).Parent as VicMenuItemNormal).Parent as VicMenuItemNormal).Parent as
-
-VicMenuNormal).Parent as DockPanel)).Parent as UnitAreaSeting;
+            UnitAreaSeting areaParent = ((((((((VicMenuItemNormal)sender).Parent as VicMenuItemNormal).Parent as VicMenuItemNormal).Parent as VicMenuNormal).Parent as DockPanel)).Parent as Grid).Parent as UnitAreaSeting;
             if (res.Equals("Largeico"))
             {
                 if (areaParent != null)
@@ -1770,9 +1800,7 @@ VicMenuNormal).Parent as DockPanel)).Parent as UnitAreaSeting;
         private void SecondMenuItemClick(object sender, RoutedEventArgs e)
         {
             string res = ((VicMenuItemNormal)sender).Tag.ToString();
-            UnitAreaSeting areaParent = ((((((VicMenuItemNormal)sender).Parent as VicMenuItemNormal).Parent as VicMenuNormal).Parent as DockPanel)).Parent
-
-as UnitAreaSeting;
+            UnitAreaSeting areaParent = (((((((VicMenuItemNormal)sender).Parent as VicMenuItemNormal).Parent as VicMenuNormal).Parent as DockPanel)).Parent as Grid).Parent as UnitAreaSeting;
             //重命名区域 
             if (res.Equals("RenName"))
             {
@@ -1820,11 +1848,14 @@ as UnitAreaSeting;
 
         void ParamsModel_UnitMouseLeaveText(object sender, MouseEventArgs e)
         {
-            UnitAreaSeting areaParent = (((TextBox)sender).Parent as DockPanel).Parent as UnitAreaSeting;
-            AreaMenu nowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
-            nowArea.AreaName = areaParent.ParamsModel.AreaName;
-            WriteFile();
-            areaParent.Focus();
+            UnitAreaSeting areaParent = ((((TextBox)sender).Parent as DockPanel).Parent as Grid).Parent as UnitAreaSeting;
+            if (areaParent != null)
+            {
+                AreaMenu nowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
+                nowArea.AreaName = areaParent.ParamsModel.AreaName;
+                WriteFile();
+                areaParent.Focus();
+            }            
         }
         ///<summary>
         ///区域title“锁定”按钮和“折叠/展开”回调事件
@@ -1832,7 +1863,9 @@ as UnitAreaSeting;
         private void BtnClick(object sender, RoutedEventArgs e)
         {
             string res = ((VicButtonNormal)sender).Tag.ToString();
-            UnitAreaSeting areaParent = ((((VicButtonNormal)sender).Parent as StackPanel).Parent as DockPanel).Parent as UnitAreaSeting;
+            UnitAreaSeting areaParent = (((((VicButtonNormal)sender).Parent as StackPanel).Parent as DockPanel).Parent as Grid).Parent as UnitAreaSeting;
+            if (areaParent == null)
+                return;
             if (res.Equals("btnDeblocking"))//单击解锁图标
             {
                 isOverRender = true;
@@ -1851,9 +1884,11 @@ as UnitAreaSeting;
             }
             if (res.Equals("btnLocking"))//单击锁定图标
             {
+                isOverRender = false;
                 areaParent.ParamsModel.DeblockingState = Visibility.Visible;
                 areaParent.ParamsModel.LockingState = Visibility.Collapsed;
-                //上拖动
+                //加上拖动
+                areaParent.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
                 ThumbCanvas(areaParent.Parent as DockPanel, false);
             }
 
