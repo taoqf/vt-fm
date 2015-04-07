@@ -33,6 +33,30 @@ namespace Victop.Frame.PublicLib.Helpers
             }
         }
         /// <summary>
+        /// 读取插件配置文件
+        /// </summary>
+        /// <param name="configPath">插件配置文件</param>
+        /// <returns></returns>
+        public static string ReadPluginConfigData(string configPath)
+        {
+            try
+            {
+                string filePath = AppDomain.CurrentDomain.BaseDirectory + "PluginConfig\\" + configPath + ".json";
+                if (File.Exists(filePath))
+                {
+                    return File.ReadAllText(filePath, Encoding.GetEncoding("gb2312"));
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+        }
+        /// <summary>
         /// 读取文本文件所有行
         /// </summary>
         /// <param name="filePath">文本文件路径</param>

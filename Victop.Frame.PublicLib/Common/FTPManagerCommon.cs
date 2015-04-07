@@ -205,6 +205,46 @@ namespace Victop.Frame.PublicLib.Common
             }
         }
         /// <summary>
+        /// 下载
+        /// </summary>
+        /// <param name="localFullName">本地完整路径</param>
+        /// <param name="ftpFullName">服务器段完整路径</param>
+        /// <param name="errorInfo">错误信息</param>
+        /// <returns></returns>
+        public bool DownLoad(string localFullName, string ftpFullName, out string errorInfo)
+        {
+            try
+            {
+                string url = "ftp://" + ftpServerIP + "/" + ftpFullName;
+                Connect(url);//连接 
+                reqFTP.Credentials = new NetworkCredential(ftpUserID, ftpPassword);
+                FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
+                Stream ftpStream = response.GetResponseStream();
+                long cl = response.ContentLength;
+                int bufferSize = 2048;
+                int readCount;
+                byte[] buffer = new byte[bufferSize];
+                readCount = ftpStream.Read(buffer, 0, bufferSize);
+
+                FileStream outputStream = new FileStream(localFullName, FileMode.Create);
+                while (readCount > 0)
+                {
+                    outputStream.Write(buffer, 0, readCount);
+                    readCount = ftpStream.Read(buffer, 0, bufferSize);
+                }
+                ftpStream.Close();
+                outputStream.Close();
+                response.Close();
+                errorInfo = "";
+                return true;
+            }
+            catch (Exception ex)
+            {
+                errorInfo = string.Format("因{0},无法下载", ex.Message);
+                return false;
+            }
+        }
+        /// <summary>
         /// 删除文件
         /// </summary>
         /// <param name="fileName">文件名称</param>

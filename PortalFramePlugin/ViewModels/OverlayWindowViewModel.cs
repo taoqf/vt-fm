@@ -178,6 +178,8 @@ namespace PortalFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    DataMessageOperation dataMsgOp = new DataMessageOperation();
+                    dataMsgOp.RemoveDataLock();
                     WindowCollection WinCollection = Application.Current.Windows;
                     foreach (Window item in WinCollection)
                     {
