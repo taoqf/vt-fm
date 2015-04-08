@@ -134,7 +134,60 @@ namespace Victop.Frame.CoreLibrary.Models
                 channelId = value;
             }
         }
+        /// <summary>
+        /// 用户列表
+        /// </summary>
+        private List<UserRoleInfo> roleList;
+        /// <summary>
+        /// 用户列表
+        /// </summary>
+        public List<UserRoleInfo> RoleList
+        {
+            get { return roleList; }
+            set { roleList = value; }
+        }
 
 	}
+    /// <summary>
+    /// 用户角色信息
+    /// </summary>
+    public class UserRoleInfo
+    {
+        private string _id;
+
+        public string Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+        private string role_No;
+
+        public string Role_No
+        {
+            get { return role_No; }
+            set { role_No = value; }
+        }
+        private string role_Name;
+
+        public string Role_Name
+        {
+            get { return role_Name; }
+            set { role_Name = value; }
+        }
+        private string tablename;
+
+        public string TableName
+        {
+            get { return tablename; }
+            set { tablename = value; }
+        }
+        private string field;
+
+        public string Field
+        {
+            get { return field; }
+            set { field = value; }
+        }
+    }
 }
 

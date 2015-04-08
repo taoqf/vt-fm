@@ -28,6 +28,22 @@ namespace UserLoginPlugin.ViewModels
         private Window LoginWindow;
         private PasswordBox pwBox;
         private string selectedGallery;
+        private ObservableCollection<UserRoleInfoModel> roleInfoList;
+        private UserRoleInfoModel selectedRoleInfo;
+        private bool showRoleList;
+
+        public bool ShowRoleList
+        {
+            get { return showRoleList; }
+            set
+            {
+                if (showRoleList != value)
+                {
+                    showRoleList = value;
+                    RaisePropertyChanged("ShowRoleList");
+                }
+            }
+        }
         #endregion
 
         #region 属性
@@ -97,6 +113,44 @@ namespace UserLoginPlugin.ViewModels
             {
                 selectedGallery = value;
                 RaisePropertyChanged("SelectedGallery");
+            }
+        }
+        /// <summary>
+        /// 角色信息集合
+        /// </summary>
+        public ObservableCollection<UserRoleInfoModel> RoleInfoList
+        {
+            get
+            {
+                if (roleInfoList == null)
+                    roleInfoList = new ObservableCollection<UserRoleInfoModel>();
+                return roleInfoList;
+            }
+            set
+            {
+                if (roleInfoList != value)
+                {
+                    roleInfoList = value;
+                    RaisePropertyChanged("RoleInfoList");
+                }
+            }
+        }
+        /// <summary>
+        /// 选定的角色信息
+        /// </summary>
+        public UserRoleInfoModel SelectedRoleInfo
+        {
+            get
+            {
+                return selectedRoleInfo;
+            }
+            set
+            {
+                if (selectedRoleInfo != value)
+                {
+                    selectedRoleInfo = value;
+                    RaisePropertyChanged("SelectedRoleInfo");
+                }
             }
         }
         #endregion
@@ -225,6 +279,53 @@ namespace UserLoginPlugin.ViewModels
             }
         }
         #endregion
+        /// <summary>
+        /// 角色列表窗体加载命令
+        /// </summary>
+        public ICommand roleListWinLoadedCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                });
+            }
+        }
+        /// <summary>
+        /// 角色列表选定命令
+        /// </summary>
+        public ICommand btnConfirmClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    #region 更新通道信息
+                    DataMessageOperation dataOp = new DataMessageOperation();
+                    string messageType = "LoginService.setUserInfo";
+                    Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
+                    setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
+                    setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
+                    setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
+                    setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
+                    setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
+                    setUserContentDic.Add("UserRole", SelectedRoleInfo.Role_No);
+                    dataOp.SendAsyncMessage(messageType, setUserContentDic);
+                    ShowRoleList = false;
+                    LoginWindow.DialogResult = true;
+                    #endregion
+                }, () =>
+                {
+                    if (SelectedRoleInfo == null)
+                    {
+                        return false;
+                    }
+                    return true;
+                });
+            }
+        }
+
         #endregion
 
         #region 自定义方法
@@ -305,9 +406,44 @@ namespace UserLoginPlugin.ViewModels
                 {
                     if (!returnDic["ReplyMode"].ToString().Equals("0"))
                     {
-                        LoginWindow.DialogResult = true;
                         SaveLoginUserInfo();
-                        LoginWindow.Close();
+                        Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                        RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
+                        if (RoleInfoList == null||RoleInfoList.Count==0)
+                        {
+                            DataMessageOperation dataOp = new DataMessageOperation();
+                            string messageType = "LoginService.setUserInfo";
+                            Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
+                            setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
+                            setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
+                            setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
+                            setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
+                            setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
+                            dataOp.SendAsyncMessage(messageType, setUserContentDic);
+                            LoginWindow.DialogResult = true;
+                        }
+                        else
+                        {
+                            if (RoleInfoList.Count == 1)
+                            {
+                                DataMessageOperation dataOp = new DataMessageOperation();
+                                string messageType = "LoginService.setUserInfo";
+                                Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
+                                setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
+                                setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
+                                setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
+                                setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
+                                setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
+                                setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
+                                dataOp.SendAsyncMessage(messageType, setUserContentDic);
+                                LoginWindow.DialogResult = true;
+                            }
+                            else
+                            {
+                                ShowRoleList = true;
+                            }
+                        }
+                        
                     }
                     else
                     {
@@ -328,6 +464,7 @@ namespace UserLoginPlugin.ViewModels
                 LoginWindow.Cursor = Cursors.Arrow;
             }
         }
+
         /// <summary>检查输入信息</summary>
         private bool CheckUserLogin()
         {
@@ -382,18 +519,8 @@ namespace UserLoginPlugin.ViewModels
                     {
                         LoginInfoModel.ClientNo = mastDs.Tables["dataArray"].Rows[0]["client_no"].ToString();
                     }
-                } 
+                }
             }
-            #endregion
-            #region 更新通道信息
-            string messageType = "LoginService.setUserInfo";
-            Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
-            setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
-            setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
-            setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-            setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
-            setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
-            messageOp.SendAsyncMessage(messageType, setUserContentDic);
             #endregion
 
         }

@@ -325,8 +325,9 @@ namespace Victop.Frame.Connection
                         if (userInfoList != null && userInfoList.Count > 0)
                         {
                             currentGallery.ClientInfo.UserId = userInfoList["_id"].ToString();
-                            currentGallery.ClientInfo.UserImg = userInfoList["avatar_path"].ToString();
+                            currentGallery.ClientInfo.UserImg = userInfoList["avatar_path"] != null ? userInfoList["avatar_path"].ToString() : string.Empty;
                             currentGallery.ClientInfo.UserFullInfo = userInfoList;
+                            currentGallery.ClientInfo.RoleList = JsonHelper.ToObject<List<UserRoleInfo>>(userInfoList["pub_user_connect"].ToString());
                         }
                         else
                         {

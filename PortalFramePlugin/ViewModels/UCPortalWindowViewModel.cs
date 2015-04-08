@@ -242,6 +242,28 @@ namespace PortalFramePlugin.ViewModels
             }
         }
         /// <summary>
+        /// 用户角色
+        /// </summary>
+        private string userRole;
+        /// <summary>
+        /// 用户角色
+        /// </summary>
+        public string UserRole
+        {
+            get
+            {
+                return userRole;
+            }
+            set
+            {
+                if (userRole != value)
+                {
+                    userRole = value;
+                    RaisePropertyChanged("UserRole");
+                }
+            }
+        }
+        /// <summary>
         /// 用户头像
         /// </summary>
         public string UserImg
@@ -718,19 +740,12 @@ namespace PortalFramePlugin.ViewModels
             menuModel.Id = item.Id;
             menuModel.Memo = item.Description;
             menuModel.ParentMenu = item.Parent_no;
-            //menuModel.MenuCode = item.menuCode;
-            MenuModel localModel = GetLocalMenuResoureName(item.Menu_name, localMenuListEx);
-            if (localModel != null)
+            if (item.Roles != null && item.Roles.Count > 0)
             {
-                menuModel.ResourceName = localModel.ResourceName;
-                menuModel.ActionType = localModel.ActionType;
-                menuModel.BzSystemId = localModel.BzSystemId;
-                menuModel.FitDataPath = localModel.FitDataPath;
-                menuModel.ActionCADName = localModel.ActionCADName;
-                menuModel.ConfigSystemId = localModel.ConfigSystemId;
-                menuModel.SpaceId = localModel.SpaceId;
-                menuModel.MenuNo = localModel.MenuNo;
-
+                foreach (MenuRoleInfo roleitem in item.Roles)
+                {
+                    menuModel.RoleAuthList.Add(new MenuRoleAuth() { Role_No = roleitem.Role_no, AuthCode = roleitem.Auth_code });
+                }
             }
             return menuModel;
         }
@@ -791,10 +806,10 @@ namespace PortalFramePlugin.ViewModels
             }
             this.SystemMenuListLocal = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             localMenuListEx = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
-            //if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
-            //{
-            //    this.SystemMenuListLocal.Clear();
-            //}
+            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+            {
+                this.SystemMenuListLocal.Clear();
+            }
         }
         #endregion
 
@@ -835,6 +850,15 @@ namespace PortalFramePlugin.ViewModels
         /// </summary>
         private void OpenJsonMenuPlugin(MenuModel selectedFourthMenu)
         {
+            MenuRoleAuth roleAuth = selectedFourthMenu.RoleAuthList.FirstOrDefault(it => it.Role_No.Equals(UserRole));
+            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+            {
+                if (roleAuth == null)
+                {
+                    VicMessageBoxNormal.Show("当前角色无启动此功能的权限");
+                    return;
+                }
+            }
             if (TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)) != null)
             {
                 TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)).IsSelected = true;
@@ -852,7 +876,7 @@ namespace PortalFramePlugin.ViewModels
                     paramDic.Add("spaceid", selectedFourthMenu.SpaceId);
                     paramDic.Add("menuno", selectedFourthMenu.MenuNo);
                     paramDic.Add("menucode", selectedFourthMenu.MenuCode);
-                    paramDic.Add("authoritycode", selectedFourthMenu.HomeId);
+                    paramDic.Add("authoritycode", roleAuth != null ? roleAuth.AuthCode : 0);
                     PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
                     if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                     {
@@ -985,6 +1009,7 @@ namespace PortalFramePlugin.ViewModels
                 if (userDic != null)
                 {
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
+                    userRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserRole");
                     this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 isFirstLogin = false;

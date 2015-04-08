@@ -132,6 +132,10 @@ namespace Victop.Frame.ServerManagerCenter
                 galleryInfo.ClientNo = contentDic["ClientNo"].ToString();
                 galleryInfo.ClientInfo.UserCode = contentDic["UserCode"].ToString();
                 galleryInfo.ClientInfo.UserPwd = contentDic["UserPwd"].ToString();
+                if (contentDic.ContainsKey("UserRole"))
+                {
+                    galleryInfo.ClientInfo.UserRole = contentDic["UserRole"].ToString();
+                }
                 returnDic.Add("ReplyMode", "1");
                 returnDic.Add("ReplyContent", "更新当前通道用户信息成功");
                 return JsonHelper.ToJson(returnDic);

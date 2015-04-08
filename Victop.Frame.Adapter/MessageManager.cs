@@ -175,7 +175,7 @@ namespace Victop.Frame.Adapter
                             {
                                 replyMessage.ReplyControl = returnMessage.MessageControl;
                                 replyMessage.ReplyContent = returnMessage.MessageContent;
-                                LoggerHelper.InfoFormat("接收信息:{0}", returnMessage.MessageContent);
+                                //LoggerHelper.InfoFormat("接收信息:{0}", returnMessage.MessageContent);
                                 string replyCode = JsonHelper.ReadJsonString(returnMessage.MessageContent, "code");
                                 if (!string.IsNullOrEmpty(replyCode))
                                 {

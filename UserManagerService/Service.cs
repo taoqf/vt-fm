@@ -82,6 +82,8 @@ namespace UserManagerService
                 userDic.Add("ProductId", cloudGallyInfo.ProductId);
                 userDic.Add("UserId", loginUserInfo.UserId);
                 userDic.Add("UserImg", loginUserInfo.UserImg);
+                userDic.Add("UserRole", JsonHelper.ToJson(loginUserInfo.RoleList));
+                userDic.Add("CurrentRole", loginUserInfo.UserRole);
                 if (loginUserInfo.UserFullInfo != null && loginUserInfo.UserFullInfo.ContainsKey("staff_no"))
                 {
                     userDic.Add("UserNo", loginUserInfo.UserFullInfo["staff_no"].ToString());

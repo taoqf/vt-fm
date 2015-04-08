@@ -103,6 +103,7 @@
     <Compile Include="Helpers\PasswordBoxBindingHelper.cs" />
     <Compile Include="Models\LoginUserInfoModel.cs" />
     <Compile Include="Models\SystemConfigModel.cs" />
+    <Compile Include="Models\UserRoleInfoModel.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
