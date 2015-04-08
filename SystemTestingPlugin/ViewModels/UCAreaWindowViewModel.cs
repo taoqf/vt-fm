@@ -440,7 +440,7 @@ namespace SystemTestingPlugin.ViewModels
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("systemid", UserInfoModel.SystemId);
                         contentDic.Add("configsystemid", UserInfoModel.ConfigsystemId);
-                        contentDic.Add("client_type_val", UserInfoModel.ClientType);
+                        contentDic.Add("clientType", UserInfoModel.ClientType);
                         contentDic.Add("userCode", UserInfoModel.UserCode);
                         Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
                         if (returnDic != null)

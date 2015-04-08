@@ -17,273 +17,195 @@ namespace Victop.Frame.CoreLibrary.Models
 	/// <remarks>菜单信息</remarks>
 	public class MenuInfo
 	{
-        #region 注册连接器获取的菜单结构
-        /// <summary>
-        /// 菜单标识
-        /// </summary>
+        private string _id;
+
         public string Id
         {
-            get;
-            set;
+            get { return _id; }
+            set { _id = value; }
+        }
+        private string menu_no;
+
+        public string Menu_no
+        {
+            get { return menu_no; }
+            set { menu_no = value; }
+        }
+        private string menu_name;
+
+        public string Menu_name
+        {
+            get { return menu_name; }
+            set { menu_name = value; }
+        }
+        private string client_type;
+
+        public string Client_type
+        {
+            get { return client_type; }
+            set { client_type = value; }
+        }
+        private string parent_no;
+
+        public string Parent_no
+        {
+            get { return parent_no; }
+            set { parent_no = value; }
+        }
+        private string icon;
+
+        public string Icon
+        {
+            get { return icon; }
+            set { icon = value; }
+        }
+        private string show_type;
+
+        public string Show_type
+        {
+            get { return show_type; }
+            set { show_type = value; }
+        }
+        private string description;
+
+        public string Description
+        {
+            get { return description; }
+            set { description = value; }
+        }
+        private long priority;
+
+        public long Priority
+        {
+            get { return priority; }
+            set { priority = value; }
+        }
+        private bool is_single;
+
+        public bool Is_single
+        {
+            get { return is_single; }
+            set { is_single = value; }
+        }
+        private bool is_offline;
+
+        public bool Is_offline
+        {
+            get { return is_offline; }
+            set { is_offline = value; }
+        }
+        private bool is_guest;
+
+        public bool Is_guest
+        {
+            get { return is_guest; }
+            set { is_guest = value; }
+        }
+        private string productId;
+
+        public string ProductId
+        {
+            get { return productId; }
+            set { productId = value; }
+        }
+        private string systemid;
+
+        public string Systemid
+        {
+            get { return systemid; }
+            set { systemid = value; }
+        }
+        private string formid;
+
+        public string Formid
+        {
+            get { return formid; }
+            set { formid = value; }
+        }
+        private string formname;
+
+        public string Formname
+        {
+            get { return formname; }
+            set { formname = value; }
+        }
+        private string package_no;
+
+        public string Package_no
+        {
+            get { return package_no; }
+            set { package_no = value; }
+        }
+        private string package_name;
+
+        public string Package_name
+        {
+            get { return package_name; }
+            set { package_name = value; }
+        }
+        private string package_url;
+
+        public string Package_url
+        {
+            get { return package_url; }
+            set { package_url = value; }
+        }
+        private List<MenuRoleInfo> roles;
+
+        public List<MenuRoleInfo> Roles
+        {
+            get { return roles; }
+            set { roles = value; }
         }
 
-        /// <summary>
-        /// SystemId
-        /// </summary>
-        public string BzSystemId
+    }
+    /// <summary>
+    /// 菜单角色信息
+    /// </summary>
+    public class MenuRoleInfo
+    {
+        private long auth_code;
+
+        public long Auth_code
         {
-            get;
-            set;
+            get { return auth_code; }
+            set { auth_code = value; }
         }
+        private string role_no;
 
-        /// <summary>
-        /// 终节点信息
-        /// </summary>
-        public string EndPoint
+        public string Role_no
         {
-            get;
-            set;
+            get { return role_no; }
+            set { role_no = value; }
         }
+        private string role_name;
 
-        /// <summary>
-        /// 菜单id
-        /// </summary>
-        public string MenuId
+        public string Role_name
         {
-            get;
-            set;
+            get { return role_name; }
+            set { role_name = value; }
         }
+        private string tablename;
 
-        /// <summary>
-        /// 菜单名称
-        /// </summary>
-        public string MenuName
+        public string Tablename
         {
-            get;
-            set;
+            get { return tablename; }
+            set { tablename = value; }
         }
+        private string pk_val;
 
-        /// <summary>
-        /// FormId
-        /// </summary>
-        public string FormId
+        public string Pk_val
         {
-            get;
-            set;
+            get { return pk_val; }
+            set { pk_val = value; }
         }
+        private string search_field_val;
 
-        /// <summary>
-        /// 父级菜单
-        /// </summary>
-        public string ParentMenu
+        public string Search_field_val
         {
-            get;
-            set;
+            get { return search_field_val; }
+            set { search_field_val = value; }
         }
-
-        /// <summary>
-        /// 是否激活
-        /// </summary>
-        public int Actived
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 备注
-        /// </summary>
-        public string Memo
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 自动打开标识
-        /// </summary>
-        public int AutoOpenFlag
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 时间戳
-        /// </summary>
-        public DateTime Stamp
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 显示方式
-        /// </summary>
-        public int DisplayType
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 打开方式
-        /// </summary>
-        public int OpenType
-        {
-            get;
-            set;
-        }
-
-        public string Compatible
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 终结点参数
-        /// </summary>
-        public string EndPointParam
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 主目录Id
-        /// </summary>
-        public string HomeId
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 队序
-        /// </summary>
-        public int Sequence
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Form名称
-        /// </summary>
-        public string FormName
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Form描述
-        /// </summary>
-        public string FormMemo
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 数据FormId
-        /// </summary>
-        public string DataFormId
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 前置文档属性
-        /// </summary>
-        public string PredocStatus
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 文档状态
-        /// </summary>
-        public string DocStatus
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 默认打印模版
-        /// </summary>
-        public string DefaultPrintTemplate
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 资源类型
-        /// </summary>
-        public string ResourceType
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 资源名称
-        /// </summary>
-        public string ResourceName
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 资源树
-        /// </summary>
-        public string ResourceTree
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 最大打印数量
-        /// </summary>
-        public string MaxPrintCount
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// 保存解决方案
-        /// </summary>
-        public string SaveProject
-        {
-            get;
-            set;
-        } 
-        #endregion
-
-        #region Mongo独立取菜单的结构
-        public string _id;
-        public string systemid;
-        public string parent_id;
-        public string client_type_val;
-        public string client_type_txt;
-        public string menu_no;
-        public string menu_name;
-        public string url;
-        public string icon;
-        public string is_single;
-        public string authority_code;
-        public string priority;
-        public string menuCode;
-        #endregion
-
     }
 }
 

@@ -82,9 +82,9 @@ namespace UserManagerService
                 userDic.Add("ProductId", cloudGallyInfo.ProductId);
                 userDic.Add("UserId", loginUserInfo.UserId);
                 userDic.Add("UserImg", loginUserInfo.UserImg);
-                if (loginUserInfo.UserFullInfo != null && loginUserInfo.UserFullInfo.Count > 0 && loginUserInfo.UserFullInfo[0].ContainsKey("staff_no"))
+                if (loginUserInfo.UserFullInfo != null && loginUserInfo.UserFullInfo.ContainsKey("staff_no"))
                 {
-                    userDic.Add("UserNo", loginUserInfo.UserFullInfo[0]["staff_no"].ToString());
+                    userDic.Add("UserNo", loginUserInfo.UserFullInfo["staff_no"].ToString());
                 }
                 returnDic.Add("ReplyContent", userDic);
                 returnDic.Add("ReplyMode", 1);

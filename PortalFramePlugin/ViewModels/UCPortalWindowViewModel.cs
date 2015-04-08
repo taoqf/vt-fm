@@ -681,10 +681,10 @@ namespace PortalFramePlugin.ViewModels
             SystemMenuListEnterprise.Clear();
             if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
             {
-                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.ParentMenu.Equals("0")))
+                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.Parent_no.Equals("0") || string.IsNullOrEmpty(it.Parent_no)))
                 {
                     MenuModel menuModel = GetMenuModel(item);
-                    menuModel = CreateMenuList(item.MenuId, resourceInfo.ResourceMnenus, menuModel);
+                    menuModel = CreateMenuList(item.Menu_no, resourceInfo.ResourceMnenus, menuModel);
                     SystemMenuListEnterprise.Add(menuModel);
                 }
             }
@@ -693,10 +693,10 @@ namespace PortalFramePlugin.ViewModels
         /// <summary>创建完整的菜单模型 </summary>
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
         {
-            foreach (MenuInfo item in fullMenuList.Where(it => it.ParentMenu.Equals(parentMenu)))
+            foreach (MenuInfo item in fullMenuList.Where(it => it.Parent_no.Equals(parentMenu)))
             {
                 MenuModel menuModel = GetMenuModel(item);
-                menuModel = CreateMenuList(item.MenuId, fullMenuList, menuModel);
+                menuModel = CreateMenuList(item.Menu_no, fullMenuList, menuModel);
                 parentModel.SystemMenuList.Add(menuModel);
             }
             return parentModel;
@@ -705,36 +705,21 @@ namespace PortalFramePlugin.ViewModels
         private MenuModel GetMenuModel(MenuInfo item)
         {
             MenuModel menuModel = new MenuModel();
-            menuModel.MenuId = item.MenuId;
-            menuModel.MenuName = item.MenuName;
-            menuModel.Actived = item.Actived;
-            menuModel.AutoOpenFlag = item.AutoOpenFlag;
-            menuModel.BzSystemId = item.BzSystemId;
-            menuModel.Compatible = item.Compatible;
-            menuModel.DataFormId = item.DataFormId;
-            menuModel.DefaultPrintTemplate = item.DefaultPrintTemplate;
-            menuModel.DisplayType = item.DisplayType;
-            menuModel.DocStatus = item.DocStatus;
-            menuModel.EndPoint = item.EndPoint;
-            menuModel.EndPointParam = item.EndPointParam;
-            menuModel.ConfigSystemId = item.FormId;
-            menuModel.FormMemo = item.FormMemo;
-            menuModel.FormName = item.FormName;
-            menuModel.HomeId = item.HomeId;
+            menuModel.MenuId = item.Id;
+            menuModel.MenuName = item.Menu_name;
+            menuModel.BzSystemId = item.Systemid;
+            menuModel.DataFormId = item.Formid;
+            menuModel.DisplayType = 0;
+            menuModel.ConfigSystemId = "11";
+            menuModel.FormName = item.Formname;
+            menuModel.ResourceName = item.Package_url;
+            menuModel.ActionType = string.IsNullOrEmpty(item.Show_type) ? "1" : item.Show_type;
+            menuModel.IconUrl = item.Icon;
             menuModel.Id = item.Id;
-            menuModel.MaxPrintCount = item.MaxPrintCount;
-            menuModel.Memo = item.Memo;
-            menuModel.OpenType = item.OpenType;
-            menuModel.ParentMenu = item.ParentMenu;
-            menuModel.PredocStatus = item.PredocStatus;
-            menuModel.ResourceName = item.ResourceName;
-            menuModel.ResourceTree = item.ResourceTree;
-            menuModel.ResourceType = item.ResourceType;
-            menuModel.SaveProject = item.SaveProject;
-            menuModel.Sequence = item.Sequence;
-            menuModel.Stamp = item.Stamp;
-            menuModel.MenuCode = item.menuCode;
-            MenuModel localModel = GetLocalMenuResoureName(item.menu_name, localMenuListEx);
+            menuModel.Memo = item.Description;
+            menuModel.ParentMenu = item.Parent_no;
+            //menuModel.MenuCode = item.menuCode;
+            MenuModel localModel = GetLocalMenuResoureName(item.Menu_name, localMenuListEx);
             if (localModel != null)
             {
                 menuModel.ResourceName = localModel.ResourceName;
@@ -863,12 +848,11 @@ namespace PortalFramePlugin.ViewModels
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
                     paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
                     paramDic.Add("configsystemid", selectedFourthMenu.ConfigSystemId);
+                    paramDic.Add("formid", selectedFourthMenu.DataFormId);
                     paramDic.Add("spaceid", selectedFourthMenu.SpaceId);
                     paramDic.Add("menuno", selectedFourthMenu.MenuNo);
                     paramDic.Add("menucode", selectedFourthMenu.MenuCode);
                     paramDic.Add("authoritycode", selectedFourthMenu.HomeId);
-                    paramDic.Add("fitdata", selectedFourthMenu.FitDataPath);
-                    paramDic.Add("cadname", selectedFourthMenu.ActionCADName);
                     PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
                     if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                     {
@@ -947,10 +931,9 @@ namespace PortalFramePlugin.ViewModels
                     case 0:
                         Window pluginWin = pluginModel.PluginInterface.StartWindow;
                         pluginWin.Uid = pluginModel.ObjectId;
-                        //pluginWin.Owner = mainWindow;
+                        pluginWin.Owner = mainWindow;
                         ActivePluginNum = pluginOp.GetPluginInfo().Count;
                         pluginWin.Show();
-                        //SendPluginCloseMessage(pluginModel);
                         break;
                     case 1:
                         UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;

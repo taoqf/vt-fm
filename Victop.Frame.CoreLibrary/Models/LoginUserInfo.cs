@@ -29,6 +29,18 @@ namespace Victop.Frame.CoreLibrary.Models
             get { return userId; }
             set { userId = value; }
         }
+        /// <summary>
+        /// 用户角色
+        /// </summary>
+        private string userRole;
+        /// <summary>
+        /// 用户角色
+        /// </summary>
+        public string UserRole
+        {
+            get { return userRole; }
+            set { userRole = value; }
+        }
         private string userName;
 		/// <summary>
 		/// 用户名
@@ -50,11 +62,11 @@ namespace Victop.Frame.CoreLibrary.Models
         /// <summary>
         /// 用户完整信息
         /// </summary>
-        private List<Dictionary<string, object>> userFullInfo;
+        private Dictionary<string, object> userFullInfo;
         /// <summary>
         /// 用户完整信息
         /// </summary>
-        public List<Dictionary<string, object>> UserFullInfo
+        public Dictionary<string, object> UserFullInfo
         {
             get { return userFullInfo; }
             set { userFullInfo = value; }

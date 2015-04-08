@@ -290,7 +290,7 @@ namespace Victop.Frame.Connection
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             string afterLoginStr = ConfigurationManager.AppSettings["afterlogin"];
             contentDic.Add("systemid", JsonHelper.ReadJsonString(afterLoginStr, "systemid"));
-            contentDic.Add("client_type_val", "1");
+            contentDic.Add("clientType", "3");
             contentDic.Add("configsystemid", JsonHelper.ReadJsonString(afterLoginStr, "configsystemid"));
             string userCode = messageInfo.MessageContent.Contains("usercode") ? JsonHelper.ReadJsonString(messageInfo.MessageContent, "usercode") : JsonHelper.ReadJsonString(messageInfo.MessageContent, "userCode");
             contentDic.Add("userCode", userCode);
@@ -311,40 +311,21 @@ namespace Victop.Frame.Connection
                     BaseResourceInfo baseResourceInfo = new BaseResourceInfo();
                     baseResourceInfo.GalleryId = GalleryManager.GetCurrentGalleryId();
                     baseResourceInfo.ResourceXml = replyMessage.ReplyContent;
-                    List<MenuInfo> menuInfo = JsonHelper.ToObject<List<MenuInfo>>(JsonHelper.ReadJsonString(replyMessage.ReplyContent, "menu"));
-                    if (menuInfo != null)
-                    {
-                        foreach (MenuInfo item in menuInfo)
-                        {
-                            if (string.IsNullOrEmpty(item.parent_id))
-                            {
-                                item.ParentMenu = "0";
-                            }
-                            else
-                            {
-                                item.ParentMenu = item.parent_id;
-                            }
-                            item.Id = item._id;
-                            item.MenuId = item._id;
-                            item.MenuName = item.menu_name;
-                            item.BzSystemId = item.systemid;
-                            item.HomeId = item.authority_code;
-                        }
-                    }
+                    List<MenuInfo> menuInfo = JsonHelper.ToObject<List<MenuInfo>>(JsonHelper.ReadJsonString(replyMessage.ReplyContent, "menus"));
                     baseResourceInfo.ResourceMnenus = menuInfo;
                     BaseResourceManager baseResourceManager = new BaseResourceManager();
                     bool result = baseResourceManager.AddResouce(baseResourceInfo);
                     #endregion
                     #region 用户信息管理
-                    string userInfoStr = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userInfo");
-                    List<Dictionary<string, object>> userInfoList = JsonHelper.ToObject<List<Dictionary<string, object>>>(userInfoStr);
+                    string userInfoStr = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "user");
+                    Dictionary<string, object> userInfoList = JsonHelper.ToObject<Dictionary<string, object>>(userInfoStr);
                     CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
                     try
                     {
                         if (userInfoList != null && userInfoList.Count > 0)
                         {
-                            currentGallery.ClientInfo.UserId = userInfoList[0]["_id"].ToString();
-                            currentGallery.ClientInfo.UserImg = userInfoList[0]["staff_picture"].ToString();
+                            currentGallery.ClientInfo.UserId = userInfoList["_id"].ToString();
+                            currentGallery.ClientInfo.UserImg = userInfoList["avatar_path"].ToString();
                             currentGallery.ClientInfo.UserFullInfo = userInfoList;
                         }
                         else
