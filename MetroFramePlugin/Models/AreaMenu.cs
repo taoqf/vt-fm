@@ -13,7 +13,7 @@ namespace MetroFramePlugin.Models
         /// <summary>
         ///区域名称
         /// </summary>
-        private string areaName = "oftenFun1";
+        private string areaName = "我的收藏夹1";
         public string AreaName
         {
             get { return areaName; }

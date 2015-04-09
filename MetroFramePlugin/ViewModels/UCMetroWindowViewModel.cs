@@ -1166,6 +1166,7 @@ MessageBoxImage.Question);
             {
                 return new RelayCommand<object>((x) =>
                 {
+                    SeachedFourthLevelMenuList.Clear();//调试出来的：必须清空，不然再次搜索重现
                     VicTextBoxSeach aa = (VicTextBoxSeach)x;
                     string keyTxt = aa.VicText.ToString();
                     if (!string.IsNullOrEmpty(keyTxt))
@@ -1183,7 +1184,26 @@ MessageBoxImage.Question);
                 });
             }
         }
-
+        
+        /// <summary>
+        /// 根据搜索框清空,实现弹窗列表四级菜单展示
+        ///  </summary>
+        public ICommand VicTextBoxClearClickCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                   
+                    VicTextBoxSeach aa = (VicTextBoxSeach)x;
+                    string keyTxt = aa.VicText.ToString();
+                    if (string.IsNullOrEmpty(keyTxt))
+                    {
+                        _listbox.ItemsSource = NewSystemFourthLevelMenuList;
+                    }
+                });
+            }
+        }
         /// <summary>
         /// 单击“删除”某个显示插件
         /// </summary>
