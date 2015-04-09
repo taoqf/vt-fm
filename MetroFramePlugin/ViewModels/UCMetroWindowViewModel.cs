@@ -1015,6 +1015,7 @@ MessageBoxImage.Question);
         private UserControl area;//当前用户控件
         private Canvas _panel;//主区域面板
         private ListBox _listbox;//弹窗展示菜单列表
+        private VicButtonNormal _allSelectBtn;//弹窗"全选"
         private string menuPath;//文件路径
         private string selectAreaId;//保存当前选中的要添加应用的区域
         /// <summary>添加应用弹框菜单列表 </summary>
@@ -1131,7 +1132,8 @@ MessageBoxImage.Question);
                     isFirstLoad = false;
                     area = (UserControl)x;
                     _panel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
-                    _listbox = area.FindName("listBoxPopupMenuList") as ListBox;
+                    _listbox = area.FindName("listBoxPopupMenuList") as ListBox;//找到“添加应用中的菜单列表”
+                    _allSelectBtn = area.FindName("btnAllSelect") as VicButtonNormal;//找到添加应用弹窗“全部选中按钮”
                     DrawingPanelArea();//读文件并渲染区域
 
                 });
@@ -1249,7 +1251,8 @@ MessageBoxImage.Question);
             get
             {
                 return new RelayCommand<object>((x) =>
-                {
+                    {
+                    _allSelectBtn.Content = "全部选中";//每次打开弹框，全选按钮名称统一
                     _listbox.SelectedItems.Clear();//每次打开弹框，去掉之前所选的
                     VicRadioButtonNormal btn = (VicRadioButtonNormal)x;
                     DockPanel parentPanel = GetParentObject<DockPanel>(btn);
