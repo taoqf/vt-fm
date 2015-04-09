@@ -1703,7 +1703,9 @@ MessageBoxImage.Question);
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).LeftSpan = Canvas.GetLeft(newArea);
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).TopSpan = Canvas.GetTop(newArea);
                 WriteFile();
-                DrawingPanelArea();
+                isOverRender = false;
+                OverRideDrawingPanelArea(newArea);
+                ThumbCanvas(newArea);
             }
         }
 
@@ -1957,6 +1959,11 @@ MessageBoxImage.Question);
                     {
                         _title.ParamsModel.DeblockingState = Visibility.Collapsed;
                         _title.ParamsModel.LockingState = Visibility.Visible;
+
+                    }
+                    else
+                    {
+                        _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
                     }
                     DockPanel.SetDock(_title, Dock.Top);
                     _title.ParamsModel.BtnDeblockingClick += BtnClick;

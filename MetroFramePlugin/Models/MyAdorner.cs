@@ -26,7 +26,7 @@ namespace MetroFramePlugin.Models
         const double MINIMAL_SIZE = 10;
         const double MOVE_OFFSET = 10;
         Thumb tl, tr, bl, br, ct, cl, cr, cb;
-        Thumb mov;
+        //Thumb mov;
         VisualCollection visCollec;
         FrameworkElement mDraggedElement = null;
 
@@ -59,7 +59,7 @@ namespace MetroFramePlugin.Models
                 visCollec.Add(cl = GetResizeThumb(Cursors.SizeWE, HorizontalAlignment.Left, VerticalAlignment.Center));
                 visCollec.Add(cr = GetResizeThumb(Cursors.SizeWE, HorizontalAlignment.Right, VerticalAlignment.Center));
                 visCollec.Add(cb = GetResizeThumb(Cursors.SizeNS, HorizontalAlignment.Center, VerticalAlignment.Bottom));
-                visCollec.Add(mov = GetMoveThumb());
+                //visCollec.Add(mov = GetMoveThumb());
             }  
         }
 
@@ -99,7 +99,7 @@ namespace MetroFramePlugin.Models
                 cl.Arrange(new Rect(new Point(-offset, (AdornedElement.RenderSize.Height - 2 * offset) / 2), sz));
                 cb.Arrange(new Rect(new Point((AdornedElement.RenderSize.Width - 2 * offset) / 2, AdornedElement.RenderSize.Height - offset), sz));
                 cr.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width - offset, (AdornedElement.RenderSize.Height - 2 * offset) / 2), sz));
-                mov.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width / 2 - THUMB_SIZE / 2, -MOVE_OFFSET), sz));
+                //mov.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width / 2 - THUMB_SIZE / 2, -MOVE_OFFSET), sz));
             }
            
             return finalSize;
