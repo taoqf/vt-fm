@@ -1267,9 +1267,23 @@ MessageBoxImage.Question);
         {
             get
             {
-                return new RelayCommand(() =>
-                {
-                    _listbox.SelectAll();
+                return new RelayCommand<object>((x) =>
+                    {
+                        VicButtonNormal btn = (VicButtonNormal) x;
+                        if (btn.Content.ToString() == "全部选中")
+                        {
+                            _listbox.SelectAll();
+                            btn.Content = "取消全选";
+                            
+                        }
+
+                        else
+                        {
+                            _listbox.SelectedItem = null;
+                            btn.Content = "全部选中";
+                           
+                        }
+                    
                 });
             }
         }
@@ -1470,7 +1484,6 @@ MessageBoxImage.Question);
                 _title.VerticalContentAlignment = VerticalAlignment.Center;
                 _title.HorizontalContentAlignment = HorizontalAlignment.Center;
                 _title.Background = Brushes.Gainsboro;
-
                 ListBox menuListArea = new ListBox();
                 menuListArea.Style = area.FindResource("PanelStyle") as Style;
                 WrapPanel pluginPanel = new WrapPanel();
@@ -1862,7 +1875,7 @@ MessageBoxImage.Question);
             //删除区域 
             if (res.Equals("DeleteArea"))
             {
-                if (VicMessageBoxNormal.Show("确定要删除当前区域吗？", "消息提示框", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (VicMessageBoxNormal.Show("确定要删除当前区域吗？删除后，区域中的应用也将同时删除！", "消息提示框", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     AreaMenu area = new AreaMenu();
                     area = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));

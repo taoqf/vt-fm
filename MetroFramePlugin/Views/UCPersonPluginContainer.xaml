@@ -643,14 +643,12 @@
                     <!--主界面第三行-->
                     <controls:VicStackPanelNormal Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
                         <!--确认按钮-->
-                        <controls:VicButtonNormal x:Name="btnAllSelect"  Content="全选" Width="75" Margin="2.5,5" Height="30" Command="{Binding btnAllSelectClickCommand}" CommandParameter="{Binding ElementName=tboxDesSuggest}">
-                        </controls:VicButtonNormal>
+                        <controls:VicButtonNormal x:Name="btnAllSelect"  Content="全部选中" Width="75" Margin="2.5,5" Height="30" Command="{Binding btnAllSelectClickCommand}" CommandParameter="{Binding ElementName=btnAllSelect}"/>
+                        
                         <!--确认按钮-->
-                        <controls:VicButtonNormal x:Name="btnIssueAffirm"  Content="确定" Width="75" Margin="2.5,5" Height="30" Command="{Binding btnAffirmClickCommand}" CommandParameter="{Binding ElementName=tboxDesSuggest}">
-                        </controls:VicButtonNormal>
+                        <controls:VicButtonNormal x:Name="btnIssueAffirm"  Content="确定" Width="75" Margin="2.5,5" Height="30" Command="{Binding btnAffirmClickCommand}"/>
                         <!--取消按钮-->
-                        <controls:VicButtonNormal x:Name="btnIssueCancel" Content="取消" Width="75" Margin="2.5,5" Height="30" Command="{Binding btnAddApplyCloseClickCommand}">
-                        </controls:VicButtonNormal>
+                        <controls:VicButtonNormal x:Name="btnIssueCancel" Content="取消" Width="75" Margin="2.5,5" Height="30" Command="{Binding btnAddApplyCloseClickCommand}"/>
                     </controls:VicStackPanelNormal>
                 </controls:VicGridNormal>
             </Border>
