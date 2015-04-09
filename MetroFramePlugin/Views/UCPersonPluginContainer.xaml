@@ -559,23 +559,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="PanelStyle"  TargetType="{x:Type ListBox}">
-            <Setter Property="Background" Value="WhiteSmoke"/>
-            <Setter Property="Template">
-            <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBox}">
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
-                            <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True" />
-                        </ScrollViewer>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="WhiteSmoke"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+      
     </UserControl.Resources>
     <Grid>
         <AdornerDecorator>
