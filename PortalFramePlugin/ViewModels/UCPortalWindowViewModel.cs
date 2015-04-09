@@ -850,15 +850,15 @@ namespace PortalFramePlugin.ViewModels
         /// </summary>
         private void OpenJsonMenuPlugin(MenuModel selectedFourthMenu)
         {
-            MenuRoleAuth roleAuth = selectedFourthMenu.RoleAuthList.FirstOrDefault(it => it.Role_No.Equals(UserRole));
-            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
-            {
-                if (roleAuth == null)
-                {
-                    VicMessageBoxNormal.Show("当前角色无启动此功能的权限");
-                    return;
-                }
-            }
+            //MenuRoleAuth roleAuth = selectedFourthMenu.RoleAuthList.FirstOrDefault(it => it.Role_No.Equals(UserRole));
+            //if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+            //{
+            //    if (roleAuth == null)
+            //    {
+            //        VicMessageBoxNormal.Show("当前角色无启动此功能的权限");
+            //        return;
+            //    }
+            //}
             if (TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)) != null)
             {
                 TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)).IsSelected = true;
@@ -876,7 +876,7 @@ namespace PortalFramePlugin.ViewModels
                     paramDic.Add("spaceid", selectedFourthMenu.SpaceId);
                     paramDic.Add("menuno", selectedFourthMenu.MenuNo);
                     paramDic.Add("menucode", selectedFourthMenu.MenuCode);
-                    paramDic.Add("authoritycode", roleAuth != null ? roleAuth.AuthCode : 0);
+                    //paramDic.Add("authoritycode", roleAuth != null ? roleAuth.AuthCode : 0);
                     PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
                     if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                     {
