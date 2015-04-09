@@ -517,7 +517,11 @@ namespace UserLoginPlugin.ViewModels
                     DataSet mastDs = messageOp.GetData(channelId, "[\"pub_product\"]");
                     if (mastDs != null && mastDs.Tables.Contains("dataArray") && mastDs.Tables["dataArray"].Rows.Count > 0)
                     {
-                        LoginInfoModel.ClientNo = mastDs.Tables["dataArray"].Rows[0]["client_no"].ToString();
+                        DataRow[] drs = mastDs.Tables["dataArray"].Select(string.Format("productid='{0}'", LoginInfoModel.ProductId));
+                        if (drs != null && drs.Count() > 0)
+                        {
+                            LoginInfoModel.ClientNo = drs[0]["client_no"].ToString();
+                        }
                     }
                 }
             }
