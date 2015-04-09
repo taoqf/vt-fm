@@ -5,17 +5,18 @@
         xmlns:vm="clr-namespace:MetroUserLoginPlugin.ViewModels"
         xmlns:views="clr-namespace:MetroUserLoginPlugin.Views"
         xmlns:helpers="clr-namespace:MetroUserLoginPlugin.Helpers"
+        xmlns:convert="clr-namespace:MetroUserLoginPlugin.Converts"
         Name="winUserLogin"
-        WindowStyle="None" Background="DodgerBlue"  Width="800" Height="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-    </Window.Resources>
-    <Grid x:Name="gridRoot" Width="600" Height="400" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <!--<Image Source="\userLogin.jpg"/>-->
+        WindowStyle="None"   Width="800" Height="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+  <Grid>
+     <Image Source="F:\VictopTeach\victopFramework\MetroUserLoginPlugin\userLogin.jpg"/>
+    <Grid x:Name="gridRoot" Width="500" Height="370" HorizontalAlignment="Center" VerticalAlignment="Center">
+      
         <Grid.DataContext>
             <vm:UserLoginViewModel/>
         </Grid.DataContext>
         <views:UCUserLogin x:Name="FrontGD"/>
         <views:UCSystemConfig x:Name="BackGD" Visibility="Collapsed"/>
-
+        </Grid>
     </Grid>
 </Window>

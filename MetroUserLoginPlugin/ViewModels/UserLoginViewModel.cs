@@ -165,7 +165,16 @@ namespace MetroUserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    VisualStateManager.GoToState(LoginWindow, "SecondPage", true);
+                    try
+                    {
+                        VisualStateManager.GoToState(LoginWindow, "SecondPage", true);
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                        MessageBox.Show(ex.ToString());
+                    }
+                  
                 });
             }
         }
@@ -400,5 +409,55 @@ namespace MetroUserLoginPlugin.ViewModels
         #endregion
 
         #endregion
+
+
+        //20150407设计新样式
+        /// <summary>
+        /// 添加应用弹窗是否显示
+        /// </summary>
+        private bool popupIsShow;
+        public bool PopupIsShow
+        {
+            get
+            {
+                return popupIsShow;
+            }
+            set
+            {
+                if (popupIsShow != value)
+                {
+                    popupIsShow = value;
+                    RaisePropertyChanged("PopupIsShow");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 单击“高级设置”命令
+        ///  </summary>
+        public ICommand btnAdvancedSetsClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                    {
+                        PopupIsShow = true;
+                    });
+            }
+        }
+        
+            /// <summary>
+        /// 单击“高级设置”命令
+        ///  </summary>
+        public ICommand popupBtnCloseClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                    {
+                        PopupIsShow = false;
+                    });
+            }
+        }
     }
 }
