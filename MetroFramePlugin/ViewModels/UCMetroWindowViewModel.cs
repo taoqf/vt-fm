@@ -1935,13 +1935,7 @@ MessageBoxImage.Question);
             if (res.Equals("btnDeblocking"))//单击解锁图标
             {
                 isOverRender = true;
-                //添加拖动事件
-                WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(areaParent.Parent as DockPanel, (areaParent.Parent as DockPanel).Uid);
-                if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
-                {
-                    ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                    pluginArea.PreviewMouseMove += menuList_PreviewMouseMove;
-                }
+                
                 areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
                 areaParent.ParamsModel.LockingState = Visibility.Visible;
                 //重绘，去拖动
@@ -1953,7 +1947,13 @@ MessageBoxImage.Question);
                 isOverRender = false;
                 areaParent.ParamsModel.DeblockingState = Visibility.Visible;
                 areaParent.ParamsModel.LockingState = Visibility.Collapsed;
-                //加上拖动
+                //添加拖动事件
+                WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(areaParent.Parent as DockPanel, (areaParent.Parent as DockPanel).Uid);
+                if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
+                {
+                    ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                    pluginArea.PreviewMouseMove += menuList_PreviewMouseMove;
+                }
                 areaParent.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
                 ThumbCanvas(areaParent.Parent as DockPanel, false);
             }
@@ -2012,7 +2012,6 @@ MessageBoxImage.Question);
                     {
                         _title.ParamsModel.DeblockingState = Visibility.Collapsed;
                         _title.ParamsModel.LockingState = Visibility.Visible;
-
                     }
                     else
                     {
