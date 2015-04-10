@@ -1418,6 +1418,7 @@ MessageBoxImage.Question);
                     _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                     _title.ParamsModel.TitleWidth = _areaMenu.AreaWidth;
                     _title.ParamsModel.AreaName = _areaMenu.AreaName;
+                    _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
                     _title.VerticalContentAlignment = VerticalAlignment.Center;
                     _title.HorizontalContentAlignment = HorizontalAlignment.Center;
                     _title.Background = Brushes.Gainsboro;
@@ -1567,10 +1568,10 @@ MessageBoxImage.Question);
         private void ThumbDragMove(object sender, DragDeltaEventArgs e)
         {
             DockPanel parentPanel = GetParentObject<DockPanel>(sender as Thumb);
-           
             if (!isOverRender)
             {
-                Canvas.SetLeft(parentPanel, Canvas.GetLeft(parentPanel) + e.HorizontalChange);
+                //Canvas.SetLeft(parentPanel, Canvas.GetLeft(parentPanel) + e.HorizontalChange);
+                //Canvas.SetTop(parentPanel, Canvas.GetTop(parentPanel) + e.VerticalChange);
                 if (Canvas.GetLeft(parentPanel) + e.HorizontalChange < 0)
                 {
                     Canvas.SetLeft(parentPanel, 5);
@@ -1753,14 +1754,17 @@ MessageBoxImage.Question);
             DockPanel newArea = sender as DockPanel;
             if (newArea != null)
             {
+                UnitAreaSeting UnitArea = GetChildObject<UnitAreaSeting>(newArea, newArea.Uid);
+                UnitArea.Width = newArea.ActualWidth;
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaWidth = newArea.ActualWidth;
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaHeight = newArea.ActualHeight;
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).LeftSpan = Canvas.GetLeft(newArea);
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).TopSpan = Canvas.GetTop(newArea);
                 WriteFile();
-                isOverRender = false;
-                OverRideDrawingPanelArea(newArea);
-                ThumbCanvas(newArea);
+                //newArea.UpdateLayout();
+                //isOverRender = false;
+                //OverRideDrawingPanelArea(newArea);
+                DrawingPanelArea();
             }
         }
 
@@ -2078,7 +2082,8 @@ MessageBoxImage.Question);
                     Canvas.SetTop(_newPanel, NewArea[i].TopSpan);
                     _panel.Children.Add(_newPanel);
                     _panel.Children.Remove(dockPanel);
-                    break;
+                                     
+                     break;
                 }
             }
         }
