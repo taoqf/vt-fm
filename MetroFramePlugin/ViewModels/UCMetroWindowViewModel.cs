@@ -1015,6 +1015,7 @@ MessageBoxImage.Question);
         private UserControl area;//当前用户控件
         private Canvas _panel;//主区域面板
         private ListBox _listbox;//弹窗展示菜单列表
+        private VicButtonNormal _allSelectBtn;//弹窗"全选"
         private string menuPath;//文件路径
         private string selectAreaId;//保存当前选中的要添加应用的区域
         /// <summary>添加应用弹框菜单列表 </summary>
@@ -1131,7 +1132,8 @@ MessageBoxImage.Question);
                     isFirstLoad = false;
                     area = (UserControl)x;
                     _panel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
-                    _listbox = area.FindName("listBoxPopupMenuList") as ListBox;
+                    _listbox = area.FindName("listBoxPopupMenuList") as ListBox;//找到“添加应用中的菜单列表”
+                    _allSelectBtn = area.FindName("btnAllSelect") as VicButtonNormal;//找到添加应用弹窗“全部选中按钮”
                     DrawingPanelArea();//读文件并渲染区域
 
                 });
@@ -1166,6 +1168,7 @@ MessageBoxImage.Question);
             {
                 return new RelayCommand<object>((x) =>
                 {
+                    SeachedFourthLevelMenuList.Clear();//调试出来的：必须清空，不然再次搜索重现
                     VicTextBoxSeach aa = (VicTextBoxSeach)x;
                     string keyTxt = aa.VicText.ToString();
                     if (!string.IsNullOrEmpty(keyTxt))
@@ -1183,7 +1186,26 @@ MessageBoxImage.Question);
                 });
             }
         }
-
+        
+        /// <summary>
+        /// 根据搜索框清空,实现弹窗列表四级菜单展示
+        ///  </summary>
+        public ICommand VicTextBoxClearClickCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                   
+                    VicTextBoxSeach aa = (VicTextBoxSeach)x;
+                    string keyTxt = aa.VicText.ToString();
+                    if (string.IsNullOrEmpty(keyTxt))
+                    {
+                        _listbox.ItemsSource = NewSystemFourthLevelMenuList;
+                    }
+                });
+            }
+        }
         /// <summary>
         /// 单击“删除”某个显示插件
         /// </summary>
@@ -1229,7 +1251,8 @@ MessageBoxImage.Question);
             get
             {
                 return new RelayCommand<object>((x) =>
-                {
+                    {
+                    _allSelectBtn.Content = "全部选中";//每次打开弹框，全选按钮名称统一
                     _listbox.SelectedItems.Clear();//每次打开弹框，去掉之前所选的
                     VicRadioButtonNormal btn = (VicRadioButtonNormal)x;
                     DockPanel parentPanel = GetParentObject<DockPanel>(btn);
@@ -1247,9 +1270,23 @@ MessageBoxImage.Question);
         {
             get
             {
-                return new RelayCommand(() =>
-                {
-                    _listbox.SelectAll();
+                return new RelayCommand<object>((x) =>
+                    {
+                        VicButtonNormal btn = (VicButtonNormal) x;
+                        if (btn.Content.ToString() == "全部选中")
+                        {
+                            _listbox.SelectAll();
+                            btn.Content = "取消全选";
+                            
+                        }
+
+                        else
+                        {
+                            _listbox.SelectedItem = null;
+                            btn.Content = "全部选中";
+                           
+                        }
+                    
                 });
             }
         }
@@ -1381,9 +1418,11 @@ MessageBoxImage.Question);
                     _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                     _title.ParamsModel.TitleWidth = _areaMenu.AreaWidth;
                     _title.ParamsModel.AreaName = _areaMenu.AreaName;
+                    _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
                     _title.VerticalContentAlignment = VerticalAlignment.Center;
                     _title.HorizontalContentAlignment = HorizontalAlignment.Center;
                     _title.Background = Brushes.Gainsboro;
+
 
                     ListBox menuList = new ListBox();
                     menuList.Background = Brushes.WhiteSmoke;
@@ -1420,13 +1459,10 @@ MessageBoxImage.Question);
         #region  方法&事件
 
         /// <summary>
-        ///  渲染区域方法
+        /// 读取myMenu.json文件
         /// </summary>
-        private void DrawingPanelArea()
+        void ReadMenuJsonFile()
         {
-            NewArea.Clear();
-            _panel.Children.Clear();
-            //读取myMenu.json文件并展示
             string areaMenuList = string.Empty;
             menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";
             if (File.Exists(menuPath))
@@ -1434,6 +1470,18 @@ MessageBoxImage.Question);
                 areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("UTF-8"));
             }
             this.NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
+        }
+
+
+        /// <summary>
+        ///  渲染区域方法
+        /// </summary>
+        private void DrawingPanelArea()
+        {
+            NewArea.Clear();
+            _panel.Children.Clear();
+            ReadMenuJsonFile();
+           
 
             for (int i = 0; i < NewArea.Count; i++)
             {
@@ -1450,10 +1498,11 @@ MessageBoxImage.Question);
                 _title.VerticalContentAlignment = VerticalAlignment.Center;
                 _title.HorizontalContentAlignment = HorizontalAlignment.Center;
                 _title.Background = Brushes.Gainsboro;
-
-                ListBox menuListArea = new ListBox();
-                menuListArea.Style = area.FindResource("PanelStyle") as Style;
+                //ListBox menuListArea = new ListBox();
+                //menuListArea.Style = area.FindResource("PanelStyle") as Style;
+              
                 WrapPanel pluginPanel = new WrapPanel();
+                pluginPanel.Background = Brushes.WhiteSmoke;
                 pluginPanel.Uid = NewArea[i].AreaID;
                 pluginPanel.Orientation = Orientation.Horizontal;
                 ListBox addapplyStyle = new ListBox();
@@ -1476,6 +1525,7 @@ MessageBoxImage.Question);
                 if (NewArea[i].PluginList.Count != 0)
                 {
                     ListBox pluginlist = new ListBox();
+                  //  pluginlist.MouseDown += menuListArea_MouseDown;
                     pluginlist.PreviewMouseMove += menuList_PreviewMouseMove;
                     pluginlist.Drop += menuList_Drop;
                     pluginlist.ItemsSource = NewArea[i].PluginList;
@@ -1491,17 +1541,17 @@ MessageBoxImage.Question);
                     {
                         pluginlist.Style = mainWindow.FindResource("SmallListBoxFourthMenuListStyle") as Style;
                     }
-                    pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);
+                    pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);//一个WrapPanel里添加了两个ListBox
                 }
 
-                menuListArea.Items.Add(pluginPanel);//一个ListBox中添加了一个wrapPanel,一个ListBox
+             //   menuListArea.Items.Add(pluginPanel);//一个ListBox中添加了一个WrapPanel,wrapPanel里添加了两个ListBox
 
                 DockPanel _newPanel = new DockPanel();
                 _newPanel.Uid = NewArea[i].AreaID;
                 _newPanel.Width = NewArea[i].AreaWidth;
                 _newPanel.Height = NewArea[i].AreaHeight;
                 _newPanel.Children.Add(_title);
-                _newPanel.Children.Add(menuListArea);
+                _newPanel.Children.Add(pluginPanel);//一个DockPanel里添加了一个UnitAreaSeting和一个WrapPanel
                 Canvas.SetLeft(_newPanel, NewArea[i].LeftSpan);
                 Canvas.SetTop(_newPanel, NewArea[i].TopSpan);
                 _panel.Children.Add(_newPanel);
@@ -1509,13 +1559,19 @@ MessageBoxImage.Question);
             ThumbCanvas();
         }
 
+        void menuListArea_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ListBox NowPluginPanel = sender as ListBox;
+            NowPluginPanel.SelectedItem = null;
+        }
+
         private void ThumbDragMove(object sender, DragDeltaEventArgs e)
         {
             DockPanel parentPanel = GetParentObject<DockPanel>(sender as Thumb);
-           
             if (!isOverRender)
             {
-                Canvas.SetLeft(parentPanel, Canvas.GetLeft(parentPanel) + e.HorizontalChange);
+                //Canvas.SetLeft(parentPanel, Canvas.GetLeft(parentPanel) + e.HorizontalChange);
+                //Canvas.SetTop(parentPanel, Canvas.GetTop(parentPanel) + e.VerticalChange);
                 if (Canvas.GetLeft(parentPanel) + e.HorizontalChange < 0)
                 {
                     Canvas.SetLeft(parentPanel, 5);
@@ -1698,11 +1754,16 @@ MessageBoxImage.Question);
             DockPanel newArea = sender as DockPanel;
             if (newArea != null)
             {
+                UnitAreaSeting UnitArea = GetChildObject<UnitAreaSeting>(newArea, newArea.Uid);
+                UnitArea.Width = newArea.ActualWidth;
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaWidth = newArea.ActualWidth;
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaHeight = newArea.ActualHeight;
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).LeftSpan = Canvas.GetLeft(newArea);
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).TopSpan = Canvas.GetTop(newArea);
                 WriteFile();
+                //newArea.UpdateLayout();
+                //isOverRender = false;
+                //OverRideDrawingPanelArea(newArea);
                 DrawingPanelArea();
             }
         }
@@ -1840,7 +1901,7 @@ MessageBoxImage.Question);
             //删除区域 
             if (res.Equals("DeleteArea"))
             {
-                if (VicMessageBoxNormal.Show("确定要删除当前区域吗？", "消息提示框", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (VicMessageBoxNormal.Show("确定要删除当前区域吗？删除后，区域中的应用也将同时删除！", "消息提示框", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     AreaMenu area = new AreaMenu();
                     area = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
@@ -1874,13 +1935,7 @@ MessageBoxImage.Question);
             if (res.Equals("btnDeblocking"))//单击解锁图标
             {
                 isOverRender = true;
-                //添加拖动事件
-                WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(areaParent.Parent as DockPanel, (areaParent.Parent as DockPanel).Uid);
-                if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
-                {
-                    ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                    pluginArea.PreviewMouseMove += menuList_PreviewMouseMove;
-                }
+                
                 areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
                 areaParent.ParamsModel.LockingState = Visibility.Visible;
                 //重绘，去拖动
@@ -1892,7 +1947,13 @@ MessageBoxImage.Question);
                 isOverRender = false;
                 areaParent.ParamsModel.DeblockingState = Visibility.Visible;
                 areaParent.ParamsModel.LockingState = Visibility.Collapsed;
-                //加上拖动
+                //添加拖动事件
+                WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(areaParent.Parent as DockPanel, (areaParent.Parent as DockPanel).Uid);
+                if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
+                {
+                    ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                    pluginArea.PreviewMouseMove += menuList_PreviewMouseMove;
+                }
                 areaParent.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
                 ThumbCanvas(areaParent.Parent as DockPanel, false);
             }
@@ -1936,15 +1997,9 @@ MessageBoxImage.Question);
         /// </summary>
         private void OverRideDrawingPanelArea(UIElement dockPanel)
         {
-            //读取myMenu.json文件并展示
-            string areaMenuList = string.Empty;
-            menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";
-            if (File.Exists(menuPath))
-            {
-                areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("UTF-8"));
-            }
-            this.NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
 
+            ReadMenuJsonFile();
+            //展示myMenu.json文件
             for (int i = 0; i < NewArea.Count; i++)
             {
                 if (NewArea[i].AreaID == dockPanel.Uid)
@@ -1958,6 +2013,10 @@ MessageBoxImage.Question);
                         _title.ParamsModel.DeblockingState = Visibility.Collapsed;
                         _title.ParamsModel.LockingState = Visibility.Visible;
                     }
+                    else
+                    {
+                        _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
+                    }
                     DockPanel.SetDock(_title, Dock.Top);
                     _title.ParamsModel.BtnDeblockingClick += BtnClick;
                     _title.MenuItemIcoClick += MenuItemClick;
@@ -1967,9 +2026,10 @@ MessageBoxImage.Question);
                     _title.HorizontalContentAlignment = HorizontalAlignment.Center;
                     _title.Background = Brushes.Gainsboro;
 
-                    ListBox menuListArea = new ListBox();
-                    menuListArea.Style = area.FindResource("PanelStyle") as Style;
+                    //ListBox menuListArea = new ListBox();
+                    //menuListArea.Style = area.FindResource("PanelStyle") as Style;
                     WrapPanel pluginPanel = new WrapPanel();
+                    pluginPanel.Background = Brushes.WhiteSmoke;
                     pluginPanel.Uid = NewArea[i].AreaID;
                     pluginPanel.Orientation = Orientation.Horizontal;
                     ListBox addapplyStyle = new ListBox();
@@ -1993,6 +2053,10 @@ MessageBoxImage.Question);
                     {
                         ListBox pluginlist = new ListBox();
                         pluginlist.Drop += menuList_Drop;
+                        if (!isOverRender)
+                        {
+                            pluginlist.PreviewMouseMove += menuList_PreviewMouseMove;
+                        }
                         pluginlist.ItemsSource = NewArea[i].PluginList;
                         if (NewArea[i].MenuForm == "normal")
                         {
@@ -2006,25 +2070,28 @@ MessageBoxImage.Question);
                         {
                             pluginlist.Style = mainWindow.FindResource("SmallListBoxFourthMenuListStyle") as Style;
                         }
-                        pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);
+                        pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);//一个WrapPanel里添加了两个ListBox
                     }
 
-                    menuListArea.Items.Add(pluginPanel);//一个ListBox中添加了一个wrapPanel,一个ListBox
+                    // menuListArea.Items.Add(pluginPanel);//一个ListBox中添加了一个wrapPanel一个wrapPanel里添加了两个ListBox
 
                     DockPanel _newPanel = new DockPanel();
                     _newPanel.Uid = NewArea[i].AreaID;
                     _newPanel.Width = NewArea[i].AreaWidth;
                     _newPanel.Height = NewArea[i].AreaHeight;
                     _newPanel.Children.Add(_title);
-                    _newPanel.Children.Add(menuListArea);
+                    _newPanel.Children.Add(pluginPanel);//一个DockPanel里添加了一个UnitAreaSeting和一个WrapPanel
                     Canvas.SetLeft(_newPanel, NewArea[i].LeftSpan);
                     Canvas.SetTop(_newPanel, NewArea[i].TopSpan);
                     _panel.Children.Add(_newPanel);
                     _panel.Children.Remove(dockPanel);
-                    break;
+                                     
+                     break;
                 }
             }
         }
+
+        
         #endregion
 
         #endregion
