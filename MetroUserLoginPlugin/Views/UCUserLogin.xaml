@@ -63,14 +63,13 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid  Grid.Row="0"  HorizontalAlignment="Center" VerticalAlignment="top" Width="100">
-                        <StackPanel Width="60" Height="80">
-                            <Ellipse Fill="{DynamicResource SkinColor}" Width="30" Height="30"/>
-                            <Ellipse Fill="{DynamicResource SkinColor}" Margin="0,3,0,0" Height="60" Width="40"/>
-                    </StackPanel>
-                <Border BorderThickness="1" CornerRadius="15" Background="White"  Margin="3">
-                    <Image Source="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}"  Stretch="UniformToFill"/>
-                </Border>
+            <Grid  Grid.Row="0"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" >
+                <StackPanel Width="60" Height="80">
+                    <Ellipse Fill="{DynamicResource SkinColor}" Width="30" Height="30"/>
+                    <Ellipse Fill="{DynamicResource SkinColor}" Margin="0,3,0,0" Height="100" Width="60"/>
+                </StackPanel>
+                <!--<Image Source="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}"  Stretch="UniformToFill"/>-->
+                <controls:VicImageNormal ImgSource="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}"></controls:VicImageNormal>
             </Grid>
             <Grid Grid.Row="1" Margin="10">
                 <Grid.ColumnDefinitions>
@@ -94,14 +93,14 @@
                 </controls:VicPasswordBoxKeyNormal>
             </Grid>
             <TextBlock Grid.Row="2" Padding="5,0,0,0" HorizontalAlignment="Left" Name="ErrLabel"  Text="{Binding ErrMsg}" Foreground="Red" Height="22"/>
-            <Border Grid.Row="2" HorizontalAlignment="Center" BorderBrush="#024672" BorderThickness="0">
+            <Border Grid.Row="2" HorizontalAlignment="Center"  BorderThickness="0" Margin="174,0,146,0">
                 <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
-                    <controls:VicButtonNormal  x:Name="btnLogin"  Style="{DynamicResource LoginButtonStyle}" Background="LightSkyBlue" Width="100" Content="{DynamicResource L_R_89}" Command="{Binding btnLoginClickCommand}" TabIndex="5" />
-                    <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Background="LightSkyBlue" Width="100" Content="取消" IsCancel="True"  Command="{Binding btnCancelClickCommand}"/>
+                    <controls:VicButtonNormal  x:Name="btnLogin"  Style="{DynamicResource LoginButtonStyle}" Background="LightSkyBlue" Width="80" Content="{DynamicResource L_R_89}" Command="{Binding btnLoginClickCommand}" TabIndex="5" />
+                    <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Background="LightSkyBlue" Width="80" Content="取消" IsCancel="True"  Command="{Binding btnCancelClickCommand}"/>
                 </StackPanel>
             </Border>
             <StackPanel Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <controls:VicButtonNormal Name="setbtn" Style="{DynamicResource iconbtnStyle}"  FocusVisualStyle="{x:Null}" Content="&#xE652;"   Width="20"  Height="25" Command="{Binding btnAdvancedSetsClickCommand}"/>
+                <controls:VicButtonNormal Name="setbtn" Style="{DynamicResource IconBtnStyle}"  FocusVisualStyle="{x:Null}" Content="&#xE652;"   Width="20"  Height="25" Command="{Binding btnAdvancedSetsClickCommand}"/>
                 <Label Content="高级设置"  FontSize="10" FontFamily="SimSun"  VerticalContentAlignment="Center"/>
             </StackPanel>
             <controls:VicPopup Margin="0,10,0,0"   StaysOpen="True" PlacementTarget="{Binding ElementName=setbtn}" Placement="Right" IsOpen="{Binding PopupIsShow,UpdateSourceTrigger=PropertyChanged}">
