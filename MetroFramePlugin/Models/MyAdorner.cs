@@ -26,7 +26,6 @@ namespace MetroFramePlugin.Models
         const double MINIMAL_SIZE = 10;
         const double MOVE_OFFSET = 10;
         Thumb tl, tr, bl, br, ct, cl, cr, cb;
-        //Thumb mov;
         VisualCollection visCollec;
         FrameworkElement mDraggedElement = null;
 
@@ -45,9 +44,7 @@ namespace MetroFramePlugin.Models
         #endregion
 
         public MyCanvasAdorner(UIElement adorned, bool flag) : base(adorned)
-        {
-            //画框架 
-            
+        {           
             if (flag)
             {
                 visCollec = new VisualCollection(this);
@@ -59,7 +56,6 @@ namespace MetroFramePlugin.Models
                 visCollec.Add(cl = GetResizeThumb(Cursors.SizeWE, HorizontalAlignment.Left, VerticalAlignment.Center));
                 visCollec.Add(cr = GetResizeThumb(Cursors.SizeWE, HorizontalAlignment.Right, VerticalAlignment.Center));
                 visCollec.Add(cb = GetResizeThumb(Cursors.SizeNS, HorizontalAlignment.Center, VerticalAlignment.Bottom));
-                //visCollec.Add(mov = GetMoveThumb());
             }  
         }
 
@@ -99,7 +95,6 @@ namespace MetroFramePlugin.Models
                 cl.Arrange(new Rect(new Point(-offset, (AdornedElement.RenderSize.Height - 2 * offset) / 2), sz));
                 cb.Arrange(new Rect(new Point((AdornedElement.RenderSize.Width - 2 * offset) / 2, AdornedElement.RenderSize.Height - offset), sz));
                 cr.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width - offset, (AdornedElement.RenderSize.Height - 2 * offset) / 2), sz));
-                //mov.Arrange(new Rect(new Point(AdornedElement.RenderSize.Width / 2 - THUMB_SIZE / 2, -MOVE_OFFSET), sz));
             }
            
             return finalSize;
@@ -107,14 +102,7 @@ namespace MetroFramePlugin.Models
 
         private void Resize(FrameworkElement ff)
         {
-            if (Canvas.GetLeft(ff) < 0)
-            {
-                Canvas.SetLeft(ff, 5);
-            }
-            if (Canvas.GetTop(ff) < 0)
-            {
-                Canvas.SetTop(ff, 5);
-            }
+        
             if (Double.IsNaN(ff.Width))
             {
                 if (ff.RenderSize.Width > (ff.Parent as Canvas).ActualWidth)
@@ -147,7 +135,6 @@ namespace MetroFramePlugin.Models
                     else ff.Height = ff.RenderSize.Height;
                 }
             }
-                
             ff.MouseLeave += ff_MouseMove;
         }
 
@@ -159,48 +146,7 @@ namespace MetroFramePlugin.Models
             }
         }
 
-        private Thumb GetMoveThumb()
-        {
-            var thumb = new Thumb()
-            {
-                Width = THUMB_SIZE,
-                Height = THUMB_SIZE,
-                Cursor = Cursors.SizeAll,
-                Template = new ControlTemplate(typeof(Thumb))
-                {
-                    VisualTree = GetFactory(GetMoveEllipseBack())
-                }
-            };
-            thumb.DragDelta += (s, e) =>
-            {
-                var element = AdornedElement as FrameworkElement;
-                if (element == null)
-                    return;
-                if (Canvas.GetLeft(element) + e.HorizontalChange < 0)
-                {
-                    Canvas.SetLeft(element, 5);
-                }
-                else
-                {
-                    if (Canvas.GetLeft(element) + element.ActualWidth > (element.Parent as Canvas).ActualWidth)
-                    {
-                        Canvas.SetLeft(element, (element.Parent as Canvas).ActualWidth - element.ActualWidth);
-                    }
-                    else Canvas.SetLeft(element, Canvas.GetLeft(element) + e.HorizontalChange);
-                }
-                if (Canvas.GetTop(element) + e.VerticalChange < 0)
-                {
-                    Canvas.SetTop(element, 5);
-                }
-                else
-                {
-
-                    Canvas.SetTop(element, Canvas.GetTop(element) + e.VerticalChange);
-                }
-               
-            };
-            return thumb;
-        }
+     
 
         private Thumb GetResizeThumb(Cursor cur, HorizontalAlignment hor, VerticalAlignment ver)
         {

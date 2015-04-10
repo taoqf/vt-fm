@@ -2053,6 +2053,10 @@ MessageBoxImage.Question);
                     {
                         ListBox pluginlist = new ListBox();
                         pluginlist.Drop += menuList_Drop;
+                        if (!isOverRender)
+                        {
+                            pluginlist.PreviewMouseMove += menuList_PreviewMouseMove;
+                        }
                         pluginlist.ItemsSource = NewArea[i].PluginList;
                         if (NewArea[i].MenuForm == "normal")
                         {
