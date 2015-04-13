@@ -303,6 +303,10 @@ namespace MetroUserLoginPlugin.ViewModels
             try
             {
                 LoginWindow.Cursor = Cursors.Wait;
+
+                IsMobilePhone(LoginInfoModel.UserName);//返回是否是输入的电话号码
+                addlist(LoginInfoModel.UserName);//返回是否是输入的邮箱
+
                 Dictionary<string, object> contentDic = new Dictionary<string, object>();
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
@@ -459,5 +463,34 @@ namespace MetroUserLoginPlugin.ViewModels
                     });
             }
         }
+
+
+        #region  添加电子邮件和电话号码登陆方式
+        #region 添加下拉框中的子项
+       //初始化邮箱格式
+        string[] semial = { "@qq.com", "@139.com", "@163.com", "@126.com", "@sohu.com", "@sina.com", "@gmial.com", "@21cn.com", "@hotmial.com", "@yeah.net", "@ifeidao.com" };
+
+        private bool addlist(string input_txt) //input_txt即为输入框内容
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(input_txt, @"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$");
+        }
+
+        #endregion 
+        
+        #region 判断是不是电话号码
+       private bool IsMobilePhone(string input_txt)  //你要校验的电话号码字符串
+        {
+            if (input_txt.Length == 0)
+            {
+                return false;
+            }
+            else if (input_txt.Length != 11)
+            {
+                return false;
+            }
+            return System.Text.RegularExpressions.Regex.IsMatch(input_txt, @"^[1]+[3,4,5,7,8]+\d{9}");
+        }
+        #endregion
+        #endregion
     }
 }

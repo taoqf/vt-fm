@@ -84,7 +84,8 @@
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Orientation="Horizontal" />
                 <Label Grid.Column="1" FontFamily="SimSun" Content="注册账号"  HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="58"/>
                 <Label Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Left" VerticalContentAlignment="Center" FontFamily="SimSun" Content="找回密码" Width="58"/>
-                <controls:VicTextBoxNormal WaterMark="用户名/手机号/飞道邮箱"  Width="190"  Margin="150,0,0,0" VicText="{Binding LoginInfoModel.UserName}"  VerticalContentAlignment="Center" Height="Auto" />
+                <controls:VicTextBoxNormal WaterMark="用户名/手机号/飞道邮箱" Grid.Column="0" Grid.Row="0" Width="190"  Margin="150,0,0,0" VicText="{Binding LoginInfoModel.UserName}"  VerticalContentAlignment="Center" Height="Auto" />
+                <!--<ListBox ></ListBox>-->
                 <controls:VicPasswordBoxKeyNormal  x:Name="pwBox"      
                 	helpers:PasswordBoxBindingHelper.Attach="True" Background="White"  Grid.Column="0" Grid.Row="1" Width="190" Margin="154,2,0,3" >
                     <!--helpers:PasswordBoxBindingHelper.Password=
