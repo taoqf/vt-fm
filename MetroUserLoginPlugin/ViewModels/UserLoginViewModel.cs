@@ -19,6 +19,8 @@ using System.Threading;
 using System.Data;
 using Victop.Wpf.Controls;
 using Victop.Frame.DataMessageManager;
+using System.Text.RegularExpressions;
+using MetroUserLoginPlugin.Enums;
 
 namespace MetroUserLoginPlugin.ViewModels
 {
@@ -303,13 +305,10 @@ namespace MetroUserLoginPlugin.ViewModels
             try
             {
                 LoginWindow.Cursor = Cursors.Wait;
-
-                IsMobilePhone(LoginInfoModel.UserName);//返回是否是输入的电话号码
-                addlist(LoginInfoModel.UserName);//返回是否是输入的邮箱
-
                 Dictionary<string, object> contentDic = new Dictionary<string, object>();
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
+                contentDic.Add("logintypenew", GetUserLoginForm(LoginInfoModel.UserName).ToString());
                 contentDic.Add("spaceId", string.Format("{0}::{1}", LoginInfoModel.ClientId, string.IsNullOrEmpty(LoginInfoModel.ProductId) ? LoginInfoModel.ClientId : LoginInfoModel.ProductId));
                 string MessageType = "LoginService.userLoginNew";
                 DataMessageOperation messageOp = new DataMessageOperation();
@@ -341,6 +340,24 @@ namespace MetroUserLoginPlugin.ViewModels
                 LoginWindow.Cursor = Cursors.Arrow;
             }
         }
+        /// <summary>
+        /// 获取登录方式
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        private LoginFormEnum GetUserLoginForm(string userName)
+        {
+            if (Regex.IsMatch(userName, @"^[1]+[3,4,5,7,8]+\d{9}"))
+            {
+                return LoginFormEnum.phone;
+            }
+            if (Regex.IsMatch(userName, @"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"))
+            {
+                return LoginFormEnum.email;
+            }
+            return LoginFormEnum.usercode;
+        }
+
         /// <summary>检查输入信息</summary>
         private bool CheckUserLogin()
         {

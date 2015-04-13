@@ -87,7 +87,7 @@
                 <controls:VicTextBoxNormal WaterMark="用户名/手机号/飞道邮箱" Grid.Column="0" Grid.Row="0" Width="190"  Margin="150,0,0,0" VicText="{Binding LoginInfoModel.UserName}"  VerticalContentAlignment="Center" Height="Auto" />
                 <!--<ListBox ></ListBox>-->
                 <controls:VicPasswordBoxKeyNormal  x:Name="pwBox"      
-                	helpers:PasswordBoxBindingHelper.Attach="True" Background="White"  Grid.Column="0" Grid.Row="1" Width="190" Margin="154,2,0,3" >
+                	Background="White"  Grid.Column="0" Grid.Row="1" Width="190" Margin="154,2,0,3" Passwordtext="{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <!--helpers:PasswordBoxBindingHelper.Password=
                     "{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             VerticalAlignment="Center"  BorderBrush="{DynamicResource SkinBorderBrush}"  >-->
