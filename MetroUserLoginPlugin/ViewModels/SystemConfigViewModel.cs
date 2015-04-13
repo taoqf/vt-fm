@@ -105,7 +105,7 @@ namespace MetroUserLoginPlugin.ViewModels
                 return new RelayCommand(() =>
                 {
                     SaveSystemConfigInfo();
-                    VisualStateManager.GoToState(mainWindow, "FirstPage", true);
+                    VisualStateManager.GoToState(mainWindow, "FirstPage", false);
                 });
             }
         }
@@ -119,7 +119,7 @@ namespace MetroUserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    VisualStateManager.GoToState(mainWindow, "FirstPage", true);
+                    VisualStateManager.GoToState(mainWindow, "FirstPage", false);
                 });
             }
         }

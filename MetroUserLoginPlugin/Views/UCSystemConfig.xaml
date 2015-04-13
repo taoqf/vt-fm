@@ -8,7 +8,7 @@
              xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              xmlns:convert="clr-namespace:MetroUserLoginPlugin.Converts"
              mc:Ignorable="d" 
-             d:DesignHeight="350" d:DesignWidth="450" Name="ucSystemConfig">
+             d:DesignHeight="370" d:DesignWidth="500" Name="ucSystemConfig">
     <UserControl.Resources>
         <convert:CheckboxBoolConverter x:Key="CheckboxBoolConverter"/>
     </UserControl.Resources>

@@ -69,7 +69,7 @@
                     <Ellipse Fill="{DynamicResource SkinColor}" Margin="0,3,0,0" Height="100" Width="60"/>
                 </StackPanel>
                 <!--<Image Source="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}"  Stretch="UniformToFill"/>-->
-                <controls:VicImageNormal ImgSource="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}"></controls:VicImageNormal>
+                <controls:VicImageNormal Width="95" Height="95" Margin="0,5,0,0" ImgSource="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}"></controls:VicImageNormal>
             </Grid>
             <Grid Grid.Row="1" Margin="10">
                 <Grid.ColumnDefinitions>
@@ -84,7 +84,7 @@
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Orientation="Horizontal" />
                 <Label Grid.Column="1" FontFamily="SimSun" Content="注册账号"  HorizontalAlignment="Left" VerticalContentAlignment="Center" Width="58"/>
                 <Label Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Left" VerticalContentAlignment="Center" FontFamily="SimSun" Content="找回密码" Width="58"/>
-                <controls:VicTextBoxNormal WaterMark="用户名/手机号/飞道邮箱"  Width="190"  Margin="150,0,0,0" Text="{Binding LoginInfoModel.UserName}"  VerticalContentAlignment="Center" Height="Auto" />
+                <controls:VicTextBoxNormal WaterMark="用户名/手机号/飞道邮箱"  Width="190"  Margin="150,0,0,0" VicText="{Binding LoginInfoModel.UserName}"  VerticalContentAlignment="Center" Height="Auto" />
                 <controls:VicPasswordBoxKeyNormal  x:Name="pwBox"      
                 	helpers:PasswordBoxBindingHelper.Attach="True" Background="White"  Grid.Column="0" Grid.Row="1" Width="190" Margin="154,2,0,3" >
                     <!--helpers:PasswordBoxBindingHelper.Password=
@@ -99,9 +99,9 @@
                     <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Background="LightSkyBlue" Width="80" Content="取消" IsCancel="True"  Command="{Binding btnCancelClickCommand}"/>
                 </StackPanel>
             </Border>
-            <StackPanel Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <StackPanel Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,4,0">
                 <controls:VicButtonNormal Name="setbtn" Style="{DynamicResource IconBtnStyle}"  FocusVisualStyle="{x:Null}" Content="&#xE652;"   Width="20"  Height="25" Command="{Binding btnAdvancedSetsClickCommand}"/>
-                <Label Content="高级设置"  FontSize="10" FontFamily="SimSun"  VerticalContentAlignment="Center"/>
+                <Label Content="设定"  FontSize="10" FontFamily="SimSun"  VerticalContentAlignment="Center" />
             </StackPanel>
             <controls:VicPopup Margin="0,10,0,0"   StaysOpen="True" PlacementTarget="{Binding ElementName=setbtn}" Placement="Right" IsOpen="{Binding PopupIsShow,UpdateSourceTrigger=PropertyChanged}">
                 <Border    Width="200" Height="100" BorderBrush="WhiteSmoke" Background="LightSkyBlue" >

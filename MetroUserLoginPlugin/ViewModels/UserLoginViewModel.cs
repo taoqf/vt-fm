@@ -433,7 +433,7 @@ namespace MetroUserLoginPlugin.ViewModels
         }
 
         /// <summary>
-        /// 单击“高级设置”命令
+        /// 单击“设定”命令
         ///  </summary>
         public ICommand btnAdvancedSetsClickCommand
         {
@@ -447,7 +447,7 @@ namespace MetroUserLoginPlugin.ViewModels
         }
         
             /// <summary>
-        /// 单击“高级设置”命令
+        /// 单击“设定”命令
         ///  </summary>
         public ICommand popupBtnCloseClickCommand
         {
