@@ -20,22 +20,22 @@ namespace Victop.Frame.CoreLibrary.Enums
 		/// <summary>
 		/// 丢弃处理
 		/// </summary>
-		CAST,
+		CAST=0,
 		/// <summary>
 		/// 同步处理
 		/// </summary>
-		SYNCH,
+		SYNCH=1,
 		/// <summary>
 		/// 异步处理
 		/// </summary>
-		ASYNC,
+		ASYNC=2,
 		/// <summary>
 		/// 转发处理
 		/// </summary>
-		ROUTER,
+		ROUTER=3,
 		/// <summary>
 		/// 中断阻塞
 		/// </summary>
-		BREAK,
+		BREAK=4,
 	}
 }

@@ -19,6 +19,7 @@ namespace Victop.Frame.Connection
     using Victop.Frame.PublicLib.Managers;
     using System.Configuration;
     using System.Net;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// 消息转发器
@@ -47,6 +48,27 @@ namespace Victop.Frame.Connection
                 else
                 {
                     ReplyMessage replyMessage = MessageSubmit(adapter, messageInfo, dataForm);
+                    if (replyMessage.ReplyMode == ReplyModeEnum.ROUTER)
+                    {
+                        RequestMessage userLoginMsg = new RequestMessage();
+                        userLoginMsg.MessageType = "LoginService.userLoginNew";
+                        CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+                        Dictionary<string, object> loginContent = new Dictionary<string, object>();
+                        loginContent.Add("usercode", currentGallery.ClientInfo.UserCode);
+                        loginContent.Add("userpw", currentGallery.ClientInfo.UserPwd);
+                        loginContent.Add("logintypenew", GetUserLoginForm(currentGallery.ClientInfo.UserCode));
+                        userLoginMsg.MessageContent = JsonHelper.ToJson(loginContent);
+                        ReplyMessage loginReplyMessage = UserLoginSubmit(adapter, userLoginMsg);
+                        if (loginReplyMessage.ReplyMode != ReplyModeEnum.CAST)
+                        {
+                            replyMessage = MessageSubmit(adapter, messageInfo, DataFormEnum.JSON);
+                        }
+                        else
+                        {
+                            replyMessage = loginReplyMessage;
+                            replyMessage.ReplyMode = ReplyModeEnum.CAST;
+                        }
+                    }
                     return replyMessage;
                 }
             }
@@ -61,6 +83,23 @@ namespace Victop.Frame.Connection
 
                 return replyMessage;
             }
+        }
+        /// <summary>
+        /// 获取登录方式
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        private string GetUserLoginForm(string userName)
+        {
+            if (Regex.IsMatch(userName, @"^[1]+[3,4,5,7,8]+\d{9}"))
+            {
+                return "phone";
+            }
+            if (Regex.IsMatch(userName, @"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"))
+            {
+                return "email";
+            }
+            return "usercode";
         }
         /// <summary>
         /// 用户登录
