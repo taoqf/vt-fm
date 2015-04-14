@@ -19,6 +19,7 @@ using System.Threading;
 using System.Data;
 using Victop.Wpf.Controls;
 using Victop.Frame.DataMessageManager;
+using System.Windows.Threading;
 
 namespace UserLoginPlugin.ViewModels
 {
@@ -26,12 +27,14 @@ namespace UserLoginPlugin.ViewModels
     {
         #region 字段
         private Window LoginWindow;
+        //把UserControl明转为Window
+        UserLoginWindow newWindow;
         private PasswordBox pwBox;
         private string selectedGallery;
         private ObservableCollection<UserRoleInfoModel> roleInfoList;
         private UserRoleInfoModel selectedRoleInfo;
         private bool showRoleList;
-
+        DispatcherTimer tm = new DispatcherTimer();
         public bool ShowRoleList
         {
             get { return showRoleList; }
@@ -292,6 +295,9 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
+
+        
+
         /// <summary>
         /// 角色列表选定命令
         /// </summary>
@@ -312,8 +318,14 @@ namespace UserLoginPlugin.ViewModels
                     setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                     setUserContentDic.Add("UserRole", SelectedRoleInfo.Role_No);
                     dataOp.SendAsyncMessage(messageType, setUserContentDic);
-                    ShowRoleList = false;
-                    LoginWindow.DialogResult = true;
+                    #region 为关闭窗体添加动画
+                    newWindow = LoginWindow as UserLoginWindow;
+                    if (newWindow != null)
+                    {
+                        newWindow.FrontGD.tm.Tick += tm_Tick;
+                        newWindow.FrontGD.tm.Start();
+                    }
+                    #endregion
                     #endregion
                 }, () =>
                 {
@@ -326,9 +338,23 @@ namespace UserLoginPlugin.ViewModels
             }
         }
 
+      
+
         #endregion
 
         #region 自定义方法
+
+        #region 关闭窗口添加命令
+        private void tm_Tick(object sender, EventArgs e)
+        {
+            if (newWindow != null)
+            {
+                newWindow.FrontGD.tm.Stop();
+            }
+            ShowRoleList = false;
+            LoginWindow.DialogResult = true;
+        }
+        #endregion
 
         #region 加载登录窗体
         private void UserLoginInit()
@@ -441,6 +467,10 @@ namespace UserLoginPlugin.ViewModels
                             else
                             {
                                 ShowRoleList = true;
+                                if (this.LoginWindow != null)
+                                {
+                                    this.LoginWindow.Height = 1; this.LoginWindow.Width = 1;
+                                }
                             }
                         }
                         
