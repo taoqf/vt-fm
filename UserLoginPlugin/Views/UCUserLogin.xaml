@@ -7,11 +7,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:convert="clr-namespace:UserLoginPlugin.Convert"
              xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
+             xmlns:my="clr-namespace:UserLoginPlugin.Views"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="450" Name="ucUserLongin">
     <UserControl.Resources>
         <convert:ImgeNameToBackgroundConverter x:Key="imgeNameToBackgroundConverter"/>
+        
     </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger SourceName="btnConfirm" RoutedEvent="ButtonBase.Click">
+            <BeginStoryboard x:Name="closeQueryCanvasStoryboard" 
+                      Storyboard="{StaticResource closeDW1}"/>
+        </EventTrigger>
+
+        <EventTrigger SourceName="btnLogin" RoutedEvent="ButtonBase.Click">
+            <BeginStoryboard x:Name="closeQueryCanvasStoryboard2" 
+                      Storyboard="{StaticResource showDW1}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid x:Name="gridMain" Style="{DynamicResource WindowChangeSkinBackground}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -34,12 +47,12 @@
                 </Path>
             </Grid>-->
             <Label  HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Margin="52,20,0,20"   Width="71" Content="飞道云服务" Style="{DynamicResource LoginTopLeftGridStyle2}"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                    <controls:VicButtonNormal Content="" Name="btnSystemSet" HorizontalAlignment="Right"   Width="34" Style="{DynamicResource btnLoginSetStyle}" Height="34" Command="{Binding btnSystemSetClickCommand}"/>
-                    <controls:VicButtonNormal Content="" Name="btnMini" HorizontalAlignment="Right"  Width="34" Style="{DynamicResource btnMiniStyle}" Height="34" Command="{Binding btnMiniClickCommand}" />
-                    <controls:VicButtonNormal Content="" Name="btnClose" HorizontalAlignment="Right"  Width="34"  Style="{DynamicResource btnCloseStyle}" Height="34" Command="{Binding btnCloseClickCommand}"/>
-                </StackPanel>
-            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                <controls:VicButtonNormal Content="" Name="btnSystemSet" HorizontalAlignment="Right"   Width="34" Style="{DynamicResource btnLoginSetStyle}" Height="34" Command="{Binding btnSystemSetClickCommand}"/>
+                <controls:VicButtonNormal Content="" Name="btnMini" HorizontalAlignment="Right"  Width="34" Style="{DynamicResource btnMiniStyle}" Height="34" Command="{Binding btnMiniClickCommand}" />
+                <controls:VicButtonNormal Content="" Name="btnClose" HorizontalAlignment="Right"  Width="34"  Style="{DynamicResource btnCloseStyle}" Height="34" Command="{Binding btnCloseClickCommand}"/>
+            </StackPanel>
+        </Grid>
         <Border Grid.Row="1" Background="{DynamicResource SkinColor}"/>
         <Border Grid.Row="2" Background="White"></Border>
         <Grid Grid.Row="2" Style="{DynamicResource loginMainGridStyle}">
@@ -97,13 +110,13 @@
             <TextBlock Grid.Row="2" Grid.Column="0" Padding="5,0,0,0" HorizontalAlignment="Left" Name="ErrLabel"  Text="{Binding ErrMsg}" Foreground="Red" Height="22"/>
             <Border Grid.Row="2" Grid.Column="1" BorderBrush="#024672" BorderThickness="0">
                 <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">
-                    <controls:VicButtonNormal  x:Name="btnLogin" IsDefault="True" Style="{DynamicResource LoginButtonStyle}" Content="{DynamicResource L_R_89}" Command="{Binding btnLoginClickCommand}" TabIndex="5" />
+                    <controls:VicButtonNormal  x:Name="btnLogin" IsDefault="True" Style="{DynamicResource LoginButtonStyle}" Content="{DynamicResource L_R_89}" Command="{Binding btnLoginClickCommand}"  TabIndex="5" />
                     <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消" IsCancel="True"  Command="{Binding btnCancelClickCommand}"/>
                 </StackPanel>
             </Border>
         </Grid>
-        <controls:VicPopup Grid.Row="2" Name="popPluginList" StaysOpen="True" Placement="Center" IsOpen="{Binding ShowRoleList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
-            <Border BorderThickness="1" BorderBrush="{DynamicResource SkinColor}"  Width="450" Height="350" Background="{DynamicResource MainBackgroundImage}">
+        <controls:VicPopup Grid.Row="2" AllowsTransparency="True" Name="popPluginList"  StaysOpen="True" Placement="Center" IsOpen="{Binding ShowRoleList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+            <!--<Border BorderThickness="1" BorderBrush="{DynamicResource SkinColor}"  Width="450" Height="350" Background="{DynamicResource MainBackgroundImage}">
                 <controls:VicGroupBoxClearBor Header="角色选择">
                     <controls:VicGridNormal Background="{DynamicResource WhiteShade}" Name="girdRoleList">
                         <controls:VicGridNormal.RowDefinitions>
@@ -116,7 +129,30 @@
                         </controls:VicDockPanelNormal>
                     </controls:VicGridNormal>
                 </controls:VicGroupBoxClearBor>
-            </Border>
+            </Border>-->
+
+            <Grid Width="450" Name="Canvas1" Height="350">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterX="100" CenterY="50"></ScaleTransform>
+                        <RotateTransform CenterX="100" CenterY="50"></RotateTransform>
+                    </TransformGroup>
+                </Grid.RenderTransform>
+                <controls:VicGridNormal Width="450"  Height="350" Background="{DynamicResource RoleBackground}">
+                    <controls:VicGridNormal.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
+                    </controls:VicGridNormal.RowDefinitions>
+                    <controls:VicLabelNormal Grid.Row="1" Foreground="Blue" FontSize="16" FontWeight="Bold" Width="150" Content="请选择角色" Margin="83,0,217,245" />
+                    <ListBox Style="{DynamicResource RoleListBoxStyle}" Grid.Row="1" Name="lboxRole" ItemsSource="{Binding RoleInfoList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Role_Name" SelectedValuePath="Role_No" SelectedItem="{Binding SelectedRoleInfo,UpdateSourceTrigger=PropertyChanged}" Margin="94,44,83,14"/>
+                    <Button  Content="确定" x:Name="btnConfirm"  Command="{Binding btnConfirmClickCommand}"  Style="{DynamicResource authorityBtnStyle}" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Right" Grid.Row="1" Margin="0,256,10,19" Grid.RowSpan="2"></Button>
+                    <my:ScrollintTextControl Content="飞道体系    " Grid.Row="1" FontWeight="Bold"  Height="32" HorizontalAlignment="Center"  x:Name="scrollingTextControl1" 
+                                VerticalAlignment="Bottom" Width="90" Foreground="Black" Margin="180,0,180,22" Grid.RowSpan="2"></my:ScrollintTextControl>
+                </controls:VicGridNormal>
+            </Grid>
+
+
         </controls:VicPopup>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">

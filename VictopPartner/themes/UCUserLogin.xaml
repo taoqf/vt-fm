@@ -2,6 +2,174 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
+
+    <!--角色界面样式-->
+    <Style x:Key="RoleListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border Background="Transparent"  BorderBrush="Transparent"  BorderThickness="0">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <WrapPanel IsItemsHost="True" />
+
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition  Width="50"  />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition  Height="20" />
+                            <RowDefinition  Height="30" />
+                        </Grid.RowDefinitions>
+                        <Border Margin="4,0" Grid.Column="0" BorderThickness="2" CornerRadius="4"  
+                        HorizontalAlignment="Center">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#aaa" Offset="0" />
+                                    <GradientStop Color="#222" Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                            <Grid>
+                                <Rectangle>
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Color="#444" Offset="0" />
+                                            <GradientStop Color="#fff" Offset="1" />
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <Image Width="20" Height="20" Margin="2,2,2,1"  Source="{Binding ImagePath}" />
+                            </Grid>
+                        </Border>
+                        <TextBlock Grid.Row="1" FontSize="12" HorizontalAlignment="Center" Margin="5" Text="{Binding Role_Name}" />
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Grid.IsSharedSizeScope" Value="True" />
+    </Style>
+    <Style x:Key="authorityBtnStyle" TargetType="{x:Type Button}" >
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid >
+                        <!--带特效的底层背景-->
+                        <Border x:Name="back" CornerRadius="2">
+                            <Border.BitmapEffect>
+                                <OuterGlowBitmapEffect Opacity="0.8" GlowSize="0" GlowColor="Red" />
+                            </Border.BitmapEffect>
+                            <Ellipse Width="49" Height="49">
+                                <Ellipse.Fill>
+                                    <Brush>Red</Brush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <!--按钮呈圆形-->
+                        </Border>
+                        <Ellipse x:Name="outerCircle" Width="50" Height="50">
+                            <Ellipse.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="DarkOliveGreen"/>
+                                    <GradientStop Offset="1" Color="Azure"/>
+                                </LinearGradientBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <Ellipse Width="40" Height="40">
+                            <Ellipse.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="White"/>
+                                    <GradientStop Offset="1" Color="Transparent"/>
+                                </LinearGradientBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <!--按钮内容-->
+                        <Border>
+                            <TextBlock x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding Content}"/>
+                        </Border>
+
+                    </Grid>
+                    <!--触发器-->
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="10" Duration="0:0:0.2" Storyboard.TargetName="back" Storyboard.TargetProperty="(UIElement.BitmapEffect).(OuterGlowBitmapEffect.GlowSize)" />
+                                        <ColorAnimation To="#4FFF" BeginTime="0:0:0.2" Duration="0:0:0.2" Storyboard.TargetName="outerCircle" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                        <ColorAnimation To="#3FFF" BeginTime="0:0:0.2" Duration="0:0:0.2" Storyboard.TargetName="outerCircle" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetName="back" Storyboard.TargetProperty="(UIElement.BitmapEffect).(OuterGlowBitmapEffect.GlowSize)" />
+                                        <ColorAnimation Duration="0:0:0.2" Storyboard.TargetName="outerCircle" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                        <ColorAnimation Duration="0:0:0.2" Storyboard.TargetName="outerCircle" Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX=".9" ScaleY=".9"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="RenderTransformOrigin" Value=".5,.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--转出来-->
+    <Storyboard x:Key="showDW1">
+        <DoubleAnimation Storyboard.TargetName="Canvas1"
+                        Storyboard.TargetProperty="Opacity"
+                        From="0" To="1" Duration="0:0:0.2">
+        </DoubleAnimation>
+        <DoubleAnimation Storyboard.TargetName="Canvas1"
+                        Storyboard.TargetProperty="RenderTransform.Children[1].Angle"
+                        From="180" To="0" Duration="0:0:0.2" >
+        </DoubleAnimation>
+        <DoubleAnimation Storyboard.TargetName="Canvas1"
+                        Storyboard.TargetProperty="RenderTransform.Children[0].ScaleX"
+                        From="-0.8" To="1" Duration="0:0:0.2" 
+                        AccelerationRatio="1">
+        </DoubleAnimation>
+        <DoubleAnimation Storyboard.TargetName="Canvas1"
+                        Storyboard.TargetProperty="RenderTransform.Children[0].ScaleY"
+                        From="-0.8" To="1" Duration="0:0:0.2" 
+                        AccelerationRatio="1">
+        </DoubleAnimation>
+    </Storyboard>
+    <!--转回去-->
+    <Storyboard x:Key="closeDW1">
+        <DoubleAnimation Storyboard.TargetName="Canvas1" 
+                      Storyboard.TargetProperty="RenderTransform.Children[1].Angle"
+                      To="180" Duration="0:0:0.2" >
+        </DoubleAnimation>
+        <DoubleAnimation Storyboard.TargetName="Canvas1" 
+                      Storyboard.TargetProperty="Opacity"
+                      To="0" Duration="0:0:0.2">
+        </DoubleAnimation>
+        <DoubleAnimation Storyboard.TargetName="Canvas1" 
+                      Storyboard.TargetProperty="RenderTransform.Children[0].ScaleX"
+                      To="0.2" Duration="0:0:0.2" AccelerationRatio="1">
+        </DoubleAnimation>
+        <DoubleAnimation Storyboard.TargetName="Canvas1"
+                      Storyboard.TargetProperty="RenderTransform.Children[0].ScaleY"
+                      To="0.2" Duration="0:0:0.2" AccelerationRatio="1">
+        </DoubleAnimation>
+    </Storyboard>
     <Style x:Key="loginWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
         <Setter Property="AllowsTransparency" Value="true"/>
