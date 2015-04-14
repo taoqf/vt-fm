@@ -168,25 +168,6 @@ namespace SystemTestingPlugin.ViewModels
                                 DataInfoModel.DataPath = JsonHelper.ToJson(pathList);
                             }
                             DataSet mastDs = new DataSet();
-                            DataTable structdt = new DataTable("dataArray");
-                            DataColumn iddc = new DataColumn("_id", typeof(string));
-                            iddc.ExtendedProperties.Add("ColType", "string");
-                            structdt.Columns.Add(iddc);
-
-                            DataColumn nameDc = new DataColumn("user_name",typeof(string));
-                            nameDc.ExtendedProperties.Add("ColType", "string");
-                            structdt.Columns.Add(nameDc);
-
-                            DataColumn birdc = new DataColumn("birthday", typeof(DateTime));
-                            birdc.ExtendedProperties.Add("ColType", "timestamp");
-                            structdt.Columns.Add(birdc);
-
-                            DataColumn regdc = new DataColumn("regist_date", typeof(DateTime));
-                            regdc.ExtendedProperties.Add("ColType", "timestamp");
-                            structdt.Columns.Add(regdc);
-
-                            mastDs.Tables.Add(structdt);
-
                             mastDs = messageOp.GetData(DataInfoModel.ChannelId, DataInfoModel.DataPath, mastDs);
                             DataTable dt = mastDs.Tables["dataArray"];
                             DataInfoModel.ResultDataTable = dt;
