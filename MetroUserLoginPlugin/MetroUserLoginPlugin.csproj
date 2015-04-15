@@ -75,7 +75,6 @@
     <Compile Include="Converts\CheckboxBoolConverter.cs" />
     <Compile Include="Converts\ImgeNameToBackgroundConverter.cs" />
     <Compile Include="Enums\LoginFormEnum.cs" />
-    <Compile Include="Helpers\PasswordBoxBindingHelper.cs" />
     <Compile Include="Models\LoginUserInfoModel.cs" />
     <Compile Include="Models\SystemConfigModel.cs" />
     <Compile Include="Plugin.cs" />

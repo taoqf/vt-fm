@@ -2,7 +2,6 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:helpers="clr-namespace:MetroUserLoginPlugin.Helpers"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:convert="clr-namespace:MetroUserLoginPlugin.Converts"
@@ -86,12 +85,7 @@
                 <Label Grid.Column="1" Grid.Row="1"  HorizontalAlignment="Left" VerticalContentAlignment="Center" FontFamily="SimSun" Content="找回密码" Width="58"/>
                 <controls:VicTextBoxNormal WaterMark="用户名/手机号/飞道邮箱" Grid.Column="0" Grid.Row="0" Width="190"  Margin="150,0,0,0" VicText="{Binding LoginInfoModel.UserName}"  VerticalContentAlignment="Center" Height="Auto" />
                 <!--<ListBox ></ListBox>-->
-                <controls:VicPasswordBoxKeyNormal  x:Name="pwBox"      
-                	Background="White"  Grid.Column="0" Grid.Row="1" Width="190" Margin="154,2,0,3" Passwordtext="{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <!--helpers:PasswordBoxBindingHelper.Password=
-                    "{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            VerticalAlignment="Center"  BorderBrush="{DynamicResource SkinBorderBrush}"  >-->
-                </controls:VicPasswordBoxKeyNormal>
+                <controls:VicPasswordBoxKeyNormal  x:Name="pwBox" Background="White"  Grid.Column="0" Grid.Row="1" Width="190" VerticalAlignment="Center"  BorderBrush="{DynamicResource SkinBorderBrush}" Margin="154,2,0,3" PasswordText="{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
             <TextBlock Grid.Row="2" Padding="5,0,0,0" HorizontalAlignment="Left" Name="ErrLabel"  Text="{Binding ErrMsg}" Foreground="Red" Height="22"/>
             <Border Grid.Row="2" HorizontalAlignment="Center"  BorderThickness="0" Margin="174,0,146,0">

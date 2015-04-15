@@ -4,7 +4,6 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:MetroUserLoginPlugin.ViewModels"
         xmlns:views="clr-namespace:MetroUserLoginPlugin.Views"
-        xmlns:helpers="clr-namespace:MetroUserLoginPlugin.Helpers"
         xmlns:convert="clr-namespace:MetroUserLoginPlugin.Converts"
         Name="winUserLogin"
         Style="{DynamicResource MetrologinWindowStyle}"   WindowStartupLocation="CenterScreen">
