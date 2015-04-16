@@ -1374,6 +1374,7 @@ MessageBoxImage.Question);
                     DockPanel.SetDock(_title, Dock.Top);
                     _title.ParamsModel.BtnDeblockingClick += BtnClick;
                     _title.MenuItemIcoClick += MenuItemClick;
+                    _title.ParamsModel.TextChangedClick += ParamsModel_TextChangedClick;  
                     _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                     _title.ParamsModel.TitleWidth = _areaMenu.AreaWidth;
                     _title.ParamsModel.AreaName = _areaMenu.AreaName;
