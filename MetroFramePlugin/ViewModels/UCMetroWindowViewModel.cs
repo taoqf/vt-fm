@@ -1302,29 +1302,6 @@ MessageBoxImage.Question);
                     PopupIsShow = false;
                     _panel.IsEnabled = true;
                     WriteFile();
-                    //foreach (DockPanel panel in _panel.Children)
-                    //{
-                    //    if (panel.Uid == selectAreaId)
-                    //    {
-                    //        WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
-                    //        if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
-                    //        {
-                    //            ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                    //            pluginArea.ItemsSource = null;
-                    //            pluginArea.ItemsSource = NowArea.PluginList;
-                    //            break;
-                    //        }
-                    //        else  if (wrapPanelArea != null && wrapPanelArea.Children.Count == 1)
-                    //        {
-                    //            ListBox pluginArea = new ListBox();
-                    //            pluginArea.ItemsSource = NowArea.PluginList;
-                    //            wrapPanelArea.Children.Insert(wrapPanelArea.Children.Count - 1, pluginArea);
-                    //            WriteFile();
-                    //            break;
-                    //        }
-                    //    }
-                    //}
-
                     //重绘当前面板
                     isOverRender = false;
                     foreach (DockPanel panel in _panel.Children)
@@ -1480,8 +1457,6 @@ MessageBoxImage.Question);
                 _title.VerticalContentAlignment = VerticalAlignment.Center;
                 _title.HorizontalContentAlignment = HorizontalAlignment.Center;
                 _title.Background = Brushes.Gainsboro;
-                //ListBox menuListArea = new ListBox();
-                //menuListArea.Style = area.FindResource("PanelStyle") as Style;
               
                 WrapPanel pluginPanel = new WrapPanel();
                 pluginPanel.Background = Brushes.WhiteSmoke;
@@ -1507,7 +1482,7 @@ MessageBoxImage.Question);
                 if (NewArea[i].PluginList.Count != 0)
                 {
                     ListBox pluginlist = new ListBox();
-                  //  pluginlist.MouseDown += menuListArea_MouseDown;
+                  //  pluginlist.MouseDown += menuListArea_MouseDown;//想去掉选中项的，还未实现
                     pluginlist.PreviewMouseMove += menuList_PreviewMouseMove;
                     pluginlist.Drop += menuList_Drop;
                     pluginlist.ItemsSource = NewArea[i].PluginList;
@@ -1525,9 +1500,7 @@ MessageBoxImage.Question);
                     }
                     pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);//一个WrapPanel里添加了两个ListBox
                 }
-
-             //   menuListArea.Items.Add(pluginPanel);//一个ListBox中添加了一个WrapPanel,wrapPanel里添加了两个ListBox
-
+           
                 DockPanel _newPanel = new DockPanel();
                 _newPanel.Uid = NewArea[i].AreaID;
                 _newPanel.Width = NewArea[i].AreaWidth;
@@ -1869,14 +1842,6 @@ MessageBoxImage.Question);
             //编辑 
             if (res.Equals("Compile"))
             {
-                //if (!isOverRender) //在解锁状态下不可用
-                //{
-                //    VicMenuItemNormal editItem = (VicMenuItemNormal) sender;
-                //    editItem.IsEnabled = false;
-                //    editItem.Background =Brushes.Gainsboro;
-                //    return;
-                //}
-                
                 if (areaParent != null)
                 {
                     foreach (DockPanel panel in _panel.Children)
@@ -1930,7 +1895,7 @@ MessageBoxImage.Question);
                 areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
                 areaParent.ParamsModel.LockingState = Visibility.Visible;
                 areaParent.ParamsModel.IsEditItem = true;
-                //重绘，去拖动
+                //重绘，去掉拖动
                 OverRideDrawingPanelArea(areaParent.Parent as DockPanel);
 
             }
@@ -2005,6 +1970,7 @@ MessageBoxImage.Question);
                     {
                         _title.ParamsModel.DeblockingState = Visibility.Collapsed;
                         _title.ParamsModel.LockingState = Visibility.Visible;
+                        _title.ParamsModel.IsEditItem = true;
                     }
                     else
                     {
@@ -2067,8 +2033,6 @@ MessageBoxImage.Question);
                         pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);//一个WrapPanel里添加了两个ListBox
                     }
 
-                    // menuListArea.Items.Add(pluginPanel);//一个ListBox中添加了一个wrapPanel一个wrapPanel里添加了两个ListBox
-
                     DockPanel _newPanel = new DockPanel();
                     _newPanel.Uid = NewArea[i].AreaID;
                     _newPanel.Width = NewArea[i].AreaWidth;
@@ -2084,8 +2048,6 @@ MessageBoxImage.Question);
                 }
             }
         }
-
-        
         #endregion
 
         #endregion
