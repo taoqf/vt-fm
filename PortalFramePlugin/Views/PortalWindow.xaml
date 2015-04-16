@@ -53,7 +53,7 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </controls:VicRadioButtonNormal>-->
-                    <Expander Header="企业云" Style="{DynamicResource ExpanderFirstLevel}">
+                    <Expander Header="企业云" Style="{DynamicResource ExpanderFirstLevel}" IsExpanded="True">
                         <ListBox x:Name="listSecondMenuEnterprise" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListEnterprise,UpdateSourceTrigger=PropertyChanged}">
                         </ListBox>
                     </Expander>

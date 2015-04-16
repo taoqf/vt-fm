@@ -912,7 +912,6 @@ namespace PortalFramePlugin.ViewModels
                 if (thirdLevelMenu.SystemMenuList.Count == 0)
                 {
                     secondLevelMenu.SystemMenuList.Remove(thirdLevelMenu);
-
                     thirdLevelMenu.ParentMenu = newThirdLevelMenu.MenuId;
                     newThirdLevelMenu.SystemMenuList.Add(thirdLevelMenu);
                 }
@@ -1009,7 +1008,7 @@ namespace PortalFramePlugin.ViewModels
                 if (userDic != null)
                 {
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
-                    userRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserRole");
+                    userRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
                     this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 isFirstLogin = false;
