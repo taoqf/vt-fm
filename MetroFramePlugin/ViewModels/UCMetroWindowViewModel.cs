@@ -1140,25 +1140,6 @@ MessageBoxImage.Question);
             }
         }
 
-        /// <summary>添加应用弹窗四级菜单列表 </summary>
-        private ObservableCollection<MenuModel> seachedFourthLevelMenuList;
-        public ObservableCollection<MenuModel> SeachedFourthLevelMenuList
-        {
-            get
-            {
-                if (seachedFourthLevelMenuList == null)
-                    seachedFourthLevelMenuList = new ObservableCollection<MenuModel>();
-                return seachedFourthLevelMenuList;
-            }
-            set
-            {
-                if (seachedFourthLevelMenuList != value)
-                {
-                    seachedFourthLevelMenuList = value;
-                    RaisePropertyChanged("SeachedFourthLevelMenuList");
-                }
-            }
-        }
         /// <summary>
         /// 根据搜索框搜索,实现弹窗列表四级菜单展示
         ///  </summary>
@@ -1168,7 +1149,7 @@ MessageBoxImage.Question);
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    SeachedFourthLevelMenuList.Clear();//调试出来的：必须清空，不然再次搜索重现
+                    ObservableCollection<MenuModel> SeachedFourthLevelMenuList = new ObservableCollection<MenuModel>();//调试心得：如果没有前台绑定的，不必要添加属性通知，也没必要设为全局变量，不然值改，哪里都跟着改的。
                     VicTextBoxSeach aa = (VicTextBoxSeach)x;
                     string keyTxt = aa.VicText.ToString();
                     if (!string.IsNullOrEmpty(keyTxt))
@@ -1207,7 +1188,7 @@ MessageBoxImage.Question);
             }
         }
         /// <summary>
-        /// 单击“删除”某个显示插件
+        /// 在解锁状态下不能删除，因为拖动把它屏蔽了，单击“删除”某个显示插件
         /// </summary>
         public ICommand BtnDelPluginCommand
         {
@@ -1321,29 +1302,6 @@ MessageBoxImage.Question);
                     PopupIsShow = false;
                     _panel.IsEnabled = true;
                     WriteFile();
-                    //foreach (DockPanel panel in _panel.Children)
-                    //{
-                    //    if (panel.Uid == selectAreaId)
-                    //    {
-                    //        WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
-                    //        if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
-                    //        {
-                    //            ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                    //            pluginArea.ItemsSource = null;
-                    //            pluginArea.ItemsSource = NowArea.PluginList;
-                    //            break;
-                    //        }
-                    //        else  if (wrapPanelArea != null && wrapPanelArea.Children.Count == 1)
-                    //        {
-                    //            ListBox pluginArea = new ListBox();
-                    //            pluginArea.ItemsSource = NowArea.PluginList;
-                    //            wrapPanelArea.Children.Insert(wrapPanelArea.Children.Count - 1, pluginArea);
-                    //            WriteFile();
-                    //            break;
-                    //        }
-                    //    }
-                    //}
-
                     //重绘当前面板
                     isOverRender = false;
                     foreach (DockPanel panel in _panel.Children)
@@ -1389,6 +1347,7 @@ MessageBoxImage.Question);
                         if (childNewModel != null)
                         {
                             NewSystemFourthLevelMenuList = childNewModel.SystemMenuList;
+                            _listbox.ItemsSource = NewSystemFourthLevelMenuList;//调试心得：这个必须有，不然搜索后清空_listbox的值，不会自动绑上了。
                             break;
                         }
                         else
@@ -1492,14 +1451,12 @@ MessageBoxImage.Question);
                 _title.ParamsModel.BtnDeblockingClick += BtnClick;
                 _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
                 _title.MenuItemIcoClick += MenuItemClick;
-                _title.ParamsModel.UnitMouseLeaveText += ParamsModel_UnitMouseLeaveText;
+                _title.ParamsModel.TextChangedClick += ParamsModel_TextChangedClick;    
                 _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                 _title.ParamsModel.AreaName = NewArea[i].AreaName;
                 _title.VerticalContentAlignment = VerticalAlignment.Center;
                 _title.HorizontalContentAlignment = HorizontalAlignment.Center;
                 _title.Background = Brushes.Gainsboro;
-                //ListBox menuListArea = new ListBox();
-                //menuListArea.Style = area.FindResource("PanelStyle") as Style;
               
                 WrapPanel pluginPanel = new WrapPanel();
                 pluginPanel.Background = Brushes.WhiteSmoke;
@@ -1525,7 +1482,7 @@ MessageBoxImage.Question);
                 if (NewArea[i].PluginList.Count != 0)
                 {
                     ListBox pluginlist = new ListBox();
-                  //  pluginlist.MouseDown += menuListArea_MouseDown;
+                  //  pluginlist.MouseDown += menuListArea_MouseDown;//想去掉选中项的，还未实现
                     pluginlist.PreviewMouseMove += menuList_PreviewMouseMove;
                     pluginlist.Drop += menuList_Drop;
                     pluginlist.ItemsSource = NewArea[i].PluginList;
@@ -1543,9 +1500,7 @@ MessageBoxImage.Question);
                     }
                     pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);//一个WrapPanel里添加了两个ListBox
                 }
-
-             //   menuListArea.Items.Add(pluginPanel);//一个ListBox中添加了一个WrapPanel,wrapPanel里添加了两个ListBox
-
+           
                 DockPanel _newPanel = new DockPanel();
                 _newPanel.Uid = NewArea[i].AreaID;
                 _newPanel.Width = NewArea[i].AreaWidth;
@@ -1557,6 +1512,18 @@ MessageBoxImage.Question);
                 _panel.Children.Add(_newPanel);
             }
             ThumbCanvas();
+        }
+
+        void ParamsModel_TextChangedClick(object sender, TextChangedEventArgs e)
+        {
+            UnitAreaSeting areaParent = ((((TextBox)sender).Parent as DockPanel).Parent as Grid).Parent as UnitAreaSeting;
+            if (areaParent != null)
+            {
+                AreaMenu nowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
+                nowArea.AreaName = areaParent.ParamsModel.AreaName;
+                WriteFile();
+                areaParent.Focus();
+            }   
         }
 
         void menuListArea_MouseDown(object sender, MouseButtonEventArgs e)
@@ -1912,17 +1879,6 @@ MessageBoxImage.Question);
             }
         }
 
-        void ParamsModel_UnitMouseLeaveText(object sender, MouseEventArgs e)
-        {
-            UnitAreaSeting areaParent = ((((TextBox)sender).Parent as DockPanel).Parent as Grid).Parent as UnitAreaSeting;
-            if (areaParent != null)
-            {
-                AreaMenu nowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
-                nowArea.AreaName = areaParent.ParamsModel.AreaName;
-                WriteFile();
-                areaParent.Focus();
-            }            
-        }
         ///<summary>
         ///区域title“锁定”按钮和“折叠/展开”回调事件
         /// </summary>
@@ -1938,7 +1894,8 @@ MessageBoxImage.Question);
                 
                 areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
                 areaParent.ParamsModel.LockingState = Visibility.Visible;
-                //重绘，去拖动
+                areaParent.ParamsModel.IsEditItem = true;
+                //重绘，去掉拖动
                 OverRideDrawingPanelArea(areaParent.Parent as DockPanel);
 
             }
@@ -1947,6 +1904,7 @@ MessageBoxImage.Question);
                 isOverRender = false;
                 areaParent.ParamsModel.DeblockingState = Visibility.Visible;
                 areaParent.ParamsModel.LockingState = Visibility.Collapsed;
+                areaParent.ParamsModel.IsEditItem = false;
                 //添加拖动事件
                 WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(areaParent.Parent as DockPanel, (areaParent.Parent as DockPanel).Uid);
                 if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
@@ -2012,6 +1970,7 @@ MessageBoxImage.Question);
                     {
                         _title.ParamsModel.DeblockingState = Visibility.Collapsed;
                         _title.ParamsModel.LockingState = Visibility.Visible;
+                        _title.ParamsModel.IsEditItem = true;
                     }
                     else
                     {
@@ -2020,6 +1979,7 @@ MessageBoxImage.Question);
                     DockPanel.SetDock(_title, Dock.Top);
                     _title.ParamsModel.BtnDeblockingClick += BtnClick;
                     _title.MenuItemIcoClick += MenuItemClick;
+                    _title.ParamsModel.TextChangedClick += ParamsModel_TextChangedClick;  
                     _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                     _title.ParamsModel.AreaName = NewArea[i].AreaName;
                     _title.VerticalContentAlignment = VerticalAlignment.Center;
@@ -2073,8 +2033,6 @@ MessageBoxImage.Question);
                         pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);//一个WrapPanel里添加了两个ListBox
                     }
 
-                    // menuListArea.Items.Add(pluginPanel);//一个ListBox中添加了一个wrapPanel一个wrapPanel里添加了两个ListBox
-
                     DockPanel _newPanel = new DockPanel();
                     _newPanel.Uid = NewArea[i].AreaID;
                     _newPanel.Width = NewArea[i].AreaWidth;
@@ -2090,8 +2048,6 @@ MessageBoxImage.Question);
                 }
             }
         }
-
-        
         #endregion
 
         #endregion
