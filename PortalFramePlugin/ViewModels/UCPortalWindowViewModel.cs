@@ -808,7 +808,7 @@ namespace PortalFramePlugin.ViewModels
             localMenuListEx = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             {
-                this.SystemMenuListLocal.Clear();
+                //this.SystemMenuListLocal.Clear();
             }
         }
         #endregion
