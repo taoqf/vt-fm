@@ -1,295 +1,313 @@
 {
 	"menu": [
 		{
-			"title": "飞道内部工具",
-			"iconUrl": "\ue69d",
-			"fitDataPath": [
-				{
-					"key": "",
-					"value": ""
-				}
-			],
+			"menu_name": "飞道内部工具",
+			"icon": "\ue7a6",
 			"children": [
 				{
-					"title": "数据部工具",
-					"iconUrl": "\ue6b8",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
+					"menu_name": "通用权限",
+					"icon": "\ue614",
 					"children": [
 						{
-							"title": "属性库",
-							"actionType": 1,
-							"actionName": "PropertyBankPlugin",
-							"showType": 1,
-							"iconUrl": "\ue6b8",
+							"menu_name": "插件控制点",
+							"package_url": "PluginControlPointPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue7a6",
+							"description": "插件控制点",
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
+						}, {
+							"menu_name": "功能定义",
+							"package_url": "FunctionDefinitionPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue60c",
+							"description": "功能定义",
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
+						}, {
+							"menu_name": "菜单",
+							"package_url": "MenuPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue623",
+							"description": "菜单",
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
+						}, {
+							"menu_name": "用户主档定义",
+							"package_url": "UserMasterFileDefPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue79a",
+							"description": "用户主档定义",
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
+						}, {
+							"menu_name": "用户",
+							"package_url": "UserPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue635",
+							"description": "用户",
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
+						}, {
+							"menu_name": "菜单权限组",
+							"package_url": "MenuAuthorityGroupPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue757",
+							"description": "菜单权限组",
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
+						}, {
+							"menu_name": "功能权限组",
+							"package_url": "FunctionAuthorityGroupPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue608",
+							"description": "功能权限组",
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
+						}
+					]
+				}, {
+					"menu_name": "数据部工具",
+					"icon": "\ue6b8",
+					"children": [
+						{
+							"menu_name": "属性库",
+							"package_url": "PropertyBankPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue6b8",
 							"description": "属性库",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": " ",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}, {
-							"title": "属性分类",
-							"actionType": 1,
-							"actionName": "PropertyCategoryPlugin",
-							"showType": 1,
-							"iconUrl": "\ue6b8",
+							"menu_name": "属性分类",
+							"package_url": "PropertyCategoryPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue6b8",
 							"description": "属性分类",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": " ",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}, {
-							"title": "表库",
-							"actionType": 1,
-							"actionName": "TableBankPlugin",
-							"showType": 1,
-							"iconUrl": "\ue6b8",
+							"menu_name": "表库",
+							"package_url": "TableBankPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue6b8",
 							"description": "表库",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": " ",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}, {
-							"title": "表分类",
-							"actionType": 1,
-							"actionName": "TableCategoryPlugin",
-							"showType": 1,
-							"iconUrl": "\ue6b8",
+							"menu_name": "表分类",
+							"package_url": "TableCategoryPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue6b8",
 							"description": "表分类",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": " ",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}, {
-							"title": "数据架构设计",
-							"actionType": 1,
-							"actionName": "DataArchitectureAllPlugin",
-							"showType": 1,
-							"iconUrl": "\ue683",
+							"menu_name": "数据架构设计",
+							"package_url": "DataArchitectureAllPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue683",
 							"description": "数据架构设计",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": " ",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}, {
-							"title": "数据维护定义",
-							"actionType": 1,
-							"actionName": "DataMaintainDefDesPlugin",
-							"showType": 1,
-							"iconUrl": "\ue68e",
+							"menu_name": "数据建模工具",
+							"package_url": "DataModelAllPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue670",
+							"description": "数据建模工具",
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
+						}, {
+							"menu_name": "数据维护定义",
+							"package_url": "DataMaintainDefDesPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue68e",
 							"description": "数据维护定义",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": " ",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}, {
-							"title": "数据维护",
-							"actionType": 1,
-							"actionName": "DataMaintenancePlugin",
-							"showType": 1,
-							"iconUrl": "\ue692",
+							"menu_name": "数据维护",
+							"package_url": "DataMaintenancePlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue692",
 							"description": "数据维护",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": " ",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
+						}, {
+							"menu_name": "业务规则维护",
+							"package_url": "BusinessRulesMaintainPlugin",
+							"systemid": 18,
+							"formid": "P001",
+							"show_type": 1,
+							"icon": "\ue798",
+							"description": "业务规则维护",
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}
 					]
 				}, {
-					"title": "客服部工具",
-					"iconUrl": "\ue6b1",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
+					"menu_name": "客服部工具",
+					"icon": "\ue6b1",
 					"children": [
 						{
-							"title": "查看字段",
-							"actionType": 1,
-							"actionName": "DataSearchPlugin",
-							"showType": 1,
-							"iconUrl": "\ue6a2",
+							"menu_name": "查看字段",
+							"package_url": "DataSearchPlugin",
+							"systemid": 18,
+							"formid": 11,
+							"show_type": 1,
+							"icon": "\ue6a2",
 							"description": "查看字段",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}
 					]
 				}, {
-					"title": "运营中心工具",
-					"iconUrl": "\ue78f",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
+					"menu_name": "运营中心工具",
+					"icon": "\ue78f",
 					"children": [
 						{
-							"title": "飞道调度中心展示",
-							"actionType": 1,
-							"actionName": "ScheduleMonitorPlugin",
-							"showType": 1,
-							"iconUrl": "\ue679",
+							"menu_name": "飞道调度中心展示",
+							"package_url": "ScheduleMonitorPlugin",
+							"systemid": 18,
+							"formid": 11,
+							"show_type": 1,
+							"icon": "\ue679",
 							"description": "用于展示公司调度中心页面",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}, {
-							"title": "飞道调度中心项目查询",
-							"actionType": 1,
-							"actionName": "ConditionQueryPlugin",
-							"showType": 1,
-							"iconUrl": "\ue61b",
+							"menu_name": "飞道调度中心项目查询",
+							"package_url": "ConditionQueryPlugin",
+							"systemid": 18,
+							"formid": 11,
+							"show_type": 1,
+							"icon": "\ue61b",
 							"description": "用于查询公司各部门调度",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}, {
-							"title": "飞道调度中心部门查询",
-							"actionType": 1,
-							"actionName": "DepartmentQueryPlugin",
-							"showType": 1,
-							"iconUrl": "\ue60d",
+							"menu_name": "飞道调度中心部门查询",
+							"package_url": "DepartmentQueryPlugin",
+							"systemid": 18,
+							"formid": 11,
+							"show_type": 1,
+							"icon": "\ue60d",
 							"description": "用于公司各部门调度",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}, {
-							"title": "飞道调度中心任务维护",
-							"actionType": 1,
-							"actionName": "TaskMaintainPlugin",
-							"showType": 1,
-							"iconUrl": "\ue61f",
+							"menu_name": "飞道调度中心任务维护",
+							"package_url": "TaskMaintainPlugin",
+							"systemid": 18,
+							"formid": 11,
+							"show_type": 1,
+							"icon": "\ue61f",
 							"description": "用于公司任务维护",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}
 					]
 				}, {
-					"title": "WPF部测试工具",
-					"iconUrl": "\ue6e2",
-					"fitDataPath": [
-						{
-							"key": "",
-							"value": ""
-						}
-					],
+					"menu_name": "WPF部测试工具",
+					"icon": "\ue6e2",
 					"children": [
 						{
-							"title": "数据测试",
-							"actionType": 1,
-							"actionName": "SystemTestingPlugin",
-							"showType": 1,
-							"iconUrl": "\ue6e2",
+							"menu_name": "数据测试",
+							"package_url": "SystemTestingPlugin",
+							"systemid": 18,
+							"formid": 11,
+							"show_type": 1,
+							"icon": "\ue6e2",
 							"description": "用于测试数据是否正常",
-							"systemId": 18,
-							"configsystemid": 11,
-							"spaceId": "feidao::feidao",
-							"actionCADName": "",
-							"menuno": "",
-							"fitDataPath": [
-								{
-									"key": "",
-									"value": ""
-								}
-							]
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
+						}, {
+							"menu_name": "组件定义",
+							"package_url": "ComponentDefinitionPlugin",
+							"systemid": 18,
+							"formid": 11,
+							"show_type": 1,
+							"icon": "\ue672",
+							"description": "用于组件定义",
+							"priority": 0,
+							"is_single": false,
+							"is_offline": false,
+							"is_guest": false
 						}
 					]
 				}
