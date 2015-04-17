@@ -816,7 +816,7 @@
                                                              
                                                              Style="{DynamicResource TextBlockMenu}" 
                                                              FontSize="{TemplateBinding FontSize}"
-                                                             Text="{Binding IconUrl}"
+                                                             Text="{Binding Icon}"
                                                              Margin="{TemplateBinding Padding}"
                                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>

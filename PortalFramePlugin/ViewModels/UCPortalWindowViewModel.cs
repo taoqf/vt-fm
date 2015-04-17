@@ -727,19 +727,15 @@ namespace PortalFramePlugin.ViewModels
         private MenuModel GetMenuModel(MenuInfo item)
         {
             MenuModel menuModel = new MenuModel();
-            menuModel.MenuId = item.Id;
-            menuModel.MenuName = item.Menu_name;
-            menuModel.BzSystemId = item.Systemid;
-            menuModel.DataFormId = item.Formid;
-            menuModel.DisplayType = 0;
-            menuModel.ConfigSystemId = "11";
-            menuModel.FormName = item.Formname;
-            menuModel.ResourceName = item.Package_url;
-            menuModel.ActionType = string.IsNullOrEmpty(item.Show_type) ? "1" : item.Show_type;
-            menuModel.IconUrl = item.Icon;
             menuModel.Id = item.Id;
-            menuModel.Memo = item.Description;
-            menuModel.ParentMenu = item.Parent_no;
+            menuModel.MenuName = item.Menu_name;
+            menuModel.SystemId = item.Systemid;
+            menuModel.FormId = item.Formid;
+            menuModel.ShowType = "0";
+            menuModel.PackageUrl = item.Package_url;
+            menuModel.ShowType = string.IsNullOrEmpty(item.Show_type) ? "1" : item.Show_type;
+            menuModel.Icon = item.Icon;
+            menuModel.Description = item.Description;
             if (item.Roles != null && item.Roles.Count > 0)
             {
                 foreach (MenuRoleInfo roleitem in item.Roles)
@@ -785,9 +781,9 @@ namespace PortalFramePlugin.ViewModels
         private MenuModel GetPluginInfoModel(XElement element)
         {
             MenuModel plugin = new MenuModel();
-            plugin.MenuName = element.Attribute("title").Value;
-            plugin.IconUrl = element.Attribute("imageurl").Value;
-            plugin.ResourceName = element.Attribute("action").Value;
+            plugin.MenuName = element.Attribute("menu_name").Value;
+            plugin.Icon = element.Attribute("icon").Value;
+            plugin.PackageUrl = element.Attribute("package_url").Value;
             return plugin;
         }
         #endregion
@@ -829,16 +825,12 @@ namespace PortalFramePlugin.ViewModels
         private MenuModel CreateMenuModel(string str)
         {
             MenuModel model = new MenuModel();
-            model.MenuName = JsonHelper.ReadJsonString(str, "title");
-            model.ActionType = JsonHelper.ReadJsonString(str, "actionType");
-            model.ResourceName = JsonHelper.ReadJsonString(str, "actionName");
-            model.ShowType = JsonHelper.ReadJsonString(str, "showType");
-            model.IconUrl = JsonHelper.ReadJsonString(str, "iconUrl");
-            model.BzSystemId = JsonHelper.ReadJsonString(str, "systemId");
-            model.ConfigSystemId = JsonHelper.ReadJsonString(str, "formId");
-            model.SpaceId = JsonHelper.ReadJsonString(str, "modelId");
-            model.MenuNo = JsonHelper.ReadJsonString(str, "masterName");
-            model.FitDataPath = JsonHelper.ReadJsonObject<List<Dictionary<string, object>>>(str, "fitDataPath");
+            model.MenuName = JsonHelper.ReadJsonString(str, "menu_name");
+            model.PackageUrl = JsonHelper.ReadJsonString(str, "package_url");
+            model.ShowType = JsonHelper.ReadJsonString(str, "show_type");
+            model.Icon = JsonHelper.ReadJsonString(str, "icon");
+            model.SystemId = JsonHelper.ReadJsonString(str, "systemid");
+            model.FormId = JsonHelper.ReadJsonString(str, "formid");
             model.SystemMenuList = CreateChildrenMenuList(JsonHelper.ReadJsonString(str, "children"));
             return model;
         }
@@ -864,29 +856,23 @@ namespace PortalFramePlugin.ViewModels
                 TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)).IsSelected = true;
                 return;
             }
-            if (selectedFourthMenu.ResourceName != null)
+            if (selectedFourthMenu.PackageUrl != null)
             {
-                if (selectedFourthMenu.ActionType == "1")//启动插件
+                DataMessageOperation pluginOp = new DataMessageOperation();
+                Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                paramDic.Add("systemid", selectedFourthMenu.SystemId);
+                paramDic.Add("configsystemid", "11");
+                paramDic.Add("formid", selectedFourthMenu.FormId);
+                //paramDic.Add("authoritycode", roleAuth != null ? roleAuth.AuthCode : 0);
+                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.PackageUrl, paramDic);
+                if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {
-                    DataMessageOperation pluginOp = new DataMessageOperation();
-                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
-                    paramDic.Add("configsystemid", selectedFourthMenu.ConfigSystemId);
-                    paramDic.Add("formid", selectedFourthMenu.DataFormId);
-                    paramDic.Add("spaceid", selectedFourthMenu.SpaceId);
-                    paramDic.Add("menuno", selectedFourthMenu.MenuNo);
-                    paramDic.Add("menucode", selectedFourthMenu.MenuCode);
-                    //paramDic.Add("authoritycode", roleAuth != null ? roleAuth.AuthCode : 0);
-                    PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
-                    if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
-                    {
-                        PluginShow(pluginModel, selectedFourthMenu.MenuName);
-                    }
-                    else
-                    {
-                        VicMessageBoxNormal.Show(pluginModel.ErrorMsg);
-                        return;
-                    }
+                    PluginShow(pluginModel, selectedFourthMenu.MenuName);
+                }
+                else
+                {
+                    VicMessageBoxNormal.Show(pluginModel.ErrorMsg);
+                    return;
                 }
             }
         }
@@ -905,14 +891,14 @@ namespace PortalFramePlugin.ViewModels
         private void GetStandardSecondLevelMenu(MenuModel secondLevelMenu)
         {
             MenuModel newThirdLevelMenu = new MenuModel();
-            newThirdLevelMenu.MenuId = new Guid().ToString();
+            newThirdLevelMenu.Id = new Guid().ToString();
             for (int i = secondLevelMenu.SystemMenuList.Count - 1; i >= 0; i--)
             {
                 MenuModel thirdLevelMenu = secondLevelMenu.SystemMenuList[i];
                 if (thirdLevelMenu.SystemMenuList.Count == 0)
                 {
                     secondLevelMenu.SystemMenuList.Remove(thirdLevelMenu);
-                    thirdLevelMenu.ParentMenu = newThirdLevelMenu.MenuId;
+                    thirdLevelMenu.ParentId = newThirdLevelMenu.Id;
                     newThirdLevelMenu.SystemMenuList.Add(thirdLevelMenu);
                 }
                 else
@@ -936,7 +922,7 @@ namespace PortalFramePlugin.ViewModels
                 foreach (MenuModel item in fourthLevelMenu.SystemMenuList)
                 {
                     thirdLevelMenu.SystemMenuList.Remove(fourthLevelMenu);
-                    item.ParentMenu = thirdLevelMenu.MenuId;
+                    item.ParentId = thirdLevelMenu.Id;
                     thirdLevelMenu.SystemMenuList.Add(item);
                 }
             }
