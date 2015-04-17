@@ -28,6 +28,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using Victop.Frame.DataMessageManager;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -734,7 +735,7 @@ namespace PortalFramePlugin.ViewModels
             menuModel.ShowType = "0";
             menuModel.PackageUrl = item.Package_url;
             menuModel.ShowType = string.IsNullOrEmpty(item.Show_type) ? "1" : item.Show_type;
-            menuModel.Icon = item.Icon;
+            menuModel.Icon = !string.IsNullOrEmpty(item.Icon) ? Regex.Unescape(item.Icon) : item.Icon;
             menuModel.Description = item.Description;
             if (item.Roles != null && item.Roles.Count > 0)
             {
