@@ -7,25 +7,18 @@ using GalaSoft.MvvmLight.Command;
 using Victop.Frame.CoreLibrary;
 using Victop.Frame.CoreLibrary.Models;
 using Victop.Frame.PublicLib.Helpers;
-using System.Data;
 using System.Windows;
 using System.Configuration;
 using System.Windows.Controls;
 using Victop.Wpf.Controls;
 using Victop.Server.Controls;
-using System.Threading;
 using PortalFramePlugin.Models;
 using System.Collections.ObjectModel;
-using System.Xml.Linq;
 using System.Reflection;
 using PortalFramePlugin.Views;
 using System.Windows.Navigation;
 using System.IO;
 using System.Text;
-using System.Windows.Media;
-using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Windows.Interop;
 using Victop.Frame.DataMessageManager;
 using System.Xml;
 using System.Text.RegularExpressions;
@@ -748,47 +741,6 @@ namespace PortalFramePlugin.ViewModels
         }
         #endregion
 
-        private MenuModel GetLocalMenuResoureName(string MenuName, ObservableCollection<MenuModel> MenuList)
-        {
-            MenuModel menuModel = MenuList.FirstOrDefault(it => it.MenuName.Equals(MenuName));
-            if (menuModel == null)
-            {
-                foreach (MenuModel item in MenuList)
-                {
-                    menuModel = GetLocalMenuResoureName(MenuName, item.SystemMenuList);
-                    if (menuModel != null)
-                        break;
-                }
-            }
-            return menuModel;
-        }
-
-        #region 加载本地菜单集合
-        private MenuModel CreatLocalMenuModel(XElement element, MenuModel menuModel)
-        {
-            foreach (var item in element.Elements())
-            {
-                MenuModel childMenuModel = GetPluginInfoModel(item);
-                if (item.Name.LocalName.Equals("Trade"))
-                {
-                    localMenuList.Add(childMenuModel);
-                }
-                childMenuModel = CreatLocalMenuModel(item, childMenuModel);
-                menuModel.SystemMenuList.Add(childMenuModel);
-            }
-            return menuModel;
-        }
-        /// <summary>根据节点信息获取菜单实例</summary>
-        private MenuModel GetPluginInfoModel(XElement element)
-        {
-            MenuModel plugin = new MenuModel();
-            plugin.MenuName = element.Attribute("menu_name").Value;
-            plugin.Icon = element.Attribute("icon").Value;
-            plugin.PackageUrl = element.Attribute("package_url").Value;
-            return plugin;
-        }
-        #endregion
-
         #region 加载本地Json菜单集合 (2014-08-29 新增)
         /// <summary>加载本地Json菜单集合 </summary>
         private void LoadJsonMenuListLocal()
@@ -807,33 +759,6 @@ namespace PortalFramePlugin.ViewModels
             {
                 //this.SystemMenuListLocal.Clear();
             }
-        }
-        #endregion
-
-        #region 手动解析树型Json(2014-08-29 暂不使用)
-        private ObservableCollection<MenuModel> CreateChildrenMenuList(string childStr)
-        {
-            ObservableCollection<MenuModel> childrenMenuList = new ObservableCollection<MenuModel>();
-            if (string.IsNullOrEmpty(childStr)) return childrenMenuList;
-            List<object> strList = JsonHelper.ToObject<List<object>>(childStr);
-            foreach (object obj in strList)
-            {
-                MenuModel model = CreateMenuModel(obj.ToString());
-                childrenMenuList.Add(model);
-            }
-            return childrenMenuList;
-        }
-        private MenuModel CreateMenuModel(string str)
-        {
-            MenuModel model = new MenuModel();
-            model.MenuName = JsonHelper.ReadJsonString(str, "menu_name");
-            model.PackageUrl = JsonHelper.ReadJsonString(str, "package_url");
-            model.ShowType = JsonHelper.ReadJsonString(str, "show_type");
-            model.Icon = JsonHelper.ReadJsonString(str, "icon");
-            model.SystemId = JsonHelper.ReadJsonString(str, "systemid");
-            model.FormId = JsonHelper.ReadJsonString(str, "formid");
-            model.SystemMenuList = CreateChildrenMenuList(JsonHelper.ReadJsonString(str, "children"));
-            return model;
         }
         #endregion
 
