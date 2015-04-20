@@ -844,6 +844,10 @@ namespace PortalFramePlugin.ViewModels
         private void OpenJsonMenuPlugin(MenuModel selectedFourthMenu)
         {
             MenuRoleAuth roleAuth = selectedFourthMenu.RoleAuthList.FirstOrDefault(it => it.Role_No.Equals(UserRole));
+            if (roleAuth != null)
+            {
+                selectedFourthMenu.AuthorityCode = roleAuth.AuthCode;
+            }
             if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             {
                 if (roleAuth == null)
@@ -864,7 +868,7 @@ namespace PortalFramePlugin.ViewModels
                 paramDic.Add("systemid", selectedFourthMenu.SystemId);
                 paramDic.Add("configsystemid", "11");
                 paramDic.Add("formid", selectedFourthMenu.FormId);
-                paramDic.Add("authoritycode", roleAuth != null ? roleAuth.AuthCode : 0);
+                paramDic.Add("authoritycode", selectedFourthMenu.AuthorityCode);
                 PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.PackageUrl, paramDic);
                 if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {

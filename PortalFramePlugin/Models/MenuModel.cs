@@ -188,6 +188,26 @@ namespace PortalFramePlugin.Models
                 }
             }
         }
+        [JsonProperty(PropertyName = "authoritycode")]
+        private long authorityCode;
+        /// <summary>
+        /// 权限码
+        /// </summary>
+        public long AuthorityCode
+        {
+            get
+            {
+                return authorityCode;
+            }
+            set
+            {
+                if (authorityCode != value)
+                {
+                    authorityCode = value;
+                    RaisePropertyChanged("AuthorityCode");
+                }
+            }
+        }
         /// <summary>
         /// 优先级
         /// </summary>
