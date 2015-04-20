@@ -137,16 +137,16 @@ namespace MetroFramePlugin.Models
         /// <summary>
         /// 图标路径
         /// </summary>
-        private string iconUrl = "\ue61f";
-        public string IconUrl
+        private string icon = "\ue61f";
+        public string Icon
         {
-            get { return iconUrl; }
+            get { return icon; }
             set
             {
                 if (string.IsNullOrWhiteSpace(value) == false)
                 {
-                    iconUrl = value;
-                    RaisePropertyChanged("IconUrl");
+                    icon = value;
+                    RaisePropertyChanged("Icon");
                 }
             }
         }

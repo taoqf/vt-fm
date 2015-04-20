@@ -12,21 +12,6 @@
     <Window.DataContext>
         <vm:UCMetroWindowViewModel/>
     </Window.DataContext>
-    <!--<DockPanel LastChildFill="True">
-        <ScrollViewer x:Name="scrollViewer" Width="70" Style="{DynamicResource MenuScrollViewer}">
-            <Grid Style="{DynamicResource LeftGrid}">
-                <StackPanel>
-                    <Image Style="{DynamicResource logoImage}" />
-                    <Grid  Margin="0,20,0,0" Width="42" Height="42" Background="{DynamicResource Logo}"  HorizontalAlignment="Center" VerticalAlignment="Center" />                   
-                    <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="46" Height="1" HorizontalAlignment="Center" Margin="0,17,0,0"/>
-                    <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="46" Height="1" HorizontalAlignment="Center"/>
-                    <Expander Header="项目名称" Style="{DynamicResource ExpanderFirstLevel}" IsExpanded="True">
-                        <ListBox x:Name="listSecondMenuLocal" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}">
-                        </ListBox>
-                    </Expander>
-                </StackPanel>
-            </Grid>
-        </ScrollViewer>-->
     <DockPanel LastChildFill="True">
         <ScrollViewer x:Name="scrollViewer" Width="70" Style="{DynamicResource MenuScrollViewer}">
             <Grid Style="{DynamicResource LeftGrid}">
