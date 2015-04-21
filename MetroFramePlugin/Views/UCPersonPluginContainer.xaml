@@ -239,6 +239,7 @@
 
         <Style x:Key="AddMenu" TargetType="{x:Type controls:VicRadioButtonNormal}">
             <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+            <Setter Property="Foreground" Value="{DynamicResource MetroFGColor}"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="FontSize" Value="45"></Setter>
@@ -294,7 +295,7 @@
                                                                  Command="{Binding DataContext.btnAddApplyClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                                  CommandParameter="{Binding ElementName=logo}"/>
                                             <controls:VicButtonNormal Name="btnPluginRun" Grid.Row="1"    BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"   Content="添加应用" FontSize="12"
-                                                       Width="{TemplateBinding Width}" Foreground="#848484"
+                                                       Width="{TemplateBinding Width}" Foreground="{DynamicResource MetroFGColor}"
                                                         Background="{TemplateBinding Background}"  VerticalAlignment="Center"
                                                          Command="{Binding DataContext.btnAddApplyClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                        CommandParameter="{Binding .}"/>
@@ -324,6 +325,7 @@
 
         <Style x:Key="AddSmallMenu" TargetType="{x:Type controls:VicRadioButtonNormal}">
             <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+            <Setter Property="Foreground" Value="{DynamicResource MetroFGColor}"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="FontSize" Value="35"></Setter>
@@ -379,7 +381,7 @@
                                                                  Command="{Binding DataContext.btnAddApplyClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                                  CommandParameter="{Binding ElementName=logo}"/>
                                             <controls:VicButtonNormal Name="btnPluginRun" Grid.Row="1"    BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"   Content="添加应用" FontSize="10"
-                                                       Width="{TemplateBinding Width}" Foreground="#848484"
+                                                       Width="{TemplateBinding Width}"  Foreground="{DynamicResource MetroFGColor}"
                                                         Background="{TemplateBinding Background}"  VerticalAlignment="Center"
                                                          Command="{Binding DataContext.btnAddApplyClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                        CommandParameter="{Binding .}"/>
@@ -409,6 +411,7 @@
 
         <Style x:Key="AddLargeMenu" TargetType="{x:Type controls:VicRadioButtonNormal}">
             <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+            <Setter Property="Foreground" Value="{DynamicResource MetroFGColor}"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="FontSize" Value="55"></Setter>
@@ -464,7 +467,7 @@
                                                                  Command="{Binding DataContext.btnAddApplyClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                                  CommandParameter="{Binding ElementName=logo}"/>
                                             <controls:VicButtonNormal Name="btnPluginRun" Grid.Row="1"    BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"   Content="添加应用" FontSize="16"
-                                                       Width="{TemplateBinding Width}" Foreground="#848484"
+                                                       Width="{TemplateBinding Width}"  Foreground="{DynamicResource MetroFGColor}"
                                                         Background="{TemplateBinding Background}"  VerticalAlignment="Center"
                                                          Command="{Binding DataContext.btnAddApplyClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                        CommandParameter="{Binding .}"/>

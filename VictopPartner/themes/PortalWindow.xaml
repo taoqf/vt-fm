@@ -3,7 +3,12 @@
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
                     xmlns:local="clr-namespace:VictopPartner"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
+    <!--自定义机台主题颜色-->
+    <SolidColorBrush x:Key="MetroBGColor" Color="#3e287d"/>
+    <SolidColorBrush x:Key="MetroFGColor" Color="White"/>
+
     <local:HorizontalOffsetConverter x:Key="HorizontalOffsetConverter"/>
+    
     <LinearGradientBrush x:Key="borStyle" EndPoint="0,1" StartPoint="0,0">
         <GradientStop Color="#F510A7" Offset="1" />
         <GradientStop Color="#10F556" Offset="0" />
@@ -89,13 +94,11 @@
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
                 <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="LightGray"/>
-                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type controls:VicMenuItemNormal}}}"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
             </Trigger>
             <Trigger Property="Role" Value="TopLevelItem">
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="BorderBrush" Value="LightGray"/>
-                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type controls:VicMenuItemNormal}}}"/>
                 <Setter Property="Padding" Value="15,6"/>
             </Trigger>
             <Trigger Property="Role" Value="SubmenuHeader">
@@ -813,14 +816,12 @@
                                 Background="{TemplateBinding Background}">
                             <Grid>
                                 <controls:VicTextBlockNormal  
-                                                             
                                                              Style="{DynamicResource TextBlockMenu}" 
                                                              FontSize="{TemplateBinding FontSize}"
                                                              ToolTip="{Binding Description}"
                                                              Text="{Binding Icon}"
                                                              Margin="{TemplateBinding Padding}"
-                                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                           />
                             </Grid>
                         </Border>
                     </BulletDecorator>
@@ -830,7 +831,7 @@
     </Style>
     <Style x:Key="ListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -853,6 +854,7 @@
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <controls:VicRadioButtonNormal 
+                                                                 Background="{Binding PluginBG}" 
                                                                  FontWeight="Bold" 
                                                                  Foreground="{TemplateBinding Foreground}"
                                                                  Style="{DynamicResource ButtonFourthLevelMenu}" 
@@ -902,7 +904,7 @@
 
     <Style x:Key="LargeListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -974,7 +976,7 @@
 
     <Style x:Key="SmallListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -1438,8 +1440,8 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
     <!--单个图标字体专用按钮样式开始-->
     <Style x:Key="IconBtnStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
-        <Setter Property="MinHeight" Value="15"></Setter>
-        <Setter Property="MinWidth" Value="15"></Setter>
+        <Setter Property="MinHeight" Value="20"></Setter>
+        <Setter Property="MinWidth" Value="20"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
         <Setter Property="Foreground" Value="#9AD8F7"/>
         <!--修改模板属性-->

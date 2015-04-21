@@ -1381,11 +1381,11 @@ MessageBoxImage.Question);
                     _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
                     _title.VerticalContentAlignment = VerticalAlignment.Center;
                     _title.HorizontalContentAlignment = HorizontalAlignment.Center;
-                    _title.Background = Brushes.Gainsboro;
+                    _title.Background = mainWindow.FindResource("MetroBGColor") as Brush;
 
 
                     ListBox menuList = new ListBox();
-                    menuList.Background = Brushes.WhiteSmoke;
+                    menuList.Background = mainWindow.FindResource("MetroBGColor") as Brush;
                     ListBoxItem _item = new ListBoxItem();
                     menuList.Items.Add(_item);
                     menuList.Style = area.FindResource("addApply") as Style;
@@ -1457,10 +1457,10 @@ MessageBoxImage.Question);
                 _title.ParamsModel.AreaName = NewArea[i].AreaName;
                 _title.VerticalContentAlignment = VerticalAlignment.Center;
                 _title.HorizontalContentAlignment = HorizontalAlignment.Center;
-                _title.Background = Brushes.Gainsboro;
+                _title.Foreground = mainWindow.FindResource("MetroFGColor") as Brush;
               
                 WrapPanel pluginPanel = new WrapPanel();
-                pluginPanel.Background = Brushes.WhiteSmoke;
+                pluginPanel.Background = mainWindow.FindResource("MetroBGColor") as Brush;
                 pluginPanel.Uid = NewArea[i].AreaID;
                 pluginPanel.Orientation = Orientation.Horizontal;
                 ListBox addapplyStyle = new ListBox();
@@ -1985,12 +1985,12 @@ MessageBoxImage.Question);
                     _title.ParamsModel.AreaName = NewArea[i].AreaName;
                     _title.VerticalContentAlignment = VerticalAlignment.Center;
                     _title.HorizontalContentAlignment = HorizontalAlignment.Center;
-                    _title.Background = Brushes.Gainsboro;
+                    _title.Foreground = mainWindow.FindResource("MetroFGColor") as Brush;
+                 
 
-                    //ListBox menuListArea = new ListBox();
-                    //menuListArea.Style = area.FindResource("PanelStyle") as Style;
+                  
                     WrapPanel pluginPanel = new WrapPanel();
-                    pluginPanel.Background = Brushes.WhiteSmoke;
+                    pluginPanel.Background = mainWindow.FindResource("MetroBGColor") as Brush;
                     pluginPanel.Uid = NewArea[i].AreaID;
                     pluginPanel.Orientation = Orientation.Horizontal;
                     ListBox addapplyStyle = new ListBox();

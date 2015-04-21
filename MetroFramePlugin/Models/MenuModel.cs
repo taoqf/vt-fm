@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
@@ -148,6 +149,20 @@ namespace MetroFramePlugin.Models
                     icon = value;
                     RaisePropertyChanged("Icon");
                 }
+            }
+        }
+     
+        /// <summary>
+        /// 插件背景色
+        /// </summary>
+        private string pluginBG="#009600";
+        public Color PluginBG
+        {
+            get { return ColorTranslator.FromHtml(pluginBG) ; }
+            set
+            {
+                pluginBG =value.ToString();
+                RaisePropertyChanged("PluginBG");
             }
         }
 
