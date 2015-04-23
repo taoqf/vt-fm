@@ -9,49 +9,107 @@ using Victop.Server.Controls.Models;
 
 namespace MetroFramePlugin.Models
 {
-   public class MenuModel : ModelBase,ICloneable
+    public class MenuModel : ModelBase, ICloneable
     {
-       
+        private string id;
+        /// <summary>
+        /// 标识
+        /// </summary>
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+        private string parentId;
+
+        public string ParentId
+        {
+            get { return parentId; }
+            set { parentId = value; }
+        }
+        /// <summary>
+        /// 关联插件名称
+        /// </summary>
+        private string packageUrl;
+        public string PackageUrl
+        {
+            get
+            {
+                return packageUrl;
+            }
+            set
+            {
+                if (packageUrl != value)
+                {
+                    packageUrl = value;
+                    RaisePropertyChanged("PackageUrl");
+                }
+            }
+        }
+
+        /// <summary>
+        /// SystemId
+        /// </summary>
+        private string systemId;
+        public string SystemId
+        {
+            get
+            {
+                return systemId;
+            }
+            set
+            {
+                if (systemId != value)
+                {
+                    systemId = value;
+                    RaisePropertyChanged("SystemId");
+                }
+            }
+        }
+      
+        private string formId;
+        /// <summary>
+        /// 功能号
+        /// </summary>
+        public string FormId
+        {
+            get
+            {
+                return formId;
+            }
+            set
+            {
+                if (formId != value)
+                {
+                    formId = value;
+                    RaisePropertyChanged("FormId");
+                }
+            }
+        }
+        /// <summary>
+        /// 菜单名称
+        /// </summary>
+        [JsonProperty(PropertyName = "menu_name")]
         private string menuName;
         /// <summary>
         /// 菜单名称
         /// </summary>
-        [JsonProperty(PropertyName = "title")]
         public string MenuName
-        {
-            get { return menuName; }
-            set
-            {
-                menuName = value;
-                RaisePropertyChanged("MenuName");
-            }
-        }
-
-        private string menuCode;
-        [JsonIgnore]
-        public string MenuCode
         {
             get
             {
-                return menuCode;
+                return menuName;
             }
             set
             {
-                menuCode = value;
-                RaisePropertyChanged("MenuCode");
+                if (menuName != value)
+                {
+                    menuName = value;
+                    RaisePropertyChanged("MenuName");
+                }
             }
         }
-
-        /// <summary>
-        /// 资源名称
-        /// </summary>
-        [JsonProperty(PropertyName = "actionName")]
-        public string ResourceName
-        {
-            get;
-            set;
-        }
-
+      
         private string configsystemid;
         /// <summary>
         /// configsystemid
@@ -82,7 +140,7 @@ namespace MetroFramePlugin.Models
             }
         }
         private string uid;
-       [JsonProperty(PropertyName = "uid")]
+        [JsonProperty(PropertyName = "uid")]
         public string Uid
         {
             get { return uid; }
@@ -138,7 +196,7 @@ namespace MetroFramePlugin.Models
         /// <summary>
         /// 图标路径
         /// </summary>
-        private string icon = "\ue61f";
+        private string icon = "\ue7a6";
         public string Icon
         {
             get { return icon; }
@@ -151,79 +209,206 @@ namespace MetroFramePlugin.Models
                 }
             }
         }
-     
+
         /// <summary>
         /// 插件背景色
         /// </summary>
-        private string pluginBG="#009600";
-        public Color PluginBG
-        {
-            get { return ColorTranslator.FromHtml(pluginBG) ; }
-            set
-            {
-                pluginBG =value.ToString();
-                RaisePropertyChanged("PluginBG");
-            }
-        }
+        //private string pluginBG="#009600";
+        //public Color PluginBG
+        //{
+        //    get { return ColorTranslator.FromHtml(pluginBG) ; }
+        //    set
+        //    {
+        //        pluginBG =value.ToString();
+        //        RaisePropertyChanged("PluginBG");
+        //    }
+        //}
 
         /// <summary>
         /// 插件描述
         /// </summary>
         [JsonProperty(PropertyName = "description")]
+        private string description;
         public string Description
         {
-            get;
-            set;
+            get
+            {
+                return description;
+            }
+            set
+            {
+                if (description != value)
+                {
+                    description = value;
+                    RaisePropertyChanged("Description");
+                }
+            }
+        }
+        [JsonProperty(PropertyName = "authoritycode")]
+        private long authorityCode;
+        /// <summary>
+        /// 权限码
+        /// </summary>
+        public long AuthorityCode
+        {
+            get
+            {
+                return authorityCode;
+            }
+            set
+            {
+                if (authorityCode != value)
+                {
+                    authorityCode = value;
+                    RaisePropertyChanged("AuthorityCode");
+                }
+            }
         }
         /// <summary>
-        /// spaceId
+        /// 优先级
         /// </summary>
-        [JsonProperty(PropertyName = "spaceId")]
-        public string SpaceId
+        [JsonProperty(PropertyName = "priority")]
+        private int priority;
+        /// <summary>
+        /// 优先级
+        /// </summary>
+        public int Priority
         {
-            get;
-            set;
+            get
+            {
+                return priority;
+            }
+            set
+            {
+                if (priority != value)
+                {
+                    priority = value;
+                    RaisePropertyChanged("Priority");
+                }
+            }
         }
         /// <summary>
-        /// menuno
+        /// 是否单实例
         /// </summary>
-        [JsonProperty(PropertyName = "menuno")]
-        public string MenuNo
+        [JsonProperty(PropertyName = "is_single")]
+        private bool isSingle;
+        /// <summary>
+        /// 是否单实例
+        /// </summary>
+        public bool IsSingle
         {
-            get;
-            set;
+            get
+            {
+                return isSingle;
+            }
+            set
+            {
+                if (isSingle != value)
+                {
+                    isSingle = value;
+                    RaisePropertyChanged("IsSingle");
+                }
+            }
         }
         /// <summary>
-        /// 装配数据路径
+        /// 是否在线运行
         /// </summary>
-        [JsonProperty(PropertyName = "fitDataPath")]
-        public List<Dictionary<string, object>> FitDataPath
+        [JsonProperty(PropertyName = "is_offline")]
+        private bool isOffline;
+        /// <summary>
+        /// 是否在线运行
+        /// </summary>
+        public bool IsOffline
         {
-            get;
-            set;
+            get
+            {
+                return isOffline;
+            }
+            set
+            {
+                if (isOffline != value)
+                {
+                    isOffline = value;
+                    RaisePropertyChanged("IsOffline");
+                }
+            }
         }
         /// <summary>
-        /// CAD名称
+        /// 是否允许匿名访问
         /// </summary>
-        [JsonProperty(PropertyName = "actionCADName")]
-        public string ActionCADName
+        [JsonProperty(PropertyName = "is_guest")]
+        private bool isGuest;
+        /// <summary>
+        /// 是否允许匿名访问
+        /// </summary>
+        public bool IsGuest
         {
-            get;
-            set;
+            get
+            {
+                return isGuest;
+            }
+            set
+            {
+                if (isGuest != value)
+                {
+                    isGuest = value;
+                    RaisePropertyChanged("IsGuest");
+                }
+            }
         }
+
+        private List<MenuRoleAuth> roleAuthList;
+        public List<MenuRoleAuth> RoleAuthList
+        {
+            get
+            {
+                if (roleAuthList == null)
+                    roleAuthList = new List<MenuRoleAuth>();
+                return roleAuthList;
+            }
+            set
+            {
+                if (roleAuthList != value)
+                {
+                    roleAuthList = value;
+                    RaisePropertyChanged("RoleAuthList");
+                }
+            }
+        }
+
         #endregion
-/// <summary>
-/// 浅克隆类属性
-/// </summary>
-/// <returns></returns>
+        /// <summary>
+        /// 浅克隆类属性
+        /// </summary>
+        /// <returns></returns>
         public object Clone()
         {
             return this.MemberwiseClone();
         }
 
-       public MenuModel Copy()
-       {
-           return Clone() as MenuModel;
-       }
+        public MenuModel Copy()
+        {
+            return Clone() as MenuModel;
+        }
+    }
+    /// <summary>
+    /// 菜单角色授权
+    /// </summary>
+    public class MenuRoleAuth
+    {
+        private long authCode;
+
+        public long AuthCode
+        {
+            get { return authCode; }
+            set { authCode = value; }
+        }
+        private string role_No;
+
+        public string Role_No
+        {
+            get { return role_No; }
+            set { role_No = value; }
+        }
     }
 }

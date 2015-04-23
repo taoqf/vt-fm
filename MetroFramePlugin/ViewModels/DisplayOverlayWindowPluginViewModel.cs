@@ -194,7 +194,7 @@ namespace MetroFramePlugin.ViewModels
                        {
                            menumodel.MenuName = Plugin.PluginTitle;
                            menumodel.ActionType = Plugin.ShowType.ToString();
-                           menumodel.ResourceName = Plugin.PluginName;
+                          // menumodel.ResourceName = Plugin.PluginName;
                            menumodel.Uid = PluginInfo["ObjectId"].ToString();
                            menumodel.ShowType = Plugin.ShowType.ToString();
                            SystemFourthLevelMenuList.Add(menumodel);
@@ -205,7 +205,7 @@ namespace MetroFramePlugin.ViewModels
                            {
                                menumodel.MenuName = Plugin.PluginTitle.ToString().Substring(0, 10) + "...";
                                menumodel.ActionType = Plugin.ShowType.ToString();
-                               menumodel.ResourceName = Plugin.PluginName;
+                         //      menumodel.ResourceName = Plugin.PluginName;
                                menumodel.Uid = PluginInfo["ObjectId"].ToString();
                                menumodel.ShowType = Plugin.ShowType.ToString();
                            }
@@ -213,7 +213,7 @@ namespace MetroFramePlugin.ViewModels
                            {
                                menumodel.MenuName = Plugin.PluginTitle;
                                menumodel.ActionType = Plugin.ShowType.ToString();
-                               menumodel.ResourceName = Plugin.PluginName;
+                            //   menumodel.ResourceName = Plugin.PluginName;
                                menumodel.Uid = PluginInfo["ObjectId"].ToString();
                                menumodel.ShowType = Plugin.ShowType.ToString();
                            }
@@ -512,40 +512,7 @@ namespace MetroFramePlugin.ViewModels
        /// <summary>
        /// 打开Json菜单下的插件
        /// </summary>
-       private void OpenJsonMenuPlugin(MenuModel selectedFourthMenu)
-       {
-           if (TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)) != null)
-           {
-               TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)).IsSelected = true;
-               return;
-           }
-           if (selectedFourthMenu.ResourceName != null)
-           {
-               if (selectedFourthMenu.ActionType == "1")//启动插件
-               {
-                   DataMessageOperation pluginOp = new DataMessageOperation();
-                   Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                   paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
-                   paramDic.Add("configsystemid", selectedFourthMenu.ConfigSystemId);
-                   paramDic.Add("spaceid", selectedFourthMenu.SpaceId);
-                   paramDic.Add("menuno", selectedFourthMenu.MenuNo);
-                   paramDic.Add("menucode", selectedFourthMenu.MenuCode);
-                   // paramDic.Add("authoritycode", selectedFourthMenu.HomeId);
-                   paramDic.Add("fitdata", selectedFourthMenu.FitDataPath);
-                   paramDic.Add("cadname", selectedFourthMenu.ActionCADName);
-                   PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
-                   if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
-                   {
-                       PluginShow(pluginModel, selectedFourthMenu.MenuName);
-                   }
-                   else
-                   {
-                       VicMessageBoxNormal.Show(pluginModel.ErrorMsg);
-                       return;
-                   }
-               }
-           }
-       }
+    
        #endregion
 
        #region 加载插件

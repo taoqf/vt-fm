@@ -1,31 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Configuration;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Navigation;
-using System.Xml.Linq;
-using GalaSoft.MvvmLight.Command;
-using MetroFramePlugin.Models;
-using MetroFramePlugin.Views;
-using Victop.Frame.CoreLibrary;
-using Victop.Frame.DataMessageManager;
-using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.Units;
-using Victop.Server.Controls;
 using Victop.Server.Controls.Models;
+using GalaSoft.MvvmLight.Command;
+using Victop.Frame.CoreLibrary;
+using Victop.Frame.CoreLibrary.Models;
+using Victop.Frame.PublicLib.Helpers;
+using System.Windows;
+using System.Configuration;
+using System.Windows.Controls;
 using Victop.Wpf.Controls;
-using System.Windows.Markup;
+using Victop.Server.Controls;
+using MetroFramePlugin.Models;
+using System.Collections.ObjectModel;
+using System.Reflection;
+using MetroFramePlugin.Views;
+using System.Windows.Navigation;
+using System.IO;
+using System.Text;
+using Victop.Frame.DataMessageManager;
 using System.Xml;
-using System.Windows.Controls.Primitives;
+using System.Text.RegularExpressions;
+
 
 namespace MetroFramePlugin.ViewModels
 {
@@ -68,6 +69,10 @@ namespace MetroFramePlugin.ViewModels
         /// 本地插件集合
         /// </summary>
         private ObservableCollection<MenuModel> localMenuListEx = new ObservableCollection<MenuModel>();
+        /// <summary>
+        /// 应用程序版本编号
+        /// </summary>
+        private string appVersionCode;
         #endregion
 
         #region 属性
@@ -188,7 +193,6 @@ namespace MetroFramePlugin.ViewModels
                     //browser.Source = new Uri("http://www.baidu.com");
                     homeItem.Content = browser;
                     tabItemList.Add(homeItem);
-
                 }
                 return tabItemList;
             }
@@ -239,6 +243,28 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         /// <summary>
+        /// 用户角色
+        /// </summary>
+        private string userRole;
+        /// <summary>
+        /// 用户角色
+        /// </summary>
+        public string UserRole
+        {
+            get
+            {
+                return userRole;
+            }
+            set
+            {
+                if (userRole != value)
+                {
+                    userRole = value;
+                    RaisePropertyChanged("UserRole");
+                }
+            }
+        }
+        /// <summary>
         /// 用户头像
         /// </summary>
         public string UserImg
@@ -274,13 +300,29 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-
+        /// <summary>
+        /// 应用程序版本编号
+        /// </summary>
+        public string AppVersionCode
+        {
+            get
+            {
+                return appVersionCode;
+            }
+            set
+            {
+                if (appVersionCode != value)
+                {
+                    appVersionCode = value;
+                    RaisePropertyChanged("AppVersionCode");
+                }
+            }
+        }
         #endregion
 
         #region 命令
 
         #region 窗体加载命令
-
         /// <summary>窗体加载命令 </summary>
         public ICommand gridMainLoadedCommand
         {
@@ -290,8 +332,6 @@ namespace MetroFramePlugin.ViewModels
                 {
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
-                    mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
-                    _panel = mainWindow.FindName("bigPanel") as Canvas;//添加新区域面板
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
                     Rect rect = SystemParameters.WorkArea;
@@ -299,15 +339,16 @@ namespace MetroFramePlugin.ViewModels
                     mainWindow.MaxHeight = rect.Height;
                     mainWindow.WindowState = WindowState.Maximized;
                     ChangeFrameWorkTheme();
-                    //LoadMenuListLocal();
+                    AppVersionCode = GetAppVersion();
                     LoadJsonMenuListLocal();
                     OverlayWindow overlayWin = new OverlayWindow();
-                    OverlayWindow.VicTabCtrl = mainTabControl;
                     overlayWin.Show();
                     UserLogin();
+
                 });
             }
         }
+
         #region 插件按钮鼠标进入事件命令
         /// 
         /// <summary>
@@ -473,7 +514,6 @@ namespace MetroFramePlugin.ViewModels
         /// <summary>窗体关闭命令 </summary>
         public ICommand btnCloseClickCommand
         {
-
             get
             {
                 return new RelayCommand(() =>
@@ -481,7 +521,8 @@ namespace MetroFramePlugin.ViewModels
                     MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
                     {
-                        //TabItemList.Clear();
+                        DataMessageOperation dataMsgOp = new DataMessageOperation();
+                        dataMsgOp.RemoveDataLock();
                         mainWindow.Close();
                         FrameInit.GetInstance().FrameUnload();
                         GC.Collect();
@@ -532,14 +573,12 @@ namespace MetroFramePlugin.ViewModels
                 TabItemList[0].Content = pluginContainer;
                 TabItemList[0].Header = "个人收藏";
             }
-
             MenuModel menuModel = (MenuModel)x;
             SystemThirdLevelMenuList = menuModel.SystemMenuList;
             if (SystemThirdLevelMenuList.Count > 0)
             {
                 SelectedThirdMenuModel = SystemThirdLevelMenuList[0];
                 SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
-
             }
 
             SelectedTabItem = TabItemList[0];
@@ -652,14 +691,62 @@ namespace MetroFramePlugin.ViewModels
 
         #region 自定义方法
 
-        #region 加载企业云标准化菜单
+        #region 加载标准化菜单
         /// <summary>加载标准化菜单</summary>
         private void LoadStandardMenu()
         {
-            //LoadMenuListEnterprise();已经删除
+            LoadMenuListEnterprise();
+        }
+        /// <summary>加载企业云菜单集合 </summary>
+        private void LoadMenuListEnterprise()
+        {
+            BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
+            SystemMenuListEnterprise.Clear();
+            if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
+            {
+                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.Parent_no.Equals("0") || string.IsNullOrEmpty(it.Parent_no)))
+                {
+                    MenuModel menuModel = GetMenuModel(item);
+                    menuModel = CreateMenuList(item.Menu_no, resourceInfo.ResourceMnenus, menuModel);
+                    SystemMenuListEnterprise.Add(menuModel);
+                }
+            }
+            GetStandardMenuList(SystemMenuListEnterprise);
+        }
+        /// <summary>创建完整的菜单模型 </summary>
+        private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
+        {
+            foreach (MenuInfo item in fullMenuList.Where(it => it.Parent_no.Equals(parentMenu)))
+            {
+                MenuModel menuModel = GetMenuModel(item);
+                menuModel = CreateMenuList(item.Menu_no, fullMenuList, menuModel);
+                parentModel.SystemMenuList.Add(menuModel);
+            }
+            return parentModel;
+        }
+        /// <summary>获得菜单模型实例</summary>
+        private MenuModel GetMenuModel(MenuInfo item)
+        {
+            MenuModel menuModel = new MenuModel();
+            menuModel.Id = item.Id;
+            menuModel.MenuName = item.Menu_name;
+            menuModel.SystemId = item.Systemid;
+            menuModel.FormId = item.Formid;
+            menuModel.ShowType = "0";
+            menuModel.PackageUrl = item.Package_url;
+            menuModel.ShowType = string.IsNullOrEmpty(item.Show_type) ? "1" : item.Show_type;
+            menuModel.Icon = !string.IsNullOrEmpty(item.Icon) ? Regex.Unescape(item.Icon) : item.Icon;
+            menuModel.Description = item.Description;
+            if (item.Roles != null && item.Roles.Count > 0)
+            {
+                foreach (MenuRoleInfo roleitem in item.Roles)
+                {
+                    menuModel.RoleAuthList.Add(new MenuRoleAuth() { Role_No = roleitem.Role_no, AuthCode = roleitem.Auth_code });
+                }
+            }
+            return menuModel;
         }
         #endregion
-
 
         #region 加载本地Json菜单集合 (2014-08-29 新增)
         /// <summary>加载本地Json菜单集合 </summary>
@@ -675,9 +762,10 @@ namespace MetroFramePlugin.ViewModels
             }
             this.SystemMenuListLocal = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             localMenuListEx = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
-            //if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
-            //{
-            //    this.SystemMenuListLocal.Clear();
+            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+            {
+                //this.SystemMenuListLocal.Clear();
+            }
 
             ///2015-03-05:得到弹窗中一、二级树型菜单并绑定到前台
             foreach (MenuModel menuModel in SystemMenuListLocal)
@@ -704,41 +792,96 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         private void OpenJsonMenuPlugin(MenuModel selectedFourthMenu)
         {
+            MenuRoleAuth roleAuth = selectedFourthMenu.RoleAuthList.FirstOrDefault(it => it.Role_No.Equals(UserRole));
+            if (roleAuth != null)
+            {
+                selectedFourthMenu.AuthorityCode = roleAuth.AuthCode;
+            }
+            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+            {
+                if (roleAuth == null)
+                {
+                    VicMessageBoxNormal.Show("当前角色无启动此功能的权限");
+                    return;
+                }
+            }
             if (TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)) != null)
             {
                 TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)).IsSelected = true;
                 return;
             }
-            if (selectedFourthMenu.ResourceName != null)
+            if (selectedFourthMenu.PackageUrl != null)
             {
-                if (selectedFourthMenu.ActionType == "1")//启动插件
+                DataMessageOperation pluginOp = new DataMessageOperation();
+                Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                paramDic.Add("systemid", selectedFourthMenu.SystemId);
+                paramDic.Add("configsystemid", "11");
+                paramDic.Add("formid", selectedFourthMenu.FormId);
+                paramDic.Add("authoritycode", selectedFourthMenu.AuthorityCode);
+                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.PackageUrl, paramDic);
+                if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {
-                    DataMessageOperation pluginOp = new DataMessageOperation();
-                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    paramDic.Add("systemid", selectedFourthMenu.BzSystemId);
-                    paramDic.Add("configsystemid", selectedFourthMenu.ConfigSystemId);
-                    paramDic.Add("spaceid", selectedFourthMenu.SpaceId);
-                    paramDic.Add("menuno", selectedFourthMenu.MenuNo);
-                    paramDic.Add("menucode", selectedFourthMenu.MenuCode);
-                    // paramDic.Add("authoritycode", selectedFourthMenu.HomeId);
-                    paramDic.Add("fitdata", selectedFourthMenu.FitDataPath);
-                    paramDic.Add("cadname", selectedFourthMenu.ActionCADName);
-                    PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.ResourceName, paramDic);
-                    if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
-                    {
-                        PluginShow(pluginModel, selectedFourthMenu.MenuName);
-                    }
-                    else
-                    {
-                        VicMessageBoxNormal.Show(pluginModel.ErrorMsg);
-                        return;
-                    }
+                    PluginShow(pluginModel, selectedFourthMenu.MenuName);
+                }
+                else
+                {
+                    VicMessageBoxNormal.Show(pluginModel.ErrorMsg);
+                    return;
                 }
             }
         }
         #endregion
 
-
+        #region 转换为标准的四级菜单
+        /// <summary>获取标准的菜单集合 </summary>
+        private void GetStandardMenuList(ObservableCollection<MenuModel> disStandardMenuList)
+        {
+            foreach (MenuModel secondLevelMenu in disStandardMenuList)
+            {
+                GetStandardSecondLevelMenu(secondLevelMenu);
+            }
+        }
+        /// <summary>获取标准的二级菜单</summary>
+        private void GetStandardSecondLevelMenu(MenuModel secondLevelMenu)
+        {
+            MenuModel newThirdLevelMenu = new MenuModel();
+            newThirdLevelMenu.Id = new Guid().ToString();
+            for (int i = secondLevelMenu.SystemMenuList.Count - 1; i >= 0; i--)
+            {
+                MenuModel thirdLevelMenu = secondLevelMenu.SystemMenuList[i];
+                if (thirdLevelMenu.SystemMenuList.Count == 0)
+                {
+                    secondLevelMenu.SystemMenuList.Remove(thirdLevelMenu);
+                    thirdLevelMenu.ParentId = newThirdLevelMenu.Id;
+                    newThirdLevelMenu.SystemMenuList.Add(thirdLevelMenu);
+                }
+                else
+                {
+                    GetStandardThirdLevelMenu(thirdLevelMenu);
+                }
+            }
+            if (newThirdLevelMenu.SystemMenuList.Count > 0)
+            {
+                newThirdLevelMenu.Id = new Guid().ToString();
+                newThirdLevelMenu.MenuName = "其他";
+            }
+            secondLevelMenu.SystemMenuList.Add(newThirdLevelMenu);
+        }
+        /// <summary>获取标准的三级菜单</summary>
+        private void GetStandardThirdLevelMenu(MenuModel thirdLevelMenu)
+        {
+            for (int i = thirdLevelMenu.SystemMenuList.Count - 1; i >= 0; i--)
+            {
+                MenuModel fourthLevelMenu = thirdLevelMenu.SystemMenuList[i];
+                foreach (MenuModel item in fourthLevelMenu.SystemMenuList)
+                {
+                    thirdLevelMenu.SystemMenuList.Remove(fourthLevelMenu);
+                    item.ParentId = thirdLevelMenu.Id;
+                    thirdLevelMenu.SystemMenuList.Add(item);
+                }
+            }
+        }
+        #endregion
 
         #region 加载插件
         private void PluginShow(PluginModel pluginModel, string HeaderTitle = null)
@@ -751,10 +894,9 @@ namespace MetroFramePlugin.ViewModels
                     case 0:
                         Window pluginWin = pluginModel.PluginInterface.StartWindow;
                         pluginWin.Uid = pluginModel.ObjectId;
-                        //pluginWin.Owner = mainWindow;
+                        pluginWin.Owner = mainWindow;
                         ActivePluginNum = pluginOp.GetPluginInfo().Count;
                         pluginWin.Show();
-                        //SendPluginCloseMessage(pluginModel);
                         break;
                     case 1:
                         UserControl pluginCtrl = pluginModel.PluginInterface.StartControl;
@@ -778,7 +920,15 @@ namespace MetroFramePlugin.ViewModels
                 VicMessageBoxNormal.Show(ex.Message);
             }
         }
-
+        /// <summary>
+        /// 发送关闭插件消息
+        /// </summary>
+        /// <param name="pluginModel"></param>
+        private static void SendPluginCloseMessage(PluginModel pluginModel)
+        {
+            DataMessageOperation pluginOp = new DataMessageOperation();
+            pluginOp.StopPlugin(pluginModel.ObjectId);
+        }
         #endregion
 
         #region 用户登录
@@ -798,9 +948,8 @@ namespace MetroFramePlugin.ViewModels
                 if (userDic != null)
                 {
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
-                    this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString
-
-                    (userDic["ReplyContent"].ToString(), "UserImg"));
+                    userRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
+                    this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 isFirstLogin = false;
                 LoadStandardMenu();
@@ -945,9 +1094,7 @@ namespace MetroFramePlugin.ViewModels
                     }
                     if (!pluginExistFlag)
                     {
-                        MessageBoxResult result = VicMessageBoxNormal.Show("插件不可用，是否卸载？", "提醒", MessageBoxButton.YesNo,
-
-MessageBoxImage.Question);
+                        MessageBoxResult result = VicMessageBoxNormal.Show("插件不可用，是否卸载？", "提醒", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (result == MessageBoxResult.Yes)
                         {
                             DataMessageOperation dataOp = new DataMessageOperation();
@@ -971,6 +1118,22 @@ MessageBoxImage.Question);
             }
         }
         #endregion
+
+        #region 设置当前通道信息
+        /// <summary>
+        /// 设置当前通道信息
+        /// </summary>
+        /// <param name="GaleryKey">通道key值</param>
+        private void SetCurrentGallery(string GaleryKey)
+        {
+            string messageType = "GalleryService.SetGalleryInfo";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("GalleryKey", GaleryKey);
+            DataMessageOperation messageOp = new DataMessageOperation();
+            messageOp.SendAsyncMessage(messageType, contentDic);
+        }
+        #endregion
+
         #endregion
 
         #region 关于WebBrowser相关的操作
@@ -1002,6 +1165,39 @@ MessageBoxImage.Question);
             if (objComWebBrowser == null) return;
 
             objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { Hide });
+        }
+        #endregion
+
+        #region 版本相关
+        /// <summary>
+        /// 获取应用程序版本
+        /// </summary>
+        /// <returns></returns>
+        private string GetAppVersion()
+        {
+            string versionStr = "已是最新版本";
+            try
+            {
+                XmlDocument xml = new XmlDocument();
+                string appPath = AppDomain.CurrentDomain.BaseDirectory;
+                if (File.Exists(Path.Combine(appPath, "AutoUpdate.exe.config")))
+                {
+                    xml.Load(Path.Combine(appPath, "AutoUpdate.exe.config"));
+                    XmlElement xnode = (XmlElement)xml.SelectSingleNode("/configuration/appSettings/add[@key='Version']");
+                    string UpDate = xnode.GetAttribute("value");
+                    return string.Format("应用程序(版本号:{0}){1}", UpDate, versionStr);
+                }
+                else
+                {
+                    return string.Format("应用程序{0}", versionStr);
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.ErrorFormat("获取应用程序版本错误：{0}", ex.InnerException != null ? ex.InnerException.Message : ex.Message);
+                return string.Format("应用程序{0}", versionStr);
+            }
+
         }
         #endregion
 
@@ -1489,7 +1685,7 @@ MessageBoxImage.Question);
                     pluginlist.ItemsSource = NewArea[i].PluginList;
                     if (NewArea[i].MenuForm == "normal")
                     {
-                        pluginlist.Style = mainWindow.FindResource("ListBoxFourthMenuListStyle") as Style;
+                        pluginlist.Style = mainWindow.FindResource("MetroListBoxFourthMenuListStyle") as Style;
                     }
                     else if (NewArea[i].MenuForm == "large")
                     {
@@ -1785,7 +1981,7 @@ MessageBoxImage.Question);
                             if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
                             {
                                 ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                                if (pluginArea != null) pluginArea.Style = mainWindow.FindResource("ListBoxFourthMenuListStyle") as Style;
+                                if (pluginArea != null) pluginArea.Style = mainWindow.FindResource("MetroListBoxFourthMenuListStyle") as Style;
                                 ListBox AddApplyArea = wrapPanelArea.Children[1] as ListBox;
                                 AddApplyArea.Style = area.FindResource("addApply") as Style;
 
@@ -2021,7 +2217,7 @@ MessageBoxImage.Question);
                         pluginlist.ItemsSource = NewArea[i].PluginList;
                         if (NewArea[i].MenuForm == "normal")
                         {
-                            pluginlist.Style = mainWindow.FindResource("ListBoxFourthMenuListStyle") as Style;
+                            pluginlist.Style = mainWindow.FindResource("MetroListBoxFourthMenuListStyle") as Style;
                         }
                         else if (NewArea[i].MenuForm == "large")
                         {
