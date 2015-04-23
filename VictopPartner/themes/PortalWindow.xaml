@@ -4,6 +4,7 @@
                     xmlns:local="clr-namespace:VictopPartner"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
     <!--自定义机台主题颜色开始-->
+    <local:StringToBackgroundConverter x:Key="StringToBackgroundConverter"/>
     <SolidColorBrush x:Key="MetroBGColor" Color="#3e287d"/>
     <SolidColorBrush x:Key="MetroFGColor" Color="White"/>
     <Style x:Key="MetroListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
@@ -24,14 +25,14 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border Name="Bd"  BorderThickness="0"  Background="{TemplateBinding Background}">
+                                <Border Name="Bd"  BorderThickness="0"  Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="80"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
                                         <controls:VicRadioButtonNormal 
-                                                                 Background="{Binding PluginBG}" 
+                                                               
                                                                  FontWeight="Bold" 
                                                                  Foreground="{TemplateBinding Foreground}"
                                                                  Style="{DynamicResource ButtonFourthLevelMenu}" 
@@ -53,18 +54,12 @@
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Effect">
                                             <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="0" Color="#3e287d"/>
+                                                <DropShadowEffect ShadowDepth="0" Color="Blue"/>
                                             </Setter.Value>
                                         </Setter>
-                                        <Setter Property="Background" TargetName="Bd" Value="Transparent"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
-                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
                                         <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
                                     </Trigger>
-                                    <!--<Trigger  Property="IsSelected" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                        <Setter Property="Foreground" Value="#19bb9b"/>
-                                    </Trigger>-->
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -100,7 +95,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border Name="Bd"  BorderThickness="0"  Background="{TemplateBinding Background}">
+                                <Border Name="Bd"  BorderThickness="0" Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="100"/>
@@ -126,15 +121,13 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource PluginBgColor}"/>
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource PluginBgColor}"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
-                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect ShadowDepth="0" Color="Blue"/>
+                                            </Setter.Value>
+                                        </Setter>
                                         <Setter Property="Cursor" Value="Hand"/>
-                                    </Trigger>
-                                    <Trigger  Property="IsSelected" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource PluginBgColor}"/>
-                                        <Setter Property="Foreground" Value="#19bb9b"/>
+                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -172,7 +165,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border Name="Bd"  BorderThickness="0"  Background="{TemplateBinding Background}">
+                                <Border Name="Bd"  BorderThickness="0"  Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="60"/>
@@ -198,15 +191,13 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource PluginBgColor}"/>
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource PluginBgColor}"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
-                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect ShadowDepth="0" Color="Blue"/>
+                                            </Setter.Value>
+                                        </Setter>
                                         <Setter Property="Cursor" Value="Hand"/>
-                                    </Trigger>
-                                    <Trigger  Property="IsSelected" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource PluginBgColor}"/>
-                                        <Setter Property="Foreground" Value="#19bb9b"/>
+                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -227,10 +218,6 @@
     </Style>
 
     <!--自定义机台主题颜色结束-->
-
-
-
-
 
     <local:HorizontalOffsetConverter x:Key="HorizontalOffsetConverter"/>
     

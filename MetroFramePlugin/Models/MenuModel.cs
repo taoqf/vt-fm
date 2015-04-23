@@ -4,8 +4,11 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Media;
 using Newtonsoft.Json;
 using Victop.Server.Controls.Models;
+using Brush = System.Drawing.Brush;
+using Color = System.Drawing.Color;
 
 namespace MetroFramePlugin.Models
 {
@@ -213,16 +216,20 @@ namespace MetroFramePlugin.Models
         /// <summary>
         /// 插件背景色
         /// </summary>
-        //private string pluginBG="#009600";
-        //public Color PluginBG
-        //{
-        //    get { return ColorTranslator.FromHtml(pluginBG) ; }
-        //    set
-        //    {
-        //        pluginBG =value.ToString();
-        //        RaisePropertyChanged("PluginBG");
-        //    }
-        //}
+        private string pluginBG = "#009600";
+        public string PluginBG
+        {
+            get
+            {
+
+                return pluginBG;
+            }
+            set
+            {
+                pluginBG = value;
+                RaisePropertyChanged("PluginBG");
+            }
+        }
 
         /// <summary>
         /// 插件描述
