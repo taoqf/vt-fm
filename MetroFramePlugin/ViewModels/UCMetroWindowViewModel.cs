@@ -2049,7 +2049,23 @@ namespace MetroFramePlugin.ViewModels
                             if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
                             {
                                 ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                                pluginArea.Style = area.FindResource("PopupMenuDelListPluginStyle") as Style;
+                                AreaMenu NowArea = new AreaMenu();
+                                NowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
+
+                                if (NowArea.MenuForm == "normal")
+                                {
+                                    pluginArea.Style = area.FindResource("PopupMenuDelListPluginStyle") as Style;
+                                }
+                                else if (NowArea.MenuForm == "large")
+                                {
+                                    pluginArea.Style = area.FindResource("PopupMenuDelListLargePluginStyle") as Style;
+                                }
+                                else if (NowArea.MenuForm == "small")
+                                {
+                                    pluginArea.Style = area.FindResource("PopupMenuDelListSmallPluginStyle") as Style;
+                                }
+
+                               
                             }
                             else
                             {
