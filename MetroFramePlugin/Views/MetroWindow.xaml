@@ -5,7 +5,7 @@
         xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels"
         xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
         xmlns:local="clr-namespace:MetroFramePlugin"
-        Name="mainWindow" Style="{DynamicResource ShadowWindow}">
+        Name="mainWindow" Style="{DynamicResource ShadowWindow}"  Background="#2e3c69">
     <Window.Resources>
         <local:ImgeNameToBackgroundConverter x:Key="imgeNameToBackgroundConverter"/>
     </Window.Resources>
@@ -66,7 +66,7 @@
             </Grid.RowDefinitions>
             <Grid Name="gridTitle" Grid.Row="0"  Grid.Column="1">
                 <!--Width="260"-->
-                <StackPanel Orientation="Horizontal" Style="{DynamicResource MainFrmUserStackPanelStyle}">
+                <StackPanel Orientation="Horizontal"  Style="{DynamicResource MainFrmUserStackPanelStyle}">
                     <Grid Name="gridSearch"  Style="{DynamicResource MainFrmSearchGridStyle}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
