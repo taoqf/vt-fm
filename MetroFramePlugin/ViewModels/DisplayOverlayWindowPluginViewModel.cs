@@ -193,7 +193,7 @@ namespace MetroFramePlugin.ViewModels
                        if (Plugin.ShowType == 0)//窗口
                        {
                            menumodel.MenuName = Plugin.PluginTitle;
-                           menumodel.ActionType = Plugin.ShowType.ToString();
+                          // menumodel.ActionType = Plugin.ShowType.ToString();
                           // menumodel.ResourceName = Plugin.PluginName;
                            menumodel.Uid = PluginInfo["ObjectId"].ToString();
                            menumodel.ShowType = Plugin.ShowType.ToString();
@@ -204,7 +204,7 @@ namespace MetroFramePlugin.ViewModels
                            if (Plugin.PluginTitle.Length >= 10)
                            {
                                menumodel.MenuName = Plugin.PluginTitle.ToString().Substring(0, 10) + "...";
-                               menumodel.ActionType = Plugin.ShowType.ToString();
+                         //      menumodel.ActionType = Plugin.ShowType.ToString();
                          //      menumodel.ResourceName = Plugin.PluginName;
                                menumodel.Uid = PluginInfo["ObjectId"].ToString();
                                menumodel.ShowType = Plugin.ShowType.ToString();
@@ -212,7 +212,7 @@ namespace MetroFramePlugin.ViewModels
                            else
                            {
                                menumodel.MenuName = Plugin.PluginTitle;
-                                menumodel.ActionType = Plugin.ShowType.ToString();
+                            //    menumodel.ActionType = Plugin.ShowType.ToString();
                             //   menumodel.ResourceName = Plugin.PluginName;
                                menumodel.Uid = PluginInfo["ObjectId"].ToString();
                                menumodel.ShowType = Plugin.ShowType.ToString();

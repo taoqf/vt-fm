@@ -22,6 +22,7 @@ using System.Text;
 using Victop.Frame.DataMessageManager;
 using System.Xml;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 
 namespace PortalFramePlugin.ViewModels
@@ -43,6 +44,7 @@ namespace PortalFramePlugin.ViewModels
         private ObservableCollection<VicTabItemNormal> tabItemList;
         private VicTabItemNormal selectedTabItem;
         private VicPopup TitlePopup;
+        private bool poPupState;
         /// <summary>是否首次登录 </summary>
         private bool isFirstLogin = true;
         /// <summary>
@@ -53,6 +55,7 @@ namespace PortalFramePlugin.ViewModels
         /// 用户头像
         /// </summary>
         private string userImg;
+        private string userCode;
         /// <summary>
         /// 活动插件数目
         /// </summary>
@@ -258,6 +261,21 @@ namespace PortalFramePlugin.ViewModels
                 }
             }
         }
+        public string UserCode
+        {
+            get
+            {
+                return userCode;
+            }
+            set
+            {
+                if (userCode != value)
+                {
+                    userCode = value;
+                    RaisePropertyChanged("UserCode");
+                }
+            }
+        }
         /// <summary>
         /// 用户头像
         /// </summary>
@@ -309,6 +327,24 @@ namespace PortalFramePlugin.ViewModels
                 {
                     appVersionCode = value;
                     RaisePropertyChanged("AppVersionCode");
+                }
+            }
+        }
+        /// <summary>
+        /// 点击头像状态
+        /// </summary>
+        public bool PoPupState
+        {
+            get
+            {
+                return poPupState;
+            }
+            set
+            {
+                if (poPupState != value)
+                {
+                    poPupState = value;
+                    RaisePropertyChanged("PoPupState");
                 }
             }
         }
@@ -460,14 +496,8 @@ namespace PortalFramePlugin.ViewModels
                     //    UserLogin();
                     //}
                     //UserLogin();
-                    if (TitlePopup.IsOpen == true)
-                    {
-                        TitlePopup.IsOpen = false;
-                    }
-                    else
-                    {
-                        TitlePopup.IsOpen = true;
-                    }
+                  
+                    PoPupState = true;
                 });
             }
         }
@@ -480,7 +510,7 @@ namespace PortalFramePlugin.ViewModels
                 return new RelayCommand(() =>
                 {
 
-                    TitlePopup.IsOpen = false;
+                    PoPupState = false;
                     UserLogin();
                 });
             }
@@ -493,9 +523,10 @@ namespace PortalFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
-                    TitlePopup.IsOpen = false;
-
+                    PoPupState = false;
+                    Process proc = new System.Diagnostics.Process();
+                    proc.StartInfo.FileName = string.Format("{0}?userCode={1}", ConfigurationManager.AppSettings["updatepwdhttp"],UserCode);
+                    proc.Start();
                 });
             }
         }
@@ -962,6 +993,7 @@ namespace PortalFramePlugin.ViewModels
                 {
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
                     userRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
+                    UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
                     this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 isFirstLogin = false;

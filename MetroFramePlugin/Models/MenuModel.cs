@@ -12,7 +12,7 @@ using Color = System.Drawing.Color;
 
 namespace MetroFramePlugin.Models
 {
-    public class MenuModel : ModelBase, ICloneable
+    public class MenuModel : PropertyModelBase
     {
         private string id;
         /// <summary>
@@ -33,6 +33,7 @@ namespace MetroFramePlugin.Models
         /// <summary>
         /// 关联插件名称
         /// </summary>
+       [JsonProperty(PropertyName = "package_url")]
         private string packageUrl;
         public string PackageUrl
         {
@@ -179,22 +180,27 @@ namespace MetroFramePlugin.Models
 
         #region 2014-08-28 新增（读取Json格式菜单）
         /// <summary>
-        /// 插件类型（0：组件||1：插件）
+        /// 展示方式
         /// </summary>
-        [JsonProperty(PropertyName = "actionType")]
-        public string ActionType
-        {
-            get;
-            set;
-        }
+        [JsonProperty(PropertyName = "show_type")]
+        private string showType;
         /// <summary>
-        /// 展示方式（0：窗口||1：UserControl）
+        /// 展示方式
         /// </summary>
-        [JsonProperty(PropertyName = "showType")]
         public string ShowType
         {
-            get;
-            set;
+            get
+            {
+                return showType;
+            }
+            set
+            {
+                if (showType != value)
+                {
+                    showType = value;
+                    RaisePropertyChanged("ShowType");
+                }
+            }
         }
         /// <summary>
         /// 图标路径
