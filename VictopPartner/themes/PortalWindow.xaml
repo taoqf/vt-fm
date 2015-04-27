@@ -31,8 +31,7 @@
                                             <RowDefinition Height="80"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
-                                        <controls:VicRadioButtonNormal 
-                                                               
+                                        <controls:VicRadioButtonNormal
                                                                  FontWeight="Bold" 
                                                                  Foreground="{TemplateBinding Foreground}"
                                                                  Style="{DynamicResource ButtonFourthLevelMenu}" 
@@ -1439,7 +1438,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"  BorderThickness="0" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Path x:Name="PART_Path" Fill="{DynamicResource MainFrmUserNameColor}" HorizontalAlignment="Center" Stroke="{DynamicResource MainFrmUserNameColor}" VerticalAlignment="Center" Height="18.12" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Width="17.759">
+                        <Path x:Name="PART_Path" Fill="{DynamicResource MainFrmUserNameColor}" HorizontalAlignment="Center" Stroke="{DynamicResource MainFrmUserNameColor}" VerticalAlignment="Center" Height="13" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Width="12">
                             <Path.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
