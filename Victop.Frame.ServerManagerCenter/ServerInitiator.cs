@@ -294,10 +294,7 @@ namespace Victop.Frame.ServerManagerCenter
                         activePluginInfo.AppId = pluginName;
                         activePluginInfo.PluginInstance = plugin;
                         ActivePluginManager activePluginManager = new ActivePluginManager();
-                        if (!plugin.SystemPlugin.Equals(0))
-                        {
-                            activePluginManager.AddPlugin(activePluginInfo);
-                        }
+                        activePluginManager.AddPlugin(activePluginInfo);
                         validPlugin = true;
                     }
                 }
@@ -381,14 +378,21 @@ namespace Victop.Frame.ServerManagerCenter
         private bool IsValidPlugin(Type type)
         {
             bool ret = false;
-            Type[] interfaces = type.GetInterfaces();
-            foreach (Type theInterface in interfaces)
+            try
             {
-                if (theInterface.FullName == "Victop.Server.Controls.IPlugin")
+                Type[] interfaces = type.GetInterfaces();
+                foreach (Type theInterface in interfaces)
                 {
-                    ret = true;
-                    break;
+                    if (theInterface.FullName == "Victop.Server.Controls.IPlugin")
+                    {
+                        ret = true;
+                        break;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.InfoFormat("验证有效插件错误:{0}", ex.Message);
             }
             return ret;
         }

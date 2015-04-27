@@ -51,7 +51,7 @@ namespace UserLoginPlugin
 
         public UserControl StartControl
         {
-            get { throw new NotImplementedException(); }
+            get { return new UCUserLogin(); }
         }
 
 
