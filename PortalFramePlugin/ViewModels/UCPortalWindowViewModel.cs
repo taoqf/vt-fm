@@ -42,6 +42,7 @@ namespace PortalFramePlugin.ViewModels
         private MenuModel selectedThirdMenuModel;
         private ObservableCollection<VicTabItemNormal> tabItemList;
         private VicTabItemNormal selectedTabItem;
+        private VicPopup TitlePopup;
         /// <summary>是否首次登录 </summary>
         private bool isFirstLogin = true;
         /// <summary>
@@ -326,6 +327,7 @@ namespace PortalFramePlugin.ViewModels
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
+                    TitlePopup = mainWindow.FindName("TitlePopup") as VicPopup;
                     mainWindow.MouseDown += mainWindow_MouseDown;
                     Rect rect = SystemParameters.WorkArea;
                     mainWindow.MaxWidth = rect.Width;
@@ -457,12 +459,47 @@ namespace PortalFramePlugin.ViewModels
                     //{
                     //    UserLogin();
                     //}
+                    //UserLogin();
+                    if (TitlePopup.IsOpen == true)
+                    {
+                        TitlePopup.IsOpen = false;
+                    }
+                    else
+                    {
+                        TitlePopup.IsOpen = true;
+                    }
+                });
+            }
+        }
+        #endregion
+        #region 切换用户命令
+        public ICommand btnChangeUserClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+
+                    TitlePopup.IsOpen = false;
                     UserLogin();
                 });
             }
         }
         #endregion
+        #region 修改密码
+        public ICommand btnModifiPassClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
 
+                    TitlePopup.IsOpen = false;
+
+                });
+            }
+        }
+        #endregion
         #region 窗体最小化命令
         /// <summary>窗体最小化命令 </summary>
         public ICommand btnMiniClickCommand
