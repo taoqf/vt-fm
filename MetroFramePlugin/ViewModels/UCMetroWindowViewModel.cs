@@ -714,6 +714,23 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
             GetStandardMenuList(SystemMenuListEnterprise);
+
+            ///2015-04-27:得到弹窗中企业云一、二级树型菜单并绑定到前台
+            foreach (MenuModel menuModel in SystemMenuListEnterprise)
+            {
+                MenuModel newModel = menuModel.Copy();
+                newModel.SystemMenuList = new ObservableCollection<MenuModel>();
+                if (menuModel.SystemMenuList.Count > 0)
+                {
+                    foreach (MenuModel childModel in menuModel.SystemMenuList)
+                    {
+                        MenuModel childNewModel = childModel.Copy();
+                        childNewModel.SystemMenuList = new ObservableCollection<MenuModel>();
+                        newModel.SystemMenuList.Add(childNewModel);
+                    }
+                }
+                NewMenuListLocal.Add(newModel);
+            }
         }
         /// <summary>创建完整的菜单模型 </summary>
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
@@ -766,7 +783,7 @@ namespace MetroFramePlugin.ViewModels
             localMenuListEx = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             {
-                //this.SystemMenuListLocal.Clear();
+                this.SystemMenuListLocal.Clear();
             }
 
             ///2015-03-05:得到弹窗中一、二级树型菜单并绑定到前台
@@ -1216,9 +1233,9 @@ namespace MetroFramePlugin.ViewModels
         private VicButtonNormal _allSelectBtn;//弹窗"全选"
         private string menuPath;//文件路径
         private string selectAreaId;//保存当前选中的要添加应用的区域
-        /// <summary>添加应用弹框菜单列表 </summary>
+        /// <summary>添加应用弹框本地菜单列表 </summary>  
         private ObservableCollection<MenuModel> newMenuListLocal;
-        public ObservableCollection<MenuModel> NewMenuListLocal
+        public ObservableCollection<MenuModel> NewMenuListLocal   //如果用“本地”菜单，XAML中树的菜单绑这个属性
         {
             get
             {
@@ -1230,11 +1247,32 @@ namespace MetroFramePlugin.ViewModels
             {
                 if (newMenuListLocal != value)
                 {
-                    systemMenuListLocal = value;
+                    newMenuListLocal = value;
                     RaisePropertyChanged("NewMenuListLocal");
                 }
             }
         }
+
+        /// <summary>添加应用弹框企业云菜单列表 </summary>  
+        private ObservableCollection<MenuModel> newMenuListEnterprise;
+        public ObservableCollection<MenuModel> NewMenuListEnterprise   //如果用“企业云”菜单，XAML中树的菜单绑这个属性
+        {
+            get
+            {
+                if (newMenuListEnterprise == null)
+                    newMenuListEnterprise = new ObservableCollection<MenuModel>();
+                return newMenuListLocal;
+            }
+            set
+            {
+                if (newMenuListEnterprise != value)
+                {
+                    newMenuListEnterprise = value;
+                    RaisePropertyChanged("NewMenuListEnterprise");
+                }
+            }
+        }
+
         /// <summary>添加应用弹窗四级菜单列表 </summary>
         private ObservableCollection<MenuModel> newSystemFourthLevelMenuList;
         public ObservableCollection<MenuModel> NewSystemFourthLevelMenuList
@@ -1538,7 +1576,7 @@ namespace MetroFramePlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     MenuModel _menuName = (MenuModel)x;
-                    foreach (MenuModel menuModel in SystemMenuListLocal)
+                    foreach (MenuModel menuModel in SystemMenuListEnterprise)
                     {
                         MenuModel childNewModel = new MenuModel();
                         childNewModel = menuModel.SystemMenuList.FirstOrDefault(it => it.MenuName.Equals(_menuName.MenuName));
@@ -2109,7 +2147,7 @@ namespace MetroFramePlugin.ViewModels
                 
                 areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
                 areaParent.ParamsModel.LockingState = Visibility.Visible;
-                areaParent.ParamsModel.IsEditItem = true;
+                areaParent.ParamsModel.IsEditItem = Visibility.Visible;
                 //重绘，去掉拖动
                 OverRideDrawingPanelArea(areaParent.Parent as DockPanel);
 
@@ -2119,7 +2157,7 @@ namespace MetroFramePlugin.ViewModels
                 isOverRender = false;
                 areaParent.ParamsModel.DeblockingState = Visibility.Visible;
                 areaParent.ParamsModel.LockingState = Visibility.Collapsed;
-                areaParent.ParamsModel.IsEditItem = false;
+                areaParent.ParamsModel.IsEditItem = Visibility.Collapsed;
                 //添加拖动事件
                 WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(areaParent.Parent as DockPanel, (areaParent.Parent as DockPanel).Uid);
                 if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
@@ -2185,7 +2223,7 @@ namespace MetroFramePlugin.ViewModels
                     {
                         _title.ParamsModel.DeblockingState = Visibility.Collapsed;
                         _title.ParamsModel.LockingState = Visibility.Visible;
-                        _title.ParamsModel.IsEditItem = true;
+                        _title.ParamsModel.IsEditItem = Visibility.Visible;
                     }
                     else
                     {
