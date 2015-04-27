@@ -81,9 +81,15 @@ namespace Victop.Frame.PublicLib.Helpers
 
                     Console.WriteLine(theEntry.Name);
                     string fileName = Path.GetFileName(theEntry.Name);
+                    string dicPath=Path.GetDirectoryName(theEntry.Name);
+                    string tempPath = string.Empty;
                     if (filePath.Length > 0)
                     {
-                        Directory.CreateDirectory(filePath);
+                        if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(dicPath))
+                        {
+                            tempPath = Path.Combine(filePath, dicPath);
+                            Directory.CreateDirectory(tempPath);
+                        }
                     }
 
                     if (fileName != String.Empty)
