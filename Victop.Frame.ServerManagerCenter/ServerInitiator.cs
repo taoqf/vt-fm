@@ -294,7 +294,10 @@ namespace Victop.Frame.ServerManagerCenter
                         activePluginInfo.AppId = pluginName;
                         activePluginInfo.PluginInstance = plugin;
                         ActivePluginManager activePluginManager = new ActivePluginManager();
-                        activePluginManager.AddPlugin(activePluginInfo);
+                        if (!plugin.SystemPlugin.Equals(0))
+                        {
+                            activePluginManager.AddPlugin(activePluginInfo);
+                        }
                         validPlugin = true;
                     }
                 }
