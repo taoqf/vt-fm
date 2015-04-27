@@ -292,7 +292,7 @@ namespace SystemTestingPlugin.ViewModels
                     try
                     {
                         DataMessageOperation dataOp = new DataMessageOperation();
-                        DataInfoModel.JsonData = dataOp.GetJSONData(DataInfoModel.ChannelId);
+                        DataInfoModel.JsonData = dataOp.GetCurdListData(DataInfoModel.ChannelId);
                     }
                     catch (Exception ex)
                     {

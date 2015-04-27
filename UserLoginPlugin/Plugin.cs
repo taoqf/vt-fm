@@ -9,11 +9,13 @@ using UserLoginPlugin.Views;
 
 namespace UserLoginPlugin
 {
-    public class Plugin:IPlugin
+    public class Plugin : IPlugin
     {
+        private string pluginTitle = "登录窗口";
         public string PluginTitle
         {
-            get { return "登录"; }
+            get { return pluginTitle; }
+            set { pluginTitle = value; }
         }
 
         public string PluginName
@@ -61,11 +63,11 @@ namespace UserLoginPlugin
         {
             get
             {
-                return new Dictionary<string,object>();
+                return new Dictionary<string, object>();
             }
             set
             {
-                
+
             }
         }
     }

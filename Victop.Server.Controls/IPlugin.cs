@@ -21,7 +21,7 @@ using System.Windows.Controls;
 		/// <summary>
 		/// 插件标题
 		/// </summary>
-		string PluginTitle { get; }
+        string PluginTitle { get; set; }
 
 		/// <summary>
 		/// 插件名称

@@ -1174,17 +1174,18 @@ namespace Victop.Frame.DataChannel
                                 }
 
                             }
-                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, OpreateStateEnum.Added);
+                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, null,OpreateStateEnum.Added);
                             break;
                         case DataRowState.Deleted:
                             Dictionary<string, object> delDic = new Dictionary<string, object>();
                             delDic.Add("_id", dr["_id", DataRowVersion.Original]);
-                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), delDic, OpreateStateEnum.Deleted);
+                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), delDic, null,OpreateStateEnum.Deleted);
                             break;
                         case DataRowState.Detached:
                             break;
                         case DataRowState.Modified:
                             Dictionary<string, object> modDic = new Dictionary<string, object>();
+                            Dictionary<string, object> originDic = new Dictionary<string, object>();
                             foreach (DataColumn dc in dt.Columns)
                             {
                                 if (dc.ExtendedProperties.ContainsKey("ColType") && !dc.ExtendedProperties["ColType"].ToString().Equals("ref"))
@@ -1204,38 +1205,48 @@ namespace Victop.Frame.DataChannel
                                             case "int":
                                             case "long":
                                                 modDic.Add(dc.ColumnName, (dr[dc.ColumnName] == null || string.IsNullOrEmpty(dr[dc.ColumnName].ToString())) ? 0 : dr[dc.ColumnName]);
+                                                originDic.Add(dc.ColumnName, (dr[dc.ColumnName, DataRowVersion.Original] == null || string.IsNullOrEmpty(dr[dc.ColumnName, DataRowVersion.Original].ToString())) ? 0 : dr[dc.ColumnName, DataRowVersion.Original]);
                                                 break;
                                             case "double":
                                             case "float":
                                                 modDic.Add(dc.ColumnName, (dr[dc.ColumnName] == null || string.IsNullOrEmpty(dr[dc.ColumnName].ToString())) ? 0 : Convert.ToDecimal(dr[dc.ColumnName]));
+                                                originDic.Add(dc.ColumnName, (dr[dc.ColumnName,DataRowVersion.Original] == null || string.IsNullOrEmpty(dr[dc.ColumnName,DataRowVersion.Original].ToString())) ? 0 : Convert.ToDecimal(dr[dc.ColumnName,DataRowVersion.Original]));
                                                 break;
                                             case "date":
                                                 modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? DateTime.Now : dr[dc.ColumnName]);
+                                                originDic.Add(dc.ColumnName, dr[dc.ColumnName, DataRowVersion.Original]);
                                                 break;
                                             case "timestamp":
                                                 DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0));
                                                 if (dr[dc.ColumnName] != null && !string.IsNullOrWhiteSpace(dr[dc.ColumnName].ToString()))
                                                 {
                                                     DateTime currentTime = (DateTime)dr[dc.ColumnName];
+                                                    DateTime originTime = (DateTime)dr[dc.ColumnName, DataRowVersion.Original];
                                                     modDic.Add(dc.ColumnName, (long)(currentTime.ToUniversalTime() - startTime.ToUniversalTime()).TotalMilliseconds);
+                                                    originDic.Add(dc.ColumnName, (long)(originTime.ToUniversalTime() - startTime.ToUniversalTime()).TotalMilliseconds);
                                                 }
                                                 else
                                                 {
                                                     modDic.Add(dc.ColumnName, (long)0);
+                                                    originDic.Add(dc.ColumnName, (long)0);
                                                 }
                                                 break;
                                             case "array":
                                                 modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? new List<object>() : dr[dc.ColumnName]);
+                                                originDic.Add(dc.ColumnName, dr[dc.ColumnName, DataRowVersion.Original] == null ? new List<object>() : dr[dc.ColumnName, DataRowVersion.Original]);
                                                 break;
                                             case "document":
                                                 modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? new Dictionary<string, object>() : dr[dc.ColumnName]);
+                                                originDic.Add(dc.ColumnName, dr[dc.ColumnName, DataRowVersion.Original] == null ? new Dictionary<string, object>() : dr[dc.ColumnName, DataRowVersion.Original]);
                                                 break;
                                             case "boolean":
                                                 modDic.Add(dc.ColumnName, (dr[dc.ColumnName] == null || string.IsNullOrEmpty(dr[dc.ColumnName].ToString())) ? false : Convert.ToBoolean(dr[dc.ColumnName]));
+                                                originDic.Add(dc.ColumnName, dr[dc.ColumnName, DataRowVersion.Original] == null ? new Dictionary<string, object>() : dr[dc.ColumnName, DataRowVersion.Original]);
                                                 break;
                                             case "string":
                                             default:
                                                 modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? string.Empty : dr[dc.ColumnName]);
+                                                originDic.Add(dc.ColumnName, dr[dc.ColumnName, DataRowVersion.Original] == null ? string.Empty : dr[dc.ColumnName, DataRowVersion.Original]);
                                                 break;
                                         }
                                     }
@@ -1249,7 +1260,7 @@ namespace Victop.Frame.DataChannel
                                 pathDic.Add("value", dr["_id"]);
                                 pathList.Add(pathDic);
                             }
-                            editFlag = DataTool.SaveCurdDataByPath(viewId, pathList, modDic, OpreateStateEnum.Modified);
+                            editFlag = DataTool.SaveCurdDataByPath(viewId, pathList, modDic, originDic,OpreateStateEnum.Modified);
                             break;
                         case DataRowState.Unchanged:
                             break;

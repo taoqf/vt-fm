@@ -266,6 +266,7 @@ namespace Victop.Frame.ServerManagerCenter
             try
             {
                 string pluginName = JsonHelper.ReadJsonString(messageInfo.MessageContent, "PluginName");
+                string showTitle = JsonHelper.ReadJsonString(messageInfo.MessageContent, "ShowTitle");
                 string pluginPath = JsonHelper.ReadJsonString(messageInfo.MessageContent, "PluginPath");
                 string pluginParam = JsonHelper.ReadJsonString(messageInfo.MessageContent, "PluginParam");
                 Dictionary<string, object> paramDict = new Dictionary<string, object>();
@@ -281,6 +282,10 @@ namespace Victop.Frame.ServerManagerCenter
                     if (IsValidPlugin(t)) //判断是否有继承IPlugin
                     {
                         IPlugin plugin = (IPlugin)pluginAssembly.CreateInstance(t.FullName);
+                        if (!string.IsNullOrEmpty(showTitle))
+                        {
+                            plugin.PluginTitle = showTitle;
+                        }
                         plugin.ParamDict = paramDict;
                         ActivePluginInfo activePluginInfo = new ActivePluginInfo();
                         activePluginInfo.ShowType = plugin.ShowType;

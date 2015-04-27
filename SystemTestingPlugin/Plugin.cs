@@ -9,11 +9,13 @@ using Victop.Server.Controls;
 
 namespace SystemTestingPlugin
 {
-    public class Plugin:IPlugin
+    public class Plugin : IPlugin
     {
+        private string pluginTitle = "测试数据工具";
         public string PluginTitle
         {
-            get { return "测试数据工具"; }
+            get { return pluginTitle; }
+            set { pluginTitle = value; }
         }
 
         public string PluginName
@@ -33,7 +35,7 @@ namespace SystemTestingPlugin
 
         public int SystemPlugin
         {
-            get { return 0; }
+            get { return 1; }
         }
 
         public int AutoInit

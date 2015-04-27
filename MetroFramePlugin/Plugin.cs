@@ -11,9 +11,11 @@ namespace MetroFramePlugin
 {
     public class Plugin : IPlugin
     {
+        private string pluginTitle = "自定义机台平台";
         public string PluginTitle
         {
-            get { return "自定义机台平台"; }
+            get { return pluginTitle; }
+            set { pluginTitle = value; }
         }
 
         public string PluginName

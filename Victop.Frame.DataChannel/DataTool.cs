@@ -382,7 +382,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="saveData"></param>
         /// <param name="rowState"></param>
         /// <returns></returns>
-        public static bool SaveCurdDataByPath(string viewId, List<object> dataPath, Dictionary<string, object> saveData, OpreateStateEnum rowState)
+        public static bool SaveCurdDataByPath(string viewId, List<object> dataPath, Dictionary<string, object> saveData, Dictionary<string, object> originalData, OpreateStateEnum rowState)
         {
             try
             {
@@ -428,6 +428,7 @@ namespace Victop.Frame.DataChannel
 
                         break;
                     case OpreateStateEnum.Modified:
+                        curdDic.Add("origindata", originalData);
                         List<object> modCurdList = dataOp.GetCurdJSONData(viewId);
                         if (modCurdList == null)
                         {

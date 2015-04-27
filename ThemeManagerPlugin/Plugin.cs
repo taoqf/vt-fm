@@ -11,10 +11,11 @@ namespace ThemeManagerPlugin
 {
     public class Plugin : IPlugin
     {
-
+        private string pluginTitle = "皮肤管理";
         public string PluginTitle
         {
-            get { return "皮肤管理"; }
+            get { return pluginTitle; }
+            set { pluginTitle = value; }
         }
 
         public string PluginName

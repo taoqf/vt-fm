@@ -621,17 +621,18 @@ namespace Victop.Frame.DataMessageManager
         /// <summary>
         /// 启动窗口插件
         /// </summary>
-        /// <param name="PluginName">插件名称</param>
+        /// <param name="pluginName">插件名称</param>
         /// <param name="paramDic">参数键值对</param>
         /// <param name="waitTime">同步等待时间(秒)</param>
         /// <returns></returns>
-        public PluginModel StratPlugin(string PluginName, Dictionary<string, object> paramDic = null, long waitTime = 15)
+        public PluginModel StratPlugin(string pluginName, Dictionary<string, object> paramDic = null,string showTitle = null)
         {
             PluginModel pluginModel = new PluginModel();
             MessageOperation messageOp = new MessageOperation();
             string messageType = "PluginService.PluginRun";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("PluginName", PluginName);
+            contentDic.Add("PluginName", pluginName);
+            contentDic.Add("ShowTitle", showTitle);
             contentDic.Add("PluginPath", "");
             contentDic.Add("PluginParam", JsonHelper.ToJson(paramDic));
             Dictionary<string, object> resultDic = messageOp.SendMessage(messageType, contentDic);
@@ -790,6 +791,13 @@ namespace Victop.Frame.DataMessageManager
             }
             return returnDic;
         }
+
+        public virtual string GetCurdListData(string viewId)
+        {
+            DataOperation dataOp = new DataOperation();
+            return JsonHelper.ToJson(dataOp.GetCurdJSONData(viewId));
+        }
+
         /// <summary>
         /// 移除数据锁定
         /// </summary>

@@ -9,11 +9,13 @@ using PortalFramePlugin.Views;
 
 namespace PortalFramePlugin
 {
-    public class Plugin:IPlugin
+    public class Plugin : IPlugin
     {
+        private string pluginTitle = "框架门户平台";
         public string PluginTitle
         {
-            get { return "框架门户平台"; }
+            get { return pluginTitle; }
+            set { pluginTitle = value; }
         }
 
         public string PluginName

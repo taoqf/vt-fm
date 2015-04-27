@@ -11,9 +11,11 @@ namespace MetroUserLoginPlugin
 {
     public class Plugin : IPlugin
     {
+        private string pluginTitle = "Win8登录";
         public string PluginTitle
         {
-            get { return "Win8登录"; }
+            get { return pluginTitle; }
+            set { pluginTitle = value; }
         }
 
         public string PluginName
