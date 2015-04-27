@@ -212,7 +212,7 @@ namespace MetroFramePlugin.ViewModels
                            else
                            {
                                menumodel.MenuName = Plugin.PluginTitle;
-                               menumodel.ActionType = Plugin.ShowType.ToString();
+                                menumodel.ActionType = Plugin.ShowType.ToString();
                             //   menumodel.ResourceName = Plugin.PluginName;
                                menumodel.Uid = PluginInfo["ObjectId"].ToString();
                                menumodel.ShowType = Plugin.ShowType.ToString();

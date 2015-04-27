@@ -86,10 +86,10 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    //VicGridNormal gridNormal = (VicGridNormal)overlayWin.FindName("girPluginList");
-                    //gridNormal.Children.Clear();
-                    //gridNormal.Children.Add(GetActivePluginInfo());
-                    //PluginListShow = true;
+                    VicGridNormal gridNormal = (VicGridNormal)overlayWin.FindName("girPluginList");
+                    gridNormal.Children.Clear();
+                    gridNormal.Children.Add(GetActivePluginInfo());
+                    PluginListShow = true;
                     DisplayOverlayWindowPlugin overlay = new DisplayOverlayWindowPlugin();
                     overlay.Show();
                 });

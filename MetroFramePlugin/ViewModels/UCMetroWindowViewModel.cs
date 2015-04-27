@@ -332,6 +332,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
+                    mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
                     Rect rect = SystemParameters.WorkArea;
@@ -342,6 +343,7 @@ namespace MetroFramePlugin.ViewModels
                     AppVersionCode = GetAppVersion();
                     LoadJsonMenuListLocal();
                     OverlayWindow overlayWin = new OverlayWindow();
+                    OverlayWindow.VicTabCtrl = mainTabControl;
                     overlayWin.Show();
                     UserLogin();
 
