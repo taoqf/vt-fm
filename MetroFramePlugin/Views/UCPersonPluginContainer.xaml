@@ -515,6 +515,7 @@
                                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                     <Border Name="Bd"  BorderThickness="{TemplateBinding BorderThickness}"  Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
                                         <Grid>
+                                        <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="80"/>
                                                 <RowDefinition Height="*"/>
@@ -532,6 +533,29 @@
                                                        Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
                                                         Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"/>
                                         </Grid>
+                                        <Border Name="borderSelect" Opacity="0"  CornerRadius="24" HorizontalAlignment="Right" Height="24"  VerticalAlignment="Top" Width="24">
+                                            <Grid>
+                                                <Path Fill="White" HorizontalAlignment="Left" 
+                                                  StrokeThickness="0" 
+                                                  VerticalAlignment="Top" 
+                                                  Margin="8.383,10.541,0,0" 
+                                                  Data="M0,0 L12,0 12,0.38199188 12.230031,0.36226721 12.913506,8.3330173 10.920817,8.5038862 10.363123,2 0,2 z" 
+                                                  Height="8.504" 
+                                                  RenderTransformOrigin="0.464629838490983,0.117593290001535" 
+                                                  Stretch="Fill" 
+                                                  Width="12.914">
+                                                    <Path.RenderTransform>
+                                                        <TransformGroup>
+                                                            <ScaleTransform/>
+                                                            <SkewTransform/>
+                                                            <RotateTransform Angle="135.502"/>
+                                                            <TranslateTransform/>
+                                                        </TransformGroup>
+                                                    </Path.RenderTransform>
+                                                </Path>
+                                            </Grid>
+                                        </Border>
+                                        </Grid>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger  Property="IsMouseOver" Value="true">
@@ -539,6 +563,8 @@
                                         </Trigger>
                                         <Trigger  Property="IsSelected" Value="true">
                                             <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderBrush" TargetName="Bd"  Value="Yellow"/>
+                                            <Setter Property="Opacity" TargetName="borderSelect"  Value="1"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
