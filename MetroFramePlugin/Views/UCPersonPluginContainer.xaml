@@ -13,7 +13,7 @@
         <Style x:Key="PopupMenuDelListPluginStyle" TargetType="{x:Type ListBox}">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-            <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
             <Setter Property="SelectionMode" Value="Multiple"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -24,7 +24,7 @@
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="Width" Value="130"/>
-                        <Setter Property="Height" Value="120"/>
+                        <Setter Property="Height" Value="100"/>
                         <Setter Property="Margin" Value="10"/>
                         <Setter Property="Template">
                             <Setter.Value>
@@ -32,17 +32,16 @@
                                     <Border Name="Bd"  BorderThickness="{TemplateBinding BorderThickness}"   Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="15"/>
                                                 <RowDefinition Height="80"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
-                                            <controls:VicButtonNormal x:Name="btnClose" Grid.Row="0" BorderThickness="0" Background="Transparent"   Command="{Binding DataContext.BtnDelPluginCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                            <controls:VicButtonNormal x:Name="btnClose"  BorderThickness="0" Background="Transparent"   Command="{Binding DataContext.BtnDelPluginCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                 CommandParameter="{Binding ElementName=btnClose}" HorizontalAlignment="Right"  VerticalAlignment="Top" Height="15" Width="15" FocusVisualStyle="{x:Null}" ToolTip="删除">
                                                 <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
                                   SnapsToDevicePixels="True"
                                    Fill="Black"/>
                                             </controls:VicButtonNormal>
-                                            <controls:VicRadioButtonNormal  Grid.Row="1"
+                                            <controls:VicRadioButtonNormal  
                                                                  FontWeight="Bold" 
                                                                  Foreground="{TemplateBinding Foreground}"
                                                                  Style="{DynamicResource ButtonFourthLevelMenu}" 
@@ -51,23 +50,20 @@
                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
-                                            <controls:VicButtonNormal  Grid.Row="2"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="12"
+                                            <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="12"
                                                        Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
                                                         Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"/>
                                         </Grid>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger  Property="IsMouseOver" Value="true">
-                                            <Setter Property="Background" TargetName="btnClose" Value="GreenYellow"/>
-                                            <Setter Property="BorderBrush" TargetName="Bd" Value="GreenYellow"/>
-                                            <Setter Property="Background" TargetName="Bd" Value="GreenYellow"/>
-                                            <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
-                                            <Setter Property="Foreground" Value="#19bb9b"/>
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect ShadowDepth="0" Color="Blue"/>
+                                                </Setter.Value>
+                                            </Setter>
                                             <Setter Property="Cursor" Value="Hand"/>
-                                        </Trigger>
-                                        <Trigger  Property="IsSelected" Value="true">
-                                            <Setter Property="Background" TargetName="Bd" Value="GreenYellow"/>
-                                            <Setter Property="Foreground" Value="#19bb9b"/>
+                                            <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -89,7 +85,7 @@
         <Style x:Key="PopupMenuDelListLargePluginStyle" TargetType="{x:Type ListBox}">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-            <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
             <Setter Property="SelectionMode" Value="Multiple"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -100,7 +96,7 @@
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="Width" Value="150"/>
-                        <Setter Property="Height" Value="140"/>
+                        <Setter Property="Height" Value="120"/>
                         <Setter Property="Margin" Value="10"/>
                         <Setter Property="Template">
                             <Setter.Value>
@@ -108,17 +104,16 @@
                                     <Border Name="Bd"  BorderThickness="{TemplateBinding BorderThickness}"  Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="15"/>
                                                 <RowDefinition Height="100"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
-                                            <controls:VicButtonNormal x:Name="btnClose" Grid.Row="0" BorderThickness="0" Background="Transparent"   Command="{Binding DataContext.BtnDelPluginCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                            <controls:VicButtonNormal x:Name="btnClose"  BorderThickness="0" Background="Transparent"   Command="{Binding DataContext.BtnDelPluginCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                  CommandParameter="{Binding ElementName=btnClose}" HorizontalAlignment="Right"  VerticalAlignment="Top" Height="15" Width="15" FocusVisualStyle="{x:Null}" ToolTip="删除">
                                                 <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
                                   SnapsToDevicePixels="True"
                                    Fill="Black"/>
                                             </controls:VicButtonNormal>
-                                            <controls:VicRadioButtonNormal  Grid.Row="1"
+                                            <controls:VicRadioButtonNormal  
                                                                  FontWeight="Bold" 
                                                                  Foreground="{TemplateBinding Foreground}"
                                                                  Style="{DynamicResource ButtonFourthLevelMenu}" 
@@ -127,22 +122,20 @@
                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
-                                            <controls:VicButtonNormal  Grid.Row="2"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="16"
+                                            <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="16"
                                                        Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
                                                         Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"/>
                                         </Grid>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger  Property="IsMouseOver" Value="true">
-                                            <Setter Property="BorderBrush" TargetName="Bd" Value="GreenYellow"/>
-                                            <Setter Property="Background" TargetName="Bd" Value="GreenYellow"/>
-                                            <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
-                                            <Setter Property="Foreground" Value="#19bb9b"/>
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect ShadowDepth="0" Color="Blue"/>
+                                                </Setter.Value>
+                                            </Setter>
                                             <Setter Property="Cursor" Value="Hand"/>
-                                        </Trigger>
-                                        <Trigger  Property="IsSelected" Value="true">
-                                            <Setter Property="Background" TargetName="Bd" Value="GreenYellow"/>
-                                            <Setter Property="Foreground" Value="#19bb9b"/>
+                                            <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -164,7 +157,7 @@
         <Style x:Key="PopupMenuDelListSmallPluginStyle" TargetType="{x:Type ListBox}">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-            <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
             <Setter Property="SelectionMode" Value="Multiple"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -175,7 +168,7 @@
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
                         <Setter Property="Width" Value="110"/>
-                        <Setter Property="Height" Value="100"/>
+                        <Setter Property="Height" Value="80"/>
                         <Setter Property="Margin" Value="10"/>
                         <Setter Property="Template">
                             <Setter.Value>
@@ -183,7 +176,6 @@
                                     <Border Name="Bd"  BorderThickness="{TemplateBinding BorderThickness}"  Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
                                         <Grid>
                                             <Grid.RowDefinitions>
-                                                <RowDefinition Height="15"/>
                                                 <RowDefinition Height="60"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
@@ -193,7 +185,7 @@
                                   SnapsToDevicePixels="True"
                                    Fill="Black"/>
                                             </controls:VicButtonNormal>
-                                            <controls:VicRadioButtonNormal  Grid.Row="1"
+                                            <controls:VicRadioButtonNormal  
                                                                  FontWeight="Bold" 
                                                                  Foreground="{TemplateBinding Foreground}"
                                                                  Style="{DynamicResource ButtonFourthLevelMenu}" 
@@ -202,23 +194,22 @@
                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
-                                            <controls:VicButtonNormal  Grid.Row="2"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="10"
+                                            <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="10"
                                                        Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
                                                         Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"/>
                                         </Grid>
                                     </Border>
                                     <ControlTemplate.Triggers>
-                                        <Trigger  Property="IsMouseOver" Value="true">
-                                            <Setter Property="BorderBrush" TargetName="Bd" Value="GreenYellow"/>
-                                            <Setter Property="Background" TargetName="Bd" Value="GreenYellow"/>
-                                            <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
-                                            <Setter Property="Foreground" Value="#19bb9b"/>
-                                            <Setter Property="Cursor" Value="Hand"/>
-                                        </Trigger>
-                                        <Trigger  Property="IsSelected" Value="true">
-                                            <Setter Property="Background" TargetName="Bd" Value="GreenYellow"/>
-                                            <Setter Property="Foreground" Value="#19bb9b"/>
-                                        </Trigger>
+                                            <Trigger  Property="IsMouseOver" Value="true">
+                                                <Setter Property="Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect ShadowDepth="0" Color="Blue"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Cursor" Value="Hand"/>
+                                                <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
+                                            </Trigger>
+                                      
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -497,7 +488,7 @@
 
         <Style x:Key="PopupMenuListStyle" TargetType="{x:Type ListBox}">
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-            <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
             <Setter Property="SelectionMode" Value="Multiple"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
