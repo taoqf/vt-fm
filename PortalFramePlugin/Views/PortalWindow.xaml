@@ -149,20 +149,21 @@
                 </Grid>
                 <TextBlock Grid.Row="1" Text="{Binding AppVersionCode}" VerticalAlignment="Center" Foreground="Blue" HorizontalAlignment="Right" Margin="0,0,10,0"/>
             </Grid>
-            <controls:VicPopup  AllowsTransparency="True" Name="TitlePopup" PlacementTarget="{Binding ElementName= btnUserLogin}" Placement="Left" Width="200" Height="200"  StaysOpen="True">
+            <controls:VicPopup IsOpen="{Binding PoPupState}"  AllowsTransparency="True" Name="TitlePopup" PlacementTarget="{Binding ElementName= btnUserLogin}" Placement="Left" Width="200" Height="200"  StaysOpen="False">
                 <Grid Background="White"  Width="200" Height="70" >
                     <StackPanel>
                         <controls:VicRadioButtonRectangle Content="切换用户" Grid.Row="0">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnChangeUserClickCommand}" CommandParameter="{Binding ElementName=btnMax}"/>
+                                    <i:InvokeCommandAction Command="{Binding btnChangeUserClickCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </controls:VicRadioButtonRectangle>
                         <controls:VicRadioButtonRectangle Content="修改密码" Grid.Row="1">
+                            
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnModifiPassClickCommand}" CommandParameter="{Binding ElementName=btnMax}"/>
+                                    <i:InvokeCommandAction Command="{Binding btnModifiPassClickCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </controls:VicRadioButtonRectangle>

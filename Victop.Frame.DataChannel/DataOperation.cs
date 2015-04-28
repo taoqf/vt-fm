@@ -41,6 +41,8 @@ namespace Victop.Frame.DataChannel
         {
             DataConvertManager convertManager = new DataConvertManager();
             return convertManager.SaveData(channelId, dataPath);
+            //TODO:调用JS方法检查操作的数据权限，传入CurdList数据,数据权限数据
+            //TODO:
         }
         /// <summary>
         /// 根据通道号获取JSON数据
