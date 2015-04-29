@@ -1266,7 +1266,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 if (newMenuListEnterprise == null)
                     newMenuListEnterprise = new ObservableCollection<MenuModel>();
-                return newMenuListLocal;
+                return newMenuListEnterprise;
             }
             set
             {
