@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Noesis.Javascript;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -1332,6 +1333,31 @@ namespace Victop.Frame.DataChannel
                 return string.Empty;
             }
 
+        }
+        /// <summary>
+        /// 检查数据权限
+        /// </summary>
+        /// <param name="viewId"></param>
+        /// <returns></returns>
+        public bool CheckDataAuthority(string viewId)
+        {
+            DataChannelManager dataChannelManager = new DataChannelManager();
+            Hashtable hashData = dataChannelManager.GetData(viewId);
+            ChannelData channelData = hashData["Data"] as ChannelData;
+            MongoModelInfoModel modelDefInfo = channelData.ModelDefInfo;
+            #region JS代码
+            using (JavascriptContext context = new JavascriptContext())
+            {
+                string modelTables = JsonHelper.ToJson(modelDefInfo.ModelTables);
+                string dataperm = JsonHelper.ReadJsonString(channelData.JSONData, "dataperm");
+                string curdList = JsonHelper.ToJson(channelData.CrudJSONData);
+                //TODO:为js代码传入model定义中的所有表结构，以及模型数据中的dataperm,当前通道下的curdJson
+                //string paramWpf = string.Format("var data={0};var path={1};", JsonData, dataPath);
+                //string script = paramWpf + Properties.Resources.GetDataByPathScript;
+                //context.Run(script);
+            }
+            #endregion
+            return false;
         }
     }
 }
