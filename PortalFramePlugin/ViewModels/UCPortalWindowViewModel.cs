@@ -797,6 +797,7 @@ namespace PortalFramePlugin.ViewModels
             menuModel.PackageUrl = item.Package_url;
             menuModel.ShowType = string.IsNullOrEmpty(item.Show_type) ? "1" : item.Show_type;
             menuModel.Icon = !string.IsNullOrEmpty(item.Icon) ? Regex.Unescape(item.Icon) : item.Icon;
+            menuModel.PluginBG = item.Background;
             menuModel.Description = item.Description;
             if (item.Roles != null && item.Roles.Count > 0)
             {

@@ -697,11 +697,14 @@ namespace MetroFramePlugin.ViewModels
         /// <summary>加载标准化菜单</summary>
         private void LoadStandardMenu()
         {
+
             LoadMenuListEnterprise();
         }
         /// <summary>加载企业云菜单集合 </summary>
         private void LoadMenuListEnterprise()
         {
+            NewMenuListEnterprise.Clear();//避免未关闭情况下二次单击登录头像，出现菜单项重复添加了
+
             BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
             SystemMenuListEnterprise.Clear();
             if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
@@ -729,7 +732,7 @@ namespace MetroFramePlugin.ViewModels
                         newModel.SystemMenuList.Add(childNewModel);
                     }
                 }
-                NewMenuListLocal.Add(newModel);
+                NewMenuListEnterprise.Add(newModel);
             }
         }
         /// <summary>创建完整的菜单模型 </summary>
@@ -755,6 +758,7 @@ namespace MetroFramePlugin.ViewModels
             menuModel.PackageUrl = item.Package_url;
             menuModel.ShowType = string.IsNullOrEmpty(item.Show_type) ? "1" : item.Show_type;
             menuModel.Icon = !string.IsNullOrEmpty(item.Icon) ? Regex.Unescape(item.Icon) : item.Icon;
+            menuModel.PluginBG = item.Background;
             menuModel.Description = item.Description;
             if (item.Roles != null && item.Roles.Count > 0)
             {
@@ -963,6 +967,7 @@ namespace MetroFramePlugin.ViewModels
             bool? result = loginWin.ShowDialog();
             if (result == true)
             {
+
                 Dictionary<string, object> userDic = pluginOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                 if (userDic != null)
                 {
@@ -1403,7 +1408,7 @@ namespace MetroFramePlugin.ViewModels
                 });
             }
         }
-        
+
         /// <summary>
         /// 根据搜索框清空,实现弹窗列表四级菜单展示
         ///  </summary>
@@ -1413,7 +1418,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                   
+
                     VicTextBoxSeach aa = (VicTextBoxSeach)x;
                     string keyTxt = aa.VicText.ToString();
                     if (string.IsNullOrEmpty(keyTxt))
@@ -1469,14 +1474,14 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                     {
-                    _allSelectBtn.Content = "全部选中";//每次打开弹框，全选按钮名称统一
-                    _listbox.SelectedItems.Clear();//每次打开弹框，去掉之前所选的
-                    VicRadioButtonNormal btn = (VicRadioButtonNormal)x;
-                    DockPanel parentPanel = GetParentObject<DockPanel>(btn);
-                    selectAreaId = parentPanel.Uid;//得到选中区域ID
-                    _panel.IsEnabled = false;
-                    PopupIsShow = true;
-                });
+                        _allSelectBtn.Content = "全部选中";//每次打开弹框，全选按钮名称统一
+                        _listbox.SelectedItems.Clear();//每次打开弹框，去掉之前所选的
+                        VicRadioButtonNormal btn = (VicRadioButtonNormal)x;
+                        DockPanel parentPanel = GetParentObject<DockPanel>(btn);
+                        selectAreaId = parentPanel.Uid;//得到选中区域ID
+                        _panel.IsEnabled = false;
+                        PopupIsShow = true;
+                    });
             }
         }
 
@@ -1489,22 +1494,22 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                     {
-                        VicButtonNormal btn = (VicButtonNormal) x;
+                        VicButtonNormal btn = (VicButtonNormal)x;
                         if (btn.Content.ToString() == "全部选中")
                         {
                             _listbox.SelectAll();
                             btn.Content = "取消全选";
-                            
+
                         }
 
                         else
                         {
                             _listbox.SelectedItem = null;
                             btn.Content = "全部选中";
-                           
+
                         }
-                    
-                });
+
+                    });
             }
         }
         /// <summary>
@@ -1575,21 +1580,24 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    MenuModel _menuName = (MenuModel)x;
-                    foreach (MenuModel menuModel in SystemMenuListEnterprise)
+                    if (x != null)
                     {
-                        MenuModel childNewModel = new MenuModel();
-                        childNewModel = menuModel.SystemMenuList.FirstOrDefault(it => it.MenuName.Equals(_menuName.MenuName));
-                        if (childNewModel != null)
+                        MenuModel _menuName = (MenuModel)x;
+                        foreach (MenuModel menuModel in SystemMenuListEnterprise)
                         {
-                            NewSystemFourthLevelMenuList = childNewModel.SystemMenuList;
-                            _listbox.ItemsSource = NewSystemFourthLevelMenuList;//调试心得：这个必须有，不然搜索后清空_listbox的值，不会自动绑上了。
-                            break;
-                        }
-                        else
-                        {
-                            NewSystemFourthLevelMenuList = null;
-                            break;
+                            MenuModel childNewModel = new MenuModel();
+                            childNewModel = menuModel.SystemMenuList.FirstOrDefault(it => it.MenuName.Equals(_menuName.MenuName));
+                            if (childNewModel != null)
+                            {
+                                NewSystemFourthLevelMenuList = childNewModel.SystemMenuList;
+                                _listbox.ItemsSource = NewSystemFourthLevelMenuList;//调试心得：这个必须有，不然搜索后清空_listbox的值，不会自动绑上了。
+                                break;
+                            }
+                            else
+                            {
+                                NewSystemFourthLevelMenuList = null;
+                                break;
+                            }
                         }
                     }
                 });
@@ -1610,7 +1618,7 @@ namespace MetroFramePlugin.ViewModels
                     DockPanel.SetDock(_title, Dock.Top);
                     _title.ParamsModel.BtnDeblockingClick += BtnClick;
                     _title.MenuItemIcoClick += MenuItemClick;
-                    _title.ParamsModel.TextChangedClick += ParamsModel_TextChangedClick;  
+                    _title.ParamsModel.TextChangedClick += ParamsModel_TextChangedClick;
                     _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                     _title.ParamsModel.TitleWidth = _areaMenu.AreaWidth;
                     _title.ParamsModel.AreaName = _areaMenu.AreaName;
@@ -1677,7 +1685,7 @@ namespace MetroFramePlugin.ViewModels
             NewArea.Clear();
             _panel.Children.Clear();
             ReadMenuJsonFile();
-           
+
 
             for (int i = 0; i < NewArea.Count; i++)
             {
@@ -1688,13 +1696,13 @@ namespace MetroFramePlugin.ViewModels
                 _title.ParamsModel.BtnDeblockingClick += BtnClick;
                 _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
                 _title.MenuItemIcoClick += MenuItemClick;
-                _title.ParamsModel.TextChangedClick += ParamsModel_TextChangedClick;    
+                _title.ParamsModel.TextChangedClick += ParamsModel_TextChangedClick;
                 _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                 _title.ParamsModel.AreaName = NewArea[i].AreaName;
                 _title.VerticalContentAlignment = VerticalAlignment.Center;
                 _title.HorizontalContentAlignment = HorizontalAlignment.Center;
                 _title.Foreground = mainWindow.FindResource("MetroFGColor") as Brush;
-              
+
                 WrapPanel pluginPanel = new WrapPanel();
                 pluginPanel.Background = mainWindow.FindResource("MetroBGColor") as Brush;
                 pluginPanel.Uid = NewArea[i].AreaID;
@@ -1719,7 +1727,7 @@ namespace MetroFramePlugin.ViewModels
                 if (NewArea[i].PluginList.Count != 0)
                 {
                     ListBox pluginlist = new ListBox();
-                  //  pluginlist.MouseDown += menuListArea_MouseDown;//想去掉选中项的，还未实现
+                    //  pluginlist.MouseDown += menuListArea_MouseDown;//想去掉选中项的，还未实现
                     pluginlist.PreviewMouseMove += menuList_PreviewMouseMove;
                     pluginlist.Drop += menuList_Drop;
                     pluginlist.ItemsSource = NewArea[i].PluginList;
@@ -1737,7 +1745,7 @@ namespace MetroFramePlugin.ViewModels
                     }
                     pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);//一个WrapPanel里添加了两个ListBox
                 }
-           
+
                 DockPanel _newPanel = new DockPanel();
                 _newPanel.Uid = NewArea[i].AreaID;
                 _newPanel.Width = NewArea[i].AreaWidth;
@@ -1760,7 +1768,7 @@ namespace MetroFramePlugin.ViewModels
                 nowArea.AreaName = areaParent.ParamsModel.AreaName;
                 WriteFile();
                 areaParent.Focus();
-            }   
+            }
         }
 
         void menuListArea_MouseDown(object sender, MouseButtonEventArgs e)
@@ -2105,7 +2113,7 @@ namespace MetroFramePlugin.ViewModels
                                     pluginArea.Style = area.FindResource("PopupMenuDelListSmallPluginStyle") as Style;
                                 }
 
-                               
+
                             }
                             else
                             {
@@ -2116,7 +2124,7 @@ namespace MetroFramePlugin.ViewModels
 
                     }
                 }
-             //   WriteFile();
+                //   WriteFile();
             }
             //删除区域 
             if (res.Equals("DeleteArea"))
@@ -2144,7 +2152,7 @@ namespace MetroFramePlugin.ViewModels
             if (res.Equals("btnDeblocking"))//单击解锁图标
             {
                 isOverRender = true;
-                
+
                 areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
                 areaParent.ParamsModel.LockingState = Visibility.Visible;
                 areaParent.ParamsModel.IsEditItem = Visibility.Visible;
@@ -2232,15 +2240,15 @@ namespace MetroFramePlugin.ViewModels
                     DockPanel.SetDock(_title, Dock.Top);
                     _title.ParamsModel.BtnDeblockingClick += BtnClick;
                     _title.MenuItemIcoClick += MenuItemClick;
-                    _title.ParamsModel.TextChangedClick += ParamsModel_TextChangedClick;  
+                    _title.ParamsModel.TextChangedClick += ParamsModel_TextChangedClick;
                     _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                     _title.ParamsModel.AreaName = NewArea[i].AreaName;
                     _title.VerticalContentAlignment = VerticalAlignment.Center;
                     _title.HorizontalContentAlignment = HorizontalAlignment.Center;
                     _title.Foreground = mainWindow.FindResource("MetroFGColor") as Brush;
-                 
 
-                  
+
+
                     WrapPanel pluginPanel = new WrapPanel();
                     pluginPanel.Background = mainWindow.FindResource("MetroBGColor") as Brush;
                     pluginPanel.Uid = NewArea[i].AreaID;
@@ -2296,8 +2304,8 @@ namespace MetroFramePlugin.ViewModels
                     Canvas.SetTop(_newPanel, NewArea[i].TopSpan);
                     _panel.Children.Add(_newPanel);
                     _panel.Children.Remove(dockPanel);
-                                     
-                     break;
+
+                    break;
                 }
             }
         }

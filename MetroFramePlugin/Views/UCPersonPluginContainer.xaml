@@ -624,8 +624,8 @@
                         </controls:VicTextBoxSeach>
                         <controls:VicButtonNormal Name="btnPopupClose" Style="{DynamicResource btnCloseMetroStyle}" VerticalAlignment="Top" Command="{Binding btnAddApplyCloseClickCommand}"/>
                     </StackPanel>
-                    <StackPanel Grid.Column="0" Grid.Row="1" Background="DimGray"   CanVerticallyScroll="True" >
-                        <TreeView Name="treeviewView" BorderThickness="0" Background="DimGray"  ItemsSource="{Binding NewMenuListLocal}" FocusVisualStyle="{x:Null}">
+                    <ScrollViewer Style="{DynamicResource MenuScrollViewer}" Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" CanContentScroll="True" VerticalScrollBarVisibility="Auto">
+                            <TreeView Name="treeviewView"  BorderThickness="0" Background="DimGray"  ItemsSource="{Binding NewMenuListEnterprise}" FocusVisualStyle="{x:Null}">
                             <ItemsControl.ItemTemplate>
                                     <HierarchicalDataTemplate HierarchicalDataTemplate.ItemsSource="{Binding SystemMenuList}">
                                          <TextBlock VerticalAlignment="Center"  Foreground="White" Margin="8" Text="{Binding MenuName}"/>
@@ -637,7 +637,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </TreeView>
-                        </StackPanel>
+                        </ScrollViewer>
                     <ListBox Name="listBoxPopupMenuList" Grid.Row="1" Grid.Column="1"  Background="GhostWhite" Style="{StaticResource PopupMenuListStyle}" ItemsSource="{Binding NewSystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>
                    
                     <!--主界面第三行-->

@@ -165,6 +165,27 @@ namespace PortalFramePlugin.Models
                 }
             }
         }
+
+        /// <summary>
+        /// 插件背景色  注：Metro的背景色，留在这儿备用
+        /// </summary>
+        private string pluginBG = "#009600";
+        public string PluginBG
+        {
+            get
+            {
+
+                return pluginBG;
+            }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value) == false)
+                {
+                    pluginBG = value;
+                    RaisePropertyChanged("PluginBG");
+                }  
+            }
+        }
         /// <summary>
         /// 描述
         /// </summary>

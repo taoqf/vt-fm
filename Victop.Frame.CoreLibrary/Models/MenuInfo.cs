@@ -59,6 +59,13 @@ namespace Victop.Frame.CoreLibrary.Models
             get { return icon; }
             set { icon = value; }
         }
+        private string background;
+
+        public string Background
+        {
+            get { return background; }
+            set { background = value; }
+        }
         private string show_type;
 
         public string Show_type

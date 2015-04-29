@@ -232,8 +232,11 @@ namespace MetroFramePlugin.Models
             }
             set
             {
-                pluginBG = value;
-                RaisePropertyChanged("PluginBG");
+                if (string.IsNullOrWhiteSpace(value) == false)
+                {
+                    pluginBG = value;
+                    RaisePropertyChanged("PluginBG");
+                }
             }
         }
 
