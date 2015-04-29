@@ -1221,9 +1221,20 @@ namespace Victop.Frame.DataChannel
                                                 if (dr[dc.ColumnName] != null && !string.IsNullOrWhiteSpace(dr[dc.ColumnName].ToString()))
                                                 {
                                                     DateTime currentTime = (DateTime)dr[dc.ColumnName];
-                                                    DateTime originTime = (DateTime)dr[dc.ColumnName, DataRowVersion.Original];
                                                     modDic.Add(dc.ColumnName, (long)(currentTime.ToUniversalTime() - startTime.ToUniversalTime()).TotalMilliseconds);
-                                                    originDic.Add(dc.ColumnName, (long)(originTime.ToUniversalTime() - startTime.ToUniversalTime()).TotalMilliseconds);
+                                                    //修改人：时长水
+                                                    //修改时间：2015-04-29 09：38
+                                                    //修改原因：如果原始时间为空的话，时间类型将不能进行转换报错
+                                                    if (dr[dc.ColumnName, DataRowVersion.Original]!=null&&!string.IsNullOrEmpty(dr[dc.ColumnName,DataRowVersion.Original].ToString()))
+                                                    {
+                                                        DateTime originTime = (DateTime)dr[dc.ColumnName, DataRowVersion.Original];
+                                                        originDic.Add(dc.ColumnName, (long)(originTime.ToUniversalTime() - startTime.ToUniversalTime()).TotalMilliseconds);
+                                                    }
+                                                    else
+                                                    {
+                                                        originDic.Add(dc.ColumnName, (long)0);
+                                                    }
+                                                    
                                                 }
                                                 else
                                                 {
