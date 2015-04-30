@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
@@ -28,6 +29,7 @@ using System.Xml;
 using System.Text.RegularExpressions;
 
 
+
 namespace MetroFramePlugin.ViewModels
 {
     public class UCMetroWindowViewModel : ModelBase
@@ -50,6 +52,7 @@ namespace MetroFramePlugin.ViewModels
         private ObservableCollection<VicTabItemNormal> tabItemList;
         private VicTabItemNormal selectedTabItem;
         private VicTabControlNormal mainTabControl;
+        private bool poPupState;
         /// <summary>是否首次登录 </summary>
         private bool isFirstLogin = true;
         private bool isFirstLoad = true;
@@ -62,6 +65,25 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         private string userImg;
         /// <summary>
+        /// 用户密码
+        /// </summary>
+        private string userCode;
+        public string UserCode
+        {
+            get
+            {
+                return userCode;
+            }
+            set
+            {
+                if (userCode != value)
+                {
+                    userCode = value;
+                    RaisePropertyChanged("UserCode");
+                }
+            }
+        }
+        /// <summary>
         /// 活动插件数目
         /// </summary>
         private long activePluginNum;
@@ -73,6 +95,25 @@ namespace MetroFramePlugin.ViewModels
         /// 应用程序版本编号
         /// </summary>
         private string appVersionCode;
+
+        /// <summary>
+        /// 点击头像状态
+        /// </summary>
+        public bool PoPupState
+        {
+            get
+            {
+                return poPupState;
+            }
+            set
+            {
+                if (poPupState != value)
+                {
+                    poPupState = value;
+                    RaisePropertyChanged("PoPupState");
+                }
+            }
+        }
         #endregion
 
         #region 属性
@@ -466,7 +507,8 @@ namespace MetroFramePlugin.ViewModels
                     //{
                     //    UserLogin();
                     //}
-                    UserLogin();
+                  //  UserLogin();
+                    PoPupState = true;
                 });
             }
         }
@@ -485,7 +527,35 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         #endregion
+        #region 切换用户命令
+        public ICommand btnChangeUserClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
 
+                    PoPupState = false;
+                    UserLogin();
+                });
+            }
+        }
+        #endregion
+        #region 修改密码
+        public ICommand btnModifiPassClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    PoPupState = false;
+                    Process proc = new System.Diagnostics.Process();
+                    proc.StartInfo.FileName = string.Format("{0}?userCode={1}", ConfigurationManager.AppSettings["updatepwdhttp"], UserCode);
+                    proc.Start();
+                });
+            }
+        }
+        #endregion
         #region 窗体最大化命令
         /// <summary>窗体最大化命令 </summary>
         public ICommand btnMaxClickCommand
@@ -973,6 +1043,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
                     userRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
+                    UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
                     this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 isFirstLogin = false;
