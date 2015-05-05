@@ -537,6 +537,7 @@ namespace MetroFramePlugin.ViewModels
 
                     PoPupState = false;
                     UserLogin();
+                    DrawingPanelArea();
                 });
             }
         }
@@ -1389,6 +1390,26 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         /// <summary>
+        /// 所有用户区域集合
+        /// </summary>
+        private ObservableCollection<UserArea> allUserArea;
+        public ObservableCollection<UserArea> AllUserArea
+        {
+            get
+            {
+                if (allUserArea == null)
+                    allUserArea = new ObservableCollection<UserArea>();
+                return allUserArea;
+            }
+            set
+            {
+                if (allUserArea != value)
+                {
+                    allUserArea = value;
+                }
+            }
+        }
+        /// <summary>
         /// 新区域集合
         /// </summary>
         private ObservableCollection<AreaMenu> newArea;
@@ -1744,7 +1765,19 @@ namespace MetroFramePlugin.ViewModels
             {
                 areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("UTF-8"));
             }
-            this.NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
+            AllUserArea = JsonHelper.ToObject<ObservableCollection<UserArea>>(areaMenuList);
+            foreach (UserArea menuModel in AllUserArea)
+            {
+                if (menuModel.UserCode != null)
+                {
+                   if (menuModel.UserCode == this.UserCode)
+                   {
+                       this.NewArea = menuModel.UserAreaMenu;
+                       break;
+                   } 
+                }
+            }
+           
         }
 
 
@@ -1975,8 +2008,23 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         private void WriteFile()
         {
+            foreach (UserArea nowUserArea in AllUserArea)
+            {
+                if (nowUserArea.UserCode != null)
+                {
+                    if (nowUserArea.UserCode == this.UserCode)
+                    {
+                        AllUserArea.Remove(nowUserArea);
+                        break;
+                    }
+                }
+            }
+            UserArea userArray=new UserArea();
+            userArray.UserCode = this.userCode;
+            userArray.UserAreaMenu = this.NewArea;
+            AllUserArea.Add(userArray);
             StreamWriter sw = new StreamWriter(menuPath, false);
-            sw.Write(JsonHelper.ToJson(NewArea));
+            sw.Write(JsonHelper.ToJson(AllUserArea));
             sw.Flush();
             sw.Close();
             sw.Dispose();

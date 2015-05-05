@@ -10,9 +10,9 @@ namespace MetroFramePlugin.Models
     public class UserArea : PropertyModelBase
     {
         /// <summary>
-        ///用户Coder
+        ///用户Code
         /// </summary>
-        private string userCode;
+        private string userCode=string.Empty;
         public string UserCode
         {
             get { return userCode; }
