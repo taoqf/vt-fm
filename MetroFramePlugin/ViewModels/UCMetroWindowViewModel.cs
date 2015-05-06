@@ -507,7 +507,7 @@ namespace MetroFramePlugin.ViewModels
                     //{
                     //    UserLogin();
                     //}
-                  //  UserLogin();
+                    //  UserLogin();
                     PoPupState = true;
                 });
             }
@@ -1675,6 +1675,12 @@ namespace MetroFramePlugin.ViewModels
                     if (x != null)
                     {
                         MenuModel _menuName = (MenuModel)x;
+
+                        if (_menuName.MenuName == "飞道工具")
+                        {
+                            VicMessageBoxNormal.Show("注意：此选项没有展示菜单，请选择其子菜单！", "提示");
+                            return;
+                        }
                         foreach (MenuModel menuModel in SystemMenuListEnterprise)
                         {
                             MenuModel childNewModel = new MenuModel();
@@ -1691,6 +1697,7 @@ namespace MetroFramePlugin.ViewModels
                                 break;
                             }
                         }
+
                     }
                 });
             }
@@ -1770,14 +1777,14 @@ namespace MetroFramePlugin.ViewModels
             {
                 if (menuModel.UserCode != null)
                 {
-                   if (menuModel.UserCode == this.UserCode)
-                   {
-                       this.NewArea = menuModel.UserAreaMenu;
-                       break;
-                   } 
+                    if (menuModel.UserCode == this.UserCode)
+                    {
+                        this.NewArea = menuModel.UserAreaMenu;
+                        break;
+                    }
                 }
             }
-           
+
         }
 
 
@@ -2019,7 +2026,7 @@ namespace MetroFramePlugin.ViewModels
                     }
                 }
             }
-            UserArea userArray=new UserArea();
+            UserArea userArray = new UserArea();
             userArray.UserCode = this.userCode;
             userArray.UserAreaMenu = this.NewArea;
             AllUserArea.Add(userArray);

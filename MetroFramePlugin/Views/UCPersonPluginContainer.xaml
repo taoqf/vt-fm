@@ -625,7 +625,7 @@
                         <controls:VicButtonNormal Name="btnPopupClose" Style="{DynamicResource btnCloseMetroStyle}" VerticalAlignment="Top" Command="{Binding btnAddApplyCloseClickCommand}"/>
                     </StackPanel>
                     <ScrollViewer Style="{DynamicResource MenuScrollViewer}" Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" CanContentScroll="True" VerticalScrollBarVisibility="Auto">
-                            <TreeView Name="treeviewView"  BorderThickness="0" Background="DimGray"  ItemsSource="{Binding NewMenuListEnterprise}" FocusVisualStyle="{x:Null}">
+                            <TreeView Name="treeviewView"  BorderThickness="0" Background="DimGray"   ItemsSource="{Binding NewMenuListEnterprise}" FocusVisualStyle="{x:Null}">
                             <ItemsControl.ItemTemplate>
                                     <HierarchicalDataTemplate HierarchicalDataTemplate.ItemsSource="{Binding SystemMenuList}">
                                          <TextBlock VerticalAlignment="Center"  Foreground="White" Margin="8" Text="{Binding MenuName}"/>
