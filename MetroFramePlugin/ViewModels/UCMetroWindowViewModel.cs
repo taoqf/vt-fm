@@ -1991,6 +1991,7 @@ namespace MetroFramePlugin.ViewModels
         private void ThumbCanvas(UIElement lElementName = null, bool IsLock = false)
         {
             //实现拖动和改变大小
+            if (_panel == null) return;
             var layer = AdornerLayer.GetAdornerLayer(_panel);
             if (lElementName == null)
             {
