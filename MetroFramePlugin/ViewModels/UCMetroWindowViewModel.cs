@@ -1794,7 +1794,7 @@ namespace MetroFramePlugin.ViewModels
         private void DrawingPanelArea()
         {
             NewArea.Clear();
-            _panel.Children.Clear();
+            if (_panel!=null) _panel.Children.Clear();
             ReadMenuJsonFile();
 
 
