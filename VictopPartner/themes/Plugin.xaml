@@ -122,6 +122,7 @@
     </Style>
 
     <!--DataGrid样式开始-->
+    <!--两头箭头样式-->
     <Style x:Key="DG_ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -157,7 +158,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    <!--滚动条底槽样式-->
     <Style x:Key="DG_ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -166,7 +167,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Border Background="Transparent" />
+                    <Border Background="{DynamicResource DG_NormalBrush}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

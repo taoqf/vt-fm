@@ -83,6 +83,14 @@ namespace UserManagerService
                 userDic.Add("UserId", loginUserInfo.UserId);
                 userDic.Add("UserImg", loginUserInfo.UserImg);
                 userDic.Add("UserRole", JsonHelper.ToJson(loginUserInfo.RoleList));
+                //20150507上午权限清空时的应急措施
+                //var temp = loginUserInfo.UserRole;
+               
+                //if (temp == null)
+                //{
+                //    temp = loginUserInfo.RoleList.FirstOrDefault().Role_No;
+                //}
+                //userDic.Add("CurrentRole",temp);
                 userDic.Add("CurrentRole", loginUserInfo.UserRole);
                 if (loginUserInfo.UserFullInfo != null && loginUserInfo.UserFullInfo.ContainsKey("staff_no"))
                 {
