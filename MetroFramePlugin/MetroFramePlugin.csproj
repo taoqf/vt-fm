@@ -116,6 +116,9 @@
     <Compile Include="Views\UCPersonPluginContainer.xaml.cs">
       <DependentUpon>UCPersonPluginContainer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UCPluginContainer.xaml.cs">
+      <DependentUpon>UCPluginContainer.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Victop.Frame.CoreLibrary\Victop.Frame.CoreLibrary.csproj">
@@ -151,6 +154,10 @@
     <Page Include="Views\UCPersonPluginContainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UCPluginContainer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
