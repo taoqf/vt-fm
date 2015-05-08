@@ -89,12 +89,19 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Row="0" Grid.Column="0" Width="192" Height="28"   HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding LoginInfoModel.UserName}"  VerticalContentAlignment="Center"/>
+
                 <Label Grid.Row="0" Grid.Column="1" FontFamily="SimSun" Content="注册账号"  HorizontalAlignment="Left" VerticalContentAlignment="Bottom"/>
-                <PasswordBox Grid.Row="1" Name="pwBox" Grid.Column="0"  Width="192" Height="28" HorizontalAlignment="Left"  
+                <!--没键盘-->
+                <!--<PasswordBox Grid.Row="1" Name="pwBox" Grid.Column="0"  Width="192" Height="28" HorizontalAlignment="Left"  
                             helpers:PasswordBoxBindingHelper.Attach="True" helpers:PasswordBoxBindingHelper.Password=
                     "{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             VerticalAlignment="Center"  BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
-                </PasswordBox>
+                </PasswordBox>-->
+              
+                <controls:VicPasswordBoxKeyNormal Grid.Row="1" Name="pwBox" Grid.Column="0"  Width="192" Height="28" HorizontalAlignment="Left"  
+                            PasswordText="{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            VerticalAlignment="Center"  BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
+                </controls:VicPasswordBoxKeyNormal>
                 <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Content="找回密码"  VerticalAlignment="Center"/>
                 <controls:VicComboBoxNormal Grid.Row="2" Grid.Column="0" Height="24" Name="CloudSOAComboBox"  
                         ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
