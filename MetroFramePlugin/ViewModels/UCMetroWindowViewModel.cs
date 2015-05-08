@@ -234,6 +234,12 @@ namespace MetroFramePlugin.ViewModels
                     //browser.Source = new Uri("http://www.baidu.com");
                     homeItem.Content = browser;
                     tabItemList.Add(homeItem);
+                    VicTabItemNormal personItem = new VicTabItemNormal();
+                    personItem.Name = "homeItem";
+                    personItem.AllowDelete = false;
+                    personItem.Header = "个人收藏";
+                    tabItemList.Add(personItem);
+                   
                 }
                 return tabItemList;
             }
@@ -640,12 +646,17 @@ namespace MetroFramePlugin.ViewModels
         /// <param name="x"></param>
         private void BuildPluginContainer(object x)
         {
+
             if (TabItemList[0].Content.GetType().Name.Equals("WebBrowser"))
             {
-                UCPersonPluginContainer pluginContainer = new UCPersonPluginContainer();
+                UCPluginContainer pluginContainer = new UCPluginContainer();
                 TabItemList[0].Content = pluginContainer;
-                TabItemList[0].Header = "个人收藏";
+                TabItemList[0].Header = "功能列表";
+                UCPersonPluginContainer personPluginContainer = new UCPersonPluginContainer();
+                TabItemList[1].Content = personPluginContainer;
+                TabItemList[1].Header = "个人收藏";
             }
+          
             MenuModel menuModel = (MenuModel)x;
             SystemThirdLevelMenuList = menuModel.SystemMenuList;
             if (SystemThirdLevelMenuList.Count > 0)

@@ -135,7 +135,7 @@ namespace Victop.Frame.Adapter
             }
             #endregion
 
-            return SubmitRequest(message, 10000);
+            return SubmitRequest(message, 15000); //20150508发送消息增加为15秒
         }
 
         /// <summary>
