@@ -43,8 +43,8 @@ namespace Victop.Frame.DataChannel
             if (convertManager.SaveData(channelId, dataPath))
             {
                 //TODO:调用JS方法检查操作的数据权限，传入CurdList数据,数据权限数据
-                //return convertManager.CheckDataAuthority(channelId);
-                return true;
+                return convertManager.CheckDataAuthority(channelId);
+                //return true;
             }
             else
             {

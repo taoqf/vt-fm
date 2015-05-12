@@ -1371,8 +1371,9 @@ namespace Victop.Frame.DataChannel
                     context.Run(Properties.Resources.CheckDataAuthorityScript);
                     context.Run(";require(['victop/core/_data/data_limit_verify'],function(wpf){result = JSON.stringify(wpf(curdList, path, data));});");
                     object result = context.GetParameter("result");
-                    if (result != null && result.ToString().Length > 0)
+                    if (result != null && result.ToString()!="[]")
                     {
+                        LoggerHelper.InfoFormat("验证数据权限不通过！原因：" + result.ToString());
                         return false;
                     }
                     else
@@ -1383,6 +1384,7 @@ namespace Victop.Frame.DataChannel
             }
             catch(Exception ex)
             {
+                LoggerHelper.InfoFormat("验证数据权限失败！失败原因："+ex.ToString());
                 return false;
             }
             #endregion
