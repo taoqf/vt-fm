@@ -25,6 +25,8 @@
                       Storyboard="{StaticResource showDW1}"/>
         </EventTrigger>
     </UserControl.Triggers>
+    <Grid>
+        
     <Grid x:Name="gridMain" Style="{DynamicResource WindowChangeSkinBackground}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -176,5 +178,7 @@
                 <i:InvokeCommandAction Command="{Binding gridMainUnloadedCommand}"/>
             </i:EventTrigger>
         </i:Interaction.Triggers>
+    </Grid>
+     <controls:VicProgressRingNormal x:Name="load" Background="Transparent" />
     </Grid>
 </UserControl>

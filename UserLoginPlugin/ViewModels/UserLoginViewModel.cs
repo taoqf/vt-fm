@@ -26,6 +26,9 @@ namespace UserLoginPlugin.ViewModels
     public class UserLoginViewModel : ModelBase
     {
         #region 字段
+
+        private VicProgressRingNormal metroLoading;
+
         private Window LoginWindow;
         //把UserControl明转为Window
         UserLoginWindow newWindow;
@@ -168,6 +171,7 @@ namespace UserLoginPlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     UserControl ucLogin = (UserControl)x;
+                    metroLoading = ucLogin.FindName("load") as VicProgressRingNormal;
                     FrameworkElement ct = (FrameworkElement)ucLogin.Parent;
                     while (true)
                     {
@@ -257,13 +261,18 @@ namespace UserLoginPlugin.ViewModels
         #endregion
 
         #region 登录命令
+
+        public delegate void NextPrimeDelegate();//2定义委托
         public ICommand btnLoginClickCommand
         {
             get
             {
                 return new RelayCommand(() =>
-                {
-                    UserLogin();
+                    {
+                      metroLoading.IsActive = true;
+                      Thread th = new Thread(UserLogin);//1 开启线程
+                      th.SetApartmentState(ApartmentState.STA);
+                      th.Start();
                 }, () => { return CheckUserLogin(); });
             }
         }
@@ -420,7 +429,6 @@ namespace UserLoginPlugin.ViewModels
         {
             try
             {
-                LoginWindow.Cursor = Cursors.Wait;
                 Dictionary<string, object> contentDic = new Dictionary<string, object>();
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
@@ -433,6 +441,7 @@ namespace UserLoginPlugin.ViewModels
                     if (!returnDic["ReplyMode"].ToString().Equals("0"))
                     {
                         SaveLoginUserInfo();
+                      
                         Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                         RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
                         if (RoleInfoList == null||RoleInfoList.Count==0)
@@ -446,7 +455,8 @@ namespace UserLoginPlugin.ViewModels
                             setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
                             setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                             dataOp.SendAsyncMessage(messageType, setUserContentDic);
-                            LoginWindow.DialogResult = true;
+                            LoginWindow.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new NextPrimeDelegate(search)); 
+                            
                         }
                         else
                         {
@@ -462,7 +472,8 @@ namespace UserLoginPlugin.ViewModels
                                 setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                                 setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
                                 dataOp.SendAsyncMessage(messageType, setUserContentDic);
-                                LoginWindow.DialogResult = true;
+                                LoginWindow.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new NextPrimeDelegate(search)); 
+                                
                             }
                             else
                             {
@@ -480,10 +491,12 @@ namespace UserLoginPlugin.ViewModels
                         MessageBox.Show((returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString())) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
                     }
                 }
+
                 else
                 {
                     MessageBox.Show("登录失败");
                 }
+              
             }
             catch (Exception ex)
             {
@@ -491,8 +504,16 @@ namespace UserLoginPlugin.ViewModels
             }
             finally
             {
-                LoginWindow.Cursor = Cursors.Arrow;
+                
             }
+        }
+
+        private void search()
+        {
+            metroLoading.IsActive = false;
+            LoginWindow.DialogResult = true;
+           
+            LoginWindow.Cursor = Cursors.Arrow;
         }
 
         /// <summary>检查输入信息</summary>
