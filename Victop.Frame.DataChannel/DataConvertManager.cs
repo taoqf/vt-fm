@@ -1345,19 +1345,46 @@ namespace Victop.Frame.DataChannel
             Hashtable hashData = dataChannelManager.GetData(viewId);
             ChannelData channelData = hashData["Data"] as ChannelData;
             MongoModelInfoModel modelDefInfo = channelData.ModelDefInfo;
-            #region JS代码
-            using (JavascriptContext context = new JavascriptContext())
+            if (modelDefInfo == null) //非模型
             {
-                string modelTables = JsonHelper.ToJson(modelDefInfo.ModelTables);
-                string dataperm = JsonHelper.ReadJsonString(channelData.JSONData, "dataperm");
-                string curdList = JsonHelper.ToJson(channelData.CrudJSONData);
-                //TODO:为js代码传入model定义中的所有表结构，以及模型数据中的dataperm,当前通道下的curdJson
-                //string paramWpf = string.Format("var data={0};var path={1};", JsonData, dataPath);
-                //string script = paramWpf + Properties.Resources.GetDataByPathScript;
-                //context.Run(script);
+                return true;
+            }
+            #region JS代码
+
+            try
+            {
+                using (JavascriptContext context = new JavascriptContext())
+                {
+                    string modelTables = JsonHelper.ToJson(modelDefInfo.ModelTables);
+                    string dataperm = JsonHelper.ReadJsonString(channelData.JSONData, "dataperm");
+                    string curdList = JsonHelper.ToJson(channelData.CrudJSONData);
+                    if (string.IsNullOrEmpty(curdList)) //无修改信息
+                    {
+                        return true;
+                    }
+                    //TODO:为js代码传入model定义中的所有表结构，以及模型数据中的dataperm,当前通道下的curdJson
+                    context.SetParameter("data", modelTables);
+                    context.SetParameter("path", dataperm);
+                    context.SetParameter("curdList", curdList);
+                    context.Run(Properties.Resources.GetDataByPathScriptNew);
+                    context.Run(";require(['victop/core/_data/data_limit_verify'],function(wpf){result = JSON.stringify(wpf(curdList, path, data));});");
+                    object result = context.GetParameter("result");
+                    if (result != null && result.ToString().Length > 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                return false;
             }
             #endregion
-            return false;
+
         }
     }
 }
