@@ -181,7 +181,6 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
     </Grid>
-     <!--<controls:VicProgressRingNormal Grid.Row="0" Height="350" Width="450" x:Name="load" Background="Transparent" IsActive="{Binding IsRingShow,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />-->
-        <controls:VictopBusyIndicatorNormal Grid.Row="0" IsBusy="{Binding IsRingShow,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+     <controls:VicProgressRingNormal Grid.Row="0" Height="300" Width="300" x:Name="load" Background="Transparent" IsActive="{Binding IsRingShow,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>
