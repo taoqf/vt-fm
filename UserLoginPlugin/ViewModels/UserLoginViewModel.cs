@@ -37,19 +37,10 @@ namespace UserLoginPlugin.ViewModels
         private ObservableCollection<UserRoleInfoModel> roleInfoList;
         private UserRoleInfoModel selectedRoleInfo;
         private bool showRoleList;
-        DispatcherTimer tm = new DispatcherTimer();
-        public bool ShowRoleList
-        {
-            get { return showRoleList; }
-            set
-            {
-                if (showRoleList != value)
-                {
-                    showRoleList = value;
-                    RaisePropertyChanged("ShowRoleList");
-                }
-            }
-        }
+        /// <summary>
+        /// 是否显示加载
+        /// </summary>
+        private bool isRingShow = false;
         #endregion
 
         #region 属性
@@ -156,6 +147,33 @@ namespace UserLoginPlugin.ViewModels
                 {
                     selectedRoleInfo = value;
                     RaisePropertyChanged("SelectedRoleInfo");
+                }
+            }
+        }
+        public bool IsRingShow
+        {
+            get
+            {
+                return isRingShow;
+            }
+            set
+            {
+                if (isRingShow != value)
+                {
+                    isRingShow = value;
+                    RaisePropertyChanged("IsRingShow");
+                }
+            }
+        }
+        public bool ShowRoleList
+        {
+            get { return showRoleList; }
+            set
+            {
+                if (showRoleList != value)
+                {
+                    showRoleList = value;
+                    RaisePropertyChanged("ShowRoleList");
                 }
             }
         }
@@ -269,11 +287,9 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                     {
-                      metroLoading.IsActive = true;
-                      Thread th = new Thread(UserLogin);//1 开启线程
-                      th.SetApartmentState(ApartmentState.STA);
-                      th.Start();
-                }, () => { return CheckUserLogin(); });
+                        UserLogin();
+                        IsRingShow = true;
+                    }, () => { return CheckUserLogin(); });
             }
         }
         #endregion
@@ -305,7 +321,7 @@ namespace UserLoginPlugin.ViewModels
             }
         }
 
-        
+
 
         /// <summary>
         /// 角色列表选定命令
@@ -347,7 +363,7 @@ namespace UserLoginPlugin.ViewModels
             }
         }
 
-      
+
 
         #endregion
 
@@ -425,6 +441,70 @@ namespace UserLoginPlugin.ViewModels
         #endregion
 
         #region 登录操作
+        void AfterLogin(object returnMsg)
+        {
+            DataMessageOperation messageOp = new DataMessageOperation();
+            Dictionary<string, object> returnDic = JsonHelper.ToObject<Dictionary<string, object>>(returnMsg.ToString());
+            if (returnDic != null)
+            {
+                if (!returnDic["ReplyMode"].ToString().Equals("0"))
+                {
+                    IsRingShow = false;
+                    SaveLoginUserInfo();
+                    Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                    RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
+                    if (RoleInfoList == null || RoleInfoList.Count == 0)
+                    {
+                        DataMessageOperation dataOp = new DataMessageOperation();
+                        string messageType = "LoginService.setUserInfo";
+                        Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
+                        setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
+                        setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
+                        setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
+                        setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
+                        setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
+                        dataOp.SendAsyncMessage(messageType, setUserContentDic);
+                        LoginWindow.DialogResult = true;
+
+                    }
+                    else
+                    {
+                        if (RoleInfoList.Count == 1)
+                        {
+                            DataMessageOperation dataOp = new DataMessageOperation();
+                            string messageType = "LoginService.setUserInfo";
+                            Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
+                            setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
+                            setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
+                            setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
+                            setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
+                            setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
+                            setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
+                            dataOp.SendAsyncMessage(messageType, setUserContentDic);
+                            LoginWindow.DialogResult = true;
+                        }
+                        else
+                        {
+                            ShowRoleList = true;
+                            if (this.LoginWindow != null)
+                            {
+                                this.LoginWindow.Height = 1; this.LoginWindow.Width = 1;
+                            }
+                        }
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show((returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString())) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
+                }
+            }
+
+            else
+            {
+                MessageBox.Show("登录失败");
+            }
+        }
         private void UserLogin()
         {
             try
@@ -435,68 +515,10 @@ namespace UserLoginPlugin.ViewModels
                 contentDic.Add("spaceId", string.Format("{0}::{1}", LoginInfoModel.ClientId, string.IsNullOrEmpty(LoginInfoModel.ProductId) ? LoginInfoModel.ClientId : LoginInfoModel.ProductId));
                 string MessageType = "LoginService.userLoginNew";
                 DataMessageOperation messageOp = new DataMessageOperation();
-                Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
-                if (returnDic != null)
-                {
-                    if (!returnDic["ReplyMode"].ToString().Equals("0"))
-                    {
-                        SaveLoginUserInfo();
-                      
-                        Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
-                        RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
-                        if (RoleInfoList == null||RoleInfoList.Count==0)
-                        {
-                            DataMessageOperation dataOp = new DataMessageOperation();
-                            string messageType = "LoginService.setUserInfo";
-                            Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
-                            setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
-                            setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
-                            setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-                            setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
-                            setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
-                            dataOp.SendAsyncMessage(messageType, setUserContentDic);
-                            LoginWindow.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new NextPrimeDelegate(search)); 
-                            
-                        }
-                        else
-                        {
-                            if (RoleInfoList.Count == 1)
-                            {
-                                DataMessageOperation dataOp = new DataMessageOperation();
-                                string messageType = "LoginService.setUserInfo";
-                                Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
-                                setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
-                                setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
-                                setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-                                setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
-                                setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
-                                setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
-                                dataOp.SendAsyncMessage(messageType, setUserContentDic);
-                                LoginWindow.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new NextPrimeDelegate(search)); 
-                                
-                            }
-                            else
-                            {
-                                ShowRoleList = true;
-                                if (this.LoginWindow != null)
-                                {
-                                    this.LoginWindow.Height = 1; this.LoginWindow.Width = 1;
-                                }
-                            }
-                        }
-                        
-                    }
-                    else
-                    {
-                        MessageBox.Show((returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString())) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
-                    }
-                }
+                //Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
+                messageOp.SendAsyncMessage(MessageType, contentDic, new WaitCallback(AfterLogin));
 
-                else
-                {
-                    MessageBox.Show("登录失败");
-                }
-              
+
             }
             catch (Exception ex)
             {
@@ -504,7 +526,7 @@ namespace UserLoginPlugin.ViewModels
             }
             finally
             {
-                
+
             }
         }
 
@@ -512,7 +534,7 @@ namespace UserLoginPlugin.ViewModels
         {
             metroLoading.IsActive = false;
             LoginWindow.DialogResult = true;
-           
+
             LoginWindow.Cursor = Cursors.Arrow;
         }
 

@@ -26,8 +26,10 @@
         </EventTrigger>
     </UserControl.Triggers>
     <Grid>
-        
-    <Grid x:Name="gridMain" Style="{DynamicResource WindowChangeSkinBackground}" >
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+    <Grid Grid.Row="0" x:Name="gridMain" Style="{DynamicResource WindowChangeSkinBackground}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="5"/>
@@ -179,6 +181,7 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
     </Grid>
-     <controls:VicProgressRingNormal x:Name="load" Background="Transparent" />
+     <!--<controls:VicProgressRingNormal Grid.Row="0" Height="350" Width="450" x:Name="load" Background="Transparent" IsActive="{Binding IsRingShow,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />-->
+        <controls:VictopBusyIndicatorNormal Grid.Row="0" IsBusy="{Binding IsRingShow,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>
