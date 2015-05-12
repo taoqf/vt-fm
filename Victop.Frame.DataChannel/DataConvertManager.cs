@@ -1353,20 +1353,22 @@ namespace Victop.Frame.DataChannel
 
             try
             {
+                if (string.IsNullOrEmpty(channelData.DatapermString))
+                {
+                    return true;
+                }
+                string curdList = JsonHelper.ToJson(channelData.CrudJSONData);
+                if (string.IsNullOrEmpty(curdList)) //无修改信息
+                {
+                    return true;
+                }
                 using (JavascriptContext context = new JavascriptContext())
                 {
                     string modelTables = JsonHelper.ToJson(modelDefInfo.ModelTables);
-                    string dataperm = JsonHelper.ReadJsonString(channelData.JSONData, "dataperm");
-                    string curdList = JsonHelper.ToJson(channelData.CrudJSONData);
-                    if (string.IsNullOrEmpty(curdList)) //无修改信息
-                    {
-                        return true;
-                    }
-                    //TODO:为js代码传入model定义中的所有表结构，以及模型数据中的dataperm,当前通道下的curdJson
                     context.SetParameter("data", modelTables);
-                    context.SetParameter("path", dataperm);
+                    context.SetParameter("path", channelData.DatapermString);
                     context.SetParameter("curdList", curdList);
-                    context.Run(Properties.Resources.GetDataByPathScriptNew);
+                    context.Run(Properties.Resources.CheckDataAuthorityScript);
                     context.Run(";require(['victop/core/_data/data_limit_verify'],function(wpf){result = JSON.stringify(wpf(curdList, path, data));});");
                     object result = context.GetParameter("result");
                     if (result != null && result.ToString().Length > 0)

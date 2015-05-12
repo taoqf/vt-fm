@@ -50,7 +50,7 @@ namespace Victop.Frame.DataChannel
             {
                 return false;
             }
-           
+
         }
         /// <summary>
         /// 根据通道号获取JSON数据

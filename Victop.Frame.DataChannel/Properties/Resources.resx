@@ -117,41 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="GetDataByPathScript" xml:space="preserve">
-    <value>var result = (function (p_data, p_path) {
-                        if (!p_path || p_path.length === 0) {
-                        return null;
-                        }
-                if (p_data) {
-                for (var i = 0; i &lt; p_path.length; i++) {
-                if (i % 2 === 0) { //取对象根据对象返回dataArray(path偶数)
-                p_data = p_data[p_path[i]];
-                if (!p_data) {
-                    return null;
-                }
-                } else if (i % 2 === 1) { //取dataArray中node，即一行数据 (path奇数)
-                p_data = p_data.dataArray;
-                var key_val = p_path[i];
-                var bfind = false;
-                for (var j = p_data.length; j--;) {
-                    var p_item = p_data[j];
-                    if (key_val.key in p_item &amp;&amp; key_val.value === p_item[key_val.key]) {
-                        p_data = p_item;
-                        bfind = true;
-                        break;
-                    }
-                }
-                if (!bfind) {
-                    return null;
-                }
-                }
-            }
-        }
-        return p_data;
-        })(data, path);</value>
-    <comment>获取数据的JS的脚本</comment>
-  </data>
-  <data name="GetDataByPathScriptNew" xml:space="preserve">
+  <data name="CheckDataAuthorityScript" xml:space="preserve">
     <value>/*
 	Copyright (c) 2004-2011, The Dojo Foundation All Rights Reserved.
 	Available via Academic Free License &gt;= 2.1 OR the modified BSD license.
@@ -10942,6 +10908,40 @@ define([
 	!require.async &amp;&amp; require(["dojo"]);
 	require.boot &amp;&amp; require.apply(null, require.boot);
 })();</value>
-    <comment>获取数据权限JS脚本</comment>
+    <comment>检查数据权限JS脚本</comment>
+  </data>
+  <data name="GetDataByPathScript" xml:space="preserve">
+    <value>var result = (function (p_data, p_path) {
+                        if (!p_path || p_path.length === 0) {
+                        return null;
+                        }
+                if (p_data) {
+                for (var i = 0; i &lt; p_path.length; i++) {
+                if (i % 2 === 0) { //取对象根据对象返回dataArray(path偶数)
+                p_data = p_data[p_path[i]];
+                if (!p_data) {
+                    return null;
+                }
+                } else if (i % 2 === 1) { //取dataArray中node，即一行数据 (path奇数)
+                p_data = p_data.dataArray;
+                var key_val = p_path[i];
+                var bfind = false;
+                for (var j = p_data.length; j--;) {
+                    var p_item = p_data[j];
+                    if (key_val.key in p_item &amp;&amp; key_val.value === p_item[key_val.key]) {
+                        p_data = p_item;
+                        bfind = true;
+                        break;
+                    }
+                }
+                if (!bfind) {
+                    return null;
+                }
+                }
+            }
+        }
+        return p_data;
+        })(data, path);</value>
+    <comment>获取数据的JS的脚本</comment>
   </data>
 </root>
