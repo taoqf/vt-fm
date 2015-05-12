@@ -15,29 +15,29 @@ namespace Victop.Frame.CoreLibrary.Models
     using Victop.Frame.CoreLibrary.Enums;
     using Victop.Frame.CoreLibrary.MongoModel;
 
-	/// <summary>
-	/// 数据通道数据类
-	/// </summary>
-	/// <remarks>数据通道数据类</remarks>
-	public class ChannelData
-	{
-		/// <summary>
-		/// 数据信息
-		/// </summary>
-		public virtual DataSet DataInfo
-		{
-			get;
-			set;
-		}
+    /// <summary>
+    /// 数据通道数据类
+    /// </summary>
+    /// <remarks>数据通道数据类</remarks>
+    public class ChannelData
+    {
+        /// <summary>
+        /// 数据信息
+        /// </summary>
+        public virtual DataSet DataInfo
+        {
+            get;
+            set;
+        }
 
-		/// <summary>
-		/// 消息信息(查询条件)
-		/// </summary>
-		public virtual RequestMessage MessageInfo
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// 消息信息(查询条件)
+        /// </summary>
+        public virtual RequestMessage MessageInfo
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// 数据类型(JSON/DATASET)
         /// </summary>
@@ -78,6 +78,14 @@ namespace Victop.Frame.CoreLibrary.Models
             get;
             set;
         }
-	}
+        /// <summary>
+        /// 数据权限
+        /// </summary>
+        public virtual string DatapermString
+        {
+            get;
+            set;
+        }
+    }
 }
 

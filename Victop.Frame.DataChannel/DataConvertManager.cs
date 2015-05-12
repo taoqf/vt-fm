@@ -1345,19 +1345,50 @@ namespace Victop.Frame.DataChannel
             Hashtable hashData = dataChannelManager.GetData(viewId);
             ChannelData channelData = hashData["Data"] as ChannelData;
             MongoModelInfoModel modelDefInfo = channelData.ModelDefInfo;
-            #region JS代码
-            using (JavascriptContext context = new JavascriptContext())
+            if (modelDefInfo == null) //非模型
             {
-                string modelTables = JsonHelper.ToJson(modelDefInfo.ModelTables);
-                string dataperm = JsonHelper.ReadJsonString(channelData.JSONData, "dataperm");
+                return true;
+            }
+            #region JS代码
+
+            try
+            {
+                if (string.IsNullOrEmpty(channelData.DatapermString))
+                {
+                    return true;
+                }
                 string curdList = JsonHelper.ToJson(channelData.CrudJSONData);
-                //TODO:为js代码传入model定义中的所有表结构，以及模型数据中的dataperm,当前通道下的curdJson
-                //string paramWpf = string.Format("var data={0};var path={1};", JsonData, dataPath);
-                //string script = paramWpf + Properties.Resources.GetDataByPathScript;
-                //context.Run(script);
+                if (string.IsNullOrEmpty(curdList)) //无修改信息
+                {
+                    return true;
+                }
+                using (JavascriptContext context = new JavascriptContext())
+                {
+                    string modelTables = JsonHelper.ToJson(modelDefInfo.ModelTables);
+                    context.SetParameter("data", modelTables);
+                    context.SetParameter("path", channelData.DatapermString);
+                    context.SetParameter("curdList", curdList);
+                    context.Run(Properties.Resources.CheckDataAuthorityScript);
+                    context.Run(";require(['victop/core/_data/data_limit_verify'],function(wpf){result = JSON.stringify(wpf(curdList, path, data));});");
+                    object result = context.GetParameter("result");
+                    if (result != null && result.ToString()!="[]")
+                    {
+                        LoggerHelper.InfoFormat("验证数据权限不通过！原因：" + result.ToString());
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                LoggerHelper.InfoFormat("验证数据权限失败！失败原因："+ex.ToString());
+                return false;
             }
             #endregion
-            return false;
+
         }
     }
 }
