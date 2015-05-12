@@ -20,6 +20,8 @@ using System.Data;
 using Victop.Wpf.Controls;
 using Victop.Frame.DataMessageManager;
 using System.Windows.Threading;
+using System.Diagnostics;
+using System.Configuration;
 
 namespace UserLoginPlugin.ViewModels
 {
@@ -269,6 +271,15 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                     {
+                        if (LoginInfoModel.UserPwd.Equals("111111") || LoginInfoModel.UserPwd.Equals("123456"))
+                        {
+
+                            VicMessageBoxNormal.Show("密码过于简单,将转向修改密码界面！");
+                            Process proc = new System.Diagnostics.Process();
+                            proc.StartInfo.FileName = string.Format("{0}?userCode={1}", ConfigurationManager.AppSettings["updatepwdhttp"], LoginInfoModel.UserName);
+                            proc.Start();
+                            return;
+                        }
                       metroLoading.IsActive = true;
                       Thread th = new Thread(UserLogin);//1 开启线程
                       th.SetApartmentState(ApartmentState.STA);
