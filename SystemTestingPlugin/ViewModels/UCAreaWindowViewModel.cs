@@ -214,6 +214,24 @@ namespace SystemTestingPlugin.ViewModels
             }
         }
 
+        public ICommand btnGetDataClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    DataMessageOperation messageOp = new DataMessageOperation();
+                    DataSet mastDs = new DataSet();
+                    mastDs = messageOp.GetData(DataInfoModel.ChannelId, DataInfoModel.DataPath, mastDs);
+                    DataTable dt = mastDs.Tables["dataArray"];
+                    DataInfoModel.ResultDataTable = dt;
+                }, () =>
+                {
+                    return !string.IsNullOrEmpty(DataInfoModel.ChannelId);
+                });
+            }
+        }
+
         void searchDataGrid_DataReferenceColumnClick(object sender, string columnName, string columnCaption)
         {
             VicTextBox vicTbox = (VicTextBox)sender;
@@ -264,7 +282,10 @@ namespace SystemTestingPlugin.ViewModels
                 return new RelayCommand(() =>
                 {
                     DataRow dr = DataInfoModel.ResultDataTable.NewRow();
-                    dr["_id"] = Guid.NewGuid().ToString();
+                    if (DataInfoModel.ResultDataTable.Columns.Contains("_id"))
+                    {
+                        dr["_id"] = Guid.NewGuid().ToString();
+                    }
                     DataInfoModel.ResultDataTable.Rows.Add(dr);
                 });
             }
