@@ -31,8 +31,6 @@ using System.Xml;
 using System.Text.RegularExpressions;
 using Victop.Frame.PublicLib.Managers;
 
-
-
 namespace MetroFramePlugin.ViewModels
 {
     public class UCMetroWindowViewModel : ModelBase
@@ -2458,7 +2456,7 @@ namespace MetroFramePlugin.ViewModels
         }
 
         ///<summary>
-        /// 根据UserCode和ProductId取数
+        /// 根据UserCode和ProductId取菜单
         /// </summary>
         private string channelId=string.Empty;
         private DataMessageOperation messageOp;
@@ -2498,7 +2496,7 @@ namespace MetroFramePlugin.ViewModels
         }
 
         ///<summary>
-        /// 保存到数据库
+        /// 保存个人菜单到数据库
         /// </summary>
         private void SavePersonMenu()
         {
@@ -2540,6 +2538,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     staffDrs[0]["custom_menu"] = JsonHelper.ToJson(NewArea);
                 }
+
                 DataMessageOperation dataOp = new DataMessageOperation();
                 dataOp.SaveData(channelId, "[\"pub_user_setting\"]");
                 string MessageType1 = "MongoDataChannelService.saveBusiData";
