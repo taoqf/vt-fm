@@ -842,42 +842,7 @@ namespace MetroFramePlugin.ViewModels
 
 
 
-            //根据UserCode和ProductId取数
-
-            DataMessageOperation messageOp = new DataMessageOperation();
-            string MessageType = "MongoDataChannelService.findBusiData";
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "12");
-            contentDic.Add("configsystemid", "11");
-            contentDic.Add("modelid", "feidao-model-pub_user_setting-0001");
-            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> conDic = new Dictionary<string, object>();
-            conDic.Add("name", "pub_user_setting");
-            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConDic.Add("productid", ProductId);
-            tableConDic.Add("userCode", UserCode);
-            tableConList.Add(tableConDic);
-            conDic.Add("tablecondition", tableConList);
-            conList.Add(conDic);
-            contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
-            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
-            {
-                string channelId = returnDic["DataChannelId"].ToString();
-                DataSet mastDs = messageOp.GetData(channelId, "[\"pub_user_setting\"]");
-
-
-                if (mastDs.Tables["dataArray"].Rows.Count == 0)
-                {
-                    return;
-                }
-                else
-                {
-                    ;
-                }
-            }
-
+            
         }
         /// <summary>创建完整的菜单模型 </summary>
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
@@ -1593,7 +1558,7 @@ namespace MetroFramePlugin.ViewModels
                     MenuModel areaPlugin = new MenuModel();
                     areaPlugin = NowArea.PluginList.FirstOrDefault(it => it.MenuName.Equals(nowPlugin.MenuName));
                     NowArea.PluginList.Remove(areaPlugin);
-                    WriteFile();
+                    SavePersonMenu();
                     //重新改变插件显示的数据源，还是编辑状态，想还原，单击大中小图标
                     foreach (DockPanel panel in _panel.Children)
                     {
@@ -1689,7 +1654,7 @@ namespace MetroFramePlugin.ViewModels
                     }
                     PopupIsShow = false;
                     _panel.IsEnabled = true;
-                    WriteFile();
+                    SavePersonMenu();
                     //重绘当前面板
                     isOverRender = false;
                     foreach (DockPanel panel in _panel.Children)
@@ -1804,7 +1769,7 @@ namespace MetroFramePlugin.ViewModels
                     _areaMenu.TopSpan += NewArea.Count * 10;
                     NewArea.Add(_areaMenu);
 
-                    WriteFile(); //把添加的区域写到JSON文件中
+                    SavePersonMenu(); //把新建的区域保存到服务器中
                     ThumbCanvas(_newPanel, false);//实现拖动
                 });
             }
@@ -1823,11 +1788,12 @@ namespace MetroFramePlugin.ViewModels
         {
             string areaMenuList = string.Empty;
             menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";
-            if (File.Exists(menuPath))
-            {
-                areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("UTF-8"));
-            }
-            NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
+            //if (File.Exists(menuPath))
+            //{
+            //    areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("UTF-8"));
+            //}
+            //NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
+           
         }
 
 
@@ -1838,7 +1804,9 @@ namespace MetroFramePlugin.ViewModels
         {
             NewArea.Clear();
             if (_panel!=null) _panel.Children.Clear();
-            ReadMenuJsonFile();
+          
+            GetPersonMenu();
+        
 
 
             for (int i = 0; i < NewArea.Count; i++)
@@ -1920,7 +1888,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 AreaMenu nowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
                 nowArea.AreaName = areaParent.ParamsModel.AreaName;
-                WriteFile();
+                SavePersonMenu();
                 areaParent.Focus();
             }
         }
@@ -1956,7 +1924,7 @@ namespace MetroFramePlugin.ViewModels
                 //保存拖动位置
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(parentPanel.Uid)).LeftSpan = Canvas.GetLeft(parentPanel);
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(parentPanel.Uid)).TopSpan = Canvas.GetTop(parentPanel);
-                WriteFile();
+                SavePersonMenu();
             }
 
         }
@@ -2015,7 +1983,7 @@ namespace MetroFramePlugin.ViewModels
                 TestPanel.ItemsSource = null;
                 TestPanel.ItemsSource = DataSource;
                 mListItem = null;
-                WriteFile();
+                SavePersonMenu();
             }
             catch (Exception)
             {
@@ -2122,7 +2090,7 @@ namespace MetroFramePlugin.ViewModels
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaHeight = newArea.ActualHeight;
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).LeftSpan = Canvas.GetLeft(newArea);
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).TopSpan = Canvas.GetTop(newArea);
-                WriteFile();
+                SavePersonMenu();
                 //newArea.UpdateLayout();
                 //isOverRender = false;
                 //OverRideDrawingPanelArea(newArea);
@@ -2222,7 +2190,7 @@ namespace MetroFramePlugin.ViewModels
                     }
                 }
             }
-            WriteFile();
+            SavePersonMenu();
         }
 
         private void SecondMenuItemClick(object sender, RoutedEventArgs e)
@@ -2274,7 +2242,7 @@ namespace MetroFramePlugin.ViewModels
 
                     }
                 }
-                //   WriteFile();
+               
             }
             //删除区域 
             if (res.Equals("DeleteArea"))
@@ -2285,7 +2253,7 @@ namespace MetroFramePlugin.ViewModels
                     area = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
                     NewArea.Remove(area);
                 }
-                WriteFile();
+                SavePersonMenu();
                 DrawingPanelArea();
             }
         }
@@ -2367,7 +2335,7 @@ namespace MetroFramePlugin.ViewModels
         private void OverRideDrawingPanelArea(UIElement dockPanel)
         {
 
-            ReadMenuJsonFile();
+            GetPersonMenu();
             //展示myMenu.json文件
             for (int i = 0; i < NewArea.Count; i++)
             {
@@ -2459,6 +2427,102 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
+
+        ///<summary>
+        /// 根据UserCode和ProductId取数
+        /// </summary>
+        private string channelId=string.Empty;
+        private DataMessageOperation messageOp;
+        private void GetPersonMenu()
+        {
+            messageOp = new DataMessageOperation();
+            string MessageType = "MongoDataChannelService.findBusiData";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", "12");
+            contentDic.Add("configsystemid", "11");
+            contentDic.Add("modelid", "feidao-model-pub_user_setting-0001");
+            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> conDic = new Dictionary<string, object>();
+            conDic.Add("name", "pub_user_setting");
+            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+            tableConDic.Add("productid", ProductId);
+            tableConDic.Add("userCode", UserCode);
+            tableConList.Add(tableConDic);
+            conDic.Add("tablecondition", tableConList);
+            conList.Add(conDic);
+            contentDic.Add("conditions", conList);
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            {
+                channelId = returnDic["DataChannelId"].ToString();
+                DataSet MenuDs = messageOp.GetData(channelId, "[\"pub_user_setting\"]");
+                DataTable dt = MenuDs.Tables["dataArray"];
+                DataRow[] staffDrs = dt.Select(string.Format("userCode = '{0}'", UserCode));
+                 if (staffDrs.Count() != 0)//从服器取
+                {
+                    string areaMenuList = staffDrs[0]["custom_menu"].ToString();
+                    NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
+                }
+            }
+
+        }
+
+        ///<summary>
+        /// 保存到数据库
+        /// </summary>
+        private void SavePersonMenu()
+        {
+            messageOp = new DataMessageOperation();
+            string MessageType = "MongoDataChannelService.findBusiData";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", "12");
+            contentDic.Add("configsystemid", "11");
+            contentDic.Add("modelid", "feidao-model-pub_user_setting-0001");
+            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> conDic = new Dictionary<string, object>();
+            conDic.Add("name", "pub_user_setting");
+            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+            tableConDic.Add("productid", ProductId);
+            tableConDic.Add("userCode", UserCode);
+            tableConList.Add(tableConDic);
+            conDic.Add("tablecondition", tableConList);
+            conList.Add(conDic);
+            contentDic.Add("conditions", conList);
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            {
+                channelId = returnDic["DataChannelId"].ToString();
+                DataSet MenuDs = messageOp.GetData(channelId, "[\"pub_user_setting\"]");
+                DataTable dt = MenuDs.Tables["dataArray"];
+                DataRow[] staffDrs = dt.Select(string.Format("userCode = '{0}'", UserCode));
+                if (dt.Rows.Count == 0 || staffDrs.Count() == 0) //第一次无记录时先存到服务器
+                {
+
+                    DataRow dr = dt.NewRow();
+                    dr["_id"] = Guid.NewGuid();
+                    dr["userCode"] = UserCode;
+                    dr["productid"] = ProductId;
+                    dr["custom_menu"] = JsonHelper.ToJson(NewArea);
+                    dt.Rows.Add(dr);
+                }
+                else if (staffDrs.Count() == 1)  //用户多次修改Plugin列表时存到服务器
+                {
+                    staffDrs[0]["custom_menu"] = JsonHelper.ToJson(NewArea);
+                }
+                DataMessageOperation dataOp = new DataMessageOperation();
+                dataOp.SaveData(channelId, "[\"pub_user_setting\"]");
+                string MessageType1 = "MongoDataChannelService.saveBusiData";
+                Dictionary<string, object> contentDic1 = new Dictionary<string, object>();
+                contentDic1.Add("systemid", "12");
+                contentDic1.Add("configsystemid", "11");
+                contentDic1.Add("modelid", "feidao-model-pub_user_setting-0001");
+                contentDic1.Add("DataChannelId", channelId);
+                Dictionary<string, object> resultDic = messageOp.SendSyncMessage(MessageType1, contentDic1, "JSON");
+            }
+        }
+
         #endregion
 
         #endregion
