@@ -91,6 +91,30 @@ namespace MetroFramePlugin.Models
             }
         }
         /// <summary>
+        /// 菜单编号
+        /// </summary>
+       
+        private string menuNo;
+        /// <summary>
+        /// 菜单编号
+        /// </summary>
+        public string MenuNo
+        {
+            get
+            {
+                return menuNo;
+            }
+            set
+            {
+                if (menuNo != value)
+                {
+                    menuNo = value;
+                    RaisePropertyChanged("MenuNo");
+                }
+            }
+        }
+      
+        /// <summary>
         /// 菜单名称
         /// </summary>
         [JsonProperty(PropertyName = "menu_name")]

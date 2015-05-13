@@ -98,7 +98,6 @@
     <Compile Include="Models\AreaMenu.cs" />
     <Compile Include="Models\MyAdorner.cs" />
     <Compile Include="Models\ShareClass.cs" />
-    <Compile Include="Models\UserArea.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DisplayOverlayWindowPluginViewModel.cs" />

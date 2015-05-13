@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using Victop.Frame.CoreLibrary.Common;
 using Victop.Frame.Units;
 using Victop.Server.Controls.Models;
 using GalaSoft.MvvmLight.Command;
@@ -80,6 +82,25 @@ namespace MetroFramePlugin.ViewModels
                 {
                     userCode = value;
                     RaisePropertyChanged("UserCode");
+                }
+            }
+        }
+        /// <summary>
+        /// 用户ProductId
+        /// </summary>
+        private string productId;
+        public string ProductId
+        {
+            get
+            {
+                return productId;
+            }
+            set
+            {
+                if (productId != value)
+                {
+                    productId = value;
+                    RaisePropertyChanged("ProductId");
                 }
             }
         }
@@ -800,7 +821,9 @@ namespace MetroFramePlugin.ViewModels
             }
             GetStandardMenuList(SystemMenuListEnterprise);
 
-            ///2015-04-27:得到弹窗中企业云一、二级树型菜单并绑定到前台
+           
+
+            //2015-04-27:得到弹窗中企业云一、二级树型菜单并绑定到前台
             foreach (MenuModel menuModel in SystemMenuListEnterprise)
             {
                 MenuModel newModel = menuModel.Copy();
@@ -816,6 +839,45 @@ namespace MetroFramePlugin.ViewModels
                 }
                 NewMenuListEnterprise.Add(newModel);
             }
+
+
+
+            //根据UserCode和ProductId取数
+
+            DataMessageOperation messageOp = new DataMessageOperation();
+            string MessageType = "MongoDataChannelService.findBusiData";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", "12");
+            contentDic.Add("configsystemid", "11");
+            contentDic.Add("modelid", "feidao-model-pub_user_setting-0001");
+            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> conDic = new Dictionary<string, object>();
+            conDic.Add("name", "pub_user_setting");
+            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+            tableConDic.Add("productid", ProductId);
+            tableConDic.Add("userCode", UserCode);
+            tableConList.Add(tableConDic);
+            conDic.Add("tablecondition", tableConList);
+            conList.Add(conDic);
+            contentDic.Add("conditions", conList);
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            {
+                string channelId = returnDic["DataChannelId"].ToString();
+                DataSet mastDs = messageOp.GetData(channelId, "[\"pub_user_setting\"]");
+
+
+                if (mastDs.Tables["dataArray"].Rows.Count == 0)
+                {
+                    return;
+                }
+                else
+                {
+                    ;
+                }
+            }
+
         }
         /// <summary>创建完整的菜单模型 </summary>
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
@@ -1056,6 +1118,7 @@ namespace MetroFramePlugin.ViewModels
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
                     userRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
                     UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
+                    ProductId = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "ProductId");
                     this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 isFirstLogin = false;
@@ -1400,26 +1463,7 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-        /// <summary>
-        /// 所有用户区域集合
-        /// </summary>
-        private ObservableCollection<UserArea> allUserArea;
-        public ObservableCollection<UserArea> AllUserArea
-        {
-            get
-            {
-                if (allUserArea == null)
-                    allUserArea = new ObservableCollection<UserArea>();
-                return allUserArea;
-            }
-            set
-            {
-                if (allUserArea != value)
-                {
-                    allUserArea = value;
-                }
-            }
-        }
+        
         /// <summary>
         /// 新区域集合
         /// </summary>
@@ -1783,19 +1827,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("UTF-8"));
             }
-            AllUserArea = JsonHelper.ToObject<ObservableCollection<UserArea>>(areaMenuList);
-            foreach (UserArea menuModel in AllUserArea)
-            {
-                if (menuModel.UserCode != null)
-                {
-                    if (menuModel.UserCode == this.UserCode)
-                    {
-                        this.NewArea = menuModel.UserAreaMenu;
-                        break;
-                    }
-                }
-            }
-
+            NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
         }
 
 
@@ -1849,7 +1881,7 @@ namespace MetroFramePlugin.ViewModels
                 if (NewArea[i].PluginList.Count != 0)
                 {
                     ListBox pluginlist = new ListBox();
-                    //  pluginlist.MouseDown += menuListArea_MouseDown;//想去掉选中项的，还未实现
+                   
                     pluginlist.PreviewMouseMove += menuList_PreviewMouseMove;
                     pluginlist.Drop += menuList_Drop;
                     pluginlist.ItemsSource = NewArea[i].PluginList;
@@ -1893,12 +1925,7 @@ namespace MetroFramePlugin.ViewModels
             }
         }
 
-        void menuListArea_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            ListBox NowPluginPanel = sender as ListBox;
-            NowPluginPanel.SelectedItem = null;
-        }
-
+       
         private void ThumbDragMove(object sender, DragDeltaEventArgs e)
         {
             DockPanel parentPanel = GetParentObject<DockPanel>(sender as Thumb);
@@ -2027,23 +2054,8 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         private void WriteFile()
         {
-            foreach (UserArea nowUserArea in AllUserArea)
-            {
-                if (nowUserArea.UserCode != null)
-                {
-                    if (nowUserArea.UserCode == this.UserCode)
-                    {
-                        AllUserArea.Remove(nowUserArea);
-                        break;
-                    }
-                }
-            }
-            UserArea userArray = new UserArea();
-            userArray.UserCode = this.userCode;
-            userArray.UserAreaMenu = this.NewArea;
-            AllUserArea.Add(userArray);
             StreamWriter sw = new StreamWriter(menuPath, false);
-            sw.Write(JsonHelper.ToJson(AllUserArea));
+            sw.Write(JsonHelper.ToJson(NewArea));
             sw.Flush();
             sw.Close();
             sw.Dispose();
