@@ -455,6 +455,7 @@ namespace UserLoginPlugin.ViewModels
         #endregion
 
         #region 登录操作
+
         void AfterLogin(object returnMsg)
         {
             DataMessageOperation messageOp = new DataMessageOperation();
@@ -478,8 +479,8 @@ namespace UserLoginPlugin.ViewModels
                         setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
                         setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                         dataOp.SendAsyncMessage(messageType, setUserContentDic);
-                        LoginWindow.DialogResult = true;
-
+                        Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
+                        
                     }
                     else
                     {
@@ -495,7 +496,7 @@ namespace UserLoginPlugin.ViewModels
                             setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                             setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
                             dataOp.SendAsyncMessage(messageType, setUserContentDic);
-                            LoginWindow.DialogResult = true;
+                            Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
                         }
                         else
                         {
@@ -513,7 +514,6 @@ namespace UserLoginPlugin.ViewModels
                     MessageBox.Show((returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString())) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
                 }
             }
-
             else
             {
                 MessageBox.Show("登录失败");
@@ -542,14 +542,6 @@ namespace UserLoginPlugin.ViewModels
             {
 
             }
-        }
-
-        private void search()
-        {
-            metroLoading.IsActive = false;
-            LoginWindow.DialogResult = true;
-
-            LoginWindow.Cursor = Cursors.Arrow;
         }
 
         /// <summary>检查输入信息</summary>
