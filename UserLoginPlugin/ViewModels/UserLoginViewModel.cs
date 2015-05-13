@@ -29,8 +29,7 @@ namespace UserLoginPlugin.ViewModels
     {
         #region 字段
 
-        private VicProgressRingNormal metroLoading;
-
+       
         private Window LoginWindow;
         //把UserControl明转为Window
         UserLoginWindow newWindow;
@@ -191,7 +190,7 @@ namespace UserLoginPlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     UserControl ucLogin = (UserControl)x;
-                    metroLoading = ucLogin.FindName("load") as VicProgressRingNormal;
+                   
                     FrameworkElement ct = (FrameworkElement)ucLogin.Parent;
                     while (true)
                     {
@@ -301,7 +300,10 @@ namespace UserLoginPlugin.ViewModels
                         else
                         {
                             IsRingShow = true;
-                            UserLogin();
+                            Thread th = new Thread(UserLogin);//1 开启线程
+                            th.SetApartmentState(ApartmentState.STA);
+                            th.Start();
+                           
                         }
                     }, () => { return CheckUserLogin(); });
             }
@@ -455,70 +457,6 @@ namespace UserLoginPlugin.ViewModels
         #endregion
 
         #region 登录操作
-        void AfterLogin(object returnMsg)
-        {
-            DataMessageOperation messageOp = new DataMessageOperation();
-            Dictionary<string, object> returnDic = JsonHelper.ToObject<Dictionary<string, object>>(returnMsg.ToString());
-            if (returnDic != null)
-            {
-                if (!returnDic["ReplyMode"].ToString().Equals("0"))
-                {
-                    IsRingShow = false;
-                    SaveLoginUserInfo();
-                    Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
-                    RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
-                    if (RoleInfoList == null || RoleInfoList.Count == 0)
-                    {
-                        DataMessageOperation dataOp = new DataMessageOperation();
-                        string messageType = "LoginService.setUserInfo";
-                        Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
-                        setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
-                        setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
-                        setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-                        setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
-                        setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
-                        dataOp.SendAsyncMessage(messageType, setUserContentDic);
-                        LoginWindow.DialogResult = true;
-
-                    }
-                    else
-                    {
-                        if (RoleInfoList.Count == 1)
-                        {
-                            DataMessageOperation dataOp = new DataMessageOperation();
-                            string messageType = "LoginService.setUserInfo";
-                            Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
-                            setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
-                            setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
-                            setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-                            setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
-                            setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
-                            setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
-                            dataOp.SendAsyncMessage(messageType, setUserContentDic);
-                            LoginWindow.DialogResult = true;
-                        }
-                        else
-                        {
-                            ShowRoleList = true;
-                            if (this.LoginWindow != null)
-                            {
-                                this.LoginWindow.Height = 1; this.LoginWindow.Width = 1;
-                            }
-                        }
-                    }
-
-                }
-                else
-                {
-                    MessageBox.Show((returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString())) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
-                }
-            }
-
-            else
-            {
-                MessageBox.Show("登录失败");
-            }
-        }
         private void UserLogin()
         {
             try
@@ -529,9 +467,70 @@ namespace UserLoginPlugin.ViewModels
                 contentDic.Add("spaceId", string.Format("{0}::{1}", LoginInfoModel.ClientId, string.IsNullOrEmpty(LoginInfoModel.ProductId) ? LoginInfoModel.ClientId : LoginInfoModel.ProductId));
                 string MessageType = "LoginService.userLoginNew";
                 DataMessageOperation messageOp = new DataMessageOperation();
-                //Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
-                messageOp.SendAsyncMessage(MessageType, contentDic, new WaitCallback(AfterLogin));
+                Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
+                if (returnDic != null)
+                {
+                    if (!returnDic["ReplyMode"].ToString().Equals("0"))
+                    {
+                        SaveLoginUserInfo();
 
+                        Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                        RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
+                        if (RoleInfoList == null || RoleInfoList.Count == 0)
+                        {
+                            DataMessageOperation dataOp = new DataMessageOperation();
+                            string messageType = "LoginService.setUserInfo";
+                            Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
+                            setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
+                            setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
+                            setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
+                            setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
+                            setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
+                            dataOp.SendAsyncMessage(messageType, setUserContentDic);
+                            LoginWindow.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new NextPrimeDelegate(search));
+
+                        }
+                        else
+                        {
+                            if (RoleInfoList.Count == 1)
+                            {
+                                DataMessageOperation dataOp = new DataMessageOperation();
+                                string messageType = "LoginService.setUserInfo";
+                                Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
+                                setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
+                                setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
+                                setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
+                                setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
+                                setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
+                                setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
+                                dataOp.SendAsyncMessage(messageType, setUserContentDic);
+                                LoginWindow.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new NextPrimeDelegate(search));
+
+                            }
+                            else
+                            {
+                                ShowRoleList = true;
+                                if (this.LoginWindow != null)
+                                {
+                                    this.LoginWindow.Height = 1; this.LoginWindow.Width = 1;
+                                }
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        IsRingShow = false;
+                        MessageBox.Show((returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString())) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
+                    }
+                }
+
+                else
+                {
+
+                    IsRingShow = false;
+                    MessageBox.Show("登录失败");
+                }
 
             }
             catch (Exception ex)
@@ -546,7 +545,7 @@ namespace UserLoginPlugin.ViewModels
 
         private void search()
         {
-            metroLoading.IsActive = false;
+            IsRingShow = true;
             LoginWindow.DialogResult = true;
 
             LoginWindow.Cursor = Cursors.Arrow;
