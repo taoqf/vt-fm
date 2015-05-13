@@ -29,6 +29,7 @@ using System.Text;
 using Victop.Frame.DataMessageManager;
 using System.Xml;
 using System.Text.RegularExpressions;
+using Victop.Frame.PublicLib.Managers;
 
 
 
@@ -101,6 +102,22 @@ namespace MetroFramePlugin.ViewModels
                 {
                     productId = value;
                     RaisePropertyChanged("ProductId");
+                }
+            }
+        }
+        private string clientId;
+        public string ClientId
+        {
+            get
+            {
+                return clientId;
+            }
+            set
+            {
+                if (clientId != value)
+                {
+                    clientId = value;
+                    RaisePropertyChanged("ClientId");
                 }
             }
         }
@@ -576,9 +593,10 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
                     PoPupState = false;
                     Process proc = new System.Diagnostics.Process();
-                    proc.StartInfo.FileName = string.Format("{0}?userCode={1}", ConfigurationManager.AppSettings["updatepwdhttp"], UserCode);
+                    proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}&ProductId={3}", ConfigurationManager.AppSettings["updatepwdhttp"], UserCode, string.Format("{0}::{1}", ClientId, ProductId), ProductId);
                     proc.Start();
                 });
             }

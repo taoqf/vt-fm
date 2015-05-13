@@ -286,20 +286,21 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                     {
-                        if (LoginInfoModel.UserPwd.Equals("111111") || LoginInfoModel.UserPwd.Equals("123456"))
-                        {
+                            if (LoginInfoModel.UserPwd.Equals("111111"))
+                            {
 
-                            VicMessageBoxNormal.Show("密码过于简单,将转向修改密码界面！");
-                            Process proc = new System.Diagnostics.Process();
-                            proc.StartInfo.FileName = string.Format("{0}?userCode={1}", ConfigurationManager.AppSettings["updatepwdhttp"], LoginInfoModel.UserName);
-                            proc.Start();
-                            return;
-                        }
-                        else
-                        {
-                            IsRingShow = true;
-                            UserLogin();
-                        }
+                                VicMessageBoxNormal.Show("密码过于简单,将转向修改密码界面！");
+                                Process proc = new System.Diagnostics.Process();
+                                proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}&ProductId={3}", ConfigurationManager.AppSettings["updatepwdhttp"], LoginInfoModel.UserName, string.Format("{0}::{1}", LoginInfoModel.ClientId,LoginInfoModel.ProductId), LoginInfoModel.ProductId);
+                                proc.Start();
+                                return;
+                            }
+                            else
+                            {
+                                IsRingShow = true;
+                                UserLogin();
+                            }
+                      
                     }, () => { return CheckUserLogin(); });
             }
         }
