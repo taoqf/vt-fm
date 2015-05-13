@@ -639,11 +639,22 @@ namespace MetroFramePlugin.ViewModels
                     MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
                     {
+                        SavePersonMenu();
+                        if (File.Exists(menuPath))
+                        {
+                            FileInfo fi = new FileInfo(menuPath);
+                            if (fi.Attributes.ToString().IndexOf("ReadOnly") != -1)
+                            {
+                                fi.Attributes = FileAttributes.Normal;
+                            }
+                            File.Delete(menuPath);//直接删除文件   
+                        }
                         DataMessageOperation dataMsgOp = new DataMessageOperation();
                         dataMsgOp.RemoveDataLock();
                         mainWindow.Close();
                         FrameInit.GetInstance().FrameUnload();
                         GC.Collect();
+                       
                     }
                 });
             }
@@ -1365,7 +1376,7 @@ namespace MetroFramePlugin.ViewModels
         private Canvas _panel;//主区域面板
         private ListBox _listbox;//弹窗展示菜单列表
         private VicButtonNormal _allSelectBtn;//弹窗"全选"
-        private string menuPath;//文件路径
+        private string  menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";//文件路径
         private string selectAreaId;//保存当前选中的要添加应用的区域
         /// <summary>添加应用弹框本地菜单列表 </summary>  
         private ObservableCollection<MenuModel> newMenuListLocal;
@@ -1500,13 +1511,13 @@ namespace MetroFramePlugin.ViewModels
                 {
                     if (!isFirstLoad)
                         return;
-                    isFirstLoad = false;
+                  
                     area = (UserControl)x;
                     _panel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
                     _listbox = area.FindName("listBoxPopupMenuList") as ListBox;//找到“添加应用中的菜单列表”
                     _allSelectBtn = area.FindName("btnAllSelect") as VicButtonNormal;//找到添加应用弹窗“全部选中按钮”
                     DrawingPanelArea();//读文件并渲染区域
-
+                    isFirstLoad = false;
                 });
             }
         }
@@ -1576,7 +1587,7 @@ namespace MetroFramePlugin.ViewModels
                     MenuModel areaPlugin = new MenuModel();
                     areaPlugin = NowArea.PluginList.FirstOrDefault(it => it.MenuName.Equals(nowPlugin.MenuName));
                     NowArea.PluginList.Remove(areaPlugin);
-                    SavePersonMenu();
+                    WriteFile();
                     //重新改变插件显示的数据源，还是编辑状态，想还原，单击大中小图标
                     foreach (DockPanel panel in _panel.Children)
                     {
@@ -1672,7 +1683,7 @@ namespace MetroFramePlugin.ViewModels
                     }
                     PopupIsShow = false;
                     _panel.IsEnabled = true;
-                    SavePersonMenu();
+                    WriteFile();
                     //重绘当前面板
                     isOverRender = false;
                     foreach (DockPanel panel in _panel.Children)
@@ -1787,7 +1798,7 @@ namespace MetroFramePlugin.ViewModels
                     _areaMenu.TopSpan += NewArea.Count * 10;
                     NewArea.Add(_areaMenu);
 
-                    SavePersonMenu(); //把新建的区域保存到服务器中
+                    WriteFile(); //把新建的区域保存到服务器中
                     ThumbCanvas(_newPanel, false);//实现拖动
                 });
             }
@@ -1805,12 +1816,12 @@ namespace MetroFramePlugin.ViewModels
         void ReadMenuJsonFile()
         {
             string areaMenuList = string.Empty;
-            menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";
-            //if (File.Exists(menuPath))
-            //{
-            //    areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("UTF-8"));
-            //}
-            //NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
+           
+            if (File.Exists(menuPath))
+            {
+                areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("UTF-8"));
+            }
+            NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
            
         }
 
@@ -1822,11 +1833,10 @@ namespace MetroFramePlugin.ViewModels
         {
             NewArea.Clear();
             if (_panel!=null) _panel.Children.Clear();
-          
-            GetPersonMenu();
-        
 
-
+            if (isFirstLoad) GetPersonMenu();
+            else  ReadMenuJsonFile();
+            
             for (int i = 0; i < NewArea.Count; i++)
             {
                 UnitAreaSeting _title = new UnitAreaSeting();
@@ -1906,7 +1916,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 AreaMenu nowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
                 nowArea.AreaName = areaParent.ParamsModel.AreaName;
-                SavePersonMenu();
+                WriteFile();
                 areaParent.Focus();
             }
         }
@@ -1942,7 +1952,7 @@ namespace MetroFramePlugin.ViewModels
                 //保存拖动位置
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(parentPanel.Uid)).LeftSpan = Canvas.GetLeft(parentPanel);
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(parentPanel.Uid)).TopSpan = Canvas.GetTop(parentPanel);
-                SavePersonMenu();
+                WriteFile();
             }
 
         }
@@ -2001,7 +2011,7 @@ namespace MetroFramePlugin.ViewModels
                 TestPanel.ItemsSource = null;
                 TestPanel.ItemsSource = DataSource;
                 mListItem = null;
-                SavePersonMenu();
+                WriteFile();
             }
             catch (Exception)
             {
@@ -2040,6 +2050,7 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         private void WriteFile()
         {
+           
             StreamWriter sw = new StreamWriter(menuPath, false);
             sw.Write(JsonHelper.ToJson(NewArea));
             sw.Flush();
@@ -2108,7 +2119,7 @@ namespace MetroFramePlugin.ViewModels
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).AreaHeight = newArea.ActualHeight;
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).LeftSpan = Canvas.GetLeft(newArea);
                 NewArea.FirstOrDefault(it => it.AreaID.Equals(newArea.Uid)).TopSpan = Canvas.GetTop(newArea);
-                SavePersonMenu();
+                WriteFile();
                 //newArea.UpdateLayout();
                 //isOverRender = false;
                 //OverRideDrawingPanelArea(newArea);
@@ -2208,7 +2219,7 @@ namespace MetroFramePlugin.ViewModels
                     }
                 }
             }
-            SavePersonMenu();
+            WriteFile();
         }
 
         private void SecondMenuItemClick(object sender, RoutedEventArgs e)
@@ -2271,7 +2282,7 @@ namespace MetroFramePlugin.ViewModels
                     area = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
                     NewArea.Remove(area);
                 }
-                SavePersonMenu();
+                WriteFile();
                 DrawingPanelArea();
             }
         }
@@ -2353,7 +2364,7 @@ namespace MetroFramePlugin.ViewModels
         private void OverRideDrawingPanelArea(UIElement dockPanel)
         {
 
-            GetPersonMenu();
+            ReadMenuJsonFile();
             //展示myMenu.json文件
             for (int i = 0; i < NewArea.Count; i++)
             {
