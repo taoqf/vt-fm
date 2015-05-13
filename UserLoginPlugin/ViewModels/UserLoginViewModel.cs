@@ -29,8 +29,7 @@ namespace UserLoginPlugin.ViewModels
     {
         #region 字段
 
-        private VicProgressRingNormal metroLoading;
-
+       
         private Window LoginWindow;
         //把UserControl明转为Window
         UserLoginWindow newWindow;
@@ -191,7 +190,7 @@ namespace UserLoginPlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     UserControl ucLogin = (UserControl)x;
-                    metroLoading = ucLogin.FindName("load") as VicProgressRingNormal;
+                   
                     FrameworkElement ct = (FrameworkElement)ucLogin.Parent;
                     while (true)
                     {
@@ -281,8 +280,6 @@ namespace UserLoginPlugin.ViewModels
         #endregion
 
         #region 登录命令
-
-        public delegate void NextPrimeDelegate();//2定义委托
         public ICommand btnLoginClickCommand
         {
             get
@@ -455,7 +452,6 @@ namespace UserLoginPlugin.ViewModels
         #endregion
 
         #region 登录操作
-
         void AfterLogin(object returnMsg)
         {
             DataMessageOperation messageOp = new DataMessageOperation();
@@ -481,41 +477,45 @@ namespace UserLoginPlugin.ViewModels
                         dataOp.SendAsyncMessage(messageType, setUserContentDic);
                         Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
                         
-                    }
-                    else
-                    {
-                        if (RoleInfoList.Count == 1)
-                        {
-                            DataMessageOperation dataOp = new DataMessageOperation();
-                            string messageType = "LoginService.setUserInfo";
-                            Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
-                            setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
-                            setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
-                            setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-                            setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
-                            setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
-                            setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
-                            dataOp.SendAsyncMessage(messageType, setUserContentDic);
-                            Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
                         }
                         else
                         {
-                            ShowRoleList = true;
-                            if (this.LoginWindow != null)
+                            if (RoleInfoList.Count == 1)
                             {
-                                this.LoginWindow.Height = 1; this.LoginWindow.Width = 1;
+                                DataMessageOperation dataOp = new DataMessageOperation();
+                                string messageType = "LoginService.setUserInfo";
+                                Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
+                                setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
+                                setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
+                                setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
+                                setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
+                                setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
+                                setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
+                                dataOp.SendAsyncMessage(messageType, setUserContentDic);
+                            Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
+
+                            }
+                            else
+                            {
+                                ShowRoleList = true;
+                                if (this.LoginWindow != null)
+                                {
+                                    this.LoginWindow.Height = 1; this.LoginWindow.Width = 1;
+                                }
                             }
                         }
-                    }
 
+                    }
+                    else
+                    {
+                        IsRingShow = false;
+                        MessageBox.Show((returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString())) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
+                    }
                 }
-                else
-                {
-                    MessageBox.Show((returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString())) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
-                }
-            }
+
             else
             {
+                IsRingShow = false;
                 MessageBox.Show("登录失败");
             }
         }
@@ -542,6 +542,14 @@ namespace UserLoginPlugin.ViewModels
             {
 
             }
+        }
+
+        private void search()
+        {
+            IsRingShow = true;
+            LoginWindow.DialogResult = true;
+
+            LoginWindow.Cursor = Cursors.Arrow;
         }
 
         /// <summary>检查输入信息</summary>

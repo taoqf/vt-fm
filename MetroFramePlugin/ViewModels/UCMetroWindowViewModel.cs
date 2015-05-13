@@ -65,7 +65,7 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         private string userImg;
         /// <summary>
-        /// 用户密码
+        /// 用户全拼
         /// </summary>
         private string userCode;
         public string UserCode
