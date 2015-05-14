@@ -578,8 +578,22 @@ namespace MetroFramePlugin.ViewModels
                 {
 
                     PoPupState = false;
+                    //切换用户时，从服务器拉取菜单必要操作
+                    isChangeUser = true;
+                    SavePersonMenu();
+                    if (File.Exists(menuPath))
+                    {
+                        FileInfo fi = new FileInfo(menuPath);
+                        if (fi.Attributes.ToString().IndexOf("ReadOnly") != -1)
+                        {
+                            fi.Attributes = FileAttributes.Normal;
+                        }
+                        File.Delete(menuPath);//直接删除本地文件   
+                    }
+                    //
                     UserLogin();
                     DrawingPanelArea();
+                   
                 });
             }
         }
@@ -1367,9 +1381,11 @@ namespace MetroFramePlugin.ViewModels
         ///<summary>
         /// 20150305添加菜单应用弹窗相关代码
         /// </summary> 
+
         #region
 
         #region 字段&属性
+        private bool isChangeUser = false;//控制切换用户时从服务器下载菜单
         private bool isOverRender = false;//控制重绘
         private UserControl area;//当前用户控件
         private Canvas _panel;//主区域面板
@@ -1833,9 +1849,20 @@ namespace MetroFramePlugin.ViewModels
             NewArea.Clear();
             if (_panel != null) _panel.Children.Clear();
 
-            if (isFirstLoad) GetPersonMenu();
-            else ReadMenuJsonFile();
+            if (isFirstLoad)
+            {
+                GetPersonMenu();
+            }
+            else if (isChangeUser)
+            {
+                GetPersonMenu();
+            }
+            else
+            {
+                ReadMenuJsonFile();
+            }
 
+            isChangeUser = false;
             for (int i = 0; i < NewArea.Count; i++)
             {
                 UnitAreaSeting _title = new UnitAreaSeting();
