@@ -338,7 +338,7 @@ namespace Victop.Frame.DataChannel
                                                         arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? (decimal)0.00 : Convert.ToDecimal(rowItem[dtCol.ColumnName].ToString());
                                                         break;
                                                     case "boolean":
-                                                        arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(rowItem[dtCol.ColumnName].ToString());
+                                                        arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(rowItem[dtCol.ColumnName]);
                                                         break;
                                                     case "timestamp":
                                                         if (Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()) == 0)
@@ -429,7 +429,7 @@ namespace Victop.Frame.DataChannel
                                                     objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (decimal)0.00 : Convert.ToDecimal(itemDic[dtCol.ColumnName].ToString());
                                                     break;
                                                 case "boolean":
-                                                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(itemDic[dtCol.ColumnName].ToString());
+                                                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(itemDic[dtCol.ColumnName]);
                                                     break;
                                                 case "timestamp":
                                                     if (Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()) == 0)
