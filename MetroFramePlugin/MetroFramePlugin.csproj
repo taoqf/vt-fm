@@ -96,6 +96,7 @@
     <Compile Include="Convert\ImgeNameToBackgroundConverter.cs" />
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\AreaMenu.cs" />
+    <Compile Include="Models\MenuRoleAuth.cs" />
     <Compile Include="Models\MyAdorner.cs" />
     <Compile Include="Models\ShareClass.cs" />
     <Compile Include="Plugin.cs" />

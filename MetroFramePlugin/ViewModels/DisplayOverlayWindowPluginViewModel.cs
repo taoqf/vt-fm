@@ -195,7 +195,7 @@ namespace MetroFramePlugin.ViewModels
                            menumodel.MenuName = Plugin.PluginTitle;
                           // menumodel.ActionType = Plugin.ShowType.ToString();
                           // menumodel.ResourceName = Plugin.PluginName;
-                           menumodel.Uid = PluginInfo["ObjectId"].ToString();
+                         //  menumodel.Uid = PluginInfo["ObjectId"].ToString();
                            menumodel.ShowType = Plugin.ShowType.ToString();
                            SystemFourthLevelMenuList.Add(menumodel);
                        }
@@ -206,7 +206,7 @@ namespace MetroFramePlugin.ViewModels
                                menumodel.MenuName = Plugin.PluginTitle.ToString().Substring(0, 10) + "...";
                          //      menumodel.ActionType = Plugin.ShowType.ToString();
                          //      menumodel.ResourceName = Plugin.PluginName;
-                               menumodel.Uid = PluginInfo["ObjectId"].ToString();
+                           //    menumodel.Uid = PluginInfo["ObjectId"].ToString();
                                menumodel.ShowType = Plugin.ShowType.ToString();
                            }
                            else
@@ -214,7 +214,7 @@ namespace MetroFramePlugin.ViewModels
                                menumodel.MenuName = Plugin.PluginTitle;
                             //    menumodel.ActionType = Plugin.ShowType.ToString();
                             //   menumodel.ResourceName = Plugin.PluginName;
-                               menumodel.Uid = PluginInfo["ObjectId"].ToString();
+                            //   menumodel.Uid = PluginInfo["ObjectId"].ToString();
                                menumodel.ShowType = Plugin.ShowType.ToString();
                            }
                            SystemFourthLevelMenuList.Add(menumodel);
@@ -273,7 +273,7 @@ namespace MetroFramePlugin.ViewModels
 
                            for (int i = 0; i < WinCollection.Count; i++)
                            {
-                               if (WinCollection[i].Uid.Equals(menuModel.Uid))
+                               //if (WinCollection[i].Uid.Equals(menuModel.Uid))
                                {
                                    switch (WinCollection[i].ResizeMode)
                                    {
@@ -311,7 +311,7 @@ namespace MetroFramePlugin.ViewModels
                            {
                                VicTabItemNormal tabItem = tabCtr.Items[i] as VicTabItemNormal;
                                string res = tabItem.Uid;
-                               if (tabItem.Uid.Equals(menuModel.Uid))
+                             // if (tabItem.Uid.Equals(menuModel.Uid))
                                {
                                    tabItem.IsSelected = true;
                                    tabItem.Focus();

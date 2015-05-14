@@ -275,7 +275,7 @@ namespace MetroFramePlugin.ViewModels
                     personItem.AllowDelete = false;
                     personItem.Header = "个人收藏";
                     tabItemList.Add(personItem);
-                   
+
                 }
                 return tabItemList;
             }
@@ -652,7 +652,7 @@ namespace MetroFramePlugin.ViewModels
                         mainWindow.Close();
                         FrameInit.GetInstance().FrameUnload();
                         GC.Collect();
-                       
+
                     }
                 });
             }
@@ -704,7 +704,7 @@ namespace MetroFramePlugin.ViewModels
                 TabItemList[1].Content = personPluginContainer;
                 TabItemList[1].Header = "个人收藏";
             }
-          
+
             MenuModel menuModel = (MenuModel)x;
             SystemThirdLevelMenuList = menuModel.SystemMenuList;
             if (SystemThirdLevelMenuList.Count > 0)
@@ -848,7 +848,7 @@ namespace MetroFramePlugin.ViewModels
             }
             GetStandardMenuList(SystemMenuListEnterprise);
 
-           
+
 
             //2015-04-27:得到弹窗中企业云一、二级树型菜单并绑定到前台
             foreach (MenuModel menuModel in SystemMenuListEnterprise)
@@ -869,7 +869,7 @@ namespace MetroFramePlugin.ViewModels
 
 
 
-            
+
         }
         /// <summary>创建完整的菜单模型 </summary>
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
@@ -887,6 +887,7 @@ namespace MetroFramePlugin.ViewModels
         {
             MenuModel menuModel = new MenuModel();
             menuModel.Id = item.Id;
+            menuModel.MenuNo = item.Menu_no;
             menuModel.MenuName = item.Menu_name;
             menuModel.SystemId = item.Systemid;
             menuModel.FormId = item.Formid;
@@ -1374,7 +1375,7 @@ namespace MetroFramePlugin.ViewModels
         private Canvas _panel;//主区域面板
         private ListBox _listbox;//弹窗展示菜单列表
         private VicButtonNormal _allSelectBtn;//弹窗"全选"
-        private string  menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";//文件路径
+        private string menuPath = AppDomain.CurrentDomain.BaseDirectory + "mymenu.json";//文件路径
         private string selectAreaId;//保存当前选中的要添加应用的区域
         /// <summary>添加应用弹框本地菜单列表 </summary>  
         private ObservableCollection<MenuModel> newMenuListLocal;
@@ -1455,7 +1456,7 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-        
+
         /// <summary>
         /// 新区域集合
         /// </summary>
@@ -1509,7 +1510,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     if (!isFirstLoad)
                         return;
-                  
+
                     area = (UserControl)x;
                     _panel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
                     _listbox = area.FindName("listBoxPopupMenuList") as ListBox;//找到“添加应用中的菜单列表”
@@ -1814,13 +1815,13 @@ namespace MetroFramePlugin.ViewModels
         void ReadMenuJsonFile()
         {
             string areaMenuList = string.Empty;
-           
+
             if (File.Exists(menuPath))
             {
                 areaMenuList = File.ReadAllText(menuPath, Encoding.GetEncoding("UTF-8"));
             }
             NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
-           
+
         }
 
 
@@ -1830,11 +1831,11 @@ namespace MetroFramePlugin.ViewModels
         private void DrawingPanelArea()
         {
             NewArea.Clear();
-            if (_panel!=null) _panel.Children.Clear();
+            if (_panel != null) _panel.Children.Clear();
 
             if (isFirstLoad) GetPersonMenu();
-            else  ReadMenuJsonFile();
-            
+            else ReadMenuJsonFile();
+
             for (int i = 0; i < NewArea.Count; i++)
             {
                 UnitAreaSeting _title = new UnitAreaSeting();
@@ -1875,7 +1876,7 @@ namespace MetroFramePlugin.ViewModels
                 if (NewArea[i].PluginList.Count != 0)
                 {
                     ListBox pluginlist = new ListBox();
-                   
+
                     pluginlist.PreviewMouseMove += menuList_PreviewMouseMove;
                     pluginlist.Drop += menuList_Drop;
                     pluginlist.ItemsSource = NewArea[i].PluginList;
@@ -1919,7 +1920,7 @@ namespace MetroFramePlugin.ViewModels
             }
         }
 
-       
+
         private void ThumbDragMove(object sender, DragDeltaEventArgs e)
         {
             DockPanel parentPanel = GetParentObject<DockPanel>(sender as Thumb);
@@ -2048,7 +2049,7 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         private void WriteFile()
         {
-           
+
             StreamWriter sw = new StreamWriter(menuPath, false);
             sw.Write(JsonHelper.ToJson(NewArea));
             sw.Flush();
@@ -2269,7 +2270,7 @@ namespace MetroFramePlugin.ViewModels
 
                     }
                 }
-               
+
             }
             //删除区域 
             if (res.Equals("DeleteArea"))
@@ -2458,7 +2459,7 @@ namespace MetroFramePlugin.ViewModels
         ///<summary>
         /// 根据UserCode和ProductId取菜单
         /// </summary>
-        private string channelId=string.Empty;
+        private string channelId = string.Empty;
         private DataMessageOperation messageOp;
         private void GetPersonMenu()
         {
@@ -2486,7 +2487,7 @@ namespace MetroFramePlugin.ViewModels
                 DataSet MenuDs = messageOp.GetData(channelId, "[\"pub_user_setting\"]");
                 DataTable dt = MenuDs.Tables["dataArray"];
                 DataRow[] staffDrs = dt.Select(string.Format("userCode = '{0}'", UserCode));
-                 if (staffDrs.Count() != 0)//从服器取
+                if (staffDrs.Count() != 0)//从服器取
                 {
                     string areaMenuList = staffDrs[0]["custom_menu"].ToString();
                     NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
