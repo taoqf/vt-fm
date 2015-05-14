@@ -148,7 +148,7 @@
                     </controls:VicGroupBoxNormal>
                 </controls:VicGridNormal>
             </controls:VicTabItemNormal>
-            <controls:VicTabItemNormal Header="用户信息" Height="30" AllowDelete="False" >
+            <controls:VicTabItemNormal Visibility="Collapsed" Header="用户信息" Height="30" AllowDelete="False" >
                 <controls:VicGridNormal>
                     <controls:VicGroupBoxNormal Header="用户信息" Margin="5,0,5,0" Height="80" VerticalAlignment="Top" Foreground="{DynamicResource Login_TabControlNomalForeground}">
                         <controls:VicGridNormal>
