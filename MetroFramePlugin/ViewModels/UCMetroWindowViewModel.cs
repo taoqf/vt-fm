@@ -274,6 +274,8 @@ namespace MetroFramePlugin.ViewModels
                     personItem.Name = "homeItem";
                     personItem.AllowDelete = false;
                     personItem.Header = "个人收藏";
+                    UCPersonPluginContainer personPluginContainer = new UCPersonPluginContainer();
+                    personItem.Content = personPluginContainer;
                     tabItemList.Add(personItem);
 
                 }
@@ -578,19 +580,7 @@ namespace MetroFramePlugin.ViewModels
                 {
 
                     PoPupState = false;
-                    //切换用户时，从服务器拉取菜单必要操作
-                    isChangeUser = true;
-                    SavePersonMenu();
-                    if (File.Exists(menuPath))
-                    {
-                        FileInfo fi = new FileInfo(menuPath);
-                        if (fi.Attributes.ToString().IndexOf("ReadOnly") != -1)
-                        {
-                            fi.Attributes = FileAttributes.Normal;
-                        }
-                        File.Delete(menuPath);//直接删除本地文件   
-                    }
-                    //
+                    isChangeUser = true; //切换用户时，从服务器拉取菜单必要操作
                     UserLogin();
                     DrawingPanelArea();
                    
@@ -651,16 +641,7 @@ namespace MetroFramePlugin.ViewModels
                     MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
                     {
-                        SavePersonMenu();
-                        if (File.Exists(menuPath))
-                        {
-                            FileInfo fi = new FileInfo(menuPath);
-                            if (fi.Attributes.ToString().IndexOf("ReadOnly") != -1)
-                            {
-                                fi.Attributes = FileAttributes.Normal;
-                            }
-                            File.Delete(menuPath);//直接删除文件   
-                        }
+                        
                         DataMessageOperation dataMsgOp = new DataMessageOperation();
                         dataMsgOp.RemoveDataLock();
                         mainWindow.Close();
@@ -714,9 +695,7 @@ namespace MetroFramePlugin.ViewModels
                 UCPluginContainer pluginContainer = new UCPluginContainer();
                 TabItemList[0].Content = pluginContainer;
                 TabItemList[0].Header = "功能列表";
-                UCPersonPluginContainer personPluginContainer = new UCPersonPluginContainer();
-                TabItemList[1].Content = personPluginContainer;
-                TabItemList[1].Header = "个人收藏";
+              
             }
 
             MenuModel menuModel = (MenuModel)x;
@@ -1819,7 +1798,15 @@ namespace MetroFramePlugin.ViewModels
             }
         }
 
-
+        public ICommand SavePersonalFavorites
+        {
+            get { 
+                 return new RelayCommand(() =>
+                     {
+                         SavePersonMenu();
+                     });
+            }
+        }
 
         #endregion
 
@@ -1856,13 +1843,12 @@ namespace MetroFramePlugin.ViewModels
             else if (isChangeUser)
             {
                 GetPersonMenu();
+                isChangeUser = false;
             }
             else
             {
                 ReadMenuJsonFile();
             }
-
-            isChangeUser = false;
             for (int i = 0; i < NewArea.Count; i++)
             {
                 UnitAreaSeting _title = new UnitAreaSeting();
@@ -2487,10 +2473,9 @@ namespace MetroFramePlugin.ViewModels
         /// 根据UserCode和ProductId取菜单
         /// </summary>
         private string channelId = string.Empty;
-        private DataMessageOperation messageOp;
         private void GetPersonMenu()
         {
-            messageOp = new DataMessageOperation();
+            DataMessageOperation messageOp = new DataMessageOperation();
             string MessageType = "MongoDataChannelService.findBusiData";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("systemid", "12");
@@ -2528,7 +2513,7 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         private void SavePersonMenu()
         {
-            messageOp = new DataMessageOperation();
+            DataMessageOperation messageOp = new DataMessageOperation();
             string MessageType = "MongoDataChannelService.findBusiData";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("systemid", "12");
@@ -2576,6 +2561,39 @@ namespace MetroFramePlugin.ViewModels
                 contentDic1.Add("modelid", "feidao-model-pub_user_setting-0001");
                 contentDic1.Add("DataChannelId", channelId);
                 Dictionary<string, object> resultDic = messageOp.SendSyncMessage(MessageType1, contentDic1, "JSON");
+
+               
+                if (resultDic != null && !resultDic["ReplyMode"].ToString().Equals("0"))
+                {
+                    Dictionary<string, object> replyContent = new Dictionary<string, object>();
+                    replyContent = JsonHelper.ToObject<Dictionary<string, object>>(resultDic["ReplyContent"].ToString());
+                    if (replyContent != null && replyContent.Keys.Contains("msg"))
+                    {
+
+                        VicMessageBoxNormal.Show("保存成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        VicMessageBoxNormal.Show("保存失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        return;
+                    }
+
+                }
+                else
+                {
+                    VicMessageBoxNormal.Show("保存失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                //删除本地文件
+                if (File.Exists(menuPath))
+                {
+                    FileInfo fi = new FileInfo(menuPath);
+                    if (fi.Attributes.ToString().IndexOf("ReadOnly") != -1)
+                    {
+                        fi.Attributes = FileAttributes.Normal;
+                    }
+                    File.Delete(menuPath);//直接删除本地文件   
+                }
             }
         }
 
