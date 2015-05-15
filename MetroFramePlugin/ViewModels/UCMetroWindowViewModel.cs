@@ -2034,7 +2034,7 @@ namespace MetroFramePlugin.ViewModels
         ///<summary>
         /// 区域改变大小和拖动
         /// </summary>
-        private void ThumbCanvas(UIElement lElementName = null, bool IsLock = false)
+        private void ThumbCanvas(UIElement lElementName = null, bool IsLock = true)
         {
             //实现拖动和改变大小
             if (_panel == null) return;
