@@ -8,7 +8,7 @@
             <Setter Property="Background" Value="#D8D8D8"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
-        <Style TargetType="{x:Type ProgressBar}">
+        <!--<Style TargetType="{x:Type ProgressBar}">
 
             <Setter Property="Background" Value="Gainsboro"/>
             <Setter Property="Height" Value="40"/>
@@ -33,6 +33,38 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>-->
+
+        <Style  TargetType="{x:Type ProgressBar}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ProgressBar}">
+                        <Grid MinHeight="18" MinWidth="200" >
+                            <Border Name="PART_Track" CornerRadius="8" BorderBrush="#3D6BBF"  
+                           BorderThickness="1" Background="White" />
+                            <Border x:Name="PART_Indicator" Height="25"  CornerRadius="8" BorderBrush="#2BB9E1" BorderThickness="3"   
+                         HorizontalAlignment="Left" >
+                                <Grid Background="Transparent">
+                                    <Grid x:Name="Foreground">
+                                        <Grid.Background>
+                                            <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                                                <GradientStop Color="#2BB9E1" Offset="0.5"/>
+                                                <GradientStop Color="#0F8DB3   " Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Grid.Background>
+                                    </Grid>
+                                    <StackPanel  Background="Transparent" Height="25" Width="35" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                        <Label   Height="25" Foreground="White"  HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Value}"></Label>
+                                        <Label  Height="25" Margin="-10,0" Foreground="White" HorizontalAlignment="Left" Content="%"></Label>
+                                    </StackPanel>
+                                </Grid>
+
+                            </Border>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
     <Grid Opacity="0.6" Background="Honeydew">
@@ -40,9 +72,9 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <Border Grid.RowSpan="6" BorderThickness="2" BorderBrush="Black" Margin="0,0,0,-34" Opacity="0.4"/>
         <DockPanel Grid.Row="0" Margin="5,3,0,0" >
@@ -50,9 +82,9 @@
         <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" FontSize="15" >自动更新</Label>
         </DockPanel>
         <TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Name="tBlockProcess" Margin="5,12,0,0"/>
-        <ProgressBar Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="proBarTotal"  Margin="0,5" Grid.RowSpan="2"/>
+        <ProgressBar Grid.Row="2" Height="25" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="proBarTotal"   Grid.RowSpan="2"/>
         <TextBlock Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left" Name="tBlockNow" Text="正在下载:" Margin="5,12,0,0"/>
-        <ProgressBar Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="proBarNow" Margin="0,5"/>
+        <ProgressBar Grid.Row="5" Height="25" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="proBarNow" />
 
     </Grid>
 </Window>
