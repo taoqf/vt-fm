@@ -274,6 +274,8 @@ namespace MetroFramePlugin.ViewModels
                     personItem.Name = "homeItem";
                     personItem.AllowDelete = false;
                     personItem.Header = "个人收藏";
+                    UCPersonPluginContainer personPluginContainer = new UCPersonPluginContainer();
+                    personItem.Content = personPluginContainer;
                     tabItemList.Add(personItem);
 
                 }
@@ -693,9 +695,7 @@ namespace MetroFramePlugin.ViewModels
                 UCPluginContainer pluginContainer = new UCPluginContainer();
                 TabItemList[0].Content = pluginContainer;
                 TabItemList[0].Header = "功能列表";
-                UCPersonPluginContainer personPluginContainer = new UCPersonPluginContainer();
-                TabItemList[1].Content = personPluginContainer;
-                TabItemList[1].Header = "个人收藏";
+              
             }
 
             MenuModel menuModel = (MenuModel)x;
@@ -2473,10 +2473,9 @@ namespace MetroFramePlugin.ViewModels
         /// 根据UserCode和ProductId取菜单
         /// </summary>
         private string channelId = string.Empty;
-        private DataMessageOperation messageOp;
         private void GetPersonMenu()
         {
-            messageOp = new DataMessageOperation();
+            DataMessageOperation messageOp = new DataMessageOperation();
             string MessageType = "MongoDataChannelService.findBusiData";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("systemid", "12");
@@ -2514,7 +2513,7 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         private void SavePersonMenu()
         {
-            messageOp = new DataMessageOperation();
+            DataMessageOperation messageOp = new DataMessageOperation();
             string MessageType = "MongoDataChannelService.findBusiData";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("systemid", "12");
@@ -2563,6 +2562,29 @@ namespace MetroFramePlugin.ViewModels
                 contentDic1.Add("DataChannelId", channelId);
                 Dictionary<string, object> resultDic = messageOp.SendSyncMessage(MessageType1, contentDic1, "JSON");
 
+               
+                if (resultDic != null && !resultDic["ReplyMode"].ToString().Equals("0"))
+                {
+                    Dictionary<string, object> replyContent = new Dictionary<string, object>();
+                    replyContent = JsonHelper.ToObject<Dictionary<string, object>>(resultDic["ReplyContent"].ToString());
+                    if (replyContent != null && replyContent.Keys.Contains("msg"))
+                    {
+
+                        VicMessageBoxNormal.Show("保存成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        VicMessageBoxNormal.Show("保存失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        return;
+                    }
+
+                }
+                else
+                {
+                    VicMessageBoxNormal.Show("保存失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                //删除本地文件
                 if (File.Exists(menuPath))
                 {
                     FileInfo fi = new FileInfo(menuPath);
