@@ -212,6 +212,7 @@ namespace AutoUpdate
                 updateModel.LoadingFilePath = string.Empty;
             }
             tBlockNow.Text = string.Format("更新进度 {0}/{1}", updateModel.UpdatedNum + 1, updateModel.TotalCount);
+            proBarNow.Value = ((double)updateModel.UpdatedNum / updateModel.TotalCount) * 100;
             proBarTotal.Value = 0;
 
             string directoryPath = AppDomain.CurrentDomain.BaseDirectory + "\\AutoUpdater\\";
@@ -247,8 +248,6 @@ namespace AutoUpdate
         {
             tBlockProcess.Text = string.Format("正在下载:{0} [{1}/{2}]", updateModel.LoadingFileName, ConvertSize(e.BytesReceived), ConvertSize(e.TotalBytesToReceive));
             updateModel.LoadingFileSize = e.TotalBytesToReceive;
-            float tempF = ((float)(updateModel.UpdateSize + e.BytesReceived) / updateModel.TotalSize);
-            proBarNow.Value = Convert.ToInt32(tempF * 100);
             proBarTotal.Value = e.ProgressPercentage;
         }
 
