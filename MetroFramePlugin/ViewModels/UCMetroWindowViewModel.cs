@@ -1764,7 +1764,7 @@ namespace MetroFramePlugin.ViewModels
                     _title.SecondMenuItemIcoClick += SecondMenuItemClick;
                     _title.ParamsModel.TitleWidth = _areaMenu.AreaWidth;
                     _title.ParamsModel.AreaName = _areaMenu.AreaName;
-                    _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
+                    _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;//控制区域拖动
                     _title.VerticalContentAlignment = VerticalAlignment.Center;
                     _title.HorizontalContentAlignment = HorizontalAlignment.Center;
                     _title.Background = mainWindow.FindResource("MetroBGColor") as Brush;
@@ -1856,7 +1856,7 @@ namespace MetroFramePlugin.ViewModels
                 _title.Uid = NewArea[i].AreaID;
                 DockPanel.SetDock(_title, Dock.Top);
                 _title.ParamsModel.BtnDeblockingClick += BtnClick;
-                _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;
+               // _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;//因为初始默认了锁定，所以初始绘制去掉拖动
                 _title.MenuItemIcoClick += MenuItemClick;
                 _title.ParamsModel.TextChangedClick += ParamsModel_TextChangedClick;
                 _title.SecondMenuItemIcoClick += SecondMenuItemClick;
@@ -1890,7 +1890,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     ListBox pluginlist = new ListBox();
 
-                    pluginlist.PreviewMouseMove += menuList_PreviewMouseMove;
+                    //pluginlist.PreviewMouseMove += menuList_PreviewMouseMove;//因为初始默认了锁定，所以初始绘制去掉内部的插件拖动
                     pluginlist.Drop += menuList_Drop;
                     pluginlist.ItemsSource = NewArea[i].PluginList;
                     if (NewArea[i].MenuForm == "normal")
