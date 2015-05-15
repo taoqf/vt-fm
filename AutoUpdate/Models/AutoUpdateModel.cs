@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Victop.Server.Controls.Models;
 
 namespace AutoUpdate.Models
 {
-    public class AutoUpdateModel
+    public class AutoUpdateModel : PropertyModelBase
     {
         /// <summary>
         /// 更新地址
@@ -151,5 +152,21 @@ namespace AutoUpdate.Models
             get { return updateSize; }
             set { updateSize = value; }
         }
+
+        private Double progressBarValue;
+        public Double ProgressBarValue
+        {
+            get { return progressBarValue; }
+            set
+            {
+                if (progressBarValue != value)
+                {
+                    progressBarValue = value;
+                    RaisePropertyChanged("ProgressBarValue");
+                }
+            }
+        }
+
+
     }
 }
