@@ -6,7 +6,7 @@ using Victop.Server.Controls.Models;
 
 namespace AutoUpdate.Models
 {
-    public class AutoUpdateModel : PropertyModelBase
+    public class AutoUpdateModel
     {
         /// <summary>
         /// 更新地址
@@ -153,19 +153,7 @@ namespace AutoUpdate.Models
             set { updateSize = value; }
         }
 
-        private Double progressBarValue;
-        public Double ProgressBarValue
-        {
-            get { return progressBarValue; }
-            set
-            {
-                if (progressBarValue != value)
-                {
-                    progressBarValue = value;
-                    RaisePropertyChanged("ProgressBarValue");
-                }
-            }
-        }
+       
 
 
     }
