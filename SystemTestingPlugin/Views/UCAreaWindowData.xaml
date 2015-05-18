@@ -16,8 +16,8 @@
         <ctrl:VicTabControlNormal Background="Transparent">
             <ctrl:VicTabItemNormal Header="数据测试" AllowDelete="False">
                 <ctrl:VicStackPanelNormal>
-                    <ctrl:VicGroupBoxNormal Header="数据查询" MaxHeight="400" MinHeight="300">
-                        <ctrl:VicGridNormal>
+                    <Expander Header="数据查询" IsExpanded="True">
+                        <ctrl:VicGridNormal MinHeight="400" MaxHeight="600" MinWidth="400">
                             <ctrl:VicGridNormal.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
@@ -41,6 +41,7 @@
                                 <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewJsonData" Content="查看Json数据" Command="{Binding btnViewJsonDataClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
                                 <ctrl:VicButtonNormal Width="100" Height="24" Name="btnAddData" Content="添加" Command="{Binding btnAddDataClickCommand}"/>
                                 <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSaveData" Content="保存" Command="{Binding btnSaveDataClickCommand}"/>
+                                <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewTableStruct" ToolTip="查看表结构" Content="查看表结构" Command="{Binding btnViewTableStructClickCommand}"/>
                                 <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding DataInfoModel.VertifyMsg}"/>
                             </ctrl:VicWrapPanelNormal>
                             <ctrl:VicTabControlNormal Grid.Row="1">
@@ -73,11 +74,31 @@
                                         <DataGrid Grid.Row="1" Name="dgridNarrowRefData" ItemsSource="{Binding DataInfoModel.RefDataTable}" SelectedValue="{Binding DataInfoModel.NarrowGridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="val"/>
                                     </ctrl:VicGridNormal>
                                 </ctrl:VicTabItemNormal>
+                                <ctrl:VicTabItemNormal Header="表结构" AllowDelete="False">
+                                    <ctrl:VicGridNormal>
+                                        <ctrl:VicGridNormal.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </ctrl:VicGridNormal.ColumnDefinitions>
+                                        <ctrl:VicGroupBoxNormal Grid.Column="0" Header="表列表">
+                                            <ctrl:VicListBoxNormal Name="lboxTableStruct" ItemsSource="{Binding TableStructInfoList,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="TableTitle" SelectedValuePath="TableName" SelectedItem="{Binding SelectedStructInfo,UpdateSourceTrigger=PropertyChanged}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="SelectionChanged">
+                                                        <i:InvokeCommandAction Command="{Binding lboxTableStructSelectionChangedCommand}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </ctrl:VicListBoxNormal>
+                                        </ctrl:VicGroupBoxNormal>
+                                        <ctrl:VicGroupBoxNormal Grid.Column="1" Header="表结构">
+                                            <ctrl:VicRichTextBoxNormal VicText="{Binding SelectedStructInfo.TableFields,UpdateSourceTrigger=PropertyChanged}"/>
+                                        </ctrl:VicGroupBoxNormal>
+                                    </ctrl:VicGridNormal>
+                                </ctrl:VicTabItemNormal>
                             </ctrl:VicTabControlNormal>
                         </ctrl:VicGridNormal>
-                    </ctrl:VicGroupBoxNormal>
-                    <ctrl:VicGroupBoxNormal Header="编号服务" MaxHeight="400" MinHeight="200">
-                        <ctrl:VicGridNormal>
+                    </Expander>
+                    <Expander Header="编号服务">
+                        <ctrl:VicGridNormal MinHeight="300" MaxHeight="500" MinWidth="300">
                             <ctrl:VicGridNormal.RowDefinitions>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="*"/>
@@ -96,9 +117,9 @@
                             </ctrl:VicDockPanelNormal>
                             <ctrl:VicRichTextBoxNormal Grid.Row="1" VicText="{Binding CodeInfoModel.ResultData}"/>
                         </ctrl:VicGridNormal>
-                    </ctrl:VicGroupBoxNormal>
-                    <ctrl:VicGroupBoxNormal Header="用户信息及菜单" MaxHeight="400" MinHeight="200">
-                        <ctrl:VicGridNormal>
+                    </Expander>
+                    <Expander Header="用户信息及菜单">
+                        <ctrl:VicGridNormal MinHeight="300" MaxHeight="500" MinWidth="300">
                             <ctrl:VicGridNormal.RowDefinitions>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="*"/>
@@ -117,9 +138,9 @@
                             </ctrl:VicDockPanelNormal>
                             <ctrl:VicRichTextBoxNormal Grid.Row="1" Name="rBoxUserMenuInfo" VicText="{Binding UserInfoModel.ResultData}"/>
                         </ctrl:VicGridNormal>
-                    </ctrl:VicGroupBoxNormal>
-                    <ctrl:VicGroupBoxNormal Header="其他" MaxHeight="400" MinHeight="200">
-                        <ctrl:VicGridNormal>
+                    </Expander>
+                    <Expander Header="其他">
+                        <ctrl:VicGridNormal MinHeight="300" MaxHeight="500" MinWidth="300">
                             <ctrl:VicGridNormal.RowDefinitions>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="*"/>
@@ -139,7 +160,7 @@
                                 </ctrl:VicTabItemNormal>
                             </ctrl:VicTabControlNormal>
                         </ctrl:VicGridNormal>
-                    </ctrl:VicGroupBoxNormal>
+                    </Expander>
                 </ctrl:VicStackPanelNormal>
             </ctrl:VicTabItemNormal>
             <ctrl:VicTabItemNormal Header="飞道FTP" AllowDelete="False">

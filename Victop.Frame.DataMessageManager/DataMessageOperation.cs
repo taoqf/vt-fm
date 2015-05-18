@@ -112,10 +112,20 @@ namespace Victop.Frame.DataMessageManager
         /// </summary>
         /// <param name="channelId">通道标识</param>
         /// <returns></returns>
-        public virtual string GetModelRelation(string viewId)
+        public virtual string GetModelInfo(string viewId, string keyString)
         {
             DataOperation dataOp = new DataOperation();
-            return dataOp.GetModelRelation(viewId);
+            string resultString = string.Empty;
+            ChannelData channelDt = dataOp.GetChannelData(viewId);
+            switch (keyString)
+            {
+                case "tables":
+                    resultString = JsonHelper.ToJson(channelDt.ModelDefInfo.ModelTables);
+                    break;
+                default:
+                    break;
+            }
+            return resultString;
         }
         /// <summary>
         /// 同步消息发送
@@ -625,7 +635,7 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="paramDic">参数键值对</param>
         /// <param name="waitTime">同步等待时间(秒)</param>
         /// <returns></returns>
-        public PluginModel StratPlugin(string pluginName, Dictionary<string, object> paramDic = null,string showTitle = null)
+        public PluginModel StratPlugin(string pluginName, Dictionary<string, object> paramDic = null, string showTitle = null)
         {
             PluginModel pluginModel = new PluginModel();
             MessageOperation messageOp = new MessageOperation();

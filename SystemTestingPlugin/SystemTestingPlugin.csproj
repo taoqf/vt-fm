@@ -113,6 +113,7 @@
     <Compile Include="Models\FTP\FTPSiteInfoModel.cs" />
     <Compile Include="Models\FTP\FTPFileInfoModel.cs" />
     <Compile Include="Models\Ref\RefForerunnerTreeModel.cs" />
+    <Compile Include="Models\Test\TableStructModel.cs" />
     <Compile Include="Models\Test\CodeServiceInfoModel.cs" />
     <Compile Include="Models\Ref\MongoModelInfoOfClientRefConditionModel.cs" />
     <Compile Include="Models\Ref\MongoModelInfoOfClientRefForeRunnerModel.cs" />

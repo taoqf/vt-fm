@@ -12,6 +12,7 @@ using Victop.Frame.DataMessageManager;
 using SystemTestingPlugin.Views;
 using System.Threading;
 using System.IO;
+using System.Collections.ObjectModel;
 
 namespace SystemTestingPlugin.ViewModels
 {
@@ -22,6 +23,16 @@ namespace SystemTestingPlugin.ViewModels
         /// 数据信息实体实例
         /// </summary>
         private DataSearchInfoModel dataInfoModel;
+
+        /// <summary>
+        /// 选定表结构信息
+        /// </summary>
+        private TableStructModel selectedStructInfo;
+        /// <summary>
+        /// 表结构集合
+        /// </summary>
+        private ObservableCollection<TableStructModel> tableStructInfoList;
+
         /// <summary>
         /// 编码服务实体实例
         /// </summary>
@@ -57,6 +68,46 @@ namespace SystemTestingPlugin.ViewModels
                 {
                     dataInfoModel = value;
                     RaisePropertyChanged("DataInfoModel");
+                }
+            }
+        }
+        /// <summary>
+        /// 选定表结构信息
+        /// </summary>
+        public TableStructModel SelectedStructInfo
+        {
+            get
+            {
+                return selectedStructInfo;
+            }
+            set
+            {
+                if (selectedStructInfo != value)
+                {
+                    selectedStructInfo = value;
+                    RaisePropertyChanged("SelectedStructInfo");
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 表结构信息集合
+        /// </summary>
+        public ObservableCollection<TableStructModel> TableStructInfoList
+        {
+            get
+            {
+                if (tableStructInfoList == null)
+                    tableStructInfoList = new ObservableCollection<TableStructModel>();
+                return tableStructInfoList;
+            }
+            set
+            {
+                if (tableStructInfoList != value)
+                {
+                    tableStructInfoList = value;
+                    RaisePropertyChanged("TableStructInfoList");
                 }
             }
         }
@@ -325,6 +376,99 @@ namespace SystemTestingPlugin.ViewModels
                 });
             }
         }
+        /// <summary>
+        /// 查看表结构
+        /// </summary>
+        public ICommand btnViewTableStructClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    DataMessageOperation dataOp = new DataMessageOperation();
+                    string tableStructString = dataOp.GetModelInfo(DataInfoModel.ChannelId, "tables");
+                    TableStructInfoList.Clear();
+                    List<Dictionary<string, object>> tableList = JsonHelper.ToObject<List<Dictionary<string, object>>>(tableStructString);
+                    foreach (Dictionary<string, object> item in tableList)
+                    {
+                        TableStructModel infoModel = new TableStructModel() { TableName = item["name"].ToString(), TableTitle = item["name"].ToString() };
+                        TableStructInfoList.Add(infoModel);
+                    }
+                }, () =>
+                {
+                    return !string.IsNullOrEmpty(DataInfoModel.ChannelId);
+                });
+            }
+        }
+        /// <summary>
+        /// 表结构选择改变
+        /// </summary>
+        public ICommand lboxTableStructSelectionChangedCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    if (SelectedStructInfo != null)
+                    {
+                        string MessageType = "MongoDataChannelService.findBusiData";
+                        DataMessageOperation messageOp = new DataMessageOperation();
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        contentDic.Add("systemid", "11");
+                        contentDic.Add("configsystemid", "11");
+                        contentDic.Add("modelid", "feidao-model-base_data_struct-0001");
+                        if (!string.IsNullOrEmpty(DataInfoModel.SpaceId))
+                        {
+                            contentDic.Add("spaceId", DataInfoModel.SpaceId);
+                        }
+                        List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+                        Dictionary<string, object> conDic = new Dictionary<string, object>();
+                        conDic.Add("name", "base_data_struct");
+                        List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+                        Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+                        tableConDic.Add("tablename", SelectedStructInfo.TableName);
+                        string productid = "feidao";
+                        if (!string.IsNullOrEmpty(DataInfoModel.SpaceId))
+                        {
+                            if (DataInfoModel.SpaceId.Contains("::"))
+                            {
+                                productid = DataInfoModel.SpaceId.Substring(DataInfoModel.SpaceId.IndexOf("::") + 2);
+                            }
+                            else
+                            {
+                                productid = DataInfoModel.SpaceId;
+                            }
+                        }
+                        tableConDic.Add("productid", productid);
+                        tableConList.Add(tableConDic);
+                        conDic.Add("tablecondition", tableConList);
+                        conList.Add(conDic);
+                        contentDic.Add("conditions", conList);
+                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
+                        if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+                        {
+                            string channelId = returnDic["DataChannelId"].ToString();
+                            DataSet mastDs = new DataSet();
+                            mastDs = messageOp.GetData(channelId, "[\"base_data_struct\"]", mastDs);
+                            DataTable dt = mastDs.Tables["dataArray"];
+                            if (dt != null && dt.Rows.Count > 0)
+                            {
+                                SelectedStructInfo.TableFields = JsonHelper.ReadJsonString(dt.Rows[0]["fields"].ToString(), "dataArray");
+                            }
+                            else
+                            {
+                                VicMessageBoxNormal.Show(string.Format("未查询到产品编号为{0},表名为{1}的表结构信息", productid, SelectedStructInfo.TableName));
+                            }
+                        }
+                        else
+                        {
+                            VicMessageBoxNormal.Show(returnDic["ReplyAlertMessage"].ToString());
+                        }
+                    }
+                });
+            }
+        }
+
         /// <summary>
         /// 窄表引用
         /// </summary>
