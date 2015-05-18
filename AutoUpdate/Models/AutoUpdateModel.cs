@@ -151,5 +151,9 @@ namespace AutoUpdate.Models
             get { return updateSize; }
             set { updateSize = value; }
         }
+
+       
+
+
     }
 }
