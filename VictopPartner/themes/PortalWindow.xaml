@@ -1275,7 +1275,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
+                    <Border x:Name="PART_Border"   BorderThickness="0" Padding="2" Background="Transparent">
                         <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Line x:Name="PART_Path1" X1="2"  X2="10" Y1="1" Y2="1" Stroke="{DynamicResource MainFrmUserNameColor}"  StrokeThickness="2"  />
                             <Line x:Name="PART_Path2" X1="2"  X2="10" Y1="2" Y2="2" Stroke="{DynamicResource MainFrmUserNameColor}"  StrokeThickness="2"  />
@@ -1316,7 +1316,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border Name="PART_Border"   BorderThickness="0" Padding="1" >
+                    <Border Name="PART_Border"   BorderThickness="0" Padding="1" Background="Transparent">
                         <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Path x:Name="PART_Path1"
                                       SnapsToDevicePixels="True"
@@ -1356,7 +1356,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border Name="PART_Border"   BorderThickness="0" Padding="2" >
+                    <Border Name="PART_Border"   BorderThickness="0" Padding="2" Background="Transparent">
                         <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Path x:Name="PART_Path1"
                                       SnapsToDevicePixels="True"
@@ -1397,11 +1397,12 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
+                    <Border x:Name="PART_Border"   BorderThickness="0"  Background="Transparent">
                         <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="{DynamicResource MainFrmUserNameColor}"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Stroke" TargetName="PART_Path" Value="{DynamicResource MainFrmWinBtnOverForeColor}"/>
                             <Setter Property="Background" TargetName="PART_Border">
                                 <Setter.Value>
                                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -1411,7 +1412,6 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Stroke" TargetName="PART_Path" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
@@ -1432,7 +1432,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
+                    <Border x:Name="PART_Border"   BorderThickness="0" Padding="2" Background="Transparent">
                         <Path x:Name="PART_Path" Data="M2,2 L2,2 10,10 M10,2 L10,2 2,10" Fill="{DynamicResource MainFrmUserNameColor}"  Stroke="{DynamicResource MainFrmUserNameColor}" Stretch="None" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -1472,7 +1472,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border x:Name="PART_Border" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"  BorderThickness="0" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border x:Name="PART_Border" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="Transparent"  BorderThickness="0" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Path x:Name="PART_Path" Fill="{DynamicResource MainFrmUserNameColor}" HorizontalAlignment="Center" Stroke="{DynamicResource MainFrmUserNameColor}" VerticalAlignment="Center" Height="13" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Width="12">
                             <Path.RenderTransform>
                                 <TransformGroup>
