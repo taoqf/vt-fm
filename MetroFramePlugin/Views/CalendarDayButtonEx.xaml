@@ -44,10 +44,12 @@
                             <Rectangle x:Name="SelectedBackground" Fill="{x:Null}" Opacity="0" RadiusY="0" RadiusX="0" Margin="0" StrokeThickness="3" Stroke="#FFFFBB00"/>
                             <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="0"/>
                             <Rectangle x:Name="HighlightBackground" Fill="Transparent" Opacity="0" RadiusY="0" RadiusX="0" Margin="0" StrokeThickness="3" Stroke="#FFFFBB00" Visibility="Hidden"/>
-                            <TextBlock x:Name="Vacation" HorizontalAlignment="Left" Grid.RowSpan="1" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Opacity="0.5" Visibility="Hidden" >
-                                <TextBlock.Background>
+                            <TextBlock x:Name="Vacation" HorizontalAlignment="Left" Background="Yellow" Grid.RowSpan="1" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" Opacity="0.5" Visibility="Hidden" >
+                                <!--<TextBlock.Background>
+                                    
                                     <ImageBrush ImageSource="/LifeCalendar;component/image/holiday_flag_left@2x.png"/>
-                                </TextBlock.Background><Run Text="休"/></TextBlock>
+                                </TextBlock.Background><Run Text="休"/>-->
+                                </TextBlock>
                             <Grid Margin="0" Height="Auto" Width="Auto">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="26" />
@@ -56,8 +58,8 @@
                                 <TextBlock x:Name="txtSolar" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="18" FontFamily="Microsoft YaHei UI" Text="{Binding SolarDateTime.Day, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CalendarDayButtonEx}}}" Foreground="{Binding SolarBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CalendarDayButtonEx}}}"/>
                                 <TextBlock x:Name="txtLunar" HorizontalAlignment="Center" Margin="0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Normal" Text="{Binding Lunar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CalendarDayButtonEx}}}" Foreground="{Binding LunarBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CalendarDayButtonEx}}}"/>
                             </Grid>
-                            <Image x:Name="Holiday" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Source="/LifeCalendar;component/image/holiday_flag_left@2x.png" Stretch="Fill" Width="25" Opacity="{Binding HolidayOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CalendarDayButtonEx}}}"/>
-                            <Image Margin="0" Source="/LifeCalendar;component/image/workday_flag_left@2x.png" Stretch="Fill" Width="25" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="{Binding WorkdayOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CalendarDayButtonEx}}}"/>
+                           <!--<Image x:Name="Holiday" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Source="/LifeCalendar;component/image/holiday_flag_left@2x.png" Stretch="Fill" Width="25" Opacity="{Binding HolidayOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CalendarDayButtonEx}}}"/>
+                            <Image Margin="0" Source="/LifeCalendar;component/image/workday_flag_left@2x.png" Stretch="Fill" Width="25" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Opacity="{Binding WorkdayOpacity, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:CalendarDayButtonEx}}}"/>-->
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">

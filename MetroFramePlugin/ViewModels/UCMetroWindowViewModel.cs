@@ -430,6 +430,7 @@ namespace MetroFramePlugin.ViewModels
                     OverlayWindow overlayWin = new OverlayWindow();
                     OverlayWindow.VicTabCtrl = mainTabControl;
                     overlayWin.Show();
+                   
                     UserLogin();
 
                 });
@@ -1797,7 +1798,9 @@ namespace MetroFramePlugin.ViewModels
                 });
             }
         }
-
+        /// <summary>
+        /// 保存当前桌面
+        /// </summary>
         public ICommand SavePersonalFavorites
         {
             get { 
@@ -1805,6 +1808,21 @@ namespace MetroFramePlugin.ViewModels
                      {
                          SavePersonMenu();
                      });
+            }
+        }
+        /// <summary>
+        /// 展示桌面日历
+        /// </summary>
+        public ICommand ShowDesktopCalendar
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    ShowCalendarWindow aa = new ShowCalendarWindow();
+                    aa.Show();
+                    
+                });
             }
         }
 

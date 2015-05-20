@@ -589,7 +589,7 @@
                             <controls:VicMenuItemNormal Header="综合区域" IsEnabled="False"/>
                         </controls:VicMenuItemNormal>
                         <controls:VicMenuItemNormal Header="显示天气"/>
-                        <controls:VicMenuItemNormal Header="显示日历"/>
+                        <controls:VicMenuItemNormal Header="显示日历" Command="{Binding ShowDesktopCalendar}"/>
                         <controls:VicMenuItemNormal Header="显示通知"/>
                         <controls:VicMenuItemNormal Header="显示常用网址"/>
                         <controls:VicMenuItemNormal Header="保存当前桌面" Command="{Binding SavePersonalFavorites}"/>
