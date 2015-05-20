@@ -68,6 +68,7 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -94,6 +95,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convert\ImgeNameToBackgroundConverter.cs" />
+    <Compile Include="Models\ChineseCalendar.cs" />
+    <Compile Include="Models\HolidayArrangement.cs" />
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\AreaMenu.cs" />
     <Compile Include="Models\MenuRoleAuth.cs" />
@@ -104,6 +107,13 @@
     <Compile Include="ViewModels\DisplayOverlayWindowPluginViewModel.cs" />
     <Compile Include="ViewModels\OverlayWindowViewModel.cs" />
     <Compile Include="ViewModels\UCMetroWindowViewModel.cs" />
+    <Compile Include="Views\CalendarDayButtonEx.xaml.cs">
+      <DependentUpon>CalendarDayButtonEx.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CalendarEx.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>CalendarEx.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DisplayOverlayWindowPlugin.xaml.cs">
       <DependentUpon>DisplayOverlayWindowPlugin.xaml</DependentUpon>
     </Compile>
@@ -139,6 +149,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\CalendarDayButtonEx.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CalendarEx.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DisplayOverlayWindowPlugin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
