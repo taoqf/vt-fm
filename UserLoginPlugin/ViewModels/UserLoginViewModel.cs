@@ -42,6 +42,10 @@ namespace UserLoginPlugin.ViewModels
         /// 是否显示加载
         /// </summary>
         private bool isRingShow = false;
+        /// <summary>
+        /// 主窗口是否可用
+        /// </summary>
+        private bool mainViewEnable = true;
         #endregion
 
         #region 属性
@@ -163,6 +167,24 @@ namespace UserLoginPlugin.ViewModels
                 {
                     isRingShow = value;
                     RaisePropertyChanged("IsRingShow");
+                }
+            }
+        }
+        /// <summary>
+        /// 主窗口是否可用
+        /// </summary>
+        public bool MainViewEnable
+        {
+            get
+            {
+                return mainViewEnable;
+            }
+            set
+            {
+                if (mainViewEnable != value)
+                {
+                    mainViewEnable = value;
+                    RaisePropertyChanged("MainViewEnable");
                 }
             }
         }
@@ -298,6 +320,7 @@ namespace UserLoginPlugin.ViewModels
                             else
                             {
                                 IsRingShow = true;
+                                MainViewEnable = false;
                                 UserLogin();
                             }
                       
@@ -510,6 +533,7 @@ namespace UserLoginPlugin.ViewModels
                     else
                     {
                         IsRingShow = false;
+                        MainViewEnable = true;
                         MessageBox.Show((returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString())) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
                     }
                 }
@@ -517,6 +541,7 @@ namespace UserLoginPlugin.ViewModels
             else
             {
                 IsRingShow = false;
+                MainViewEnable = true;
                 MessageBox.Show("登录失败");
             }
         }
@@ -544,15 +569,6 @@ namespace UserLoginPlugin.ViewModels
 
             }
         }
-
-        private void search()
-        {
-            IsRingShow = true;
-            LoginWindow.DialogResult = true;
-
-            LoginWindow.Cursor = Cursors.Arrow;
-        }
-
         /// <summary>检查输入信息</summary>
         private bool CheckUserLogin()
         {

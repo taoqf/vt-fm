@@ -28,7 +28,7 @@
         <Grid.RowDefinitions>
             <RowDefinition />
         </Grid.RowDefinitions>
-    <Grid Grid.Row="0" x:Name="gridMain" Style="{DynamicResource WindowChangeSkinBackground}" >
+        <Grid Grid.Row="0" x:Name="gridMain" Style="{DynamicResource WindowChangeSkinBackground}" IsEnabled="{Binding MainViewEnable,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="5"/>
