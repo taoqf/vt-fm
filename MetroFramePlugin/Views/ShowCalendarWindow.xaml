@@ -6,7 +6,7 @@
              xmlns:views="clr-namespace:MetroFramePlugin.Views"
              xmlns:Control="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="350" d:DesignWidth="400"  Title="飞道桌面日历" TitleHeight="30" FontSize="12" Width="405" Height="396" Topmost="True">
+             d:DesignHeight="350" d:DesignWidth="400"  Title="飞道桌面日历" TitleHeight="35"  Width="405" Height="396" Topmost="True">
     <Grid>
         <views:CalendarEx x:Name="FrontGD"/>       
     </Grid>
