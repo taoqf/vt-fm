@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:views="clr-namespace:MetroFramePlugin.Views"
-                         xmlns:Control="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
-                         mc:Ignorable="d" 
-             d:DesignHeight="350" d:DesignWidth="400"  Title="桌面日历"  TitleHeight="30" Width="405" Height="366" Topmost="True">
+             xmlns:Control="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="350" d:DesignWidth="400"  Title="飞道桌面日历" TitleHeight="30" FontSize="12" Width="405" Height="396" Topmost="True">
     <Grid>
         <views:CalendarEx x:Name="FrontGD"/>       
     </Grid>
