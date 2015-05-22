@@ -619,7 +619,7 @@ namespace Victop.Frame.DataChannel
                                     dc.ExtendedProperties.Add("ColType", "string");
                                     break;
                             }
-                            DataSet ds = GetSimpleRef(simpleRefList, dataPath, item.FieldKey.Substring(item.FieldKey.LastIndexOf(".") + 1), null);
+                            DataSet ds = GetSimpleRef(simpleRefList, dataPath, keyStr, null);
                             if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
                             {
                                 dc.ExtendedProperties.Add("ComboBox", ds.Tables["dataArray"]);
