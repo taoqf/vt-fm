@@ -13,7 +13,7 @@
         <Style x:Key="PopupMenuDelListPluginStyle" TargetType="{x:Type ListBox}">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-            <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
             <Setter Property="SelectionMode" Value="Multiple"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -85,7 +85,7 @@
         <Style x:Key="PopupMenuDelListLargePluginStyle" TargetType="{x:Type ListBox}">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-            <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
             <Setter Property="SelectionMode" Value="Multiple"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -157,7 +157,7 @@
         <Style x:Key="PopupMenuDelListSmallPluginStyle" TargetType="{x:Type ListBox}">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-            <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
             <Setter Property="SelectionMode" Value="Multiple"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -488,7 +488,7 @@
 
         <Style x:Key="PopupMenuListStyle" TargetType="{x:Type ListBox}">
             <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-            <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
             <Setter Property="SelectionMode" Value="Multiple"/>
             <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>

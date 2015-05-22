@@ -9,7 +9,7 @@
     <SolidColorBrush x:Key="MetroFGColor" Color="White"/>
     <Style x:Key="MetroListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -78,7 +78,7 @@
     </Style>
     <Style x:Key="LargeListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -148,7 +148,7 @@
 
     <Style x:Key="SmallListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
