@@ -619,6 +619,11 @@ namespace Victop.Frame.DataChannel
                                     dc.ExtendedProperties.Add("ColType", "string");
                                     break;
                             }
+                            DataSet ds = GetSimpleRef(simpleRefList, dataPath, item.FieldKey.Substring(item.FieldKey.LastIndexOf(".") + 1), null);
+                            if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
+                            {
+                                dc.ExtendedProperties.Add("ComboBox", ds.Tables["dataArray"]);
+                            }
                             if (!newDt.Columns.Contains(dc.ColumnName))
                             {
                                 newDt.Columns.Add(dc);
@@ -1175,12 +1180,12 @@ namespace Victop.Frame.DataChannel
                                 }
 
                             }
-                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, null,OpreateStateEnum.Added);
+                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, null, OpreateStateEnum.Added);
                             break;
                         case DataRowState.Deleted:
                             Dictionary<string, object> delDic = new Dictionary<string, object>();
                             delDic.Add("_id", dr["_id", DataRowVersion.Original]);
-                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), delDic, null,OpreateStateEnum.Deleted);
+                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), delDic, null, OpreateStateEnum.Deleted);
                             break;
                         case DataRowState.Detached:
                             break;
@@ -1211,7 +1216,7 @@ namespace Victop.Frame.DataChannel
                                             case "double":
                                             case "float":
                                                 modDic.Add(dc.ColumnName, (dr[dc.ColumnName] == null || string.IsNullOrEmpty(dr[dc.ColumnName].ToString())) ? 0 : Convert.ToDecimal(dr[dc.ColumnName]));
-                                                originDic.Add(dc.ColumnName, (dr[dc.ColumnName,DataRowVersion.Original] == null || string.IsNullOrEmpty(dr[dc.ColumnName,DataRowVersion.Original].ToString())) ? 0 : Convert.ToDecimal(dr[dc.ColumnName,DataRowVersion.Original]));
+                                                originDic.Add(dc.ColumnName, (dr[dc.ColumnName, DataRowVersion.Original] == null || string.IsNullOrEmpty(dr[dc.ColumnName, DataRowVersion.Original].ToString())) ? 0 : Convert.ToDecimal(dr[dc.ColumnName, DataRowVersion.Original]));
                                                 break;
                                             case "date":
                                                 modDic.Add(dc.ColumnName, dr[dc.ColumnName] == null ? DateTime.Now : dr[dc.ColumnName]);
@@ -1226,7 +1231,7 @@ namespace Victop.Frame.DataChannel
                                                     //修改人：时长水
                                                     //修改时间：2015-04-29 09：38
                                                     //修改原因：如果原始时间为空的话，时间类型将不能进行转换报错
-                                                    if (dr[dc.ColumnName, DataRowVersion.Original]!=null&&!string.IsNullOrEmpty(dr[dc.ColumnName,DataRowVersion.Original].ToString()))
+                                                    if (dr[dc.ColumnName, DataRowVersion.Original] != null && !string.IsNullOrEmpty(dr[dc.ColumnName, DataRowVersion.Original].ToString()))
                                                     {
                                                         DateTime originTime = (DateTime)dr[dc.ColumnName, DataRowVersion.Original];
                                                         originDic.Add(dc.ColumnName, (long)(originTime.ToUniversalTime() - startTime.ToUniversalTime()).TotalMilliseconds);
@@ -1235,7 +1240,7 @@ namespace Victop.Frame.DataChannel
                                                     {
                                                         originDic.Add(dc.ColumnName, (long)0);
                                                     }
-                                                    
+
                                                 }
                                                 else
                                                 {
@@ -1272,7 +1277,7 @@ namespace Victop.Frame.DataChannel
                                 pathDic.Add("value", dr["_id"]);
                                 pathList.Add(pathDic);
                             }
-                            editFlag = DataTool.SaveCurdDataByPath(viewId, pathList, modDic, originDic,OpreateStateEnum.Modified);
+                            editFlag = DataTool.SaveCurdDataByPath(viewId, pathList, modDic, originDic, OpreateStateEnum.Modified);
                             break;
                         case DataRowState.Unchanged:
                             break;
@@ -1371,7 +1376,7 @@ namespace Victop.Frame.DataChannel
                     context.Run(Properties.Resources.CheckDataAuthorityScript);
                     context.Run(";require(['victop/core/_data/data_limit_verify'],function(wpf){result = JSON.stringify(wpf(curdList, path, data));});");
                     object result = context.GetParameter("result");
-                    if (result != null && result.ToString()!="[]")
+                    if (result != null && result.ToString() != "[]")
                     {
                         LoggerHelper.InfoFormat("验证数据权限不通过！原因：" + result.ToString());
                         return false;
@@ -1382,9 +1387,9 @@ namespace Victop.Frame.DataChannel
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                LoggerHelper.InfoFormat("验证数据权限失败！失败原因："+ex.ToString());
+                LoggerHelper.InfoFormat("验证数据权限失败！失败原因：" + ex.ToString());
                 return false;
             }
             #endregion
