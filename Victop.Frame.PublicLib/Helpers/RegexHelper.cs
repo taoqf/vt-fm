@@ -81,6 +81,18 @@ namespace Victop.Frame.PublicLib.Helpers
             return resultDic;
         }
         /// <summary>
+        /// 检索值Or
+        /// </summary>
+        /// <param name="valueList"></param>
+        /// <returns></returns>
+        public static Dictionary<string, object> ValuesOr(List<object> valueList)
+        {
+            Dictionary<string, object> resultDic = new Dictionary<string, object>();
+            resultDic.Add("$or", valueList);
+            return resultDic;
+        }
+
+        /// <summary>
         /// 不等于
         /// </summary>
         /// <param name="value"></param>
