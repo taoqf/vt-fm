@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using GalaSoft.MvvmLight.Command;
+using Microsoft.Win32;
 using ThemeManagerPlugin.Models;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
@@ -60,6 +62,27 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
 
+      
+        /// <summary>壁纸列表 </summary>
+        private ObservableCollection<WallPaperModel> _systemWallPaperList;
+        public ObservableCollection<WallPaperModel> SystemWallPaperList
+        {
+            get
+            {
+                if (_systemWallPaperList == null)
+                    _systemWallPaperList = new ObservableCollection<WallPaperModel>();
+                return _systemWallPaperList;
+            }
+            set
+            {
+                if (_systemWallPaperList != value)
+                {
+                    _systemWallPaperList = value;
+                    RaisePropertyChanged("SystemWallPaperList");
+                }
+            }
+        }
+
         /// <summary>N款皮肤 </summary>
         private int _skinNum;
         public int SkinNum
@@ -95,6 +118,7 @@ namespace ThemeManagerPlugin.ViewModels
                  
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
+                    GetWallPaperDisplay();
                 });
             }
         }
@@ -126,8 +150,48 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
         #endregion
+        #region 单击下载壁纸命令
+        public ICommand btnDownLoadCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                    if (x != null)
+                    {
+                        WallPaperModel wallModel = (WallPaperModel) x;
+                        SaveFileDialog saveFileDialog = new SaveFileDialog();
+                        saveFileDialog.Title = "下载到";
+                        saveFileDialog.Filter = string.Format("{0}文件|*{0}", wallModel.WllPaperType);
+                        saveFileDialog.FileName = wallModel.WllPaperName;
+                        string path = "";
+                        if (saveFileDialog.ShowDialog() == true)
+                        {
+                            path = saveFileDialog.FileName;
+                            Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
+                            Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
+                            downloadAddress.Add("DownloadFileId", wallModel.WallDisplay);
+                            downloadAddress.Add("DownloadToPath", path);
+                            downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
+                            DataMessageOperation messageOperation = new DataMessageOperation();
+                            Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
+                                                                   downloadMessageContent);
+                            if (downloadResult != null && !downloadResult["ReplyMode"].ToString().Equals("0"))
+                            {
+                                VicMessageBoxNormal.Show(downloadResult["ReplyAlertMessage"].ToString(), "标题");
+                            }
+                            
+                        }
+                        if (path == "")  //下载其间，不下载了，直接返回
+                        {
+                            return;
+                        }
+                    }
+                });
+            }
+        }
+        #endregion
 
-     
 
         /// <summary>
         /// 获取主题文件夹中默认皮肤路径
@@ -172,6 +236,44 @@ namespace ThemeManagerPlugin.ViewModels
                 this.SystemThemeList = new ObservableCollection<ThemeModel>(list);
             }
         }
+
+
+       private void GetWallPaperDisplay()
+       {
+           DataMessageOperation messageOp = new DataMessageOperation();
+           string channelId = string.Empty;
+           string MessageType = "MongoDataChannelService.findBusiData";
+           Dictionary<string, object> contentDic = new Dictionary<string, object>();
+           contentDic.Add("systemid", "18");
+           contentDic.Add("configsystemid", "11");
+           contentDic.Add("modelid", "feidao-model-fd_wallpaper-0001");
+           List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+           Dictionary<string, object> conDic = new Dictionary<string, object>();
+           conDic.Add("name", "fd_wallpaper");
+           List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+           Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+           tableConList.Add(tableConDic);
+           conDic.Add("tablecondition", tableConList);
+           conList.Add(conDic);
+           contentDic.Add("conditions", conList);
+           Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+           if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+           {
+               channelId = returnDic["DataChannelId"].ToString();
+               DataSet MenuDs = messageOp.GetData(channelId, "[\"fd_wallpaper\"]");
+               DataTable dt = MenuDs.Tables["dataArray"];
+               foreach (DataRow row in dt.Rows)
+               {
+                   string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["preview"];
+                   WallPaperModel model = new WallPaperModel();
+                   model.WallDisplay = row["display"].ToString();
+                   model.WallPreview = previewUrl;
+                   model.WllPaperName = row["wallpaper_name"].ToString();
+                   model.WllPaperType = row["img_type"].ToString();
+                   SystemWallPaperList.Add(model);
+               }
+           } 
+       }
         #endregion
 
         #region 私有方法
