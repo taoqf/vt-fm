@@ -96,20 +96,87 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-                                    <Border Name="border" BorderBrush="Yellow" CornerRadius="5" BorderThickness="3" Height="122" Width="203">
+                                    <Border Name="border" ToolTip="{Binding OnLineName}"  BorderBrush="Transparent"  BorderThickness="0" Height="122" Width="203">
                                         <Border.Background>
                                             <ImageBrush ImageSource="{Binding OnLinePreview}" Stretch="UniformToFill"/>
                                         </Border.Background>
                                     </Border>
                                     <controls:VicButtonNormal  Grid.Row="1"   Name="downLoadRun" BorderThickness="0"  Content="下 载" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30"
                                                          VerticalAlignment="Center"
-                                                         Command="{Binding DataContext.btnDownLoadCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                         Command="{Binding DataContext.btnOnLineCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                          CommandParameter="{Binding .}"/>
                                 </StackPanel>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver"  Value="True" >
+                                        <Setter Property="BorderBrush" Value="Yellow" TargetName="border"/>
+                                        <Setter Property="BorderThickness" Value="3" TargetName="border"/>
+                                        <Setter Property="CornerRadius" Value="5" TargetName="border"></Setter>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
                 </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="listboxTitle" TargetType="{x:Type ListBox}">
+        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Margin" Value="10"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border x:Name="temBd" Background="Transparent"  BorderBrush="Transparent"  BorderThickness="0">
+                            <StackPanel IsItemsHost="True" Orientation="Horizontal"  HorizontalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="BorderBrush" Value="Transparent" TargetName="temBd"></Setter>
+                            <Setter Property="Background" Value="Red"  TargetName="temBd"></Setter>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <Style x:Key="ListBoxItemTitle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Width" Value="100"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+        <Setter Property="Foreground" Value="#666666"></Setter>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" Margin="1" BorderBrush="Transparent" BorderThickness="0" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <!--<TextBlock Text="{Binding Category_Name}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>-->
+                        <Button Content="{Binding Category_Name}" Width="75"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Command="{Binding DataContext.btnOnLineByCategoryCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                         CommandParameter="{Binding .}"></Button>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" TargetName="Bd" Value="#F2F2F2"/>
+                            <Setter Property="Foreground" Value="#666666"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="#666666"/>
+                        </Trigger>
+                       
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>

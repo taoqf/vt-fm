@@ -101,6 +101,25 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
+        /// <summary>在线皮肤分类列表 </summary>
+        private ObservableCollection<OnLineCategory> _systemOnLineCategoryList;
+        public ObservableCollection<OnLineCategory> SystemOnLineCategoryList
+        {
+            get
+            {
+                if (_systemOnLineCategoryList == null)
+                    _systemOnLineCategoryList = new ObservableCollection<OnLineCategory>();
+                return _systemOnLineCategoryList;
+            }
+            set
+            {
+                if (_systemOnLineCategoryList != value)
+                {
+                    _systemOnLineCategoryList = value;
+                    RaisePropertyChanged("SystemOnLineCategoryList");
+                }
+            }
+        }
          /// <summary>N款皮肤 </summary>
         private int _skinNum;
         public int SkinNum
@@ -136,7 +155,8 @@ namespace ThemeManagerPlugin.ViewModels
                  
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
-                    GetOnLineTheme();
+                    GetOnLineCategory();
+                    
                     GetWallPaperDisplay();
                 });
             }
@@ -210,7 +230,31 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
         #endregion
+        #region 根据分类展示皮肤
+        public ICommand btnOnLineByCategoryCommand
+        {
+            get { 
+                return new RelayCommand<object>((x)=>
+                {
+                    OnLineCategory model = (OnLineCategory)x;
+                    GetOnLineTheme(model.Category_No);
+            
+            });
+            }
+        }
+        #endregion
+        #region 在线皮肤下载命令
+        public ICommand btnOnLineCommand
+        {
+            get {
+                return new RelayCommand<object>((x) =>
+                {
+                    OnLineModel model = (OnLineModel)x;
 
+                });
+            }
+        }
+        #endregion
 
         /// <summary>
         /// 获取主题文件夹中默认皮肤路径
@@ -220,7 +264,7 @@ namespace ThemeManagerPlugin.ViewModels
             /*读取配置文件中的默认皮肤路径*/
             string skinDefaultName = ConfigurationManager.AppSettings.Get("skinurl");
             if (this.SystemThemeList.Count > 0)
-            {
+            {                                                            
                 foreach (ThemeModel model in SystemThemeList)
                 {
                     if (model.SkinPath == skinDefaultName)
@@ -255,7 +299,7 @@ namespace ThemeManagerPlugin.ViewModels
                 this.SystemThemeList = new ObservableCollection<ThemeModel>(list);
             }
         }
-
+        
 
        private void GetWallPaperDisplay()
        {
@@ -363,9 +407,43 @@ namespace ThemeManagerPlugin.ViewModels
         }
         #endregion
 
-
+        #region 在线皮肤分类
+        private void GetOnLineCategory()
+        {
+            DataMessageOperation messageOp = new DataMessageOperation();
+            string channelId = string.Empty;
+            string MessageType = "MongoDataChannelService.findBusiData";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", "18");
+            contentDic.Add("configsystemid", "11");
+            contentDic.Add("modelid", "feidao-model-fd_skin_category-0002");
+            List<object> conList = new List<object>();
+            Dictionary<string, object> conDic = new Dictionary<string, object>();
+            conDic.Add("name", "fd_skin_category");
+            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+            tableConList.Add(tableConDic);
+            conDic.Add("tablecondition", tableConList);
+            conList.Add(conDic);
+            contentDic.Add("conditions", conList);
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            {
+                channelId = returnDic["DataChannelId"].ToString();
+                DataSet MenuDs = messageOp.GetData(channelId, "[\"fd_skin_category\"]");
+                DataTable dt = MenuDs.Tables["dataArray"];
+                foreach (DataRow row in dt.Rows)
+                {
+                    OnLineCategory model = new OnLineCategory();
+                    model.Category_No = row["category_no"].ToString();
+                    model.Category_Name = row["category_name"].ToString();
+                    SystemOnLineCategoryList.Add(model);
+                }
+            }
+        }
+        #endregion
         #region 在线皮肤展示
-        private void GetOnLineTheme()
+        private void GetOnLineTheme(string categoryNo)
         {
             DataMessageOperation messageOp = new DataMessageOperation();
             string channelId = string.Empty;
@@ -377,8 +455,9 @@ namespace ThemeManagerPlugin.ViewModels
             List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
             Dictionary<string, object> conDic = new Dictionary<string, object>();
             conDic.Add("name", "fd_skin");
-            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+            List<object> tableConList = new List<object>();
             Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+            tableConDic.Add("category_no",categoryNo);
             tableConList.Add(tableConDic);
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
@@ -387,7 +466,7 @@ namespace ThemeManagerPlugin.ViewModels
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {
                 channelId = returnDic["DataChannelId"].ToString();
-                DataSet MenuDs = messageOp.GetData(channelId, "[\"fd_wallpaper\"]");
+                DataSet MenuDs = messageOp.GetData(channelId, "[\"fd_skin\"]");
                 DataTable dt = MenuDs.Tables["dataArray"];
                 foreach (DataRow row in dt.Rows)
                 {
@@ -398,6 +477,9 @@ namespace ThemeManagerPlugin.ViewModels
                     model.TypeNo = row["category_no"].ToString();
                     model.OnLinePreview = previewUrl;
                     model.OnLineImgType = row["img_type"].ToString();
+                    model.FileName = row["file_name"].ToString();
+                    model.FileName = row["file_path"].ToString();
+                    model.FileType = row["file_type"].ToString();
                     SystemOnLineList.Add(model);
                 }
             }

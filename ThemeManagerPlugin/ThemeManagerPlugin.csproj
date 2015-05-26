@@ -90,6 +90,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\OnLineCategory.cs" />
     <Compile Include="Models\OnLineModel.cs" />
     <Compile Include="Models\ThemeModel.cs" />
     <Compile Include="Models\WallPaperModel.cs" />
