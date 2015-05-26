@@ -70,12 +70,18 @@
             <controls:VicTabItemNormal  Header="在线皮肤" AllowDelete="False">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"></RowDefinition>
-                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="2"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0"></StackPanel>
-                    <ListBox Name="listBoxOnLineList" Style="{DynamicResource RadioButtonOnLineListStyle}" ItemsSource="{Binding SystemWallPaperList,UpdateSourceTrigger=PropertyChanged}"  >
+                    <ListBox Name="listbox" Grid.Row="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" ItemContainerStyle="{StaticResource ListBoxItemTitle}" Style="{StaticResource listboxTitle}">
+
                     </ListBox>
+                    <Border Grid.Row="1" BorderBrush="Green" BorderThickness="1"></Border>
+                        <ScrollViewer CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+                        <ListBox Name="listBoxOnLineList" Style="{DynamicResource RadioButtonOnLineListStyle}" ItemsSource="{Binding SystemOnLineList,UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"  >
+                        </ListBox>
+                    </ScrollViewer>
                 </Grid>
             </controls:VicTabItemNormal>
             <controls:VicTabItemNormal  Header="壁纸"  AllowDelete="False">
