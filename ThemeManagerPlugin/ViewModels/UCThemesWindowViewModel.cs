@@ -64,7 +64,7 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
 
-      
+
         /// <summary>壁纸列表 </summary>
         private ObservableCollection<WallPaperModel> _systemWallPaperList;
         public ObservableCollection<WallPaperModel> SystemWallPaperList
@@ -122,7 +122,7 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
-         /// <summary>N款皮肤 </summary>
+        /// <summary>N款皮肤 </summary>
         private int _skinNum;
         public int SkinNum
         {
@@ -145,20 +145,20 @@ namespace ThemeManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand <object>((x) =>
+                return new RelayCommand<object>((x) =>
                 {
-                   
+
                     portalWindow = (Window)x;
                     stdEnd = (Storyboard)portalWindow.Resources["end"];
                     stdEnd.Completed += (c, d) =>
                     {
-                       portalWindow.Close();
+                        portalWindow.Close();
                     };
-                 
+
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
                     GetOnLineCategory();
-                    
+
                     GetWallPaperDisplay();
                 });
             }
@@ -168,7 +168,8 @@ namespace ThemeManagerPlugin.ViewModels
         {
             get
             {
-                return new RelayCommand<object>((x) => {
+                return new RelayCommand<object>((x) =>
+                {
                     DataMessageOperation pluginOp = new DataMessageOperation();
                     pluginOp.StopPlugin(x as string);
                 });
@@ -185,7 +186,7 @@ namespace ThemeManagerPlugin.ViewModels
                     //MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     //if (result == MessageBoxResult.Yes)
                     //{
-                        stdEnd.Begin();
+                    stdEnd.Begin();
                     //}
                 });
             }
@@ -200,7 +201,7 @@ namespace ThemeManagerPlugin.ViewModels
                 {
                     if (x != null)
                     {
-                        WallPaperModel wallModel = (WallPaperModel) x;
+                        WallPaperModel wallModel = (WallPaperModel)x;
                         SaveFileDialog saveFileDialog = new SaveFileDialog();
                         saveFileDialog.Title = "下载到";
                         saveFileDialog.Filter = string.Format("{0}文件|*{0}", wallModel.WllPaperType);
@@ -221,7 +222,7 @@ namespace ThemeManagerPlugin.ViewModels
                             {
                                 VicMessageBoxNormal.Show(downloadResult["ReplyAlertMessage"].ToString(), "标题");
                             }
-                            
+
                         }
                         if (path == "")  //下载其间，不下载了，直接返回
                         {
@@ -235,21 +236,23 @@ namespace ThemeManagerPlugin.ViewModels
         #region 根据分类展示皮肤
         public ICommand btnOnLineByCategoryCommand
         {
-            get { 
-                return new RelayCommand<object>((x)=>
+            get
+            {
+                return new RelayCommand<object>((x) =>
                 {
                     OnLineCategory model = (OnLineCategory)x;
                     SystemOnLineList.Clear();
                     GetOnLineTheme(model.Category_No);
-            
-            });
+
+                });
             }
         }
         #endregion
         #region 在线皮肤应用
         public ICommand btnOnLineUseCommand
         {
-            get {
+            get
+            {
                 return new RelayCommand<object>((x) =>
                 {
                     OnLineModel model = (OnLineModel)x;
@@ -260,15 +263,16 @@ namespace ThemeManagerPlugin.ViewModels
         #region 在线皮肤下载命令
         public ICommand btnOnLineDownloadCommand
         {
-            get {
+            get
+            {
                 return new RelayCommand<object>((x) =>
                 {
                     OnLineModel model = (OnLineModel)x;
                     //string serverUrl = ConfigurationManager.AppSettings["fileserverhttp"];
-                    string localityUrl = AppDomain.CurrentDomain.BaseDirectory + "theme";
+                    string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
                     Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
                     Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
-                    downloadAddress.Add("DownloadFileId",model.OnLinePreview);
+                    downloadAddress.Add("DownloadFileId", model.OnLinePreview);
                     downloadAddress.Add("DownloadToPath", localityUrl);
                     downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
                     DataMessageOperation messageOperation = new DataMessageOperation();
@@ -296,7 +300,7 @@ namespace ThemeManagerPlugin.ViewModels
             /*读取配置文件中的默认皮肤路径*/
             string skinDefaultName = ConfigurationManager.AppSettings.Get("skinurl");
             if (this.SystemThemeList.Count > 0)
-            {                                                            
+            {
                 foreach (ThemeModel model in SystemThemeList)
                 {
                     if (model.SkinPath == skinDefaultName)
@@ -331,44 +335,44 @@ namespace ThemeManagerPlugin.ViewModels
                 this.SystemThemeList = new ObservableCollection<ThemeModel>(list);
             }
         }
-        
 
-       private void GetWallPaperDisplay()
-       {
-           DataMessageOperation messageOp = new DataMessageOperation();
-           string channelId = string.Empty;
-           string MessageType = "MongoDataChannelService.findBusiData";
-           Dictionary<string, object> contentDic = new Dictionary<string, object>();
-           contentDic.Add("systemid", "18");
-           contentDic.Add("configsystemid", "11");
-           contentDic.Add("modelid", "feidao-model-fd_wallpaper-0001");
-           List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
-           Dictionary<string, object> conDic = new Dictionary<string, object>();
-           conDic.Add("name", "fd_wallpaper");
-           List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
-           Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-           tableConList.Add(tableConDic);
-           conDic.Add("tablecondition", tableConList);
-           conList.Add(conDic);
-           contentDic.Add("conditions", conList);
-           Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
-           if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
-           {
-               channelId = returnDic["DataChannelId"].ToString();
-               DataSet MenuDs = messageOp.GetData(channelId, "[\"fd_wallpaper\"]");
-               DataTable dt = MenuDs.Tables["dataArray"];
-               foreach (DataRow row in dt.Rows)
-               {
-                   string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["preview"];
-                   WallPaperModel model = new WallPaperModel();
-                   model.WallDisplay = row["display"].ToString();
-                   model.WallPreview = previewUrl;
-                   model.WllPaperName = row["wallpaper_name"].ToString();
-                   model.WllPaperType = row["img_type"].ToString();
-                   SystemWallPaperList.Add(model);
-               }
-           } 
-       }
+
+        private void GetWallPaperDisplay()
+        {
+            DataMessageOperation messageOp = new DataMessageOperation();
+            string channelId = string.Empty;
+            string MessageType = "MongoDataChannelService.findBusiData";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", "18");
+            contentDic.Add("configsystemid", "11");
+            contentDic.Add("modelid", "feidao-model-fd_wallpaper-0001");
+            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> conDic = new Dictionary<string, object>();
+            conDic.Add("name", "fd_wallpaper");
+            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+            tableConList.Add(tableConDic);
+            conDic.Add("tablecondition", tableConList);
+            conList.Add(conDic);
+            contentDic.Add("conditions", conList);
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            {
+                channelId = returnDic["DataChannelId"].ToString();
+                DataSet MenuDs = messageOp.GetData(channelId, "[\"fd_wallpaper\"]");
+                DataTable dt = MenuDs.Tables["dataArray"];
+                foreach (DataRow row in dt.Rows)
+                {
+                    string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["preview"];
+                    WallPaperModel model = new WallPaperModel();
+                    model.WallDisplay = row["display"].ToString();
+                    model.WallPreview = previewUrl;
+                    model.WllPaperName = row["wallpaper_name"].ToString();
+                    model.WllPaperType = row["img_type"].ToString();
+                    SystemWallPaperList.Add(model);
+                }
+            }
+        }
         #endregion
 
         #region 私有方法
@@ -489,7 +493,7 @@ namespace ThemeManagerPlugin.ViewModels
             conDic.Add("name", "fd_skin");
             List<object> tableConList = new List<object>();
             Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConDic.Add("category_no",categoryNo);
+            tableConDic.Add("category_no", categoryNo);
             tableConList.Add(tableConDic);
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
