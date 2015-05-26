@@ -101,10 +101,18 @@
                                             <ImageBrush ImageSource="{Binding OnLinePreview}" Stretch="UniformToFill"/>
                                         </Border.Background>
                                     </Border>
-                                    <controls:VicButtonNormal  Grid.Row="1"   Name="downLoadRun" BorderThickness="0"  Content="下 载" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30"
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <controls:VicButtonNormal BorderThickness="0"  Content="应用" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30" VerticalAlignment="Center"
+                                             Command="{Binding DataContext.btnOnLineUseCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                         CommandParameter="{Binding .}" />
+                                            <controls:VicButtonNormal Name="downLoadRun" BorderThickness="0"  Content="下 载" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30"
                                                          VerticalAlignment="Center"
-                                                         Command="{Binding DataContext.btnOnLineCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                         Command="{Binding DataContext.btnOnLineDownloadCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                          CommandParameter="{Binding .}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                   
                                 </StackPanel>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver"  Value="True" >

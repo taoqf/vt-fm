@@ -19,6 +19,8 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using Victop.Frame.DataMessageManager;
+using System.Net;
+using System.Xml;
 
 namespace ThemeManagerPlugin.ViewModels
 {
@@ -237,20 +239,50 @@ namespace ThemeManagerPlugin.ViewModels
                 return new RelayCommand<object>((x)=>
                 {
                     OnLineCategory model = (OnLineCategory)x;
+                    SystemOnLineList.Clear();
                     GetOnLineTheme(model.Category_No);
             
             });
             }
         }
         #endregion
-        #region 在线皮肤下载命令
-        public ICommand btnOnLineCommand
+        #region 在线皮肤应用
+        public ICommand btnOnLineUseCommand
         {
             get {
                 return new RelayCommand<object>((x) =>
                 {
                     OnLineModel model = (OnLineModel)x;
+                });
+            }
+        }
+        #endregion
+        #region 在线皮肤下载命令
+        public ICommand btnOnLineDownloadCommand
+        {
+            get {
+                return new RelayCommand<object>((x) =>
+                {
+                    OnLineModel model = (OnLineModel)x;
+                    //string serverUrl = ConfigurationManager.AppSettings["fileserverhttp"];
+                    string localityUrl = AppDomain.CurrentDomain.BaseDirectory + "theme";
+                    Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
+                    Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
+                    downloadAddress.Add("DownloadFileId",model.OnLinePreview);
+                    downloadAddress.Add("DownloadToPath", localityUrl);
+                    downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
+                    DataMessageOperation messageOperation = new DataMessageOperation();
+                    Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
+                                                           downloadMessageContent);
+                    if (downloadResult != null && !downloadResult["ReplyMode"].ToString().Equals("0"))
+                    {
+                        VicMessageBoxNormal.Show(downloadResult["ReplyAlertMessage"].ToString(), "标题");
+                    }
 
+                    ThemeModel themeModel = new ThemeModel();
+                    themeModel.SkinPath = @"theme\" + model.FileName + ".dll";
+                    SystemThemeList.Add(themeModel);
+                    MessageBox.Show(SystemThemeList.Count.ToString());
                 });
             }
         }
@@ -478,7 +510,7 @@ namespace ThemeManagerPlugin.ViewModels
                     model.OnLinePreview = previewUrl;
                     model.OnLineImgType = row["img_type"].ToString();
                     model.FileName = row["file_name"].ToString();
-                    model.FileName = row["file_path"].ToString();
+                    model.FilePath = row["file_path"].ToString();
                     model.FileType = row["file_type"].ToString();
                     SystemOnLineList.Add(model);
                 }
