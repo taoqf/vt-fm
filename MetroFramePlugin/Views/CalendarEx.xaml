@@ -7,7 +7,7 @@
               xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Name="userControl" 
              x:Class="MetroFramePlugin.Views.CalendarEx" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Width="405" Height="366" Loaded="UserControl_Loaded" Background="#FFF0F7FB">
+             d:DesignHeight="300" d:DesignWidth="300" Width="350" Height="300" Loaded="UserControl_Loaded" Background="#FFF0F7FB">
     <UserControl.Resources>
         <Style x:Key="ComboBoxFocusVisual">
         	<Setter Property="Control.Template">
@@ -175,7 +175,7 @@
         						</Themes:SystemDropShadowChrome>
         					</Popup>
         					<ToggleButton BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Grid.ColumnSpan="2" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource ComboBoxReadonlyToggleButton}" Foreground="{TemplateBinding Foreground}"/>
-        					<ContentPresenter TextBlock.Foreground="White" x:Name="contentPresenter" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" IsHitTestVisible="false" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" OpacityMask="{x:Null}" Margin="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        					<ContentPresenter TextBlock.Foreground="Black" x:Name="contentPresenter" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" IsHitTestVisible="false" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" OpacityMask="{x:Null}" Margin="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             
         				</Grid>
         				<ControlTemplate.Triggers>
@@ -281,7 +281,7 @@
         						</Themes:SystemDropShadowChrome>
         					</Popup>
         					<ToggleButton BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Grid.ColumnSpan="2" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Style="{DynamicResource ToggleButtonStyle1}" Grid.Column="0"/>
-        					<ContentPresenter TextBlock.Foreground="White" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" IsHitTestVisible="false" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Grid.Column="0" Visibility="Visible" Grid.ColumnSpan="2" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        					<ContentPresenter TextBlock.Foreground="Black" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" IsHitTestVisible="false" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Grid.Column="0" Visibility="Visible" Grid.ColumnSpan="2" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         				</Grid>
         				<ControlTemplate.Triggers>
         					<Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="true">
@@ -418,7 +418,7 @@
         					</VisualStateManager.VisualStateGroups>
         					<Rectangle Opacity="1" Stretch="Fill" Stroke="Black" StrokeThickness="0" Fill="{TemplateBinding Background}"/>
         					<Grid>
-        						<Path x:Name="path" Data="M282.875,231.875L282.875,240.375 288.625,236z" Fill="#FF0F71DC" HorizontalAlignment="Center" Height="13" Stretch="Fill" VerticalAlignment="Center" Width="8" Visibility="Visible" Margin="0" RenderTransformOrigin="0.5,0.5">
+        						<Path x:Name="path" Data="M282.875,231.875L282.875,240.375 288.625,236z" Fill="Black" HorizontalAlignment="Center" Height="13" Stretch="Fill" VerticalAlignment="Center" Width="8" Visibility="Visible" Margin="0" RenderTransformOrigin="0.5,0.5">
         							<Path.RenderTransform>
         								<TransformGroup>
         									<ScaleTransform/>
@@ -465,7 +465,7 @@
         					</VisualStateManager.VisualStateGroups>
         					<Rectangle Fill="Transparent" Opacity="1" Stretch="Fill" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="0"/>
         					<Grid>
-        						<Path x:Name="path" Data="M282.875,231.875 L282.875,240.375 L288.625,236 z" Fill="#FF0F71DC" HorizontalAlignment="Center" Height="13" Margin="0" Stretch="Fill" VerticalAlignment="Center" Width="8"/>
+        						<Path x:Name="path" Data="M282.875,231.875 L282.875,240.375 L288.625,236 z" Fill="Black" HorizontalAlignment="Center" Height="13" Margin="0" Stretch="Fill" VerticalAlignment="Center" Width="8"/>
         					</Grid>
         				</Grid>
         				<ControlTemplate.Triggers>
@@ -484,7 +484,7 @@
         	<Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
         	<Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
         	<Setter Property="BorderThickness" Value="1"/>
-        	<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        	
         	<Setter Property="HorizontalContentAlignment" Value="Center"/>
         	<Setter Property="VerticalContentAlignment" Value="Center"/>
         	<Setter Property="Padding" Value="1"/>
@@ -509,35 +509,33 @@
         		</Setter.Value>
         	</Setter>
         </Style>
-     
-
     </UserControl.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="46"/>
+			<RowDefinition Height="35"/>
 			<RowDefinition/>
 		</Grid.RowDefinitions>
 		<Grid x:Name="grid1">
-			<Grid.Background>
+			<!--<Grid.Background>
 				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-					<GradientStop Color="#FF369DE4" Offset="0"/>
+					<GradientStop Color="White" Offset="0"/>
 					<GradientStop Color="#FF76B3DE" Offset="1"/>
 				</LinearGradientBrush>
-			</Grid.Background>
+			</Grid.Background>-->
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="100" />
 				<ColumnDefinition  Width="112"/>
 				<ColumnDefinition Width="150" />
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
-			<StackPanel Height="46" VerticalAlignment="Top" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="20,0,0,0">
+			<StackPanel Height="35" VerticalAlignment="Top" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,0">
 				<Button x:Name="PART_PreviousButton" Focusable="False" Height="26" Margin="0" Style="{DynamicResource PART_PreviousButton}" RenderTransformOrigin="5.5,1.077" VerticalAlignment="Center" Click="PART_PreviousButton_Click" Background="Transparent" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" Width="26" />
-				<ComboBox x:Name="cbb_year" HorizontalAlignment="Left" Margin="0,10" VerticalAlignment="Center" Width="60.5" Background="Transparent" BorderThickness="0" SelectedIndex="0" IsSynchronizedWithCurrentItem="True" Height="26" FontSize="17.333" FontFamily="Microsoft YaHei" Style="{DynamicResource ComboBoxStyle}" Foreground="Black" BorderBrush="{x:Null}" Cursor="Hand"/>
-				<TextBlock TextWrapping="Wrap" Text="一" FontSize="17.333" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0"/>
-				<ComboBox x:Name="cbb_month" HorizontalAlignment="Left" VerticalAlignment="Center" Width="35" BorderBrush="{x:Null}" Height="26" FontSize="17.333" Background="Transparent" Style="{DynamicResource CBB_MonthStyle}" MaxDropDownHeight="300" Foreground="Black" Cursor="Hand" Margin="0,10"/>
+				<ComboBox x:Name="cbb_year" HorizontalAlignment="Left" Margin="0,10" VerticalAlignment="Center" Width="60.5" Background="Transparent" BorderThickness="0" SelectedIndex="0" IsSynchronizedWithCurrentItem="True" Height="26" FontSize="14" FontFamily="Microsoft YaHei" Style="{DynamicResource ComboBoxStyle}" Foreground="Black" BorderBrush="{x:Null}" Cursor="Hand"/>
+				<!--<TextBlock TextWrapping="Wrap" Text="一" FontSize="17.333" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0"/>-->
+				<ComboBox x:Name="cbb_month" HorizontalAlignment="Left" VerticalAlignment="Center" Width="35" BorderBrush="{x:Null}" Height="26" FontSize="14" Background="Transparent" Style="{DynamicResource CBB_MonthStyle}" MaxDropDownHeight="300" Foreground="Black" Cursor="Hand" Margin="0,10"/>
 				<Button x:Name="PART_NextButton" Focusable="False" HorizontalAlignment="Left" Height="26"  Width="26" Margin="0" Style="{DynamicResource PART_NextButtonStyle}" VerticalAlignment="Center" Click="PART_NextButton_Click" Background="#FF0F71DC"/>
 			</StackPanel>
-			<Button x:Name="btn_today" Content="返回今天" Grid.Column="2" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="75" Background="White" Height="26" FontSize="13.333" Style="{DynamicResource ButtonStyle}" Click="btn_today_Click" Foreground="{Binding Background, ElementName=grid1}" BorderBrush="{x:Null}"/>
+			<Button x:Name="btn_today" Content="返回今天" Grid.Column="2" HorizontalAlignment="Center"   Margin="0" VerticalAlignment="Center" Width="75" Background="White" Height="26" FontSize="13.333" Style="{DynamicResource ButtonStyle}" Click="btn_today_Click" Foreground="Black" BorderBrush="{x:Null}"/>
 		</Grid>
 		<Grid x:Name="grid" Grid.Row="1">
 			<Grid.RowDefinitions>
