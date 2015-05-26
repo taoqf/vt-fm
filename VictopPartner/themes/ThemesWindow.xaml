@@ -151,7 +151,31 @@
         </Setter>
 
     </Style>
+    <Style TargetType="Button" x:Key="btnTitleStyle">
+        <Setter Property="Foreground" Value="#666666"></Setter>
+        <Setter Property="Width" Value="100"></Setter>
+        <Setter Property="Height" Value="50"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border" CornerRadius="8">
+                        <TextBlock Name="txtBlock" VerticalAlignment="Center"  HorizontalAlignment="Center" 
+ Text="{TemplateBinding Button.Content}"></TextBlock>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#12311516"></Setter>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#F2F2F2"></Setter>
+                            <Setter Property="BorderThickness" TargetName="border" Value="2"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
 
+                </ControlTemplate>
+            </Setter.Value>
+
+        </Setter>
+
+    </Style>
     <Style x:Key="ListBoxItemTitle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Height" Value="40"/>
@@ -166,24 +190,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Border x:Name="Bd" Margin="1" BorderBrush="Transparent" BorderThickness="0" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-                        <!--<TextBlock Text="{Binding Category_Name}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>-->
-                        <Button Content="{Binding Category_Name}" Width="75"
+                        
+                        <Button Style="{StaticResource btnTitleStyle}" Content="{Binding Category_Name}" Width="75"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"
                                 Command="{Binding DataContext.btnOnLineByCategoryCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                          CommandParameter="{Binding .}"></Button>
                     </Border>
 
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" TargetName="Bd" Value="#F2F2F2"/>
-                            <Setter Property="Foreground" Value="#666666"/>
-                        </Trigger>
-
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="#666666"/>
-                        </Trigger>
-                       
-                    </ControlTemplate.Triggers>
+                  
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
