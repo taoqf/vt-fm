@@ -430,7 +430,7 @@ namespace MetroFramePlugin.ViewModels
                     OverlayWindow overlayWin = new OverlayWindow();
                     OverlayWindow.VicTabCtrl = mainTabControl;
                     overlayWin.Show();
-                   
+
                     UserLogin();
 
                 });
@@ -584,7 +584,7 @@ namespace MetroFramePlugin.ViewModels
                     isChangeUser = true; //切换用户时，从服务器拉取菜单必要操作
                     UserLogin();
                     DrawingPanelArea();
-                   
+
                 });
             }
         }
@@ -642,7 +642,7 @@ namespace MetroFramePlugin.ViewModels
                     MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
                     {
-                        
+
                         DataMessageOperation dataMsgOp = new DataMessageOperation();
                         dataMsgOp.RemoveDataLock();
                         mainWindow.Close();
@@ -696,7 +696,7 @@ namespace MetroFramePlugin.ViewModels
                 UCPluginContainer pluginContainer = new UCPluginContainer();
                 TabItemList[0].Content = pluginContainer;
                 TabItemList[0].Header = "功能列表";
-              
+
             }
 
             MenuModel menuModel = (MenuModel)x;
@@ -1565,7 +1565,7 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         /// <summary>
-        /// 在解锁状态下不能删除，因为拖动把它屏蔽了，单击“删除”某个显示插件
+        /// 在解锁状态下不能删除，因为拖动把它屏蔽了，单击“编辑”后再点插件上的“删除”某个显示插件
         /// </summary>
         public ICommand BtnDelPluginCommand
         {
@@ -1573,28 +1573,31 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    VicButtonNormal btn = (VicButtonNormal)x;
-                    DockPanel parentPanel = GetParentObject<DockPanel>(btn);
-                    ListBoxItem nowSelectDelPlugin = GetParentObject<ListBoxItem>(btn);
-                    MenuModel nowPlugin = (MenuModel)nowSelectDelPlugin.DataContext;
-                    string eidtAreaId = parentPanel.Uid;//得到当前选中的区域ID
-                    AreaMenu NowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(eidtAreaId));
-                    MenuModel areaPlugin = new MenuModel();
-                    areaPlugin = NowArea.PluginList.FirstOrDefault(it => it.MenuName.Equals(nowPlugin.MenuName));
-                    NowArea.PluginList.Remove(areaPlugin);
-                    WriteFile();
-                    //重新改变插件显示的数据源，还是编辑状态，想还原，单击大中小图标
-                    foreach (DockPanel panel in _panel.Children)
+                    if (VicMessageBoxNormal.Show("确定要删除吗？", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        if (panel.Uid == selectAreaId)
+                        VicButtonNormal btn = (VicButtonNormal)x;
+                        DockPanel parentPanel = GetParentObject<DockPanel>(btn);
+                        ListBoxItem nowSelectDelPlugin = GetParentObject<ListBoxItem>(btn);
+                        MenuModel nowPlugin = (MenuModel)nowSelectDelPlugin.DataContext;
+                        string eidtAreaId = parentPanel.Uid; //得到当前选中的区域ID
+                        AreaMenu NowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(eidtAreaId));
+                        MenuModel areaPlugin = new MenuModel();
+                        areaPlugin = NowArea.PluginList.FirstOrDefault(it => it.MenuName.Equals(nowPlugin.MenuName));
+                        NowArea.PluginList.Remove(areaPlugin);
+                        WriteFile();
+                        //重新改变插件显示的数据源，还是编辑状态，想还原，单击大中小图标
+                        foreach (DockPanel panel in _panel.Children)
                         {
-                            WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
-                            if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
+                            if (panel.Uid == selectAreaId)
                             {
-                                ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                                pluginArea.ItemsSource = null;
-                                pluginArea.ItemsSource = NowArea.PluginList;
-                                break;
+                                WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
+                                if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
+                                {
+                                    ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                                    pluginArea.ItemsSource = null;
+                                    pluginArea.ItemsSource = NowArea.PluginList;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -1803,11 +1806,12 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         public ICommand SavePersonalFavorites
         {
-            get { 
-                 return new RelayCommand(() =>
-                     {
-                         SavePersonMenu();
-                     });
+            get
+            {
+                return new RelayCommand(() =>
+                    {
+                        SavePersonMenu();
+                    });
             }
         }
         /// <summary>
@@ -1821,7 +1825,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     ShowCalendarWindow aa = new ShowCalendarWindow();
                     aa.Show();
-                    
+
                 });
             }
         }
@@ -1874,7 +1878,7 @@ namespace MetroFramePlugin.ViewModels
                 _title.Uid = NewArea[i].AreaID;
                 DockPanel.SetDock(_title, Dock.Top);
                 _title.ParamsModel.BtnDeblockingClick += BtnClick;
-               // _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;//因为初始默认了锁定，所以初始绘制去掉拖动
+                // _title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;//因为初始默认了锁定，所以初始绘制去掉拖动
                 _title.MenuItemIcoClick += MenuItemClick;
                 _title.ParamsModel.TextChangedClick += ParamsModel_TextChangedClick;
                 _title.SecondMenuItemIcoClick += SecondMenuItemClick;
@@ -2255,6 +2259,7 @@ namespace MetroFramePlugin.ViewModels
         private void SecondMenuItemClick(object sender, RoutedEventArgs e)
         {
             string res = ((VicMenuItemNormal)sender).Tag.ToString();
+            VicMenuItemNormal edit = sender as VicMenuItemNormal;
             UnitAreaSeting areaParent = (((((((VicMenuItemNormal)sender).Parent as VicMenuItemNormal).Parent as VicMenuNormal).Parent as DockPanel)).Parent as Grid).Parent as UnitAreaSeting;
             //重命名区域 
             if (res.Equals("RenName"))
@@ -2266,39 +2271,75 @@ namespace MetroFramePlugin.ViewModels
             {
                 if (areaParent != null)
                 {
-                    foreach (DockPanel panel in _panel.Children)
+                    if (edit.Header.Equals("编辑"))
                     {
-                        if (panel.Uid == areaParent.Uid)
+                        foreach (DockPanel panel in _panel.Children)
                         {
-                            WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
-                            if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
+                            if (panel.Uid == areaParent.Uid)
                             {
-                                ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
-                                AreaMenu NowArea = new AreaMenu();
-                                NowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
-
-                                if (NowArea.MenuForm == "normal")
+                                WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
+                                if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
                                 {
-                                    pluginArea.Style = area.FindResource("PopupMenuDelListPluginStyle") as Style;
-                                }
-                                else if (NowArea.MenuForm == "large")
-                                {
-                                    pluginArea.Style = area.FindResource("PopupMenuDelListLargePluginStyle") as Style;
-                                }
-                                else if (NowArea.MenuForm == "small")
-                                {
-                                    pluginArea.Style = area.FindResource("PopupMenuDelListSmallPluginStyle") as Style;
-                                }
+                                    ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                                    AreaMenu NowArea = new AreaMenu();
+                                    NowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
 
-
+                                    if (NowArea.MenuForm == "normal")
+                                    {
+                                        pluginArea.Style = area.FindResource("PopupMenuDelListPluginStyle") as Style;
+                                    }
+                                    else if (NowArea.MenuForm == "large")
+                                    {
+                                        pluginArea.Style = area.FindResource("PopupMenuDelListLargePluginStyle") as Style;
+                                    }
+                                    else if (NowArea.MenuForm == "small")
+                                    {
+                                        pluginArea.Style = area.FindResource("PopupMenuDelListSmallPluginStyle") as Style;
+                                    }
+                                }
+                                else
+                                {
+                                    VicMessageBoxNormal.Show("当前没有要编辑的插件", "消息提示框");
+                                }
+                                break;//找到当前区域后直接跳出循环
                             }
-                            else
-                            {
-                                VicMessageBoxNormal.Show("当前没有要编辑的插件", "消息提示框");
-                            }
-
                         }
+                        edit.Header = "编辑完成";//单击“编辑”后变成“编辑完成”
+                    }
+                    else if (edit.Header.Equals("编辑完成"))
+                    {
+                        foreach (DockPanel panel in _panel.Children)
+                        {
+                            if (panel.Uid == areaParent.Uid)
+                            {
+                                WrapPanel wrapPanelArea = GetChildObject<WrapPanel>(panel, panel.Uid);
+                                if (wrapPanelArea != null && wrapPanelArea.Children.Count == 2)
+                                {
+                                    ListBox pluginArea = wrapPanelArea.Children[0] as ListBox;
+                                    AreaMenu NowArea = new AreaMenu();
+                                    NowArea = NewArea.FirstOrDefault(it => it.AreaID.Equals(areaParent.Uid));
 
+                                    if (NowArea.MenuForm == "normal")
+                                    {
+                                        pluginArea.Style = area.FindResource("MetroListBoxFourthMenuListStyle") as Style;
+                                    }
+                                    else if (NowArea.MenuForm == "large")
+                                    {
+                                        pluginArea.Style = area.FindResource("LargeListBoxFourthMenuListStyle") as Style;
+                                    }
+                                    else if (NowArea.MenuForm == "small")
+                                    {
+                                        pluginArea.Style = area.FindResource("SmallListBoxFourthMenuListStyle") as Style;
+                                    }
+                                }
+                                else
+                                {
+                                    VicMessageBoxNormal.Show("当前没有要编辑的插件", "消息提示框");
+                                }
+                                break;//找到当前区域后直接跳出循环
+                            }
+                        }
+                        edit.Header = "编辑";//单击“编辑完成”后变成“编辑”
                     }
                 }
 
@@ -2580,7 +2621,7 @@ namespace MetroFramePlugin.ViewModels
                 contentDic1.Add("DataChannelId", channelId);
                 Dictionary<string, object> resultDic = messageOp.SendSyncMessage(MessageType1, contentDic1, "JSON");
 
-               
+
                 if (resultDic != null && !resultDic["ReplyMode"].ToString().Equals("0"))
                 {
                     Dictionary<string, object> replyContent = new Dictionary<string, object>();
