@@ -82,8 +82,26 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
-
-        /// <summary>N款皮肤 </summary>
+        /// <summary>在线皮肤列表</summary>
+        private ObservableCollection<OnLineModel> _systemOnLineList;
+        public ObservableCollection<OnLineModel> SystemOnLineList
+        {
+            get
+            {
+                if (_systemOnLineList == null)
+                    _systemOnLineList = new ObservableCollection<OnLineModel>();
+                return _systemOnLineList;
+            }
+            set
+            {
+                if (_systemOnLineList != value)
+                {
+                    _systemOnLineList = value;
+                    RaisePropertyChanged("SystemOnLineList");
+                }
+            }
+        }
+         /// <summary>N款皮肤 </summary>
         private int _skinNum;
         public int SkinNum
         {
@@ -118,6 +136,7 @@ namespace ThemeManagerPlugin.ViewModels
                  
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
+                    GetOnLineTheme();
                     GetWallPaperDisplay();
                 });
             }
@@ -340,6 +359,47 @@ namespace ThemeManagerPlugin.ViewModels
                         }
                     }
                 });
+            }
+        }
+        #endregion
+
+
+        #region 在线皮肤展示
+        private void GetOnLineTheme()
+        {
+            DataMessageOperation messageOp = new DataMessageOperation();
+            string channelId = string.Empty;
+            string MessageType = "MongoDataChannelService.findBusiData";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", "18");
+            contentDic.Add("configsystemid", "11");
+            contentDic.Add("modelid", "feidao-model-fd_skin-0001");
+            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> conDic = new Dictionary<string, object>();
+            conDic.Add("name", "fd_skin");
+            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+            tableConList.Add(tableConDic);
+            conDic.Add("tablecondition", tableConList);
+            conList.Add(conDic);
+            contentDic.Add("conditions", conList);
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            {
+                channelId = returnDic["DataChannelId"].ToString();
+                DataSet MenuDs = messageOp.GetData(channelId, "[\"fd_wallpaper\"]");
+                DataTable dt = MenuDs.Tables["dataArray"];
+                foreach (DataRow row in dt.Rows)
+                {
+                    string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["img_url"];
+                    OnLineModel model = new OnLineModel();
+                    model.OnLineNo = row["skin_no"].ToString();
+                    model.OnLineName = row["skin_name"].ToString();
+                    model.TypeNo = row["category_no"].ToString();
+                    model.OnLinePreview = previewUrl;
+                    model.OnLineImgType = row["img_type"].ToString();
+                    SystemOnLineList.Add(model);
+                }
             }
         }
         #endregion

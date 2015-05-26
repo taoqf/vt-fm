@@ -74,7 +74,46 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+<!--在线皮肤样式开始-->
+    <Style  x:Key="RadioButtonOnLineListStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"   Value="Auto"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <WrapPanel Orientation="Horizontal" IsItemsHost="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Margin"  Value="10"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+                                    <Border Name="border" BorderBrush="Yellow" CornerRadius="5" BorderThickness="3" Height="122" Width="203">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="{Binding OnLinePreview}" Stretch="UniformToFill"/>
+                                        </Border.Background>
+                                    </Border>
+                                    <controls:VicButtonNormal  Grid.Row="1"   Name="downLoadRun" BorderThickness="0"  Content="下 载" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30"
+                                                         VerticalAlignment="Center"
+                                                         Command="{Binding DataContext.btnDownLoadCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                         CommandParameter="{Binding .}"/>
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--在线皮肤样式结束-->
 <!--壁纸样式控制开始-->
     <Style  x:Key="RadioButtonWallPaperListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="HorizontalAlignment" Value="Left" />
