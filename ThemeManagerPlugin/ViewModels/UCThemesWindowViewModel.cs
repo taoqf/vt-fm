@@ -158,6 +158,7 @@ namespace ThemeManagerPlugin.ViewModels
 
         #endregion
 
+        #region 命令
         #region 窗体加载命令
         /// <summary>窗体加载命令 </summary>
         public ICommand gridMainLoadedCommand
@@ -177,10 +178,7 @@ namespace ThemeManagerPlugin.ViewModels
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
                     GetOnLineCategory();
-
                     GetWallPaperCategory();
-                    GetWallPaperDisplay();
-                   
                 });
             }
         }
@@ -197,6 +195,7 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
 
+          #endregion
         #region 窗体关闭命令
         public ICommand btnCloseClickCommand
         {
@@ -213,6 +212,32 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
         #endregion
+
+
+        #region 在主题列表选中主题皮肤触发命令
+        public ICommand listBoxSystemThemeListSelectionChangedCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    if (SelectedListBoxItem != null)
+                    {
+                        try
+                        {
+                            ChangeFrameWorkTheme();
+                            this.UpdateDefaultSkin();
+                        }
+                        catch (Exception ex)
+                        {
+                            VicMessageBoxNormal.Show("Change error: " + ex.Message);
+                        }
+                    }
+                });
+            }
+        }
+        #endregion
+
         #region 单击下载壁纸命令
         public ICommand btnDownLoadCommand
         {
@@ -254,6 +279,7 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
         #endregion
+
         #region 根据所选分类展示皮肤
         public ICommand btnOnLineByCategoryCommand
         {
@@ -313,131 +339,20 @@ namespace ThemeManagerPlugin.ViewModels
         }
         #endregion
 
-        /// <summary>
-        /// 获取主题文件夹中默认皮肤路径
-        /// </summary>
-        private void GetDefaultThemeSkin()
+        #region  选择不同壁纸分类展示相关壁纸列表
+        public ICommand WallPaperCategoryListSelectionChangedCommand
         {
-            /*读取配置文件中的默认皮肤路径*/
-            string skinDefaultName = ConfigurationManager.AppSettings.Get("skinurl");
-            if (this.SystemThemeList.Count > 0)
+            get
             {
-                foreach (ThemeModel model in SystemThemeList)
+                return new RelayCommand<object>((x) =>
                 {
-                    if (model.SkinPath == skinDefaultName)
-                    {
-                        SelectedListBoxItem = model;
-                        break;
-                    }
-                }
+                    WallPaperCategory model = (WallPaperCategory)x;
+                    SystemWallPaperList.Clear();
+                    GetWallPaperDisplay(model.Category_No);
+                });
             }
         }
-
-        /// <summary>
-        /// 获取主题文件夹中皮肤个数和皮肤列表
-        /// </summary>
-        private void GetThemeSkinNum()
-        {
-            string[] files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "theme", "*Skin.dll");
-            SkinNum = files.Count();
-            for (int j = 0; j < files.Count(); j++)
-            {
-                string skinNamespace = Path.GetFileNameWithoutExtension(files[j]);//得到皮肤命名空间
-                ThemeModel model = new ThemeModel();
-                this.ReflectorInfo(files[j], skinNamespace + ".Skin", model);
-                model.SkinPath = @"theme\" + skinNamespace + ".dll";
-                SystemThemeList.Add(model);
-            }
-
-            if (this.SystemThemeList.Count > 0)
-            {
-                List<ThemeModel> list = this.SystemThemeList.ToList();
-                list.Sort();
-                this.SystemThemeList = new ObservableCollection<ThemeModel>(list);
-            }
-        }
-
-
-
-
-        /// <summary>
-        /// 壁纸分类展示
-        /// </summary>
-        private void GetWallPaperCategory()
-        {
-            DataMessageOperation messageOp = new DataMessageOperation();
-            string channelId = string.Empty;
-            string MessageType = "MongoDataChannelService.findBusiData";
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "18");
-            contentDic.Add("configsystemid", "11");
-            contentDic.Add("modelid", "feidao-model-fd_wallpaper_category-0001");
-            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> conDic = new Dictionary<string, object>();
-            conDic.Add("name", "fd_wallpaper_category");
-            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConList.Add(tableConDic);
-            conDic.Add("tablecondition", tableConList);
-            conList.Add(conDic);
-            contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
-            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
-            {
-                channelId = returnDic["DataChannelId"].ToString();
-                DataSet MenuDs = messageOp.GetData(channelId, "[\"fd_wallpaper_category\"]");
-                DataTable dt = MenuDs.Tables["dataArray"];
-                foreach (DataRow row in dt.Rows)
-                {
-                    WallPaperCategory model = new WallPaperCategory();
-                    model.Category_No = row["category_no"].ToString();
-                    model.Category_Name = row["category_name"].ToString();
-                    WallPaperCategoryList.Add(model);
-                }
-            }
-        }
-        /// <summary>
-        /// 壁纸列表展示
-        /// </summary>
-        private void GetWallPaperDisplay()
-        {
-            DataMessageOperation messageOp = new DataMessageOperation();
-            string channelId = string.Empty;
-            string MessageType = "MongoDataChannelService.findBusiData";
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "18");
-            contentDic.Add("configsystemid", "11");
-            contentDic.Add("modelid", "feidao-model-fd_wallpaper-0001");
-            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> conDic = new Dictionary<string, object>();
-            conDic.Add("name", "fd_wallpaper");
-            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConList.Add(tableConDic);
-            conDic.Add("tablecondition", tableConList);
-            conList.Add(conDic);
-            contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
-            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
-            {
-                channelId = returnDic["DataChannelId"].ToString();
-                DataSet MenuDs = messageOp.GetData(channelId, "[\"fd_wallpaper\"]");
-                DataTable dt = MenuDs.Tables["dataArray"];
-                foreach (DataRow row in dt.Rows)
-                {
-                    string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["preview"];
-                    WallPaperModel model = new WallPaperModel();
-                    model.WallDisplay = row["display"].ToString();
-                    model.WallPreview = previewUrl;
-                    model.WllPaperName = row["wallpaper_name"].ToString();
-                    model.WllPaperType = row["img_type"].ToString();
-                    SystemWallPaperList.Add(model);
-                }
-            }
-        }
-
-
-
+        #endregion
         #endregion
 
         #region 私有方法
@@ -482,31 +397,128 @@ namespace ThemeManagerPlugin.ViewModels
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
         }
-        #endregion
-
-        #region 在主题列表选中主题皮肤触发命令
-        public ICommand listBoxSystemThemeListSelectionChangedCommand
+      
+        /// <summary>
+        /// 获取主题文件夹中默认皮肤路径
+        /// </summary>
+        private void GetDefaultThemeSkin()
         {
-            get
+            /*读取配置文件中的默认皮肤路径*/
+            string skinDefaultName = ConfigurationManager.AppSettings.Get("skinurl");
+            if (this.SystemThemeList.Count > 0)
             {
-                return new RelayCommand(() =>
+                foreach (ThemeModel model in SystemThemeList)
                 {
-                    if (SelectedListBoxItem != null)
+                    if (model.SkinPath == skinDefaultName)
                     {
-                        try
-                        {
-                            ChangeFrameWorkTheme();
-                            this.UpdateDefaultSkin();
-                        }
-                        catch (Exception ex)
-                        {
-                            VicMessageBoxNormal.Show("Change error: " + ex.Message);
-                        }
+                        SelectedListBoxItem = model;
+                        break;
                     }
-                });
+                }
             }
         }
-        #endregion
+
+        /// <summary>
+        /// 获取主题文件夹中皮肤个数和皮肤列表
+        /// </summary>
+        private void GetThemeSkinNum()
+        {
+            string[] files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory + "theme", "*Skin.dll");
+            SkinNum = files.Count();
+            for (int j = 0; j < files.Count(); j++)
+            {
+                string skinNamespace = Path.GetFileNameWithoutExtension(files[j]);//得到皮肤命名空间
+                ThemeModel model = new ThemeModel();
+                this.ReflectorInfo(files[j], skinNamespace + ".Skin", model);
+                model.SkinPath = @"theme\" + skinNamespace + ".dll";
+                SystemThemeList.Add(model);
+            }
+
+            if (this.SystemThemeList.Count > 0)
+            {
+                List<ThemeModel> list = this.SystemThemeList.ToList();
+                list.Sort();
+                this.SystemThemeList = new ObservableCollection<ThemeModel>(list);
+            }
+        }
+
+        /// <summary>
+        /// 壁纸分类展示
+        /// </summary>
+        private void GetWallPaperCategory()
+        {
+            DataMessageOperation messageOp = new DataMessageOperation();
+            string channelId = string.Empty;
+            string MessageType = "MongoDataChannelService.findBusiData";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", "18");
+            contentDic.Add("configsystemid", "11");
+            contentDic.Add("modelid", "feidao-model-fd_wallpaper_category-0001");
+            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> conDic = new Dictionary<string, object>();
+            conDic.Add("name", "fd_wallpaper_category");
+            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+            tableConList.Add(tableConDic);
+            conDic.Add("tablecondition", tableConList);
+            conList.Add(conDic);
+            contentDic.Add("conditions", conList);
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            {
+                channelId = returnDic["DataChannelId"].ToString();
+                DataSet MenuDs = messageOp.GetData(channelId, "[\"fd_wallpaper_category\"]");
+                DataTable dt = MenuDs.Tables["dataArray"];
+                foreach (DataRow row in dt.Rows)
+                {
+                    WallPaperCategory model = new WallPaperCategory();
+                    model.Category_No = row["category_no"].ToString();
+                    model.Category_Name = row["category_name"].ToString();
+                    WallPaperCategoryList.Add(model);
+                }
+            }
+        }
+        /// <summary>
+        /// 壁纸列表展示
+        /// </summary>
+        private void GetWallPaperDisplay(string categoryNo)
+        {
+            DataMessageOperation messageOp = new DataMessageOperation();
+            string channelId = string.Empty;
+            string MessageType = "MongoDataChannelService.findBusiData";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", "18");
+            contentDic.Add("configsystemid", "11");
+            contentDic.Add("modelid", "feidao-model-fd_wallpaper-0001");
+            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> conDic = new Dictionary<string, object>();
+            conDic.Add("name", "fd_wallpaper");
+            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+            tableConDic.Add("category_no", categoryNo);
+            tableConList.Add(tableConDic);
+            conDic.Add("tablecondition", tableConList);
+            conList.Add(conDic);
+            contentDic.Add("conditions", conList);
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            {
+                channelId = returnDic["DataChannelId"].ToString();
+                DataSet MenuDs = messageOp.GetData(channelId, "[\"fd_wallpaper\"]");
+                DataTable dt = MenuDs.Tables["dataArray"];
+                foreach (DataRow row in dt.Rows)
+                {
+                    string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["preview"];
+                    WallPaperModel model = new WallPaperModel();
+                    model.WallDisplay = row["display"].ToString();
+                    model.WallPreview = previewUrl;
+                    model.WllPaperName = row["wallpaper_name"].ToString();
+                    model.WllPaperType = row["img_type"].ToString();
+                    SystemWallPaperList.Add(model);
+                }
+            }
+        }
+
 
         #region 在线皮肤分类
         private void GetOnLineCategory()
@@ -585,6 +597,7 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
+        #endregion
         #endregion
     }
 }
