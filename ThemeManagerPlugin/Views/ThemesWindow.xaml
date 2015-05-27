@@ -46,7 +46,6 @@
                         <ColumnDefinition Width="218*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-
                         <RowDefinition RowDefinition.Height="30"/>
                         <RowDefinition RowDefinition.Height="*"/>
                     </Grid.RowDefinitions>
@@ -74,13 +73,10 @@
                         <RowDefinition Height="2"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <ListBox Name="listbox" Grid.Row="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" ItemContainerStyle="{StaticResource ListBoxItemTitle}" Style="{StaticResource listboxTitle}">
-
-                    </ListBox>
+                    <ListBox Name="listbox" Grid.Row="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" ItemContainerStyle="{StaticResource ListBoxItemTitle}" Style="{StaticResource listboxTitle}"/>
                     <Border Grid.Row="1" BorderBrush="Green" BorderThickness="1"></Border>
-                        <ScrollViewer CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
-                        <ListBox Name="listBoxOnLineList" Style="{DynamicResource RadioButtonOnLineListStyle}" ItemsSource="{Binding SystemOnLineList,UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"  >
-                        </ListBox>
+                    <ScrollViewer CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+                        <ListBox Name="listBoxOnLineList" Style="{DynamicResource RadioButtonOnLineListStyle}" ItemsSource="{Binding SystemOnLineList,UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"/>                       
                     </ScrollViewer>
                 </Grid>
             </controls:VicTabItemNormal>
@@ -90,10 +86,16 @@
                         <RowDefinition Height="40"></RowDefinition>
                         <RowDefinition Height="auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <ListBox Name="WallPaperType" ItemsSource="{Binding WallPaperCategoryList,UpdateSourceTrigger=PropertyChanged}" ItemContainerStyle="{StaticResource ListBoxItemTitle}" Style="{StaticResource listboxTitle}"/>
-                <ScrollViewer  CanContentScroll="True"  Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
-                    <ListBox Name="listBoxWallList"     Style="{DynamicResource RadioButtonWallPaperListStyle}" ItemsSource="{Binding SystemWallPaperList,UpdateSourceTrigger=PropertyChanged}"/>
-                </ScrollViewer>
+                    <ListBox Name="WallPaperType" SelectedIndex="0" ItemsSource="{Binding WallPaperCategoryList,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource RadioButtonWallPaperCategoryListStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding WallPaperCategoryListSelectionChangedCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+                    <ScrollViewer  CanContentScroll="True"  Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+                        <ListBox Name="listBoxWallList" Style="{DynamicResource RadioButtonWallPaperListStyle}" ItemsSource="{Binding SystemWallPaperList,UpdateSourceTrigger=PropertyChanged}"/>
+                    </ScrollViewer>
                 </Grid>
             </controls:VicTabItemNormal>
         </controls:VicTabControlNormal>

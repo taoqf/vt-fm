@@ -64,7 +64,6 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
 
-
         /// <summary>壁纸列表 </summary>
         private ObservableCollection<WallPaperModel> _systemWallPaperList;
         public ObservableCollection<WallPaperModel> SystemWallPaperList
@@ -84,14 +83,14 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
-        /// <summary>在线皮肤分类列表 </summary>
-        private ObservableCollection<OnLineCategory> wallPaperCategoryList;
-        public ObservableCollection<OnLineCategory> WallPaperCategoryList
+        /// <summary>壁纸分类列表 </summary>
+        private ObservableCollection<WallPaperCategory> wallPaperCategoryList;
+        public ObservableCollection<WallPaperCategory> WallPaperCategoryList
         {
             get
             {
                 if (wallPaperCategoryList == null)
-                    wallPaperCategoryList = new ObservableCollection<OnLineCategory>();
+                    wallPaperCategoryList = new ObservableCollection<WallPaperCategory>();
                 return wallPaperCategoryList;
             }
             set
@@ -179,7 +178,9 @@ namespace ThemeManagerPlugin.ViewModels
                     GetDefaultThemeSkin();
                     GetOnLineCategory();
 
+                    GetWallPaperCategory();
                     GetWallPaperDisplay();
+                   
                 });
             }
         }
@@ -253,7 +254,7 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
         #endregion
-        #region 根据分类展示皮肤
+        #region 根据所选分类展示皮肤
         public ICommand btnOnLineByCategoryCommand
         {
             get
@@ -357,6 +358,47 @@ namespace ThemeManagerPlugin.ViewModels
         }
 
 
+
+
+        /// <summary>
+        /// 壁纸分类展示
+        /// </summary>
+        private void GetWallPaperCategory()
+        {
+            DataMessageOperation messageOp = new DataMessageOperation();
+            string channelId = string.Empty;
+            string MessageType = "MongoDataChannelService.findBusiData";
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", "18");
+            contentDic.Add("configsystemid", "11");
+            contentDic.Add("modelid", "feidao-model-fd_wallpaper_category-0001");
+            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> conDic = new Dictionary<string, object>();
+            conDic.Add("name", "fd_wallpaper_category");
+            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
+            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
+            tableConList.Add(tableConDic);
+            conDic.Add("tablecondition", tableConList);
+            conList.Add(conDic);
+            contentDic.Add("conditions", conList);
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            {
+                channelId = returnDic["DataChannelId"].ToString();
+                DataSet MenuDs = messageOp.GetData(channelId, "[\"fd_wallpaper_category\"]");
+                DataTable dt = MenuDs.Tables["dataArray"];
+                foreach (DataRow row in dt.Rows)
+                {
+                    WallPaperCategory model = new WallPaperCategory();
+                    model.Category_No = row["category_no"].ToString();
+                    model.Category_Name = row["category_name"].ToString();
+                    WallPaperCategoryList.Add(model);
+                }
+            }
+        }
+        /// <summary>
+        /// 壁纸列表展示
+        /// </summary>
         private void GetWallPaperDisplay()
         {
             DataMessageOperation messageOp = new DataMessageOperation();
@@ -393,6 +435,9 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
+
+
+
         #endregion
 
         #region 私有方法

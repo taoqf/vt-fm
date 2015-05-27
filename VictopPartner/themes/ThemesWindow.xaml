@@ -250,6 +250,47 @@
         </Setter>
     </Style>
     <!--壁纸样式控制结束-->
+    <!--壁纸分类样式控制开始-->
+    <Style  x:Key="RadioButtonWallPaperCategoryListStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"   Value="Auto"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <WrapPanel Orientation="Horizontal" IsItemsHost="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Margin"  Value="2"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}"  BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                                    <ContentPresenter  Content="{Binding Category_Name}" Width="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Border>
+                               <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="Background" Value="{DynamicResource SkinColor}" TargetName="Bd"></Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter Property="Background" Value="{DynamicResource SkinColor}" TargetName="Bd"></Setter>
+                                   </Trigger>
+                               </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                            
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--壁纸分类样式控制结束-->
     <!--窗体弹出框样式开始-->
     <Style x:Key="WindowMessageSkin" TargetType="{x:Type controls:VicWindowNormal}">
         <Setter Property="BorderBrush" Value="#024672"/>
