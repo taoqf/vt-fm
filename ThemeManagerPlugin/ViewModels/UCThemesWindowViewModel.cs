@@ -310,13 +310,11 @@ namespace ThemeManagerPlugin.ViewModels
                         {
                             try
                             {
-                                //ChangeFrameWorkTheme();
-                                //this.UpdateDefaultSkin();
                                 string messageType = "ServerCenterService.ChangeThemeByDll";
                                 Dictionary<string, object> contentDic = new Dictionary<string, object>();
                                 Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
-                                ServiceParams.Add("SourceName",model.OnLineName);
-                                ServiceParams.Add("SkinPath", this.SelectedListBoxItem.SkinPath);
+                                ServiceParams.Add("SourceName", skinModel.ThemeName);
+                                ServiceParams.Add("SkinPath", skinModel.SkinPath);
                                 contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
                                 DataMessageOperation messageOp = new DataMessageOperation();
                                 messageOp.SendAsyncMessage(messageType, contentDic);
@@ -337,25 +335,29 @@ namespace ThemeManagerPlugin.ViewModels
                     DataMessageOperation messageOperation = new DataMessageOperation();
                     Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
                                                            downloadMessageContent);
-                    if (downloadResult != null && !downloadResult["ReplyMode"].ToString().Equals("0"))
+                    SystemThemeList.Clear();
+                    GetThemeSkinNum();
+                    foreach (ThemeModel skinModel in SystemThemeList)
                     {
-                        VicMessageBoxNormal.Show(downloadResult["ReplyAlertMessage"].ToString(), "标题");
-                    }
-
-                    ThemeModel themeModel = new ThemeModel();
-                    themeModel.SkinName = model.OnLineName;
-                    themeModel.SkinPath = model.FilePath;
-                    themeModel.SkinPath = @"theme\" + model.FileName + ".dll";
-                    SystemThemeList.Add(themeModel);
-                    MessageBox.Show(SystemThemeList.Count.ToString());
-                    try
-                    {
-                        ChangeFrameWorkTheme();
-                        this.UpdateDefaultSkin();
-                    }
-                    catch (Exception ex)
-                    {
-                        VicMessageBoxNormal.Show("Change error: " + ex.Message);
+                        if (skinModel.SkinName.Equals(model.OnLineName))
+                        {
+                            try
+                            {
+                                string messageType = "ServerCenterService.ChangeThemeByDll";
+                                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                                Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
+                                ServiceParams.Add("SourceName", skinModel.ThemeName);
+                                ServiceParams.Add("SkinPath", skinModel.SkinPath);
+                                contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
+                                DataMessageOperation messageOp = new DataMessageOperation();
+                                messageOp.SendAsyncMessage(messageType, contentDic);
+                                return;
+                            }
+                            catch (Exception ex)
+                            {
+                                VicMessageBoxNormal.Show("Change error: " + ex.Message);
+                            }
+                        }
                     }
                 });
             }
