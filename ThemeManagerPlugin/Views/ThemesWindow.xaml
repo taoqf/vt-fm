@@ -73,7 +73,13 @@
                         <RowDefinition Height="2"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <ListBox Name="listbox" Grid.Row="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" ItemContainerStyle="{StaticResource ListBoxItemTitle}" Style="{StaticResource listboxTitle}"/>
+                    <ListBox Name="listboxCategory"  Grid.Row="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource OnLineCategoryListStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding OnLineListBoxSelectionChangedCommand}" CommandParameter="{Binding ElementName=listboxCategory,Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
                     <Border Grid.Row="1" BorderBrush="Green" BorderThickness="1"></Border>
                     <ScrollViewer CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                         <ListBox Name="listBoxOnLineList" Style="{DynamicResource RadioButtonOnLineListStyle}" ItemsSource="{Binding SystemOnLineList,UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"/>                       

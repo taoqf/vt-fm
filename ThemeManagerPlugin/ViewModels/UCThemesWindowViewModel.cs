@@ -282,7 +282,7 @@ namespace ThemeManagerPlugin.ViewModels
         #endregion
 
         #region 根据所选分类展示皮肤
-        public ICommand btnOnLineByCategoryCommand
+        public ICommand OnLineListBoxSelectionChangedCommand
         {
             get
             {
