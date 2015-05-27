@@ -71,11 +71,11 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"></RowDefinition>
                         <RowDefinition Height="2"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <ListBox Name="listbox" Grid.Row="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" ItemContainerStyle="{StaticResource ListBoxItemTitle}" Style="{StaticResource listboxTitle}"/>
                     <Border Grid.Row="1" BorderBrush="Green" BorderThickness="1"></Border>
-                    <ScrollViewer CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+                    <ScrollViewer CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                         <ListBox Name="listBoxOnLineList" Style="{DynamicResource RadioButtonOnLineListStyle}" ItemsSource="{Binding SystemOnLineList,UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2"/>                       
                     </ScrollViewer>
                 </Grid>
@@ -84,16 +84,18 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"></RowDefinition>
-                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="2"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <ListBox Name="WallPaperType" SelectedIndex="0" ItemsSource="{Binding WallPaperCategoryList,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource RadioButtonWallPaperCategoryListStyle}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding WallPaperCategoryListSelectionChangedCommand}"/>
+                                <i:InvokeCommandAction Command="{Binding WallPaperCategoryListSelectionChangedCommand}" CommandParameter="{Binding ElementName=WallPaperType,Path=SelectedItem}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ListBox>
-                    <ScrollViewer  CanContentScroll="True"  Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+                    <Border Grid.Row="1" BorderBrush="{DynamicResource SkinColor}" BorderThickness="1"/>
+                    <ScrollViewer  CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                         <ListBox Name="listBoxWallList" Style="{DynamicResource RadioButtonWallPaperListStyle}" ItemsSource="{Binding SystemWallPaperList,UpdateSourceTrigger=PropertyChanged}"/>
                     </ScrollViewer>
                 </Grid>
