@@ -303,19 +303,30 @@ namespace ThemeManagerPlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     OnLineModel model = (OnLineModel)x;
-                });
-            }
-        }
-        #endregion
-        #region 在线皮肤下载命令
-        public ICommand btnOnLineDownloadCommand
-        {
-            get
-            {
-                return new RelayCommand<object>((x) =>
-                {
-                    OnLineModel model = (OnLineModel)x;
-                    //string serverUrl = ConfigurationManager.AppSettings["fileserverhttp"];
+                    foreach (ThemeModel skinModel in SystemThemeList)
+                    {
+                        if (skinModel.SkinName.Equals(model.OnLineName))
+                        {
+                            try
+                            {
+                                //ChangeFrameWorkTheme();
+                                //this.UpdateDefaultSkin();
+                                string messageType = "ServerCenterService.ChangeThemeByDll";
+                                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                                Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
+                                ServiceParams.Add("SourceName",model.OnLineName);
+                                ServiceParams.Add("SkinPath", this.SelectedListBoxItem.SkinPath);
+                                contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
+                                DataMessageOperation messageOp = new DataMessageOperation();
+                                messageOp.SendAsyncMessage(messageType, contentDic);
+                                return;
+                            }
+                            catch (Exception ex)
+                            {
+                                VicMessageBoxNormal.Show("Change error: " + ex.Message);
+                            }
+                        }
+                    }
                     string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
                     Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
                     Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
@@ -331,9 +342,56 @@ namespace ThemeManagerPlugin.ViewModels
                     }
 
                     ThemeModel themeModel = new ThemeModel();
+                    themeModel.SkinName = model.OnLineName;
+                    themeModel.SkinPath = model.FilePath;
                     themeModel.SkinPath = @"theme\" + model.FileName + ".dll";
                     SystemThemeList.Add(themeModel);
                     MessageBox.Show(SystemThemeList.Count.ToString());
+                    try
+                    {
+                        ChangeFrameWorkTheme();
+                        this.UpdateDefaultSkin();
+                    }
+                    catch (Exception ex)
+                    {
+                        VicMessageBoxNormal.Show("Change error: " + ex.Message);
+                    }
+                });
+            }
+        }
+        #endregion
+        #region 在线皮肤下载命令
+        public ICommand btnOnLineDownloadCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                    OnLineModel model = (OnLineModel)x;
+                    foreach (ThemeModel skinModel in SystemThemeList)
+                    {
+                        if (skinModel.SkinName.Equals(model.OnLineName))
+                        {
+                            VicMessageBoxNormal.Show("此皮肤本地已存在");
+                            return;
+                        }
+                    }
+                    string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
+                    Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
+                    Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
+                    downloadAddress.Add("DownloadFileId", model.FilePath);
+                    downloadAddress.Add("DownloadToPath", localityUrl);
+                    downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
+                    DataMessageOperation messageOperation = new DataMessageOperation();
+                    Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
+                                                           downloadMessageContent);
+                    if (downloadResult != null && !downloadResult["ReplyMode"].ToString().Equals("0"))
+                    {
+                        VicMessageBoxNormal.Show(downloadResult["ReplyAlertMessage"].ToString(), "标题");
+                    }
+                    //清空本地皮肤重新加载
+                    SystemThemeList.Clear();
+                    GetThemeSkinNum();
                 });
             }
         }
