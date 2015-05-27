@@ -151,7 +151,38 @@
         </Setter>
 
     </Style>
+    <Style TargetType="Button" x:Key="btnTitleStyle">
+        <Setter Property="Foreground" Value="#666666"></Setter>
+        <Setter Property="Width" Value="80"></Setter>
+        <Setter Property="Height" Value="30"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border">
+                        <TextBlock Name="txtBlock" VerticalAlignment="Center"  HorizontalAlignment="Center" 
+ Text="{TemplateBinding Button.Content}"></TextBlock>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#12311516"></Setter>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#F2F2F2"></Setter>
+                            <Setter Property="BorderThickness" TargetName="border" Value="3"></Setter>
+                            <Setter Property="CornerRadius" TargetName="border" Value="15,15,15,15"></Setter>
+                        </Trigger>
+                        <!--<Trigger Property="IsFocused" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="WhiteSmoke"></Setter>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#15854676"></Setter>
+                            <Setter Property="BorderThickness" TargetName="border" Value="3"></Setter>
+                            <Setter Property="CornerRadius" TargetName="border" Value="15,15,15,15"></Setter>
+                        </Trigger>-->
+                    </ControlTemplate.Triggers>
 
+                </ControlTemplate>
+            </Setter.Value>
+
+        </Setter>
+
+    </Style>
     <Style x:Key="ListBoxItemTitle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Height" Value="40"/>
@@ -166,24 +197,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Border x:Name="Bd" Margin="1" BorderBrush="Transparent" BorderThickness="0" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-                        <!--<TextBlock Text="{Binding Category_Name}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>-->
-                        <Button Content="{Binding Category_Name}" Width="75"
+                        
+                        <Button Style="{StaticResource btnTitleStyle}" Content="{Binding Category_Name}" Width="75"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"
                                 Command="{Binding DataContext.btnOnLineByCategoryCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                          CommandParameter="{Binding .}"></Button>
                     </Border>
 
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" TargetName="Bd" Value="#F2F2F2"/>
-                            <Setter Property="Foreground" Value="#666666"/>
-                        </Trigger>
-
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="#666666"/>
-                        </Trigger>
-                       
-                    </ControlTemplate.Triggers>
+                  
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -229,6 +250,47 @@
         </Setter>
     </Style>
     <!--壁纸样式控制结束-->
+    <!--壁纸分类样式控制开始-->
+    <Style  x:Key="RadioButtonWallPaperCategoryListStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"   Value="Auto"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <WrapPanel Orientation="Horizontal" IsItemsHost="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="Margin"  Value="2"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}"  BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                                    <ContentPresenter  Content="{Binding Category_Name}" Width="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Border>
+                               <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="true">
+                                        <Setter Property="Background" Value="{DynamicResource SkinColor}" TargetName="Bd"></Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter Property="Background" Value="{DynamicResource SkinColor}" TargetName="Bd"></Setter>
+                                   </Trigger>
+                               </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                            
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--壁纸分类样式控制结束-->
     <!--窗体弹出框样式开始-->
     <Style x:Key="WindowMessageSkin" TargetType="{x:Type controls:VicWindowNormal}">
         <Setter Property="BorderBrush" Value="#024672"/>

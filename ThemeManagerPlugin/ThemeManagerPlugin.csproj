@@ -93,6 +93,7 @@
     <Compile Include="Models\OnLineCategory.cs" />
     <Compile Include="Models\OnLineModel.cs" />
     <Compile Include="Models\ThemeModel.cs" />
+    <Compile Include="Models\WallPaperCategory.cs" />
     <Compile Include="Models\WallPaperModel.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
