@@ -293,7 +293,7 @@ namespace ThemeManagerPlugin.ViewModels
                     string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
                     Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
                     Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
-                    downloadAddress.Add("DownloadFileId", model.OnLinePreview);
+                    downloadAddress.Add("DownloadFileId", model.FilePath);
                     downloadAddress.Add("DownloadToPath", localityUrl);
                     downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
                     DataMessageOperation messageOperation = new DataMessageOperation();
