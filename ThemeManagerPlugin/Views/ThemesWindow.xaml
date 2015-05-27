@@ -85,15 +85,16 @@
                 </Grid>
             </controls:VicTabItemNormal>
             <controls:VicTabItemNormal  Header="壁纸"  AllowDelete="False">
-                <ScrollViewer CanContentScroll="True"  Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
-                    <ListBox Name="listBoxWallList"     Style="{DynamicResource RadioButtonWallPaperListStyle}" ItemsSource="{Binding SystemWallPaperList,UpdateSourceTrigger=PropertyChanged}"  >
-                        <!--<i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding listBoxSystemThemeListSelectionChangedCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>-->
-                    </ListBox>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <ListBox Name="WallPaperType" ItemsSource="{Binding WallPaperCategoryList,UpdateSourceTrigger=PropertyChanged}" ItemContainerStyle="{StaticResource ListBoxItemTitle}" Style="{StaticResource listboxTitle}"/>
+                <ScrollViewer  CanContentScroll="True"  Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+                    <ListBox Name="listBoxWallList"     Style="{DynamicResource RadioButtonWallPaperListStyle}" ItemsSource="{Binding SystemWallPaperList,UpdateSourceTrigger=PropertyChanged}"/>
                 </ScrollViewer>
+                </Grid>
             </controls:VicTabItemNormal>
         </controls:VicTabControlNormal>
     </Grid>

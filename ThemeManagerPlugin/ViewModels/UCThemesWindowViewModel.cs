@@ -84,6 +84,26 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
+        /// <summary>在线皮肤分类列表 </summary>
+        private ObservableCollection<OnLineCategory> wallPaperCategoryList;
+        public ObservableCollection<OnLineCategory> WallPaperCategoryList
+        {
+            get
+            {
+                if (wallPaperCategoryList == null)
+                    wallPaperCategoryList = new ObservableCollection<OnLineCategory>();
+                return wallPaperCategoryList;
+            }
+            set
+            {
+                if (wallPaperCategoryList != value)
+                {
+                    wallPaperCategoryList = value;
+                    RaisePropertyChanged("WallPaperCategoryList");
+                }
+            }
+        }
+
         /// <summary>在线皮肤列表</summary>
         private ObservableCollection<OnLineModel> _systemOnLineList;
         public ObservableCollection<OnLineModel> SystemOnLineList
