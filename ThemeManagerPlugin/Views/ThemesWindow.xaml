@@ -73,7 +73,7 @@
                         <RowDefinition Height="2"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <ListBox Name="listboxCategory"  Grid.Row="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource OnLineCategoryListStyle}">
+                    <ListBox Name="listboxCategory" SelectedIndex="0" Grid.Row="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource RadioButtonWallPaperCategoryListStyle}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding OnLineListBoxSelectionChangedCommand}" CommandParameter="{Binding ElementName=listboxCategory,Path=SelectedItem}"/>

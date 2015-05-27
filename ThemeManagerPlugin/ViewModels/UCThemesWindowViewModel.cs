@@ -178,6 +178,7 @@ namespace ThemeManagerPlugin.ViewModels
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
                     GetOnLineCategory();
+                    GetOnLineTheme(SystemOnLineCategoryList[0].Category_No);
                     GetWallPaperCategory();
                     GetWallPaperDisplay(WallPaperCategoryList[0].Category_No);
                 });
