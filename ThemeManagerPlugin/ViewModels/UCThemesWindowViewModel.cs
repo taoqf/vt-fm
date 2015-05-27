@@ -179,6 +179,7 @@ namespace ThemeManagerPlugin.ViewModels
                     GetDefaultThemeSkin();
                     GetOnLineCategory();
                     GetWallPaperCategory();
+                    GetWallPaperDisplay(WallPaperCategoryList[0].Category_No);
                 });
             }
         }
@@ -258,7 +259,7 @@ namespace ThemeManagerPlugin.ViewModels
                             path = saveFileDialog.FileName;
                             Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
                             Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
-                            downloadAddress.Add("DownloadFileId", wallModel.WallDisplay);
+                            downloadAddress.Add("DownloadFileId", wallModel.FilePath);
                             downloadAddress.Add("DownloadToPath", path);
                             downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
                             DataMessageOperation messageOperation = new DataMessageOperation();
@@ -568,10 +569,10 @@ namespace ThemeManagerPlugin.ViewModels
                 {
                     string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["preview"];
                     WallPaperModel model = new WallPaperModel();
-                    model.WallDisplay = row["display"].ToString();
+                    model.FilePath = row["file_path"].ToString();
                     model.WallPreview = previewUrl;
                     model.WllPaperName = row["wallpaper_name"].ToString();
-                    model.WllPaperType = row["img_type"].ToString();
+                    model.WllPaperType = row["file_type"].ToString();
                     SystemWallPaperList.Add(model);
                 }
             }

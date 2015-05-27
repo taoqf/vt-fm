@@ -55,7 +55,7 @@
                         <TextBlock HorizontalAlignment="Left" Margin="594,7,0,0" TextWrapping="Wrap" Text="款皮肤" VerticalAlignment="Top" RenderTransformOrigin="0.655,-0.688"/>
                     </Grid>
                     <Border Background="{DynamicResource WhiteShade}" Grid.Row="1" Grid.ColumnSpan="3"></Border>
-                    <ScrollViewer CanContentScroll="True"  Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="3">
+                    <ScrollViewer CanContentScroll="True"  Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3">
                         <ListBox Name="listBoxThemeList"   SelectedItem="{Binding SelectedListBoxItem}"   Style="{DynamicResource RadioButtonListStyle}" ItemsSource="{Binding SystemThemeList,UpdateSourceTrigger=PropertyChanged}"  >
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
