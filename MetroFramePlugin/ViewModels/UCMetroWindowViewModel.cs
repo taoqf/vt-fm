@@ -1772,7 +1772,9 @@ namespace MetroFramePlugin.ViewModels
                     title.VerticalContentAlignment = VerticalAlignment.Center;
                     title.HorizontalContentAlignment = HorizontalAlignment.Center;
                     title.Background = mainWindow.FindResource("MetroBGColor") as Brush;
-
+                    title.ParamsModel.DeblockingState = Visibility.Visible;
+                    title.ParamsModel.LockingState = Visibility.Collapsed;
+                    title.ParamsModel.IsEditItem = Visibility.Collapsed;
 
                     ListBox menuList = new ListBox();
                     menuList.Background = mainWindow.FindResource("MetroBGColor") as Brush;
