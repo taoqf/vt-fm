@@ -572,6 +572,7 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         #endregion
+
         #region 切换用户命令
         public ICommand btnChangeUserClickCommand
         {
@@ -583,12 +584,13 @@ namespace MetroFramePlugin.ViewModels
                     PoPupState = false;
                     isChangeUser = true; //切换用户时，从服务器拉取菜单必要操作
                     UserLogin();
-                    DrawingPanelArea();
+                    InitPanelArea();
 
                 });
             }
         }
         #endregion
+
         #region 修改密码
         public ICommand btnModifiPassClickCommand
         {
@@ -605,6 +607,7 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         #endregion
+
         #region 窗体最大化命令
         /// <summary>窗体最大化命令 </summary>
         public ICommand btnMaxClickCommand
@@ -1511,7 +1514,7 @@ namespace MetroFramePlugin.ViewModels
                     mainPanel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
                     _listbox = area.FindName("listBoxPopupMenuList") as ListBox;//找到“添加应用中的菜单列表”
                     _allSelectBtn = area.FindName("btnAllSelect") as VicButtonNormal;//找到添加应用弹窗“全部选中按钮”
-                    DrawingPanelArea();//读文件并渲染区域
+                    InitPanelArea();//读文件并渲染区域
                     isFirstLoad = false;
                 });
             }
@@ -1851,12 +1854,10 @@ namespace MetroFramePlugin.ViewModels
             NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
 
         }
-
-
         /// <summary>
-        ///  渲染区域方法
+        ///  渲染区域初始化
         /// </summary>
-        private void DrawingPanelArea()
+        private void InitPanelArea()
         {
             NewArea.Clear();
             if (mainPanel != null) mainPanel.Children.Clear();
@@ -1943,7 +1944,101 @@ namespace MetroFramePlugin.ViewModels
                 Canvas.SetTop(newPanel, NewArea[i].TopSpan);
                 mainPanel.Children.Add(newPanel);
             }
-            ThumbCanvas();
+        }
+
+        /// <summary>
+        ///  渲染区域方法
+        /// </summary>
+        private void DrawingPanelArea()
+        {
+            NewArea.Clear();
+            if (mainPanel != null) mainPanel.Children.Clear();
+
+            if (isFirstLoad)
+            {
+                GetPersonMenu();
+            }
+            else if (isChangeUser)
+            {
+                GetPersonMenu();
+                isChangeUser = false;
+            }
+            else
+            {
+                ReadMenuJsonFile();
+            }
+            for (int i = 0; i < NewArea.Count; i++)
+            {
+                UnitAreaSeting title = new UnitAreaSeting();
+                title.ParamsModel.TitleWidth = NewArea[i].AreaWidth;
+                title.Uid = NewArea[i].AreaID;
+                DockPanel.SetDock(title, Dock.Top);
+                title.ParamsModel.BtnDeblockingClick += BtnClick;
+                title.ParamsModel.ThumbDragMoveClick += ThumbDragMove;//因为初始默认了锁定，所以初始绘制去掉拖动
+                title.MenuItemIcoClick += MenuItemClick;
+                title.ParamsModel.TextChangedClick += ParamsModel_TextChangedClick;
+                title.SecondMenuItemIcoClick += SecondMenuItemClick;
+                title.ParamsModel.AreaName = NewArea[i].AreaName;
+                title.VerticalContentAlignment = VerticalAlignment.Center;
+                title.HorizontalContentAlignment = HorizontalAlignment.Center;
+                title.Foreground = mainWindow.FindResource("MetroFGColor") as Brush;
+                title.ParamsModel.DeblockingState = Visibility.Visible;
+                title.ParamsModel.LockingState = Visibility.Collapsed;
+                title.ParamsModel.IsEditItem = Visibility.Collapsed;
+                WrapPanel pluginPanel = new WrapPanel();
+                pluginPanel.Background = mainWindow.FindResource("MetroBGColor") as Brush;
+                pluginPanel.Uid = NewArea[i].AreaID;
+                pluginPanel.Orientation = Orientation.Horizontal;
+                ListBox addapplyStyle = new ListBox();
+                ListBoxItem _item = new ListBoxItem();
+                addapplyStyle.Items.Add(_item);
+                if (NewArea[i].MenuForm == "normal")
+                {
+                    addapplyStyle.Style = area.FindResource("addApply") as Style;
+                }
+                else if (NewArea[i].MenuForm == "large")
+                {
+                    addapplyStyle.Style = area.FindResource("addLargeApply") as Style;
+                }
+                else if (NewArea[i].MenuForm == "small")
+                {
+                    addapplyStyle.Style = area.FindResource("addSmallApply") as Style;
+                }
+                pluginPanel.Children.Add(addapplyStyle);
+
+                if (NewArea[i].PluginList.Count != 0)
+                {
+                    ListBox pluginlist = new ListBox();
+
+                    pluginlist.PreviewMouseMove += menuList_PreviewMouseMove;//因为初始默认了锁定，所以初始绘制去掉内部的插件拖动
+                    pluginlist.Drop += menuList_Drop;
+                    pluginlist.ItemsSource = NewArea[i].PluginList;
+                    if (NewArea[i].MenuForm == "normal")
+                    {
+                        pluginlist.Style = mainWindow.FindResource("MetroListBoxFourthMenuListStyle") as Style;
+                    }
+                    else if (NewArea[i].MenuForm == "large")
+                    {
+                        pluginlist.Style = mainWindow.FindResource("LargeListBoxFourthMenuListStyle") as Style;
+                    }
+                    else if (NewArea[i].MenuForm == "small")
+                    {
+                        pluginlist.Style = mainWindow.FindResource("SmallListBoxFourthMenuListStyle") as Style;
+                    }
+                    pluginPanel.Children.Insert(pluginPanel.Children.Count - 1, pluginlist);//一个WrapPanel里添加了两个ListBox
+                }
+
+                DockPanel newPanel = new DockPanel();
+                newPanel.Uid = NewArea[i].AreaID;
+                newPanel.Width = NewArea[i].AreaWidth;
+                newPanel.Height = NewArea[i].AreaHeight;
+                newPanel.Children.Add(title);
+                newPanel.Children.Add(pluginPanel);//一个DockPanel里添加了一个UnitAreaSeting和一个WrapPanel
+                Canvas.SetLeft(newPanel, NewArea[i].LeftSpan);
+                Canvas.SetTop(newPanel, NewArea[i].TopSpan);
+                mainPanel.Children.Add(newPanel);
+            }
+            ThumbCanvas(null, false);
         }
 
         void ParamsModel_TextChangedClick(object sender, TextChangedEventArgs e)
