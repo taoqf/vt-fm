@@ -61,7 +61,7 @@ namespace Victop.Frame.DataChannel
         /// <param name="channelId">通道标识</param>
         /// <param name="dataPath">路径信息</param>
         /// <returns></returns>
-        public virtual bool ResetData(string channelId, string dataPath)
+        public virtual bool ResetData(string channelId, string dataPath, bool cascading)
         {
             DataChannelManager dataChannelManager = new DataChannelManager();
             Hashtable hashData = dataChannelManager.GetData(channelId);
@@ -75,7 +75,7 @@ namespace Victop.Frame.DataChannel
                     foreach (Dictionary<string, object> item in channelData.CrudJSONData)
                     {
                         string pathStr = JsonHelper.ToJson(item["path"]);
-                        if (pathStr.Equals(dataPath))
+                        if (cascading ? pathStr.StartsWith(dataPath.TrimEnd(']')) : pathStr.Equals(dataPath))
                         {
                             continue;
                         }

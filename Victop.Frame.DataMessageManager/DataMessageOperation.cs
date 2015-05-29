@@ -51,13 +51,14 @@ namespace Victop.Frame.DataMessageManager
         /// <summary>
         /// 重置数据
         /// </summary>
-        /// <param name="viewId"></param>
-        /// <param name="dataPath"></param>
+        /// <param name="viewId">通道标识</param>
+        /// <param name="dataPath">数据路径</param>
+        /// <param name="cascading">级联</param>
         /// <returns></returns>
-        public virtual bool ResetData(string viewId, string dataPath)
+        public virtual bool ResetData(string viewId, string dataPath, bool cascading = true)
         {
             DataOperation dataOp = new DataOperation();
-            return dataOp.ResetData(viewId, dataPath);
+            return dataOp.ResetData(viewId, dataPath,cascading);
         }
 
         /// <summary>
