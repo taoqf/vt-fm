@@ -12,6 +12,7 @@ namespace Victop.Frame.DataChannel
     using Victop.Frame.CoreLibrary;
     using Victop.Frame.CoreLibrary.Models;
     using Victop.Frame.CoreLibrary.MongoModel;
+    using Victop.Frame.PublicLib.Helpers;
 
     /// <summary>
     /// 数据操作
@@ -52,6 +53,38 @@ namespace Victop.Frame.DataChannel
             }
 
         }
+        /// <summary>
+        /// 重置数据
+        /// </summary>
+        /// <param name="channelId">通道标识</param>
+        /// <param name="dataPath">路径信息</param>
+        /// <returns></returns>
+        public virtual bool ResetData(string channelId, string dataPath)
+        {
+            DataChannelManager dataChannelManager = new DataChannelManager();
+            Hashtable hashData = dataChannelManager.GetData(channelId);
+            ChannelData channelData = hashData["Data"] as ChannelData;
+            channelData.JSONData = channelData.OriginalJsonData;
+            if (channelData.CrudJSONData != null && channelData.CrudJSONData.Count > 0)
+            {
+                List<object> curdDataList = new List<object>();
+                foreach (Dictionary<string, object> item in channelData.CrudJSONData)
+                {
+                    if (JsonHelper.ToJson(item["path"]).Equals(dataPath))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        curdDataList.Add(item);
+                    }
+                }
+                channelData.CrudJSONData = curdDataList;
+            }
+            return true;
+
+        }
+
         /// <summary>
         /// 根据通道号获取JSON数据
         /// </summary>

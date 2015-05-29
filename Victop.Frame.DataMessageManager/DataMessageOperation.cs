@@ -49,6 +49,18 @@ namespace Victop.Frame.DataMessageManager
             return dataOp.SaveData(viewId, dataPath);
         }
         /// <summary>
+        /// 重置数据
+        /// </summary>
+        /// <param name="viewId"></param>
+        /// <param name="dataPath"></param>
+        /// <returns></returns>
+        public virtual bool ResetData(string viewId, string dataPath)
+        {
+            DataOperation dataOp = new DataOperation();
+            return dataOp.ResetData(viewId, dataPath);
+        }
+
+        /// <summary>
         /// 获取JSON数据
         /// </summary>
         /// <param name="viewId">通道标识</param>

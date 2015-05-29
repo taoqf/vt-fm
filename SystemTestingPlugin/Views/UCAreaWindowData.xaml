@@ -41,6 +41,7 @@
                                 <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewJsonData" Content="查看Json数据" Command="{Binding btnViewJsonDataClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
                                 <ctrl:VicButtonNormal Width="100" Height="24" Name="btnAddData" Content="添加" Command="{Binding btnAddDataClickCommand}"/>
                                 <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSaveData" Content="保存" Command="{Binding btnSaveDataClickCommand}"/>
+                                <ctrl:VicButtonNormal Width="100" Height="24" Name="btnResetData" Content="重置数据" Command="{Binding btnResetDataClickCommand}"/>
                                 <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewTableStruct" ToolTip="查看表结构" Content="查看表结构" Command="{Binding btnViewTableStructClickCommand}"/>
                                 <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding DataInfoModel.VertifyMsg}"/>
                             </ctrl:VicWrapPanelNormal>

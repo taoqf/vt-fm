@@ -352,6 +352,20 @@ namespace SystemTestingPlugin.ViewModels
                 });
             }
         }
+
+        public ICommand btnResetDataClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    DataMessageOperation dataOp = new DataMessageOperation();
+                    bool result = dataOp.ResetData(DataInfoModel.ChannelId, DataInfoModel.DataPath);
+                    VicMessageBoxNormal.Show(result.ToString());
+                });
+            }
+        }
+
         /// <summary>
         /// 查看Json数据
         /// </summary>

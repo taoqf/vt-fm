@@ -55,6 +55,15 @@ namespace Victop.Frame.CoreLibrary.Models
             set;
         }
         /// <summary>
+        /// 原始JSON数据信息
+        /// </summary>
+        public virtual string OriginalJsonData
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// 调整的JSON数据信息
         /// </summary>
         public virtual List<object> CrudJSONData

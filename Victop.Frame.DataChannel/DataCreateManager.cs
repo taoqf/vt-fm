@@ -63,6 +63,7 @@ namespace Victop.Frame.DataChannel
                     string JsonData = replyMessageInfo.ReplyContent;
                     channelData.DataForm = DataFormEnum.JSON;
                     channelData.JSONData = JsonData;
+                    channelData.OriginalJsonData = JsonData;
                     try
                     {
                         channelData.ModelDefInfo = JsonHelper.ReadJsonObject<MongoModelInfoModel>(JsonHelper.ReadJsonString(JsonData, "docDataStore"), "model");
