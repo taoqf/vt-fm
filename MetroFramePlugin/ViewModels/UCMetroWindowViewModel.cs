@@ -2468,13 +2468,8 @@ namespace MetroFramePlugin.ViewModels
             if (res.Equals("btnDeblocking"))//单击解锁图标
             {
                 isOverRender = true;
-
-                areaParent.ParamsModel.DeblockingState = Visibility.Collapsed;
-                areaParent.ParamsModel.LockingState = Visibility.Visible;
-                areaParent.ParamsModel.IsEditItem = Visibility.Visible;
                 //重绘，去掉拖动
                 OverRideDrawingPanelArea(areaParent.Parent as DockPanel);
-
             }
             if (res.Equals("btnLocking"))//单击锁定图标
             {
@@ -2539,7 +2534,6 @@ namespace MetroFramePlugin.ViewModels
             {
                 if (NewArea[i].AreaID == dockPanel.Uid)
                 {
-
                     UnitAreaSeting title = new UnitAreaSeting();
                     title.ParamsModel.TitleWidth = NewArea[i].AreaWidth;
                     title.Uid = NewArea[i].AreaID;
@@ -2562,8 +2556,6 @@ namespace MetroFramePlugin.ViewModels
                     title.VerticalContentAlignment = VerticalAlignment.Center;
                     title.HorizontalContentAlignment = HorizontalAlignment.Center;
                     title.Foreground = mainWindow.FindResource("MetroFGColor") as Brush;
-
-
 
                     WrapPanel pluginPanel = new WrapPanel();
                     pluginPanel.Background = mainWindow.FindResource("MetroBGColor") as Brush;
@@ -2618,9 +2610,10 @@ namespace MetroFramePlugin.ViewModels
                     newPanel.Children.Add(pluginPanel);//一个DockPanel里添加了一个UnitAreaSeting和一个WrapPanel
                     Canvas.SetLeft(newPanel, NewArea[i].LeftSpan);
                     Canvas.SetTop(newPanel, NewArea[i].TopSpan);
+
                     mainPanel.Children.Add(newPanel);
                     mainPanel.Children.Remove(dockPanel);
-
+                    isOverRender = false;
                     break;
                 }
             }
