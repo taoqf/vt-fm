@@ -14,6 +14,7 @@ namespace Victop.Frame.DataChannel
     using Victop.Frame.CoreLibrary.MongoModel;
     using Victop.Frame.PublicLib.Helpers;
     using Victop.Frame.DataChannel.Enums;
+    using System;
 
     /// <summary>
     /// 数据操作
@@ -66,25 +67,33 @@ namespace Victop.Frame.DataChannel
             Hashtable hashData = dataChannelManager.GetData(channelId);
             ChannelData channelData = hashData["Data"] as ChannelData;
             channelData.JSONData = channelData.OriginalJsonData;
-            if (channelData.CrudJSONData != null && channelData.CrudJSONData.Count > 0)
+            try
             {
-                List<object> curdDataList = new List<object>();
-                foreach (Dictionary<string, object> item in channelData.CrudJSONData)
+                if (channelData.CrudJSONData != null && channelData.CrudJSONData.Count > 0)
                 {
-                    string pathStr = JsonHelper.ToJson(item["path"]);
-                    if (pathStr.Equals(dataPath))
+                    List<object> curdDataList = new List<object>();
+                    foreach (Dictionary<string, object> item in channelData.CrudJSONData)
                     {
-                        continue;
+                        string pathStr = JsonHelper.ToJson(item["path"]);
+                        if (pathStr.Equals(dataPath))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            DataTool.SaveDataByPath(channelId, (List<object>)item["path"], (Dictionary<string, object>)item["rowdata"], (OpreateStateEnum)item["flag"]);
+                            curdDataList.Add(item);
+                        }
                     }
-                    else
-                    {
-                        DataTool.SaveDataByPath(channelId, (List<object>)item["path"], (Dictionary<string, object>)item["rowdata"], (OpreateStateEnum)item["flag"]);
-                        curdDataList.Add(item);
-                    }
+                    channelData.CrudJSONData = curdDataList;
                 }
-                channelData.CrudJSONData = curdDataList;
+                return true;
             }
-            return true;
+            catch (Exception ex)
+            {
+                LoggerHelper.InfoFormat("重置数据错误:{0}", ex.Message);
+                return false;
+            }
 
         }
 
