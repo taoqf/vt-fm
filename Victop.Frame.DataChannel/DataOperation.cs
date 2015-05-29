@@ -13,6 +13,7 @@ namespace Victop.Frame.DataChannel
     using Victop.Frame.CoreLibrary.Models;
     using Victop.Frame.CoreLibrary.MongoModel;
     using Victop.Frame.PublicLib.Helpers;
+    using Victop.Frame.DataChannel.Enums;
 
     /// <summary>
     /// 数据操作
@@ -70,12 +71,14 @@ namespace Victop.Frame.DataChannel
                 List<object> curdDataList = new List<object>();
                 foreach (Dictionary<string, object> item in channelData.CrudJSONData)
                 {
-                    if (JsonHelper.ToJson(item["path"]).Equals(dataPath))
+                    string pathStr = JsonHelper.ToJson(item["path"]);
+                    if (pathStr.Equals(dataPath))
                     {
                         continue;
                     }
                     else
                     {
+                        DataTool.SaveDataByPath(channelId, (List<object>)item["path"], (Dictionary<string, object>)item["rowdata"], (OpreateStateEnum)item["flag"]);
                         curdDataList.Add(item);
                     }
                 }
