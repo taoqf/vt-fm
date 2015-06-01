@@ -40,7 +40,7 @@ namespace Victop.Frame.DataMessageManager
         /// <summary>
         /// 保存数据到数据通道
         /// </summary>
-        /// <param name="channelId">通道标识</param>
+        /// <param name="viewId">通道标识</param>
         /// <param name="dataPath">路径</param>
         /// <returns></returns>
         public virtual bool SaveData(string viewId, string dataPath)
