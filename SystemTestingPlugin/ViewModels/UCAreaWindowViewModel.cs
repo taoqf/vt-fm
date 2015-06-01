@@ -13,6 +13,7 @@ using SystemTestingPlugin.Views;
 using System.Threading;
 using System.IO;
 using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace SystemTestingPlugin.ViewModels
 {

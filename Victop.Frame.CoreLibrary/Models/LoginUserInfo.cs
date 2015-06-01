@@ -188,6 +188,27 @@ namespace Victop.Frame.CoreLibrary.Models
             get { return field; }
             set { field = value; }
         }
+        private string modelid;
+
+        public string Modelid
+        {
+            get { return modelid; }
+            set { modelid = value; }
+        }
+        private string pk_val;
+
+        public string Pk_val
+        {
+            get { return pk_val; }
+            set { pk_val = value; }
+        }
+        private string systemid;
+
+        public string Systemid
+        {
+            get { return systemid; }
+            set { systemid = value; }
+        }
     }
 }
 

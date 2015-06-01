@@ -63,19 +63,16 @@ namespace SystemTestingPlugin
         {
         }
 
-        private Dictionary<string, object> paramDict;
-
         public Dictionary<string, object> ParamDict
         {
             get
             {
-                if (paramDict == null)
-                    paramDict = new Dictionary<string, object>();
-                return paramDict;
+                return UCAreaWindowData.ParamDict;
+
             }
             set
             {
-                paramDict = value;
+                UCAreaWindowData.ParamDict = value;
             }
         }
     }
