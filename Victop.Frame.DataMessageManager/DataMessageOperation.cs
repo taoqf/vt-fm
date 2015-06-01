@@ -113,7 +113,7 @@ namespace Victop.Frame.DataMessageManager
         /// <summary>
         /// 释放数据
         /// </summary>
-        /// <param name="channelId">通道标识</param>
+        /// <param name="viewId">通道标识</param>
         /// <returns></returns>
         public virtual bool DisposeData(string viewId)
         {
@@ -123,7 +123,8 @@ namespace Victop.Frame.DataMessageManager
         /// <summary>
         /// 获取模型关系
         /// </summary>
-        /// <param name="channelId">通道标识</param>
+        /// <param name="viewId">通道标识</param>
+        /// <param name="keyString">关键字</param>
         /// <returns></returns>
         public virtual string GetModelInfo(string viewId, string keyString)
         {
