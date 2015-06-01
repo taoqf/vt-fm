@@ -75,11 +75,15 @@ namespace DocumentManagerService
                     if (CurrentMessageType == "ServerCenterService.DownloadDocument")
                     {
                         string downloadFileId = string.Empty;
+                        string downloadProductId = "feidao";
                         if (serviceParams.ContainsKey("DownloadFileId"))
                         {
                             downloadFileId = serviceParams["DownloadFileId"].ToString();
                         }
-
+                        if (serviceParams.ContainsKey("ProductId"))
+                        {
+                            downloadProductId = serviceParams["ProductId"].ToString();
+                        }
                         if (string.IsNullOrWhiteSpace(downloadFileId))
                         {
                             returnDic.Add("ReplyContent", "文件编号为空");
@@ -88,7 +92,7 @@ namespace DocumentManagerService
                         }
                         else
                         {
-                            string downloadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + downloadFileId;
+                            string downloadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + downloadFileId + "&productid=" + downloadProductId;
                             string downloadToPath = string.Empty;
                             if (serviceParams.ContainsKey("DownloadToPath"))
                             {
@@ -115,6 +119,11 @@ namespace DocumentManagerService
                     {
                         string uploadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "reupload";
                         string uploadMode = string.Empty;
+                        string downloadProductId = "feidao";
+                        if (serviceParams.ContainsKey("ProductId"))
+                        {
+                            downloadProductId = serviceParams["ProductId"].ToString();
+                        }
                         if (serviceParams.ContainsKey("UploadMode"))
                         {
                             uploadMode = serviceParams["UploadMode"].ToString();
@@ -122,7 +131,7 @@ namespace DocumentManagerService
 
                         if (string.IsNullOrWhiteSpace(uploadMode) == false)
                         {
-                            uploadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "upload?mode_id=" + uploadMode;
+                            uploadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "upload?mode_id=" + uploadMode + "&productid=" + downloadProductId;
                         }
                         else
                         {
@@ -132,7 +141,7 @@ namespace DocumentManagerService
                                 delFileId = serviceParams["DelFileId"].ToString();
                             }
 
-                            uploadUrl += "?delfile_name=" + delFileId;
+                            uploadUrl += "?delfile_name=" + delFileId + "&productid=" + downloadProductId;
                         }
 
                         string uploadFromPath = string.Empty;
