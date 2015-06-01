@@ -56,8 +56,8 @@ namespace Victop.Frame.PublicLib.Helpers
         /// <summary>
         /// 时间范围(包含边界值)
         /// </summary>
-        /// <param name="startTime">开始时间</param>
-        /// <param name="endTime">结束时间</param>
+        /// <param name="startTimeStr">开始时间</param>
+        /// <param name="endTimeStr">结束时间</param>
         /// <returns></returns>
         public static Dictionary<string, object> TimeRange(string startTimeStr, string endTimeStr)
         {
