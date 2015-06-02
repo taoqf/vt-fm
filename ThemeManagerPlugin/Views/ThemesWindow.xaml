@@ -37,8 +37,8 @@
             </controls:VicButtonNormal>
         </Grid>
         <Grid Background="{DynamicResource SkinColor}"  Grid.Row="1"/>
-        <controls:VicTabControlNormal Grid.Row="2" Grid.RowSpan="2"  Style="{DynamicResource MainVicTabControlStyle}">
-            <controls:VicTabItemNormal Header="本地皮肤" AllowDelete="False">
+        <controls:VicTabControlNormal Grid.Row="2" Grid.RowSpan="2"  Style="{DynamicResource TabControlStyle1}">
+            <TabItem Header="本地皮肤" Style="{DynamicResource TabItemStyle}" >
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="66*"/>
@@ -65,8 +65,8 @@
                         </ListBox>
                     </ScrollViewer>
                 </Grid>
-            </controls:VicTabItemNormal>
-            <controls:VicTabItemNormal  Header="在线皮肤" AllowDelete="False">
+            </TabItem>
+            <TabItem  Header="在线皮肤" Style="{DynamicResource TabItemStyle}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"></RowDefinition>
@@ -80,7 +80,7 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ListBox>
-                    <Border Grid.Row="1" BorderBrush="Green" BorderThickness="1"></Border>
+                    <Border Grid.Row="1" BorderBrush="{DynamicResource SkinColor}" BorderThickness="1"></Border>
                     <ScrollViewer CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                         <ListBox Name="listBoxOnLineList" Style="{DynamicResource RadioButtonOnLineListStyle}" ItemsSource="{Binding SystemOnLineList,UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
                             <i:Interaction.Triggers>
@@ -91,8 +91,8 @@
                         </ListBox>                       
                     </ScrollViewer>
                 </Grid>
-            </controls:VicTabItemNormal>
-            <controls:VicTabItemNormal  Header="壁纸"  AllowDelete="False">
+            </TabItem>
+            <TabItem Header="壁纸"  Style="{DynamicResource TabItemStyle}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"></RowDefinition>
@@ -111,7 +111,7 @@
                         <ListBox Name="listBoxWallList" Style="{DynamicResource RadioButtonWallPaperListStyle}" ItemsSource="{Binding SystemWallPaperList,UpdateSourceTrigger=PropertyChanged}"/>
                     </ScrollViewer>
                 </Grid>
-            </controls:VicTabItemNormal>
+            </TabItem>
         </controls:VicTabControlNormal>
     </Grid>
     <i:Interaction.Triggers>

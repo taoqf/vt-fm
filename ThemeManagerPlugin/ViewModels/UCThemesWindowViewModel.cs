@@ -375,63 +375,67 @@ namespace ThemeManagerPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    OnLineModel model = (OnLineModel)x;
-                    foreach (ThemeModel skinModel in SystemThemeList)
+                    if(x!=null)
                     {
-                        if (skinModel.SkinName.Equals(model.OnLineName))
+                        OnLineModel model = (OnLineModel)x;
+                        foreach (ThemeModel skinModel in SystemThemeList)
                         {
-                            try
+                            if (skinModel.SkinName.Equals(model.OnLineName))
                             {
-                                string messageType = "ServerCenterService.ChangeThemeByDll";
-                                Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                                Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
-                                ServiceParams.Add("SourceName", skinModel.ThemeName);
-                                ServiceParams.Add("SkinPath", skinModel.SkinPath);
-                                contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
-                                DataMessageOperation messageOp = new DataMessageOperation();
-                                messageOp.SendAsyncMessage(messageType, contentDic);
-                                return;
+                                try
+                                {
+                                    string messageType = "ServerCenterService.ChangeThemeByDll";
+                                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                                    Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
+                                    ServiceParams.Add("SourceName", skinModel.ThemeName);
+                                    ServiceParams.Add("SkinPath", skinModel.SkinPath);
+                                    contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
+                                    DataMessageOperation messageOp = new DataMessageOperation();
+                                    messageOp.SendAsyncMessage(messageType, contentDic);
+                                    return;
+                                }
+                                catch (Exception ex)
+                                {
+                                    VicMessageBoxNormal.Show("Change error: " + ex.Message);
+                                }
                             }
-                            catch (Exception ex)
+                        }
+                        string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
+                        Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
+                        Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
+                        downloadAddress.Add("DownloadFileId", model.FilePath);
+                        downloadAddress.Add("DownloadToPath", localityUrl);
+                        downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
+                        DataMessageOperation messageOperation = new DataMessageOperation();
+                        Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
+                                                               downloadMessageContent);
+                        SystemThemeList.Clear();
+                        GetThemeSkinNum();
+
+                        foreach (ThemeModel skinModel in SystemThemeList)
+                        {
+                            if (skinModel.SkinName.Equals(model.OnLineName))
                             {
-                                VicMessageBoxNormal.Show("Change error: " + ex.Message);
+                                try
+                                {
+                                    string messageType = "ServerCenterService.ChangeThemeByDll";
+                                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                                    Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
+                                    ServiceParams.Add("SourceName", skinModel.ThemeName);
+                                    ServiceParams.Add("SkinPath", skinModel.SkinPath);
+                                    contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
+                                    DataMessageOperation messageOp = new DataMessageOperation();
+                                    messageOp.SendAsyncMessage(messageType, contentDic);
+                                    return;
+                                }
+                                catch (Exception ex)
+                                {
+                                    VicMessageBoxNormal.Show("Change error: " + ex.Message);
+                                }
                             }
                         }
                     }
-                    string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
-                    Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
-                    Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
-                    downloadAddress.Add("DownloadFileId", model.FilePath);
-                    downloadAddress.Add("DownloadToPath", localityUrl);
-                    downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
-                    DataMessageOperation messageOperation = new DataMessageOperation();
-                    Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
-                                                           downloadMessageContent);
-                    SystemThemeList.Clear();
-                    GetThemeSkinNum();
-                
-                    foreach (ThemeModel skinModel in SystemThemeList)
-                    {
-                        if (skinModel.SkinName.Equals(model.OnLineName))
-                        {
-                            try
-                            {
-                                string messageType = "ServerCenterService.ChangeThemeByDll";
-                                Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                                Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
-                                ServiceParams.Add("SourceName", skinModel.ThemeName);
-                                ServiceParams.Add("SkinPath", skinModel.SkinPath);
-                                contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
-                                DataMessageOperation messageOp = new DataMessageOperation();
-                                messageOp.SendAsyncMessage(messageType, contentDic);
-                                return;
-                            }
-                            catch (Exception ex)
-                            {
-                                VicMessageBoxNormal.Show("Change error: " + ex.Message);
-                            }
-                        }
-                    }
+                   
                 });
             }
         }

@@ -4,7 +4,7 @@
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
                     xmlns:converters="clr-namespace:VictopPartner">
 
-    <controls:IconToImageConverter x:Key="IconToImageConverter"/>
+    <controls:IconToImageConverter x:Key="IconToImageConverter"/> 
     <controls:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <controls:CheckboxBoolConverter x:Key="CheckboxBoolConverter"/>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
