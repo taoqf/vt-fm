@@ -75,6 +75,65 @@
         </Setter>
     </Style>
 <!--在线皮肤样式开始-->
+    
+    <Style  TargetType="{x:Type ProgressBar}" x:Key="progressBarStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid MinHeight="8" MinWidth="100" >
+                        <Border Name="PART_Track" CornerRadius="3" BorderBrush="#707070"  
+                           BorderThickness="1" Background="#C9C9C9" Opacity="0.9"/>
+                        <Border x:Name="PART_Indicator" Height="6"  CornerRadius="3" BorderBrush="White"  BorderThickness="3"   
+                         HorizontalAlignment="Left" >
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ToolTipStyle" TargetType="ToolTip">
+        <Setter Property ="IsOpen" Value="False"/>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property ="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border x:Name="errorBorder" BorderThickness="1" CornerRadius="8" BorderBrush="Yellow" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="50">
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius ="4" ShadowDepth="0"/>
+                        </Border.Effect>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="textBlock" Text="{TemplateBinding Content }"  FontSize="14"  TextWrapping="Wrap" Foreground="White"/>
+                    </Border>
+                    
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property ="IsOpen" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Duration="0:0:3">
+                                <DiscreteObjectKeyFrame KeyTime ="0:0:0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Visible</Visibility >
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                                <DiscreteObjectKeyFrame KeyTime ="0:0:3">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <Visibility>Hidden</Visibility >
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style  x:Key="RadioButtonOnLineListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
@@ -95,13 +154,35 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <ControlTemplate.Resources>
+                                    <Storyboard x:Key="Storyboard1">
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(RangeBase.Value)" Storyboard.TargetName="progressBar">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="100"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="progressBar">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </ControlTemplate.Resources>
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-                                    <Border Name="border" ToolTip="{Binding OnLineName}"  BorderBrush="Transparent"  BorderThickness="0" Height="122" Width="203">
-                                        <Border.Background>
+                                    <Border Name="border" BorderBrush="Transparent"  BorderThickness="0" Height="122" Width="203">
+                                        <Border.ToolTip>
+                                            <ToolTip Style="{DynamicResource ToolTipStyle}" Content="{Binding OnLineName}"></ToolTip>
+                                        </Border.ToolTip>
+                                            <Border.Background>
                                             <ImageBrush ImageSource="{Binding OnLinePreview}" Stretch="UniformToFill"/>
                                         </Border.Background>
+                                        
+                                        <Border Name="borderSelect" Opacity="0" Background="Transparent"  Height="10" Margin="10,0,0,0"  Width="100">
+                                        <ProgressBar x:Name="progressBar" Value="{Binding CurrentRate}" Style="{DynamicResource progressBarStyle}">
+                                           
+                                        </ProgressBar>
+                                        </Border>
                                     </Border>
-                                    <Grid>
+                                   
+                                    <!--<Grid>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                             <controls:VicButtonNormal BorderThickness="0"  Content="应用" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30" VerticalAlignment="Center"
                                              Command="{Binding DataContext.btnOnLineUseCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
@@ -111,15 +192,27 @@
                                                          Command="{Binding DataContext.btnOnLineDownloadCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                          CommandParameter="{Binding .}"/>
                                         </StackPanel>
-                                    </Grid>
+                                    </Grid>-->
                                    
-                                </StackPanel>
+                                </StackPanel> 
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver"  Value="True" >
                                         <Setter Property="BorderBrush" Value="Yellow" TargetName="border"/>
                                         <Setter Property="BorderThickness" Value="3" TargetName="border"/>
                                         <Setter Property="CornerRadius" Value="5" TargetName="border"></Setter>
                                     </Trigger>
+                                        <Trigger Property="IsSelected" Value="true" >
+                                            <Setter Property="BorderBrush" TargetName="border"  Value="Yellow"/>
+                                            <Setter Property="Opacity" TargetName="borderSelect"  Value="1"/>
+                                        </Trigger>
+                                        <MultiTrigger>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.Conditions>
+                                            <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                        </MultiTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
