@@ -141,6 +141,27 @@ namespace MetroFramePlugin.Models
             }
         }
         /// <summary>
+        /// 插件标识
+        /// </summary>
+         [JsonProperty(PropertyName = "Uid")]
+        private string uid;
+         [JsonIgnore]
+        public string Uid
+        {
+            get
+            {
+                return uid;
+            }
+            set
+            {
+                if (uid != value)
+                {
+                    uid = value;
+                    RaisePropertyChanged("Uid");
+                }
+            }
+        }
+        /// <summary>
         /// 子菜单集合
         /// </summary>
         [JsonProperty(PropertyName = "Children")]

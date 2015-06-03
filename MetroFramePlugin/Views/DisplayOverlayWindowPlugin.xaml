@@ -31,6 +31,38 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+
+        <Style x:Key="LeftButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="Width" Value="35"/>
+            <Setter Property="Height" Value="75"/>
+            <Setter Property="Template" >
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="PART_Border"   BorderThickness="0"  Background="Transparent">
+                            <Path Grid.Row="1" Data="M148,185 C172.5,165.83333 219.5,130.5 221.5,127.5 223.5,124.5 226.83333,132.16667 229.5,134.5 L191.5,186.5 228.5,239.5 220.5,244.5 145.5,188.5" Fill="Cyan"  HorizontalAlignment="Left" Height="75"  Stretch="Fill" Stroke="Cyan" VerticalAlignment="Top" Width="35" />
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RightButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="Width" Value="35"/>
+            <Setter Property="Height" Value="75"/>
+            <Setter Property="Template" >
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="PART_Border"   BorderThickness="0"  Background="Transparent">
+                            <Path Grid.Row="1"  Data="M387,223 L349.5,277.5 358.5,283.5 430.5,224.5 358.5,164.5 348.5,169.5 z" Fill="Cyan"  HorizontalAlignment="Left" Height="75"  Stretch="Fill" Stroke="Cyan" VerticalAlignment="Top" Width="35" />
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
         <Window.DataContext>
         <vm:DisplayOverlayWindowPluginViewModel/>
@@ -40,22 +72,6 @@
             <i:InvokeCommandAction Command="{Binding displayOverlayWindowPluginCommand}" CommandParameter="{Binding ElementName=DisplayOverlayWindow}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <!--没动画-->
-    <!--<Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="40"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Button Content="&#xe6ab;" IsEnabled="{Binding UpPageVis}" Height="40" Width="40" HorizontalAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnUpPageClickCommand}" Background="Transparent"></Button>
-        <controls:VicStackPanelNormal Grid.Column="1" Orientation="Vertical"  Name="statePanel">
-
-
-        </controls:VicStackPanelNormal>
-        
-        <Button Content="&#xe6ae;" IsEnabled="{Binding NextPageVis}" Height="40" Width="40" HorizontalAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" Style="{DynamicResource btnNextPageStyle}" Command="{Binding btnNextPageClickCommand}" Background="Transparent"></Button>
-    </Grid>-->
-    <!--动画分屏-->
     <Grid>
         <Grid Width="900">
             <Grid.ColumnDefinitions>
@@ -63,7 +79,27 @@
                 <ColumnDefinition x:Name="CenterGrid" Width="*"/>
                 <ColumnDefinition x:Name="RightGrid" Width="50"/>
             </Grid.ColumnDefinitions>
-            <Image x:Name="imageLeft" Grid.Column="0"   Source="..\Images\left.png"  Stretch="Fill" RenderTransformOrigin="0.5,0.5" Height="73" Width="45"
+            <Button Grid.Column="0" x:Name="imageLeft" RenderTransformOrigin="0.5,0.5"  Style="{DynamicResource LeftButtonStyle}">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+            <Button Grid.Column="2" x:Name="imageRight"  Style="{DynamicResource RightButtonStyle}"   RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+            <!--<Image x:Name="imageLeft" Grid.Column="0"   Source="..\Images\left.png"  Stretch="Fill" RenderTransformOrigin="0.5,0.5" Height="73" Width="45"
                 Visibility="Hidden" >
                 <Image.RenderTransform>
                     <TransformGroup>
@@ -84,7 +120,7 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </Image.RenderTransform>
-            </Image>
+            </Image>-->
             <Canvas Grid.Column="1"  Width="800" Height="350" Name="canvasPageContent" Margin="0,1" >
                 <Canvas.Clip>
                     <RectangleGeometry x:Name="canvasPageRectangle" RadiusX="0" RadiusY="0" Rect="0,0,800,350" />

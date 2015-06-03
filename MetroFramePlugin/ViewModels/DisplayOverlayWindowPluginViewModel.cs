@@ -33,11 +33,11 @@ namespace MetroFramePlugin.ViewModels
        /// <summary>
        /// 左翻页
        /// </summary>
-       private Image imageLeft;
+       private Button imageLeft;
        /// <summary>
        /// 右翻页
        /// </summary>
-       private Image imageRight;
+       private Button imageRight;
        /// <summary>
        /// 内容容器
        /// </summary>
@@ -157,8 +157,8 @@ namespace MetroFramePlugin.ViewModels
                return new RelayCommand<object>((x) =>
                {
                    displayOverlayWindow = (Window)x;
-                   imageLeft = (Image)displayOverlayWindow.FindName("imageLeft");
-                   imageRight = (Image)displayOverlayWindow.FindName("imageRight");
+                   imageLeft = (Button)displayOverlayWindow.FindName("imageLeft");
+                   imageRight = (Button)displayOverlayWindow.FindName("imageRight");
                    wrapPanelPages = (WrapPanel)displayOverlayWindow.FindName("wrapPanelPages");
                    canvasPageContent = (Canvas)displayOverlayWindow.FindName("canvasPageContent");
                    canvasPageRectangle = (RectangleGeometry)displayOverlayWindow.FindName("canvasPageRectangle");
@@ -170,10 +170,12 @@ namespace MetroFramePlugin.ViewModels
                    #region 分屏按钮事件
                    imageLeft.MouseEnter += imageLeft_MouseEnter;
                    imageLeft.MouseLeave += imageLeft_MouseLeave;
-                   imageLeft.MouseLeftButtonDown += imageLeft_MouseLeftButtonDown;
+                  //imageLeft.MouseLeftButtonDown += imageLeft_MouseLeftButtonDown;
+                   imageLeft.Click += imageLeft_Click;
                    imageRight.MouseEnter += imageRight_MouseEnter;
                    imageRight.MouseLeave += imageRight_MouseLeave;
-                   imageRight.MouseLeftButtonDown += imageRight_MouseLeftButtonDown;
+                   //imageRight.MouseLeftButtonDown += imageRight_MouseLeftButtonDown;
+                   imageRight.Click += imageRight_Click;
                    #endregion
                    #region 内容容器事件
                    canvasPageContent.PreviewMouseLeftButtonDown += canvasPageContent_PreviewMouseLeftButtonDown;
@@ -195,7 +197,7 @@ namespace MetroFramePlugin.ViewModels
                            menumodel.MenuName = Plugin.PluginTitle;
                           // menumodel.ActionType = Plugin.ShowType.ToString();
                           // menumodel.ResourceName = Plugin.PluginName;
-                         //  menumodel.Uid = PluginInfo["ObjectId"].ToString();
+                           menumodel.Uid = PluginInfo["ObjectId"].ToString();
                            menumodel.ShowType = Plugin.ShowType.ToString();
                            SystemFourthLevelMenuList.Add(menumodel);
                        }
@@ -206,7 +208,7 @@ namespace MetroFramePlugin.ViewModels
                                menumodel.MenuName = Plugin.PluginTitle.ToString().Substring(0, 10) + "...";
                          //      menumodel.ActionType = Plugin.ShowType.ToString();
                          //      menumodel.ResourceName = Plugin.PluginName;
-                           //    menumodel.Uid = PluginInfo["ObjectId"].ToString();
+                               menumodel.Uid = PluginInfo["ObjectId"].ToString();
                                menumodel.ShowType = Plugin.ShowType.ToString();
                            }
                            else
@@ -214,7 +216,7 @@ namespace MetroFramePlugin.ViewModels
                                menumodel.MenuName = Plugin.PluginTitle;
                             //    menumodel.ActionType = Plugin.ShowType.ToString();
                             //   menumodel.ResourceName = Plugin.PluginName;
-                            //   menumodel.Uid = PluginInfo["ObjectId"].ToString();
+                               menumodel.Uid = PluginInfo["ObjectId"].ToString();
                                menumodel.ShowType = Plugin.ShowType.ToString();
                            }
                            SystemFourthLevelMenuList.Add(menumodel);
@@ -252,6 +254,10 @@ namespace MetroFramePlugin.ViewModels
            }
        }
 
+    
+
+      
+
 
 
 
@@ -273,7 +279,7 @@ namespace MetroFramePlugin.ViewModels
 
                            for (int i = 0; i < WinCollection.Count; i++)
                            {
-                               //if (WinCollection[i].Uid.Equals(menuModel.Uid))
+                               if (WinCollection[i].Uid.Equals(menuModel.Uid))
                                {
                                    switch (WinCollection[i].ResizeMode)
                                    {
@@ -311,7 +317,7 @@ namespace MetroFramePlugin.ViewModels
                            {
                                VicTabItemNormal tabItem = tabCtr.Items[i] as VicTabItemNormal;
                                string res = tabItem.Uid;
-                             // if (tabItem.Uid.Equals(menuModel.Uid))
+                               if (tabItem.Uid.Equals(menuModel.Uid))
                                {
                                    tabItem.IsSelected = true;
                                    tabItem.Focus();
@@ -1017,7 +1023,11 @@ namespace MetroFramePlugin.ViewModels
            sboardRightIamge.Begin();
            ChangePage(true);
        }
-
+       void imageRight_Click(object sender, RoutedEventArgs e)
+       {
+           sboardRightIamge.Begin();
+           ChangePage(true);
+       }
        private void imageRight_MouseLeave(object sender, MouseEventArgs e)
        {
            imageRight.Effect = null;
@@ -1030,10 +1040,14 @@ namespace MetroFramePlugin.ViewModels
 
        private void imageLeft_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
        {
+          sboardLeftIamge.Begin();
+           ChangePage(false);
+       }
+       void imageLeft_Click(object sender, RoutedEventArgs e)
+       {
            sboardLeftIamge.Begin();
            ChangePage(false);
        }
-
        private void imageLeft_MouseLeave(object sender, MouseEventArgs e)
        {
            imageLeft.Effect = null;
