@@ -975,7 +975,7 @@ namespace MetroFramePlugin.ViewModels
                 paramDic.Add("configsystemid", "11");
                 paramDic.Add("formid", selectedFourthMenu.FormId);
                 paramDic.Add("authoritycode", selectedFourthMenu.AuthorityCode);
-                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.PackageUrl, paramDic);
+                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.PackageUrl, paramDic, selectedFourthMenu.MenuName);
                 if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {
                     PluginShow(pluginModel, selectedFourthMenu.MenuName);
