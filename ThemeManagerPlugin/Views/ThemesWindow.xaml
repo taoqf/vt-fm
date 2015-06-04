@@ -37,8 +37,8 @@
             </controls:VicButtonNormal>
         </Grid>
         <Grid Background="{DynamicResource SkinColor}"  Grid.Row="1"/>
-        <controls:VicTabControlNormal Grid.Row="2" Grid.RowSpan="2"  Style="{DynamicResource TabControlStyle1}">
-            <TabItem Header="本地皮肤" Style="{DynamicResource TabItemStyle}" >
+        <controls:VicTabControlNormal Grid.Row="2" Grid.RowSpan="2"  Style="{DynamicResource ThemeTabControlStyle}">
+            <TabItem Header="本地皮肤" Style="{DynamicResource ThemeTabItemStyle}" >
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="66*"/>
@@ -66,7 +66,7 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem  Header="在线皮肤" Style="{DynamicResource TabItemStyle}">
+            <TabItem  Header="在线皮肤" Style="{DynamicResource ThemeTabItemStyle}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"></RowDefinition>
@@ -92,7 +92,7 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="壁纸"  Style="{DynamicResource TabItemStyle}">
+            <TabItem Header="壁纸"  Style="{DynamicResource ThemeTabItemStyle}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"></RowDefinition>

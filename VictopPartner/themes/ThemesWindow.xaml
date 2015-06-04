@@ -415,7 +415,7 @@
         <GradientStop Color="#FF006691" Offset="1"/>
         <GradientStop Color="White"/>
     </LinearGradientBrush>
-    <Style x:Key="TabControlStyle1" TargetType="{x:Type TabControl}">
+    <Style x:Key="ThemeTabControlStyle" TargetType="{x:Type TabControl}">
         <!--<Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect/>
@@ -455,7 +455,7 @@
     <SolidColorBrush x:Key="TabItemDisabledBackground" Color="Transparent"/>
     <SolidColorBrush x:Key="TabItemDisabledBorderBrush" Color="Transparent"/>
     
-    <Style x:Key="TabItemStyle" TargetType="{x:Type TabItem}">
+    <Style x:Key="ThemeTabItemStyle" TargetType="{x:Type TabItem}">
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Padding" Value="6,1,6,1"/>
         <Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
@@ -476,7 +476,7 @@
                         </Trigger>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Panel.ZIndex" Value="1"/>
-                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
                             <Setter Property="Background" TargetName="Bd">
                                 <Setter.Value>
                                     <VisualBrush>
