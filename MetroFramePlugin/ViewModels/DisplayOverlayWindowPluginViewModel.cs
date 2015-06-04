@@ -240,15 +240,6 @@ namespace MetroFramePlugin.ViewModels
                    {
                        totalPage = SystemFourthLevelMenuList.Count / pageSize + 1; ;// 非8项，
                    }
-
-                   //for (int i = 0; i < SystemFourthLevelMenuList.Count; i++)
-                   //{
-                   //    ListBox lbox = new ListBox();
-                   //    lbox.ItemsSource = SystemFourthLevelMenuList;
-                   //    lbox.SetResourceReference(ListBox.StyleProperty, "OverlayPluginListStyle");
-                   //    statePanel.Children.Add(lbox);
-
-                   //}
                    setInit(totalPage);
                });
            }
@@ -357,12 +348,6 @@ namespace MetroFramePlugin.ViewModels
                        {
                            totalPage = SystemFourthLevelMenuList.Count / pageSize + 1; ;// 非8项，
                        }
-
-
-                       //statePanel.Children.Clear();
-                       //setPage(totalPage);
-
-
                        wrapPanelPages.Children.Clear();
                        imageLeft.Visibility = System.Windows.Visibility.Hidden;
                        imageRight.Visibility = System.Windows.Visibility.Hidden;

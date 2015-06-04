@@ -32,37 +32,7 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
 
-        <Style x:Key="LeftButtonStyle" TargetType="Button">
-            <Setter Property="Margin" Value="5,0,5,0"/>
-            <Setter Property="Width" Value="35"/>
-            <Setter Property="Height" Value="75"/>
-            <Setter Property="Template" >
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="PART_Border"   BorderThickness="0"  Background="Transparent">
-                            <Path Grid.Row="1" Data="M148,185 C172.5,165.83333 219.5,130.5 221.5,127.5 223.5,124.5 226.83333,132.16667 229.5,134.5 L191.5,186.5 228.5,239.5 220.5,244.5 145.5,188.5" Fill="Cyan"  HorizontalAlignment="Left" Height="75"  Stretch="Fill" Stroke="Cyan" VerticalAlignment="Top" Width="35" />
-                        </Border>
-
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="RightButtonStyle" TargetType="Button">
-            <Setter Property="Margin" Value="5,0,5,0"/>
-            <Setter Property="Width" Value="35"/>
-            <Setter Property="Height" Value="75"/>
-            <Setter Property="Template" >
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="PART_Border"   BorderThickness="0"  Background="Transparent">
-                            <Path Grid.Row="1"  Data="M387,223 L349.5,277.5 358.5,283.5 430.5,224.5 358.5,164.5 348.5,169.5 z" Fill="Cyan"  HorizontalAlignment="Left" Height="75"  Stretch="Fill" Stroke="Cyan" VerticalAlignment="Top" Width="35" />
-                        </Border>
-
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        
     </Window.Resources>
         <Window.DataContext>
         <vm:DisplayOverlayWindowPluginViewModel/>
