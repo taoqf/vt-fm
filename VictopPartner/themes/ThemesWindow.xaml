@@ -27,12 +27,13 @@
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    <Setter Property="Margin"  Value="10"/>
+                    <Setter Property="Margin"  Value="10,0"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-                                    <Border Name="border" BorderBrush="White" CornerRadius="5" BorderThickness="3" Height="122" Width="203">
+                                    <Border Name="border" BorderBrush="White" CornerRadius="5" BorderThickness="3" Height="122" Width="205">
+                                        
                                         <Border.Background>
                                             <ImageBrush ImageSource="{Binding SkinFace}" Stretch="UniformToFill"/>
                                         </Border.Background>

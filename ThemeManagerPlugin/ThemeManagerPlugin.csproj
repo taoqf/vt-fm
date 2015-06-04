@@ -82,6 +82,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Victop.Frame.Units, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Bin\Victop.Frame.Units.dll</HintPath>
+    </Reference>
     <Reference Include="Victop.Wpf.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Bin\Victop.Wpf.Controls.dll</HintPath>
@@ -92,6 +96,7 @@
   <ItemGroup>
     <Compile Include="Models\OnLineCategory.cs" />
     <Compile Include="Models\OnLineModel.cs" />
+    <Compile Include="Models\ShareClass.cs" />
     <Compile Include="Models\ThemeModel.cs" />
     <Compile Include="Models\WallPaperCategory.cs" />
     <Compile Include="Models\WallPaperModel.cs" />
