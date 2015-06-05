@@ -217,6 +217,25 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
 
+        /// <summary>
+        /// 用户ProductId
+        /// </summary>
+        private string productId;
+        public string ProductId
+        {
+            get
+            {
+                return productId;
+            }
+            set
+            {
+                if (productId != value)
+                {
+                    productId = value;
+                    RaisePropertyChanged("ProductId");
+                }
+            }
+        }
         #endregion
 
         #region 命令
@@ -259,7 +278,7 @@ namespace ThemeManagerPlugin.ViewModels
                     {
                         portalWindow.Close();
                     };
-                   
+                    GetProductId();
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
                     GetOnLineCategory();
@@ -701,6 +720,18 @@ namespace ThemeManagerPlugin.ViewModels
         }
 
         /// <summary>
+        /// 发送消息，得到ProductId
+        /// </summary>
+        private void GetProductId()
+        {
+            DataMessageOperation ThemePluginOp = new DataMessageOperation();
+            Dictionary<string, object> userDic = ThemePluginOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+            if (userDic != null)
+            {
+                ProductId = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "ProductId");
+            }
+        }
+        /// <summary>
         /// 壁纸分类展示
         /// </summary>
         private void GetWallPaperCategory()
@@ -766,7 +797,7 @@ namespace ThemeManagerPlugin.ViewModels
                 DataTable dt = MenuDs.Tables["dataArray"];
                 foreach (DataRow row in dt.Rows)
                 {
-                    string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["preview"];
+                    string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["preview"] + "&productid=" + ProductId;
                     WallPaperModel model = new WallPaperModel();
                     model.FilePath = row["file_path"].ToString();
                     model.WallPreview = previewUrl;
@@ -843,7 +874,7 @@ namespace ThemeManagerPlugin.ViewModels
                 foreach (DataRow row in dt.Rows)
                 {
                     OnLineModel model = new OnLineModel();
-                    string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["img_url"];
+                    string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["img_url"] + "&productid=" + ProductId;
                     
                     model.OnLineNo = row["skin_no"].ToString();
                     model.OnLineName = row["skin_name"].ToString();
