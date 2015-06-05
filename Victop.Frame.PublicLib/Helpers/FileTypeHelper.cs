@@ -571,6 +571,7 @@ namespace Victop.Frame.PublicLib.Helpers
      {".xwd", "image/x-xwindowdump"},
      {".z", "application/x-compress"},
      {".zip", "application/x-zip-compressed"},
+     {".xmind","application/vnd.xmind.workbook"}
      };
         #endregion
         /// <summary>
