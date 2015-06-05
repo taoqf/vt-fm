@@ -104,6 +104,22 @@ namespace ThemeManagerPlugin.Models
                 }
             }
         }
+        /// <summary>
+        /// 分类编号
+        /// </summary>
+        private string category_no;
+        public string Category_No
+        {
+            get { return category_no; }
+            set
+            {
+                if (category_no != value)
+                {
+                    category_no = value;
+                    RaisePropertyChanged("Category_No");
+                }
+            }
+        }
     }
 
 }

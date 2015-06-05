@@ -178,7 +178,7 @@
                     </ListBox>
                     <Border Grid.Row="1" BorderBrush="{DynamicResource SkinColor}" BorderThickness="1"/>
                     <ScrollViewer  CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                        <ListBox Name="listBoxWallList" Style="{DynamicResource RadioButtonWallPaperListStyle}" ItemsSource="{Binding SystemWallPaperList,UpdateSourceTrigger=PropertyChanged}"/>
+                        <ListBox Name="listBoxWallList" Style="{DynamicResource RadioButtonWallPaperListStyle}" ItemsSource="{Binding SeletetedTabControlWallPaperList,UpdateSourceTrigger=PropertyChanged}"/>
                     </ScrollViewer>
                 </Grid>
             </TabItem>

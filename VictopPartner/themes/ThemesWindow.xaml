@@ -293,9 +293,7 @@
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
                                     <Border Name="border" BorderBrush="Yellow" ToolTip="{Binding WllPaperName}" CornerRadius="5" BorderThickness="3" Height="122" Width="203">
-                                        <Border.Background>
-                                            <ImageBrush ImageSource="{Binding WallPreview}" Stretch="UniformToFill"/>
-                                        </Border.Background>
+                                        <Image Source="{Binding WallPreview}" Stretch="UniformToFill"></Image>
                                     </Border>
                                     <controls:VicButtonNormal  Grid.Row="1"   Name="downLoadRun" BorderThickness="0"  Content="下 载" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30"
                                                          VerticalAlignment="Center"

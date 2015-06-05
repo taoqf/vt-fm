@@ -126,20 +126,20 @@ namespace ThemeManagerPlugin.ViewModels
         }
 
         /// <summary>壁纸列表 </summary>
-        private ObservableCollection<WallPaperModel> _systemWallPaperList;
+        private ObservableCollection<WallPaperModel> systemWallPaperList;
         public ObservableCollection<WallPaperModel> SystemWallPaperList
         {
             get
             {
-                if (_systemWallPaperList == null)
-                    _systemWallPaperList = new ObservableCollection<WallPaperModel>();
-                return _systemWallPaperList;
+                if (systemWallPaperList == null)
+                    systemWallPaperList = new ObservableCollection<WallPaperModel>();
+                return systemWallPaperList;
             }
             set
             {
-                if (_systemWallPaperList != value)
+                if (systemWallPaperList != value)
                 {
-                    _systemWallPaperList = value;
+                    systemWallPaperList = value;
                     RaisePropertyChanged("SystemWallPaperList");
                 }
             }
@@ -163,7 +163,25 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
-
+        /// <summary>当前选项卡壁纸列表 </summary>
+        private ObservableCollection<WallPaperModel> seletetedTabControlWallPaperList;
+        public ObservableCollection<WallPaperModel> SeletetedTabControlWallPaperList
+        {
+            get
+            {
+                if (seletetedTabControlWallPaperList == null)
+                    seletetedTabControlWallPaperList = new ObservableCollection<WallPaperModel>();
+                return seletetedTabControlWallPaperList;
+            }
+            set
+            {
+                if (seletetedTabControlWallPaperList != value)
+                {
+                    seletetedTabControlWallPaperList = value;
+                    RaisePropertyChanged("SeletetedTabControlWallPaperList");
+                }
+            }
+        }
         /// <summary>在线皮肤列表</summary>
         private ObservableCollection<OnLineModel> _systemOnLineList;
         public ObservableCollection<OnLineModel> SystemOnLineList
@@ -284,7 +302,8 @@ namespace ThemeManagerPlugin.ViewModels
                     GetOnLineCategory();
                     GetOnLineTheme(SystemOnLineCategoryList[0].Category_No);
                     GetWallPaperCategory();
-                    GetWallPaperDisplay(WallPaperCategoryList[0].Category_No);
+                    GetWallPaperDisplay();//一次从服务器取到所有壁纸
+                    GetSelectedTabControlWallPaperDisplay(WallPaperCategoryList[0].Category_No);
                     totalPage = SystemThemeList.Count / pageSize;
                     if ((SystemThemeList.Count % pageSize) == 0)
                     {
@@ -623,8 +642,8 @@ namespace ThemeManagerPlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     WallPaperCategory model = (WallPaperCategory)x;
-                    SystemWallPaperList.Clear();
-                    GetWallPaperDisplay(model.Category_No);
+                    SeletetedTabControlWallPaperList.Clear();
+                    GetSelectedTabControlWallPaperDisplay(model.Category_No);
                 });
             }
         }
@@ -770,7 +789,7 @@ namespace ThemeManagerPlugin.ViewModels
         /// <summary>
         /// 壁纸列表展示
         /// </summary>
-        private void GetWallPaperDisplay(string categoryNo)
+        private void GetWallPaperDisplay()
         {
             DataMessageOperation messageOp = new DataMessageOperation();
             string channelId = string.Empty;
@@ -784,7 +803,7 @@ namespace ThemeManagerPlugin.ViewModels
             conDic.Add("name", "fd_wallpaper");
             List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
             Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConDic.Add("category_no", categoryNo);
+           // tableConDic.Add("category_no", categoryNo);
             tableConList.Add(tableConDic);
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
@@ -803,12 +822,25 @@ namespace ThemeManagerPlugin.ViewModels
                     model.WallPreview = previewUrl;
                     model.WllPaperName = row["wallpaper_name"].ToString();
                     model.WllPaperType = row["file_type"].ToString();
-
+                    model.Category_No = row["category_no"].ToString();
                     SystemWallPaperList.Add(model);
                 }
             }
         }
 
+
+        /// <summary>
+        /// 当前选项卡壁纸列表展示
+        /// </summary>
+        private void GetSelectedTabControlWallPaperDisplay(string categoryNo)
+        {
+            foreach (WallPaperModel model in SystemWallPaperList)
+            {
+                if (model.Category_No.Equals(categoryNo))   
+                    SeletetedTabControlWallPaperList.Add(model);
+            }
+           
+        }
 
         #region 在线皮肤分类
         private void GetOnLineCategory()
