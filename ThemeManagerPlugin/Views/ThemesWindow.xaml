@@ -4,6 +4,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:ThemeManagerPlugin.ViewModels" 
         xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+       xmlns:Unit="clr-namespace:Victop.Frame.Units;assembly=Victop.Frame.Units"
        Title="飞道皮肤中心" Name="portalWindow" Height="600" Width="700" ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"  WindowStyle="None" ResizeMode="NoResize" RenderTransformOrigin="0.5,0.5">
     <Window.Resources>
@@ -37,33 +38,58 @@
             </controls:VicButtonNormal>
         </Grid>
         <Grid Background="{DynamicResource SkinColor}"  Grid.Row="1"/>
-        <controls:VicTabControlNormal Grid.Row="2" Grid.RowSpan="2"  Style="{DynamicResource ThemeTabControlStyle}">
-            <TabItem Header="本地皮肤" Style="{DynamicResource ThemeTabItemStyle}" >
+        <controls:VicTabControlNormal Name="ThemeTabControl"  Grid.Row="2" Grid.RowSpan="2"  Style="{DynamicResource ThemeTabControlStyle}">
+            <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding ThemeTabControlSelectionChanged}" CommandParameter="{Binding ElementName=ThemeTabControl}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            <TabItem Name="localityTabItem" Header="本地皮肤" Style="{DynamicResource ThemeTabItemStyle}" >
+           
                 <Grid>
-                    <Grid.ColumnDefinitions>
+                    <!--<Grid.ColumnDefinitions>
                         <ColumnDefinition Width="66*"/>
                         <ColumnDefinition Width="65*"/>
                         <ColumnDefinition Width="218*"/>
-                    </Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>-->
                     <Grid.RowDefinitions>
                         <RowDefinition RowDefinition.Height="30"/>
                         <RowDefinition RowDefinition.Height="*"/>
+                        <RowDefinition RowDefinition.Height="22"/>
                     </Grid.RowDefinitions>
-                    <Grid   Background="{DynamicResource WhiteShade}" Grid.ColumnSpan="3">
+                    <Grid Background="{DynamicResource WhiteShade}">
                         <TextBlock HorizontalAlignment="Left" Margin="543,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" Text="共有"/>
                         <TextBlock Name="tblockSkinNum" Text="{Binding SkinNum}" HorizontalAlignment="Left" Margin="570,7,0,0" TextWrapping="Wrap"   VerticalAlignment="Top" Width="22" Height="16" TextAlignment="Center"/>
                         <TextBlock HorizontalAlignment="Left" Margin="594,7,0,0" TextWrapping="Wrap" Text="款皮肤" VerticalAlignment="Top" RenderTransformOrigin="0.655,-0.688"/>
                     </Grid>
-                    <Border Background="{DynamicResource WhiteShade}" Grid.Row="1" Grid.ColumnSpan="3"></Border>
-                    <ScrollViewer CanContentScroll="True"  Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3">
-                        <ListBox Name="listBoxThemeList"   SelectedItem="{Binding SelectedListBoxItem}"   Style="{DynamicResource RadioButtonListStyle}" ItemsSource="{Binding SystemThemeList,UpdateSourceTrigger=PropertyChanged}"  >
+                    <Border Background="{DynamicResource WhiteShade}" Grid.Row="1"></Border>
+                    <!--<ScrollViewer CanContentScroll="True"  Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3">-->
+                    <Canvas  Grid.Row="1"  Width="700" Height="460" Name="canvasPageContent" Margin="0,1" >
+                        <Canvas.Clip>
+                            <RectangleGeometry x:Name="canvasPageRectangle" RadiusX="0" RadiusY="0" Rect="0,0,700,460" />
+                        </Canvas.Clip>
+                        <WrapPanel Orientation="Vertical" Canvas.Left="0" Name="wrapPanelPages" Width="700" Height="460">
+                            <WrapPanel.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </WrapPanel.RenderTransform>
+                        </WrapPanel>
+                    </Canvas>
+                    <Grid Height="20" Grid.Row="2" VerticalAlignment="Bottom">
+                        <Unit:UnitPageBar HorizontalAlignment="Center"  x:Name="pageBar1" VerticalAlignment="Bottom"  Visibility="Hidden"/>
+                    </Grid>
+                    <!--<ListBox Name="listBoxThemeList"   SelectedItem="{Binding SelectedListBoxItem}"   Style="{DynamicResource RadioButtonListStyle}" ItemsSource="{Binding SystemThemeList,UpdateSourceTrigger=PropertyChanged}"  >
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding listBoxSystemThemeListSelectionChangedCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </ListBox>
-                    </ScrollViewer>
+                        </ListBox>-->
+                    <!--</ScrollViewer>-->
                 </Grid>
             </TabItem>
             <TabItem  Header="在线皮肤" Style="{DynamicResource ThemeTabItemStyle}">

@@ -22,16 +22,46 @@ using Victop.Frame.DataMessageManager;
 using System.Net;
 using System.Xml;
 using System.Windows.Threading;
+using Victop.Frame.Units;
 
 namespace ThemeManagerPlugin.ViewModels
 {
     public class UCThemesWindowViewModel : ModelBase
     {
         #region 字段&属性
+
+        #region 分屏字段属性
+        /// <summary>
+        /// 内容容器
+        /// </summary>
+        private Canvas canvasPageContent;
+        private RectangleGeometry canvasPageRectangle;
+        private WrapPanel wrapPanelPages;
+        private UnitPageBar pageBar1;
+        private int pageCount;
+        private int totalPage;
+        private int pageSize =9;
+        private int currentPage = 1;
+        int pageSelect = 0;
+
+        bool isDown = false;
+        double down_pX = 0;
+        double down_pY = 0;
+        bool isMoveSure = false;
+        double oldX = 0;
+
+        bool isInMove = false;
+        object changeLock = new object();
+        System.Windows.Media.Animation.Storyboard sboard;
+        System.Windows.Media.Animation.Storyboard sboardLeftIamge;
+        System.Windows.Media.Animation.Storyboard sboardRightIamge;
+        #endregion
+
         Storyboard stdEnd;
         private int currentRate = 0;
         private DispatcherTimer timer;
         private Window portalWindow;
+        private TabControl ThemeTabControl;
         /// <summary>皮肤列表 </summary>
         private ObservableCollection<ThemeModel> _systemThemeList;
         public ObservableCollection<ThemeModel> SystemThemeList
@@ -51,7 +81,27 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
-
+        /// <summary>
+        /// 皮肤分屏集合
+        /// </summary>
+        private ObservableCollection<ThemeModel> sumPageThemeList;
+        public ObservableCollection<ThemeModel> SumPageThemeList
+        {
+            get
+            {
+                if (sumPageThemeList == null)
+                    sumPageThemeList = new ObservableCollection<ThemeModel>();
+                return sumPageThemeList;
+            }
+            set
+            {
+                if (sumPageThemeList != value)
+                {
+                    sumPageThemeList = value;
+                    RaisePropertyChanged("SumPageThemeList");
+                }
+            }
+        }
         /// <summary>当前选中主题 </summary>
         private ThemeModel _selectedItem;
         public ThemeModel SelectedListBoxItem
@@ -172,7 +222,19 @@ namespace ThemeManagerPlugin.ViewModels
                 {
 
                     portalWindow = (Window)x;
+                    ThemeTabControl = (TabControl)portalWindow.FindName("ThemeTabControl");
+                    wrapPanelPages = (WrapPanel)portalWindow.FindName("wrapPanelPages");
+                    canvasPageContent = (Canvas)portalWindow.FindName("canvasPageContent");
+                    canvasPageRectangle = (RectangleGeometry)portalWindow.FindName("canvasPageRectangle");
+                    pageBar1 = (UnitPageBar)portalWindow.FindName("pageBar1");
                     stdEnd = (Storyboard)portalWindow.Resources["end"];
+                    #region 内容容器事件
+                    canvasPageContent.PreviewMouseLeftButtonDown += canvasPageContent_PreviewMouseLeftButtonDown;
+                    canvasPageContent.PreviewMouseLeftButtonUp += canvasPageContent_PreviewMouseLeftButtonUp;
+                    canvasPageContent.PreviewMouseMove += canvasPageContent_PreviewMouseMove;
+                    canvasPageContent.MouseLeave += canvasPageContent_MouseLeave;
+                    canvasPageContent.SizeChanged += canvasPageContent_SizeChanged;
+                    #endregion
                     stdEnd.Completed += (c, d) =>
                     {
                         portalWindow.Close();
@@ -184,6 +246,43 @@ namespace ThemeManagerPlugin.ViewModels
                     GetOnLineTheme(SystemOnLineCategoryList[0].Category_No);
                     GetWallPaperCategory();
                     GetWallPaperDisplay(WallPaperCategoryList[0].Category_No);
+                    totalPage = SystemThemeList.Count / pageSize;
+                    if ((SystemThemeList.Count % pageSize) == 0)
+                    {
+                        totalPage = SystemThemeList.Count / pageSize; //正好8项是1页
+                    }
+                    else
+                    {
+                        totalPage = SystemThemeList.Count / pageSize + 1; ;// 非8项，
+                    }
+                    setInit(totalPage);
+                });
+            }
+        }
+        public ICommand ThemeTabControlSelectionChanged
+        {
+            get {
+                return new RelayCommand<object>((x) =>
+                {
+                    
+                    ThemeTabControl = (TabControl)x;
+                    if(ThemeTabControl.SelectedIndex==0)
+                    {
+                        wrapPanelPages.Children.Clear();
+                        //GetThemeSkinNum();
+                        //GetDefaultThemeSkin();
+                        totalPage = SystemThemeList.Count / pageSize;
+                        if ((SystemThemeList.Count % pageSize) == 0)
+                        {
+                            totalPage = SystemThemeList.Count / pageSize; //正好8项是1页
+                        }
+                        else
+                        {
+                            totalPage = SystemThemeList.Count / pageSize + 1; ;// 非8项，
+                        }
+                        setInit(totalPage);
+                    }
+                  
                 });
             }
         }
@@ -741,7 +840,246 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
         #endregion
-     
+
+        #region 分屏方法
+        private void setInit(int totalPage)
+        {
+            //设置wrapPanelPages宽度
+            wrapPanelPages.Width = canvasPageContent.ActualWidth * totalPage;
+            SumPageThemeList.Clear();
+            for (int i = 0; i < SystemThemeList.Count; i++)
+            {
+                SumPageThemeList.Add(SystemThemeList[i]);
+            }
+            int articleWindowCount = SumPageThemeList.Count;
+
+            for (int i = 0; i < totalPage; i++)
+            {
+                WrapPanel rectangle = new WrapPanel();
+                rectangle.Orientation = Orientation.Vertical;
+                rectangle.Width = 700;
+                rectangle.Height = 460;
+                ObservableCollection<ThemeModel> currentPageList = new ObservableCollection<ThemeModel>();
+                ListBox lbox = new ListBox();
+                if (articleWindowCount > 0)
+                {
+                    foreach (var menuModel in SystemThemeList.Skip(i * pageSize).Take(pageSize).ToList<ThemeModel>())
+                    {
+                        if (menuModel != null)
+                        {
+                            currentPageList.Add(menuModel);
+                        }
+                    }
+                }
+                lbox.ItemsSource = currentPageList;
+                lbox.SelectedItem = SelectedListBoxItem;
+                lbox.SelectionChanged += lbox_SelectionChanged;
+                lbox.SetResourceReference(ListBox.StyleProperty, "RadioButtonListStyle");
+                rectangle.Children.Add(lbox);
+
+                Viewbox viewbox = new Viewbox();
+                viewbox.Stretch = Stretch.Fill;
+                viewbox.Width = canvasPageContent.ActualWidth;
+                viewbox.Height = canvasPageContent.ActualHeight;
+                viewbox.Child = rectangle;
+                wrapPanelPages.Children.Add(viewbox);
+            }
+
+            //改变页   pageSelect = defaultPageNum;
+            if (pageSelect > totalPage)
+                pageSelect = totalPage;
+            if (pageSelect == 0)
+                pageSelect = 1;
+            Canvas.SetLeft(wrapPanelPages, -canvasPageContent.ActualWidth * (pageSelect - 1));
+            pageBar1.CreatePageEllipse(totalPage);
+            pageBar1.SelectPage(pageSelect);
+            pageBar1.Visibility = System.Windows.Visibility.Visible;
+
+
+        }
+        private void canvasPageContent_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            isDown = true;
+            System.Windows.Point position = e.GetPosition(canvasPageContent);
+            down_pX = position.X;
+            down_pY = position.Y;
+            oldX = down_pX;
+        }
+
+        private void canvasPageContent_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (isDown)
+            {
+                e.Handled = isMoveSure;
+                changePos();
+            }
+        }
+
+        private void canvasPageContent_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDown)
+            {
+                System.Windows.Point position = e.GetPosition(canvasPageContent);
+                Canvas.SetLeft(wrapPanelPages, Canvas.GetLeft(wrapPanelPages) + (position.X - oldX));
+                oldX = position.X;
+
+                if (Math.Abs(down_pX - position.X) > 150)
+                {
+                    isMoveSure = true;
+                }
+            }
+        }
+
+        private void canvasPageContent_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (isDown)
+            {
+                changePos();
+            }
+        }
+        #region 页面大小变化
+        private void canvasPageContent_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            canvasPageRectangle.Rect = new Rect(0, 0, canvasPageContent.ActualWidth, canvasPageContent.ActualHeight);
+        }
+        #endregion
+        private void changePos()
+        {
+            double pageWidth = canvasPageContent.ActualWidth;
+            isDown = false;
+            isMoveSure = false;
+            double listLeft_now = Canvas.GetLeft(wrapPanelPages);
+            double listLeft_sur = -(pageSelect - 1) * pageWidth;
+            if (listLeft_now < listLeft_sur)
+            {
+                if (pageSelect == totalPage)
+                {
+                    isInMove = true;
+                    double formX = listLeft_now + (pageSelect - 1) * pageWidth;
+                    double toX = 0;
+                    double time = 1000 * Math.Abs(formX) / pageWidth;
+                    Canvas.SetLeft(wrapPanelPages, listLeft_sur);
+                    sboard = ShareClass.CeaterAnimation_Xmove(wrapPanelPages, formX, toX, time, 0);
+                    sboard.Completed += sboardNoChange_Completed;
+                    sboard.Begin();
+                }
+                else
+                {
+                    bool SureRight = false;
+                    double dis = Math.Abs(listLeft_now - listLeft_sur);
+                    if (dis >= 150)
+                        SureRight = true;
+                    if (SureRight)
+                    {
+                        isInMove = true;
+                        double formX = listLeft_now + (pageSelect - 1) * pageWidth;
+                        double toX = -pageWidth;
+                        double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                        Canvas.SetLeft(wrapPanelPages, listLeft_sur);
+                        sboard = ShareClass.CeaterAnimation_Xmove(wrapPanelPages, formX, toX, time, 0);
+                        sboard.Completed += sboardRight_Completed;
+                        sboard.Begin();
+                    }
+                    else
+                    {
+                        isInMove = true;
+                        double formX = listLeft_now + (pageSelect - 1) * pageWidth;
+                        double toX = 0;
+                        double time = 1000 * Math.Abs(formX) / pageWidth;
+                        Canvas.SetLeft(wrapPanelPages, listLeft_sur);
+                        sboard = ShareClass.CeaterAnimation_Xmove(wrapPanelPages, formX, toX, time, 0);
+                        sboard.Completed += sboardNoChange_Completed;
+                        sboard.Begin();
+                    }
+                }
+            }
+            else
+            {
+                if (pageSelect == 1)
+                {
+                    isInMove = true;
+                    double formX = listLeft_now + (pageSelect - 1) * pageWidth;
+                    double toX = 0;
+                    double time = 1000 * Math.Abs(formX) / pageWidth;
+                    Canvas.SetLeft(wrapPanelPages, listLeft_sur);
+                    sboard = ShareClass.CeaterAnimation_Xmove(wrapPanelPages, formX, toX, time, 0);
+                    sboard.Completed += sboardNoChange_Completed;
+                    sboard.Begin();
+                }
+                else
+                {
+                    bool SureLeft = false;
+                    double dis = Math.Abs(listLeft_now - listLeft_sur);
+                    if (dis >= 150)
+                        SureLeft = true;
+                    if (SureLeft)
+                    {
+                        isInMove = true;
+                        double formX = listLeft_now + (pageSelect - 1) * pageWidth;
+                        double toX = pageWidth;
+                        double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                        Canvas.SetLeft(wrapPanelPages, listLeft_sur);
+                        sboard = ShareClass.CeaterAnimation_Xmove(wrapPanelPages, formX, toX, time, 0);
+                        sboard.Completed += sboardLeft_Completed;
+                        sboard.Begin();
+                    }
+                    else
+                    {
+                        isInMove = true;
+                        double formX = listLeft_now + (pageSelect - 1) * pageWidth;
+                        double toX = 0;
+                        double time = 1000 * Math.Abs(formX) / pageWidth;
+                        Canvas.SetLeft(wrapPanelPages, listLeft_sur);
+                        sboard = ShareClass.CeaterAnimation_Xmove(wrapPanelPages, formX, toX, time, 0);
+                        sboard.Completed += sboardNoChange_Completed;
+                        sboard.Begin();
+                    }
+                }
+            }
+        }
+        //翻页回滚结束
+        private void sboardNoChange_Completed(object sender, EventArgs e)
+        {
+            lock (changeLock)
+            {
+                isInMove = false;
+            }
+        }
+
+        //右翻页结束
+        private void sboardRight_Completed(object sender, EventArgs e)
+        {
+            pageSelect++;
+            pageBar1.SelectPage(pageSelect);
+            sboard.Stop();
+            Canvas.SetLeft(wrapPanelPages, -(pageSelect - 1) * canvasPageContent.ActualWidth);
+            lock (changeLock)
+            {
+                isInMove = false;
+            }
+        }
+
+        //左翻页结束
+        private void sboardLeft_Completed(object sender, EventArgs e)
+        {
+            pageSelect--;
+            pageBar1.SelectPage(pageSelect);
+            sboard.Stop();
+            Canvas.SetLeft(wrapPanelPages, -(pageSelect - 1) * canvasPageContent.ActualWidth);
+            lock (changeLock)
+            {
+                isInMove = false;
+            }
+        }
+        void lbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListBox listBox = sender as ListBox;
+            SelectedListBoxItem = (ThemeModel)listBox.SelectedItem;
+            ChangeFrameWorkTheme();
+            this.UpdateDefaultSkin();
+        }
+        #endregion
+
         #endregion
     }
 }

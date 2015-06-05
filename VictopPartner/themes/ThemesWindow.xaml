@@ -33,15 +33,14 @@
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
                                     <Border Name="border" BorderBrush="White" CornerRadius="5" BorderThickness="3" Height="122" Width="205">
-                                        
                                         <Border.Background>
-                                            <ImageBrush ImageSource="{Binding SkinFace}" Stretch="UniformToFill"/>
+                                            <ImageBrush  ImageSource="{Binding SkinFace}" Stretch="UniformToFill"/>
                                         </Border.Background>
                                         <Border Name="borderSelect" Opacity="0" Background="Yellow" CornerRadius="24" HorizontalAlignment="Left" Height="24" Margin="154,90,0,0" VerticalAlignment="Top" Width="24">
                                             <Grid>
                                                 <Path Fill="Red" HorizontalAlignment="Left" 
                                                   StrokeThickness="0" 
-                                                  VerticalAlignment="Top" 
+                                                  VerticalAlignment="Top"  
                                                   Margin="8.383,10.541,0,0" 
                                                   Data="M0,0 L12,0 12,0.38199188 12.230031,0.36226721 12.913506,8.3330173 10.920817,8.5038862 10.363123,2 0,2 z" 
                                                   Height="8.504" 
