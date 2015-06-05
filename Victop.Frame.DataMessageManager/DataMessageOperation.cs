@@ -318,14 +318,20 @@ namespace Victop.Frame.DataMessageManager
                                                     {
                                                         if (!clientRefModel.ClientRefField.Equals(item.ConditionLeft))
                                                         {
-                                                            tableconditionList.FirstOrDefault(it => it.ContainsKey(refRightField))[refRightField] = drs[0][refLeftField];
+                                                            if (!string.IsNullOrEmpty(drs[0][refLeftField].ToString()))
+                                                            {
+                                                                tableconditionList.FirstOrDefault(it => it.ContainsKey(refRightField))[refRightField] = drs[0][refLeftField];
+                                                            }
                                                         }
                                                     }
                                                     else
                                                     {
                                                         Dictionary<string, object> itemDic = new Dictionary<string, object>();
-                                                        itemDic.Add(refRightField, drs[0][refLeftField]);
-                                                        tableconditionList.Add(itemDic);
+                                                        if (!string.IsNullOrEmpty(drs[0][refLeftField].ToString()))
+                                                        {
+                                                            itemDic.Add(refRightField, drs[0][refLeftField]);
+                                                            tableconditionList.Add(itemDic);
+                                                        }
                                                     }
                                                 }
                                             }
