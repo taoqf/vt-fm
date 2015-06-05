@@ -1571,7 +1571,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         </Setter>
     </Style>
     <!--图标字体专用按钮样式结束-->
-   <!--分屏按钮样式开始-->
+   <!--浮窗分屏按钮样式开始-->
     <Style x:Key="LeftButtonStyle" TargetType="Button">
         <Setter Property="Margin" Value="5,0,5,0"/>
         <Setter Property="Width" Value="35"/>
@@ -1603,5 +1603,5 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
             </Setter.Value>
         </Setter>
     </Style>
-    <!--分屏按钮样式结束-->
+    <!--浮窗分屏按钮样式结束-->
 </ResourceDictionary>
