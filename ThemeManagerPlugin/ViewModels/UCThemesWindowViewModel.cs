@@ -423,6 +423,7 @@ namespace ThemeManagerPlugin.ViewModels
                             Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
                             downloadAddress.Add("DownloadFileId", wallModel.FilePath);
                             downloadAddress.Add("DownloadToPath", path);
+                            downloadAddress.Add("ProductId", ProductId);
                             downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
                             DataMessageOperation messageOperation = new DataMessageOperation();
                             Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
@@ -493,6 +494,7 @@ namespace ThemeManagerPlugin.ViewModels
                     Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
                     downloadAddress.Add("DownloadFileId", model.FilePath);
                     downloadAddress.Add("DownloadToPath", localityUrl);
+                    downloadAddress.Add("ProductId", ProductId);
                     downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
                     DataMessageOperation messageOperation = new DataMessageOperation();
                     Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
@@ -618,6 +620,7 @@ namespace ThemeManagerPlugin.ViewModels
                     Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
                     downloadAddress.Add("DownloadFileId", model.FilePath);
                     downloadAddress.Add("DownloadToPath", localityUrl);
+                    downloadAddress.Add("ProductId",ProductId);
                     downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
                     DataMessageOperation messageOperation = new DataMessageOperation();
                     Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
@@ -803,7 +806,6 @@ namespace ThemeManagerPlugin.ViewModels
             conDic.Add("name", "fd_wallpaper");
             List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
             Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-           // tableConDic.Add("category_no", categoryNo);
             tableConList.Add(tableConDic);
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
