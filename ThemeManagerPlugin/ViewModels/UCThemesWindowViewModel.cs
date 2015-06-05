@@ -32,6 +32,14 @@ namespace ThemeManagerPlugin.ViewModels
 
         #region 分屏字段属性
         /// <summary>
+        /// 左翻页
+        /// </summary>
+        private Button imageLeft;
+        /// <summary>
+        /// 右翻页
+        /// </summary>
+        private Button imageRight;
+        /// <summary>
         /// 内容容器
         /// </summary>
         private Canvas canvasPageContent;
@@ -225,9 +233,21 @@ namespace ThemeManagerPlugin.ViewModels
                     ThemeTabControl = (TabControl)portalWindow.FindName("ThemeTabControl");
                     wrapPanelPages = (WrapPanel)portalWindow.FindName("wrapPanelPages");
                     canvasPageContent = (Canvas)portalWindow.FindName("canvasPageContent");
+                    imageLeft = (Button)portalWindow.FindName("imageLeft");
+                    imageRight = (Button)portalWindow.FindName("imageRight");
                     canvasPageRectangle = (RectangleGeometry)portalWindow.FindName("canvasPageRectangle");
+                    sboardLeftIamge = (System.Windows.Media.Animation.Storyboard)portalWindow.FindResource("StoryboardLeftImage");
+                    sboardRightIamge = (System.Windows.Media.Animation.Storyboard)portalWindow.FindResource("StoryboardRightImage");
                     pageBar1 = (UnitPageBar)portalWindow.FindName("pageBar1");
                     stdEnd = (Storyboard)portalWindow.Resources["end"];
+                    #region 翻页按钮事件
+                    imageLeft.MouseEnter += imageLeft_MouseEnter;
+                    imageLeft.MouseLeave += imageLeft_MouseLeave;
+                    imageLeft.Click += imageLeft_Click;
+                    imageRight.MouseEnter += imageRight_MouseEnter;
+                    imageRight.MouseLeave += imageRight_MouseLeave;
+                    imageRight.Click += imageRight_Click;
+                    #endregion
                     #region 内容容器事件
                     canvasPageContent.PreviewMouseLeftButtonDown += canvasPageContent_PreviewMouseLeftButtonDown;
                     canvasPageContent.PreviewMouseLeftButtonUp += canvasPageContent_PreviewMouseLeftButtonUp;
@@ -249,11 +269,11 @@ namespace ThemeManagerPlugin.ViewModels
                     totalPage = SystemThemeList.Count / pageSize;
                     if ((SystemThemeList.Count % pageSize) == 0)
                     {
-                        totalPage = SystemThemeList.Count / pageSize; //正好8项是1页
+                        totalPage = SystemThemeList.Count / pageSize;
                     }
                     else
                     {
-                        totalPage = SystemThemeList.Count / pageSize + 1; ;// 非8项，
+                        totalPage = SystemThemeList.Count / pageSize + 1;
                     }
                     setInit(totalPage);
                 });
@@ -274,11 +294,11 @@ namespace ThemeManagerPlugin.ViewModels
                         totalPage = SystemThemeList.Count / pageSize;
                         if ((SystemThemeList.Count % pageSize) == 0)
                         {
-                            totalPage = SystemThemeList.Count / pageSize; //正好8项是1页
+                            totalPage = SystemThemeList.Count / pageSize;
                         }
                         else
                         {
-                            totalPage = SystemThemeList.Count / pageSize + 1; ;// 非8项，
+                            totalPage = SystemThemeList.Count / pageSize + 1; ;
                         }
                         setInit(totalPage);
                     }
@@ -1037,47 +1057,211 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
-        //翻页回滚结束
-        private void sboardNoChange_Completed(object sender, EventArgs e)
-        {
-            lock (changeLock)
-            {
-                isInMove = false;
-            }
-        }
-
-        //右翻页结束
-        private void sboardRight_Completed(object sender, EventArgs e)
-        {
-            pageSelect++;
-            pageBar1.SelectPage(pageSelect);
-            sboard.Stop();
-            Canvas.SetLeft(wrapPanelPages, -(pageSelect - 1) * canvasPageContent.ActualWidth);
-            lock (changeLock)
-            {
-                isInMove = false;
-            }
-        }
-
-        //左翻页结束
-        private void sboardLeft_Completed(object sender, EventArgs e)
-        {
-            pageSelect--;
-            pageBar1.SelectPage(pageSelect);
-            sboard.Stop();
-            Canvas.SetLeft(wrapPanelPages, -(pageSelect - 1) * canvasPageContent.ActualWidth);
-            lock (changeLock)
-            {
-                isInMove = false;
-            }
-        }
-        void lbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+     
+        /// <summary>
+        /// 点击ListBoxItem换肤
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+       private  void lbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBox listBox = sender as ListBox;
             SelectedListBoxItem = (ThemeModel)listBox.SelectedItem;
             ChangeFrameWorkTheme();
             this.UpdateDefaultSkin();
         }
+
+      
+       private void imageRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+       {
+           sboardRightIamge.Begin();
+           ChangePage(true);
+       }
+       void imageRight_Click(object sender, RoutedEventArgs e)
+       {
+           sboardRightIamge.Begin();
+           ChangePage(true);
+       }
+       private void imageRight_MouseLeave(object sender, MouseEventArgs e)
+       {
+           imageRight.Effect = null;
+       }
+
+       private void imageRight_MouseEnter(object sender, MouseEventArgs e)
+       {
+           imageRight.Effect = new System.Windows.Media.Effects.DropShadowEffect();
+       }
+
+       private void imageLeft_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+       {
+           sboardLeftIamge.Begin();
+           ChangePage(false);
+       }
+       void imageLeft_Click(object sender, RoutedEventArgs e)
+       {
+           sboardLeftIamge.Begin();
+           ChangePage(false);
+       }
+       private void imageLeft_MouseLeave(object sender, MouseEventArgs e)
+       {
+           imageLeft.Effect = null;
+       }
+
+       private void imageLeft_MouseEnter(object sender, MouseEventArgs e)
+       {
+           imageLeft.Effect = new System.Windows.Media.Effects.DropShadowEffect();
+       }
+
+       #region 翻页实现
+       /// <summary>
+       /// 翻页实现
+       /// </summary>
+       /// <param name="page"></param>
+       /// <param name="needAnimation"></param>
+       private void ChangePage(bool isRight)
+       {
+           double pageWidth = canvasPageContent.ActualWidth;
+           lock (changeLock)
+           {
+               if (isInMove)
+                   return;
+               isInMove = true;
+           }
+           if (isRight)
+           {
+               if (pageSelect == totalPage)
+               {
+                   lock (changeLock)
+                   {
+                       isInMove = false;
+                   }
+                   return;
+               }
+               else
+               {
+
+                   isInMove = true;
+                   double listLeft_now = Canvas.GetLeft(wrapPanelPages);
+                   double listLeft_sur = -(pageSelect - 1) * pageWidth;
+                   double formX = listLeft_now + (pageSelect - 1) * pageWidth;
+                   double toX = -pageWidth;
+                   double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                   sboardRightBegin(formX, toX, time);
+               }
+           }
+           else
+           {
+               if (pageSelect == 1)
+               {
+                   lock (changeLock)
+                   {
+                       isInMove = false;
+                   }
+                   return;
+               }
+               else
+               {
+                   isInMove = true;
+                   double listLeft_now = Canvas.GetLeft(wrapPanelPages);
+                   double listLeft_sur = -(pageSelect - 1) * pageWidth;
+                   //启动左翻动画-翻页
+                   double formX = listLeft_now + (pageSelect - 1) * pageWidth;
+                   double toX = pageWidth;
+                   double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                   sboardLeftBegin(formX, toX, time);
+               }
+           }
+       }
+       #endregion
+
+       #region 改变翻页按钮状态
+       /// <summary>
+       /// 改变翻页按钮状态
+       /// </summary>
+       private void ChangeButtonStatus()
+       {
+           if (totalPage == 0)
+           {
+               return;
+           }
+           if (pageSelect == 1 && totalPage == 1)
+           {
+               imageLeft.Visibility = System.Windows.Visibility.Hidden;
+               imageRight.Visibility = System.Windows.Visibility.Hidden;
+           }
+           else if (pageSelect == 1 && totalPage > 1)
+           {
+               imageLeft.Visibility = System.Windows.Visibility.Hidden;
+               imageRight.Visibility = System.Windows.Visibility.Visible;
+           }
+           else
+           {
+               if (pageSelect == totalPage)
+               {
+                   imageLeft.Visibility = System.Windows.Visibility.Visible;
+                   imageRight.Visibility = System.Windows.Visibility.Hidden;
+               }
+               else
+               {
+                   imageLeft.Visibility = System.Windows.Visibility.Visible;
+                   imageRight.Visibility = System.Windows.Visibility.Visible;
+               }
+           }
+       }
+       #endregion
+
+       //左翻动画
+       private void sboardLeftBegin(double formX, double toX, double time)
+       {
+           sboard = ShareClass.CeaterAnimation_Xmove(wrapPanelPages, formX, toX, time, 0);
+           sboard.Completed += sboardLeft_Completed;
+           sboard.Begin();
+       }
+
+       //右翻动画
+       private void sboardRightBegin(double formX, double toX, double time)
+       {
+           sboard = ShareClass.CeaterAnimation_Xmove(wrapPanelPages, formX, toX, time, 0);
+           sboard.Completed += sboardRight_Completed;
+           sboard.Begin();
+       }
+
+       //翻页回滚结束
+       private void sboardNoChange_Completed(object sender, EventArgs e)
+       {
+           lock (changeLock)
+           {
+               isInMove = false;
+           }
+       }
+
+       //右翻页结束
+       private void sboardRight_Completed(object sender, EventArgs e)
+       {
+           pageSelect++;
+           pageBar1.SelectPage(pageSelect);
+           sboard.Stop();
+           ChangeButtonStatus();
+           Canvas.SetLeft(wrapPanelPages, -(pageSelect - 1) * canvasPageContent.ActualWidth);
+           lock (changeLock)
+           {
+               isInMove = false;
+           }
+       }
+
+       //左翻页结束
+       private void sboardLeft_Completed(object sender, EventArgs e)
+       {
+           pageSelect--;
+           pageBar1.SelectPage(pageSelect);
+           sboard.Stop();
+           ChangeButtonStatus();
+           Canvas.SetLeft(wrapPanelPages, -(pageSelect - 1) * canvasPageContent.ActualWidth);
+           lock (changeLock)
+           {
+               isInMove = false;
+           }
+       }
         #endregion
 
         #endregion
