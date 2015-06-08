@@ -140,6 +140,24 @@
                             <ctrl:VicRichTextBoxNormal Grid.Row="1" Name="rBoxUserMenuInfo" VicText="{Binding UserInfoModel.ResultData}"/>
                         </ctrl:VicGridNormal>
                     </Expander>
+                    <Expander Header="下载服务测试">
+                        <ctrl:VicGridNormal MinHeight="300" MaxHeight="500" MinWidth="300">
+                            <ctrl:VicGridNormal.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </ctrl:VicGridNormal.RowDefinitions>
+                            <ctrl:VicDockPanelNormal Grid.Row="0">
+                                <ctrl:VicLabelNormal>文件Id</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="300" Height="24" Name="tBoxFieldId" VicText="{Binding DownInfoModel.FieldId,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <ctrl:VicLabelNormal>文件保存地址</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal WaterMark="请输入正确路径地址，包含文件名称及扩展名" Name="tBoxFilePath" Width="300" Height="24" VicText="{Binding DownInfoModel.DownLoadPath,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                <ctrl:VicLabelNormal>产品Id</ctrl:VicLabelNormal>
+                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxProdutId" VicText="{Binding DownInfoModel.ProductId,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                <ctrl:VicButtonNormal Width="100" Height="24" Content="下载" Name="btnDownLoad" Command="{Binding btnDownLoadClickCommand}"/>
+                            </ctrl:VicDockPanelNormal>
+                            <ctrl:VicRichTextBoxNormal Name="rBoxDownLoadResult" Grid.Row="1" VicText="{Binding DownInfoModel.DownLoadResult,UpdateSourceTrigger=PropertyChanged}"/>
+                        </ctrl:VicGridNormal>
+                    </Expander>
                     <Expander Header="其他">
                         <ctrl:VicGridNormal MinHeight="300" MaxHeight="500" MinWidth="300">
                             <ctrl:VicGridNormal.RowDefinitions>

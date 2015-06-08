@@ -47,6 +47,10 @@ namespace SystemTestingPlugin.ViewModels
         /// </summary>
         private OtherInfoModel otherInfoModel;
         /// <summary>
+        /// 下载信息实体实例
+        /// </summary>
+        private DownLoadInfoModel downInfoModel;
+        /// <summary>
         /// 查询列表
         /// </summary>
         private VicDataGrid searchDataGrid;
@@ -172,6 +176,27 @@ namespace SystemTestingPlugin.ViewModels
                 }
             }
         }
+        /// <summary>
+        /// 下载信息实体实例
+        /// </summary>
+        public DownLoadInfoModel DownInfoModel
+        {
+            get
+            {
+                if (downInfoModel == null)
+                    downInfoModel = new DownLoadInfoModel();
+                return downInfoModel;
+            }
+            set
+            {
+                if (downInfoModel != value)
+                {
+                    downInfoModel = value;
+                    RaisePropertyChanged("DownInfoModel");
+                }
+            }
+        }
+
         #endregion
         #region 命令
         /// <summary>
@@ -686,6 +711,52 @@ namespace SystemTestingPlugin.ViewModels
                 });
             }
         }
+        /// <summary>
+        /// 下载服务
+        /// </summary>
+        public ICommand btnDownLoadClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
+                    Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
+                    downloadAddress.Add("DownloadFileId", DownInfoModel.FieldId);
+                    downloadAddress.Add("DownloadToPath", DownInfoModel.DownLoadPath);
+                    downloadAddress.Add("ProductId", DownInfoModel.ProductId);
+                    downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
+                    DataMessageOperation messageOperation = new DataMessageOperation();
+                    Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
+                                                           downloadMessageContent);
+                    if (downloadResult != null)
+                    {
+                        DownInfoModel.DownLoadResult = JsonHelper.ToJson(downloadResult);
+                    }
+                    else
+                    {
+                        VicMessageBoxNormal.Show("执行下载服务出错");
+                    }
+                }, () =>
+                {
+                    bool result = true;
+                    if (string.IsNullOrEmpty(DownInfoModel.FieldId))
+                    {
+                        return false;
+                    }
+                    if (string.IsNullOrEmpty(DownInfoModel.DownLoadPath))
+                    {
+                        return false;
+                    }
+                    if (string.IsNullOrEmpty(DownInfoModel.ProductId))
+                    {
+                        return false;
+                    }
+                    return result;
+                });
+            }
+        }
+
 
         public ICommand UCMainUnloadedCommand
         {

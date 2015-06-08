@@ -110,6 +110,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Test\DownLoadInfoModel.cs" />
     <Compile Include="Models\FTP\FTPSiteInfoModel.cs" />
     <Compile Include="Models\FTP\FTPFileInfoModel.cs" />
     <Compile Include="Models\Ref\RefForerunnerTreeModel.cs" />
