@@ -4,13 +4,13 @@
 
     <Style x:Key="WindowChangeSkinBackground" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
-       
+
     </Style>
-    
+
     <Style x:Key="WindowChangeSkinTitleBackGround" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
     </Style>
-    
+
     <Style  x:Key="RadioButtonListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
@@ -74,8 +74,8 @@
             </Setter.Value>
         </Setter>
     </Style>
-<!--在线皮肤样式开始-->
-    
+    <!--在线皮肤样式开始-->
+
     <Style  TargetType="{x:Type ProgressBar}" x:Key="progressBarStyle">
         <Setter Property="Template">
             <Setter.Value>
@@ -104,9 +104,9 @@
                         <Border.Effect>
                             <DropShadowEffect BlurRadius ="4" ShadowDepth="0"/>
                         </Border.Effect>
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="textBlock" Text="{TemplateBinding Content }"  FontSize="14"  TextWrapping="Wrap" Foreground="White"/>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="textBlock" Text="{TemplateBinding Content }"  FontSize="14"  TextWrapping="Wrap" Foreground="White"/>
                     </Border>
-                    
+
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -171,17 +171,17 @@
                                         <Border.ToolTip>
                                             <ToolTip Style="{DynamicResource ToolTipStyle}" Content="{Binding OnLineName}"></ToolTip>
                                         </Border.ToolTip>
-                                            <Border.Background>
+                                        <Border.Background>
                                             <ImageBrush ImageSource="{Binding OnLinePreview}" Stretch="UniformToFill"/>
                                         </Border.Background>
-                                        
+
                                         <Border Name="borderSelect" Opacity="0" Background="Transparent"  Height="10" Margin="10,0,0,0"  Width="100">
-                                        <ProgressBar x:Name="progressBar" Value="{Binding CurrentRate}" Style="{DynamicResource progressBarStyle}">
-                                           
-                                        </ProgressBar>
+                                            <ProgressBar x:Name="progressBar" Value="{Binding CurrentRate}" Style="{DynamicResource progressBarStyle}">
+
+                                            </ProgressBar>
                                         </Border>
                                     </Border>
-                                   
+
                                     <!--<Grid>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                             <controls:VicButtonNormal BorderThickness="0"  Content="应用" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30" VerticalAlignment="Center"
@@ -193,26 +193,26 @@
                                                          CommandParameter="{Binding .}"/>
                                         </StackPanel>
                                     </Grid>-->
-                                   
-                                </StackPanel> 
+
+                                </StackPanel>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver"  Value="True" >
                                         <Setter Property="BorderBrush" Value="Yellow" TargetName="border"/>
                                         <Setter Property="BorderThickness" Value="3" TargetName="border"/>
                                         <Setter Property="CornerRadius" Value="5" TargetName="border"></Setter>
                                     </Trigger>
-                                        <Trigger Property="IsSelected" Value="true" >
-                                            <Setter Property="BorderBrush" TargetName="border"  Value="Yellow"/>
-                                            <Setter Property="Opacity" TargetName="borderSelect"  Value="1"/>
-                                        </Trigger>
-                                        <MultiTrigger>
-                            <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
-                            </MultiTrigger.EnterActions>
-                            <MultiTrigger.Conditions>
+                                    <Trigger Property="IsSelected" Value="true" >
+                                        <Setter Property="BorderBrush" TargetName="border"  Value="Yellow"/>
+                                        <Setter Property="Opacity" TargetName="borderSelect"  Value="1"/>
+                                    </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.EnterActions>
+                                            <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
+                                        </MultiTrigger.EnterActions>
+                                        <MultiTrigger.Conditions>
                                             <Condition Property="IsSelected" Value="True"/>
-                            </MultiTrigger.Conditions>
-                        </MultiTrigger>
+                                        </MultiTrigger.Conditions>
+                                    </MultiTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -221,7 +221,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-   
+
 
     <Style  x:Key="OnLineCategoryListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -270,7 +270,7 @@
         </Setter>
     </Style>
     <!--在线皮肤样式结束-->
-<!--壁纸样式控制开始-->
+    <!--壁纸样式控制开始-->
     <Style  x:Key="RadioButtonWallPaperListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
@@ -292,7 +292,10 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-                                    <Border Name="border" BorderBrush="Yellow" ToolTip="{Binding WllPaperName}" CornerRadius="5" BorderThickness="3" Height="122" Width="203">
+                                    <Border Name="border" BorderBrush="Yellow"  CornerRadius="5" BorderThickness="3" Height="122" Width="203">
+                                        <Border.ToolTip>
+                                            <ToolTip Style="{DynamicResource ToolTipStyle}" Content="{Binding WllPaperName}"/>
+                                        </Border.ToolTip>
                                         <Image Source="{Binding WallPreview}" Stretch="UniformToFill"></Image>
                                     </Border>
                                     <controls:VicButtonNormal  Grid.Row="1"   Name="downLoadRun" BorderThickness="0"  Content="下 载" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30"
@@ -332,16 +335,16 @@
                                 <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}"  BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
                                     <ContentPresenter  Content="{Binding Category_Name}" Width="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Border>
-                               <ControlTemplate.Triggers>
+                                <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="true">
                                         <Setter Property="Background" Value="{DynamicResource SkinColor}" TargetName="Bd"></Setter>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true">
                                         <Setter Property="Background" Value="{DynamicResource SkinColor}" TargetName="Bd"></Setter>
-                                   </Trigger>
-                               </ControlTemplate.Triggers>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
-                            
+
                         </Setter.Value>
                     </Setter>
                 </Style>
@@ -357,7 +360,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicWindowNormal}">
-                    <Grid Background="{DynamicResource WindowBackground}"> 
+                    <Grid Background="{DynamicResource WindowBackground}">
                         <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" CornerRadius="0">
                             <Grid Name="gridRoot">
                                 <Grid.RowDefinitions>
@@ -365,7 +368,7 @@
                                     <RowDefinition Height="*"></RowDefinition>
                                     <RowDefinition Height="Auto"></RowDefinition>
                                 </Grid.RowDefinitions>
-                                    <Border  Grid.Row="0" Background="{DynamicResource WindowBackground}"/>
+                                <Border  Grid.Row="0" Background="{DynamicResource WindowBackground}"/>
                                 <Grid Name="gridTitleBar" Grid.Row="0" Style="{DynamicResource loginMainGridStyle}" Height="{TemplateBinding TitleHeight}">
                                     <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="{DynamicResource MsgBoxTitleColor}"/>
                                     <controls:VicButtonNormal x:Name="btnMini" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  Margin="0,0,66,0" VerticalAlignment="Top"  Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最小化">
@@ -452,7 +455,7 @@
     <SolidColorBrush x:Key="TabItemHotBorderBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="TabItemDisabledBackground" Color="Transparent"/>
     <SolidColorBrush x:Key="TabItemDisabledBorderBrush" Color="Transparent"/>
-    
+
     <Style x:Key="ThemeTabItemStyle" TargetType="{x:Type TabItem}">
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Padding" Value="6,1,6,1"/>

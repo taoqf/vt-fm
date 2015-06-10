@@ -631,9 +631,9 @@
 
     </Style>
     <Style x:Key="MainFrmUserStackPanelStyle" TargetType="{x:Type StackPanel}">
-        <Setter Property="Margin" Value="20,10,120,0"/>
-        <Setter Property="HorizontalAlignment" Value="Right"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Margin" Value="0,20,0,0"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
     <Style x:Key="MainFrmUserPictrueGridStyle" TargetType="{x:Type controls:VicButtonImage}">
@@ -659,7 +659,7 @@
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Focusable" Value="True"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="16,0,94,0"/>
+        <Setter Property="Margin" Value="0,20,0,0"/>
     </Style>
 
     <Style x:Key="LeftGrid" TargetType="{x:Type Grid}">

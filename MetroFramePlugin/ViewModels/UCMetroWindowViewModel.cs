@@ -313,7 +313,7 @@ namespace MetroFramePlugin.ViewModels
                 if (string.IsNullOrEmpty(userName))
                 {
                     Random rd = new Random();
-                    userName = "User " + rd.Next() + "，欢迎登录系统";
+                    userName = "User";
                 }
                 return userName;
             }
