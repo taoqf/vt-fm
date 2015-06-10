@@ -1186,11 +1186,9 @@ namespace MetroFramePlugin.ViewModels
                 VicButtonNormal btn = new VicButtonNormal();
                 btn.Width = 120;
                 IPlugin Plugin = PluginInfo["IPlugin"] as IPlugin;
-                if (Convert.ToInt32(PluginInfo["ShowType"].ToString()) <= 1)
+                switch (Plugin.ShowType)
                 {
-                    if (Plugin.ShowType == 0)
-                    {
-
+                    case 0:
                         if (Plugin.ParamDict.ContainsKey("Title"))
                         {
                             if (Plugin.ParamDict["Title"].ToString().Length > 8)
@@ -1208,14 +1206,15 @@ namespace MetroFramePlugin.ViewModels
                         btn.Tag = PluginInfo;
                         btn.Click += ActivatePlugin_Click;
                         PluginListContent.Children.Add(btn);
-                    }
-                    else
-                    {
+                        break;
+                    case 1:
                         btn.Content = Plugin.PluginTitle;
                         btn.Tag = PluginInfo;
                         btn.Click += ActivatePlugin_Click;
                         PluginListContent.Children.Add(btn);
-                    }
+                        break;
+                    default:
+                        break;
                 }
             }
             return PluginListContent;
