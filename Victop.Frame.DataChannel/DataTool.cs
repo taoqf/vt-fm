@@ -618,11 +618,16 @@ namespace Victop.Frame.DataChannel
                                                 itemDic.Add(savekey, saveData[savekey]);
                                             }
                                         }
+                                        arrayList.Remove(itemDic);
+                                        arrayList.Add(itemDic);
                                     }
                                     else
                                     {
                                         arrayList.Add(saveData);
                                     }
+                                    Dictionary<string, object> keyValueDic = new Dictionary<string, object>();
+                                    keyValueDic.Add("dataArray", arrayList);
+                                    DataList.Add(keyValueDic);
                                 }
                                 else
                                 {
