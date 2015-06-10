@@ -995,6 +995,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="{DynamicResource DataGridHeaderBgColor}"/>
         <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeColor}"/>
+        <Setter Property="FontFamily" Value="Microsoft YaHei"/>
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
