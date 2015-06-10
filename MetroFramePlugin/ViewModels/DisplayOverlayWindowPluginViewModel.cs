@@ -201,26 +201,26 @@ namespace MetroFramePlugin.ViewModels
                            menumodel.ShowType = Plugin.ShowType.ToString();
                            SystemFourthLevelMenuList.Add(menumodel);
                        }
-                       else
-                       {
-                           if (Plugin.PluginTitle.Length >= 10)
-                           {
-                               menumodel.MenuName = Plugin.PluginTitle.ToString().Substring(0, 10) + "...";
-                         //      menumodel.ActionType = Plugin.ShowType.ToString();
-                         //      menumodel.ResourceName = Plugin.PluginName;
-                               menumodel.Uid = PluginInfo["ObjectId"].ToString();
-                               menumodel.ShowType = Plugin.ShowType.ToString();
-                           }
-                           else
-                           {
-                               menumodel.MenuName = Plugin.PluginTitle;
-                            //    menumodel.ActionType = Plugin.ShowType.ToString();
-                            //   menumodel.ResourceName = Plugin.PluginName;
-                               menumodel.Uid = PluginInfo["ObjectId"].ToString();
-                               menumodel.ShowType = Plugin.ShowType.ToString();
-                           }
-                           SystemFourthLevelMenuList.Add(menumodel);
-                       }
+                       //else
+                       //{
+                       //    if (Plugin.PluginTitle.Length >= 10)
+                       //    {
+                       //        menumodel.MenuName = Plugin.PluginTitle.ToString().Substring(0, 10) + "...";
+                       //  //      menumodel.ActionType = Plugin.ShowType.ToString();
+                       //  //      menumodel.ResourceName = Plugin.PluginName;
+                       //        menumodel.Uid = PluginInfo["ObjectId"].ToString();
+                       //        menumodel.ShowType = Plugin.ShowType.ToString();
+                       //    }
+                       //    else
+                       //    {
+                       //        menumodel.MenuName = Plugin.PluginTitle;
+                       //     //    menumodel.ActionType = Plugin.ShowType.ToString();
+                       //     //   menumodel.ResourceName = Plugin.PluginName;
+                       //        menumodel.Uid = PluginInfo["ObjectId"].ToString();
+                       //        menumodel.ShowType = Plugin.ShowType.ToString();
+                       //    }
+                       //    SystemFourthLevelMenuList.Add(menumodel);
+                       //}
                    }
                    if (SystemFourthLevelMenuList.Count == 0)
                    {
@@ -353,6 +353,15 @@ namespace MetroFramePlugin.ViewModels
                        imageRight.Visibility = System.Windows.Visibility.Hidden;
 
                        setInit(totalPage);
+                        WindowCollection WinCollection = Application.Current.Windows;
+
+                        for (int i = 0; i < WinCollection.Count; i++)
+                        {
+                            if (WinCollection[i].Uid.Equals(menuModel.Uid))
+                            {
+                                WinCollection[i].Close();
+                            }
+                        }
                    }
                });
            }
