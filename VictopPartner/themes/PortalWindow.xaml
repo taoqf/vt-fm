@@ -1271,17 +1271,17 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
     <!--主窗体右侧按钮样式开始-->
     <Style x:Key="btnActivePluginStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Width" Value="34"/>
+        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+        <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
+        <Setter Property="Content" Value="&#xe885;"/>
+        <Setter Property="FontSize" Value="10"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2" Background="Transparent">
-                        <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Line x:Name="PART_Path1" X1="2"  X2="10" Y1="1" Y2="1" Stroke="{DynamicResource MainFrmUserNameColor}"  StrokeThickness="2"  />
-                            <Line x:Name="PART_Path2" X1="2"  X2="10" Y1="2" Y2="2" Stroke="{DynamicResource MainFrmUserNameColor}"  StrokeThickness="2"  />
-                            <Line x:Name="PART_Path3" X1="2"  X2="10" Y1="3" Y2="3" Stroke="{DynamicResource MainFrmUserNameColor}"  StrokeThickness="2"  />
-                        </StackPanel>
+                        <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -1294,9 +1294,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Stroke" TargetName="PART_Path1" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
-                            <Setter Property="Stroke" TargetName="PART_Path2" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
-                            <Setter Property="Stroke" TargetName="PART_Path3" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
+                            <Setter Property="Foreground"  Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
@@ -1312,18 +1310,17 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
     </Style>
     <Style x:Key="btnMaxStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Width" Value="34"/>
+        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+        <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
+        <Setter Property="Content" Value="&#xe73f;"/>
+        <Setter Property="FontSize" Value="10"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border Name="PART_Border"   BorderThickness="0" Padding="1" Background="Transparent">
-                        <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Path x:Name="PART_Path1"
-                                      SnapsToDevicePixels="True"
-                                      Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"
-                                      Fill="{DynamicResource MainFrmUserNameColor}" />
-                        </StackPanel>
+                        <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -1336,7 +1333,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Stroke" TargetName="PART_Path1" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
+                            <Setter Property="Foreground"  Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
@@ -1351,19 +1348,18 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         </Setter>
     </Style>
     <Style x:Key="btnRestoreStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+        <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="Width" Value="34"/>
+        <Setter Property="Content" Value="&#xe6ee;"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="FontSize" Value="10"/>
         <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border Name="PART_Border"   BorderThickness="0" Padding="2" Background="Transparent">
-                        <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Path x:Name="PART_Path1"
-                                      SnapsToDevicePixels="True"
-                                      Data="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z"
-                                      Fill="{DynamicResource MainFrmUserNameColor}" />
-                        </StackPanel>
+                        <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -1376,7 +1372,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Stroke" TargetName="PART_Path1" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
+                            <Setter Property="Foreground"  Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
@@ -1391,19 +1387,23 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         </Setter>
     </Style>
     <Style x:Key="btnMiniStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+        <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="Margin" Value="5,0,5,0"/>
         <Setter Property="Width" Value="34"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="Content" Value="&#xe64e;"/>
         <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"   BorderThickness="0"  Background="Transparent">
-                        <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="{DynamicResource MainFrmUserNameColor}"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Stroke" TargetName="PART_Path" Value="{DynamicResource MainFrmWinBtnOverForeColor}"/>
+                            <Setter Property="Foreground"  Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
                             <Setter Property="Background" TargetName="PART_Border">
                                 <Setter.Value>
                                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
@@ -1427,14 +1427,18 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         </Setter>
     </Style>
     <Style x:Key="btnCloseStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+        <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="Width" Value="34"/>
+        <Setter Property="Content" Value="&#xe6c4;"/>
+        <Setter Property="FontSize" Value="10"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Height" Value="34"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"   BorderThickness="0" Padding="2" Background="Transparent">
-                        <Path x:Name="PART_Path" Data="M2,2 L2,2 10,10 M10,2 L10,2 2,10" Fill="{DynamicResource MainFrmUserNameColor}"  Stroke="{DynamicResource MainFrmUserNameColor}" Stretch="None" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -1447,7 +1451,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Stroke" TargetName="PART_Path" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
+                            <Setter Property="Foreground"  Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
@@ -1463,55 +1467,22 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
     </Style>
 
     <Style x:Key="btnChangeSkinStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="Width" Value="34"/>
         <Setter Property="Height" Value="34"/>
+        <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Margin" Value="5,0,5,0"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
+        <Setter Property="Content" Value="&#xe6e8;"/> 
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="Transparent"  BorderThickness="0" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Path x:Name="PART_Path" Fill="{DynamicResource MainFrmUserNameColor}" HorizontalAlignment="Center" Stroke="{DynamicResource MainFrmUserNameColor}" VerticalAlignment="Center" Height="13" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Width="12">
-                            <Path.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform Angle="131.051"/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Path.RenderTransform>
-                            <Path.Data>
-                                <PathGeometry>
-                                    <PathFigure IsFilled="False" StartPoint="0.5,78.8983172774315">
-                                        <BezierSegment Point3="49.5,127.898317277432" Point2="49.5,100.836363048867" Point1="27.5619542285649,78.8983172774315"/>
-                                    </PathFigure>
-                                    <PathFigure StartPoint="49.4805583085988,127.670269556321">
-                                        <LineSegment Point="96.0784127394104,130.246935524208"/>
-                                    </PathFigure>
-                                    <PathFigure StartPoint="0.738676457775789,78.7247658032647">
-                                        <LineSegment Point="3.31534855514627,32.126900749484"/>
-                                    </PathFigure>
-                                    <PathFigure StartPoint="90.3909287772115,89.0339314524066">
-                                        <LineSegment Point="127.644363732333,55.6845448906644"/>
-                                    </PathFigure>
-                                    <PathFigure StartPoint="40.3021150491014,34.5807450096124">
-                                        <LineSegment Point="78.3006220713602,0.564367701560684"/>
-                                    </PathFigure>
-                                    <PathFigure StartPoint="127.605323149417,56.390572995263">
-                                        <LineSegment Point="77.5719147880499,0.500000000091759"/>
-                                    </PathFigure>
-                                    <PathFigure IsFilled="False" StartPoint="90.7626642620414,89.2880813166091">
-                                        <BezierSegment Point3="95.510544637534,129.726476112273" Point2="105.442884011954,118.533124413565" Point1="103.317185681609,100.428239134179"/>
-                                    </PathFigure>
-                                    <PathFigure IsFilled="False" StartPoint="3.07833805025023,33.72898388847">
-                                        <BezierSegment Point3="40.367265441197,34.2215010104423" Point2="27.903005754828,24.0181742907099" Point1="11.2081869241446,23.7976641894249"/>
-                                    </PathFigure>
-                                </PathGeometry>
-                            </Path.Data>
-                        </Path>
+                        <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -1524,7 +1495,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                     </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Stroke" TargetName="PART_Path" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
+                            <Setter Property="Foreground"  Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
