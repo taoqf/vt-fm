@@ -559,10 +559,13 @@
     </Style>
 
     <Style x:Key="btnLoginSetStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+        <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="Width" Value="34"/>
-        <Setter Property="Padding" Value="0"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Height" Value="34"/>
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="Content" Value="&#xe7ad;"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">

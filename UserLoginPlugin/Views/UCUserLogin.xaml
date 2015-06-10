@@ -51,9 +51,9 @@
             </Grid>-->
             <Label  HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Margin="52,20,0,20"   Width="71" Content="飞道云服务" Style="{DynamicResource LoginTopLeftGridStyle2}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                <controls:VicButtonNormal Content="" Name="btnSystemSet" HorizontalAlignment="Right"   Width="34" Style="{DynamicResource btnLoginSetStyle}" Height="34" Command="{Binding btnSystemSetClickCommand}"/>
-                <controls:VicButtonNormal Content="" Name="btnMini" HorizontalAlignment="Right"  Width="34" Style="{DynamicResource btnMiniStyle}" Height="34" Command="{Binding btnMiniClickCommand}" />
-                <controls:VicButtonNormal Content="" Name="btnClose" HorizontalAlignment="Right"  Width="34"  Style="{DynamicResource btnCloseStyle}" Height="34" Command="{Binding btnCloseClickCommand}"/>
+                <controls:VicButtonNormal  Name="btnSystemSet" HorizontalAlignment="Right"    Style="{DynamicResource btnLoginSetStyle}"  Command="{Binding btnSystemSetClickCommand}"/>
+                <controls:VicButtonNormal  Name="btnMini" HorizontalAlignment="Right"   Style="{DynamicResource btnMiniStyle}"  Command="{Binding btnMiniClickCommand}" />
+                <controls:VicButtonNormal  Name="btnClose" HorizontalAlignment="Right"    Style="{DynamicResource btnCloseStyle}"  Command="{Binding btnCloseClickCommand}"/>
             </StackPanel>
         </Grid>
         <Border Grid.Row="1" Background="{DynamicResource SkinColor}"/>
