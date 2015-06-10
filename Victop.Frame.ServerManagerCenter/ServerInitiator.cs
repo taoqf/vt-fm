@@ -269,6 +269,7 @@ namespace Victop.Frame.ServerManagerCenter
                 string showTitle = JsonHelper.ReadJsonString(messageInfo.MessageContent, "ShowTitle");
                 string pluginPath = JsonHelper.ReadJsonString(messageInfo.MessageContent, "PluginPath");
                 string pluginParam = JsonHelper.ReadJsonString(messageInfo.MessageContent, "PluginParam");
+                string pluginVisibile = JsonHelper.ReadJsonString(messageInfo.MessageContent, "VisiblePlugin");
                 Dictionary<string, object> paramDict = new Dictionary<string, object>();
                 if (!string.IsNullOrEmpty(pluginParam))
                 {
@@ -288,7 +289,14 @@ namespace Victop.Frame.ServerManagerCenter
                         }
                         plugin.ParamDict = paramDict;
                         ActivePluginInfo activePluginInfo = new ActivePluginInfo();
-                        activePluginInfo.ShowType = plugin.ShowType;
+                        if (pluginVisibile.ToLower().Equals("false"))
+                        {
+                            activePluginInfo.ShowType = 2;
+                        }
+                        else
+                        {
+                            activePluginInfo.ShowType = plugin.ShowType;
+                        }
                         activePluginInfo.ObjectId = messageInfo.MessageId;
                         activePluginInfo.CloudGalleryId = GalleryManager.GetCurrentGalleryId();
                         activePluginInfo.AppId = pluginName;

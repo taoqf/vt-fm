@@ -199,11 +199,11 @@ namespace Victop.Frame.DataChannel
             foreach (string item in pluginInfoDic.Keys)
             {
                 ActivePluginInfo pluginInfo = pluginInfoDic[item];
-
                 Dictionary<string, object> pluginDict = new Dictionary<string, object>();
                 pluginDict.Add("AppId", pluginInfo.AppId);
                 pluginDict.Add("IPlugin", pluginInfo.PluginInstance);
                 pluginDict.Add("ObjectId", pluginInfo.ObjectId);
+                pluginDict.Add("ShowType", pluginInfo.ShowType);
                 pluginList.Add(pluginDict);
             }
             return pluginList;
