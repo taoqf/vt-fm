@@ -7,7 +7,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using Victop.Frame.CoreLibrary.Common;
 using Victop.Frame.Units;
 using Victop.Server.Controls.Models;
 using GalaSoft.MvvmLight.Command;
@@ -1187,33 +1186,35 @@ namespace MetroFramePlugin.ViewModels
                 VicButtonNormal btn = new VicButtonNormal();
                 btn.Width = 120;
                 IPlugin Plugin = PluginInfo["IPlugin"] as IPlugin;
-                if (Plugin.ShowType == 0)
+                switch (Plugin.ShowType)
                 {
-
-                    if (Plugin.ParamDict.ContainsKey("Title"))
-                    {
-                        if (Plugin.ParamDict["Title"].ToString().Length > 8)
+                    case 0:
+                        if (Plugin.ParamDict.ContainsKey("Title"))
                         {
-                            btn.Content = Plugin.ParamDict["Title"].ToString().Substring(0, 6) + "...";
-                            btn.ToolTip = Plugin.ParamDict["Title"];
+                            if (Plugin.ParamDict["Title"].ToString().Length > 8)
+                            {
+                                btn.Content = Plugin.ParamDict["Title"].ToString().Substring(0, 6) + "...";
+                                btn.ToolTip = Plugin.ParamDict["Title"];
+                            }
+                            else
+                            {
+                                btn.Content = Plugin.ParamDict["Title"];
+                            }
                         }
                         else
-                        {
-                            btn.Content = Plugin.ParamDict["Title"];
-                        }
-                    }
-                    else
+                            btn.Content = Plugin.PluginTitle;
+                        btn.Tag = PluginInfo;
+                        btn.Click += ActivatePlugin_Click;
+                        PluginListContent.Children.Add(btn);
+                        break;
+                    case 1:
                         btn.Content = Plugin.PluginTitle;
-                    btn.Tag = PluginInfo;
-                    btn.Click += ActivatePlugin_Click;
-                    PluginListContent.Children.Add(btn);
-                }
-                else
-                {
-                    btn.Content = Plugin.PluginTitle;
-                    btn.Tag = PluginInfo;
-                    btn.Click += ActivatePlugin_Click;
-                    PluginListContent.Children.Add(btn);
+                        btn.Tag = PluginInfo;
+                        btn.Click += ActivatePlugin_Click;
+                        PluginListContent.Children.Add(btn);
+                        break;
+                    default:
+                        break;
                 }
             }
             return PluginListContent;

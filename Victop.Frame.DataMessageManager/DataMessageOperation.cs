@@ -58,7 +58,7 @@ namespace Victop.Frame.DataMessageManager
         public virtual bool ResetData(string viewId, string dataPath, bool cascading = true)
         {
             DataOperation dataOp = new DataOperation();
-            return dataOp.ResetData(viewId, dataPath,cascading);
+            return dataOp.ResetData(viewId, dataPath, cascading);
         }
 
         /// <summary>
@@ -653,9 +653,10 @@ namespace Victop.Frame.DataMessageManager
         /// </summary>
         /// <param name="pluginName">插件名称</param>
         /// <param name="paramDic">参数键值对</param>
-        /// <param name="waitTime">同步等待时间(秒)</param>
+        /// <param name="showTitle">展示名称</param>
+        /// <param name="visiblePlugin">是否在活动列表中展示</param>
         /// <returns></returns>
-        public PluginModel StratPlugin(string pluginName, Dictionary<string, object> paramDic = null, string showTitle = null)
+        public PluginModel StratPlugin(string pluginName, Dictionary<string, object> paramDic = null, string showTitle = null, bool visiblePlugin = true)
         {
             PluginModel pluginModel = new PluginModel();
             MessageOperation messageOp = new MessageOperation();
@@ -663,6 +664,7 @@ namespace Victop.Frame.DataMessageManager
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("PluginName", pluginName);
             contentDic.Add("ShowTitle", showTitle);
+            contentDic.Add("VisiblePlugin", visiblePlugin);
             contentDic.Add("PluginPath", "");
             contentDic.Add("PluginParam", JsonHelper.ToJson(paramDic));
             Dictionary<string, object> resultDic = messageOp.SendMessage(messageType, contentDic);
