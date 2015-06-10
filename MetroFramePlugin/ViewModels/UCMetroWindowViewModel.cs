@@ -1186,7 +1186,7 @@ namespace MetroFramePlugin.ViewModels
                 VicButtonNormal btn = new VicButtonNormal();
                 btn.Width = 120;
                 IPlugin Plugin = PluginInfo["IPlugin"] as IPlugin;
-                switch (Plugin.ShowType)
+                switch (Convert.ToInt32(PluginInfo["ShowType"].ToString()))
                 {
                     case 0:
                         if (Plugin.ParamDict.ContainsKey("Title"))
