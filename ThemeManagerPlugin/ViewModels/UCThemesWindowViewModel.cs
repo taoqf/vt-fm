@@ -291,6 +291,7 @@ namespace ThemeManagerPlugin.ViewModels
                     canvasPageContent.PreviewMouseMove += canvasPageContent_PreviewMouseMove;
                     canvasPageContent.MouseLeave += canvasPageContent_MouseLeave;
                     canvasPageContent.SizeChanged += canvasPageContent_SizeChanged;
+                    canvasPageContent.MouseUp += canvasPageContent_MouseUp;
                     #endregion
                     stdEnd.Completed += (c, d) =>
                     {
@@ -317,6 +318,8 @@ namespace ThemeManagerPlugin.ViewModels
                 });
             }
         }
+
+        
         public ICommand ThemeTabControlSelectionChanged
         {
             get {
@@ -1022,6 +1025,11 @@ namespace ThemeManagerPlugin.ViewModels
                 changePos();
             }
         }
+        void canvasPageContent_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Mouse.Capture(null);
+
+        }
         #region 页面大小变化
         private void canvasPageContent_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -1154,7 +1162,7 @@ namespace ThemeManagerPlugin.ViewModels
 
        private void imageRight_MouseEnter(object sender, MouseEventArgs e)
        {
-           imageRight.Effect = new System.Windows.Media.Effects.DropShadowEffect();
+           //imageRight.Effect = new System.Windows.Media.Effects.DropShadowEffect();
        }
 
        private void imageLeft_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -1174,7 +1182,7 @@ namespace ThemeManagerPlugin.ViewModels
 
        private void imageLeft_MouseEnter(object sender, MouseEventArgs e)
        {
-           imageLeft.Effect = new System.Windows.Media.Effects.DropShadowEffect();
+          // imageLeft.Effect = new System.Windows.Media.Effects.DropShadowEffect();
        }
 
        #region 翻页实现
