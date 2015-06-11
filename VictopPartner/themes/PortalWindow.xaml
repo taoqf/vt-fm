@@ -989,7 +989,7 @@
     <!--主窗体内容插件三四级菜单开始--> 
     <Style x:Key="ListBoxThirdMenuListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="BorderThickness" Value="0"/>
-        <!--<Setter Property="Height" Value="35"/>-->
+        <Setter Property="Height" Value="35"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
@@ -997,8 +997,6 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="{DynamicResource DataGridHeaderBgColor}"/>
         <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeColor}"/>
-        <Setter Property="FontSize" Value="12"></Setter>
-        <!--<Setter Property="FontFamily" Value="Microsoft YaHei"/>-->
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
@@ -1007,7 +1005,6 @@
                     <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
                     <Setter Property="Padding" Value="5"/>
                     <Setter Property="FontSize" Value="12"/>
-                    <Setter Property="FontFamily" Value="SimSun"></Setter>
                     <Setter Property="Height" Value="25"/>
                     <Setter Property="Margin" Value="5,5,5,5"/>
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
