@@ -21,7 +21,7 @@ namespace MetroFramePlugin
             {
                 if (value == null || value.ToString() == string.Empty)
                 {
-                    return Application.Current.Resources["UserPictrue"] as ImageBrush;
+                    return Application.Current.Resources["Logo"] as ImageBrush;
                 }
 
                 ImageBrush image = new ImageBrush();
@@ -31,7 +31,7 @@ namespace MetroFramePlugin
             }
             catch
             {
-                return Application.Current.Resources["UserPictrue"] as ImageBrush;
+                return Application.Current.Resources["Logo"] as ImageBrush;
             }
         }
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
