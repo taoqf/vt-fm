@@ -13,11 +13,14 @@
         <vm:UCMetroWindowViewModel/>
     </Window.DataContext>
     <DockPanel LastChildFill="True">
-        <ScrollViewer x:Name="scrollViewer" Width="70" Style="{DynamicResource MenuScrollViewer}">
+        <ScrollViewer x:Name="scrollViewer" Width="70" Visibility="{Binding IsShowMenu}"  Style="{DynamicResource MenuScrollViewer}">
             <Grid Style="{DynamicResource LeftGrid}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeave">
+                        <i:InvokeCommandAction Command="{Binding BtnSystemSet_OnMouseLeave}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <StackPanel>
-                    <!--<Image Style="{DynamicResource logoImage}" />-->
-                    <!--<Grid  Margin="0,20,0,0" Width="42" Height="42" Background="{DynamicResource Logo}"  HorizontalAlignment="Center" VerticalAlignment="Center" />-->
                     <StackPanel Margin="0,46,0,0"  Style="{DynamicResource MainFrmUserStackPanelStyle}">
                         <controls:VicButtonImage Name="btnUserLogin" Background="{Binding UserImg, Converter={StaticResource imgeNameToBackgroundConverter}}"
                                          Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}"/>
@@ -35,6 +38,7 @@
                 </StackPanel>
             </Grid>
         </ScrollViewer>
+      
         <Grid Name="gridMain">
             <Grid.RowDefinitions>
                 <RowDefinition RowDefinition.Height="45"/>
@@ -104,6 +108,17 @@
                         </i:Interaction.Triggers>
                     </controls:VicTabControlNormal>
                 </Grid>
+                <controls:VicButtonNormal Grid.Row="1"  Name="btnSystemSet" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="Yellow" Style="{DynamicResource btnLoginSetStyle}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseEnter">
+                            <i:InvokeCommandAction Command="{Binding BtnSystemSet_OnMouseEnter}"/>
+                        </i:EventTrigger>
+                        <!--<i:EventTrigger EventName="MouseLeave">
+                            <i:InvokeCommandAction Command="{Binding BtnSystemSet_OnMouseLeave}"/>
+                        </i:EventTrigger>-->
+                    </i:Interaction.Triggers>
+                </controls:VicButtonNormal>
+
                 <TextBlock Grid.Row="1" Text="{Binding AppVersionCode}" VerticalAlignment="Center" Foreground="{DynamicResource MainFrmUserNameColor}" HorizontalAlignment="Right" Margin="0,0,10,0"/>
             </Grid>
         <controls:VicPopup IsOpen="{Binding PoPupState}"  AllowsTransparency="True" Name="TitlePopup" PlacementTarget="{Binding ElementName= btnUserLogin}" Placement="Left" Width="200" Height="200"  StaysOpen="False">

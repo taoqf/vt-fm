@@ -402,6 +402,26 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// 是否显示左侧工具栏
+        /// </summary>
+        private Visibility isShowMenu = Visibility.Visible;
+        public Visibility IsShowMenu
+        {
+            get
+            {
+                return isShowMenu;
+            }
+            set
+            {
+                if (isShowMenu != value)
+                {
+                    isShowMenu = value;
+                    RaisePropertyChanged("IsShowMenu");
+                }
+            }
+        }
         #endregion
 
         #region 命令
@@ -815,6 +835,32 @@ namespace MetroFramePlugin.ViewModels
         }
         #endregion
 
+
+        #region 移入命令
+        public ICommand BtnSystemSet_OnMouseEnter
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    IsShowMenu = Visibility.Visible;
+                });
+            }
+        }
+        #endregion
+
+        #region 移出命令
+        public ICommand BtnSystemSet_OnMouseLeave
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    IsShowMenu = Visibility.Collapsed;
+                });
+            }
+        }
+        #endregion
         #endregion
 
         #region 自定义方法
@@ -1112,6 +1158,7 @@ namespace MetroFramePlugin.ViewModels
                 }
                 isFirstLogin = false;
                 LoadStandardMenu();
+                IsShowMenu = Visibility.Collapsed;
                 //NotificationCenter notifyCenter = new NotificationCenter();
                 //notifyCenter.Show();
             }
