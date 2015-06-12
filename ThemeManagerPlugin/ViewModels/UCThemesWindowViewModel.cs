@@ -301,9 +301,11 @@ namespace ThemeManagerPlugin.ViewModels
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
                     GetOnLineCategory();
+                    if (SystemOnLineCategoryList.Count == 0) return;//服务器登录不上时异常控制
                     GetOnLineTheme(SystemOnLineCategoryList[0].Category_No);
                     GetWallPaperCategory();
                     GetWallPaperDisplay();//一次从服务器取到所有壁纸
+                    if (WallPaperCategoryList.Count == 0) return;
                     GetSelectedTabControlWallPaperDisplay(WallPaperCategoryList[0].Category_No);
                     totalPage = SystemThemeList.Count / pageSize;
                     if ((SystemThemeList.Count % pageSize) == 0)
