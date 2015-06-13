@@ -266,7 +266,7 @@ namespace MetroFramePlugin.ViewModels
                     homeItem.AllowDelete = false;
                     homeItem.Header = "飞道科技";
                     WebBrowser browser = new WebBrowser();
-                    //browser.Source = new Uri("http://www.baidu.com");
+                    browser.Source = new Uri("http://www.baidu.com");
                     homeItem.Content = browser;
                     tabItemList.Add(homeItem);
                     VicTabItemNormal personItem = new VicTabItemNormal();
