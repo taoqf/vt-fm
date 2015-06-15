@@ -7,27 +7,27 @@
 namespace Victop.Frame.MessageManager
 {
     using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using Victop.Frame.CoreLibrary.Enums;
-using Victop.Frame.CoreLibrary.Interfaces;
-using Victop.Frame.PublicLib.Helpers;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading;
+    using Victop.Frame.CoreLibrary.Enums;
+    using Victop.Frame.CoreLibrary.Interfaces;
+    using Victop.Frame.PublicLib.Helpers;
 
-	/// <summary>
+    /// <summary>
     /// 插件消息实现类【消息接收】
-	/// </summary>
-	/// <remarks>插件消息实现类</remarks>
-	public class PluginMessage
-	{
-		/// <summary>
-		/// 发送消息
+    /// </summary>
+    /// <remarks>插件消息实现类</remarks>
+    public class PluginMessage
+    {
+        /// <summary>
+        /// 发送消息
         /// <param name="objectId">对象id</param>
         /// <param name="messageInfo">请求消息</param>
         /// <param name="replyCallBack">应答回调</param>
         /// <param name="validTime">消息有效时间(秒)</param>
-		/// </summary>
+        /// </summary>
         public virtual void SendMessage(string messageType, Dictionary<string, object> messageContent, WaitCallback replyCallBack, long validTime = 15)
         {
             PluginMessageFormManager pluginMessageFormManager = new PluginMessageFormManager();
@@ -41,7 +41,7 @@ using Victop.Frame.PublicLib.Helpers;
         /// <param name="replyCallBack"></param>
         /// <param name="validTime"></param>
         /// <param name="dataForm"></param>
-        public virtual void SendMessage(string messageType, Dictionary<string,object> messageContent, WaitCallback replyCallBack, DataFormEnum dataForm, long validTime = 15)
+        public virtual void SendMessage(string messageType, Dictionary<string, object> messageContent, WaitCallback replyCallBack, DataFormEnum dataForm, long validTime = 15)
         {
             PluginMessageFormManager pluginMessageFormManager = new PluginMessageFormManager();
             pluginMessageFormManager.CheckMessageFormat(messageType, messageContent, replyCallBack, validTime, dataForm);
@@ -56,20 +56,21 @@ using Victop.Frame.PublicLib.Helpers;
             {
                 string messageId = JsonHelper.ReadJsonString(replyMessageInfo, "MessageId");
                 PluginMessageManager pluginMessageManager = new PluginMessageManager();
-                Dictionary<string,PluginMessageInfo> pluginMessageList= pluginMessageManager.GetPluginMessageList();
+                Dictionary<string, PluginMessageInfo> pluginMessageList = pluginMessageManager.GetPluginMessageList();
                 if (pluginMessageManager.CheckMessageIsExist(messageId))
                 {
                     PluginMessageInfo messageInfo = pluginMessageList[messageId];
                     //移除消息池中的消息
                     pluginMessageManager.RemovePluginMessage(messageId);
-                    if (messageInfo.MessageCallBack!=null)
+                    if (messageInfo.MessageCallBack != null)
                     {
                         messageInfo.MessageCallBack(replyMessageInfo);
+                        LoggerHelper.InfoFormat("回调信息:{0}", replyMessageInfo);
                     }
-                  
+
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
             }
         }

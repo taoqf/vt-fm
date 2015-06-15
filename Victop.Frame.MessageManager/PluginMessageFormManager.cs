@@ -48,6 +48,7 @@ namespace Victop.Frame.MessageManager
                     CloudGalleryId = GalleryManager.GetCurrentGalleryId().ToString(),
                     MessageCallBack = callBack
                 });
+                LoggerHelper.InfoFormat("写入信息：{0}", JsonHelper.ToJson(message));
                 if (result)//插入成功
                 {
                     PluginMessageThreadManager.GetInstance().DoWork(message,dataForm);
