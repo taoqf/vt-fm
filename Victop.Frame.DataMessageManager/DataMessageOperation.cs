@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using Victop.Frame.CoreLibrary.Enums;
 using Victop.Frame.CoreLibrary.Models;
@@ -12,9 +11,7 @@ using Victop.Frame.DataMessageManager.Enums;
 using Victop.Frame.DataMessageManager.Models;
 using Victop.Frame.DataMessageManager.StaticClass;
 using Victop.Frame.MessageManager;
-using Victop.Frame.PublicLib;
 using Victop.Frame.PublicLib.Helpers;
-using Victop.Frame.SyncOperation;
 using Victop.Server.Controls;
 using Victop.Server.Controls.Models;
 
@@ -151,8 +148,7 @@ namespace Victop.Frame.DataMessageManager
         /// <returns>应答消息内容</returns>
         public Dictionary<string, object> SendSyncMessage(string messageType, Dictionary<string, object> messageContent, string dataForm = "JSON", int waiteTime = 15)
         {
-            MessageOperation messageOp = new MessageOperation();
-            return messageOp.SendMessage(messageType, messageContent, dataForm, waiteTime);
+            return SendMessage(messageType, messageContent, waiteTime);
         }
         /// <summary>
         /// 异步消息发送
@@ -265,7 +261,6 @@ namespace Victop.Frame.DataMessageManager
                                 {
                                     string messageType = "MongoDataChannelService.findBusiData";
                                     string refTableName = string.Empty;
-                                    MessageOperation messageOp = new MessageOperation();
                                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                                     contentDic.Add("systemid", systemId);
                                     contentDic.Add("configsystemid", configsystemId);
@@ -365,7 +360,7 @@ namespace Victop.Frame.DataMessageManager
                                     {
                                         contentDic.Add("conditions", defaultCondition);
                                     }
-                                    Dictionary<string, object> returnDic = messageOp.SendMessage(messageType, contentDic, "JSON");
+                                    Dictionary<string, object> returnDic = SendMessage(messageType, contentDic);
                                     if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
                                     {
                                         relationInfo.DataChannelId = returnDic["DataChannelId"].ToString();
@@ -659,7 +654,6 @@ namespace Victop.Frame.DataMessageManager
         public PluginModel StratPlugin(string pluginName, Dictionary<string, object> paramDic = null, string showTitle = null, bool visiblePlugin = true)
         {
             PluginModel pluginModel = new PluginModel();
-            MessageOperation messageOp = new MessageOperation();
             string messageType = "PluginService.PluginRun";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("PluginName", pluginName);
@@ -667,7 +661,7 @@ namespace Victop.Frame.DataMessageManager
             contentDic.Add("VisiblePlugin", visiblePlugin);
             contentDic.Add("PluginPath", "");
             contentDic.Add("PluginParam", JsonHelper.ToJson(paramDic));
-            Dictionary<string, object> resultDic = messageOp.SendMessage(messageType, contentDic);
+            Dictionary<string, object> resultDic = SendMessage(messageType, contentDic);
             if (!resultDic["ReplyMode"].ToString().Equals("0"))
             {
                 string messageId = resultDic["MessageId"].ToString();
@@ -703,11 +697,10 @@ namespace Victop.Frame.DataMessageManager
         public bool StopPlugin(string ObjectId, int waitTime = 15)
         {
             bool result = false;
-            MessageOperation messageOp = new MessageOperation();
             string messageType = "PluginService.PluginStop";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("ObjectId", ObjectId);
-            Dictionary<string, object> resultDic = messageOp.SendMessage(messageType, contentDic, waitTime);
+            Dictionary<string, object> resultDic = SendMessage(messageType, contentDic, waitTime);
             if (resultDic != null)
             {
                 result = resultDic["ReplyMode"].ToString().Equals("0") ? false : true;
@@ -791,7 +784,6 @@ namespace Victop.Frame.DataMessageManager
         /// <returns></returns>
         public virtual Dictionary<string, object> SendDataLockMessage(LockInfoModel lockInfo)
         {
-            MessageOperation messageOp = new MessageOperation();
             string messageType = "MongoDataChannelService.dataLock";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("_id", lockInfo.Id);
@@ -802,7 +794,7 @@ namespace Victop.Frame.DataMessageManager
             contentDic.Add("spaceId", lockInfo.SpaceId);
             contentDic.Add("userCode", lockInfo.UserCode);
             contentDic.Add("operflag", (int)lockInfo.OpenFlag);
-            Dictionary<string, object> returnDic = messageOp.SendMessage(messageType, contentDic, "JSON");
+            Dictionary<string, object> returnDic = SendMessage(messageType, contentDic);
             if (returnDic != null && returnDic["ReplyMode"].ToString() != "0")
             {
                 switch (lockInfo.OpenFlag)
@@ -823,7 +815,11 @@ namespace Victop.Frame.DataMessageManager
             }
             return returnDic;
         }
-
+        /// <summary>
+        /// 获取更改的数据信息
+        /// </summary>
+        /// <param name="viewId">通道标示</param>
+        /// <returns></returns>
         public virtual string GetCurdListData(string viewId)
         {
             DataOperation dataOp = new DataOperation();
@@ -856,8 +852,8 @@ namespace Victop.Frame.DataMessageManager
         /// 根据结构Path获取数据Table
         /// </summary>
         /// <param name="constructPath"></param>
-        /// <param name="dependPath"></param>
-        /// <param name="jsonData"></param>
+        /// <param name="valuePath"></param>
+        /// <param name="jsonDataDic"></param>
         /// <param name="dependDic"></param>
         /// <returns></returns>
         private DataTable GetDataByConsturctPath(string constructPath, string valuePath, Dictionary<string, object> jsonDataDic, Dictionary<string, object> dependDic)
@@ -899,7 +895,7 @@ namespace Victop.Frame.DataMessageManager
         /// <summary>
         /// 获取简单引用的Json数据
         /// </summary>
-        /// <param name="jsonData"></param>
+        /// <param name="jsonDataDic"></param>
         /// <param name="dataPath"></param>
         /// <returns></returns>
         private string GetSimpeRefJsonData(Dictionary<string, object> jsonDataDic, string dataPath)
@@ -968,6 +964,64 @@ namespace Victop.Frame.DataMessageManager
             {
                 return string.Empty;
             }
+        }
+        #endregion
+
+        #region SendMessage
+        /// <summary>
+        /// 应答消息
+        /// </summary>
+        private Dictionary<string, object> replyMessageInfo;
+        /// <summary>
+        /// 同步发送消息
+        /// </summary>
+        /// <param name="messageType">消息类型</param>
+        /// <param name="messageContent">消息体</param>
+        /// <param name="waiteTime">等待时间</param>
+        /// <returns></returns>
+        public Dictionary<string, object> SendMessage(string messageType, Dictionary<string, object> messageContent, int waiteTime = 16)
+        {
+            Dictionary<string, object> returnDic;
+            new PluginMessage().SendMessage(messageType, messageContent, new WaitCallback(MessageBack));
+            if (waiteTime > 0)
+            {
+                bool flag = false;
+                UserTimeThread timeoutThread = new UserTimeThread((int)waiteTime);
+                Thread thread = new Thread(new ThreadStart(timeoutThread.Sleep));
+                thread.Start();
+                while (!timeoutThread.Done)
+                {
+                    if (replyMessageInfo != null)
+                    {
+                        returnDic = replyMessageInfo;
+                        lock (this)
+                        {
+                            timeoutThread.Stop();
+                        }
+                        flag = true;
+                        break;
+                    }
+                    try
+                    {
+                        Thread.Sleep(1);
+                    }
+                    catch (ThreadInterruptedException)
+                    {
+                        lock (this)
+                        {
+                            timeoutThread.Stop();
+                        }
+                    }
+                }
+                if (!flag)
+                {
+                }
+            }
+            return replyMessageInfo;
+        }
+        private void MessageBack(object message)
+        {
+            replyMessageInfo = JsonHelper.ToObject<Dictionary<string, object>>(message.ToString());
         }
         #endregion
     }
