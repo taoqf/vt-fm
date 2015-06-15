@@ -261,14 +261,6 @@ namespace MetroFramePlugin.ViewModels
                 if (tabItemList == null)
                 {
                     tabItemList = new ObservableCollection<VicTabItemNormal>();
-                    VicTabItemNormal homeItem = new VicTabItemNormal();
-                    homeItem.Name = "homeItem";
-                    homeItem.AllowDelete = false;
-                    homeItem.Header = "飞道科技";
-                    WebBrowser browser = new WebBrowser();
-                    browser.Source = new Uri("http://www.baidu.com");
-                    homeItem.Content = browser;
-                    tabItemList.Add(homeItem);
                     VicTabItemNormal personItem = new VicTabItemNormal();
                     personItem.Name = "homeItem";
                     personItem.AllowDelete = false;
@@ -276,6 +268,14 @@ namespace MetroFramePlugin.ViewModels
                     UCPersonPluginContainer personPluginContainer = new UCPersonPluginContainer();
                     personItem.Content = personPluginContainer;
                     tabItemList.Add(personItem);
+                    VicTabItemNormal homeItem = new VicTabItemNormal();
+                    homeItem.Name = "homeItem";
+                    homeItem.AllowDelete = false;
+                    homeItem.Header = "飞道科技";
+                    WebBrowser browser = new WebBrowser();
+                    //browser.Source = new Uri("http://www.baidu.com");
+                    homeItem.Content = browser;
+                    tabItemList.Add(homeItem);
 
                 }
                 return tabItemList;
@@ -422,6 +422,8 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
+
+        private bool isLockMenu=false;
         #endregion
 
         #region 命令
@@ -713,11 +715,11 @@ namespace MetroFramePlugin.ViewModels
         private void BuildPluginContainer(object x)
         {
 
-            if (TabItemList[0].Content.GetType().Name.Equals("WebBrowser"))
+            if (TabItemList[1].Content.GetType().Name.Equals("WebBrowser"))
             {
                 UCPluginContainer pluginContainer = new UCPluginContainer();
-                TabItemList[0].Content = pluginContainer;
-                TabItemList[0].Header = "功能列表";
+                TabItemList[1].Content = pluginContainer;
+                TabItemList[1].Header = "功能列表";
 
             }
 
@@ -729,7 +731,7 @@ namespace MetroFramePlugin.ViewModels
                 SystemFourthLevelMenuList = SelectedThirdMenuModel.SystemMenuList;
             }
 
-            SelectedTabItem = TabItemList[0];
+            SelectedTabItem = TabItemList[1];
         }
         #endregion
 
@@ -843,6 +845,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    if (isLockMenu==false)
                     IsShowMenu = Visibility.Visible;
                 });
             }
@@ -856,7 +859,32 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    if (isLockMenu == false)
                     IsShowMenu = Visibility.Collapsed;
+                });
+            }
+        }
+        #endregion
+
+        #region 移出命令
+        public ICommand LockMenuList
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                    {
+                        VicButtonNormal lockBtn = (VicButtonNormal) x;
+                        if (lockBtn.Content.Equals("锁定"))
+                        {
+                            lockBtn.Content = "解锁";
+                            isLockMenu = true;
+                        }
+                        else
+                        {
+                            lockBtn.Content = "锁定";
+                            isLockMenu = false;
+                        }
+                        
                 });
             }
         }
