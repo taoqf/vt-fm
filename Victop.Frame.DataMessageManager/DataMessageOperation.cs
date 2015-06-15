@@ -148,7 +148,7 @@ namespace Victop.Frame.DataMessageManager
         /// <returns>应答消息内容</returns>
         public Dictionary<string, object> SendSyncMessage(string messageType, Dictionary<string, object> messageContent, string dataForm = "JSON", int waiteTime = 15)
         {
-            return SendMessage(messageType, messageContent, dataForm, waiteTime);
+            return SendMessage(messageType, messageContent, waiteTime);
         }
         /// <summary>
         /// 异步消息发送
@@ -360,7 +360,7 @@ namespace Victop.Frame.DataMessageManager
                                     {
                                         contentDic.Add("conditions", defaultCondition);
                                     }
-                                    Dictionary<string, object> returnDic = SendMessage(messageType, contentDic, "JSON");
+                                    Dictionary<string, object> returnDic = SendMessage(messageType, contentDic);
                                     if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
                                     {
                                         relationInfo.DataChannelId = returnDic["DataChannelId"].ToString();
@@ -794,7 +794,7 @@ namespace Victop.Frame.DataMessageManager
             contentDic.Add("spaceId", lockInfo.SpaceId);
             contentDic.Add("userCode", lockInfo.UserCode);
             contentDic.Add("operflag", (int)lockInfo.OpenFlag);
-            Dictionary<string, object> returnDic = SendMessage(messageType, contentDic, "JSON");
+            Dictionary<string, object> returnDic = SendMessage(messageType, contentDic);
             if (returnDic != null && returnDic["ReplyMode"].ToString() != "0")
             {
                 switch (lockInfo.OpenFlag)
@@ -983,54 +983,6 @@ namespace Victop.Frame.DataMessageManager
         {
             Dictionary<string, object> returnDic;
             new PluginMessage().SendMessage(messageType, messageContent, new WaitCallback(MessageBack));
-            if (waiteTime > 0)
-            {
-                bool flag = false;
-                UserTimeThread timeoutThread = new UserTimeThread((int)waiteTime);
-                Thread thread = new Thread(new ThreadStart(timeoutThread.Sleep));
-                thread.Start();
-                while (!timeoutThread.Done)
-                {
-                    if (replyMessageInfo != null)
-                    {
-                        returnDic = replyMessageInfo;
-                        lock (this)
-                        {
-                            timeoutThread.Stop();
-                        }
-                        flag = true;
-                        break;
-                    }
-                    try
-                    {
-                        Thread.Sleep(1);
-                    }
-                    catch (ThreadInterruptedException)
-                    {
-                        lock (this)
-                        {
-                            timeoutThread.Stop();
-                        }
-                    }
-                }
-                if (!flag)
-                {
-                }
-            }
-            return replyMessageInfo;
-        }
-        /// <summary>
-        /// 发送消息
-        /// </summary>
-        /// <param name="messageType"></param>
-        /// <param name="messageContent"></param>
-        /// <param name="dataForm"></param>
-        /// <param name="waiteTime"></param>
-        /// <returns></returns>
-        public Dictionary<string, object> SendMessage(string messageType, Dictionary<string, object> messageContent, string dataForm, int waiteTime = 16)
-        {
-            Dictionary<string, object> returnDic;
-            new PluginMessage().SendMessage(messageType, messageContent, new WaitCallback(MessageBack), dataForm.Equals("JSON") ? DataFormEnum.JSON : DataFormEnum.DATASET, waiteTime);
             if (waiteTime > 0)
             {
                 bool flag = false;
