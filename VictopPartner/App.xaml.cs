@@ -8,8 +8,8 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using Victop.Frame.CoreLibrary;
+using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
-using Victop.Frame.SyncOperation;
 using Victop.Server.Controls;
 
 namespace VictopPartner
@@ -108,7 +108,7 @@ namespace VictopPartner
             ServiceParams.Add("SourceName", ThemeName);
             ServiceParams.Add("SkinPath", SkinPath);
             contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
-            MessageOperation messageOp = new MessageOperation();
+            DataMessageOperation messageOp = new DataMessageOperation();
             messageOp.SendMessage(messageType, contentDic);
         }
         #endregion

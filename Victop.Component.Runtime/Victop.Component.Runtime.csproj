@@ -80,10 +80,6 @@
       <Project>{90c4d04f-f952-4c63-8a69-0c9d12e050fb}</Project>
       <Name>Victop.Frame.PublicLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Victop.Frame.SyncOperation\Victop.Frame.SyncOperation.csproj">
-      <Project>{d852f8b6-0ff8-4637-bdaa-9cd145d1aa65}</Project>
-      <Name>Victop.Frame.SyncOperation</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
