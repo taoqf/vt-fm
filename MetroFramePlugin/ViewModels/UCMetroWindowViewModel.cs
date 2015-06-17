@@ -423,7 +423,8 @@ namespace MetroFramePlugin.ViewModels
             }
         }
 
-        private bool isLockMenu=false;
+        private bool isLockMenu=false;//控制固定/浮动左侧菜单
+        private VicButtonNormal lockbtn;
         #endregion
 
         #region 命令
@@ -438,6 +439,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
+                    lockbtn = (VicButtonNormal)mainWindow.FindName("lock");
                     mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
@@ -603,7 +605,14 @@ namespace MetroFramePlugin.ViewModels
                 {
 
                     PoPupState = false;
+
                     isChangeUser = true; //切换用户时，从服务器拉取菜单必要操作
+
+                    //切换用户时，自动隐藏菜单状态初始化
+                    IsShowMenu = Visibility.Visible;
+                    isLockMenu = false;
+                    lockbtn.Content = "锁定";
+                    //
                     UserLogin();
                     InitPanelArea();
 
