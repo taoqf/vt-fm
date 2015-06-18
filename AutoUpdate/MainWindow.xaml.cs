@@ -218,6 +218,7 @@ namespace AutoUpdate
                 tem = 100;
             }
             proBarNow.Value = tem;
+            lblProgressBar.Content = proBarNow.Value.ToString()+"%";
             proBarTotal.Value = 0;
             string directoryPath = AppDomain.CurrentDomain.BaseDirectory + "\\AutoUpdater\\";
             if (string.IsNullOrEmpty(updateModel.LoadingFilePath))
@@ -253,6 +254,7 @@ namespace AutoUpdate
             tBlockProcess.Text = string.Format("正在下载:{0} [{1}/{2}]", updateModel.LoadingFileName, ConvertSize(e.BytesReceived), ConvertSize(e.TotalBytesToReceive));
             updateModel.LoadingFileSize = e.TotalBytesToReceive;
             proBarTotal.Value = e.ProgressPercentage;
+            lblBlockProcess.Content = proBarTotal.Value.ToString() + "%";
         }
 
         /// <summary> 
