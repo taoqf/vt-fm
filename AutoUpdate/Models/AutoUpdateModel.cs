@@ -152,7 +152,7 @@ namespace AutoUpdate.Models
             set { updateSize = value; }
         }
 
-       
+      
 
 
     }

@@ -20,6 +20,7 @@ namespace AutoUpdate
         #region 字段
         AutoUpdateModel updateModel = new AutoUpdateModel();
         WebClient updateClient = new WebClient();
+        private bool openPop;
         #endregion
         public MainWindow()
         {
@@ -193,8 +194,11 @@ namespace AutoUpdate
                 config.AppSettings.Settings["Version"].Value = updateModel.ServerUpdaterVersion;
                 config.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection("appSettings");
-                MessageBox.Show("更新完成", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                this.Close();
+                gridUpdate.Visibility = Visibility.Collapsed;
+                gridOPen.Visibility = Visibility.Visible;
+                //MessageBox.Show("更新完成", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                //openPopup.IsOpen = true;
+               
             }
         }
 
@@ -211,7 +215,7 @@ namespace AutoUpdate
             {
                 updateModel.LoadingFilePath = string.Empty;
             }
-            tBlockNow.Text = string.Format("更新进度 {0}/{1}", updateModel.UpdatedNum + 1, updateModel.TotalCount);
+           // tBlockNow.Text = string.Format("更新进度 {0}/{1}", updateModel.UpdatedNum + 1, updateModel.TotalCount);
             int tem = Convert.ToInt32(((double)updateModel.UpdatedNum / updateModel.TotalCount) * 100);
             if (tem == 99)
             {
@@ -219,7 +223,7 @@ namespace AutoUpdate
             }
             proBarNow.Value = tem;
             lblProgressBar.Content = proBarNow.Value.ToString()+"%";
-            proBarTotal.Value = 0;
+            //proBarTotal.Value = 0;
             string directoryPath = AppDomain.CurrentDomain.BaseDirectory + "\\AutoUpdater\\";
             if (string.IsNullOrEmpty(updateModel.LoadingFilePath))
             {
@@ -251,10 +255,10 @@ namespace AutoUpdate
         /// <param name="e"></param>
         void updateClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            tBlockProcess.Text = string.Format("正在下载:{0} [{1}/{2}]", updateModel.LoadingFileName, ConvertSize(e.BytesReceived), ConvertSize(e.TotalBytesToReceive));
-            updateModel.LoadingFileSize = e.TotalBytesToReceive;
-            proBarTotal.Value = e.ProgressPercentage;
-            lblBlockProcess.Content = proBarTotal.Value.ToString() + "%";
+            //tBlockProcess.Text = string.Format("正在下载:{0} [{1}/{2}]", updateModel.LoadingFileName, ConvertSize(e.BytesReceived), ConvertSize(e.TotalBytesToReceive));
+            //updateModel.LoadingFileSize = e.TotalBytesToReceive;
+            //proBarTotal.Value = e.ProgressPercentage;
+            //lblBlockProcess.Content = proBarTotal.Value.ToString() + "%";
         }
 
         /// <summary> 
@@ -353,6 +357,11 @@ namespace AutoUpdate
                 }
             }
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
