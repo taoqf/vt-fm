@@ -35,14 +35,9 @@ namespace Victop.Frame.Connection
             IAdapter adapter = new MessageManager();
             try
             {
-                if (messageInfo.MessageType.Equals("LoginService.userLoginNew"))
+                if (messageInfo.MessageType.Equals("loginService"))
                 {
                     ReplyMessage replyMessage = UserLoginSubmit(adapter, messageInfo);
-                    return replyMessage;
-                }
-                else if (messageInfo.MessageType.Equals("LoginService.getCurrentLinker"))
-                {
-                    ReplyMessage replyMessage = AnonymousLoginSubmit(adapter, messageInfo);
                     return replyMessage;
                 }
                 else
@@ -186,86 +181,8 @@ namespace Victop.Frame.Connection
                 currentGallery.ClientInfo.ChannelId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "channelID");
                 currentGallery.ClientInfo.UserCode = replyMessage.ReplyContent.Contains("usercode") ? JsonHelper.ReadJsonString(replyMessage.ReplyContent, "usercode") : JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode");
                 messageInfo.MessageContent = replyMessage.ReplyContent;
-                if (dataForm == DataFormEnum.DATASET)
-                {
-                    replyMessage = ConnectLinkSubmit(adapter, messageInfo);
-                }
-                else
-                {
-                    replyMessage = GetLoginUserMenuSubmit(adapter, messageInfo);
-                    //replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "msg");
-                }
+                replyMessage = GetLoginUserMenuSubmit(adapter, messageInfo);
             }
-            return replyMessage;
-        }
-        /// <summary>
-        /// 匿名登陆
-        /// </summary>
-        /// <param name="adapter"></param>
-        /// <param name="messageInfo"></param>
-        /// <returns></returns>
-        private ReplyMessage AnonymousLoginSubmit(IAdapter adapter, RequestMessage messageInfo)
-        {
-            ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
-            if (replyMessage.ReplyMode == ReplyModeEnum.SYNCH || replyMessage.ReplyMode == ReplyModeEnum.BREAK)
-            {
-                if (!string.IsNullOrEmpty(replyMessage.ReplyContent))
-                {
-                    //解析ReplyContent内容完善当前通道的用户登录信息
-                    CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
-                    currentGallery.ClientInfo.LinkRouterAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "routerAddress");
-                    currentGallery.ClientInfo.LinkServerAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "address");
-                    currentGallery.ClientInfo.SessionId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "sessionID");
-                    currentGallery.ClientInfo.ChannelId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "channelID");
-                    messageInfo.MessageContent = replyMessage.ReplyContent;
-                }
-            }
-            replyMessage.MessageId = messageInfo.MessageId;
-            return replyMessage;
-        }
-        /// <summary>
-        /// 注册连接器
-        /// </summary>
-        /// <param name="adapter"></param>
-        /// <param name="messageInfo"></param>
-        /// <returns></returns>
-        private ReplyMessage ConnectLinkSubmit(IAdapter adapter, RequestMessage messageInfo)
-        {
-            messageInfo.MessageType = "LinkService.registAsync";
-            ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
-            if (replyMessage.ReplyMode == (ReplyModeEnum)0)
-            {
-                replyMessage.ReplyAlertMessage = "注册连接器失败";
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(replyMessage.ReplyContent))
-                {
-                    BaseResourceInfo baseResourceInfo = new BaseResourceInfo();
-                    baseResourceInfo.GalleryId = GalleryManager.GetCurrentGalleryId();
-                    Dictionary<string, string> replyContentDic = JsonHelper.ToObject<Dictionary<string, string>>(replyMessage.ReplyContent);
-                    baseResourceInfo.ResourceXml = replyMessage.ReplyContent;
-                    List<object> menuObj = JsonHelper.ToObject<List<object>>(JsonHelper.ReadJsonString(replyContentDic["menu"], "result"));
-                    if (menuObj != null)
-                    {
-                        foreach (object item in menuObj)
-                        {
-                            MenuInfo menuInfo = JsonHelper.ToObject<MenuInfo>(item.ToString());
-                            if (menuInfo == null || baseResourceInfo.ResourceMnenus.Exists(it => it.Id == menuInfo.Id))
-                                continue;
-                            baseResourceInfo.ResourceMnenus.Add(menuInfo);
-                        }
-                    }
-                    BaseResourceManager baseResourceManager = new BaseResourceManager();
-                    bool result = baseResourceManager.AddResouce(baseResourceInfo);
-                    if (result)
-                    {
-                        replyMessage.ReplyContent = string.Empty;
-                        replyMessage.ReplyAlertMessage = replyContentDic["msg"];
-                    }
-                }
-            }
-            replyMessage.MessageId = messageInfo.MessageId;
             return replyMessage;
         }
         /// <summary>

@@ -19,16 +19,8 @@ namespace Victop.Frame.ComLink.ICE.Servants
 	/// <remarks>服务参数</remarks>
 	public class ServiceParams
 	{
-		/// <summary>
-		/// 回调
-		/// </summary>
-		public AMD_MessageEndpoint_sendMessage CallBack
-		{
-			get;
-			set;
-		}
         /** ICE应答. */
-        public AMD_MessageEndpoint_sendMessageNew NewCallBack
+        public AMD_MessageEndpoint_sendMessage CallBack
         {
             get;
             set;
@@ -66,9 +58,9 @@ namespace Victop.Frame.ComLink.ICE.Servants
             get { return message; }
         }
 
-        public ServiceParams(AMD_MessageEndpoint_sendMessageNew cb, Message message, bool isCallback, string hash, Current current)
+        public ServiceParams(AMD_MessageEndpoint_sendMessage cb, Message message, bool isCallback, string hash, Current current)
         {
-            this.NewCallBack = cb;
+            this.CallBack = cb;
             this.IsCallBack = isCallback;
             this.ICE_Current = current;
             this.Hash = hash;

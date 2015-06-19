@@ -58,78 +58,7 @@ namespace Victop.Frame.ComLink.ICE.Servants
             iCEManager = iceManager;
             baseI = iceManager.BaseInfo;
 		}
-
-        /// <summary>
-        /// 处理接收到的消息
-        /// </summary>
-        /// <param name="cb">ICE应答单元</param>
-        /// <param name="message">待处理的消息</param>
-        /// <param name="isCallback">是否回调模式发来的</param>
-        /// <param name="current">ICE通讯器上下文</param>
-		private void DoMessage(AMD_MessageEndpoint_sendMessage cb, string messageInfo, bool isCallBack, Current current)
-		{
-            // 将接收到的消息转为外部程序可以识别的格式触发外部应用程序回调函数
-            RequestMessage message = MessageHelper.ReceiveMsgToClass(messageInfo);
-            // 记录发送者的连接信息
-            string senderID = message.CurrentSenderId;
-            Connection connection = current.con;
-            IPConnectionInfo info = (IPConnectionInfo)connection.getInfo();
-            Dictionary<string, IPInfo> hole = baseI.Wormhole;
-            IPInfo ip = null;
-            if (hole.ContainsKey(senderID))
-            {
-                ip = hole[senderID];
-            }
-            else
-            {
-                ip = new IPInfo();
-            }
-            ip.Address = info.remoteAddress;
-            ip.Port = info.remotePort;
-            ip.SenderID = senderID;
-            if (!hole.ContainsKey(senderID))
-            {
-                hole.Add(senderID, ip);
-            }
-            // 处理消息的流程
-            bool flag = true;
-            if (flag)
-            {
-                // 接收消息，触发事件，发回回应，设置默认的处理方式为异步
-                IceResponseImpl response = new IceResponseImpl(ReplyModeEnum.ASYNC, cb);
-                // 将消息交给同步处理逻辑处理
-                baseI.SynchDoMessage(response, message);
-                if (response.entry.replyMode == (int)ReplyModeEnum.CAST)
-                {
-                    RejectMessage(cb, message);
-                }
-                else if (response.Flag)
-                {
-                    // 同步事件有回应
-                    if (response.entry.replyMode == (int)ReplyModeEnum.ASYNC)
-                    {
-                        // 事件回应的处理方式为异步，加入消息缓存队列，转入异步处理事件
-                        ThreadPool.QueueUserWorkItem(new WaitCallback(AsyncDoMessageTask), message);
-                        int poolSize, portThreadNum; // 线程总数
-                        ThreadPool.GetMaxThreads(out poolSize, out  portThreadNum);
-                        int activeCount; // 可用的线程数
-                        ThreadPool.GetAvailableThreads(out activeCount, out portThreadNum);
-                    }
-                }
-                else
-                {
-                    // 事件没有回应，将默认的处理结果回应给客户端
-                    cb.ice_response(response.entry);
-                }
-            }
-            else
-            {
-                RejectMessage(cb, message);
-            }
-		}
-
-
-        private void DoMessageNew(AMD_MessageEndpoint_sendMessageNew cb, Message message, bool isCallback, Current current)
+        private void DoMessage(AMD_MessageEndpoint_sendMessage cb, Message message, bool isCallback, Current current)
         {
             // 将接收到的消息转为外部程序可以识别的格式触发外部应用程序回调函数
             RequestMessage msg = MessageUtil.ICEmsg2SOAmsg(message);
@@ -145,7 +74,7 @@ namespace Victop.Frame.ComLink.ICE.Servants
                 baseI.SynchDoMessage(response, msg);
                 if (response.entry.replyMode == (int)ReplyModeEnum.CAST)
                 {
-                    RejectMessageNew(cb, msg);
+                    RejectMessage(cb, msg);
                 }
                 else if (response.Flag)
                 {
@@ -169,27 +98,11 @@ namespace Victop.Frame.ComLink.ICE.Servants
             }
             else
             {
-                RejectMessageNew(cb, msg);
+                RejectMessage(cb, msg);
             }
         }
 
-		/// <summary>
-		/// 拒收消息处理逻辑
-		/// </summary>
-		private void RejectMessage(AMD_MessageEndpoint_sendMessage cb, RequestMessage messageInfo)
-		{
-            // 接收消息，触发事件，发回回应，设置默认的处理方式为丢弃
-            IceResponseImpl response = new IceResponseImpl(ReplyModeEnum.CAST, cb);
-            // 将消息交给同步处理逻辑处理
-            baseI.RejectedMessage(response, messageInfo);
-            if (!response.Flag)
-            {
-                // 事件没有回应，将默认的处理结果回应给客户端
-                cb.ice_response(response.entry);
-            }
-		}
-
-        private void RejectMessageNew(AMD_MessageEndpoint_sendMessageNew cb, RequestMessage messageInfo)
+        private void RejectMessage(AMD_MessageEndpoint_sendMessage cb, RequestMessage messageInfo)
         {
             // 接收消息，触发事件，发回回应，设置默认的处理方式为丢弃
             IceResponseImpl response = new IceResponseImpl(ReplyModeEnum.CAST, cb);
@@ -245,7 +158,7 @@ namespace Victop.Frame.ComLink.ICE.Servants
             ////////////////new////////////////////////
             Message message = param.Message;
             message.messageContent = msg;
-            DoMessageNew(param.NewCallBack, message, param.IsCallBack, param.ICE_Current);
+            DoMessage(param.CallBack, message, param.IsCallBack, param.ICE_Current);
         }
 
 		/// <summary>
@@ -264,118 +177,9 @@ namespace Victop.Frame.ComLink.ICE.Servants
             msg = msg.Substring(0, msg.LastIndexOf(']'));
 
 
-            DoMessage(param.CallBack, msg, param.IsCallBack, param.ICE_Current);
+            DoMessage(param.CallBack, param.Message, param.IsCallBack, param.ICE_Current);
 		}
-
-        /// <summary>
-        /// 接收发来的回调代理
-        /// </summary>
-        /// <param name="callbackProxy">回调代理</param>
-        /// <param name="id">标识</param>
-        /// <param name="current__">ICE通讯器上下文</param>
-        /// <returns>状态</returns>
-        public override bool setCallback(MessageEndpointPrx callbackProxy, string id, Current current__)
-        {
-            Connection connection = current__.con;
-            IPConnectionInfo info = (IPConnectionInfo)connection.getInfo();
-            string remoteAddress = info.remoteAddress;
-            int remotePort = info.remotePort;
-            Ice.Endpoint[] endpoints = callbackProxy.ice_getEndpoints();
-            List<Ice.Endpoint> endpointList = new List<Ice.Endpoint>(endpoints);
-            Identity identity = callbackProxy.ice_getIdentity();
-            // flag==true表示可以直接使用的回调代理
-            bool flag = false;
-            int port = remotePort;
-            string[] net = remoteAddress.Split(new char[] { '.' });
-            string nettext = net[0] + net[1] + net[2];
-            foreach (Ice.Endpoint endpoint in endpointList)
-            {
-                IPEndpointInfo ipInfo = (IPEndpointInfo)endpoint.getInfo();
-                port = ipInfo.port;
-                string address = ipInfo.host;
-                if (address.Equals("127.0.0.1") || address.Equals(remoteAddress))
-                {
-                    flag = true;
-                    break;
-                }
-                else
-                {
-                    string[] check = address.Split(new char[] { '.' });
-                    string checktext = check[0] + check[1] + check[2];
-                    if (checktext.Equals(nettext))
-                    {
-                        flag = true;
-                        break;
-                    }
-                }
-            }
-            if (!flag)
-            {
-                string endpointStr = null;
-                if (info.GetType().IsAssignableFrom(typeof(TCPConnectionInfo)))
-                {
-                    endpointStr = "tcp ";
-                }
-                else if (info.GetType().IsAssignableFrom(typeof(UDPConnectionInfo)))
-                {
-                    endpointStr = "udp ";
-                }
-                else
-                {
-                    endpointStr = "ssl ";
-                }
-                endpointStr += " -h " + remoteAddress;
-                endpointStr += " -p " + port;
-                ObjectAdapter adapter = callbackProxy.ice_getCommunicator().createObjectAdapterWithEndpoints(id, endpointStr);
-                ObjectPrx basePrx = adapter.createProxy(identity);
-                endpointList.Add(basePrx.ice_getEndpoints()[0]);
-                adapter.destroy();
-            }
-            if (null != endpointList && endpointList.Count > 0)
-            {
-                ObjectPrx fixCallback = callbackProxy.ice_endpoints(endpointList.ToArray());
-                callbackProxy = MessageEndpointPrxHelper.uncheckedCast(fixCallback);
-            }
-            return iCEManager.CallbackMaps.AddCallBack(id, callbackProxy);
-        }
-        /// <summary>
-        /// 数据接收，需要进行分批处理(重写方法)
-        /// </summary>
-        public override void sendMessage_async(AMD_MessageEndpoint_sendMessage cb__, string hash, int index, int fragmentSize, string message, bool isCallback, Current current__)
-        {
-            // 检查接收的消息是否为消息片段，如果是消息片段需要对片段进行组装
-            if (fragmentSize > 1)
-            {
-                // 对消息片段进行组装，得到完整的消息，再响应到外部应用程序回调函数
-                try
-                {
-                    Queue<object> queue = iCEManager.QueueMaps.CreateQueue(hash, fragmentSize);
-                    queue.Enqueue(message);// 插入消息片断
-                    if (fragmentSize == index)
-                    {
-                        // 最后一个片断，组装消息
-                        ServiceParams param = new ServiceParams(cb__, isCallback, hash, current__);
-                        ThreadPool.QueueUserWorkItem(new WaitCallback(MsgFragmentService), param);
-                    }
-                    else
-                    {
-                        Reply reply = new Reply((int)ReplyModeEnum.SYNCH, hash);
-                        // 应答消息发送端
-                        cb__.ice_response(reply);
-                        return;
-                    }
-                }
-                catch
-                {
-                    iCEManager.QueueMaps.RemoveEntry(hash);
-                }
-            }
-            else
-            {
-                // 不对消息进行组装，直接响应外部应用程序回调函数
-                DoMessage(cb__, message, isCallback, current__);
-            }
-        }
+       
         /// <summary>
         /// 通讯中断触发该事件(重写方法)
         /// </summary>
@@ -391,7 +195,7 @@ namespace Victop.Frame.ComLink.ICE.Servants
             }
         }
 
-        public override void sendMessageNew_async(AMD_MessageEndpoint_sendMessageNew cb__, string hash, bool isCallback, Message msg, int index, int fragmentSize, string messagecontent, Current current__)
+        public override void sendMessage_async(AMD_MessageEndpoint_sendMessage cb__, string hash, bool isCallback, Message msg, int index, int fragmentSize, string messagecontent, Current current__)
         {
             // 检查接收的消息是否为消息片段，如果是消息片段需要对片段进行组装
             if (fragmentSize > 1)
@@ -424,7 +228,7 @@ namespace Victop.Frame.ComLink.ICE.Servants
             {
                 msg.messageContent = messagecontent;
                 // 不对消息进行组装，直接响应外部应用程序回调函数
-                DoMessageNew(cb__, msg, isCallback, current__);
+                DoMessage(cb__, msg, isCallback, current__);
             }
         }
     }

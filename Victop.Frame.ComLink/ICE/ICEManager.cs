@@ -24,12 +24,12 @@ namespace Victop.Frame.ComLink.ICE
     using Victop.Frame.PublicLib.Helpers;
     using slice;
 
-	/// <summary>
-	/// ICE 通信管理器
-	/// </summary>
-	/// <remarks>ICE 通信管理器</remarks>
-	public class ICEManager : IComlink
-	{
+    /// <summary>
+    /// ICE 通信管理器
+    /// </summary>
+    /// <remarks>ICE 通信管理器</remarks>
+    public class ICEManager : IComlink
+    {
         /// <summary>
         /// ICE配置文件
         /// </summary>
@@ -42,11 +42,11 @@ namespace Victop.Frame.ComLink.ICE
         public Base BaseInfo = null;
 
         private RouterMap routerMaps;
-		/// <summary>
-		/// 路由适配器管理器
-		/// </summary>
-		public RouterMap RouterMaps
-		{
+        /// <summary>
+        /// 路由适配器管理器
+        /// </summary>
+        public RouterMap RouterMaps
+        {
             get
             {
                 if (routerMaps == null)
@@ -57,14 +57,14 @@ namespace Victop.Frame.ComLink.ICE
             {
                 routerMaps = value;
             }
-		}
+        }
 
         private ProxyMap serverProxyMaps;
-		/// <summary>
-		/// 服务器代理管理器
-		/// </summary>
-		public ProxyMap ServerProxyMaps
-		{
+        /// <summary>
+        /// 服务器代理管理器
+        /// </summary>
+        public ProxyMap ServerProxyMaps
+        {
             get
             {
                 if (serverProxyMaps == null)
@@ -75,13 +75,13 @@ namespace Victop.Frame.ComLink.ICE
             {
                 serverProxyMaps = value;
             }
-		}
+        }
         private QueueMap queueMaps;
-		/// <summary>
-		/// 队列管理器
-		/// </summary>
-		public QueueMap QueueMaps
-		{
+        /// <summary>
+        /// 队列管理器
+        /// </summary>
+        public QueueMap QueueMaps
+        {
             get
             {
                 if (queueMaps == null)
@@ -92,14 +92,14 @@ namespace Victop.Frame.ComLink.ICE
             {
                 queueMaps = value;
             }
-		}
+        }
 
         private CallbackMap callbackMaps;
-		/// <summary>
-		/// 存储回调的代理
-		/// </summary>
-		public CallbackMap CallbackMaps
-		{
+        /// <summary>
+        /// 存储回调的代理
+        /// </summary>
+        public CallbackMap CallbackMaps
+        {
             get
             {
                 if (callbackMaps == null)
@@ -110,13 +110,13 @@ namespace Victop.Frame.ComLink.ICE
             {
                 callbackMaps = value;
             }
-		}
+        }
         private ChannelMap channelMaps;
-		/// <summary>
-		/// 通道管理器(发送者与建立者的配对关系缓存)
-		/// </summary>
-		public ChannelMap ChannelMaps
-		{
+        /// <summary>
+        /// 通道管理器(发送者与建立者的配对关系缓存)
+        /// </summary>
+        public ChannelMap ChannelMaps
+        {
             get
             {
                 if (channelMaps == null)
@@ -127,13 +127,13 @@ namespace Victop.Frame.ComLink.ICE
             {
                 channelMaps = value;
             }
-		}
+        }
         private IceApplication iceApp;
-		/// <summary>
-		/// ICE通信器实例
-		/// </summary>
-		public IceApplication ICEApp
-		{
+        /// <summary>
+        /// ICE通信器实例
+        /// </summary>
+        public IceApplication ICEApp
+        {
             get
             {
                 if (iceApp == null)
@@ -144,7 +144,7 @@ namespace Victop.Frame.ComLink.ICE
             {
                 iceApp = value;
             }
-		}
+        }
         /// <summary>
         /// ICE通信器主线程
         /// </summary>
@@ -167,11 +167,11 @@ namespace Victop.Frame.ComLink.ICE
         {
             get { return ICEApp.ICEStatus; }
         }
-		/// <summary>
-		/// 发送消息
-		/// </summary>
-		public ReplyMessage SendMessage(RequestMessage messageInfo)
-		{
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        public ReplyMessage SendMessage(RequestMessage messageInfo)
+        {
             if (string.IsNullOrWhiteSpace(messageInfo.CurrentRecepitId) && string.IsNullOrWhiteSpace(messageInfo.TargetAddress))
             {
                 throw new NoReceiptException(messageInfo);
@@ -219,7 +219,7 @@ namespace Victop.Frame.ComLink.ICE
                 throw ex;
             }
             return replyMessage;
-		}
+        }
         /// <summary>
         /// 发送消息，解析传入的消息是否存在路由信息，如果存在调用携带路由的消息发送，不存在则正常的发送消息.
         /// </summary>
@@ -278,15 +278,13 @@ namespace Victop.Frame.ComLink.ICE
                 if (!ChannelMaps.ContainChannelInfo(senderID, serverAddress, null))
                 {
                     callbackProxy = CreateCallbackProxy(senderID);
-                    bool flag = serverProxy.setCallback(callbackProxy, senderID);
-                    if (flag)
-                    {
-                        ChannelMaps.AddChannelInfo(senderID, serverAddress, null);
-                    }
+                    //bool flag = serverProxy.setCallback(callbackProxy, senderID);
+                    ChannelMaps.AddChannelInfo(senderID, serverAddress, null);
                 }
             }
+            message.ClientCallBackProxy = callbackProxy.ToString();
             // 发送
-            return DefaultSendMessageNew(serverProxy, message, isAsync, isCallback);
+            return DefaultSendMessage(serverProxy, message, isAsync, isCallback);
         }
         /// <summary>
         /// 创建一个服务器代理,检查缓存中是否已经有服务器代理,有则直接取出,没有则新建一个服务器代理.
@@ -313,7 +311,7 @@ namespace Victop.Frame.ComLink.ICE
                 }
                 catch (System.Exception ex1)
                 {
-                    
+
                 }
             }
             // 没有维护有代理，或者是代理已经失效，重新建立一个新的代理
@@ -329,7 +327,7 @@ namespace Victop.Frame.ComLink.ICE
                 RouterPrx router = null;
                 try
                 {
-                    
+
                     RouterEntry RouterEntry = RouterMaps.FindRouterEntry(routerAddress);
                     router = RouterEntry.RouterProxy;
                     // router.ice_ping();
@@ -429,14 +427,15 @@ namespace Victop.Frame.ComLink.ICE
             if (!ChannelMaps.ContainChannelInfo(senderID, serverAddress, routerAddress))
             {
                 MessageEndpointPrx callbackProxy = CreateCallbackProxyWithRouter(routerAddress, senderID);
-                bool flag = serverProxy.setCallback(callbackProxy, senderID);
-                if (flag)
-                {
-                    ChannelMaps.AddChannelInfo(senderID, serverAddress, routerAddress);
-                }
+                //bool flag = serverProxy.setCallback(callbackProxy, senderID);
+                //if (flag)
+                //{
+                //    ChannelMaps.AddChannelInfo(senderID, serverAddress, routerAddress);
+                //}
+                message.ClientCallBackProxy = callbackProxy.ToString();
             }
             // 发送
-            return DefaultSendMessageNew(serverProxy, message, isAsync, isCallback);
+            return DefaultSendMessage(serverProxy, message, isAsync, isCallback);
         }
 
         /// <summary>
@@ -485,7 +484,7 @@ namespace Victop.Frame.ComLink.ICE
         /// <param name="isAsync">异步分派</param>
         /// <param name="isCallback">回调标识</param>
         /// <returns></returns>
-        private Reply DefaultSendMessageNew(MessageEndpointPrx serverProxy, RequestMessage message, bool isAsync, bool isCallback)
+        private Reply DefaultSendMessage(MessageEndpointPrx serverProxy, RequestMessage message, bool isAsync, bool isCallback)
         {
 
             // 格式化消息，发送
@@ -502,12 +501,12 @@ namespace Victop.Frame.ComLink.ICE
                 {
                     if (isAsync)
                     {
-                        serverProxy.begin_sendMessageNew(null, isCallback, msg, 1, 1, message.MessageContent);
+                        serverProxy.begin_sendMessage(null, isCallback, msg, 1, 1, message.MessageContent);
                         return null;
                     }
                     else
                     {
-                        Reply reply = serverProxy.sendMessageNew(null, isCallback, msg, 1, 1, message.MessageContent);
+                        Reply reply = serverProxy.sendMessage(null, isCallback, msg, 1, 1, message.MessageContent);
                         return reply;
                     }
                 }
@@ -564,19 +563,19 @@ namespace Victop.Frame.ComLink.ICE
                     // 截取消息片段
                     sendMsg = content.Substring(msgPos, fragmentSize);
                 }
-                reply = serverPrx.sendMessageNew(hash, isCallback, msg, index, fragmentNum, sendMsg);
+                reply = serverPrx.sendMessage(hash, isCallback, msg, index, fragmentNum, sendMsg);
             }
 
             return reply;
         }
-		/// <summary>
-		/// 通信器初始化
-		/// </summary>
-		public void Init(Base baseI)
-		{
+        /// <summary>
+        /// 通信器初始化
+        /// </summary>
+        public void Init(Base baseI)
+        {
             this.BaseInfo = baseI;
             ComLinkRun();
-		}
+        }
         /// <summary>
         /// 通信器运行
         /// </summary>
@@ -635,28 +634,28 @@ namespace Victop.Frame.ComLink.ICE
             iceApp.main((string[])args, iceConfigFile);
         }
 
-		/// <summary>
-		/// 获取通信器状态
-		/// </summary>
-		public int GetStatus()
-		{
+        /// <summary>
+        /// 获取通信器状态
+        /// </summary>
+        public int GetStatus()
+        {
             return commStatus;
-		}
+        }
 
-		/// <summary>
-		/// 重置通信器
-		/// </summary>
-		public void Reset()
-		{
-			throw new System.NotImplementedException(); //TODO:方法实现
-		}
+        /// <summary>
+        /// 重置通信器
+        /// </summary>
+        public void Reset()
+        {
+            throw new System.NotImplementedException(); //TODO:方法实现
+        }
 
-		/// <summary>
-		/// 停止通信器
-		/// </summary>
+        /// <summary>
+        /// 停止通信器
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
-		public void Stop()
-		{
+        public void Stop()
+        {
             try
             {
                 if (!commtor.isShutdown())
@@ -679,23 +678,23 @@ namespace Victop.Frame.ComLink.ICE
                 ServerProxyMaps.DelServerProxy(proxyID);
                 callBackAdapter = null;
             }
-		}
+        }
 
-		/// <summary>
-		/// 检查是否存在回调代理
-		/// </summary>
-		public bool CheckCallBackEndPoint(string target)
-		{
+        /// <summary>
+        /// 检查是否存在回调代理
+        /// </summary>
+        public bool CheckCallBackEndPoint(string target)
+        {
             return CallbackMaps.CallbackMaps.ContainsKey(target);
-		}
+        }
         /// <summary>
         /// 把A端点的回调代理，转交给B端点(p2p)
         /// </summary>
         /// <param name="sender">请求者</param>
         /// <param name="target">目标</param>
         /// <returns>结果</returns>
-		public bool TransferEndPoint(string sender, string target)
-		{
+        public bool TransferEndPoint(string sender, string target)
+        {
             bool flag = false;
             MessageEndpointPrx targetProxy = null;
             MessageEndpointPrx senderProxy = null;
@@ -703,10 +702,11 @@ namespace Victop.Frame.ComLink.ICE
             if (null != targetProxy)
             {
                 senderProxy = CallbackMaps.FindCallBack(sender);
-                flag = senderProxy.setCallback(targetProxy, target);
+                //flag = senderProxy.setCallback(targetProxy, target);
+                flag = true;
             }
             return flag;
-		}
+        }
         public string StartLocalServer(string ip, string port)
         {
             throw new NotImplementedException();

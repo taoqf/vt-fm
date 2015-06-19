@@ -12,9 +12,7 @@ namespace Victop.Frame.ComLink.ICE.Maps
     public class IceResponseImpl:IResponse
     {
         public Reply entry = new Reply();
-
-        private AMD_MessageEndpoint_sendMessage cb;
-        private AMD_MessageEndpoint_sendMessageNew _cb;
+        private AMD_MessageEndpoint_sendMessage _cb;
         private bool flag = false;
 
         public bool Flag
@@ -26,13 +24,7 @@ namespace Victop.Frame.ComLink.ICE.Maps
         {
             this.entry.replyMode = (int)mode;
         }
-
-        public IceResponseImpl(ReplyModeEnum mode, AMD_MessageEndpoint_sendMessage cb)
-        {
-            this.entry.replyMode = (int)mode;
-            this.cb = cb;
-        }
-        public IceResponseImpl(ReplyModeEnum mode, AMD_MessageEndpoint_sendMessageNew _cb)
+        public IceResponseImpl(ReplyModeEnum mode, AMD_MessageEndpoint_sendMessage _cb)
         {
             this.entry.replyMode = (int)mode;
             this._cb = _cb;

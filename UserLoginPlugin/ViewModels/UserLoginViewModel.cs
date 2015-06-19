@@ -553,7 +553,7 @@ namespace UserLoginPlugin.ViewModels
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
                 contentDic.Add("spaceId", string.Format("{0}::{1}", LoginInfoModel.ClientId, string.IsNullOrEmpty(LoginInfoModel.ProductId) ? LoginInfoModel.ClientId : LoginInfoModel.ProductId));
-                string MessageType = "LoginService.userLoginNew";
+                string MessageType = "loginService";
                 DataMessageOperation messageOp = new DataMessageOperation();
                 //Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                 messageOp.SendAsyncMessage(MessageType, contentDic, new WaitCallback(AfterLogin));

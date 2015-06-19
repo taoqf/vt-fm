@@ -35,35 +35,15 @@ namespace Victop.Frame.Adapter
                 GalleryManager galleryManager = new GalleryManager();
                 CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
                 LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
-                //message.MessageId = Guid.NewGuid().ToString();
-                message.FromRole = "WPF客户端";
                 message.FromId = loginUserInfo.UserCode;
                 message.CurrentSenderId = String.IsNullOrWhiteSpace(loginUserInfo.ChannelId) ? Guid.NewGuid().ToString() : loginUserInfo.ChannelId;
                 message.SessionId = loginUserInfo.SessionId;
-                switch (messageTarget)
+                message.SpaceId = cloudGallyInfo.ClientId;
+                if (cloudGallyInfo.IsNeedRouter)
                 {
-                    case MessageTargetEnum.LINK:
-                        message.SetTargetAddress(loginUserInfo.LinkServerAddress.Split(':')[0], loginUserInfo.LinkServerAddress.Split(':')[1]);
-                        if (cloudGallyInfo.IsNeedRouter)
-                        {
-                            message.SetRouterAddress(loginUserInfo.LinkRouterAddress.Split(':')[0], loginUserInfo.LinkRouterAddress.Split(':')[1]);
-                        }
-                        break;
-                    case MessageTargetEnum.MAIN:
-                        if (cloudGallyInfo.IsNeedRouter)
-                        {
-                            message.SetRouterAddress(cloudGallyInfo.RouterAddress.Split(':')[0], cloudGallyInfo.RouterAddress.Split(':')[1]);
-                        }
-                        message.SetTargetAddress(cloudGallyInfo.CloudAddress.Split(':')[0], cloudGallyInfo.CloudAddress.Split(':')[1]);
-                        break;
-                    case MessageTargetEnum.NORMAL:
-                        message.SetTargetAddress(loginUserInfo.LinkServerAddress.Split(':')[0], loginUserInfo.LinkServerAddress.Split(':')[1]);
-                        if (cloudGallyInfo.IsNeedRouter)
-                        {
-                            message.SetRouterAddress(loginUserInfo.LinkRouterAddress.Split(':')[0], loginUserInfo.LinkRouterAddress.Split(':')[1]);
-                        }
-                        break;
+                    message.SetRouterAddress(cloudGallyInfo.RouterAddress.Split(':')[0], cloudGallyInfo.RouterAddress.Split(':')[1]);
                 }
+                message.SetTargetAddress(cloudGallyInfo.CloudAddress.Split(':')[0], cloudGallyInfo.CloudAddress.Split(':')[1]);
             }
             catch (Exception ex)
             {
@@ -95,10 +75,8 @@ namespace Victop.Frame.Adapter
         public virtual RequestMessage CreateMessage(MessageTargetEnum messageTarget, RequestMessage messageInfo)
         {
             string messageId = messageInfo.MessageId;
-            string messageToRole = messageInfo.ToRole;
             messageInfo = CreateMessage(messageTarget, messageInfo.MessageType, messageInfo.MessageControl, messageInfo.MessageContent);
             messageInfo.MessageId = messageId;
-            messageInfo.ToRole = messageToRole;
             return messageInfo;
         }
         /// <summary>
@@ -122,19 +100,6 @@ namespace Victop.Frame.Adapter
         /// </summary>
         public virtual ReplyMessage SubmitRequest(RequestMessage message)
         {
-            #region 获取推送消息
-            if (message.MessageType == "TaskNotifyService.GetNoifyInfo")
-            {
-                ReplyMessage repMessage = new ReplyMessage();
-                repMessage.MessageId = message.MessageId;
-                repMessage.ReplyMode = ReplyModeEnum.ASYNC;
-                repMessage.ReplyContent = JsonHelper.ToJson(NotificationPoolManager.NotificationPool.PoolMap);
-                //NotificationPoolManager notifyMgr = new NotificationPoolManager();
-                //notifyMgr.ClearNotificationPool();
-                return repMessage;
-            }
-            #endregion
-
             return SubmitRequest(message, 15000); //20150508发送消息增加为15秒
         }
 
@@ -143,18 +108,7 @@ namespace Victop.Frame.Adapter
         /// </summary>
         public virtual ReplyMessage SubmitRequest(RequestMessage message, long time)
         {
-            if (message.MessageType == "LoginService.userLoginNew" || message.MessageType == "LoginService.getCurrentLinker")
-            {
-                message = CreateMessage(MessageTargetEnum.MAIN, message);
-            }
-            else if (message.MessageType == "LinkService.registAsync")
-            {
-                message = CreateMessage(MessageTargetEnum.LINK, message);
-            }
-            else
-            {
-                message = CreateMessage(MessageTargetEnum.NORMAL, message);
-            }
+            message = CreateMessage(MessageTargetEnum.NORMAL, message);
             MessagePoolManager messagePoolManager = new MessagePoolManager();
             ReplyMessage replyMessage = FrameInit.GetInstance().ComlinkObject.SendMessage(message);
             LoggerHelper.InfoFormat("发送消息:{0}", JsonHelper.ToJson(message));
@@ -268,12 +222,12 @@ namespace Victop.Frame.Adapter
             else
             {
                 string replyToID = messageInfo.ReplyToId;
-                if (null == replyToID || "".Equals(replyToID.Trim()) || "null".Equals(replyToID.Trim()))
+                if (string.IsNullOrEmpty(replyToID))
                 {
                     otherPoolManager.SaveMessageData(messageInfo);
 
                 }
-                else if ("victop-task-role".Equals(messageInfo.FromRole) && "reply".Equals(messageInfo.MessageType))
+                else if (messageInfo.MessageType.Equals("reply"))
                 {
                     messagePoolManager.SaveMessageData(messageInfo);
                 }

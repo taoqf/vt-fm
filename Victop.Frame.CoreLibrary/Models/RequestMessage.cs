@@ -35,15 +35,6 @@ namespace Victop.Frame.CoreLibrary.Models
             get { return fromId; }
             set { fromId = value; }
 		}
-        private string fromRole;
-		/// <summary>
-		/// 发起角色
-		/// </summary>
-		public virtual string FromRole
-		{
-            get { return fromRole; }
-            set { fromRole = value; }
-		}
         private string toId;
 		/// <summary>
 		/// 最终接收者
@@ -52,15 +43,6 @@ namespace Victop.Frame.CoreLibrary.Models
 		{
             get { return toId; }
             set { toId = value; }
-		}
-        private string toRole;
-		/// <summary>
-		/// 最终接收者
-		/// </summary>
-		public virtual string ToRole
-		{
-            get { return toRole; }
-            set { toRole = value; }
 		}
         private string routerAddress;
 		/// <summary>
@@ -144,6 +126,31 @@ namespace Victop.Frame.CoreLibrary.Models
             set { messageControl = value; }
         }
         /// <summary>
+        /// 空间Id
+        /// </summary>
+        private string spaceId;
+        /// <summary>
+        /// 空间Id
+        /// </summary>
+        public string SpaceId
+        {
+            get { return spaceId; }
+            set { spaceId = value; }
+        }
+        /// <summary>
+        /// 回调代理
+        /// </summary>
+        private string clientCallBackProxy;
+        /// <summary>
+        /// 回调代理
+        /// </summary>
+        public string ClientCallBackProxy
+        {
+            get { return clientCallBackProxy; }
+            set { clientCallBackProxy = value; }
+        }
+
+        /// <summary>
         /// 设定路由地址和端口，端口输入空则使用默认值9527，如果不使用路由，此处不设定，或将地址设为null
         /// </summary>
         /// <param name="routerAddress"></param>
@@ -171,20 +178,7 @@ namespace Victop.Frame.CoreLibrary.Models
         /// <param name="port"></param>
         public void SetTargetAddress(string targetAddress, string port)
         {
-            if (String.IsNullOrWhiteSpace(targetAddress))
-            {
-                this.targetAddress = "";
-            }
-            else
-            {
-                string targetPortTemp = "";
-                if (port != "" && Trim(port).Length > 0)
-                {
-                    targetPortTemp = " -p " + port;
-                }
-                this.targetAddress = "onmessage:tcp -h " + targetAddress
-                    + targetPortTemp;
-            }
+            this.targetAddress = "onmessage";
         }
         /// <summary>
         /// 过滤字符串中头尾的换行与空格

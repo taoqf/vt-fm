@@ -104,7 +104,6 @@ namespace Victop.Frame.Connection
                         break;
                     case "MongoDataChannelService.findBusiData":
                     case "MongoDataChannelService.findTableData":
-                    case "MongoDataChannelService.conveyor":
                     case "MongoDataChannelService.findCommodities":
                         dicContent = GetFindMongoTableDataMessage(dicContent);
                         replyIsToChannel = DataOperateEnum.SAVE;
@@ -1010,7 +1009,6 @@ namespace Victop.Frame.Connection
                 CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
                 LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
                 #region 处理消息体
-                messageInfo.ToRole = "victop-task-role";
                 Dictionary<string, object> dicMessageControl = new Dictionary<string, object>();
                 dicMessageControl.Add("sessionid", loginUserInfo.SessionId);
                 dicMessageControl.Add("BusinessKey", dicContent.ContainsKey("DocCode") ? dicContent["DocCode"] : null);
