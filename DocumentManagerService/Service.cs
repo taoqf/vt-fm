@@ -40,6 +40,7 @@ namespace DocumentManagerService
                     serviceReceiptMessageType = new List<string>();
                     serviceReceiptMessageType.Add("ServerCenterService.UploadDocument");
                     serviceReceiptMessageType.Add("ServerCenterService.DownloadDocument");
+                    serviceReceiptMessageType.Add("ServerCenterService.DeleteDocument");
                 }
                 return serviceReceiptMessageType;
             }
@@ -168,6 +169,50 @@ namespace DocumentManagerService
                             returnDic.Add("ReplyMode", 1);
                             result = true;
                         }
+                    }
+
+                    if (CurrentMessageType == "ServerCenterService.DeleteDocument")
+                    {                        
+                        string dropuploadProductId = "feidao";
+                        if (serviceParams.ContainsKey("ProductId"))
+                        {
+                            dropuploadProductId = serviceParams["ProductId"].ToString();
+                        }
+                        string deleteFilePath = string.Empty;
+                        if (serviceParams.ContainsKey("FilePath"))
+                        {
+                            deleteFilePath = serviceParams["FilePath"].ToString();
+                        }
+
+                        if (string.IsNullOrWhiteSpace(deleteFilePath))
+                        {
+                            returnDic.Add("ReplyContent", "请选择要删除的文件");
+                            returnDic.Add("ReplyMode", 0);
+                            result = false;
+                        }
+                        else if (string.IsNullOrWhiteSpace(dropuploadProductId))
+                        {
+                            returnDic.Add("ReplyContent", "请选择文件所属的产品");
+                            returnDic.Add("ReplyMode", 0);
+                            result = false;
+                        }
+                        else
+                        {
+                            string dropuploadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "dropupload?productid=" + dropuploadProductId + "&delfile_name="+deleteFilePath;                            
+                            if (this.DeleteFile(dropuploadUrl))
+                            {
+                                returnDic.Add("ReplyContent", "删除成功");
+                                returnDic.Add("ReplyMode", 1);
+                                result = true;
+                            }
+                            else 
+                            {
+                                returnDic.Add("ReplyContent", "删除失败");
+                                returnDic.Add("ReplyMode", 0);
+                                return false;
+                            }
+                        }
+
                     }
                 }
                 else
@@ -344,5 +389,49 @@ namespace DocumentManagerService
             }
         }
         #endregion
+
+        #region 删除文件
+        /// <summary>
+        /// 删除文件
+        /// </summary>
+        /// <param name="dropuploadUrl">删除Url</param>
+        /// <returns></returns>
+        private bool DeleteFile(string dropuploadUrl) 
+        {
+            bool result = false;
+            try
+            {
+                WebRequest request = WebRequest.Create(dropuploadUrl);
+                request.Method = "POST";
+
+                WebResponse response = request.GetResponse();
+                Stream requestStream = response.GetResponseStream();
+                StreamReader sr = new StreamReader(requestStream, Encoding.UTF8);
+                string html = sr.ReadToEnd().Trim();
+                Dictionary<string, object> dicReturn = JsonHelper.ToObject<Dictionary<string, object>>(html);
+                if (dicReturn != null && dicReturn.Count > 0)
+                {
+                    if (dicReturn.ContainsKey("ErrorReportDL"))
+                    {
+                        string error = dicReturn["ErrorReportDL"].ToString();
+                        if (error=="[]")
+                        {
+                            result = true;
+                        }
+                    }
+                }
+                response.Close();
+                if (request != null)
+                {
+                    request = null;
+                }
+            }
+            catch (Exception)
+            {
+                return result;
+            }
+            return result;
+        }
+        #endregion 
     }
 }
