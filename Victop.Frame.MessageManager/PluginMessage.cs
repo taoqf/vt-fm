@@ -65,7 +65,6 @@ namespace Victop.Frame.MessageManager
                     if (messageInfo.MessageCallBack != null)
                     {
                         messageInfo.MessageCallBack(replyMessageInfo);
-                        LoggerHelper.InfoFormat("回调信息:{0}", replyMessageInfo);
                     }
 
                 }
