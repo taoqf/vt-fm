@@ -105,64 +105,39 @@ namespace Victop.Frame.Connection
         {
             CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
             Dictionary<string, string> contentDic = JsonHelper.ToObject<Dictionary<string, string>>(messageInfo.MessageContent);
-            DataFormEnum dataForm = ConfigurationManager.AppSettings["SystemType"].Equals("JSON") ? DataFormEnum.JSON : DataFormEnum.DATASET;
-            switch (dataForm)
+            if (contentDic.ContainsKey("spaceId"))
             {
-                case DataFormEnum.JSON:
-                    if (contentDic.ContainsKey("spaceId"))
-                    {
-                        if (string.IsNullOrEmpty(contentDic["spaceId"].ToString()))
-                        {
-                            contentDic["spaceId"] = string.Format("{0}::{1}", currentGallery.ClientId, currentGallery.ProductId);
-                        }
-                        else
-                        {
-                            if (contentDic["spaceId"].ToString().Contains("::"))
-                            {
-                                currentGallery.ProductId = contentDic["spaceId"].ToString().Substring(contentDic["spaceId"].ToString().IndexOf("::") + 2);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        contentDic.Add("spaceId", string.Format("{0}::{1}", currentGallery.ClientId, currentGallery.ProductId));
-                    }
-                    if (contentDic.ContainsKey("usercode"))
-                    {
-                        contentDic.Add("userCode", contentDic["usercode"]);
-                        contentDic.Remove("usercode");
-                    }
-                    if (!contentDic.ContainsKey("logintypenew"))
-                    {
-                        contentDic.Add("logintypenew", "usercode");
-                    }
-                    if (!contentDic.ContainsKey("userIp"))
-                    {
-                        string hostname = Dns.GetHostName();//得到本机名   
-                        IPHostEntry localhost = Dns.GetHostEntry(hostname);
-                        IPAddress localaddr = localhost.AddressList.Last();
-                        contentDic.Add("userIp", localaddr.ToString());
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            if (contentDic.ContainsKey("channelID"))
-            {
-                if (string.IsNullOrEmpty(currentGallery.ClientInfo.ChannelId))
+                if (string.IsNullOrEmpty(contentDic["spaceId"].ToString()))
                 {
-                    currentGallery.ClientInfo.ChannelId = Guid.NewGuid().ToString();
+                    contentDic["spaceId"] = string.Format("{0}::{1}", currentGallery.ClientId, currentGallery.ProductId);
                 }
-                contentDic["channelID"] = currentGallery.ClientInfo.ChannelId;
+                else
+                {
+                    if (contentDic["spaceId"].ToString().Contains("::"))
+                    {
+                        currentGallery.ProductId = contentDic["spaceId"].ToString().Substring(contentDic["spaceId"].ToString().IndexOf("::") + 2);
+                    }
+                }
             }
             else
             {
-                if (string.IsNullOrEmpty(currentGallery.ClientInfo.ChannelId))
-                {
-                    currentGallery.ClientInfo.ChannelId = Guid.NewGuid().ToString();
-                }
-                contentDic.Add("channelID", currentGallery.ClientInfo.ChannelId);
+                contentDic.Add("spaceId", string.Format("{0}::{1}", currentGallery.ClientId, currentGallery.ProductId));
+            }
+            if (contentDic.ContainsKey("usercode"))
+            {
+                contentDic.Add("userCode", contentDic["usercode"]);
+                contentDic.Remove("usercode");
+            }
+            if (!contentDic.ContainsKey("logintypenew"))
+            {
+                contentDic.Add("logintypenew", "usercode");
+            }
+            if (!contentDic.ContainsKey("userIp"))
+            {
+                string hostname = Dns.GetHostName();//得到本机名   
+                IPHostEntry localhost = Dns.GetHostEntry(hostname);
+                IPAddress localaddr = localhost.AddressList.Last();
+                contentDic.Add("userIp", localaddr.ToString());
             }
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
