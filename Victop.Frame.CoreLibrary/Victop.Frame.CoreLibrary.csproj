@@ -107,6 +107,7 @@
     <Compile Include="Models\JsonMapKey.cs" />
     <Compile Include="Models\LoginUserInfo.cs" />
     <Compile Include="Models\MenuInfo.cs" />
+    <Compile Include="Models\MessageTypeModel.cs" />
     <Compile Include="Models\RefRelationInfo.cs" />
     <Compile Include="Models\RequestMessage.cs" />
     <Compile Include="Models\P2PGroupInfo.cs" />

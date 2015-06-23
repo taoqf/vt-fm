@@ -37,125 +37,27 @@ namespace Victop.Frame.Connection
             try
             {
                 Dictionary<string, object> dicContent = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
-                switch (messageInfo.MessageType)
+                bool opFlag = false;
+                if (CoreDataCollection.ClientMessageTypeList.NoneMessageType.Contains(messageInfo.MessageType))
                 {
-                    case "DataChannelService.getFormBusiDataAsync":
-                        dicContent = GetDataByModelMessage(dicContent);
-                        replyIsToChannel = DataOperateEnum.SAVE;
-                        break;
-                    case "DataChannelService.saveBusiData":
-                        dicContent = SaveDataByModelMessage(dicContent);
-                        replyIsToChannel = DataOperateEnum.COMMIT;
-                        break;
-                    case "DataChannelService.getMasterPropDataAsync":
-                        dicContent = GetMasterPropDataMessage(dicContent);
-                        replyIsToChannel = DataOperateEnum.SAVE;
-                        break;
-                    case "DataChannelService.getSaveMasterDataAsync":
-                        dicContent = SaveMasterPropDataMessage(dicContent);
-                        replyIsToChannel = DataOperateEnum.COMMIT;
-                        break;
-                    case "DataChannelService.getBusinessRulesDataAsync":
-                        dicContent = GetBusinessRulesDataMessage(dicContent);
-                        replyIsToChannel = DataOperateEnum.SAVE;
-                        break;
-                    case "DataChannelService.getSaveBusinessRulesDataAsync":
-                        dicContent = SaveBusinessRulesDataMessage(dicContent);
-                        replyIsToChannel = DataOperateEnum.COMMIT;
-                        break;
-                    case "DataChannelService.getDocCodeAsync":
-                        dicContent = GetDocCodeMessage(dicContent);
-                        break;
-                    case "DataChannelService.getFormReferenceSpecial":
-                        dicContent = GetFormReferenceSpecialMessage(dicContent);
-                        replyIsToChannel = DataOperateEnum.SAVE;
-                        break;
-                    case "DataChannelService.getFormReferenceDataAsync":
-                        dicContent = GetFormReferenceDataMessage(dicContent);
-                        break;
-                    case "SynchronousMessageServer.getSynchronousMessageServer":
-                        dicContent = GetSynchronousMessageServerMessage(dicContent);
-                        break;
-                    case "TaskService.excute":
-                        dicContent = GetDoEJBMessage(dicContent, messageInfo);
-                        break;
-                    case "DataService.execSQLAsyn":
-                        dicContent = GetExecSQLMessage(dicContent);
-                        break;
-                    case "DataService.getDataBySql":
-                        dicContent = GetDataBySqlMessage(dicContent);
-                        break;
-                    case "DataChannelService.getFilterMasterTree":
-                        dicContent = GetFilterMasterTreeMessage(dicContent);
-                        break;
-                    case "BizDataService.executeAsyn":
-                        dicContent = GetExecuteAsynMessage(dicContent);
-                        break;
-                    case "MongoDataChannelService.fetchSystime":
-                        dicContent = GetServerDateTimeMessage(dicContent);
-                        break;
-                    case "DataChannelService.loadDataByModelAsync":
-                        dicContent = GetLoadDataByModelMessage(dicContent);
-                        replyIsToChannel = DataOperateEnum.SAVE;
-                        break;
-                    case "DataChannelService.saveDataByModelAsync":
-                        dicContent = GetSaveDataByModelMessage(dicContent);
-                        replyIsToChannel = DataOperateEnum.COMMIT;
-                        break;
-                    case "MongoDataChannelService.findBusiData":
-                    case "MongoDataChannelService.findTableData":
-                    case "MongoDataChannelService.findCommodities":
-                        dicContent = GetFindMongoTableDataMessage(dicContent);
-                        replyIsToChannel = DataOperateEnum.SAVE;
-                        break;
-                    case "MongoDataChannelService.saveBusiData":
-                    case "MongoDataChannelService.saveTableData":
-                        dicContent = GetSaveMongoTableDataMessage(dicContent);
-                        replyIsToChannel = DataOperateEnum.COMMIT;
-                        break;
-                    case "MongoDataChannelService.customFunc":
-                        dicContent = GetMongoExecuteAsynMessage(dicContent);
-                        break;
-                    default:
-                        break;
+                    opFlag = true;
                 }
-                if (dicContent.ContainsKey("runUser"))
+                if (!opFlag && CoreDataCollection.ClientMessageTypeList.SearchMessageType.Contains(messageInfo.MessageType))
                 {
-                    dicContent["runUser"] = loginUserInfo.UserCode;
+                    dicContent = GetFindMongoTableDataMessage(dicContent);
+                    replyIsToChannel = DataOperateEnum.SAVE;
+                    opFlag = true;
                 }
-                switch (dataForm)
+                if (!opFlag && CoreDataCollection.ClientMessageTypeList.SaveMessageType.Contains(messageInfo.MessageType))
                 {
-                    case DataFormEnum.DATASET:
-                        if (dicContent.ContainsKey("clientId"))
-                        {
-                            dicContent["clientId"] = cloudGallyInfo.ClientId;
-                        }
-                        else
-                        {
-                            //dicContent.Add("clientId", cloudGallyInfo.ClientId);
-                        }
-                        break;
-                    case DataFormEnum.JSON:
-                        if (dicContent.ContainsKey("clientId"))
-                        {
-                            dicContent.Remove("clientId");
-                            dicContent.Add("spaceId", string.Format("{0}::{1}", cloudGallyInfo.ClientId, cloudGallyInfo.ProductId));
-                        }
-                        #region 暂时支持以请求消息中的SpaceId为准，没有时则使用配置文件中的SpaceId
-                        //if (dicContent.ContainsKey("spaceId"))
-                        //{
-                        //    dicContent["spaceId"] = cloudGallyInfo.ClientId;
-                        //} 
-                        #endregion
-                        if (!dicContent.ContainsKey("spaceId"))
-                        {
-                            dicContent.Add("spaceId", string.Format("{0}::{1}", cloudGallyInfo.ClientId, cloudGallyInfo.ProductId));
-                        }
-                        break;
-                    default:
-                        break;
+                    dicContent = GetSaveMongoTableDataMessage(dicContent);
+                    replyIsToChannel = DataOperateEnum.COMMIT;
+                    opFlag = true;
                 }
-
+                if (!dicContent.ContainsKey("spaceId"))
+                {
+                    dicContent.Add("spaceId", string.Format("{0}::{1}", cloudGallyInfo.ClientId, cloudGallyInfo.ProductId));
+                }
                 messageInfo.MessageContent = JsonHelper.ToJson(dicContent);
             }
             catch (Exception)

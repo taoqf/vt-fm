@@ -104,6 +104,23 @@ using Victop.Frame.CoreLibrary.Enums;
             get { return currentGalleryId; }
             set { currentGalleryId = value; }
         }
+        /// <summary>
+        /// 消息类型列表
+        /// </summary>
+        private static MessageTypeModel clientMessageTypeList;
+        /// <summary>
+        /// 消息类型列表
+        /// </summary>
+        public static MessageTypeModel ClientMessageTypeList
+        {
+            get
+            {
+                if (CoreDataCollection.clientMessageTypeList == null)
+                    CoreDataCollection.clientMessageTypeList = new MessageTypeModel();
+                return CoreDataCollection.clientMessageTypeList;
+            }
+            set { CoreDataCollection.clientMessageTypeList = value; }
+        }
 	}
 }
 

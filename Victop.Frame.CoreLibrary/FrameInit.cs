@@ -8,6 +8,8 @@ namespace Victop.Frame.CoreLibrary
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
+    using System.IO;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Text;
@@ -15,14 +17,15 @@ namespace Victop.Frame.CoreLibrary
     using Victop.Frame.CoreLibrary.Enums;
     using Victop.Frame.CoreLibrary.Interfaces;
     using Victop.Frame.CoreLibrary.Models;
+    using Victop.Frame.PublicLib.Helpers;
     using Victop.Frame.PublicLib.Managers;
 
-	/// <summary>
-	/// 框架初始化
-	/// </summary>
-	/// <remarks>框架初始化</remarks>
-	public class FrameInit
-	{
+    /// <summary>
+    /// 框架初始化
+    /// </summary>
+    /// <remarks>框架初始化</remarks>
+    public class FrameInit
+    {
         /// <summary>
         /// 框架初始化实例
         /// </summary>
@@ -107,11 +110,11 @@ namespace Victop.Frame.CoreLibrary
         {
             ComlinkObject.Reset();
         }
-		/// <summary>
-		/// 消息通信连接初始化,完成适配器及通信器的开启
-		/// </summary>
-		private bool MessageComLinkOpen()
-		{
+        /// <summary>
+        /// 消息通信连接初始化,完成适配器及通信器的开启
+        /// </summary>
+        private bool MessageComLinkOpen()
+        {
             if (baseObject == null)
             {
                 baseObject = AdapterFactory.AdapterBase;
@@ -130,31 +133,40 @@ namespace Victop.Frame.CoreLibrary
                 }
             }
             return false;
-            
-		}
 
-		/// <summary>
-		/// 通道信息初始化
-		/// </summary>
-		private void CloudGalleryInit()
-		{
+        }
+
+        /// <summary>
+        /// 通道信息初始化
+        /// </summary>
+        private void CloudGalleryInit()
+        {
             GalleryManager galleryManager = new GalleryManager();
             galleryManager.InitGalleryList();
-		}
+        }
 
-		/// <summary>
-		/// 内置服务初始化
-		/// </summary>
-		private void BuildInServerInit()
-		{
+        /// <summary>
+        /// 内置服务初始化
+        /// </summary>
+        private void BuildInServerInit()
+        {
             RegisterServerManager registerServerManager = new RegisterServerManager();
             registerServerManager.InitServerList();
-		}
+        }
         /// <summary>
         /// 获取配置信息
         /// </summary>
         private void GetConfigInfo()
         {
+            try
+            {
+                string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings.Get("clientmsg") + ".json");
+                CoreDataCollection.ClientMessageTypeList = JsonHelper.ToObject<MessageTypeModel>(FileHelper.ReadText(filePath));
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.ErrorFormat("初始化客户端消息类型异常:{0}", ex.Message);
+            }
             appName = ConfigManager.GetAttributeOfNodeByName("System", "AppName");
             runMode = Convert.ToInt32(ConfigManager.GetAttributeOfNodeByName("System", "Mode"));
             comlinkObject = ComlinkFactory.CreateDefaultComlink();
@@ -178,6 +190,6 @@ namespace Victop.Frame.CoreLibrary
             AutoDiscover.GetInstance().EndPoint = endPort;
             AutoDiscover.GetInstance().StartDiscover();
         }
-	}
+    }
 }
 

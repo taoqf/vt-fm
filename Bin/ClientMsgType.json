@@ -1,0 +1,11 @@
+{
+	"searchMessageType": [
+		"MongoDataChannelService.findBusiData", "MongoDataChannelService.findCommodities"
+	],
+	"saveMessageType": [
+		"MongoDataChannelService.saveBusiData"
+	],
+	"noneMessageType": [
+		"MongoDataChannelService.fetchSystime"
+	]
+}
