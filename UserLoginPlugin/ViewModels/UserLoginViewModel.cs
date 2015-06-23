@@ -485,7 +485,7 @@ namespace UserLoginPlugin.ViewModels
                 if (!returnDic["ReplyMode"].ToString().Equals("0"))
                 {
                     IsRingShow = false;
-                    SaveLoginUserInfo();
+                    //SaveLoginUserInfo();
                     Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                     RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
                     if (RoleInfoList == null || RoleInfoList.Count == 0)

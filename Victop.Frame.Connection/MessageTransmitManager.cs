@@ -173,15 +173,11 @@ namespace Victop.Frame.Connection
             }
             else
             {
-                currentGallery.ClientInfo.LinkRouterAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "routerAddress");
-                currentGallery.ClientInfo.LinkServerAddress = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "linkInfo");
                 currentGallery.ClientInfo.SessionId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "sessionID");
-                currentGallery.ClientInfo.UserName = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userName");
-                currentGallery.ClientInfo.UserPwd = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userpw");
-                currentGallery.ClientInfo.ChannelId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "channelID");
-                currentGallery.ClientInfo.UserCode = replyMessage.ReplyContent.Contains("usercode") ? JsonHelper.ReadJsonString(replyMessage.ReplyContent, "usercode") : JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode");
+                currentGallery.ClientInfo.UserName = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "user_name");
+                currentGallery.ClientInfo.UserCode = replyMessage.ReplyContent.Contains("userCode") ? JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode") : JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode");
                 messageInfo.MessageContent = replyMessage.ReplyContent;
-                replyMessage = GetLoginUserMenuSubmit(adapter, messageInfo);
+                //replyMessage = GetLoginUserMenuSubmit(adapter, messageInfo);
             }
             return replyMessage;
         }
