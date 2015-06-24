@@ -725,7 +725,7 @@ namespace Victop.Frame.DataChannel
                                 if (modelDefInfo.ModelClientRef != null && modelDefInfo.ModelClientRef.Count > 0)
                                 {
                                     MongoModelInfoOfClientRefModel clientRefInfo = modelDefInfo.ModelClientRef.Find(it => (
-                                    it.ClientRefField.Equals(string.Format("{0}.dataArray.{1}", masterFlag ? tableName : dataPathList[0].ToString(), leftStr))));
+                                    it.ClientRefField.Equals(RebuildPath + leftStr)));
                                     if (clientRefInfo != null)
                                     {
                                         dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefInfo));
