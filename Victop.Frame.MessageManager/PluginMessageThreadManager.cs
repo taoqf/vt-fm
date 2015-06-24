@@ -44,11 +44,10 @@ namespace Victop.Frame.MessageManager
 		/// <summary>
 		/// 线程工作
 		/// </summary>
-		public virtual void DoWork(RequestMessage messageInfo,DataFormEnum dataForm)
+		public virtual void DoWork(RequestMessage messageInfo)
 		{
             Dictionary<string, object> paramDic = new Dictionary<string, object>();
             paramDic.Add("messageInfo", messageInfo);
-            paramDic.Add("dataForm", dataForm);
             ThreadPool.QueueUserWorkItem(new WaitCallback(SendMessage), paramDic);
 		}
 
@@ -65,7 +64,7 @@ namespace Victop.Frame.MessageManager
             {
                 return;
             }
-            messageSend.SendMessage(message, (DataFormEnum)(MessageDic["dataForm"]));
+            messageSend.SendMessage(message);
         }
 	}
 }

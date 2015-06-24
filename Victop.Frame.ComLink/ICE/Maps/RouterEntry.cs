@@ -12,108 +12,109 @@ namespace Victop.Frame.ComLink.ICE.Maps
     using System.Linq;
     using System.Text;
     using System.Threading;
+    using Victop.Frame.PublicLib.Helpers;
 
-	/// <summary>
-	/// 路由适配条目
-	/// </summary>
-	/// <remarks>路由适配条目</remarks>
-	public class RouterEntry
-	{
+    /// <summary>
+    /// 路由适配条目
+    /// </summary>
+    /// <remarks>路由适配条目</remarks>
+    public class RouterEntry
+    {
         private string routerAddress;
-		/// <summary>
-		/// 路由地址
-		/// </summary>
-		public string RouterAddress
-		{
+        /// <summary>
+        /// 路由地址
+        /// </summary>
+        public string RouterAddress
+        {
             get { return routerAddress; }
             set { routerAddress = value; }
-		}
+        }
 
         private Glacier2.RouterPrx routerProxy;
-		/// <summary>
-		/// 路由代理
-		/// </summary>
+        /// <summary>
+        /// 路由代理
+        /// </summary>
         public Glacier2.RouterPrx RouterProxy
-		{
+        {
             get { return routerProxy; }
             set { routerProxy = value; }
-		}
+        }
         private ObjectAdapter routerAdapter;
-		/// <summary>
-		/// 路由适配
-		/// </summary>
-		public ObjectAdapter RouterAdapter
-		{
+        /// <summary>
+        /// 路由适配
+        /// </summary>
+        public ObjectAdapter RouterAdapter
+        {
             get { return routerAdapter; }
             set { routerAdapter = value; }
-		}
+        }
         private RouterEntry routerEntry;
-		/// <summary>
-		/// 路由适配实例
-		/// </summary>
-		public RouterEntry RouterEntries
-		{
+        /// <summary>
+        /// 路由适配实例
+        /// </summary>
+        public RouterEntry RouterEntries
+        {
             get { return routerEntry; }
             set { routerEntry = value; }
-		}
+        }
         private Thread refreshRouterThread;
-		/// <summary>
-		/// 刷新路由线程
-		/// </summary>
-		public Thread RefreshRouterThread
-		{
+        /// <summary>
+        /// 刷新路由线程
+        /// </summary>
+        public Thread RefreshRouterThread
+        {
             get { return refreshRouterThread; }
             set { refreshRouterThread = value; }
-		}
+        }
         private long refreshRate;
-		/// <summary>
-		/// 刷新频率
-		/// </summary>
-		public long RefreshRate
-		{
+        /// <summary>
+        /// 刷新频率
+        /// </summary>
+        public long RefreshRate
+        {
             get { return refreshRate; }
             set { refreshRate = value; }
-		}
+        }
         private bool refreshDone;
-		/// <summary>
-		/// 刷新开关
-		/// </summary>
-		public bool RefreshDone
-		{
+        /// <summary>
+        /// 刷新开关
+        /// </summary>
+        public bool RefreshDone
+        {
             get { return refreshDone; }
             set { refreshDone = value; }
-		}
+        }
 
-		public RouterEntry()
-		{
+        public RouterEntry()
+        {
             refreshDone = false;
-		}
+        }
 
-		public RouterEntry(long refreshRate)
-		{
+        public RouterEntry(long refreshRate)
+        {
             this.refreshRate = refreshRate;
             refreshDone = false;
-		}
+        }
 
-		/// <summary>
-		/// 停止刷新路由
-		/// </summary>
-		public void StopRefresh()
-		{
+        /// <summary>
+        /// 停止刷新路由
+        /// </summary>
+        public void StopRefresh()
+        {
             RefreshDone = true;
-		}
+        }
 
-		/// <summary>
-		/// 启动刷新路由适配器
-		/// </summary>
-		public void StartRefresh()
-		{
+        /// <summary>
+        /// 启动刷新路由适配器
+        /// </summary>
+        public void StartRefresh()
+        {
             long TimeOut = RouterProxy.getSessionTimeout();
             RefreshRate = TimeOut * 1000 / 2;
             RouterEntries = this;
             RefreshRouterThread = new Thread(new ParameterizedThreadStart(RefreshSessionThreadProc));
             RefreshRouterThread.Start(this);
-		}
+        }
         /// <summary>
         /// 路由刷新线程
         /// </summary>
@@ -127,11 +128,13 @@ namespace Victop.Frame.ComLink.ICE.Maps
                 {
                     try
                     {
-                        routerEntry.RouterEntries.RouterProxy.refreshSession();
+                        //routerEntry.RouterEntries.RouterProxy.refreshSession();
+                        LoggerHelper.InfoFormat("路由刷新:{0}", DateTime.Now.ToLongTimeString());
                     }
-                    catch
+                    catch (System.Exception ex)
                     {
                         routerEntry.StopRefresh();
+                        LoggerHelper.InfoFormat("[{0}]路由刷新异常:{1}", DateTime.Now.ToLongTimeString(), ex.Message);
                     }
                     if (!routerEntry.RouterEntries.RefreshDone)
                     {
@@ -146,15 +149,15 @@ namespace Victop.Frame.ComLink.ICE.Maps
             }
             catch (System.Exception ex)
             {
-                throw;
+                LoggerHelper.InfoFormat("[{0}]路由刷新异常:{1}", DateTime.Now.ToLongTimeString(), ex.Message);
             }
         }
 
-		/// <summary>
-		/// 销毁Session
-		/// </summary>
-		public void SessionDestroy()
-		{
+        /// <summary>
+        /// 销毁Session
+        /// </summary>
+        public void SessionDestroy()
+        {
             try
             {
                 RouterAdapter.deactivate();
@@ -164,8 +167,8 @@ namespace Victop.Frame.ComLink.ICE.Maps
             {
                 return;
             }
-		}
+        }
 
-	}
+    }
 }
 

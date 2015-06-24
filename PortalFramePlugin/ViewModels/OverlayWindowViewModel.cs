@@ -140,7 +140,7 @@ namespace PortalFramePlugin.ViewModels
                     contentDic.Add("systemid", "11");
                     contentDic.Add("refsystemid","11");
                     contentDic.Add("modelid", "listonlineuser::");
-                    Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+                    Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                     if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
                     {
                         string ChannelId = returnDic["DataChannelId"].ToString();

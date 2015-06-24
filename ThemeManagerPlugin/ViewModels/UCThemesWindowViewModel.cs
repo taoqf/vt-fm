@@ -779,7 +779,7 @@ namespace ThemeManagerPlugin.ViewModels
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
             contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {
                 channelId = returnDic["DataChannelId"].ToString();
@@ -815,7 +815,7 @@ namespace ThemeManagerPlugin.ViewModels
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
             contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {
                 channelId = returnDic["DataChannelId"].ToString();
@@ -868,7 +868,7 @@ namespace ThemeManagerPlugin.ViewModels
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
             contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {
                 channelId = returnDic["DataChannelId"].ToString();
@@ -904,7 +904,7 @@ namespace ThemeManagerPlugin.ViewModels
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
             contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {
                 channelId = returnDic["DataChannelId"].ToString();

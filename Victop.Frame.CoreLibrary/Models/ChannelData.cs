@@ -39,14 +39,6 @@ namespace Victop.Frame.CoreLibrary.Models
             set;
         }
         /// <summary>
-        /// 数据类型(JSON/DATASET)
-        /// </summary>
-        public virtual DataFormEnum DataForm
-        {
-            get;
-            set;
-        }
-        /// <summary>
         /// JSON数据信息
         /// </summary>
         public virtual string JSONData

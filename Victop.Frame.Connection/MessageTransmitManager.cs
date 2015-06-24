@@ -30,33 +30,33 @@ namespace Victop.Frame.Connection
         /// <summary>
         /// 发送消息
         /// </summary>
-        public virtual ReplyMessage SendRmoteMessage(RequestMessage messageInfo, DataFormEnum dataForm)
+        public virtual ReplyMessage SendRmoteMessage(RequestMessage messageInfo)
         {
             IAdapter adapter = new MessageManager();
             try
             {
-                if (messageInfo.MessageType.Equals("loginService"))
+                if (messageInfo.MessageType.Equals("LoginService.userLogin"))
                 {
                     ReplyMessage replyMessage = UserLoginSubmit(adapter, messageInfo);
                     return replyMessage;
                 }
                 else
                 {
-                    ReplyMessage replyMessage = MessageSubmit(adapter, messageInfo, dataForm);
+                    ReplyMessage replyMessage = MessageSubmit(adapter, messageInfo);
                     if (replyMessage.ReplyMode == ReplyModeEnum.ROUTER)
                     {
                         RequestMessage userLoginMsg = new RequestMessage();
-                        userLoginMsg.MessageType = "LoginService.userLoginNew";
+                        userLoginMsg.MessageType = "LoginService.userLogin";
                         CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
                         Dictionary<string, object> loginContent = new Dictionary<string, object>();
-                        loginContent.Add("usercode", currentGallery.ClientInfo.UserCode);
+                        loginContent.Add("userCode", currentGallery.ClientInfo.UserCode);
                         loginContent.Add("userpw", currentGallery.ClientInfo.UserPwd);
                         loginContent.Add("logintypenew", GetUserLoginForm(currentGallery.ClientInfo.UserCode));
                         userLoginMsg.MessageContent = JsonHelper.ToJson(loginContent);
                         ReplyMessage loginReplyMessage = UserLoginSubmit(adapter, userLoginMsg);
                         if (loginReplyMessage.ReplyMode != ReplyModeEnum.CAST)
                         {
-                            replyMessage = MessageSubmit(adapter, messageInfo, DataFormEnum.JSON);
+                            replyMessage = MessageSubmit(adapter, messageInfo);
                         }
                         else
                         {
@@ -134,10 +134,23 @@ namespace Victop.Frame.Connection
             }
             if (!contentDic.ContainsKey("userIp"))
             {
-                string hostname = Dns.GetHostName();//得到本机名   
+                string ipreg = @"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))";
+                string hostname = Dns.GetHostName();
+                bool getIpFlag = false;
                 IPHostEntry localhost = Dns.GetHostEntry(hostname);
-                IPAddress localaddr = localhost.AddressList.Last();
-                contentDic.Add("userIp", localaddr.ToString());
+                foreach (IPAddress item in localhost.AddressList)
+                {
+                    if (Regex.IsMatch(item.ToString(), ipreg))
+                    {
+                        contentDic.Add("userIp", item.ToString());
+                        getIpFlag = true;
+                        break;
+                    }
+                }
+                if (!getIpFlag)
+                {
+                    contentDic.Add("userIp", localhost.AddressList.Last().ToString());
+                }
             }
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
@@ -162,12 +175,12 @@ namespace Victop.Frame.Connection
         /// <param name="adapter"></param>
         /// <param name="messageInfo"></param>
         /// <returns></returns>
-        private ReplyMessage MessageSubmit(IAdapter adapter, RequestMessage messageInfo, DataFormEnum dataForm)
+        private ReplyMessage MessageSubmit(IAdapter adapter, RequestMessage messageInfo)
         {
             MessageOrganizeManager organizeManager = new MessageOrganizeManager();
             DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
             string DataChannelId = JsonHelper.ReadJsonString(messageInfo.MessageContent, "DataChannelId");
-            messageInfo = organizeManager.OrganizeMessage(messageInfo, dataForm, out saveDataFlag);
+            messageInfo = organizeManager.OrganizeMessage(messageInfo, out saveDataFlag);
             string DataSource = ConfigurationManager.AppSettings.Get("DataSource").ToLower();
             ReplyMessage replyMessage = new ReplyMessage();
             switch (DataSource)
@@ -187,7 +200,7 @@ namespace Victop.Frame.Connection
                 switch (saveDataFlag)
                 {
                     case DataOperateEnum.SAVE:
-                        replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo, dataForm);
+                        replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo);
                         break;
                     case DataOperateEnum.COMMIT:
                         bool result = replyMessageResolver.CommitDataSetChange(DataChannelId);
@@ -224,7 +237,7 @@ namespace Victop.Frame.Connection
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
             DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
             MessageOrganizeManager organizeManager = new MessageOrganizeManager();
-            messageInfo = organizeManager.OrganizeMessage(messageInfo, DataFormEnum.JSON, out saveDataFlag);
+            messageInfo = organizeManager.OrganizeMessage(messageInfo, out saveDataFlag);
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
             if (replyMessage.ReplyMode == (ReplyModeEnum)0)
             {

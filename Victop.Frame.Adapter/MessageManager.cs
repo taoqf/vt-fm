@@ -38,6 +38,7 @@ namespace Victop.Frame.Adapter
                 message.FromId = string.IsNullOrEmpty(loginUserInfo.UserCode) ? "WPF" : loginUserInfo.UserCode;
                 message.CurrentSenderId = String.IsNullOrWhiteSpace(loginUserInfo.ChannelId) ? Guid.NewGuid().ToString() : loginUserInfo.ChannelId;
                 message.SessionId = loginUserInfo.SessionId;
+                message.SessionId = null;
                 message.SpaceId = cloudGallyInfo.ClientId;
                 if (cloudGallyInfo.IsNeedRouter)
                 {
@@ -129,7 +130,6 @@ namespace Victop.Frame.Adapter
                             {
                                 replyMessage.ReplyControl = returnMessage.MessageControl;
                                 replyMessage.ReplyContent = returnMessage.MessageContent;
-                                //LoggerHelper.InfoFormat("接收信息:{0}", returnMessage.MessageContent);
                                 string replyCode = JsonHelper.ReadJsonString(returnMessage.MessageContent, "code");
                                 if (!string.IsNullOrEmpty(replyCode))
                                 {

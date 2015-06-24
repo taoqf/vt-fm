@@ -29,7 +29,7 @@ namespace Victop.Frame.MessageManager
         /// <param name="callBack">消息回调方法</param>
         /// <param name="validTime">有效时间</param>
         /// </summary>
-        public virtual void CheckMessageFormat(string messageType,Dictionary<string,object> messageContent,WaitCallback callBack, long validTime, DataFormEnum dataForm)
+        public virtual void CheckMessageFormat(string messageType,Dictionary<string,object> messageContent,WaitCallback callBack, long validTime)
         {
             PluginMessageManager pluginMessageManager = new PluginMessageManager();
             if (true)//验证成功
@@ -50,7 +50,7 @@ namespace Victop.Frame.MessageManager
                 });
                 if (result)//插入成功
                 {
-                    PluginMessageThreadManager.GetInstance().DoWork(message,dataForm);
+                    PluginMessageThreadManager.GetInstance().DoWork(message);
                 }
                 else
                 {

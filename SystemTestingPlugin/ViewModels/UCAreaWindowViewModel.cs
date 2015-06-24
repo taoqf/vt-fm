@@ -234,7 +234,7 @@ namespace SystemTestingPlugin.ViewModels
                                 contentDic.Add("conditions", conList);
                             }
                         }
-                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                         if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
                         {
                             DataInfoModel.ChannelId = returnDic["DataChannelId"].ToString();
@@ -591,7 +591,7 @@ namespace SystemTestingPlugin.ViewModels
                         contentDic.Add("configsystemid", CodeInfoModel.ConfigsystemId);
                         contentDic.Add("pname", CodeInfoModel.PName);
                         contentDic.Add("setinfo", CodeInfoModel.SetInfo);
-                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                         if (returnDic != null)
                         {
                             CodeInfoModel.ResultData = returnDic["ReplyContent"].ToString();
@@ -647,7 +647,7 @@ namespace SystemTestingPlugin.ViewModels
                         contentDic.Add("configsystemid", UserInfoModel.ConfigsystemId);
                         contentDic.Add("clientType", UserInfoModel.ClientType);
                         contentDic.Add("userCode", UserInfoModel.UserCode);
-                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                         if (returnDic != null)
                         {
                             UserInfoModel.ResultData = returnDic["ReplyContent"].ToString();
@@ -698,7 +698,7 @@ namespace SystemTestingPlugin.ViewModels
                     {
                         DataMessageOperation messageOp = new DataMessageOperation();
                         Dictionary<string, object> contentDic = string.IsNullOrEmpty(OtherInfoModel.OtherConditionData) ? new Dictionary<string, object>() : JsonHelper.ToObject<Dictionary<string, object>>(OtherInfoModel.OtherConditionData);
-                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(OtherInfoModel.MessageType, contentDic, "JSON");
+                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(OtherInfoModel.MessageType, contentDic);
                         if (returnDic != null)
                         {
                             OtherInfoModel.OtherResultData = returnDic["ReplyContent"].ToString();

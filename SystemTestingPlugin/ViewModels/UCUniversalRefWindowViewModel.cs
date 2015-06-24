@@ -456,7 +456,7 @@ namespace SystemTestingPlugin.ViewModels
             }
             conditionsList.Add(conditionsDic);
             contentDic.Add("conditions", conditionsList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(messageType, contentDic, "JSON");
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(messageType, contentDic);
             if (returnDic != null && returnDic["ReplyMode"].ToString() != "0")
             {
                 ds = messageOp.GetData(returnDic["DataChannelId"].ToString(), "[\"" + tableName + "\"]");

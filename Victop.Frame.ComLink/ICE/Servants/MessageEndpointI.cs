@@ -143,7 +143,7 @@ namespace Victop.Frame.ComLink.ICE.Servants
         /// 组装消息片段线程
         /// </summary>
         /// <param name="obj">会话参数</param>
-        private void MsgFragmentServiceNew(object obj)
+        private void MsgFragmentService(object obj)
         {
             ServiceParams param = (ServiceParams)obj;
             Queue<object> queue = iCEManager.QueueMaps.GetQueue(param.Hash);
@@ -160,25 +160,6 @@ namespace Victop.Frame.ComLink.ICE.Servants
             message.messageContent = msg;
             DoMessage(param.CallBack, message, param.IsCallBack, param.ICE_Current);
         }
-
-		/// <summary>
-		/// 组装消息片段线程
-		/// </summary>
-		private void MsgFragmentService(object obj)
-		{
-            ServiceParams param = (ServiceParams)obj;
-            Queue<object> queue = iCEManager.QueueMaps.GetQueue(param.Hash);
-            StringBuilder msgResult = new StringBuilder();
-            while (queue.Count > 0)
-            {
-                msgResult.Append(queue.Dequeue());
-            }
-            string msg = msgResult.ToString();
-            msg = msg.Substring(0, msg.LastIndexOf(']'));
-
-
-            DoMessage(param.CallBack, param.Message, param.IsCallBack, param.ICE_Current);
-		}
        
         /// <summary>
         /// 通讯中断触发该事件(重写方法)
@@ -209,7 +190,7 @@ namespace Victop.Frame.ComLink.ICE.Servants
                     {
                         // 最后一个片断，组装消息
                         ServiceParams param = new ServiceParams(cb__, msg, isCallback, hash, current__);
-                        ThreadPool.QueueUserWorkItem(new WaitCallback(MsgFragmentServiceNew), param);
+                        ThreadPool.QueueUserWorkItem(new WaitCallback(MsgFragmentService), param);
                     }
                     else
                     {

@@ -19,10 +19,10 @@ using Victop.Frame.CoreLibrary.Models;
         /// 请求消息体发送
         /// </summary>
         /// <param name="messageInfo">请求消息体</param>
-        public virtual void SendMessage(RequestMessage messageInfo,DataFormEnum dataForm)
+        public virtual void SendMessage(RequestMessage messageInfo)
         {
             MessageBodyManager messageBodyManager = new MessageBodyManager();
-            ReplyMessage replyMessage = messageBodyManager.SendMessage(messageInfo, dataForm);
+            ReplyMessage replyMessage = messageBodyManager.SendMessage(messageInfo);
             PluginMessageManager pluginMsgManager = new PluginMessageManager();
             //取得消息列表
             if ( pluginMsgManager.CheckMessageIsExist(messageInfo.MessageId))

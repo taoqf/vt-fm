@@ -553,7 +553,7 @@ namespace UserLoginPlugin.ViewModels
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
                 contentDic.Add("spaceId", string.Format("{0}::{1}", LoginInfoModel.ClientId, string.IsNullOrEmpty(LoginInfoModel.ProductId) ? LoginInfoModel.ClientId : LoginInfoModel.ProductId));
-                string MessageType = "loginService";
+                string MessageType = "LoginService.userLogin";
                 DataMessageOperation messageOp = new DataMessageOperation();
                 //Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                 messageOp.SendAsyncMessage(MessageType, contentDic, new WaitCallback(AfterLogin));
@@ -611,7 +611,7 @@ namespace UserLoginPlugin.ViewModels
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
             contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {
                 string channelId = returnDic["DataChannelId"].ToString();

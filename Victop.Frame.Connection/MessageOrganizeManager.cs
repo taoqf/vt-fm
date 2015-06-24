@@ -26,7 +26,7 @@ namespace Victop.Frame.Connection
         /// </summary>
         /// <param name="messageInfo"></param>
         /// <returns></returns>
-        public virtual RequestMessage OrganizeMessage(RequestMessage messageInfo, DataFormEnum dataForm, out DataOperateEnum replyIsToChannel)
+        public virtual RequestMessage OrganizeMessage(RequestMessage messageInfo, out DataOperateEnum replyIsToChannel)
         {
             replyIsToChannel = DataOperateEnum.NONE;
             #region 通道及用户相关
@@ -57,6 +57,10 @@ namespace Victop.Frame.Connection
                 if (!dicContent.ContainsKey("spaceId"))
                 {
                     dicContent.Add("spaceId", string.Format("{0}::{1}", cloudGallyInfo.ClientId, cloudGallyInfo.ProductId));
+                }
+                if (dicContent != null && !dicContent.ContainsKey("userCode"))
+                {
+                    dicContent.Add("userCode", loginUserInfo.UserCode);
                 }
                 messageInfo.MessageContent = JsonHelper.ToJson(dicContent);
             }
@@ -99,15 +103,15 @@ namespace Victop.Frame.Connection
             {
                 string channelId = dicContent["DataChannelId"].ToString();
                 ReplyMessageResolver replyResolver = new ReplyMessageResolver();
-                string dataXml = replyResolver.GetDataXmlByDataChannelId(channelId, false);
+                string jsonData = replyResolver.GetCurdDataByDataChannelId(channelId, false);
                 dicContent.Remove("DataChannelId");
                 if (!dicContent.ContainsKey("crudlist"))
                 {
                     dicContent.Add("crudlist", new List<object>());
                 }
-                if (!string.IsNullOrEmpty(dataXml))
+                if (!string.IsNullOrEmpty(jsonData))
                 {
-                    dicContent["crudlist"] = JsonHelper.ToObject<List<object>>(dataXml);
+                    dicContent["crudlist"] = JsonHelper.ToObject<List<object>>(jsonData);
                 }
             }
             return dicContent;

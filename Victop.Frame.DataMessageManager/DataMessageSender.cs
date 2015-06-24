@@ -28,7 +28,7 @@ namespace Victop.Frame.DataMessageManager
         public Dictionary<string, object> SendMessage(string messageType, Dictionary<string, object> messageContent, int waiteTime = 16)
         {
             Dictionary<string, object> returnDic;
-            new PluginMessage().SendMessage(messageType, messageContent, new WaitCallback(MessageBack), DataFormEnum.JSON);
+            new PluginMessage().SendMessage(messageType, messageContent, new WaitCallback(MessageBack));
             if (waiteTime > 0)
             {
                 bool flag = false;

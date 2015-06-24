@@ -1894,7 +1894,7 @@ namespace MetroFramePlugin.ViewModels
         /// <summary>
         /// 保存当前桌面
         /// </summary>
-        public ICommand SavePersonalFavorites
+        public ICommand mItemSaveDesktopClickCommand
         {
             get
             {
@@ -1907,7 +1907,7 @@ namespace MetroFramePlugin.ViewModels
         /// <summary>
         /// 展示桌面日历
         /// </summary>
-        public ICommand ShowDesktopCalendar
+        public ICommand mItemShowCalendarClickCommand
         {
             get
             {
@@ -2727,7 +2727,7 @@ namespace MetroFramePlugin.ViewModels
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
             contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {
                 channelId = returnDic["DataChannelId"].ToString();
@@ -2765,7 +2765,7 @@ namespace MetroFramePlugin.ViewModels
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
             contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, "JSON");
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {
                 channelId = returnDic["DataChannelId"].ToString();
@@ -2795,7 +2795,7 @@ namespace MetroFramePlugin.ViewModels
                 contentDic1.Add("configsystemid", "11");
                 contentDic1.Add("modelid", "feidao-model-pub_user_setting-0001");
                 contentDic1.Add("DataChannelId", channelId);
-                Dictionary<string, object> resultDic = messageOp.SendSyncMessage(MessageType1, contentDic1, "JSON");
+                Dictionary<string, object> resultDic = messageOp.SendSyncMessage(MessageType1, contentDic1);
 
 
                 if (resultDic != null && !resultDic["ReplyMode"].ToString().Equals("0"))

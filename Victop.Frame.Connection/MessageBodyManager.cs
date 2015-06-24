@@ -50,17 +50,17 @@ namespace Victop.Frame.Connection
 		/// <summary>
 		/// 发送远程服务请求
 		/// </summary>
-        private ReplyMessage SendMessageToRemote(RequestMessage messageInfo, DataFormEnum dataForm)
+        private ReplyMessage SendMessageToRemote(RequestMessage messageInfo)
 		{
             MessageTransmitManager messageTransmitManager = new MessageTransmitManager();
-            ReplyMessage replyMessage = messageTransmitManager.SendRmoteMessage(messageInfo,dataForm);
+            ReplyMessage replyMessage = messageTransmitManager.SendRmoteMessage(messageInfo);
             return replyMessage;
 		}
 
 		/// <summary>
 		/// 消息发送
 		/// </summary>
-		public virtual ReplyMessage SendMessage(RequestMessage messageInfo,DataFormEnum dataForm)
+		public virtual ReplyMessage SendMessage(RequestMessage messageInfo)
 		{
             RegisterServerInfo serverInfo = CheckMessageServerType(messageInfo);
             ReplyMessage replyMessage = null;
@@ -75,7 +75,7 @@ namespace Victop.Frame.Connection
                     break;
                 case ServerTypeEnum.SERVER:
                 default:
-                    replyMessage = SendMessageToRemote(messageInfo, dataForm);
+                    replyMessage = SendMessageToRemote(messageInfo);
                     break;
             }
             return replyMessage;

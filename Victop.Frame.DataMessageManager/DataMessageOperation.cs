@@ -143,26 +143,26 @@ namespace Victop.Frame.DataMessageManager
         /// </summary>
         /// <param name="messageType">消息类型</param>
         /// <param name="messageContent">消息体</param>
-        /// <param name="dataForm">数据格式(JSON/DATASET)</param>
         /// <param name="waiteTime">同步等待时间</param>
         /// <returns>应答消息内容</returns>
-        public Dictionary<string, object> SendSyncMessage(string messageType, Dictionary<string, object> messageContent, string dataForm = "JSON", int waiteTime = 15)
+        public Dictionary<string, object> SendSyncMessage(string messageType, Dictionary<string, object> messageContent, int waiteTime = 15)
         {
             DataMessageSender sender = new DataMessageSender();
             return sender.SendMessage(messageType, messageContent, waiteTime);
         }
+
+
         /// <summary>
         /// 异步消息发送
         /// </summary>
         /// <param name="messageType">消息类型</param>
         /// <param name="messageContent">消息体</param>
         /// <param name="replyCallBack">回调方法</param>
-        /// <param name="dataForm">数据格式</param>
         /// <param name="validTime">超时时间</param>
-        public void SendAsyncMessage(string messageType, Dictionary<string, object> messageContent, WaitCallback replyCallBack = null, string dataForm = "JSON", long validTime = 15)
+        public void SendAsyncMessage(string messageType, Dictionary<string, object> messageContent, WaitCallback replyCallBack = null, long validTime = 15)
         {
             PluginMessage pluginMessage = new PluginMessage();
-            pluginMessage.SendMessage(messageType, messageContent, replyCallBack, dataForm.Equals("JSON") ? DataFormEnum.JSON : DataFormEnum.DATASET, validTime);
+            pluginMessage.SendMessage(messageType, messageContent, replyCallBack, validTime);
         }
 
         /// <summary>
@@ -421,7 +421,6 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="storeInfo">数据集存储信息</param>
         /// <param name="wideFieldFullName">宽表字符全名</param>
         /// <param name="narrowFieldFullName">窄表字符全名</param>
-        /// <param name="dataOp">数据操作对象</param>
         /// <param name="channelData">数据集合</param>
         /// <param name="relationInfo">关系信息</param>
         /// <param name="simpleRefFlag">简单引用标识</param>

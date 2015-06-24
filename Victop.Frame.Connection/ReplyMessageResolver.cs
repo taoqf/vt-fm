@@ -42,7 +42,7 @@ namespace Victop.Frame.Connection
         /// <summary>
         /// 分解应答消息体的数据部分和状态部分
         /// </summary>
-        public virtual ReplyMessage ResolveReplyMessage(ReplyMessage replyMessageInfo, RequestMessage messageInfo, DataFormEnum dataForm)
+        public virtual ReplyMessage ResolveReplyMessage(ReplyMessage replyMessageInfo, RequestMessage messageInfo)
         {
             DataReplyMessage = new ReplyMessage()
             {
@@ -52,7 +52,7 @@ namespace Victop.Frame.Connection
             string channelId = string.Empty;
             try
             {
-                if (ReplyToDataChannel(DataReplyMessage, messageInfo, out channelId,dataForm))
+                if (ReplyToDataChannel(DataReplyMessage, messageInfo, out channelId))
                 {
                     MessageStatusReplyMessage = new ReplyMessage()
                     {
@@ -86,7 +86,7 @@ namespace Victop.Frame.Connection
         /// <summary>
         /// 应答消息数据部分保存到数据通道
         /// </summary>
-        private bool ReplyToDataChannel(ReplyMessage replyMessageInfo, RequestMessage messageInfo, out string channelId,DataFormEnum dataForm)
+        private bool ReplyToDataChannel(ReplyMessage replyMessageInfo, RequestMessage messageInfo, out string channelId)
         {
             channelId = string.Empty;
             //与数据通道连接，将MessageInfo中的数据部分存储到数据通道中，
@@ -94,7 +94,7 @@ namespace Victop.Frame.Connection
             ReplyMessage ReplyMessage = new ReplyMessage();
             DataCreateManager dataCreateManager = new DataCreateManager();
             bool result = false;
-            ReplyMessage = dataCreateManager.SendReplyMessage(replyMessageInfo, messageInfo,dataForm);
+            ReplyMessage = dataCreateManager.SendReplyMessage(replyMessageInfo, messageInfo);
             channelId = ReplyMessage.DataChannelId;
             if (string.IsNullOrEmpty(channelId))
             {
@@ -161,23 +161,11 @@ namespace Victop.Frame.Connection
         /// </summary>
         /// <param name="channelId"></param>
         /// <returns></returns>
-        public string GetDataXmlByDataChannelId(string channelId, bool masterFlag = true)
+        public string GetCurdDataByDataChannelId(string channelId, bool masterFlag = true)
         {
             DataCreateManager dataManager = new DataCreateManager();
-            string dataXml = dataManager.GetXmlData(channelId, masterFlag);
-            return dataXml;
-        }
-        /// <summary>
-        /// 根据数据通道id获取数据的JSON
-        /// </summary>
-        /// <param name="channelId"></param>
-        /// <param name="masterFlag"></param>
-        /// <returns></returns>
-        public List<object> GetDataJSONByDataChannelId(string channelId, bool masterFlag = true)
-        {
-            DataCreateManager dataManager = new DataCreateManager();
-            List<object> dataJson = dataManager.GetJSONData(channelId, masterFlag);
-            return dataJson;
+            string curdData = dataManager.GetCurdData(channelId, masterFlag);
+            return curdData;
         }
         /// <summary>
         /// 提交数据集变更
