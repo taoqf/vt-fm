@@ -38,7 +38,6 @@ namespace Victop.Frame.Adapter
                 message.FromId = string.IsNullOrEmpty(loginUserInfo.UserCode) ? "WPF" : loginUserInfo.UserCode;
                 message.CurrentSenderId = String.IsNullOrWhiteSpace(loginUserInfo.ChannelId) ? Guid.NewGuid().ToString() : loginUserInfo.ChannelId;
                 message.SessionId = loginUserInfo.SessionId;
-                message.SessionId = null;
                 message.SpaceId = cloudGallyInfo.ClientId;
                 if (cloudGallyInfo.IsNeedRouter)
                 {
@@ -101,7 +100,7 @@ namespace Victop.Frame.Adapter
         /// </summary>
         public virtual ReplyMessage SubmitRequest(RequestMessage message)
         {
-            return SubmitRequest(message, 15000); //20150508发送消息增加为15秒
+            return SubmitRequest(message, 12000);
         }
 
         /// <summary>
@@ -165,6 +164,7 @@ namespace Victop.Frame.Adapter
                         if (!flag)
                         {
                             replyMessage.MessageId = message.MessageId;
+                            replyMessage.ReplyAlertMessage = string.Format("消息类型为:{0}的消息未收到服务端返回信息", message.MessageType);
                             replyMessage.ReplyMode = (ReplyModeEnum)0;
                         }
                     }
