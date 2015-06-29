@@ -323,50 +323,7 @@ namespace Victop.Frame.DataChannel
                                             }
                                             else if (dtCol.ExtendedProperties["ColType"] != null)
                                             {
-                                                switch (dtCol.ExtendedProperties["ColType"].ToString())
-                                                {
-                                                    case "int":
-                                                        arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? (int)0 : Convert.ToInt32(rowItem[dtCol.ColumnName].ToString());
-                                                        break;
-                                                    case "long":
-                                                        arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? (long)0 : Convert.ToInt64(rowItem[dtCol.ColumnName].ToString());
-                                                        break;
-                                                    case "double":
-                                                        arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? (double)0.00 : Convert.ToDouble(rowItem[dtCol.ColumnName].ToString());
-                                                        break;
-                                                    case "float":
-                                                        arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? (decimal)0.00 : Convert.ToDecimal(rowItem[dtCol.ColumnName].ToString());
-                                                        break;
-                                                    case "boolean":
-                                                        arrayDr[dtCol.ColumnName] = string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(rowItem[dtCol.ColumnName]);
-                                                        break;
-                                                    case "timestamp":
-                                                        if (Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()) == 0)
-                                                        {
-                                                            arrayDr[dtCol.ColumnName] = DBNull.Value;
-                                                        }
-                                                        else
-                                                        {
-                                                            DateTime dt = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0));
-                                                            dt = dt.AddMilliseconds(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()));
-                                                            arrayDr[dtCol.ColumnName] = dt;
-                                                        }
-                                                        break;
-                                                    case "date":
-                                                        if (string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()))
-                                                        {
-                                                            arrayDr[dtCol.ColumnName] = DBNull.Value;
-                                                        }
-                                                        else
-                                                        {
-                                                            arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
-                                                        }
-                                                        break;
-                                                    case "string":
-                                                    default:
-                                                        arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
-                                                        break;
-                                                }
+                                                CreateDataRowValue(rowItem, arrayDr, dtCol);
                                             }
                                         }
                                     }
@@ -414,50 +371,7 @@ namespace Victop.Frame.DataChannel
                                         }
                                         else if (dtCol.ExtendedProperties["ColType"] != null)
                                         {
-                                            switch (dtCol.ExtendedProperties["ColType"].ToString())
-                                            {
-                                                case "int":
-                                                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (int)0 : Convert.ToInt32(itemDic[dtCol.ColumnName].ToString());
-                                                    break;
-                                                case "long":
-                                                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (long)0 : Convert.ToInt64(itemDic[dtCol.ColumnName].ToString());
-                                                    break;
-                                                case "double":
-                                                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (double)0.00 : Convert.ToDouble(itemDic[dtCol.ColumnName].ToString());
-                                                    break;
-                                                case "float":
-                                                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (decimal)0.00 : Convert.ToDecimal(itemDic[dtCol.ColumnName].ToString());
-                                                    break;
-                                                case "boolean":
-                                                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(itemDic[dtCol.ColumnName]);
-                                                    break;
-                                                case "timestamp":
-                                                    if (Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()) == 0)
-                                                    {
-                                                        objectDr[dtCol.ColumnName] = DBNull.Value;
-                                                    }
-                                                    else
-                                                    {
-                                                        DateTime dt = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0));
-                                                        dt = dt.AddMilliseconds(Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()));
-                                                        objectDr[dtCol.ColumnName] = dt;
-                                                    }
-                                                    break;
-                                                case "date":
-                                                    if (string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()))
-                                                    {
-                                                        objectDr[dtCol.ColumnName] = DBNull.Value;
-                                                    }
-                                                    else
-                                                    {
-                                                        objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
-                                                    }
-                                                    break;
-                                                case "string":
-                                                default:
-                                                    objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
-                                                    break;
-                                            }
+                                            CreateDataRowValue(itemDic, objectDr, dtCol);
                                         }
                                     }
                                 }
@@ -482,6 +396,57 @@ namespace Victop.Frame.DataChannel
                     newDs.Tables.Remove(itemDt.TableName);
                 }
                 newDs.Tables.Add(itemDt);
+            }
+        }
+
+        private static void CreateDataRowValue(Dictionary<string, object> itemDic, DataRow objectDr, DataColumn dtCol, bool refTypeFlag = false)
+        {
+            switch (refTypeFlag ? dtCol.ExtendedProperties["RefType"].ToString() : dtCol.ExtendedProperties["ColType"].ToString())
+            {
+                case "int":
+                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (int)0 : Convert.ToInt32(itemDic[dtCol.ColumnName].ToString());
+                    break;
+                case "long":
+                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (long)0 : Convert.ToInt64(itemDic[dtCol.ColumnName].ToString());
+                    break;
+                case "double":
+                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (double)0.00 : Convert.ToDouble(itemDic[dtCol.ColumnName].ToString());
+                    break;
+                case "float":
+                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (decimal)0.00 : Convert.ToDecimal(itemDic[dtCol.ColumnName].ToString());
+                    break;
+                case "boolean":
+                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(itemDic[dtCol.ColumnName]);
+                    break;
+                case "timestamp":
+                    if (Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()) == 0)
+                    {
+                        objectDr[dtCol.ColumnName] = DBNull.Value;
+                    }
+                    else
+                    {
+                        DateTime dt = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0));
+                        dt = dt.AddMilliseconds(Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()));
+                        objectDr[dtCol.ColumnName] = dt;
+                    }
+                    break;
+                case "date":
+                    if (string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()))
+                    {
+                        objectDr[dtCol.ColumnName] = DBNull.Value;
+                    }
+                    else
+                    {
+                        objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
+                    }
+                    break;
+                case "ref":
+                    CreateDataRowValue(itemDic, objectDr, dtCol, true);
+                    break;
+                case "string":
+                default:
+                    objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
+                    break;
             }
         }
 
@@ -732,6 +697,7 @@ namespace Victop.Frame.DataChannel
                                     }
                                 }
                                 dc.ExtendedProperties.Add("ColType", "ref");
+                                dc.ExtendedProperties.Add("RefType", refitem.ContentType);
                                 if (!string.IsNullOrEmpty(refitem.ContentType))
                                 {
                                     switch (refitem.ContentType)
