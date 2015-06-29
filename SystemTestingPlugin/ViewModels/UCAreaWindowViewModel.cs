@@ -253,6 +253,7 @@ namespace SystemTestingPlugin.ViewModels
                         {
                             if (returnDic != null && returnDic.ContainsKey("ReplyAlertMessage"))
                             {
+                                DataInfoModel.JsonData = returnDic["ReplyAlertMessage"].ToString();
                                 VicMessageBoxNormal.Show(returnDic["ReplyAlertMessage"].ToString());
                             }
                         }
