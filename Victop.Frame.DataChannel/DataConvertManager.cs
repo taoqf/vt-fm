@@ -111,75 +111,6 @@ namespace Victop.Frame.DataChannel
         {
             return DataTool.GetDataObjectByPath(viewId, dataPath);
         }
-
-        private static void UpdateDataTableRow(DataTable itemDt, Dictionary<string, object> rowItem)
-        {
-            if (rowItem != null && rowItem.ContainsKey("_id") && string.IsNullOrEmpty(rowItem["_id"].ToString()))
-            {
-                return;
-            }
-            DataRow arrayDr = itemDt.NewRow();
-            foreach (DataColumn dtCol in itemDt.Columns)
-            {
-                if (rowItem.ContainsKey(dtCol.ColumnName))
-                {
-                    if (rowItem[dtCol.ColumnName] != null)
-                    {
-                        if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
-                        {
-                            dtCol.ExtendedProperties.Add("ColType", rowItem[dtCol.ColumnName].GetType().Name);
-                        }
-                        if (dtCol.DataType == typeof(DateTime) && dtCol.ExtendedProperties["ColType"] != null)
-                        {
-                            switch (dtCol.ExtendedProperties["ColType"].ToString())
-                            {
-                                case "timestamp":
-                                    if (rowItem[dtCol.ColumnName].ToString().Equals("0"))
-                                    {
-                                        arrayDr[dtCol.ColumnName] = DBNull.Value;
-                                    }
-                                    else
-                                    {
-                                        DateTime dt = new DateTime(1970, 1, 1);
-                                        dt = dt.AddMilliseconds(Convert.ToInt64(rowItem[dtCol.ColumnName].ToString()));
-                                        arrayDr[dtCol.ColumnName] = dt;
-                                    }
-                                    break;
-                                case "date":
-                                default:
-                                    if (string.IsNullOrEmpty(rowItem[dtCol.ColumnName].ToString()))
-                                    {
-                                        arrayDr[dtCol.ColumnName] = DBNull.Value;
-                                    }
-                                    else
-                                    {
-                                        arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
-                                    }
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            arrayDr[dtCol.ColumnName] = rowItem[dtCol.ColumnName];
-                        }
-                    }
-                    else
-                    {
-                        if (!dtCol.ExtendedProperties.ContainsKey("ColType"))
-                        {
-                            dtCol.ExtendedProperties.Add("ColType", "string");
-                        }
-                        arrayDr[dtCol.ColumnName] = DBNull.Value;
-                    }
-                }
-                else
-                {
-                    arrayDr[dtCol.ColumnName] = DBNull.Value;
-                }
-            }
-            itemDt.Rows.Add(arrayDr);
-        }
-
         /// <summary>
         /// 组织行数据
         /// </summary>
@@ -214,50 +145,7 @@ namespace Victop.Frame.DataChannel
                     }
                     else if (dtCol.ExtendedProperties["ColType"] != null)
                     {
-                        switch (dtCol.ExtendedProperties["ColType"].ToString())
-                        {
-                            case "int":
-                                objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()) ? (int)0 : Convert.ToInt32(jsonDic[dtCol.ColumnName].ToString());
-                                break;
-                            case "long":
-                                objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()) ? (long)0 : Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString());
-                                break;
-                            case "double":
-                                objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()) ? (double)0.00 : Convert.ToDouble(jsonDic[dtCol.ColumnName].ToString());
-                                break;
-                            case "float":
-                                objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()) ? (decimal)0.00 : Convert.ToDecimal(jsonDic[dtCol.ColumnName].ToString());
-                                break;
-                            case "boolean":
-                                objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(jsonDic[dtCol.ColumnName].ToString());
-                                break;
-                            case "timestamp":
-                                if (Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()) == 0)
-                                {
-                                    objectDr[dtCol.ColumnName] = DBNull.Value;
-                                }
-                                else
-                                {
-                                    DateTime dt = new DateTime(1970, 1, 1);
-                                    dt = dt.AddMilliseconds(Convert.ToInt64(jsonDic[dtCol.ColumnName].ToString()));
-                                    objectDr[dtCol.ColumnName] = dt;
-                                }
-                                break;
-                            case "date":
-                                if (string.IsNullOrEmpty(jsonDic[dtCol.ColumnName].ToString()))
-                                {
-                                    objectDr[dtCol.ColumnName] = DBNull.Value;
-                                }
-                                else
-                                {
-                                    objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
-                                }
-                                break;
-                            case "string":
-                            default:
-                                objectDr[dtCol.ColumnName] = jsonDic[dtCol.ColumnName];
-                                break;
-                        }
+                        CreateDataRowValue(jsonDic, objectDr, dtCol);
                     }
                 }
             }
