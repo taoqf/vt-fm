@@ -128,13 +128,11 @@ namespace Victop.Frame.ComLink.ICE.Maps
                 {
                     try
                     {
-                        //routerEntry.RouterEntries.RouterProxy.refreshSession();
-                        LoggerHelper.InfoFormat("路由刷新:{0}", DateTime.Now.ToLongTimeString());
+                        routerEntry.RouterEntries.RouterProxy.refreshSession();
                     }
                     catch (System.Exception ex)
                     {
                         routerEntry.StopRefresh();
-                        LoggerHelper.InfoFormat("[{0}]路由刷新异常:{1}", DateTime.Now.ToLongTimeString(), ex.Message);
                     }
                     if (!routerEntry.RouterEntries.RefreshDone)
                     {

@@ -165,7 +165,7 @@ namespace Victop.Frame.Connection
                 currentGallery.ClientInfo.UserName = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "user_name");
                 currentGallery.ClientInfo.UserCode = replyMessage.ReplyContent.Contains("userCode") ? JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode") : JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode");
                 messageInfo.MessageContent = replyMessage.ReplyContent;
-                //replyMessage = GetLoginUserMenuSubmit(adapter, messageInfo);
+                replyMessage = GetLoginUserMenuSubmit(adapter, messageInfo);
             }
             return replyMessage;
         }

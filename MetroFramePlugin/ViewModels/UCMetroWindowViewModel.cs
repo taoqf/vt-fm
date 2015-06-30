@@ -612,9 +612,8 @@ namespace MetroFramePlugin.ViewModels
                     IsShowMenu = Visibility.Visible;
                     isLockMenu = false;
                     lockbtn.Content = "锁定";
-                    //
                     UserLogin();
-                    //InitPanelArea();
+                    InitPanelArea();
 
                 });
             }
@@ -1599,7 +1598,7 @@ namespace MetroFramePlugin.ViewModels
                     mainPanel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”
                     _listbox = area.FindName("listBoxPopupMenuList") as ListBox;//找到“添加应用中的菜单列表”
                     _allSelectBtn = area.FindName("btnAllSelect") as VicButtonNormal;//找到添加应用弹窗“全部选中按钮”
-                    //InitPanelArea();//读文件并渲染区域
+                    InitPanelArea();//读文件并渲染区域
                     isFirstLoad = false;
                 });
             }
