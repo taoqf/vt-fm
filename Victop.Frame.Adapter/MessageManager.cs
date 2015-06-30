@@ -129,12 +129,12 @@ namespace Victop.Frame.Adapter
                             {
                                 replyMessage.ReplyControl = returnMessage.MessageControl;
                                 replyMessage.ReplyContent = returnMessage.MessageContent;
-                                string replyCode = JsonHelper.ReadJsonString(returnMessage.MessageContent, "code");
+                                string replyCode = JsonHelper.ReadJsonString(returnMessage.MessageControl, "code");
                                 if (!string.IsNullOrEmpty(replyCode))
                                 {
                                     long codeInt = Convert.ToInt32(replyCode);
                                     replyMessage.ReplyMode = (ReplyModeEnum)codeInt;
-                                    replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(returnMessage.MessageContent, "msg");
+                                    replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(returnMessage.MessageContent, "code_msg");
                                 }
                                 else
                                 {
