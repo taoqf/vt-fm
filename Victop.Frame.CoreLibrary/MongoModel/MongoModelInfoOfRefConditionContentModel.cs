@@ -18,7 +18,7 @@ namespace Victop.Frame.CoreLibrary.MongoModel
         /// <summary>
         /// 内容left
         /// </summary>
-        [JsonProperty(PropertyName="left")]
+        [JsonProperty(PropertyName = "left")]
         public string ContentLeft
         {
             get { return contentLeft; }
@@ -31,7 +31,7 @@ namespace Victop.Frame.CoreLibrary.MongoModel
         /// <summary>
         /// 内容right
         /// </summary>
-        [JsonProperty(PropertyName="right")]
+        [JsonProperty(PropertyName = "right")]
         public string ContentRight
         {
             get { return contentRight; }
@@ -40,11 +40,11 @@ namespace Victop.Frame.CoreLibrary.MongoModel
         /// <summary>
         /// 引用字段类型
         /// </summary>
-        private string contentType;
+        private string contentType = "string";
         /// <summary>
         /// 引用字段类型
         /// </summary>
-        [JsonProperty(PropertyName="type")]
+        [JsonProperty(PropertyName = "type")]
         public string ContentType
         {
             get { return contentType; }
