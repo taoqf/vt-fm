@@ -134,7 +134,7 @@ namespace Victop.Frame.Adapter
                                 {
                                     long codeInt = Convert.ToInt32(replyCode);
                                     replyMessage.ReplyMode = (ReplyModeEnum)codeInt;
-                                    replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(returnMessage.MessageContent, "code_msg");
+                                    replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(returnMessage.MessageControl, "code_msg");
                                 }
                                 else
                                 {

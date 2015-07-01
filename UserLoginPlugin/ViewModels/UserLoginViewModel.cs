@@ -29,7 +29,7 @@ namespace UserLoginPlugin.ViewModels
     {
         #region 字段
 
-       
+
         private Window LoginWindow;
         //把UserControl明转为Window
         UserLoginWindow newWindow;
@@ -212,7 +212,7 @@ namespace UserLoginPlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     UserControl ucLogin = (UserControl)x;
-                   
+
                     FrameworkElement ct = (FrameworkElement)ucLogin.Parent;
                     while (true)
                     {
@@ -308,22 +308,22 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                     {
-                            if (LoginInfoModel.UserPwd.Equals("111111"))
-                            {
+                        if (LoginInfoModel.UserPwd.Equals("111111"))
+                        {
 
-                                VicMessageBoxNormal.Show("密码过于简单,将转向修改密码界面！");
-                                Process proc = new System.Diagnostics.Process();
-                                proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}&ProductId={3}", ConfigurationManager.AppSettings["updatepwdhttp"], LoginInfoModel.UserName, string.Format("{0}::{1}", LoginInfoModel.ClientId,LoginInfoModel.ProductId), LoginInfoModel.ProductId);
-                                proc.Start();
-                                return;
-                            }
-                            else
-                            {
-                                IsRingShow = true;
-                                MainViewEnable = false;
-                                UserLogin();
-                            }
-                      
+                            VicMessageBoxNormal.Show("密码过于简单,将转向修改密码界面！");
+                            Process proc = new System.Diagnostics.Process();
+                            proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}&ProductId={3}", ConfigurationManager.AppSettings["updatepwdhttp"], LoginInfoModel.UserName, string.Format("{0}::{1}", LoginInfoModel.ClientId, LoginInfoModel.ProductId), LoginInfoModel.ProductId);
+                            proc.Start();
+                            return;
+                        }
+                        else
+                        {
+                            IsRingShow = true;
+                            MainViewEnable = false;
+                            UserLogin();
+                        }
+
                     }, () => { return CheckUserLogin(); });
             }
         }
@@ -500,43 +500,43 @@ namespace UserLoginPlugin.ViewModels
                         setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                         dataOp.SendAsyncMessage(messageType, setUserContentDic);
                         Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
-                        
-                        }
-                        else
-                        {
-                            if (RoleInfoList.Count == 1)
-                            {
-                                DataMessageOperation dataOp = new DataMessageOperation();
-                                string messageType = "LoginService.setUserInfo";
-                                Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
-                                setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
-                                setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
-                                setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-                                setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
-                                setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
-                                setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
-                                dataOp.SendAsyncMessage(messageType, setUserContentDic);
-                            Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
-
-                            }
-                            else
-                            {
-                                ShowRoleList = true;
-                                if (this.LoginWindow != null)
-                                {
-                                    this.LoginWindow.Height = 1; this.LoginWindow.Width = 1;
-                                }
-                            }
-                        }
 
                     }
                     else
                     {
-                        IsRingShow = false;
-                        MainViewEnable = true;
-                        MessageBox.Show((returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString())) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
+                        if (RoleInfoList.Count == 1)
+                        {
+                            DataMessageOperation dataOp = new DataMessageOperation();
+                            string messageType = "LoginService.setUserInfo";
+                            Dictionary<string, object> setUserContentDic = new Dictionary<string, object>();
+                            setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
+                            setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
+                            setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
+                            setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
+                            setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
+                            setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
+                            dataOp.SendAsyncMessage(messageType, setUserContentDic);
+                            Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
+
+                        }
+                        else
+                        {
+                            ShowRoleList = true;
+                            if (this.LoginWindow != null)
+                            {
+                                this.LoginWindow.Height = 1; this.LoginWindow.Width = 1;
+                            }
+                        }
                     }
+
                 }
+                else
+                {
+                    IsRingShow = false;
+                    MainViewEnable = true;
+                    MessageBox.Show(returnDic["ReplyAlertMessage"].ToString());
+                }
+            }
 
             else
             {

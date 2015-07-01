@@ -157,7 +157,6 @@ namespace Victop.Frame.Connection
             if (replyMessage.ReplyMode == (ReplyModeEnum)0)
             {
                 replyMessage.MessageId = messageInfo.MessageId;
-                replyMessage.ReplyAlertMessage = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "msg");
             }
             else
             {
