@@ -2709,6 +2709,10 @@ namespace MetroFramePlugin.ViewModels
         private string channelId = string.Empty;
         private void GetPersonMenu()
         {
+            if (string.IsNullOrEmpty(ProductId) || string.IsNullOrEmpty(UserCode))
+            {
+                return;
+            }
             DataMessageOperation messageOp = new DataMessageOperation();
             string MessageType = "MongoDataChannelService.findBusiData";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
