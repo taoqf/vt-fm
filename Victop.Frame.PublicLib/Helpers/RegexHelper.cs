@@ -13,7 +13,7 @@ namespace Victop.Frame.PublicLib.Helpers
         /// <summary>
         /// 以匹配字符串开始
         /// </summary>
-        /// <param name="regexStr"></param>
+        /// <param name="regexStr">匹配字符</param>
         /// <returns></returns>
         public static string StartWith(string regexStr)
         {
@@ -23,7 +23,7 @@ namespace Victop.Frame.PublicLib.Helpers
         /// <summary>
         /// 以匹配字符串结尾
         /// </summary>
-        /// <param name="regexStr"></param>
+        /// <param name="regexStr">匹配字符</param>
         /// <returns></returns>
         public static string EndWith(string regexStr)
         {
@@ -33,7 +33,7 @@ namespace Victop.Frame.PublicLib.Helpers
         /// <summary>
         /// 包含字符串
         /// </summary>
-        /// <param name="regexStr"></param>
+        /// <param name="regexStr">匹配字符</param>
         /// <returns></returns>
         public static string Contains(string regexStr)
         {
@@ -43,8 +43,8 @@ namespace Victop.Frame.PublicLib.Helpers
         /// <summary>
         /// 整形范围(包含边界值)
         /// </summary>
-        /// <param name="minValue"></param>
-        /// <param name="maxValue"></param>
+        /// <param name="minValue">最小值</param>
+        /// <param name="maxValue">最大值</param>
         /// <returns></returns>
         public static Dictionary<string, object> longRange(long minValue, long maxValue)
         {
@@ -53,6 +53,45 @@ namespace Victop.Frame.PublicLib.Helpers
             resultDic.Add("$lte", maxValue);
             return resultDic;
         }
+        /// <summary>
+        /// 整形大于
+        /// </summary>
+        /// <param name="relativeValue">比较的值</param>
+        /// /// <param name="edgeFlag">是否包含边界值</param>
+        /// <returns></returns>
+        public static Dictionary<string, object> longGreatThan(long relativeValue, bool edgeFlag = true)
+        {
+            Dictionary<string, object> resultDic = new Dictionary<string, object>();
+            if (edgeFlag)
+            {
+                resultDic.Add("$gte", relativeValue);
+            }
+            else
+            {
+                resultDic.Add("$gt", relativeValue);
+            }
+            return resultDic;
+        }
+        /// <summary>
+        /// 整形小于
+        /// </summary>
+        /// <param name="relativeValue">比较的值</param>
+        /// <param name="edgeFlag">是否包含边界值</param>
+        /// <returns></returns>
+        public static Dictionary<string, object> longLessThan(long relativeValue, bool edgeFlag = true)
+        {
+            Dictionary<string, object> resultDic = new Dictionary<string, object>();
+            if (edgeFlag)
+            {
+                resultDic.Add("$lte", relativeValue);
+            }
+            else
+            {
+                resultDic.Add("$lt", relativeValue);
+            }
+            return resultDic;
+        }
+
         /// <summary>
         /// 时间范围(包含边界值)
         /// </summary>
@@ -72,7 +111,7 @@ namespace Victop.Frame.PublicLib.Helpers
         /// <summary>
         /// 检索值In
         /// </summary>
-        /// <param name="valueList"></param>
+        /// <param name="valueList">值集合</param>
         /// <returns></returns>
         public static Dictionary<string, object> ValuesIn(List<object> valueList)
         {
@@ -83,7 +122,7 @@ namespace Victop.Frame.PublicLib.Helpers
         /// <summary>
         /// 检索值Or
         /// </summary>
-        /// <param name="valueList"></param>
+        /// <param name="valueList">值集合</param>
         /// <returns></returns>
         public static Dictionary<string, object> ValuesOr(List<object> valueList)
         {
@@ -95,12 +134,12 @@ namespace Victop.Frame.PublicLib.Helpers
         /// <summary>
         /// 不等于
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="relativeValue">比较的值</param>
         /// <returns></returns>
-        public static Dictionary<string, object> ValueNoEqual(object value)
+        public static Dictionary<string, object> ValueNoEqual(object relativeValue)
         {
             Dictionary<string, object> resultDic = new Dictionary<string, object>();
-            resultDic.Add("$ne", value);
+            resultDic.Add("$ne", relativeValue);
             return resultDic;
         }
 
