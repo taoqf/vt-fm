@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using Victop.Frame.PublicLib.Helpers;
+using Victop.Frame.DataMessageManager;
+using System.Collections.ObjectModel;
+using Victop.Server.Controls.Models;
 
 namespace Victop.Frame.CmptRuntime
 {
     /// <summary>
     /// 组件定义视图层实体
     /// </summary>
-    public class DefinViewsModel
+    public class DefinViewsModel:ModelBase
     {
         /// <summary>
         /// 视图名称
@@ -68,14 +72,88 @@ namespace Victop.Frame.CmptRuntime
         /// 视图Block
         /// </summary>
         [JsonProperty(PropertyName = "blocks")]
-        private List<object> viewBlocks;
+        private ObservableCollection<ViewsBlockModel> viewBlocks;
         /// <summary>
         /// 视图Block
         /// </summary>
-        public List<object> ViewBlocks
+        public ObservableCollection<ViewsBlockModel> ViewBlocks
         {
-            get { return viewBlocks; }
-            set { viewBlocks = value; }
+            get
+            {
+                if (viewBlocks == null)
+                    viewBlocks = new ObservableCollection<ViewsBlockModel>();
+                return viewBlocks;
+            }
+            set
+            {
+                if (viewBlocks != value)
+                {
+                    viewBlocks = value;
+                    RaisePropertyChanged("ViewBlocks");
+                }
+            }
+        }
+        /// <summary>
+        /// 数据通道标识
+        /// </summary>
+        [JsonIgnore]
+        public string ViewId
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 获取Block数据
+        /// </summary>
+        public void GetBlockData(string BlockName)
+        {
+            if (!string.IsNullOrEmpty(BlockName))
+            {
+                ViewsBlockModel blockModel = ViewBlocks.FirstOrDefault(it => it.BlockName == BlockName);
+                if (blockModel != null && blockModel.BlockDataPath != null && blockModel.BlockDataPath.Count > 0)
+                {
+                    if (!string.IsNullOrEmpty(ViewId))
+                    {
+                        DataMessageOperation dataOp = new DataMessageOperation();
+                        blockModel.BlockDt = dataOp.GetData(ViewId, JsonHelper.ToJson(blockModel.BlockDataPath));
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 保存数据
+        /// </summary>
+        public void SaveData()
+        {
+            if (!string.IsNullOrEmpty(ViewId))
+            {
+                ViewsBlockModel blockmodel = ViewBlocks.FirstOrDefault(it => it.Superiors.Equals("root"));
+                if (blockmodel.BlockDataPath != null && blockmodel.BlockDataPath.Count > 0)
+                {
+                    DataMessageOperation dataOp = new DataMessageOperation();
+                    dataOp.SaveData(ViewId, JsonHelper.ToJson(blockmodel.BlockDataPath));
+                    SaveBlockData(ViewId, blockmodel);
+                }
+            }
+        }
+        private void SaveBlockData(string viewId, ViewsBlockModel blockModel)
+        {
+            List<ViewsBlockModel> BlockList = ViewBlocks.Where(it => it.Superiors.Equals(blockModel.BlockName)).ToList();
+            if (BlockList != null && BlockList.Count > 0)
+            {
+                foreach (ViewsBlockModel item in BlockList)
+                {
+                    if (item.BlockDataPath != null && item.BlockDataPath.Count > 0)
+                    {
+                        DataMessageOperation dataOp = new DataMessageOperation();
+                        dataOp.SaveData(viewId, JsonHelper.ToJson(item.BlockDataPath));
+                    }
+                }
+                foreach (ViewsBlockModel item in BlockList)
+                {
+                    SaveBlockData(viewId, item);
+                }
+            }
         }
     }
 }
