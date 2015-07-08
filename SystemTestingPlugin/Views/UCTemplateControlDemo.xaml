@@ -1,0 +1,45 @@
+﻿<uc:TemplateControl x:Class="SystemTestingPlugin.Views.UCTemplateControlDemo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:uc="clr-namespace:Victop.Frame.CmptRuntime;assembly=Victop.Frame.CmptRuntime"
+             xmlns:vm="clr-namespace:SystemTestingPlugin.ViewModels"
+             xmlns:ctrl="http://schemas.ifeidao.com/wpfcontrol"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Name="mainView">
+    <uc:TemplateControl.DataContext>
+        <vm:UCTempateControlDemoViewModel/>
+    </uc:TemplateControl.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding mainViewLoadedCommand}" CommandParameter="{Binding ElementName=mainView}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <ctrl:VicGridNormal>
+        <ctrl:VicGridNormal.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </ctrl:VicGridNormal.RowDefinitions>
+        <ctrl:VicGridNormal Grid.Row="0" Name="master">
+        </ctrl:VicGridNormal>
+        <ctrl:VicGridNormal Grid.Row="1" Name="grid1">
+            <ctrl:VicGridNormal.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </ctrl:VicGridNormal.RowDefinitions>
+            <ctrl:VicGridNormal Grid.Row="0">
+                <ctrl:VicDockPanelNormal VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <ctrl:VicTextBoxNormal Width="100" Height="24" VicText="{Binding BlockName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0,0,5,0"/>
+                    <ctrl:VicTextBoxNormal Width="100" Height="24" VicText="{Binding DataContext.BlockName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </ctrl:VicDockPanelNormal>
+            </ctrl:VicGridNormal>
+            <ctrl:VicGridNormal Grid.Row="1" Name="grid1_1">
+                <ctrl:VicDockPanelNormal VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <ctrl:VicTextBoxNormal Width="100" Height="24" VicText="{Binding BlockName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </ctrl:VicDockPanelNormal>
+            </ctrl:VicGridNormal>
+        </ctrl:VicGridNormal>
+    </ctrl:VicGridNormal>
+</uc:TemplateControl>

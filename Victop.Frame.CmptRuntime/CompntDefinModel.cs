@@ -11,7 +11,7 @@ namespace Victop.Frame.CmptRuntime
     /// <summary>
     /// 组件定义
     /// </summary>
-    public class CompntDefinModel:ModelBase
+    public class CompntDefinModel:PropertyModelBase
     {
         /// <summary>
         /// 组件视图层

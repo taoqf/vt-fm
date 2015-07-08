@@ -131,16 +131,17 @@
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\UCAreaWindowViewModel.cs" />
+    <Compile Include="ViewModels\UCTempateControlDemoViewModel.cs" />
     <Compile Include="ViewModels\UCUniversalRefWindowViewModel.cs" />
     <Compile Include="ViewModels\UCVictopFTPViewModel.cs" />
     <Compile Include="Views\AreaWindow.xaml.cs">
       <DependentUpon>AreaWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UCAreaWindow.xaml.cs">
-      <DependentUpon>UCAreaWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\UCAreaWindowData.xaml.cs">
       <DependentUpon>UCAreaWindowData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UCTemplateControlDemo.xaml.cs">
+      <DependentUpon>UCTemplateControlDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UCVictopFTP.xaml.cs">
       <DependentUpon>UCVictopFTP.xaml</DependentUpon>
@@ -153,6 +154,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Victop.Frame.CmptRuntime\Victop.Frame.CmptRuntime.csproj">
+      <Project>{4fd0d337-25d5-4e44-890c-afa599599999}</Project>
+      <Name>Victop.Frame.CmptRuntime</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.DataMessageManager\Victop.Frame.DataMessageManager.csproj">
       <Project>{d3ee684e-9600-460b-a3e3-39bf32180f9f}</Project>
       <Name>Victop.Frame.DataMessageManager</Name>
@@ -173,11 +178,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UCAreaWindow.xaml">
+    <Page Include="Views\UCAreaWindowData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UCAreaWindowData.xaml">
+    <Page Include="Views\UCTemplateControlDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

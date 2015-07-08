@@ -13,7 +13,7 @@ namespace Victop.Frame.CmptRuntime
     /// <summary>
     /// 组件定义视图层实体
     /// </summary>
-    public class DefinViewsModel:ModelBase
+    public class DefinViewsModel : PropertyModelBase
     {
         /// <summary>
         /// 视图名称
@@ -102,6 +102,30 @@ namespace Victop.Frame.CmptRuntime
             get;
             set;
         }
+        /// <summary>
+        /// SystemId
+        /// </summary>
+        [JsonIgnore]
+        public string SystemId
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 引用数据的SystemId
+        /// </summary>
+        [JsonIgnore]
+        public string RefSystemId
+        {
+            get;
+            set;
+        }
+
+        public void DoRender()
+        {
+ 
+        }
+
         /// <summary>
         /// 获取Block数据
         /// </summary>

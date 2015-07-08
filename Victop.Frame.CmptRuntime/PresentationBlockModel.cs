@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using System.Data;
+using Victop.Server.Controls.Models;
 
 namespace Victop.Frame.CmptRuntime
 {
-    public class PresentationBlockModel
+    public class PresentationBlockModel : PropertyModelBase
     {
         /// <summary>
         /// 区块名称
@@ -18,8 +20,15 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         public string BlockName
         {
-            get { return blockName; }
-            set { blockName = value; }
+            get
+            {
+                return blockName;
+            }
+            set
+            {
+                blockName = value;
+                RaisePropertyChanged("BlockName");
+            }
         }
         /// <summary>
         /// 上级Block名称
@@ -94,6 +103,15 @@ namespace Victop.Frame.CmptRuntime
         {
             get;
             set;
+        }
+        public DataSet GetData()
+        {
+            return ViewBlock.BlockDt;
+        }
+
+        public void SaveData()
+        {
+            ViewBlock.ViewModel.SaveData();
         }
     }
 }

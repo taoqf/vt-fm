@@ -52,10 +52,8 @@ namespace SystemTestingPlugin
         {
             get
             {
-                //return new UCAreaWindow();
-                //return new UCSimpleDefWindow();
+                //return new UCTemplateControlDemo();
                 return new UCAreaWindowData();
-                //return new UCVictopFTP();
             }
         }
 

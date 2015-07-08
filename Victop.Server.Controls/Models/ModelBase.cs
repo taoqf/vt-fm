@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel;
+using GalaSoft.MvvmLight;
 
 namespace Victop.Server.Controls.Models
 {
     /// <summary>
     /// Model基类
     /// </summary>
-    public class ModelBase : INotifyPropertyChanged
+    public class ModelBase :ViewModelBase, INotifyPropertyChanged
     {
         /// <summary>
         /// 事件定义
