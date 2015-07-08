@@ -93,6 +93,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Templates\TemplateControl.cs" />
     <Compile Include="ViewsBlockConditionModel.cs" />
     <Compile Include="ViewsBlockModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

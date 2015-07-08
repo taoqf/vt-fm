@@ -6,6 +6,9 @@ using Victop.Frame.PublicLib.Helpers;
 
 namespace Victop.Frame.CmptRuntime
 {
+    /// <summary>
+    /// 组件运行时
+    /// </summary>
     public class OrgnizeRuntime
     {
         /// <summary>
@@ -49,20 +52,20 @@ namespace Victop.Frame.CmptRuntime
                 DefinViewsModel viewModel = runtime.CompntViews.FirstOrDefault(it => it.ViewName.Equals(item.ViewName));
                 if (viewModel != null)
                 {
-                    item.ViewBlock = viewModel.ViewBlocks.Find(it => it.BlockName.Equals(item.BindingBlock));
+                    item.ViewBlock = viewModel.ViewBlocks.FirstOrDefault(it => it.BlockName.Equals(item.BindingBlock));
                 }
             }
         }
 
         /// <summary>
-        /// 重建Block的DataPath
+        /// 重建所有View下所有Block的DataPath
         /// </summary>
-        /// <param name="runtime"></param>
+        /// <param name="runtime">运行时</param>
         public static void RebuildAllDataPath(CompntDefinModel runtime)
         {
             foreach (DefinViewsModel item in runtime.CompntViews)
             {
-                ViewsBlockModel blockmodel = item.ViewBlocks.Find(it => it.Superiors.Equals("root"));
+                ViewsBlockModel blockmodel = item.ViewBlocks.FirstOrDefault(it => it.Superiors.Equals("root"));
                 if (blockmodel.BlockLock && blockmodel.BlockDataPath != null && blockmodel.BlockDataPath.Count > 0)
                 {
                     RebuildDataPath(item, blockmodel);
@@ -81,10 +84,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 重构 View下的Block的DataPath
         /// </summary>
-        /// <param name="view"></param>
+        /// <param name="runtime">运行时</param>
+        /// <param name="view">View定义</param>
         public static void RebuildViewDataPath(CompntDefinModel runtime, DefinViewsModel view)
         {
-            ViewsBlockModel blockmodel = view.ViewBlocks.Find(it => it.Superiors.Equals("root"));
+            ViewsBlockModel blockmodel = view.ViewBlocks.FirstOrDefault(it => it.Superiors.Equals("root"));
             if (blockmodel.BlockLock && blockmodel.BlockDataPath != null && blockmodel.BlockDataPath.Count > 0)
             {
                 RebuildDataPath(view, blockmodel);
@@ -111,8 +115,8 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 重建Block的DataPath
         /// </summary>
-        /// <param name="definView"></param>
-        /// <param name="blockModel"></param>
+        /// <param name="definView">View定义</param>
+        /// <param name="blockModel">Block实体</param>
         private static void RebuildDataPath(DefinViewsModel definView, ViewsBlockModel blockModel)
         {
             for (int i = 0; i < definView.ViewBlocks.Count; i++)
