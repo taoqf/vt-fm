@@ -8,6 +8,9 @@ using Victop.Server.Controls.Models;
 
 namespace Victop.Frame.CmptRuntime
 {
+    /// <summary>
+    /// 展示层区块
+    /// </summary>
     public class PresentationBlockModel : PropertyModelBase
     {
         /// <summary>
@@ -104,10 +107,86 @@ namespace Victop.Frame.CmptRuntime
             get;
             set;
         }
-        public DataSet GetData()
+        /// <summary>
+        /// 展示层Block的数据表
+        /// </summary>
+        private DataTable viewBlockDataTable;
+        /// <summary>
+        /// 展示层Block的数据表
+        /// </summary>
+        public DataTable ViewBlockDataTable
         {
-            return ViewBlock.BlockDt;
+            get
+            {
+                if (viewBlockDataTable == null)
+                    viewBlockDataTable = new DataTable();
+                return viewBlockDataTable;
+            }
+            set
+            {
+                if (viewBlockDataTable != value)
+                {
+                    viewBlockDataTable = value;
+                    RaisePropertyChanged("ViewBlockDataTable");
+                }
+            }
         }
+        /// <summary>
+        /// 展示层Block当前选择行
+        /// </summary>
+        private DataRow preBlockSelectedRow;
+        /// <summary>
+        /// 展示层Block当前选择行
+        /// </summary>
+        public DataRow PreBlockSelectedRow
+        {
+            get
+            {
+                return preBlockSelectedRow;
+            }
+            set
+            {
+                if (preBlockSelectedRow != value)
+                {
+                    preBlockSelectedRow = value;
+                    RaisePropertyChanged("PreBlockSelectedRow");
+                }
+            }
+        }
+        /// <summary>
+        /// 设置检索条件
+        /// </summary>
+        /// <param name="conditionModel"></param>
+        public void SetSearchCondition(ViewsBlockConditionModel conditionModel)
+        {
+            if (conditionModel != null && conditionModel.TableCondition != null)
+            {
+                ViewBlock.Conditions.TableCondition = conditionModel.TableCondition;
+            }
+            if (conditionModel != null && conditionModel.TableSort != null)
+            {
+                ViewBlock.Conditions.TableSort = conditionModel.TableSort;
+            }
+            if (conditionModel != null && conditionModel.PageIndex != null)
+            {
+                ViewBlock.Conditions.PageIndex = conditionModel.PageIndex;
+            }
+            if (conditionModel != null && conditionModel.PageSize != null)
+            {
+                ViewBlock.Conditions.PageSize = conditionModel.PageSize;
+            }
+        }
+        /// <summary>
+        /// 获取数据
+        /// </summary>
+        public void GetData()
+        {
+            ViewBlock.ViewModel.GetBlockData(BindingBlock);
+            ViewBlockDataTable = ViewBlock.BlockDt.Tables["dataArray"];
+        }
+        /// <summary>
+        /// 保存数据
+        /// </summary>
 
         public void SaveData()
         {

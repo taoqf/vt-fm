@@ -7,6 +7,9 @@ using System.Data;
 
 namespace Victop.Frame.CmptRuntime
 {
+    /// <summary>
+    /// 视图层Block实体
+    /// </summary>
     public class ViewsBlockModel : ICloneable
     {
         [JsonProperty(PropertyName = "blockname")]
@@ -92,7 +95,7 @@ namespace Victop.Frame.CmptRuntime
             }
         }
         /// <summary>
-        /// 12-13新增
+        /// Block所属View
         /// </summary>
         public DefinViewsModel ViewModel
         {
@@ -108,14 +111,23 @@ namespace Victop.Frame.CmptRuntime
             get;
             set;
         }
+        private DataSet blockDt;
         /// <summary>
         /// 块数据集
         /// </summary>
         [JsonIgnore]
         public DataSet BlockDt
         {
-            get;
-            set;
+            get
+            {
+                if (blockDt == null)
+                    blockDt = new DataSet();
+                return blockDt;
+            }
+            set
+            {
+                blockDt = value;
+            }
         }
         /// <summary>
         /// 块路径
@@ -144,6 +156,84 @@ namespace Victop.Frame.CmptRuntime
             get;
             set;
         }
+        /// <summary>
+        /// 设置当前选择行
+        /// </summary>
+        /// <param name="dr"></param>
+        public void SetCurrentRow(DataRow dr)
+        {
+            if (dr != null)
+            {
+                if (CurrentRow == null)
+                {
+                    CurrentRow = new Dictionary<string, object>();
+                }
+                else
+                {
+                    CurrentRow.Clear();
+                    foreach (DataColumn item in dr.Table.Columns)
+                    {
+                        CurrentRow.Add(item.ColumnName, dr[item.ColumnName]);
+                    }
+                    RebuildPath();
+                }
+            }
+        }
+
+        private void RebuildPath()
+        {
+            RebuildDataPath(ViewModel, this);
+        }
+
+        /// <summary>
+        /// 重建Block的DataPath
+        /// </summary>
+        /// <param name="definView">View定义</param>
+        /// <param name="blockModel">Block实体</param>
+        private void RebuildDataPath(DefinViewsModel definView, ViewsBlockModel blockModel)
+        {
+            for (int i = 0; i < definView.ViewBlocks.Count; i++)
+            {
+                ViewsBlockModel block = definView.ViewBlocks[i];
+                if (block.Superiors.Equals(blockModel.BlockName))
+                {
+                    if (block.BlockLock && block.BlockDataPath != null && block.BlockDataPath.Count > 0)
+                    {
+                        RebuildDataPath(definView, block);
+                    }
+                    else
+                    {
+                        Dictionary<string, object> pathDic = new Dictionary<string, object>();
+                        pathDic.Add("key", "_id");
+                        pathDic.Add("value", (blockModel.CurrentRow == null || !blockModel.CurrentRow.ContainsKey("_id")) ? Guid.NewGuid().ToString() : blockModel.CurrentRow["_id"]);
+                        if (block.BlockDataPath == null)
+                        {
+                            block.BlockDataPath = new List<object>();
+                        }
+                        else
+                        {
+                            block.BlockDataPath.Clear();
+                        }
+                        foreach (var item in blockModel.BlockDataPath)
+                        {
+                            block.BlockDataPath.Add(item);
+                        }
+                        if (!blockModel.DatasetType.Equals("row"))
+                        {
+                            block.BlockDataPath.Add(pathDic);
+                        }
+                        block.ViewId = blockModel.ViewId;
+                        if (block.DatasetType.Equals("table"))
+                        {
+                            block.BlockDataPath.Add(block.TableName);
+                        }
+                        RebuildDataPath(definView, block);
+                    }
+                }
+            }
+        }
+
+
         public object Clone()
         {
             return this.MemberwiseClone();

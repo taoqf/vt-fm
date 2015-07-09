@@ -17,29 +17,31 @@
             <i:InvokeCommandAction Command="{Binding mainViewLoadedCommand}" CommandParameter="{Binding ElementName=mainView}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <ctrl:VicGridNormal>
+    <ctrl:VicGridNormal Name="p_1">
         <ctrl:VicGridNormal.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </ctrl:VicGridNormal.RowDefinitions>
-        <ctrl:VicGridNormal Grid.Row="0" Name="master">
-        </ctrl:VicGridNormal>
-        <ctrl:VicGridNormal Grid.Row="1" Name="grid1">
-            <ctrl:VicGridNormal.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="*"/>
-            </ctrl:VicGridNormal.RowDefinitions>
-            <ctrl:VicGridNormal Grid.Row="0">
-                <ctrl:VicDockPanelNormal VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <ctrl:VicTextBoxNormal Width="100" Height="24" VicText="{Binding BlockName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="0,0,5,0"/>
-                    <ctrl:VicTextBoxNormal Width="100" Height="24" VicText="{Binding DataContext.BlockName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                </ctrl:VicDockPanelNormal>
-            </ctrl:VicGridNormal>
-            <ctrl:VicGridNormal Grid.Row="1" Name="grid1_1">
-                <ctrl:VicDockPanelNormal VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <ctrl:VicTextBoxNormal Width="100" Height="24" VicText="{Binding BlockName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                </ctrl:VicDockPanelNormal>
-            </ctrl:VicGridNormal>
+        <ctrl:VicDockPanelNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <ctrl:VicTextBoxNormal Name="txtProductName" Width="100" Height="24" VicText="{Binding PreOneBlockModel.PreBlockSelectedRow[product_name]}" Margin="0,0,5,0"/>
+            <ctrl:VicTextBoxNormal Width="100" Height="24" VicText="{Binding PreOneBlockModel.PreBlockSelectedRow[productid]}" Margin="0,0,5,0"/>
+            <ctrl:VicButtonNormal Name="btnPrei" Width="100" Height="24" Content="上一条" Margin="0,0,5,0" Command="{Binding btnPreiClickCommand}"/>
+            <ctrl:VicButtonNormal Name="btnNext" Width="100" Height="24" Content="上一条" Margin="0,0,5,0" Command="{Binding btnNextClickCommand}"/>
+        </ctrl:VicDockPanelNormal>
+        <ctrl:VicGridNormal Grid.Row="1" Name="p_1_1">
+            <ctrl:VicDataGrid Name="dgridBusi"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              IsUserSetColumn="True"
+                              ItemsSource="{Binding PreOneOfOneBlockModel.ViewBlockDataTable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <ctrl:VicDataGrid.Columns>
+                    <ctrl:VicDataGridTextColumn Header="业务编号" Binding="{Binding Path=busi_name}"/>
+                    <ctrl:VicDataGridTextColumn Header="业务名称" Binding="{Binding Path=buis_name}"/>
+                    <ctrl:VicDataGridTextColumn Header="业务类型" Binding="{Binding Path=business_type}"/>
+                    <ctrl:VicDataGridTextColumn Header="描述" Binding="{Binding Path=description}"/>
+                    <ctrl:VicDataGridTextColumn Header="产品名称" Binding="{Binding ElementName=txtProductName,Path=VicText}"/>
+                </ctrl:VicDataGrid.Columns>
+            </ctrl:VicDataGrid>
         </ctrl:VicGridNormal>
     </ctrl:VicGridNormal>
 </uc:TemplateControl>

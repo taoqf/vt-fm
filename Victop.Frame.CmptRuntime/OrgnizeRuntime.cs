@@ -72,6 +72,8 @@ namespace Victop.Frame.CmptRuntime
                 }
                 else
                 {
+                    if (blockmodel.BlockDataPath == null)
+                        blockmodel.BlockDataPath = new List<object>();
                     blockmodel.BlockDataPath.Clear();
                     blockmodel.BlockDataPath.Add(blockmodel.TableName);
                     if (blockmodel != null)

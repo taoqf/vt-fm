@@ -20,20 +20,23 @@ namespace Victop.Frame.CmptRuntime
         /// 组件定义实体
         /// </summary>
         public CompntDefinModel DefinModel;
-
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnInitialized(EventArgs e)
         {
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                VicGridNormal gridGrid1 = this.FindName("grid1") as VicGridNormal;
-                PresentationBlockModel blockModel = new PresentationBlockModel();
-                blockModel.BlockName = "grid1";
-
-                VicGridNormal gridGrid1_1 = this.FindName("grid1_1") as VicGridNormal;
-                PresentationBlockModel blockModel1 = new PresentationBlockModel();
-                blockModel1.BlockName = "grid1_1";
-                gridGrid1_1.DataContext = blockModel1;
-                gridGrid1.DataContext = blockModel;
+                OrgnizeRuntime.InitCompnt(DefinModel);
+                if (DefinModel.CompntViews.Count > 0)
+                {
+                    foreach (DefinViewsModel item in DefinModel.CompntViews)
+                    {
+                        item.DoRender();
+                        OrgnizeRuntime.RebuildViewDataPath(DefinModel, item);
+                    }
+                }
             }
             base.OnInitialized(e);
         }

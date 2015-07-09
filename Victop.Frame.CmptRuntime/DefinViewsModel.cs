@@ -105,25 +105,81 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// SystemId
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "systemid")]
+        private string systemId;
+        /// <summary>
+        /// SystemId
+        /// </summary>
         public string SystemId
         {
-            get;
-            set;
+            get
+            {
+                return systemId;
+            }
+            set
+            {
+                systemId = value;
+            }
         }
         /// <summary>
         /// 引用数据的SystemId
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "refsystemid")]
+        private string refSystemId;
+        /// <summary>
+        /// 引用数据的SystemId
+        /// </summary>
         public string RefSystemId
         {
-            get;
-            set;
+            get
+            {
+                return refSystemId;
+            }
+            set
+            {
+                refSystemId = value;
+            }
         }
 
         public void DoRender()
         {
- 
+            if (loadData.Equals(1))
+            {
+                SearchData();
+            }
+        }
+        public void SearchData()
+        {
+            string MessageType = "MongoDataChannelService.findBusiData";
+            DataMessageOperation messageOp = new DataMessageOperation();
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", SystemId);
+            contentDic.Add("refsystemid", RefSystemId);
+            contentDic.Add("modelid", ModelId);
+            List<object> conditionList = new List<object>();
+            foreach (ViewsBlockModel item in this.viewBlocks)
+            {
+                Dictionary<string, object> blockDic = new Dictionary<string, object>();
+                blockDic.Add("name", item.TableName);
+                List<object> tableConList = new List<object>();
+                tableConList.Add(item.Conditions.TableCondition);
+                blockDic.Add("tablecondition", tableConList);
+                blockDic.Add("sort", item.Conditions.TableSort);
+                Dictionary<string, object> pageDic = new Dictionary<string, object>();
+                pageDic.Add("size", item.Conditions.PageSize);
+                pageDic.Add("index", item.Conditions.PageIndex);
+                blockDic.Add("paging", pageDic);
+                conditionList.Add(blockDic);
+            }
+            if (conditionList.Count > 0)
+            {
+                contentDic.Add("conditions", conditionList);
+            }
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            {
+                ViewId = returnDic["DataChannelId"].ToString();
+            }
         }
 
         /// <summary>
@@ -131,6 +187,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         public void GetBlockData(string BlockName)
         {
+            if (string.IsNullOrEmpty(ViewId))
+            {
+                DoRender();
+            }
             if (!string.IsNullOrEmpty(BlockName))
             {
                 ViewsBlockModel blockModel = ViewBlocks.FirstOrDefault(it => it.BlockName == BlockName);
@@ -140,6 +200,10 @@ namespace Victop.Frame.CmptRuntime
                     {
                         DataMessageOperation dataOp = new DataMessageOperation();
                         blockModel.BlockDt = dataOp.GetData(ViewId, JsonHelper.ToJson(blockModel.BlockDataPath));
+                        if (blockModel.BlockDt != null && blockModel.BlockDt.Tables["dataArray"] != null && blockModel.BlockDt.Tables["dataArray"].Rows.Count > 0)
+                        {
+                            blockModel.SetCurrentRow(blockModel.BlockDt.Tables["dataArray"].Rows[0]);
+                        }
                     }
                 }
             }
