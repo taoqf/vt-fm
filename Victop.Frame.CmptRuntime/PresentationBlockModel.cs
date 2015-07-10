@@ -47,6 +47,19 @@ namespace Victop.Frame.CmptRuntime
             set { superiors = value; }
         }
         /// <summary>
+        /// 关键字
+        /// </summary>
+        [JsonProperty(PropertyName = "keyword")]
+        private string keywords;
+        /// <summary>
+        /// 关键字(多个关键字时用"|"分隔)
+        /// </summary>
+        public string Keywords
+        {
+            get { return keywords; }
+            set { keywords = value; }
+        }
+        /// <summary>
         /// 方法
         /// </summary>
         [JsonProperty(PropertyName = "method")]
@@ -182,7 +195,42 @@ namespace Victop.Frame.CmptRuntime
         public void GetData()
         {
             ViewBlock.ViewModel.GetBlockData(BindingBlock);
-            ViewBlockDataTable = ViewBlock.BlockDt.Tables["dataArray"];
+            if (string.IsNullOrEmpty(keywords))
+            {
+                ViewBlockDataTable = ViewBlock.BlockDt.Tables["dataArray"];
+            }
+            else
+            {
+                List<string> keywordsList = Keywords.Split('|').ToList();
+                if (!keywordsList.Contains("_id"))
+                {
+                    keywordsList.Add("_id");
+                }
+                if (superiors.Equals("root"))
+                {
+                    ViewBlockDataTable = ViewBlock.BlockDt.Tables["dataArray"].DefaultView.ToTable("dataArray", true, keywordsList.ToArray());
+                }
+                else
+                {
+
+                }
+            }
+        }
+        /// <summary>
+        /// 设置当前选择行
+        /// </summary>
+        /// <param name="dr"></param>
+        public void SetCurrentRow(DataRow dr)
+        {
+            if (string.IsNullOrEmpty(keywords))
+            {
+                ViewBlock.SetCurrentRow(dr);
+            }
+            else
+            {
+                DataRow[] drs = ViewBlock.BlockDt.Tables["dataArray"].Select(string.Format("_id='{0}'", dr["_id"].ToString()));
+                ViewBlock.SetCurrentRow(drs[0]);
+            }
         }
         /// <summary>
         /// 保存数据

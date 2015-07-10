@@ -78,7 +78,7 @@ namespace SystemTestingPlugin.ViewModels
                     PreOneBlockModel = mainViewControl.DefinModel.CompntPresentation.PresentationBlocks.First(it => it.BlockName.Equals("p_1"));
                     PreOneBlockModel.GetData();
                     PreOneBlockModel.PreBlockSelectedRow = PreOneBlockModel.ViewBlockDataTable.Rows[temp];
-                    PreOneBlockModel.ViewBlock.SetCurrentRow(PreOneBlockModel.PreBlockSelectedRow);
+                    PreOneBlockModel.SetCurrentRow(PreOneBlockModel.PreBlockSelectedRow);
                     PreOneOfOneBlockModel = mainViewControl.DefinModel.CompntPresentation.PresentationBlocks.First(it => it.BlockName.Equals("p_1_1"));
                     PreOneOfOneBlockModel.GetData();
                 });
@@ -93,7 +93,7 @@ namespace SystemTestingPlugin.ViewModels
                 {
                     temp -= 1;
                     PreOneBlockModel.PreBlockSelectedRow = PreOneBlockModel.ViewBlockDataTable.Rows[temp];
-                    PreOneBlockModel.ViewBlock.SetCurrentRow(PreOneBlockModel.PreBlockSelectedRow);
+                    PreOneBlockModel.SetCurrentRow(PreOneBlockModel.PreBlockSelectedRow);
                     PreOneOfOneBlockModel.GetData();
                 }, () =>
                 {
@@ -110,7 +110,7 @@ namespace SystemTestingPlugin.ViewModels
                 {
                     temp += 1;
                     PreOneBlockModel.PreBlockSelectedRow = PreOneBlockModel.ViewBlockDataTable.Rows[temp];
-                    PreOneBlockModel.ViewBlock.SetCurrentRow(PreOneBlockModel.PreBlockSelectedRow);
+                    PreOneBlockModel.SetCurrentRow(PreOneBlockModel.PreBlockSelectedRow);
                     PreOneOfOneBlockModel.GetData();
                 }, () =>
                 {
@@ -126,10 +126,10 @@ namespace SystemTestingPlugin.ViewModels
                 {
                     DataRow dr = PreOneOfOneBlockModel.ViewBlockDataTable.NewRow();
                     dr["_id"] = Guid.NewGuid().ToString();
-                    //dr["productid"] = PreOneBlockModel.PreBlockSelectedRow["productid"];
+                    dr["productid"] = PreOneBlockModel.PreBlockSelectedRow["productid"];
                     PreOneOfOneBlockModel.ViewBlockDataTable.Rows.Add(dr);
                     PreOneOfOneBlockModel.PreBlockSelectedRow = dr;
-                    PreOneOfOneBlockModel.ViewBlock.SetCurrentRow(dr);
+                    PreOneOfOneBlockModel.SetCurrentRow(dr);
                 });
             }
         }
