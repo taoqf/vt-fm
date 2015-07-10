@@ -210,10 +210,10 @@ namespace Victop.Frame.Connection
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             string afterLoginStr = ConfigurationManager.AppSettings["afterlogin"];
             contentDic.Add("systemid", JsonHelper.ReadJsonString(afterLoginStr, "systemid"));
-            contentDic.Add("clientType", "3");
+            contentDic.Add("clienttype", "3");
             contentDic.Add("configsystemid", JsonHelper.ReadJsonString(afterLoginStr, "configsystemid"));
             string userCode = messageInfo.MessageContent.Contains("usercode") ? JsonHelper.ReadJsonString(messageInfo.MessageContent, "usercode") : JsonHelper.ReadJsonString(messageInfo.MessageContent, "userCode");
-            contentDic.Add("userCode", userCode);
+            contentDic.Add("usercode", userCode);
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
             DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
             MessageOrganizeManager organizeManager = new MessageOrganizeManager();
