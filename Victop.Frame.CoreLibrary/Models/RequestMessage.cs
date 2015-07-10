@@ -168,7 +168,7 @@ namespace Victop.Frame.CoreLibrary.Models
                 {
                     portTemp = port;
                 }
-                this.routerAddress = "VictopGlacier2/router:tcp -h " + routerAddress + " -p " + portTemp;
+                this.routerAddress = "FeidaoGlacier2/router:tcp -h " + routerAddress + " -p " + portTemp;
             }
         }
         /// <summary>

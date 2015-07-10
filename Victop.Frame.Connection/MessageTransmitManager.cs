@@ -105,34 +105,15 @@ namespace Victop.Frame.Connection
         {
             CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
             Dictionary<string, string> contentDic = JsonHelper.ToObject<Dictionary<string, string>>(messageInfo.MessageContent);
-            if (contentDic.ContainsKey("spaceId"))
+            if (!contentDic.ContainsKey("spaceid"))
             {
-                if (string.IsNullOrEmpty(contentDic["spaceId"].ToString()))
-                {
-                    contentDic["spaceId"] = string.Format("{0}::{1}", currentGallery.ClientId, currentGallery.ProductId);
-                }
-                else
-                {
-                    if (contentDic["spaceId"].ToString().Contains("::"))
-                    {
-                        currentGallery.ProductId = contentDic["spaceId"].ToString().Substring(contentDic["spaceId"].ToString().IndexOf("::") + 2);
-                    }
-                }
-            }
-            else
-            {
-                contentDic.Add("spaceId", string.Format("{0}::{1}", currentGallery.ClientId, currentGallery.ProductId));
-            }
-            if (contentDic.ContainsKey("usercode"))
-            {
-                contentDic.Add("userCode", contentDic["usercode"]);
-                contentDic.Remove("usercode");
+                contentDic.Add("spaceid", currentGallery.ClientId);
             }
             if (!contentDic.ContainsKey("logintypenew"))
             {
                 contentDic.Add("logintypenew", "usercode");
             }
-            if (!contentDic.ContainsKey("userIp"))
+            if (!contentDic.ContainsKey("userip"))
             {
                 string ipreg = @"((?:(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d)))\.){3}(?:25[0-5]|2[0-4]\d|((1\d{2})|([1-9]?\d))))";
                 string hostname = Dns.GetHostName();
@@ -149,7 +130,7 @@ namespace Victop.Frame.Connection
                 }
                 if (!getIpFlag)
                 {
-                    contentDic.Add("userIp", localhost.AddressList.Last().ToString());
+                    contentDic.Add("userip", localhost.AddressList.Last().ToString());
                 }
             }
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);

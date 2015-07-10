@@ -54,13 +54,13 @@ namespace Victop.Frame.Connection
                     replyIsToChannel = DataOperateEnum.COMMIT;
                     opFlag = true;
                 }
-                if (!dicContent.ContainsKey("spaceId"))
+                if (!dicContent.ContainsKey("spaceid"))
                 {
-                    dicContent.Add("spaceId", string.Format("{0}::{1}", cloudGallyInfo.ClientId, cloudGallyInfo.ProductId));
+                    dicContent.Add("spaceid", cloudGallyInfo.ClientId);
                 }
-                if (dicContent != null && !dicContent.ContainsKey("userCode"))
+                if (dicContent != null && !dicContent.ContainsKey("usercode"))
                 {
-                    dicContent.Add("userCode", loginUserInfo.UserCode);
+                    dicContent.Add("usercode", loginUserInfo.UserCode);
                 }
                 messageInfo.MessageContent = JsonHelper.ToJson(dicContent);
             }
