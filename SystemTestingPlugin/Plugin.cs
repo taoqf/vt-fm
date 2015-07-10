@@ -52,8 +52,8 @@ namespace SystemTestingPlugin
         {
             get
             {
-                return new UCTemplateControlDemo();
-                //return new UCAreaWindowData();
+                //return new UCTemplateControlDemo();
+                return new UCAreaWindowData();
             }
         }
 
