@@ -39,17 +39,7 @@ namespace Victop.Frame.Connection
                 Dictionary<string, object> returnContentDic = new Dictionary<string, object>();
                 int ReplyCode;
                 string dataStr = ReadLocalData(modelId, out ReplyCode);
-                if (ConfigurationManager.AppSettings["SystemType"].Equals("DATASET"))
-                {
-                    returnContentDic.Add("Result", dataStr);
-                    returnContentDic.Add("code", ReplyCode);
-                    returnContentDic.Add("messageType", messageInfo.MessageType);
-                    replyMessage.ReplyContent = JsonHelper.ToJson(returnContentDic);
-                }
-                else
-                {
-                    replyMessage.ReplyContent = dataStr;
-                }
+                replyMessage.ReplyContent = dataStr;
                 replyMessage.ReplyMode = (ReplyModeEnum)ReplyCode;
                 if (ReplyCode.Equals(0))
                 {

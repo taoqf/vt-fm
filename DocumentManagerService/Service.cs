@@ -93,7 +93,7 @@ namespace DocumentManagerService
                         }
                         else
                         {
-                            string downloadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + downloadFileId + "&productid=" + downloadProductId;
+                            string downloadUrl = ConfigurationManager.AppSettings.Get("downloadfilehttp") + "getfile?id=" + downloadFileId + "&productid=" + downloadProductId;
                             string downloadToPath = string.Empty;
                             if (serviceParams.ContainsKey("DownloadToPath"))
                             {
@@ -118,7 +118,7 @@ namespace DocumentManagerService
 
                     if (CurrentMessageType == "ServerCenterService.UploadDocument")
                     {
-                        string uploadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "reupload";
+                        string uploadUrl = ConfigurationManager.AppSettings.Get("uploadfilehttp") + "reupload";
                         string uploadMode = string.Empty;
                         string downloadProductId = "feidao";
                         if (serviceParams.ContainsKey("ProductId"))
@@ -132,7 +132,7 @@ namespace DocumentManagerService
 
                         if (string.IsNullOrWhiteSpace(uploadMode) == false)
                         {
-                            uploadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "upload?mode_id=" + uploadMode + "&productid=" + downloadProductId;
+                            uploadUrl = ConfigurationManager.AppSettings.Get("uploadfilehttp") + "upload?mode_id=" + uploadMode + "&productid=" + downloadProductId;
                         }
                         else
                         {
@@ -198,7 +198,7 @@ namespace DocumentManagerService
                         }
                         else
                         {
-                            string dropuploadUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "dropupload?productid=" + dropuploadProductId + "&delfile_name="+deleteFilePath;                            
+                            string dropuploadUrl = ConfigurationManager.AppSettings.Get("uploadfilehttp") + "dropupload?productid=" + dropuploadProductId + "&delfile_name=" + deleteFilePath;                            
                             if (this.DeleteFile(dropuploadUrl))
                             {
                                 returnDic.Add("ReplyContent", "删除成功");

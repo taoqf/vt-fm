@@ -823,7 +823,7 @@ namespace ThemeManagerPlugin.ViewModels
                 DataTable dt = MenuDs.Tables["dataArray"];
                 foreach (DataRow row in dt.Rows)
                 {
-                    string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["preview"] + "&productid=" + ProductId;
+                    string previewUrl = ConfigurationManager.AppSettings.Get("downloadfilehttp") + "getfile?id=" + row["preview"] + "&productid=" + ProductId;
                     WallPaperModel model = new WallPaperModel();
                     model.FilePath = row["file_path"].ToString();
                     model.WallPreview = previewUrl;

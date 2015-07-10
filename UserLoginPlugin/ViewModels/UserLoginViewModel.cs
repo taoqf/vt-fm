@@ -552,7 +552,6 @@ namespace UserLoginPlugin.ViewModels
                 Dictionary<string, object> contentDic = new Dictionary<string, object>();
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
-                contentDic.Add("spaceId", string.Format("{0}::{1}", LoginInfoModel.ClientId, string.IsNullOrEmpty(LoginInfoModel.ProductId) ? LoginInfoModel.ClientId : LoginInfoModel.ProductId));
                 string MessageType = "LoginService.userLogin";
                 DataMessageOperation messageOp = new DataMessageOperation();
                 //Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);

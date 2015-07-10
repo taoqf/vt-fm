@@ -36,8 +36,7 @@ namespace PortalFramePlugin.Views
         public NotificationCenter()
         {
             InitializeComponent();
-            string notifyTimeStr = ConfigurationManager.AppSettings["notifyTime"];
-            double notifyTime = Convert.ToDouble(notifyTimeStr);
+            double notifyTime = 10;
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(notifyTime);
             _timer.Tick += timer_Tick;
@@ -108,7 +107,7 @@ namespace PortalFramePlugin.Views
         private void GetNotifyMessage()
         {
             DataMessageOperation pluginMessage = new DataMessageOperation();
-            string messageType="TaskNotifyService.GetNoifyInfo";
+            string messageType = "TaskNotifyService.GetNoifyInfo";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("ObjectId", Guid.NewGuid().ToString());
             pluginMessage.SendAsyncMessage(messageType, contentDic, new WaitCallback(SaveDataSuccess));

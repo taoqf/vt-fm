@@ -123,7 +123,7 @@ namespace Victop.Frame.Connection
                 {
                     if (Regex.IsMatch(item.ToString(), ipreg))
                     {
-                        contentDic.Add("userIp", item.ToString());
+                        contentDic.Add("userip", item.ToString());
                         getIpFlag = true;
                         break;
                     }
