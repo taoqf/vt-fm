@@ -289,52 +289,59 @@ namespace Victop.Frame.DataChannel
 
         private static void CreateDataRowValue(Dictionary<string, object> itemDic, DataRow objectDr, DataColumn dtCol, bool refTypeFlag = false)
         {
-            switch (refTypeFlag ? dtCol.ExtendedProperties["RefType"].ToString() : dtCol.ExtendedProperties["ColType"].ToString())
+            try
             {
-                case "int":
-                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (int)0 : Convert.ToInt32(itemDic[dtCol.ColumnName].ToString());
-                    break;
-                case "long":
-                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (long)0 : Convert.ToInt64(itemDic[dtCol.ColumnName].ToString());
-                    break;
-                case "double":
-                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (double)0.00 : Convert.ToDouble(itemDic[dtCol.ColumnName].ToString());
-                    break;
-                case "float":
-                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (decimal)0.00 : Convert.ToDecimal(itemDic[dtCol.ColumnName].ToString());
-                    break;
-                case "boolean":
-                    objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(itemDic[dtCol.ColumnName]);
-                    break;
-                case "timestamp":
-                    if (Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()) == 0)
-                    {
-                        objectDr[dtCol.ColumnName] = DBNull.Value;
-                    }
-                    else
-                    {
-                        DateTime dt = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0));
-                        dt = dt.AddMilliseconds(Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()));
-                        objectDr[dtCol.ColumnName] = dt;
-                    }
-                    break;
-                case "date":
-                    if (string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()))
-                    {
-                        objectDr[dtCol.ColumnName] = DBNull.Value;
-                    }
-                    else
-                    {
+                switch (refTypeFlag ? dtCol.ExtendedProperties["RefType"].ToString() : dtCol.ExtendedProperties["ColType"].ToString())
+                {
+                    case "int":
+                        objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (int)0 : Convert.ToInt32(itemDic[dtCol.ColumnName].ToString());
+                        break;
+                    case "long":
+                        objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (long)0 : Convert.ToInt64(itemDic[dtCol.ColumnName].ToString());
+                        break;
+                    case "double":
+                        objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (double)0.00 : Convert.ToDouble(itemDic[dtCol.ColumnName].ToString());
+                        break;
+                    case "float":
+                        objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? (decimal)0.00 : Convert.ToDecimal(itemDic[dtCol.ColumnName].ToString());
+                        break;
+                    case "boolean":
+                        objectDr[dtCol.ColumnName] = string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()) ? false : Convert.ToBoolean(itemDic[dtCol.ColumnName]);
+                        break;
+                    case "timestamp":
+                        if (Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()) == 0)
+                        {
+                            objectDr[dtCol.ColumnName] = DBNull.Value;
+                        }
+                        else
+                        {
+                            DateTime dt = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0));
+                            dt = dt.AddMilliseconds(Convert.ToInt64(itemDic[dtCol.ColumnName].ToString()));
+                            objectDr[dtCol.ColumnName] = dt;
+                        }
+                        break;
+                    case "date":
+                        if (string.IsNullOrEmpty(itemDic[dtCol.ColumnName].ToString()))
+                        {
+                            objectDr[dtCol.ColumnName] = DBNull.Value;
+                        }
+                        else
+                        {
+                            objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
+                        }
+                        break;
+                    case "ref":
+                        CreateDataRowValue(itemDic, objectDr, dtCol, true);
+                        break;
+                    case "string":
+                    default:
                         objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
-                    }
-                    break;
-                case "ref":
-                    CreateDataRowValue(itemDic, objectDr, dtCol, true);
-                    break;
-                case "string":
-                default:
-                    objectDr[dtCol.ColumnName] = itemDic[dtCol.ColumnName];
-                    break;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.ErrorFormat("数据生成异常!字段{0}的类型为{1},对应数据为:{2}", dtCol.ColumnName, refTypeFlag ? dtCol.ExtendedProperties["RefType"].ToString() : dtCol.ExtendedProperties["ColType"].ToString(), itemDic[dtCol.ColumnName]);
             }
         }
 

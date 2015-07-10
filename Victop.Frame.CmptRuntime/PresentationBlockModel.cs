@@ -5,6 +5,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Data;
 using Victop.Server.Controls.Models;
+using Victop.Frame.PublicLib.Helpers;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -50,7 +51,7 @@ namespace Victop.Frame.CmptRuntime
         /// 关键字
         /// </summary>
         [JsonProperty(PropertyName = "keyword")]
-        private string keywords;
+        private string keywords = string.Empty;
         /// <summary>
         /// 关键字(多个关键字时用"|"分隔)
         /// </summary>
@@ -110,6 +111,19 @@ namespace Victop.Frame.CmptRuntime
         {
             get { return bindingBlock; }
             set { bindingBlock = value; }
+        }
+        /// <summary>
+        /// 上级视图Block
+        /// </summary>
+        [JsonIgnore]
+        private PresentationBlockModel parentPreBlockModel;
+        /// <summary>
+        /// 上级视图Block
+        /// </summary>
+        public PresentationBlockModel ParentPreBlockModel
+        {
+            get { return parentPreBlockModel; }
+            set { parentPreBlockModel = value; }
         }
         /// <summary>
         /// 呈现层对应的视图层Block
@@ -195,26 +209,88 @@ namespace Victop.Frame.CmptRuntime
         public void GetData()
         {
             ViewBlock.ViewModel.GetBlockData(BindingBlock);
-            if (string.IsNullOrEmpty(keywords))
+            if (string.IsNullOrEmpty(keywords) && string.IsNullOrEmpty(this.ParentPreBlockModel.Keywords))
             {
                 ViewBlockDataTable = ViewBlock.BlockDt.Tables["dataArray"];
             }
             else
             {
-                List<string> keywordsList = Keywords.Split('|').ToList();
-                if (!keywordsList.Contains("_id"))
-                {
-                    keywordsList.Add("_id");
-                }
+                string[] keyStrList = Keywords.Split('|');
+                DataTable dt = ViewBlock.BlockDt.Tables["dataArray"].Clone();
+                dt.Clear();
                 if (superiors.Equals("root"))
                 {
-                    ViewBlockDataTable = ViewBlock.BlockDt.Tables["dataArray"].DefaultView.ToTable("dataArray", true, keywordsList.ToArray());
+                    foreach (DataRow item in ViewBlock.BlockDt.Tables["dataArray"].Rows)
+                    {
+                        string sqlStr = string.Empty;
+                        if (!string.IsNullOrEmpty(Keywords))
+                        {
+                            sqlStr = OrganizeDtSql(keyStrList, item);
+                        }
+                        DataRow[] drs = dt.Select(sqlStr);
+                        if (drs.Length == 0)
+                        {
+                            dt.ImportRow(item);
+                        }
+
+                    }
+                    ViewBlockDataTable = dt;
                 }
                 else
                 {
-
+                    if (this.ParentPreBlockModel != null)
+                    {
+                        string sqlStr = string.Empty;
+                        if (!string.IsNullOrEmpty(ParentPreBlockModel.Keywords))
+                        {
+                            sqlStr = OrganizeDtSql(ParentPreBlockModel.Keywords.Split('|'), ParentPreBlockModel.PreBlockSelectedRow);
+                        }
+                        if (string.IsNullOrEmpty(Keywords))
+                        {
+                            DataRow[] drs = ViewBlock.BlockDt.Tables["dataArray"].Select(sqlStr);
+                            foreach (DataRow drsitem in drs)
+                            {
+                                dt.ImportRow(drsitem);
+                            }
+                        }
+                        else
+                        {
+                            foreach (DataRow item in ViewBlock.BlockDt.Tables["dataArray"].Rows)
+                            {
+                                sqlStr += " and " + OrganizeDtSql(Keywords.Split('|'), item);
+                                DataRow[] drs = dt.Select(sqlStr);
+                                if (drs.Length == 0)
+                                {
+                                    dt.ImportRow(item);
+                                }
+                            }
+                        }
+                    }
+                    ViewBlockDataTable = dt;
                 }
             }
+        }
+        /// <summary>
+        /// 组织Dt的sql语句
+        /// </summary>
+        /// <param name="keyStrList"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private string OrganizeDtSql(string[] keyStrList, DataRow item)
+        {
+            string sqlStr = string.Empty;
+            for (int i = 0; i < keyStrList.Length; i++)
+            {
+                if (string.IsNullOrEmpty(keyStrList[i]))
+                    continue;
+                sqlStr += keyStrList[i] + "=";
+                sqlStr += "'" + item[keyStrList[i]] + "'";
+                if (i != keyStrList.Length - 1)
+                {
+                    sqlStr += " and ";
+                }
+            }
+            return sqlStr;
         }
         /// <summary>
         /// 设置当前选择行
@@ -238,6 +314,39 @@ namespace Victop.Frame.CmptRuntime
 
         public void SaveData()
         {
+            if (!string.IsNullOrEmpty(Keywords)||!string.IsNullOrEmpty(ParentPreBlockModel.keywords))
+            {
+                foreach (DataRow item in ViewBlockDataTable.Rows)
+                {
+                    switch (item.RowState)
+                    {
+                        case DataRowState.Added:
+                            ViewBlock.BlockDt.Tables["dataArray"].ImportRow(item);
+                            break;
+                        case DataRowState.Deleted:
+                            DataRow[] delDrs = ViewBlock.BlockDt.Tables["dataArray"].Select(string.Format("_id='{0}'", item["_id"]));
+                            foreach (DataRow drsitem in delDrs)
+                            {
+                                drsitem.Delete();
+                            }
+                            break;
+                        case DataRowState.Modified:
+                            DataRow[] modDrs = ViewBlock.BlockDt.Tables["dataArray"].Select(string.Format("_id='{0}'", item["_id"]));
+                            foreach (DataRow drsitem in modDrs)
+                            {
+                                foreach (DataColumn colitem in drsitem.Table.Columns)
+                                {
+                                    drsitem[colitem.ColumnName] = item[colitem.ColumnName];
+                                }
+                            }
+                            break;
+                        case DataRowState.Detached:
+                        case DataRowState.Unchanged:
+                        default:
+                            break;
+                    }
+                }
+            }
             ViewBlock.ViewModel.SaveData();
         }
     }

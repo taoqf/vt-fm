@@ -23,8 +23,8 @@
             <RowDefinition Height="*"/>
         </ctrl:VicGridNormal.RowDefinitions>
         <ctrl:VicDockPanelNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <ctrl:VicTextBoxNormal Name="txtProductName" Width="100" Height="24" VicText="{Binding PreOneBlockModel.PreBlockSelectedRow[product_name]}" Margin="0,0,5,0"/>
-            <ctrl:VicTextBoxNormal Width="100" Height="24" VicText="{Binding PreOneBlockModel.PreBlockSelectedRow[productid]}" Margin="0,0,5,0"/>
+            <ctrl:VicTextBoxNormal Name="txtProductName" Width="100" Height="24" VicText="{Binding PreOneBlockModel.PreBlockSelectedRow[busi_scope_no]}" Margin="0,0,5,0"/>
+            <ctrl:VicTextBoxNormal Width="100" Height="24" VicText="{Binding PreOneBlockModel.PreBlockSelectedRow[industry_no]}" Margin="0,0,5,0"/>
             <ctrl:VicButtonNormal Name="btnPrei" Width="100" Height="24" Content="上一条" Margin="0,0,5,0" Command="{Binding btnPreiClickCommand}"/>
             <ctrl:VicButtonNormal Name="btnNext" Width="100" Height="24" Content="上一条" Margin="0,0,5,0" Command="{Binding btnNextClickCommand}"/>
             <ctrl:VicButtonNormal Name="btnAdd" Width="100" Height="24" Content="添加" Margin="0,0,5,0" Command="{Binding btnAddClickCommand}"/>
@@ -37,10 +37,10 @@
                               IsUserSetColumn="True"
                               ItemsSource="{Binding Path=PreOneOfOneBlockModel.ViewBlockDataTable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 <ctrl:VicDataGrid.Columns>
-                    <ctrl:VicDataGridTextColumn Header="业务编号" Binding="{Binding Path=busi_name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                    <ctrl:VicDataGridTextColumn Header="业务名称" Binding="{Binding Path=buis_name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                    <ctrl:VicDataGridTextColumn Header="业务类型" Binding="{Binding Path=business_type,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                    <ctrl:VicDataGridTextColumn Header="描述" Binding="{Binding Path=description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <ctrl:VicDataGridTextColumn Header="业务编号" Binding="{Binding Path=product_name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <ctrl:VicDataGridTextColumn Header="业务名称" Binding="{Binding Path=productid,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <ctrl:VicDataGridTextColumn Header="业务类型" Binding="{Binding Path=client_no,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <ctrl:VicDataGridTextColumn Header="描述" Binding="{Binding Path=industry_no,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                     <ctrl:VicDataGridTextColumn Header="产品名称" Binding="{Binding ElementName=txtProductName,Path=VicText,Mode=OneTime}" IsReadOnly="True"/>
                 </ctrl:VicDataGrid.Columns>
             </ctrl:VicDataGrid>
