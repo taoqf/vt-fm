@@ -27,13 +27,15 @@
             <ctrl:VicTextBoxNormal Width="100" Height="24" VicText="{Binding PreOneBlockModel.PreBlockSelectedRow[productid]}" Margin="0,0,5,0"/>
             <ctrl:VicButtonNormal Name="btnPrei" Width="100" Height="24" Content="上一条" Margin="0,0,5,0" Command="{Binding btnPreiClickCommand}"/>
             <ctrl:VicButtonNormal Name="btnNext" Width="100" Height="24" Content="上一条" Margin="0,0,5,0" Command="{Binding btnNextClickCommand}"/>
+            <ctrl:VicButtonNormal Name="btnAdd" Width="100" Height="24" Content="添加" Margin="0,0,5,0" Command="{Binding btnAddClickCommand}"/>
+            <ctrl:VicButtonNormal Name="btnSave" Width="100" Height="24" Content="保存" Margin="0,0,5,0" Command="{Binding btnSaveClickCommand}"/>
         </ctrl:VicDockPanelNormal>
         <ctrl:VicGridNormal Grid.Row="1" Name="p_1_1">
             <ctrl:VicDataGrid Name="dgridBusi"
                               AutoGenerateColumns="False"
                               CanUserAddRows="False"
                               IsUserSetColumn="True"
-                              ItemsSource="{Binding PreOneOfOneBlockModel.ViewBlockDataTable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                              ItemsSource="{Binding Path=PreOneOfOneBlockModel.ViewBlockDataTable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 <ctrl:VicDataGrid.Columns>
                     <ctrl:VicDataGridTextColumn Header="业务编号" Binding="{Binding Path=busi_name}"/>
                     <ctrl:VicDataGridTextColumn Header="业务名称" Binding="{Binding Path=buis_name}"/>

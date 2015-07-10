@@ -21,6 +21,7 @@ namespace Victop.Frame.CmptRuntime
             {
                 RebulidViews(runtime);
                 PresentationBindingViewBlock(runtime);
+                RebuildAllDataPath(runtime);
             }
             catch (Exception ex)
             {

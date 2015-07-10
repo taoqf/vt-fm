@@ -118,17 +118,28 @@ namespace SystemTestingPlugin.ViewModels
                 });
             }
         }
-
-        public ICommand dgridProductSelectionChangedCommand
+        public ICommand btnAddClickCommand
         {
             get
             {
-                return new RelayCommand<object>((x) =>
+                return new RelayCommand(() =>
                 {
-                    DataRowView drv = x as DataRowView;
-                    PreOneBlockModel.PreBlockSelectedRow = drv.Row;
-                    PreOneBlockModel.ViewBlock.SetCurrentRow(drv.Row);
-                    PreOneOfOneBlockModel.GetData();
+                    DataRow dr = PreOneOfOneBlockModel.ViewBlockDataTable.NewRow();
+                    dr["_id"] = Guid.NewGuid().ToString();
+                    //dr["productid"] = PreOneBlockModel.PreBlockSelectedRow["productid"];
+                    PreOneOfOneBlockModel.ViewBlockDataTable.Rows.Add(dr);
+                    PreOneOfOneBlockModel.PreBlockSelectedRow = dr;
+                    PreOneOfOneBlockModel.ViewBlock.SetCurrentRow(dr);
+                });
+            }
+        }
+        public ICommand btnSaveClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    PreOneOfOneBlockModel.SaveData();
                 });
             }
         }

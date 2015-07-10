@@ -34,7 +34,6 @@ namespace Victop.Frame.CmptRuntime
                     foreach (DefinViewsModel item in DefinModel.CompntViews)
                     {
                         item.DoRender();
-                        OrgnizeRuntime.RebuildViewDataPath(DefinModel, item);
                     }
                 }
             }
