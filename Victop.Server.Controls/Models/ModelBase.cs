@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GalaSoft.MvvmLight;
 using System.ComponentModel;
+using GalaSoft.MvvmLight;
 
 namespace Victop.Server.Controls.Models
 {
-    public class ModelBase : ViewModelBase, INotifyPropertyChanged
+    /// <summary>
+    /// Model基类
+    /// </summary>
+    public class ModelBase :ViewModelBase, INotifyPropertyChanged
     {
+        /// <summary>
+        /// 事件定义
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
         /// <summary>
         /// 属性改变通知

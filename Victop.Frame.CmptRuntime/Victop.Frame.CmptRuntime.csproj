@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{88929E7B-9840-4994-A8C9-2BED3F8B9A93}</ProjectGuid>
+    <ProjectGuid>{4FD0D337-25D5-4E44-890C-AFA599599999}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Victop.Frame.CommonBase</RootNamespace>
-    <AssemblyName>Victop.Frame.CommonBase</AssemblyName>
+    <RootNamespace>Victop.Frame.CmptRuntime</RootNamespace>
+    <AssemblyName>Victop.Frame.CmptRuntime</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -44,7 +44,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>..\Bin\Victop.Frame.CommonBase.XML</DocumentationFile>
+    <DocumentationFile>..\Bin\Victop.Frame.CmptRuntime.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -56,6 +56,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\VictopLib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -66,14 +70,20 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Victop.Wpf.Controls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Bin\Victop.Wpf.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseModel.cs" />
-    <Compile Include="BaseViewModel.cs" />
-    <Compile Include="CommonPluginBase.cs" />
+    <Compile Include="CompntDefinModel.cs" />
+    <Compile Include="DefinPresentationModel.cs" />
+    <Compile Include="DefinViewsModel.cs" />
+    <Compile Include="OrgnizeRuntime.cs" />
+    <Compile Include="PresentationBlockModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -87,16 +97,32 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Templates\TemplateControl.cs" />
+    <Compile Include="ViewsBlockConditionModel.cs" />
+    <Compile Include="ViewsBlockModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ComBaseClassDiagram.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Victop.Frame.DataMessageManager\Victop.Frame.DataMessageManager.csproj">
+      <Project>{d3ee684e-9600-460b-a3e3-39bf32180f9f}</Project>
+      <Name>Victop.Frame.DataMessageManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Victop.Frame.PublicLib\Victop.Frame.PublicLib.csproj">
+      <Project>{90c4d04f-f952-4c63-8a69-0c9d12e050fb}</Project>
+      <Name>Victop.Frame.PublicLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Victop.Server.Controls\Victop.Server.Controls.csproj">
+      <Project>{d609f0a2-27e1-4855-a5b6-942e580d0d8a}</Project>
+      <Name>Victop.Server.Controls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

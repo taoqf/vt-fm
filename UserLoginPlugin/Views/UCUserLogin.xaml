@@ -180,6 +180,6 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
     </Grid>
-     <controls:VicProgressRingNormal Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="load" Background="Transparent" IsActive="{Binding IsRingShow,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+     <controls:VicProgressRingNormal Grid.Row="0" IsLarge="True" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="load" Background="Transparent" IsActive="{Binding IsRingShow,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>

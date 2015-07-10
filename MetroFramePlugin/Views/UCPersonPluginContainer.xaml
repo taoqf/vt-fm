@@ -613,7 +613,7 @@
                        <Label   Foreground="White" Height="80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Bold" FontSize="18"  Content="添加应用"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
-                        <controls:VicTextBoxSeach x:Name="txtSearch"  VerticalAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource SkinColor}" MaxLength="20" WaterMark=" Search"  BorderThickness="0,0,0,1" Width="150">
+                        <controls:VicTextBoxSeachNormal x:Name="txtSearch"  VerticalAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{DynamicResource SkinColor}" MaxLength="20" WaterMark=" Search"  BorderThickness="0,0,0,1" Width="150">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="VicTextBoxSeachClick">
                                     <i:InvokeCommandAction Command="{Binding VicTextBoxSeachClickCommand}"  CommandParameter="{Binding ElementName=txtSearch}"/>
@@ -622,7 +622,7 @@
                                     <i:InvokeCommandAction Command="{Binding VicTextBoxClearClickCommand}"  CommandParameter="{Binding ElementName=txtSearch}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </controls:VicTextBoxSeach>
+                        </controls:VicTextBoxSeachNormal>
                         <controls:VicButtonNormal Name="btnPopupClose" Style="{DynamicResource btnCloseMetroStyle}" VerticalAlignment="Top" Command="{Binding btnAddApplyCloseClickCommand}"/>
                     </StackPanel>
                     <ScrollViewer Style="{DynamicResource MenuScrollViewer}" Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Auto" CanContentScroll="True" VerticalScrollBarVisibility="Auto">

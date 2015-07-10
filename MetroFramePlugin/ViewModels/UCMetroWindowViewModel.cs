@@ -603,7 +603,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-
+                   
                     PoPupState = false;
 
                     isChangeUser = true; //切换用户时，从服务器拉取菜单必要操作
@@ -1614,7 +1614,7 @@ namespace MetroFramePlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     ObservableCollection<MenuModel> SeachedFourthLevelMenuList = new ObservableCollection<MenuModel>();//调试心得：如果没有前台绑定的，不必要添加属性通知，也没必要设为全局变量，不然值改，哪里都跟着改的。
-                    VicTextBoxSeach aa = (VicTextBoxSeach)x;
+                    VicTextBoxSeachNormal aa = (VicTextBoxSeachNormal)x;
                     string keyTxt = aa.VicText.ToString();
                     if (!string.IsNullOrEmpty(keyTxt))
                     {
@@ -1642,7 +1642,7 @@ namespace MetroFramePlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
 
-                    VicTextBoxSeach aa = (VicTextBoxSeach)x;
+                    VicTextBoxSeachNormal aa = (VicTextBoxSeachNormal)x;
                     string keyTxt = aa.VicText.ToString();
                     if (string.IsNullOrEmpty(keyTxt))
                     {

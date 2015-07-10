@@ -69,13 +69,13 @@
                 <!--Width="260"-->
                 <StackPanel Orientation="Horizontal" Style="{DynamicResource MainFrmUserStackPanelStyle}">
                     <Grid Name="gridSearch"  Style="{DynamicResource MainFrmSearchGridStyle}">
-                        <controls:VicTextBoxSeach WaterMark="搜索">
+                        <controls:VicTextBoxSeachNormal WaterMark="搜索">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="VicTextBoxSeachClick">
                                     <i:InvokeCommandAction Command="{Binding btnUserLoginClickCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </controls:VicTextBoxSeach>
+                        </controls:VicTextBoxSeachNormal>
                     </Grid>
                     <controls:VicButtonImage Name="btnUserLogin" Background="{Binding UserImg, Converter={StaticResource imgeNameToBackgroundConverter}}"
                                          Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}">
