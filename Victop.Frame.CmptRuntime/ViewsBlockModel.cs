@@ -160,7 +160,7 @@ namespace Victop.Frame.CmptRuntime
         /// 设置当前选择行
         /// </summary>
         /// <param name="dr"></param>
-        public void SetCurrentRow(DataRow dr)
+        internal void SetCurrentRow(DataRow dr)
         {
             if (dr != null)
             {
