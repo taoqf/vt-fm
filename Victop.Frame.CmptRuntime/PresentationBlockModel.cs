@@ -346,6 +346,7 @@ namespace Victop.Frame.CmptRuntime
                             break;
                     }
                 }
+                ViewBlockDataTable.AcceptChanges();
             }
             ViewBlock.ViewModel.SaveData();
         }
