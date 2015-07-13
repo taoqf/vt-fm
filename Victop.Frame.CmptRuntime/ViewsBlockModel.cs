@@ -111,22 +111,22 @@ namespace Victop.Frame.CmptRuntime
             get;
             set;
         }
-        private DataSet blockDt;
+        private DataSet blockDataSet;
         /// <summary>
         /// 块数据集
         /// </summary>
         [JsonIgnore]
-        public DataSet BlockDt
+        public DataSet BlockDataSet
         {
             get
             {
-                if (blockDt == null)
-                    blockDt = new DataSet();
-                return blockDt;
+                if (blockDataSet == null)
+                    blockDataSet = new DataSet();
+                return blockDataSet;
             }
             set
             {
-                blockDt = value;
+                blockDataSet = value;
             }
         }
         /// <summary>

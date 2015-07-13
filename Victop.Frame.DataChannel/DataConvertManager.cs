@@ -1089,9 +1089,6 @@ namespace Victop.Frame.DataChannel
                                                 {
                                                     DateTime currentTime = (DateTime)dr[dc.ColumnName];
                                                     modDic.Add(dc.ColumnName, (long)(currentTime.ToUniversalTime() - startTime.ToUniversalTime()).TotalMilliseconds);
-                                                    //修改人：时长水
-                                                    //修改时间：2015-04-29 09：38
-                                                    //修改原因：如果原始时间为空的话，时间类型将不能进行转换报错
                                                     if (dr[dc.ColumnName, DataRowVersion.Original] != null && !string.IsNullOrEmpty(dr[dc.ColumnName, DataRowVersion.Original].ToString()))
                                                     {
                                                         DateTime originTime = (DateTime)dr[dc.ColumnName, DataRowVersion.Original];
