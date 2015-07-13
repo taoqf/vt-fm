@@ -211,16 +211,16 @@ namespace Victop.Frame.CmptRuntime
             ViewBlock.ViewModel.GetBlockData(BindingBlock);
             if (string.IsNullOrEmpty(keywords) && string.IsNullOrEmpty(this.ParentPreBlockModel.Keywords))
             {
-                ViewBlockDataTable = ViewBlock.BlockDt.Tables["dataArray"];
+                ViewBlockDataTable = ViewBlock.BlockDataSet.Tables["dataArray"];
             }
             else
             {
                 string[] keyStrList = Keywords.Split('|');
-                DataTable dt = ViewBlock.BlockDt.Tables["dataArray"].Clone();
+                DataTable dt = ViewBlock.BlockDataSet.Tables["dataArray"].Clone();
                 dt.Clear();
                 if (superiors.Equals("root"))
                 {
-                    foreach (DataRow item in ViewBlock.BlockDt.Tables["dataArray"].Rows)
+                    foreach (DataRow item in ViewBlock.BlockDataSet.Tables["dataArray"].Rows)
                     {
                         string sqlStr = string.Empty;
                         if (!string.IsNullOrEmpty(Keywords))
@@ -247,7 +247,7 @@ namespace Victop.Frame.CmptRuntime
                         }
                         if (string.IsNullOrEmpty(Keywords))
                         {
-                            DataRow[] drs = ViewBlock.BlockDt.Tables["dataArray"].Select(sqlStr);
+                            DataRow[] drs = ViewBlock.BlockDataSet.Tables["dataArray"].Select(sqlStr);
                             foreach (DataRow drsitem in drs)
                             {
                                 dt.ImportRow(drsitem);
@@ -255,7 +255,7 @@ namespace Victop.Frame.CmptRuntime
                         }
                         else
                         {
-                            foreach (DataRow item in ViewBlock.BlockDt.Tables["dataArray"].Rows)
+                            foreach (DataRow item in ViewBlock.BlockDataSet.Tables["dataArray"].Rows)
                             {
                                 sqlStr += " and " + OrganizeDtSql(Keywords.Split('|'), item);
                                 DataRow[] drs = dt.Select(sqlStr);
@@ -270,6 +270,15 @@ namespace Victop.Frame.CmptRuntime
                 }
             }
         }
+        /// <summary>
+        /// 获取完整数据集
+        /// </summary>
+        /// <returns></returns>
+        public DataSet GetFullData()
+        {
+            return ViewBlock.BlockDataSet;
+        }
+
         /// <summary>
         /// 组织Dt的sql语句
         /// </summary>
@@ -304,7 +313,7 @@ namespace Victop.Frame.CmptRuntime
             }
             else
             {
-                DataRow[] drs = ViewBlock.BlockDt.Tables["dataArray"].Select(string.Format("_id='{0}'", dr["_id"].ToString()));
+                DataRow[] drs = ViewBlock.BlockDataSet.Tables["dataArray"].Select(string.Format("_id='{0}'", dr["_id"].ToString()));
                 ViewBlock.SetCurrentRow(drs[0]);
             }
         }
@@ -314,24 +323,24 @@ namespace Victop.Frame.CmptRuntime
 
         public void SaveData()
         {
-            if (!string.IsNullOrEmpty(Keywords)||!string.IsNullOrEmpty(ParentPreBlockModel.keywords))
+            if (!string.IsNullOrEmpty(Keywords) || !string.IsNullOrEmpty(ParentPreBlockModel.keywords))
             {
                 foreach (DataRow item in ViewBlockDataTable.Rows)
                 {
                     switch (item.RowState)
                     {
                         case DataRowState.Added:
-                            ViewBlock.BlockDt.Tables["dataArray"].ImportRow(item);
+                            ViewBlock.BlockDataSet.Tables["dataArray"].ImportRow(item);
                             break;
                         case DataRowState.Deleted:
-                            DataRow[] delDrs = ViewBlock.BlockDt.Tables["dataArray"].Select(string.Format("_id='{0}'", item["_id"]));
+                            DataRow[] delDrs = ViewBlock.BlockDataSet.Tables["dataArray"].Select(string.Format("_id='{0}'", item["_id"]));
                             foreach (DataRow drsitem in delDrs)
                             {
                                 drsitem.Delete();
                             }
                             break;
                         case DataRowState.Modified:
-                            DataRow[] modDrs = ViewBlock.BlockDt.Tables["dataArray"].Select(string.Format("_id='{0}'", item["_id"]));
+                            DataRow[] modDrs = ViewBlock.BlockDataSet.Tables["dataArray"].Select(string.Format("_id='{0}'", item["_id"]));
                             foreach (DataRow drsitem in modDrs)
                             {
                                 foreach (DataColumn colitem in drsitem.Table.Columns)

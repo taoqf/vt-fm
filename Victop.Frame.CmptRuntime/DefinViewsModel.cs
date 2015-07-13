@@ -199,10 +199,10 @@ namespace Victop.Frame.CmptRuntime
                     if (!string.IsNullOrEmpty(ViewId))
                     {
                         DataMessageOperation dataOp = new DataMessageOperation();
-                        blockModel.BlockDt = dataOp.GetData(ViewId, JsonHelper.ToJson(blockModel.BlockDataPath));
-                        if (blockModel.BlockDt != null && blockModel.BlockDt.Tables["dataArray"] != null && blockModel.BlockDt.Tables["dataArray"].Rows.Count > 0)
+                        blockModel.BlockDataSet = dataOp.GetData(ViewId, JsonHelper.ToJson(blockModel.BlockDataPath));
+                        if (blockModel.BlockDataSet != null && blockModel.BlockDataSet.Tables["dataArray"] != null && blockModel.BlockDataSet.Tables["dataArray"].Rows.Count > 0)
                         {
-                            blockModel.SetCurrentRow(blockModel.BlockDt.Tables["dataArray"].Rows[0]);
+                            blockModel.SetCurrentRow(blockModel.BlockDataSet.Tables["dataArray"].Rows[0]);
                         }
                     }
                 }
