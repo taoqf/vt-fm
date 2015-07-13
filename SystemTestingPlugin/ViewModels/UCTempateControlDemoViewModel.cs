@@ -127,6 +127,7 @@ namespace SystemTestingPlugin.ViewModels
                     DataRow dr = PreOneOfOneBlockModel.ViewBlockDataTable.NewRow();
                     dr["_id"] = Guid.NewGuid().ToString();
                     dr["productid"] = PreOneBlockModel.PreBlockSelectedRow["productid"];
+                    dr["busi_scope_no"] = PreOneBlockModel.PreBlockSelectedRow["busi_scope_no"];
                     PreOneOfOneBlockModel.ViewBlockDataTable.Rows.Add(dr);
                     PreOneOfOneBlockModel.PreBlockSelectedRow = dr;
                     PreOneOfOneBlockModel.SetCurrentRow(dr);

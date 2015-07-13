@@ -54,6 +54,10 @@ namespace Victop.Frame.CmptRuntime
                 if (viewModel != null)
                 {
                     item.ViewBlock = viewModel.ViewBlocks.FirstOrDefault(it => it.BlockName.Equals(item.BindingBlock));
+                    if (!item.Superiors.Equals("root"))
+                    {
+                        item.ParentPreBlockModel = runtime.CompntPresentation.PresentationBlocks.FirstOrDefault(it => it.BlockName.Equals(item.Superiors));
+                    }
                 }
             }
         }
