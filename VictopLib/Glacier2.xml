@@ -4,6 +4,164 @@
         <name>Glacier2</name>
     </assembly>
     <members>
+        <member name="T:Glacier2.Application">
+             <summary>
+             Utility base class that makes it easy to correctly initialize and finalize
+             the Ice run time, as well as handle signals. Unless the application specifies
+             a logger, Application installs a per-process logger that logs to the standard
+             error output.
+            
+             Applications must create a derived class that implements the {@link #run} method.
+            
+             A program can contain only one instance of this class.
+             </summary>
+        </member>
+        <member name="M:Glacier2.Application.#ctor">
+            <summary>
+            Initializes an instance that calls Communicator.shutdown if
+            a signal is received.
+            </summary>
+        </member>
+        <member name="M:Glacier2.Application.#ctor(Ice.SignalPolicy)">
+            <summary>
+            Initializes an instance that handles signals according to the signal
+            policy.
+            </summary>
+            <param name="signalPolicy">@param signalPolicy Determines how to
+            respond to signals.</param>
+        </member>
+        <member name="M:Glacier2.Application.runWithSession(System.String[])">
+             <summary>
+             Called once the communicator has been initialized and the Glacier2 session
+             has been established. A derived class must implement <code>runWithSession</code>,
+             which is the application's starting method.
+             </summary>
+             <param name="args"> The argument vector for the application. Application
+             scans the argument vector passed to <code>main</code> for options that are
+             specific to the Ice run time and removes them; therefore, the vector passed
+             to <code>runWithSession</code> is free from Ice-related options and contains
+             only options and arguments that are application-specific.</param>
+            
+             <returns> The runWithSession method should return zero for successful
+             termination, and non-zero otherwise. Application.main returns the
+             value returned by runWithSession.</returns>
+            
+        </member>
+        <member name="M:Glacier2.Application.run(System.String[])">
+            <summary>
+            Run should not be overridden for Glacier2.Application. Instead
+            runWithSession should be used.
+            </summary>
+        </member>
+        <member name="M:Glacier2.Application.restart">
+             <summary>
+             Called to restart the application's Glacier2 session. This
+             method never returns. The exception produce an application restart
+             when called from the Application main thread.
+             </summary>
+             <returns>throws RestartSessionException This exception is
+             always thrown.</returns>
+            
+        </member>
+        <member name="M:Glacier2.Application.createSession">
+            <summary>
+            Creates a new Glacier2 session. A call to createSession always
+            precedes a call to runWithSession. If Ice.LocalException is thrown
+            from this method, the application is terminated.
+            </summary>
+            <returns> The Glacier2 session.</returns>
+        </member>
+        <member name="M:Glacier2.Application.sessionDestroyed">
+            <summary>
+            Called when the session refresh thread detects that the session has been
+            destroyed. A subclass can override this method to take action after the
+            loss of connectivity with the Glacier2 router. This method is called
+            according to the Ice invocation dipsatch rules (in other words, it
+            uses the same rules as an servant upcall or AMI callback).
+            </summary>
+        </member>
+        <member name="M:Glacier2.Application.router">
+            <summary>
+            Returns the Glacier2 router proxy.
+            </summary>
+            <returns>The router proxy.</returns>
+        </member>
+        <member name="M:Glacier2.Application.session">
+            <summary>
+            Returns the Glacier2 session proxy.
+            </summary>
+            <returns>The session proxy.</returns>
+        </member>
+        <member name="M:Glacier2.Application.categoryForClient">
+            <summary>
+            Returns the category to be used in the identities of all of the client's
+            callback objects. Clients must use this category for the router to
+            forward callback requests to the intended client.
+            Throws SessionNotExistException if no session exists.
+            </summary>
+            <returns>The category.</returns>
+        </member>
+        <member name="M:Glacier2.Application.createCallbackIdentity(System.String)">
+            <summary>
+            Create a new Ice identity for callback objects with the given
+            identity name field.
+            </summary>
+            <returns>The identity.</returns>
+        </member>
+        <member name="M:Glacier2.Application.addWithUUID(Ice.Object)">
+            <summary>
+            Adds a servant to the callback object adapter's Active Servant Map with a UUID.
+            </summary>
+            <param name="servant">The servant to add.</param>
+            <returns>The proxy for the servant.</returns>
+        </member>
+        <member name="M:Glacier2.Application.objectAdapter">
+            <summary>
+            Returns an object adapter for callback objects, creating it if necessary.
+            </summary>
+            <returns>The object adapter.</returns>
+        </member>
+        <member name="T:Glacier2.Application.RestartSessionException">
+            <summary>
+            This exception is raised if the session should be restarted.
+            </summary>
+        </member>
+        <member name="T:Glacier2.SessionCallback">
+            <summary>
+            A callback class to get notifications of status changes in the
+            Glacier2 session. All callbacks on the SessionCallback interface
+            occur in the main swing thread.
+            </summary>
+        </member>
+        <member name="M:Glacier2.SessionCallback.createdCommunicator(Glacier2.SessionHelper)">
+            <summary>
+            Notifies the application that the communicator was created.
+            </summary>
+            <param name="session">The Glacier2 session.</param>
+        </member>
+        <member name="M:Glacier2.SessionCallback.connected(Glacier2.SessionHelper)">
+            <summary>
+            Notifies the application that the Glacier2 session has
+            been established.
+            </summary>
+            <param name="session">The established session.</param>
+        </member>
+        <member name="M:Glacier2.SessionCallback.disconnected(Glacier2.SessionHelper)">
+            <summary>
+            Notifies the application that the Glacier2 session has been
+            disconnected.
+            </summary>
+            <param name="session">The disconnected session.</param>
+        </member>
+        <member name="M:Glacier2.SessionCallback.connectFailed(Glacier2.SessionHelper,System.Exception)">
+            <summary>
+            Notifies the application that the Glacier2 session
+            establishment failed. 
+            </summary>
+            <param name="session">The session reporting the connection
+            failure.</param>
+            <param name="ex">The exception.</param>
+        </member>
         <member name="T:Glacier2.SessionFactoryHelper">
              <summary>
              A helper class for using Glacier2 with GUI applications.
@@ -71,6 +229,18 @@
             </summary>
             <returns>The secure flag.</returns>
         </member>
+        <member name="M:Glacier2.SessionFactoryHelper.setProtocol(System.String)">
+            <summary>
+            Sets the protocol that will be used by the session factory to establish the connection..
+            </summary>
+            <param name="protocol">The protocol.</param>
+        </member>
+        <member name="M:Glacier2.SessionFactoryHelper.getProtocol">
+            <summary>
+            Returns the protocol that will be used by the session factory to establish the connection.
+            </summary>
+            <returns>The protocol.</returns>
+        </member>
         <member name="M:Glacier2.SessionFactoryHelper.setTimeout(System.Int32)">
             <summary>
             Sets the connect and connection timeout for the Glacier2 router.
@@ -109,15 +279,29 @@
             </summary>
             <param name="context">The request context.</param>
         </member>
-        <member name="M:Glacier2.SessionFactoryHelper.connect">
+        <member name="M:Glacier2.SessionFactoryHelper.setUseCallbacks(System.Boolean)">
             <summary>
-            Connects to the Glacier2 router using the associated SSL credentials.
-            
-            Once the connection is established, SesssionCallback.connected is called on
-            the callback object; upon failure, SessionCallback.connectFailed is called 
-            with the exception.
+            Determines whether the session should create an object adapter that the client
+            can use for receiving callbacks.
             </summary>
-            <returns>The connected session.</returns>
+            <param name="useCallbacks">True if the session should create an object adapter.</param>
+        </member>
+        <member name="M:Glacier2.SessionFactoryHelper.getUseCallbacks">
+            <summary>
+            Indicates whether a newly-created session will also create an object adapter that
+            the client can use for receiving callbaks.
+            </summary>
+            <returns>True if the session will create an object adapter.</returns>
+        </member>
+        <member name="M:Glacier2.SessionFactoryHelper.connect">
+             <summary>
+             Connects to the Glacier2 router using the associated SSL credentials.
+            
+             Once the connection is established, SesssionCallback.connected is called on
+             the callback object; upon failure, SessionCallback.connectFailed is called
+             with the exception.
+             </summary>
+             <returns>The connected session.</returns>
         </member>
         <member name="M:Glacier2.SessionFactoryHelper.connect(System.String,System.String)">
              <summary>
@@ -125,7 +309,7 @@
             
              Once the connection is established, SessionCallback.connected is called on
              the callback object; upon failure, SessionCallback.connectFailed is called
-             with the exception. 
+             with the exception.
              </summary>
              <param name="username">The user name.</param>
              <param name="password">The password.</param>
@@ -136,7 +320,7 @@
             A helper class for using Glacier2 with GUI applications.
             </summary>
         </member>
-        <member name="M:Glacier2.SessionHelper.#ctor(Glacier2.SessionCallback,Ice.InitializationData)">
+        <member name="M:Glacier2.SessionHelper.#ctor(Glacier2.SessionCallback,Ice.InitializationData,System.String,System.Boolean)">
             <summary>
             Creates a Glacier2 session.
             </summary>
@@ -144,6 +328,8 @@
             establishment.</param>
             <param name="initData">The Ice.InitializationData for initializing
             the communicator.</param>
+            <param name="finderStr">The stringified Ice.RouterFinder proxy.</param>
+            <param name="useCallbacks">True if the session should create an object adapter for receiving callbacks.</param>
         </member>
         <member name="M:Glacier2.SessionHelper.destroy">
              <summary>
@@ -197,7 +383,7 @@
             <summary>
             Returns an object adapter for callback objects, creating it if necessary.
             </summary>
-            <return>The object adapter. throws SessionNotExistException
+            <return>The object adapter. Throws SessionNotExistException
             if no session exists.</return>
         </member>
         <member name="M:Glacier2.SessionHelper.connect(System.Collections.Generic.Dictionary{System.String,System.String})">
@@ -221,161 +407,9 @@
              <param name="password">The password.</param>
              <param name="context">The request context to use when creating the session.</param>
         </member>
-        <member name="T:Glacier2.SessionCallback">
+        <member name="T:IceMX.SessionMetricsPrxHelper">
             <summary>
-            A callback class to get notifications of status changes in the
-            Glacier2 session. All callbacks on the SessionCallback interface
-            occur in the main swing thread.
-            </summary>
-        </member>
-        <member name="M:Glacier2.SessionCallback.createdCommunicator(Glacier2.SessionHelper)">
-            <summary>
-            Notifies the application that the communicator was created.
-            </summary>
-            <param name="session">The Glacier2 session.</param>
-        </member>
-        <member name="M:Glacier2.SessionCallback.connected(Glacier2.SessionHelper)">
-            <summary>
-            Notifies the application that the Glacier2 session has
-            been established.
-            </summary>
-            <param name="session">The established session.</param>
-        </member>
-        <member name="M:Glacier2.SessionCallback.disconnected(Glacier2.SessionHelper)">
-            <summary>
-            Notifies the application that the Glacier2 session has been
-            disconnected.
-            </summary>
-            <param name="session">The disconnected session.</param>
-        </member>
-        <member name="M:Glacier2.SessionCallback.connectFailed(Glacier2.SessionHelper,System.Exception)">
-            <summary>
-            Notifies the application that the Glacier2 session
-            establishment failed. 
-            </summary>
-            <param name="session">The session reporting the connection
-            failure.</param>
-            <param name="ex">The exception.</param>
-        </member>
-        <member name="T:Glacier2.Application">
-             <summary>
-             Utility base class that makes it easy to correctly initialize and finalize
-             the Ice run time, as well as handle signals. Unless the application specifies
-             a logger, Application installs a per-process logger that logs to the standard
-             error output.
-            
-             Applications must create a derived class that implements the {@link #run} method.
-             
-             A program can contain only one instance of this class.
-             </summary>
-        </member>
-        <member name="M:Glacier2.Application.#ctor">
-            <summary>
-            Initializes an instance that calls Communicator.shutdown if
-            a signal is received.
-            </summary>
-        </member>
-        <member name="M:Glacier2.Application.#ctor(Ice.SignalPolicy)">
-            <summary>
-            Initializes an instance that handles signals according to the signal
-            policy.
-            </summary>
-            <param name="signalPolicy">@param signalPolicy Determines how to 
-            respond to signals.</param>
-        </member>
-        <member name="M:Glacier2.Application.runWithSession(System.String[])">
-             <summary>
-             Called once the communicator has been initialized and the Glacier2 session
-             has been established. A derived class must implement <code>runWithSession</code>,
-             which is the application's starting method.
-             </summary>
-             <param name="args"> The argument vector for the application. Application
-             scans the argument vector passed to <code>main</code> for options that are
-             specific to the Ice run time and removes them; therefore, the vector passed
-             to <code>runWithSession</code> is free from Ice-related options and contains
-             only options and arguments that are application-specific.</param>
-            
-             <returns> The runWithSession method should return zero for successful
-             termination, and non-zero otherwise. Application.main returns the
-             value returned by runWithSession.</returns>
-            
-        </member>
-        <member name="M:Glacier2.Application.run(System.String[])">
-            <summary>
-            Run should not be overridden for Glacier2.Application. Instead
-            runWithSession should be used.
-            </summary>
-        </member>
-        <member name="M:Glacier2.Application.restart">
-             <summary>
-             Called to restart the application's Glacier2 session. This
-             method never returns. The exception produce an application restart
-             when called from the Application main thread.
-             </summary>
-             <returns>throws RestartSessionException This exception is 
-             always thrown.</returns>
-            
-        </member>
-        <member name="M:Glacier2.Application.createSession">
-            <summary>
-            Creates a new Glacier2 session. A call to createSession always
-            precedes a call to runWithSession. If Ice.LocalException is thrown 
-            from this method, the application is terminated.
-            </summary>
-            <returns> The Glacier2 session.</returns>
-        </member>
-        <member name="M:Glacier2.Application.sessionDestroyed">
-            <summary>
-            Called when the session refresh thread detects that the session has been
-            destroyed. A subclass can override this method to take action after the
-            loss of connectivity with the Glacier2 router. This method is always
-            called from the session refresh thread.
-            </summary>
-        </member>
-        <member name="M:Glacier2.Application.router">
-            <summary>
-            Returns the Glacier2 router proxy.
-            </summary>
-            <returns>The router proxy.</returns>
-        </member>
-        <member name="M:Glacier2.Application.session">
-            <summary>
-            Returns the Glacier2 session proxy.
-            </summary>
-            <returns>The session proxy.</returns>
-        </member>
-        <member name="M:Glacier2.Application.categoryForClient">
-            <summary>
-            Returns the category to be used in the identities of all of the client's
-            callback objects. Clients must use this category for the router to
-            forward callback requests to the intended client.
-            Throws SessionNotExistException if no session exists.
-            </summary>
-            <returns>The category.</returns>
-        </member>
-        <member name="M:Glacier2.Application.createCallbackIdentity(System.String)">
-            <summary>
-            Create a new Ice identity for callback objects with the given
-            identity name field.
-            </summary>
-            <returns>The identity.</returns>
-        </member>
-        <member name="M:Glacier2.Application.addWithUUID(Ice.Object)">
-            <summary>
-            Adds a servant to the callback object adapter's Active Servant Map with a UUID.
-            </summary>
-            <param name="servant">The servant to add.</param>
-            <returns>The proxy for the servant.</returns>
-        </member>
-        <member name="M:Glacier2.Application.objectAdapter">
-            <summary>
-            Returns an object adapter for callback objects, creating it if necessary.
-            </summary>
-            <returns>The object adapter.</returns>
-        </member>
-        <member name="T:Glacier2.Application.RestartSessionException">
-            <summary>
-            This exception is raised if the session should be restarted.
+            Provides information on Glacier2 sessions.
             </summary>
         </member>
         <member name="T:Glacier2.PermissionDeniedException">
@@ -631,7 +665,7 @@
             callback objects.
             This is necessary in order for the router to
             forward callback requests to the intended client. If the Glacier2
-            server endpoints are not set, the returned category is an empty 
+            server endpoints are not set, the returned category is an empty
             string.
             
             </summary>
@@ -660,12 +694,11 @@
             <param name="cb__">The callback object for the operation.</param>
             <param name="current__">The Current object for the invocation.</param>
         </member>
-        <member name="M:Glacier2.RouterOperations_.refreshSession(Ice.Current)">
+        <member name="M:Glacier2.RouterOperations_.refreshSession_async(Glacier2.AMD_Router_refreshSession,Ice.Current)">
             <summary>
             Keep the calling client's session with this router alive.
             </summary>
-            <exception name="SessionNotExistException">Raised if no session exists
-            for the calling client.</exception>
+            <param name="cb__">The callback object for the operation.</param>
             <param name="current__">The Current object for the invocation.</param>
         </member>
         <member name="M:Glacier2.RouterOperations_.destroySession(Ice.Current)">
@@ -686,6 +719,19 @@
             <returns>The timeout (in seconds).</returns>
             <param name="current__">The Current object for the invocation.</param>
         </member>
+        <member name="M:Glacier2.RouterOperations_.getACMTimeout(Ice.Current)">
+            <summary>
+            Get the value of the ACM timeout.
+            Clients supporting connection
+            heartbeats can enable them instead of explicitly sending keep
+            alives requests.
+            
+            NOTE: This method is only available since Ice 3.6.
+            
+            </summary>
+            <returns>The timeout (in seconds).</returns>
+            <param name="current__">The Current object for the invocation.</param>
+        </member>
         <member name="T:Glacier2.RouterOperationsNC_">
             <summary>
             The Glacier2 specialization of the Ice.Router
@@ -698,7 +744,7 @@
             callback objects.
             This is necessary in order for the router to
             forward callback requests to the intended client. If the Glacier2
-            server endpoints are not set, the returned category is an empty 
+            server endpoints are not set, the returned category is an empty
             string.
             
             </summary>
@@ -724,12 +770,11 @@
             </summary>
             <param name="cb__">The callback object for the operation.</param>
         </member>
-        <member name="M:Glacier2.RouterOperationsNC_.refreshSession">
+        <member name="M:Glacier2.RouterOperationsNC_.refreshSession_async(Glacier2.AMD_Router_refreshSession)">
             <summary>
             Keep the calling client's session with this router alive.
             </summary>
-            <exception name="SessionNotExistException">Raised if no session exists
-            for the calling client.</exception>
+            <param name="cb__">The callback object for the operation.</param>
         </member>
         <member name="M:Glacier2.RouterOperationsNC_.destroySession">
             <summary>
@@ -743,6 +788,18 @@
             Get the value of the session timeout.
             Sessions are destroyed
             if they see no activity for this period of time.
+            
+            </summary>
+            <returns>The timeout (in seconds).</returns>
+        </member>
+        <member name="M:Glacier2.RouterOperationsNC_.getACMTimeout">
+            <summary>
+            Get the value of the ACM timeout.
+            Clients supporting connection
+            heartbeats can enable them instead of explicitly sending keep
+            alives requests.
+            
+            NOTE: This method is only available since Ice 3.6.
             
             </summary>
             <returns>The timeout (in seconds).</returns>
@@ -894,13 +951,38 @@
             for the calling client.</exception>
             <param name="context__">The Context map to send with the invocation.</param>
         </member>
+        <member name="M:Glacier2.RouterPrxHelper.getACMTimeout">
+            <summary>
+            Get the value of the ACM timeout.
+            Clients supporting connection
+            heartbeats can enable them instead of explicitly sending keep
+            alives requests.
+            
+            NOTE: This method is only available since Ice 3.6.
+            
+            </summary>
+            <returns>The timeout (in seconds).</returns>
+        </member>
+        <member name="M:Glacier2.RouterPrxHelper.getACMTimeout(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Get the value of the ACM timeout.
+            Clients supporting connection
+            heartbeats can enable them instead of explicitly sending keep
+            alives requests.
+            
+            NOTE: This method is only available since Ice 3.6.
+            
+            </summary>
+            <returns>The timeout (in seconds).</returns>
+            <param name="context__">The Context map to send with the invocation.</param>
+        </member>
         <member name="M:Glacier2.RouterPrxHelper.getCategoryForClient">
             <summary>
             This category must be used in the identities of all of the client's
             callback objects.
             This is necessary in order for the router to
             forward callback requests to the intended client. If the Glacier2
-            server endpoints are not set, the returned category is an empty 
+            server endpoints are not set, the returned category is an empty
             string.
             
             </summary>
@@ -912,7 +994,7 @@
             callback objects.
             This is necessary in order for the router to
             forward callback requests to the intended client. If the Glacier2
-            server endpoints are not set, the returned category is an empty 
+            server endpoints are not set, the returned category is an empty
             string.
             
             </summary>
@@ -972,31 +1054,6 @@
             <returns>Proxies discarded by the router.</returns>
             <param name="context__">The Context map to send with the invocation.</param>
         </member>
-        <member name="M:Glacier2.RouterPrxHelper.addProxy(Ice.ObjectPrx)">
-             <summary>
-             Add new proxy information to the router's routing table.
-            
-             <para>addProxy() is deprecated, use addProxies() instead.</para>
-            
-             This operation is deprecated, and only used for old
-             Ice clients (older than version 3.1).
-             
-             </summary>
-             <param name="proxy">The proxy to add.</param>
-        </member>
-        <member name="M:Glacier2.RouterPrxHelper.addProxy(Ice.ObjectPrx,System.Collections.Generic.Dictionary{System.String,System.String})">
-             <summary>
-             Add new proxy information to the router's routing table.
-            
-             <para>addProxy() is deprecated, use addProxies() instead.</para>
-            
-             This operation is deprecated, and only used for old
-             Ice clients (older than version 3.1).
-             
-             </summary>
-             <param name="proxy">The proxy to add.</param>
-             <param name="context__">The Context map to send with the invocation.</param>
-        </member>
         <member name="M:Glacier2.RouterPrxHelper.getClientProxy">
             <summary>
             Get the router's client proxy, i.e., the proxy to use for
@@ -1053,6 +1110,13 @@
             </summary>
             <param name="ctx__">The Context map to send with the invocation.</param>
         </member>
+        <member name="M:Glacier2.RouterPrxHelper.begin_getACMTimeout(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Get the value of the ACM timeout.
+            Clients supporting connection
+            </summary>
+            <param name="ctx__">The Context map to send with the invocation.</param>
+        </member>
         <member name="M:Glacier2.RouterPrxHelper.begin_getCategoryForClient(System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
             This category must be used in the identities of all of the client's
@@ -1082,15 +1146,6 @@
             
             </param>
             <param name="ctx__">The Context map to send with the invocation.</param>
-        </member>
-        <member name="M:Glacier2.RouterPrxHelper.begin_addProxy(Ice.ObjectPrx,System.Collections.Generic.Dictionary{System.String,System.String})">
-            <summary>
-            Add new proxy information to the router's routing table.
-            This operation is deprecated, and only used for old
-            </summary>
-            <param name="proxy">The proxy to add.</param>
-            <param name="ctx__">The Context map to send with the invocation.</param>
-            <para>addProxy() is deprecated, use addProxies() instead.</para>
         </member>
         <member name="M:Glacier2.RouterPrxHelper.begin_getClientProxy(System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
@@ -1160,6 +1215,17 @@
             SessionManager has been installed.
             
             </param>
+        </member>
+        <member name="T:Glacier2.AMD_Router_refreshSession">
+            <summary>
+            Keep the calling client's session with this router alive.
+            </summary>
+        </member>
+        <member name="M:Glacier2.AMD_Router_refreshSession.ice_response">
+            <summary>
+            ice_response indicates that
+            the operation completed successfully.
+            </summary>
         </member>
         <member name="T:Glacier2.CannotCreateSessionException">
             <summary>
@@ -1929,11 +1995,6 @@
             
             </param>
             <param name="ctx__">The Context map to send with the invocation.</param>
-        </member>
-        <member name="T:IceMX.SessionMetricsPrxHelper">
-            <summary>
-            Provides information on Glacier2 sessions.
-            </summary>
         </member>
     </members>
 </doc>

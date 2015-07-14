@@ -4,6 +4,20 @@
         <name>Ice</name>
     </assembly>
     <members>
+        <member name="T:Ice.AMDCallback">
+            <summary>
+            AMDCallback is the interface from which all AMD callbacks are derived.
+            </summary>
+        </member>
+        <member name="M:Ice.AMDCallback.ice_exception(System.Exception)">
+            <summary>
+            Indicates to the Ice run time that an operation completed
+            with a run-time exception.
+            </summary>
+            <param name="ex">The encoded Ice run-time exception. Note that, if ex
+            is a user exception, the caller receives UnknownUserException.
+            Use ice_response to raise user exceptions.</param>
+        </member>
         <member name="T:Ice.SignalPolicy">
             <summary>
             The signal policy for Ice.Application signal handling.
@@ -170,19 +184,83 @@
             </summary>
             <returns>True if a signal caused the communicator to shut down; false otherwise.</returns>
         </member>
-        <member name="T:Ice.AMDCallback">
+        <member name="T:Ice.AsyncCallback">
+            
+             <summary>
+             Callback that requires the application to down-cast the proxy.
+             </summary>
+            
+        </member>
+        <member name="T:Ice.OnewayCallback">
+            
+             <summary>
+             Callback for the successful completion of an operation
+             that returns no data.
+             </summary>
+            
+        </member>
+        <member name="T:Ice.SentCallback">
+            
+             <summary>
+             Callback for the successful completion of an operation
+             that returns no data.
+             </summary>
+            
+        </member>
+        <member name="T:Ice.ExceptionCallback">
+            
+             <summary>
+             Called when an invocation raises an exception.
+             </summary>
+            
+        </member>
+        <member name="T:Ice.AsyncResult">
+            
+             <summary>
+             <!-- TODO -->
+             </summary>
+        </member>
+        <member name="M:Ice.BatchRequest.enqueue">
             <summary>
-            AMDCallback is the interface from which all AMD callbacks are derived.
+            Confirms the queuing of the batch request.
             </summary>
         </member>
-        <member name="M:Ice.AMDCallback.ice_exception(System.Exception)">
+        <member name="M:Ice.BatchRequest.getSize">
             <summary>
-            Indicates to the Ice run time that an operation completed
-            with a run-time exception.
+            Get the marshalled size of the request.
             </summary>
-            <param name="ex">The encoded Ice run-time exception. Note that, if ex
-            is a user exception, the caller receives UnknownUserException.
-            Use ice_response to raise user exceptions.</param>
+            <returns>The request size.</returns>
+        </member>
+        <member name="M:Ice.BatchRequest.getOperation">
+            <summary>
+            Get the name of the operation
+            </summary>
+            <returns>The request operation.</returns>
+        </member>
+        <member name="M:Ice.BatchRequest.getProxy">
+            <summary>
+            The proxy used to invoke the batch request.
+            </summary>
+            <returns>The request proxy.</returns>
+        </member>
+        <member name="T:Ice.BatchRequestInterceptor">
+            <summary>
+            Base interface for listening to batch request queues.
+            </summary>
+        </member>
+        <member name="M:Ice.BatchRequestInterceptor.enqueue(Ice.BatchRequest,System.Int32,System.Int32)">
+             <summary>
+             Called by the Ice runtime when a batch request is about to be
+             added to the batch request queue of a proxy or connection.
+            
+             The implementation of this method must call enqueue() on the
+             request to confirm its addition to the queue, if not called
+             the request isn't added to the queue. The implementation can
+             raise an Ice local exception to notify the caller of a failure.
+             </summary>
+             <param name="request">The batch request.</param>
+             <param name="queueBatchRequestCount">The number of batch request queued.</param>
+             <param name="queueBatchRequestSize">The size of the queued batch requests.</param>
         </member>
         <member name="M:Ice.Communicator.destroy">
             <summary>
@@ -391,8 +469,8 @@
         <member name="M:Ice.Communicator.addObjectFactory(Ice.ObjectFactory,System.String)">
             <summary>
             Add an object factory to this communicator.
-            Installing a 
-            factory with an id for which a factory is already registered 
+            Installing a
+            factory with an id for which a factory is already registered
             throws AlreadyRegisteredException.
             
             When unmarshaling an Ice object, the Ice run time reads the
@@ -475,21 +553,11 @@
             
             </returns>
         </member>
-        <member name="M:Ice.Communicator.getStats">
-            <summary>
-            Get the statistics callback object for this communicator.
-            </summary>
-            <returns>This communicator's statistics callback object.
-            
-            </returns>
-        </member>
         <member name="M:Ice.Communicator.getObserver">
             <summary>
             Get the observer resolver object for this communicator.
             </summary>
-            <returns>This communicator's observer resolver object.
-            
-            </returns>
+            <returns>This communicator's observer resolver object.</returns>
         </member>
         <member name="M:Ice.Communicator.getDefaultRouter">
             <summary>
@@ -553,26 +621,52 @@
         <member name="M:Ice.Communicator.flushBatchRequests">
             <summary>
             Flush any pending batch requests for this communicator.
-            This causes all batch requests that were sent via proxies
-            obtained via this communicator to be sent to the server.
+            This means all batch requests invoked on fixed proxies
+            for all connections associated with the communicator.
+            Any errors that occur while flushing a connection are ignored.
             </summary>
+        </member>
+        <member name="M:Ice.Communicator.createAdmin(Ice.ObjectAdapter,Ice.Identity)">
+            <summary>
+            Add the Admin object with all its facets to the provided object adapter.
+            If Ice.Admin.ServerId is set and the provided object adapter has a Locator,
+            createAdmin registers the Admin's Process facet with the Locator's LocatorRegistry.
+            
+            createAdmin call only be called once; subsequent calls raise InitializationException.
+            
+            </summary>
+            <param name="adminAdapter">The object adapter used to host the Admin object; if null and
+            Ice.Admin.Endpoints is set, create, activate and use the Ice.Admin object adapter.
+            
+            </param>
+            <param name="adminId">The identity of the Admin object.
+            
+            </param>
+            <returns>A proxy to the main ("") facet of the Admin object. Never returns a null proxy.
+            
+            </returns>
         </member>
         <member name="M:Ice.Communicator.getAdmin">
             <summary>
             Get a proxy to the main facet of the Admin object.
-            When Ice.Admin.DelayCreation
-            is greater than 0, it is necessary to call getAdmin() after the communicator is
-            initialized to create the Admin object. Otherwise, the Admin object is created
-            automatically after all the plug-ins are initialized.
+            getAdmin also creates the Admin object and creates and activates the Ice.Admin object
+            adapter to host this Admin object if Ice.Admin.Enpoints is set. The identity of the Admin
+            object created by getAdmin is /admin, or /admin
+            when Ice.Admin.InstanceName is not set.
+            
+            If Ice.Admin.DelayCreation is 0 or not set, getAdmin is called by the communicator
+            initialization, after initialization of all plugins.
             
             </summary>
-            <returns>The main ("") facet of the Admin object; a null proxy if no
-            Admin object is configured.</returns>
+            <returns>A proxy to the main ("") facet of the Admin object, or a null proxy if no
+            Admin object is configured.
+            
+            </returns>
         </member>
         <member name="M:Ice.Communicator.addAdminFacet(Ice.Object,System.String)">
             <summary>
             Add a new facet to the Admin object.
-            Adding a servant with a facet that is already registered 
+            Adding a servant with a facet that is already registered
             throws AlreadyRegisteredException.
             
             </summary>
@@ -583,7 +677,7 @@
         <member name="M:Ice.Communicator.removeAdminFacet(System.String)">
             <summary>
             Remove the following facet to the Admin object.
-            Removing a facet that was not previously registered throws 
+            Removing a facet that was not previously registered throws
             NotRegisteredException.
             
             </summary>
@@ -599,6 +693,15 @@
             </param>
             <returns>The servant associated with this Admin facet, or
             null if no facet is registered with the given name.</returns>
+        </member>
+        <member name="M:Ice.Communicator.findAllAdminFacets">
+            <summary>
+            Returns a map of all facets of the Admin object.
+            </summary>
+            <returns>A collection containing all the facet names and
+            servants of the Admin object.
+            
+            </returns>
         </member>
         <member name="M:Ice.Connection.close(System.Boolean)">
             <summary>
@@ -670,10 +773,37 @@
         <member name="M:Ice.Connection.flushBatchRequests">
             <summary>
             Flush any pending batch requests for this connection.
-            This
-            causes all batch requests that were sent via proxies that use
-            this connection to be sent to the server.
+            This means all batch requests invoked on fixed proxies
+            associated with the connection.
             </summary>
+        </member>
+        <member name="M:Ice.Connection.setCallback(Ice.ConnectionCallback)">
+            <summary>
+            Set callback on the connection.
+            The callback is called by the
+            connection when it's closed. The callback is called from the
+            Ice thread pool associated with the connection.
+            
+            </summary>
+            <param name="callback">The connection callback object.</param>
+        </member>
+        <member name="M:Ice.Connection.setACM(Ice.Optional{System.Int32},Ice.Optional{Ice.ACMClose},Ice.Optional{Ice.ACMHeartbeat})">
+            <summary>
+            Set the active connection management parameters.
+            </summary>
+            <param name="timeout">The timeout value in milliseconds.
+            
+            </param>
+            <param name="close">The close condition
+            
+            </param>
+            <param name="heartbeat">The hertbeat condition</param>
+        </member>
+        <member name="M:Ice.Connection.getACM">
+            <summary>
+            Get the ACM parameters.
+            </summary>
+            <returns>The ACM parameters.</returns>
         </member>
         <member name="M:Ice.Connection.type">
             <summary>
@@ -704,23 +834,12 @@
             </summary>
             <returns>The connection information.</returns>
         </member>
-        <member name="T:Ice.Request">
+        <member name="M:Ice.Connection.setBufferSize(System.Int32,System.Int32)">
             <summary>
-            Interface for incoming requests.
+            Set the connectiion buffer receive/send size.
+            @rcvSize The connection receive buffer size.
+            @sndSize The connection send buffer size.
             </summary>
-        </member>
-        <member name="M:Ice.Request.isCollocated">
-            <summary>
-            Returns whether this request is collocated.
-            </summary>
-            <returns>True if the invocation was made via proxy created by the same communicator
-            that hosts the target's object adapter; false, otherwise.</returns>
-        </member>
-        <member name="M:Ice.Request.getCurrent">
-            <summary>
-            Returns the {@link Current} object for this the request.
-            </summary>
-            <returns>The Current object for this request.</returns>
         </member>
         <member name="T:Ice.DispatchInterceptor">
             <summary>
@@ -975,6 +1094,13 @@
             </summary>
             <param name="ex">The inner exception.</param>
         </member>
+        <member name="M:Ice.Exception.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the exception with serialized data.
+            </summary>
+            <param name="info">Holds the serialized object data about the exception being thrown.</param>
+            <param name="context">Contains contextual information about the source or destination.</param>
+        </member>
         <member name="M:Ice.Exception.ice_name">
             <summary>
             Returns the name of this exception.
@@ -1005,6 +1131,13 @@
             </summary>
             <param name="ex">The inner exception.</param>
         </member>
+        <member name="M:Ice.LocalException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the exception with serialized data.
+            </summary>
+            <param name="info">Holds the serialized object data about the exception being thrown.</param>
+            <param name="context">Contains contextual information about the source or destination.</param>
+        </member>
         <member name="T:Ice.SystemException">
             <summary>
             Base class for Ice run-time exceptions.
@@ -1022,6 +1155,13 @@
             </summary>
             <param name="ex">The inner exception.</param>
         </member>
+        <member name="M:Ice.SystemException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the exception with serialized data.
+            </summary>
+            <param name="info">Holds the serialized object data about the exception being thrown.</param>
+            <param name="context">Contains contextual information about the source or destination.</param>
+        </member>
         <member name="T:Ice.UserException">
             <summary>
             Base class for Slice user exceptions.
@@ -1038,6 +1178,13 @@
             property to the passed exception.
             </summary>
             <param name="ex">The inner exception.</param>
+        </member>
+        <member name="M:Ice.UserException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the exception with serialized data.
+            </summary>
+            <param name="info">Holds the serialized object data about the exception being thrown.</param>
+            <param name="context">Contains contextual information about the source or destination.</param>
         </member>
         <member name="T:Ice.FormatType">
             <summary>
@@ -1098,6 +1245,17 @@
             
             </param>
             <returns>The value associated with the key, if any.</returns>
+        </member>
+        <member name="T:Ice.Request">
+            <summary>
+            Interface for incoming requests.
+            </summary>
+        </member>
+        <member name="M:Ice.Request.getCurrent">
+            <summary>
+            Returns the {@link Current} object for this the request.
+            </summary>
+            <returns>The Current object for this request.</returns>
         </member>
         <member name="T:Ice.AMD_Object_ice_invoke">
             <summary>
@@ -1176,7 +1334,7 @@
             </summary>
             <param name="size">The size of the reply.</param>
         </member>
-        <member name="M:Ice.Instrumentation.RemoteObserver.reply(System.Int32)">
+        <member name="M:Ice.Instrumentation.ChildInvocationObserver.reply(System.Int32)">
             <summary>
             Reply notification.
             </summary>
@@ -1209,6 +1367,21 @@
             
             </param>
             <returns>The observer to instrument the remote invocation.</returns>
+        </member>
+        <member name="M:Ice.Instrumentation.InvocationObserver.getCollocatedObserver(Ice.ObjectAdapter,System.Int32,System.Int32)">
+            <summary>
+            Get a collocated observer for this invocation.
+            </summary>
+            <param name="adapter">The object adapter hosting the collocated Ice object.
+            
+            </param>
+            <param name="requestId">The ID of the invocation.
+            
+            </param>
+            <param name="size">The size of the invocation.
+            
+            </param>
+            <returns>The observer to instrument the collocated invocation.</returns>
         </member>
         <member name="M:Ice.Instrumentation.ThreadObserver.stateChanged(Ice.Instrumentation.ThreadState,Ice.Instrumentation.ThreadState)">
             <summary>
@@ -1348,6 +1521,152 @@
             </summary>
             <param name="updater">The observer updater object.</param>
         </member>
+        <member name="M:Ice.EndpointInfo.type">
+            <summary>
+            Returns the type of the endpoint.
+            </summary>
+        </member>
+        <member name="M:Ice.EndpointInfo.datagram">
+            <summary>
+            Returns true if this endpoint is a datagram endpoint.
+            </summary>
+        </member>
+        <member name="M:Ice.EndpointInfo.secure">
+            <summary>
+            Returns true if this endpoint is a secure endpoint.
+            </summary>
+        </member>
+        <member name="T:Ice.LoggerAdminOperations_">
+            <summary>
+            The interface of the admin object that allows an Ice application the attach its 
+            RemoteLogger to the Logger of this admin object's Ice communicator.
+            </summary>
+        </member>
+        <member name="M:Ice.LoggerAdminOperations_.attachRemoteLogger(Ice.RemoteLoggerPrx,Ice.LogMessageType[],System.String[],System.Int32,Ice.Current)">
+            <summary>
+            attachRemoteLogger is called to attach a RemoteLogger object to 
+            the local Logger.
+            attachRemoteLogger calls init on the provided RemoteLogger proxy.
+            
+            </summary>
+            <param name="prx">A proxy to the remote logger.
+            
+            </param>
+            <param name="messageTypes">The list of message types that the remote logger wishes to receive.
+            An empty list means no filtering (send all message types).
+            
+            </param>
+            <param name="traceCategories">The categories of traces that the remote logger wishes to receive.
+            This parameter is ignored if messageTypes is not empty and does not include trace.
+            An empty list means no filtering (send all trace categories). 
+            
+            </param>
+            <param name="messageMax">The maximum number of log messages (of all types) to be provided 
+            to RemoteLogger.init. A negative value requests all messages available.
+            
+            </param>
+            <exception name="RemoteLoggerAlreadyAttachedException">Raised if this remote logger is already
+            attached to this admin object.</exception>
+            <param name="current__">The Current object for the invocation.</param>
+        </member>
+        <member name="M:Ice.LoggerAdminOperations_.detachRemoteLogger(Ice.RemoteLoggerPrx,Ice.Current)">
+            <summary>
+            detachRemoteLogger is called to detach a RemoteLogger object from
+            the local Logger.
+            </summary>
+            <param name="prx">A proxy to the remote logger.
+            
+            </param>
+            <returns>True if the provided remote logger proxy was detached, and false otherwise.</returns>
+            <param name="current__">The Current object for the invocation.</param>
+        </member>
+        <member name="M:Ice.LoggerAdminOperations_.getLog(Ice.LogMessageType[],System.String[],System.Int32,System.String@,Ice.Current)">
+            <summary>
+            getLog retrieves log messages recently logged.
+            </summary>
+            <param name="messageTypes">The list of message types that the caller wishes to receive. 
+            An empty list means no filtering (send all message types).
+            
+            </param>
+            <param name="traceCategories">The categories of traces that caller wish to receive.
+            This parameter is ignored if messageTypes is not empty and does not include trace.
+            An empty list means no filtering (send all trace categories). 
+            
+            </param>
+            <param name="messageMax">The maximum number of log messages (of all types) to be returned. 
+            A negative value requests all messages available.
+            
+            </param>
+            <param name="prefix">The prefix of the associated local Logger.
+            
+            </param>
+            <returns>The Log messages.</returns>
+            <param name="current__">The Current object for the invocation.</param>
+        </member>
+        <member name="T:Ice.LoggerAdminOperationsNC_">
+            <summary>
+            The interface of the admin object that allows an Ice application the attach its 
+            RemoteLogger to the Logger of this admin object's Ice communicator.
+            </summary>
+        </member>
+        <member name="M:Ice.LoggerAdminOperationsNC_.attachRemoteLogger(Ice.RemoteLoggerPrx,Ice.LogMessageType[],System.String[],System.Int32)">
+            <summary>
+            attachRemoteLogger is called to attach a RemoteLogger object to 
+            the local Logger.
+            attachRemoteLogger calls init on the provided RemoteLogger proxy.
+            
+            </summary>
+            <param name="prx">A proxy to the remote logger.
+            
+            </param>
+            <param name="messageTypes">The list of message types that the remote logger wishes to receive.
+            An empty list means no filtering (send all message types).
+            
+            </param>
+            <param name="traceCategories">The categories of traces that the remote logger wishes to receive.
+            This parameter is ignored if messageTypes is not empty and does not include trace.
+            An empty list means no filtering (send all trace categories). 
+            
+            </param>
+            <param name="messageMax">The maximum number of log messages (of all types) to be provided 
+            to RemoteLogger.init. A negative value requests all messages available.
+            
+            </param>
+            <exception name="RemoteLoggerAlreadyAttachedException">Raised if this remote logger is already
+            attached to this admin object.</exception>
+        </member>
+        <member name="M:Ice.LoggerAdminOperationsNC_.detachRemoteLogger(Ice.RemoteLoggerPrx)">
+            <summary>
+            detachRemoteLogger is called to detach a RemoteLogger object from
+            the local Logger.
+            </summary>
+            <param name="prx">A proxy to the remote logger.
+            
+            </param>
+            <returns>True if the provided remote logger proxy was detached, and false otherwise.</returns>
+        </member>
+        <member name="M:Ice.LoggerAdminOperationsNC_.getLog(Ice.LogMessageType[],System.String[],System.Int32,System.String@)">
+            <summary>
+            getLog retrieves log messages recently logged.
+            </summary>
+            <param name="messageTypes">The list of message types that the caller wishes to receive. 
+            An empty list means no filtering (send all message types).
+            
+            </param>
+            <param name="traceCategories">The categories of traces that caller wish to receive.
+            This parameter is ignored if messageTypes is not empty and does not include trace.
+            An empty list means no filtering (send all trace categories). 
+            
+            </param>
+            <param name="messageMax">The maximum number of log messages (of all types) to be returned. 
+            A negative value requests all messages available.
+            
+            </param>
+            <param name="prefix">The prefix of the associated local Logger.
+            
+            </param>
+            <returns>The Log messages.</returns>
+        </member>
         <member name="M:Ice.Logger.print(System.String)">
             <summary>
             Print a message.
@@ -1379,6 +1698,12 @@
             <param name="message">The error message to log.
             
             </param>
+        </member>
+        <member name="M:Ice.Logger.getPrefix">
+            <summary>
+            Returns this logger's prefix.
+            </summary>
+            <returns>The prefix.</returns>
         </member>
         <member name="M:Ice.Logger.cloneWithPrefix(System.String)">
             <summary>
@@ -1622,6 +1947,47 @@
             <exception name="UnknownMetricsView">Raised if the metrics view cannot be
             found.</exception>
         </member>
+        <member name="T:Ice.DispatchStatus">
+            <summary>
+            Indicates the status of operation dispatch.
+            </summary>
+        </member>
+        <member name="F:Ice.DispatchStatus.DispatchOK">
+            <summary>
+            Indicates that an operation was dispatched synchronously and successfully.
+            </summary>
+        </member>
+        <member name="F:Ice.DispatchStatus.DispatchUserException">
+            <summary>
+            Indicates that an operation was dispatched synchronously and raised a user exception.
+            </summary>
+        </member>
+        <member name="F:Ice.DispatchStatus.DispatchAsync">
+            <summary>
+            Indicates that an operation was dispatched asynchronously.
+            </summary>
+        </member>
+        <member name="T:Ice.Blobject">
+            <summary>
+            Base class for dynamic dispatch servants. A server application
+            derives a concrete servant class from Blobject that
+            implements the Blobject.ice_invoke method.
+            </summary>
+        </member>
+        <member name="M:Ice.Blobject.ice_invoke(System.Byte[],System.Byte[]@,Ice.Current)">
+            <summary>
+            Dispatch an incoming request.
+            </summary>
+            <param name="inParams">The encoded in-parameters for the operation.</param>
+            <param name="outParams">The encoded out-paramaters and return value
+            for the operation. The return value follows any out-parameters.</param>
+            <param name="current">The Current object to pass to the operation.</param>
+            <returns>If the operation completed successfully, the return value
+            is true. If the operation raises a user exception,
+            the return value is false; in this case, outParams
+            must contain the encoded user exception. If the operation raises an
+            Ice run-time exception, it must throw it directly.</returns>
+        </member>
         <member name="M:Ice.ObjectAdapter.getName">
             <summary>
             Get the name of this object adapter.
@@ -1693,7 +2059,7 @@
             Calling
             deactivate initiates object adapter deactivation, and
             waitForDeactivate only returns when deactivation has
-            been completed. 
+            been completed.
             
             </summary>
         </member>
@@ -2113,13 +2479,23 @@
             By doing so, the
             object adapter will register itself with the locator registry
             when it is activated for the first time. Furthermore, the proxies
-            created by this object adapter will contain the adapter name
-            instead of its endpoints.
+            created by this object adapter will contain the adapter identifier
+            instead of its endpoints. The adapter identifier must be configured
+            using the AdapterId property.
             
             </summary>
             <param name="loc">The locator used by this object adapter.
             
             </param>
+        </member>
+        <member name="M:Ice.ObjectAdapter.getLocator">
+            <summary>
+            Get the Ice locator used by this object adapter.
+            </summary>
+            <returns> The locator used by this object adapter, or null if no locator is
+            used by this object adapter.
+            
+            </returns>
         </member>
         <member name="M:Ice.ObjectAdapter.refreshPublishedEndpoints">
             <summary>
@@ -2149,62 +2525,6 @@
             
             </returns>
         </member>
-        <member name="T:Ice.DispatchStatus">
-            <summary>
-            Indicates the status of operation dispatch.
-            </summary>
-        </member>
-        <member name="F:Ice.DispatchStatus.DispatchOK">
-            <summary>
-            Indicates that an operation was dispatched synchronously and successfully.
-            </summary>
-        </member>
-        <member name="F:Ice.DispatchStatus.DispatchUserException">
-            <summary>
-            Indicates that an operation was dispatched synchronously and raised a user exception.
-            </summary>
-        </member>
-        <member name="F:Ice.DispatchStatus.DispatchAsync">
-            <summary>
-            Indicates that an operation was dispatched asynchronously.
-            </summary>
-        </member>
-        <member name="T:Ice.Blobject">
-            <summary>
-            Base class for dynamic dispatch servants. A server application
-            derives a concrete servant class from Blobject that
-            implements the Blobject.ice_invoke method.
-            </summary>
-        </member>
-        <member name="M:Ice.Blobject.ice_invoke(System.Byte[],System.Byte[]@,Ice.Current)">
-            <summary>
-            Dispatch an incoming request.
-            </summary>
-            <param name="inParams">The encoded in-parameters for the operation.</param>
-            <param name="outParams">The encoded out-paramaters and return value
-            for the operation. The return value follows any out-parameters.</param>
-            <param name="current">The Current object to pass to the operation.</param>
-            <returns>If the operation completed successfully, the return value
-            is true. If the operation raises a user exception,
-            the return value is false; in this case, outParams
-            must contain the encoded user exception. If the operation raises an
-            Ice run-time exception, it must throw it directly.</returns>
-        </member>
-        <member name="M:Ice.EndpointInfo.type">
-            <summary>
-            Returns the type of the endpoint.
-            </summary>
-        </member>
-        <member name="M:Ice.EndpointInfo.datagram">
-            <summary>
-            Returns true if this endpoint is a datagram endpoint.
-            </summary>
-        </member>
-        <member name="M:Ice.EndpointInfo.secure">
-            <summary>
-            Returns true if this endpoint is a secure endpoint.
-            </summary>
-        </member>
         <member name="T:Ice.Optional`1">
             <summary>
             Encapsulates an optional value. Instances of this type are immutable.
@@ -2225,6 +2545,13 @@
             Creates an optional value whose state is copied from the given argument.
             </summary>
         </member>
+        <member name="M:Ice.Optional`1.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the exception with serialized data.
+            </summary>
+            <param name="info">Holds the serialized object data about the exception being thrown.</param>
+            <param name="context">Contains contextual information about the source or destination.</param>
+        </member>
         <member name="M:Ice.Optional`1.op_Explicit(Ice.Optional{`0})~`0">
             <summary>
             Conversion operator to the underlying type; a cast is required. An exception
@@ -2242,6 +2569,13 @@
             <summary>
             Conversion operator from a None value; no cast is required.
             </summary>
+        </member>
+        <member name="M:Ice.Optional`1.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Serializes an optional value.
+            </summary>
+            <param name="info">Holds the serialized object data about the exception being thrown.</param>
+            <param name="context">Contains contextual information about the source or destination.</param>
         </member>
         <member name="P:Ice.Optional`1.Value">
             <summary>
@@ -2299,68 +2633,6 @@
              format describes how the data is encoded and how it can be skipped by the
              unmarshaling code if the optional is not known to the receiver.
              </summary>
-        </member>
-        <member name="T:Ice.AsyncCallback">
-            
-             <summary>
-             Callback that requires the application to down-cast the proxy.
-             </summary>
-            
-        </member>
-        <member name="T:Ice.OnewayCallback">
-            
-             <summary>
-             Callback for the successful completion of an operation
-             that returns no data.
-             </summary>
-            
-        </member>
-        <member name="T:Ice.SentCallback">
-            
-             <summary>
-             Callback for the successful completion of an operation
-             that returns no data.
-             </summary>
-            
-        </member>
-        <member name="T:Ice.ExceptionCallback">
-            
-             <summary>
-             Called when an invocation raises an exception.
-             </summary>
-            
-        </member>
-        <member name="T:Ice.AsyncResult">
-            
-             <summary>
-             <!-- TODO -->
-             </summary>
-        </member>
-        <member name="T:Ice.AMISentCallback">
-            <summary>
-            Deprecated callback interface for AMI invocations. This is useful
-            for applications that send asynchronous invocations that
-            might not be sent for some time and, therefore, are
-            queued in the Ice run time for transmission.
-            The Ice run time calls ice_sent if an
-            an AMI invocation cannot be written to the transport and was
-            queued for later transmission. Applications that need to
-            implement flow control for AMI invocations can implement
-            this interface on the corresponding AMI callback object.
-            </summary>
-        </member>
-        <member name="M:Ice.AMISentCallback.ice_sent">
-            <summary>
-            Indicates to the caller of an AMI operation that
-            the invocation was queued for later transmission.
-            </summary>
-        </member>
-        <member name="M:Ice.AMICallbackBase.ice_exception(Ice.Exception)">
-            <summary>
-            The Ice run time calls ice_exception when an asynchronous operation invocation
-            raises an Ice run-time exception.
-            </summary>
-            <param name="ex">The encoded Ice run-time exception raised by the operation.</param>
         </member>
         <member name="T:Ice.PluginFactory">
             <summary>
@@ -2638,11 +2910,12 @@
         <member name="M:Ice.Properties.getPropertyAsList(System.String)">
             <summary>
             Get a property as a list of strings.
-            If the property is not set,
+            The strings must be
+            separated by whitespace or comma. If the property is not set,
             an empty list is returned. The strings in the list can contain
-            whitespace if they are enclosed in single or double quotes.
-            If quotes are mismatched, an empty list is returned.
-            Within single quotes or double-quotes, you can escape the
+            whitespace and commas if they are enclosed in single or double 
+            quotes. If quotes are mismatched, an empty list is returned.
+            Within single quotes or double quotes, you can escape the
             quote in question with \, e.g. O'Reilly can be written as
             O'Reilly, "O'Reilly" or 'O\'Reilly'.
             
@@ -2657,11 +2930,12 @@
         <member name="M:Ice.Properties.getPropertyAsListWithDefault(System.String,System.String[])">
             <summary>
             Get a property as a list of strings.
-            If the property is not set,
+            The strings must be
+            separated by whitespace or comma. If the property is not set,
             the default list is returned. The strings in the list can contain
-            whitespace if they are enclosed in single or double quotes.
-            If quotes are mismatched, the default list is returned.
-            Within single quotes or double-quotes, you can escape the
+            whitespace and commas if they are enclosed in single or double 
+            quotes. If quotes are mismatched, the default list is returned.
+            Within single quotes or double quotes, you can escape the
             quote in question with \, e.g. O'Reilly can be written as
             O'Reilly, "O'Reilly" or 'O\'Reilly'.
             
@@ -2790,25 +3064,10 @@
             <param name="outEncaps">The encoded out-parameters or user exception.</param>
             </summary>
         </member>
-        <member name="T:Ice.AMI_Object_ice_invoke">
+        <member name="T:Ice.Callback_Object_ice_getConnection">
             <summary>
-            Callback object for Blobject AMI invocations.
-            </summary>
-        </member>
-        <member name="M:Ice.AMI_Object_ice_invoke.ice_response(System.Boolean,System.Byte[])">
-            <summary>
-            The Ice run time calls <code>ice_response</code> when an asynchronous operation invocation
-            completes successfully or raises a user exception.
-            </summary>
-            <param name="ok">Indicates the result of the invocation. If true, the operation
-            completed succesfully; if false, the operation raised a user exception.</param>
-            <param name="outEncaps">Contains the encoded out-parameters of the operation (if any) if ok
-            is true; otherwise, if ok is false, contains the
-            encoded user exception raised by the operation.</param>
-        </member>
-        <member name="T:Ice.AMI_Object_ice_flushBatchRequests">
-            <summary>
-            Callback object for ObjectPrx.ice_flushBatchRequests_async.
+            Delegate for a successful <code>ice_getConnection</code> invocation.
+            <param name="ret__">The connection used by the proxy.</param>
             </summary>
         </member>
         <member name="T:Ice.ObjectPrx">
@@ -3061,31 +3320,6 @@
             contains the encoded user exception. If the operation raises a run-time exception,
             it throws it directly.</returns>
         </member>
-        <member name="M:Ice.ObjectPrx.ice_invoke_async(Ice.AMI_Object_ice_invoke,System.String,Ice.OperationMode,System.Byte[])">
-            <summary>
-            Invokes an operation dynamically and asynchronously.
-            </summary>
-            <param name="cb">The callback object to notify when the operation completes.</param>
-            <param name="operation">The name of the operation to invoke.</param>
-            <param name="mode">The operation mode (normal or idempotent).</param>
-            <param name="inEncaps">The encoded in-parameters for the operation.</param>
-            <returns> If the operation was invoked synchronously (because there
-            was no need to queue the request), the return value is true;
-            otherwise, if the invocation was queued, the return value is false.</returns>
-        </member>
-        <member name="M:Ice.ObjectPrx.ice_invoke_async(Ice.AMI_Object_ice_invoke,System.String,Ice.OperationMode,System.Byte[],System.Collections.Generic.Dictionary{System.String,System.String})">
-            <summary>
-            Invokes an operation dynamically and asynchronously.
-            </summary>
-            <param name="cb">The callback object to notify when the operation completes.</param>
-            <param name="operation">The name of the operation to invoke.</param>
-            <param name="mode">The operation mode (normal or idempotent).</param>
-            <param name="inEncaps">The encoded in-parameters for the operation.</param>
-            <param name="context">The context dictionary for the invocation.</param>
-            <returns> If the operation was invoked synchronously (because there
-            was no need to queue the request), the return value is true;
-            otherwise, if the invocation was queued, the return value is false.</returns>
-        </member>
         <member name="M:Ice.ObjectPrx.begin_ice_invoke(System.String,Ice.OperationMode,System.Byte[])">
             <summary>
             Invokes an operation dynamically.
@@ -3219,6 +3453,18 @@
             Creates a new proxy that is identical to this proxy, except for the locator cache timeout.
             </summary>
             <param name="timeout">The new locator cache timeout (in seconds).</param>
+        </member>
+        <member name="M:Ice.ObjectPrx.ice_invocationTimeout(System.Int32)">
+            <summary>
+            Creates a new proxy that is identical to this proxy, except for the invocation timeout.
+            </summary>
+            <param name="timeout">The new invocation timeout (in seconds).</param>
+        </member>
+        <member name="M:Ice.ObjectPrx.ice_getInvocationTimeout">
+            <summary>
+            Returns the invocation timeout of this proxy.
+            </summary>
+            <returns>The invocation timeout value (in seconds).</returns>
         </member>
         <member name="M:Ice.ObjectPrx.ice_isConnectionCached">
             <summary>
@@ -3426,6 +3672,27 @@
             <exception name="CollocationOptimizationException">If the proxy uses collocation optimization and denotes a
             collocated object.</exception>
         </member>
+        <member name="M:Ice.ObjectPrx.begin_ice_getConnection">
+            <summary>
+            Asynchronously gets the connection for this proxy.
+            </summary>
+            <returns>An asynchronous result object.</returns>
+        </member>
+        <member name="M:Ice.ObjectPrx.begin_ice_getConnection(Ice.AsyncCallback,System.Object)">
+            <summary>
+            Asynchronously gets the connection for this proxy.
+            </summary>
+            <param name="cb__">A callback to be invoked when the invocation completes.</param>
+            <param name="cookie__">Application-specific data to be stored in the result.</param>
+            <returns>An asynchronous result object.</returns>
+        </member>
+        <member name="M:Ice.ObjectPrx.end_ice_getConnection(Ice.AsyncResult)">
+            <summary>
+            Asynchronously gets the connection for this proxy.
+            </summary>
+            <param name="r__">The asynchronous result object returned by <code>begin_ice_getConnection</code>.</param>
+            <returns>The connection.</returns>
+        </member>
         <member name="M:Ice.ObjectPrx.ice_getCachedConnection">
             <summary>
             Returns the cached Connection for this proxy. If the proxy does not yet have an established
@@ -3440,14 +3707,6 @@
             <summary>
             Flushes any pending batched requests for this communicator. The call blocks until the flush is complete.
             </summary>
-        </member>
-        <member name="M:Ice.ObjectPrx.ice_flushBatchRequests_async(Ice.AMI_Object_ice_flushBatchRequests)">
-            <summary>
-            Asynchronously flushes any pending batched requests for this communicator. The call does not block.
-            </summary>
-            <param name="cb">The callback object to notify the application when the flush is complete.</param>
-            <returns>True if the requests were flushed immediately without blocking; false
-            if the requests could not be flushed immediately.</returns>
         </member>
         <member name="T:Ice.ObjectPrxHelperBase">
             <summary>
@@ -3559,31 +3818,6 @@
             contains the encoded user exception. If the operation raises a run-time exception,
             it throws it directly.</returns>
         </member>
-        <member name="M:Ice.ObjectPrxHelperBase.ice_invoke_async(Ice.AMI_Object_ice_invoke,System.String,Ice.OperationMode,System.Byte[])">
-            <summary>
-            Invokes an operation dynamically and asynchronously.
-            </summary>
-            <param name="cb">The callback object to notify when the operation completes.</param>
-            <param name="operation">The name of the operation to invoke.</param>
-            <param name="mode">The operation mode (normal or idempotent).</param>
-            <param name="inEncaps">The encoded in-parameters for the operation.</param>
-            <returns> If the operation was invoked synchronously (because there
-            was no need to queue the request), the return value is true;
-            otherwise, if the invocation was queued, the return value is false.</returns>
-        </member>
-        <member name="M:Ice.ObjectPrxHelperBase.ice_invoke_async(Ice.AMI_Object_ice_invoke,System.String,Ice.OperationMode,System.Byte[],System.Collections.Generic.Dictionary{System.String,System.String})">
-            <summary>
-            Invokes an operation dynamically and asynchronously.
-            </summary>
-            <param name="cb">The callback object to notify when the operation completes.</param>
-            <param name="operation">The name of the operation to invoke.</param>
-            <param name="mode">The operation mode (normal or idempotent).</param>
-            <param name="inEncaps">The encoded in-parameters for the operation.</param>
-            <param name="context">The context dictionary for the invocation.</param>
-            <returns> If the operation was invoked synchronously (because there
-            was no need to queue the request), the return value is true;
-            otherwise, if the invocation was queued, the return value is false.</returns>
-        </member>
         <member name="M:Ice.ObjectPrxHelperBase.ice_getIdentity">
             <summary>
             Returns the identity embedded in this proxy.
@@ -3663,6 +3897,18 @@
             Creates a new proxy that is identical to this proxy, except for the locator cache timeout.
             </summary>
             <param name="newTimeout">The new locator cache timeout (in seconds).</param>
+        </member>
+        <member name="M:Ice.ObjectPrxHelperBase.ice_getInvocationTimeout">
+            <summary>
+            Returns the invocation timeout of this proxy.
+            </summary>
+            <returns>The invocation timeout value (in seconds).</returns>
+        </member>
+        <member name="M:Ice.ObjectPrxHelperBase.ice_invocationTimeout(System.Int32)">
+            <summary>
+            Creates a new proxy that is identical to this proxy, except for the invocation timeout.
+            </summary>
+            <param name="newTimeout">The new invocation timeout (in seconds).</param>
         </member>
         <member name="M:Ice.ObjectPrxHelperBase.ice_isConnectionCached">
             <summary>
@@ -3885,14 +4131,6 @@
             Flushes any pending batched requests for this communicator. The call blocks until the flush is complete.
             </summary>
         </member>
-        <member name="M:Ice.ObjectPrxHelperBase.ice_flushBatchRequests_async(Ice.AMI_Object_ice_flushBatchRequests)">
-            <summary>
-            Asynchronously flushes any pending batched requests for this communicator. The call does not block.
-            </summary>
-            <param name="cb">The callback object to notify the application when the flush is complete.</param>
-            <returns>True if the requests were flushed immediately without blocking; false
-            if the requests could not be flushed immediately.</returns>
-        </member>
         <member name="M:Ice.ObjectPrxHelperBase.Equals(System.Object)">
             <summary>
             Returns whether this proxy equals the passed object. Two proxies are equal if they are equal in all
@@ -3991,6 +4229,13 @@
             <param name="b">The proxy to cast to ObjectPrx.</param>
             <param name="f">The facet for the new proxy.</param>
             <returns>The new proxy with the specified facet.</returns>
+        </member>
+        <member name="M:Ice.ObjectPrxHelper.ice_staticId">
+            <summary>
+            Returns the Slice type id of the interface or class associated
+            with this proxy class.
+            </summary>
+            <returns>The type id, "::Ice::Object".</returns>
         </member>
         <member name="T:Ice.ProxyIdentityKey">
             <summary>
@@ -4611,15 +4856,17 @@
         </member>
         <member name="M:Ice.OutputStream.startSize">
             <summary>
-            Records the current position and allocates four bytes for a fixed-length (32-bit)
+            Returns the current position and allocates four bytes for a fixed-length (32-bit)
             size value.
             </summary>
+            <returns>The current position.</returns>
         </member>
-        <member name="M:Ice.OutputStream.endSize">
+        <member name="M:Ice.OutputStream.endSize(System.Int32)">
             <summary>
             Computes the amount of data written since the previous call to startSize and
             writes that value at the saved position.
             </summary>
+            <param name="pos">The saved position at which to write the size.</param>
         </member>
         <member name="M:Ice.OutputStream.finished">
             <summary>
@@ -4790,11 +5037,6 @@
             The communicator observer used by the Ice run-time.
             </summary>
         </member>
-        <member name="F:Ice.InitializationData.stats">
-            <summary>
-            The Stats instance for the communicator.
-            </summary>
-        </member>
         <member name="F:Ice.InitializationData.threadHook">
             <summary>
             The thread hook for the communicator.
@@ -4808,6 +5050,11 @@
         <member name="F:Ice.InitializationData.compactIdResolver">
             <summary>
             The compact type ID resolver.
+            </summary>
+        </member>
+        <member name="F:Ice.InitializationData.batchRequestInterceptor">
+            <summary>
+            The batch request interceptor.
             </summary>
         </member>
         <member name="T:Ice.Util">
@@ -4941,7 +5188,7 @@
         </member>
         <member name="M:Ice.Util.wrapInputStream(Ice.Communicator,System.Byte[])">
             <summary>
-            Wraps encoded data with an input stream for dynamic invocation and dispatch. 
+            Wraps encoded data with an input stream for dynamic invocation and dispatch.
             The stream uses the communicator's default encoding version.
             </summary>
             <param name="communicator">The communicator for the stream.</param>
@@ -4950,7 +5197,7 @@
         </member>
         <member name="M:Ice.Util.wrapInputStream(Ice.Communicator,System.Byte[],Ice.EncodingVersion)">
             <summary>
-            Wraps encoded data with an input stream for dynamic invocation and dispatch. 
+            Wraps encoded data with an input stream for dynamic invocation and dispatch.
             The stream uses the given encoding version.
             </summary>
             <param name="communicator">The communicator for the stream.</param>
@@ -5031,6 +5278,18 @@
             <param name="v">The encoding version to convert.</param>
             <returns>The converted string.</returns>
         </member>
+        <member name="M:Ice.ConnectionCallback.heartbeat(Ice.Connection)">
+            <summary>
+            This method is called by the the connection when a heartbeat is
+            received from the peer.
+            </summary>
+        </member>
+        <member name="M:Ice.ConnectionCallback.closed(Ice.Connection)">
+            <summary>
+            This method is called by the the connection when the connection
+            is closed.
+            </summary>
+        </member>
         <member name="T:Ice.InitializationException">
             <summary>
             This exception is raised when a failure occurs during initialization.
@@ -5043,10 +5302,13 @@
             </summary>
         </member>
         <member name="T:Ice.CollocationOptimizationException">
-            <summary>
-            This exception is raised if a feature is requested that is not
-            supported with collocation optimization.
-            </summary>
+             <summary>
+             This exception is raised if a feature is requested that is not
+             supported with collocation optimization.
+            
+             <para>this exception isn't used anymore by the Ice runtime</para>
+            
+             </summary>
         </member>
         <member name="T:Ice.AlreadyRegisteredException">
             <summary>
@@ -5063,7 +5325,7 @@
             An attempt was made to find or deregister something that is not
             registered with the Ice run time or Ice locator.
             This exception is raised if an attempt is made to remove a servant,
-            servant locator, facet, object factory, plug-in, object adapter, 
+            servant locator, facet, object factory, plug-in, object adapter,
             object, or user exception factory that is not currently registered.
             
             It's also raised if the Ice locator can't find an object or object
@@ -5190,6 +5452,13 @@
             This exception is raised if an illegal identity is encountered.
             </summary>
         </member>
+        <member name="T:Ice.IllegalServantException">
+            <summary>
+            This exception is raised to reject an illegal servant (typically
+            a null servant)
+            
+            </summary>
+        </member>
         <member name="T:Ice.RequestFailedException">
             <summary>
             This exception is raised if a request failed.
@@ -5261,6 +5530,11 @@
             DNSException.error should be inspected.
             </summary>
         </member>
+        <member name="T:Ice.OperationInterruptedException">
+            <summary>
+            This exception indicates a request was interrupted.
+            </summary>
+        </member>
         <member name="T:Ice.TimeoutException">
             <summary>
             This exception indicates a timeout condition.
@@ -5280,6 +5554,19 @@
             <summary>
             This exception indicates that a connection has been shut down because it has been
             idle for some time.
+            </summary>
+        </member>
+        <member name="T:Ice.InvocationTimeoutException">
+            <summary>
+            This exception indicates that an invocation failed because it timed
+            out.
+            </summary>
+        </member>
+        <member name="T:Ice.InvocationCanceledException">
+            <summary>
+            This exception indicates that an asynchronous invocation failed
+            because it was canceled explicitly by the user using the
+            Ice::AsyncResult::cancel method.
             </summary>
         </member>
         <member name="T:Ice.ProtocolException">
@@ -5397,14 +5684,15 @@
         </member>
         <member name="T:Ice.MemoryLimitException">
             <summary>
-            This exception is raised if a request size exceeds the limit specified by the Ice.MessageSizeMax property.
+            This exception is raised when Ice receives a request or reply
+            message whose size exceeds the limit specified by the
+            Ice.MessageSizeMax property.
             </summary>
         </member>
         <member name="T:Ice.StringConversionException">
             <summary>
-            This exception is
-            raised when a string conversion to or from UTF-8 fails during 
-            marshaling or unmarshaling.
+            This exception is raised when a string conversion to or from UTF-8
+            fails during marshaling or unmarshaling.
             </summary>
         </member>
         <member name="T:Ice.EncapsulationException">
@@ -5656,6 +5944,45 @@
             <param name="proxy">The process proxy.
             
             </param>
+        </member>
+        <member name="T:Ice.LocatorFinderOperations_">
+            <summary>
+            This inferface should be implemented by services implementing the
+            Ice::Locator interface.
+            It should be advertised through an Ice
+            object with the identity `Ice/LocatorFinder'. This allows clients
+            to retrieve the locator proxy with just the endpoint information of
+            the service.
+            </summary>
+        </member>
+        <member name="M:Ice.LocatorFinderOperations_.getLocator(Ice.Current)">
+            <summary>
+            Get the locator proxy implemented by the process hosting this
+            finder object.
+            The proxy might point to several replicas.
+            
+            </summary>
+            <returns>The locator proxy.</returns>
+            <param name="current__">The Current object for the invocation.</param>
+        </member>
+        <member name="T:Ice.LocatorFinderOperationsNC_">
+            <summary>
+            This inferface should be implemented by services implementing the
+            Ice::Locator interface.
+            It should be advertised through an Ice
+            object with the identity `Ice/LocatorFinder'. This allows clients
+            to retrieve the locator proxy with just the endpoint information of
+            the service.
+            </summary>
+        </member>
+        <member name="M:Ice.LocatorFinderOperationsNC_.getLocator">
+            <summary>
+            Get the locator proxy implemented by the process hosting this
+            finder object.
+            The proxy might point to several replicas.
+            
+            </summary>
+            <returns>The locator proxy.</returns>
         </member>
         <member name="T:Ice.LocatorPrxHelper">
             <summary>
@@ -5946,6 +6273,43 @@
             <param name="proxy">The process proxy.
             
             </param>
+            <param name="ctx__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="T:Ice.LocatorFinderPrxHelper">
+            <summary>
+            This inferface should be implemented by services implementing the
+            Ice::Locator interface.
+            It should be advertised through an Ice
+            object with the identity `Ice/LocatorFinder'. This allows clients
+            to retrieve the locator proxy with just the endpoint information of
+            the service.
+            </summary>
+        </member>
+        <member name="M:Ice.LocatorFinderPrxHelper.getLocator">
+            <summary>
+            Get the locator proxy implemented by the process hosting this
+            finder object.
+            The proxy might point to several replicas.
+            
+            </summary>
+            <returns>The locator proxy.</returns>
+        </member>
+        <member name="M:Ice.LocatorFinderPrxHelper.getLocator(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Get the locator proxy implemented by the process hosting this
+            finder object.
+            The proxy might point to several replicas.
+            
+            </summary>
+            <returns>The locator proxy.</returns>
+            <param name="context__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="M:Ice.LocatorFinderPrxHelper.begin_getLocator(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Get the locator proxy implemented by the process hosting this
+            finder object.
+            The proxy might point to several replicas.
+            </summary>
             <param name="ctx__">The Context map to send with the invocation.</param>
         </member>
         <member name="T:Ice.AMD_Locator_findObjectById">
@@ -6283,6 +6647,22 @@
             Provides information on servant dispatch.
             </summary>
         </member>
+        <member name="T:IceMX.ChildInvocationMetricsPrxHelper">
+            <summary>
+            Provides information on child invocations.
+            A child invocation is
+            either remote (sent over an Ice connection) or collocated. An
+            invocation can have multiple child invocation if it is
+            retried. Child invocation metrics are embedded within InvocationMetrics.
+            </summary>
+        </member>
+        <member name="T:IceMX.CollocatedMetricsPrxHelper">
+            <summary>
+            Provides information on invocations that are collocated.
+            Collocated
+            metrics are embedded within InvocationMetrics.
+            </summary>
+        </member>
         <member name="T:IceMX.RemoteMetricsPrxHelper">
             <summary>
             Provides information on invocations that are specifically sent over
@@ -6294,9 +6674,7 @@
             <summary>
             Provide measurements for proxy invocations.
             Proxy invocations can
-            either be sent over the wire or be collocated. The metrics for
-            invocations sent over the wire are specifically measured with
-            RemoteMetrics.
+            either be sent over the wire or be collocated.
             </summary>
         </member>
         <member name="T:IceMX.ConnectionMetricsPrxHelper">
@@ -6507,6 +6885,334 @@
             the operation completed successfully.
             </summary>
         </member>
+        <member name="T:Ice.RemoteLoggerOperations_">
+            <summary>
+            The Ice remote logger interface.
+            An application can implement a
+            RemoteLogger to receive the log messages sent to the local Logger
+            of another Ice application.
+            </summary>
+        </member>
+        <member name="M:Ice.RemoteLoggerOperations_.init(System.String,Ice.LogMessage[],Ice.Current)">
+            <summary>
+            init is called by LoggerAdmin.attachRemoteLogger when a
+            RemoteLogger proxy is attached.
+            </summary>
+            <param name="prefix">The prefix of the associated local Logger
+            
+            </param>
+            <param name="logMessages">Old log messages generated before "now".
+            
+            </param>
+            <param name="current__">The Current object for the invocation.</param>
+        </member>
+        <member name="M:Ice.RemoteLoggerOperations_.log(Ice.LogMessage,Ice.Current)">
+            <summary>
+            log a LogMessage.
+            Note that log may be called by LoggerAdmin
+            before init.
+            
+            </summary>
+            <param name="message">The message to log.
+            
+            </param>
+            <param name="current__">The Current object for the invocation.</param>
+        </member>
+        <member name="T:Ice.RemoteLoggerOperationsNC_">
+            <summary>
+            The Ice remote logger interface.
+            An application can implement a
+            RemoteLogger to receive the log messages sent to the local Logger
+            of another Ice application.
+            </summary>
+        </member>
+        <member name="M:Ice.RemoteLoggerOperationsNC_.init(System.String,Ice.LogMessage[])">
+            <summary>
+            init is called by LoggerAdmin.attachRemoteLogger when a
+            RemoteLogger proxy is attached.
+            </summary>
+            <param name="prefix">The prefix of the associated local Logger
+            
+            </param>
+            <param name="logMessages">Old log messages generated before "now".
+            
+            </param>
+        </member>
+        <member name="M:Ice.RemoteLoggerOperationsNC_.log(Ice.LogMessage)">
+            <summary>
+            log a LogMessage.
+            Note that log may be called by LoggerAdmin
+            before init.
+            
+            </summary>
+            <param name="message">The message to log.
+            
+            </param>
+        </member>
+        <member name="T:Ice.RemoteLoggerAlreadyAttachedException">
+            <summary>
+            An exception thrown by LoggerAdmin.attachRemoteLogger to report
+            that the provided RemoteLogger was previously attached to this
+            LoggerAdmin.
+            </summary>
+        </member>
+        <member name="T:Ice.RemoteLoggerPrxHelper">
+            <summary>
+            The Ice remote logger interface.
+            An application can implement a
+            RemoteLogger to receive the log messages sent to the local Logger
+            of another Ice application.
+            </summary>
+        </member>
+        <member name="M:Ice.RemoteLoggerPrxHelper.init(System.String,Ice.LogMessage[])">
+            <summary>
+            init is called by LoggerAdmin.attachRemoteLogger when a
+            RemoteLogger proxy is attached.
+            </summary>
+            <param name="prefix">The prefix of the associated local Logger
+            
+            </param>
+            <param name="logMessages">Old log messages generated before "now".
+            
+            </param>
+        </member>
+        <member name="M:Ice.RemoteLoggerPrxHelper.init(System.String,Ice.LogMessage[],System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            init is called by LoggerAdmin.attachRemoteLogger when a
+            RemoteLogger proxy is attached.
+            </summary>
+            <param name="prefix">The prefix of the associated local Logger
+            
+            </param>
+            <param name="logMessages">Old log messages generated before "now".
+            
+            </param>
+            <param name="context__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="M:Ice.RemoteLoggerPrxHelper.log(Ice.LogMessage)">
+            <summary>
+            log a LogMessage.
+            Note that log may be called by LoggerAdmin
+            before init.
+            
+            </summary>
+            <param name="message">The message to log.
+            
+            </param>
+        </member>
+        <member name="M:Ice.RemoteLoggerPrxHelper.log(Ice.LogMessage,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            log a LogMessage.
+            Note that log may be called by LoggerAdmin
+            before init.
+            
+            </summary>
+            <param name="message">The message to log.
+            
+            </param>
+            <param name="context__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="M:Ice.RemoteLoggerPrxHelper.begin_init(System.String,Ice.LogMessage[],System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            init is called by LoggerAdmin.attachRemoteLogger when a
+            RemoteLogger proxy is attached.
+            </summary>
+            <param name="prefix">The prefix of the associated local Logger
+            
+            </param>
+            <param name="logMessages">Old log messages generated before "now".
+            
+            </param>
+            <param name="ctx__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="M:Ice.RemoteLoggerPrxHelper.begin_log(Ice.LogMessage,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            log a LogMessage.
+            Note that log may be called by LoggerAdmin
+            </summary>
+            <param name="message">The message to log.
+            
+            </param>
+            <param name="ctx__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="T:Ice.LoggerAdminPrxHelper">
+            <summary>
+            The interface of the admin object that allows an Ice application the attach its 
+            RemoteLogger to the Logger of this admin object's Ice communicator.
+            </summary>
+        </member>
+        <member name="M:Ice.LoggerAdminPrxHelper.attachRemoteLogger(Ice.RemoteLoggerPrx,Ice.LogMessageType[],System.String[],System.Int32)">
+            <summary>
+            attachRemoteLogger is called to attach a RemoteLogger object to 
+            the local Logger.
+            attachRemoteLogger calls init on the provided RemoteLogger proxy.
+            
+            </summary>
+            <param name="prx">A proxy to the remote logger.
+            
+            </param>
+            <param name="messageTypes">The list of message types that the remote logger wishes to receive.
+            An empty list means no filtering (send all message types).
+            
+            </param>
+            <param name="traceCategories">The categories of traces that the remote logger wishes to receive.
+            This parameter is ignored if messageTypes is not empty and does not include trace.
+            An empty list means no filtering (send all trace categories). 
+            
+            </param>
+            <param name="messageMax">The maximum number of log messages (of all types) to be provided 
+            to RemoteLogger.init. A negative value requests all messages available.
+            
+            </param>
+            <exception name="RemoteLoggerAlreadyAttachedException">Raised if this remote logger is already
+            attached to this admin object.</exception>
+        </member>
+        <member name="M:Ice.LoggerAdminPrxHelper.attachRemoteLogger(Ice.RemoteLoggerPrx,Ice.LogMessageType[],System.String[],System.Int32,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            attachRemoteLogger is called to attach a RemoteLogger object to 
+            the local Logger.
+            attachRemoteLogger calls init on the provided RemoteLogger proxy.
+            
+            </summary>
+            <param name="prx">A proxy to the remote logger.
+            
+            </param>
+            <param name="messageTypes">The list of message types that the remote logger wishes to receive.
+            An empty list means no filtering (send all message types).
+            
+            </param>
+            <param name="traceCategories">The categories of traces that the remote logger wishes to receive.
+            This parameter is ignored if messageTypes is not empty and does not include trace.
+            An empty list means no filtering (send all trace categories). 
+            
+            </param>
+            <param name="messageMax">The maximum number of log messages (of all types) to be provided 
+            to RemoteLogger.init. A negative value requests all messages available.
+            
+            </param>
+            <exception name="RemoteLoggerAlreadyAttachedException">Raised if this remote logger is already
+            attached to this admin object.</exception>
+            <param name="context__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="M:Ice.LoggerAdminPrxHelper.detachRemoteLogger(Ice.RemoteLoggerPrx)">
+            <summary>
+            detachRemoteLogger is called to detach a RemoteLogger object from
+            the local Logger.
+            </summary>
+            <param name="prx">A proxy to the remote logger.
+            
+            </param>
+            <returns>True if the provided remote logger proxy was detached, and false otherwise.</returns>
+        </member>
+        <member name="M:Ice.LoggerAdminPrxHelper.detachRemoteLogger(Ice.RemoteLoggerPrx,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            detachRemoteLogger is called to detach a RemoteLogger object from
+            the local Logger.
+            </summary>
+            <param name="prx">A proxy to the remote logger.
+            
+            </param>
+            <returns>True if the provided remote logger proxy was detached, and false otherwise.</returns>
+            <param name="context__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="M:Ice.LoggerAdminPrxHelper.getLog(Ice.LogMessageType[],System.String[],System.Int32,System.String@)">
+            <summary>
+            getLog retrieves log messages recently logged.
+            </summary>
+            <param name="messageTypes">The list of message types that the caller wishes to receive. 
+            An empty list means no filtering (send all message types).
+            
+            </param>
+            <param name="traceCategories">The categories of traces that caller wish to receive.
+            This parameter is ignored if messageTypes is not empty and does not include trace.
+            An empty list means no filtering (send all trace categories). 
+            
+            </param>
+            <param name="messageMax">The maximum number of log messages (of all types) to be returned. 
+            A negative value requests all messages available.
+            
+            </param>
+            <param name="prefix">The prefix of the associated local Logger.
+            
+            </param>
+            <returns>The Log messages.</returns>
+        </member>
+        <member name="M:Ice.LoggerAdminPrxHelper.getLog(Ice.LogMessageType[],System.String[],System.Int32,System.String@,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            getLog retrieves log messages recently logged.
+            </summary>
+            <param name="messageTypes">The list of message types that the caller wishes to receive. 
+            An empty list means no filtering (send all message types).
+            
+            </param>
+            <param name="traceCategories">The categories of traces that caller wish to receive.
+            This parameter is ignored if messageTypes is not empty and does not include trace.
+            An empty list means no filtering (send all trace categories). 
+            
+            </param>
+            <param name="messageMax">The maximum number of log messages (of all types) to be returned. 
+            A negative value requests all messages available.
+            
+            </param>
+            <param name="prefix">The prefix of the associated local Logger.
+            
+            </param>
+            <returns>The Log messages.</returns>
+            <param name="context__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="M:Ice.LoggerAdminPrxHelper.begin_attachRemoteLogger(Ice.RemoteLoggerPrx,Ice.LogMessageType[],System.String[],System.Int32,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            attachRemoteLogger is called to attach a RemoteLogger object to 
+            the local Logger.
+            attachRemoteLogger calls init on the provided RemoteLogger proxy.
+            </summary>
+            <param name="prx">A proxy to the remote logger.
+            
+            </param>
+            <param name="messageTypes">The list of message types that the remote logger wishes to receive.
+            An empty list means no filtering (send all message types).
+            
+            </param>
+            <param name="traceCategories">The categories of traces that the remote logger wishes to receive.
+            This parameter is ignored if messageTypes is not empty and does not include trace.
+            An empty list means no filtering (send all trace categories). 
+            
+            </param>
+            <param name="messageMax">The maximum number of log messages (of all types) to be provided 
+            to RemoteLogger.init. A negative value requests all messages available.
+            
+            </param>
+            <param name="ctx__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="M:Ice.LoggerAdminPrxHelper.begin_detachRemoteLogger(Ice.RemoteLoggerPrx,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            detachRemoteLogger is called to detach a RemoteLogger object from
+            the local Logger.
+            </summary>
+            <param name="prx">A proxy to the remote logger.
+            
+            </param>
+            <param name="ctx__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="M:Ice.LoggerAdminPrxHelper.begin_getLog(Ice.LogMessageType[],System.String[],System.Int32,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            getLog retrieves log messages recently logged.
+            </summary>
+            <param name="messageTypes">The list of message types that the caller wishes to receive. 
+            An empty list means no filtering (send all message types).
+            
+            </param>
+            <param name="traceCategories">The categories of traces that caller wish to receive.
+            This parameter is ignored if messageTypes is not empty and does not include trace.
+            An empty list means no filtering (send all trace categories). 
+            
+            </param>
+            <param name="messageMax">The maximum number of log messages (of all types) to be returned. 
+            A negative value requests all messages available.
+            
+            </param>
+            <param name="ctx__">The Context map to send with the invocation.</param>
+        </member>
         <member name="T:Ice.RouterOperations_">
             <summary>
             The Ice router interface.
@@ -6530,19 +7236,6 @@
             </summary>
             <returns>The router's server proxy.</returns>
             <param name="current__">The Current object for the invocation.</param>
-        </member>
-        <member name="M:Ice.RouterOperations_.addProxy(Ice.ObjectPrx,Ice.Current)">
-             <summary>
-             Add new proxy information to the router's routing table.
-            
-             <para>addProxy() is deprecated, use addProxies() instead.</para>
-            
-             This operation is deprecated, and only used for old
-             Ice clients (older than version 3.1).
-             
-             </summary>
-             <param name="proxy">The proxy to add.</param>
-             <param name="current__">The Current object for the invocation.</param>
         </member>
         <member name="M:Ice.RouterOperations_.addProxies(Ice.ObjectPrx[],Ice.Current)">
             <summary>
@@ -6576,18 +7269,6 @@
             </summary>
             <returns>The router's server proxy.</returns>
         </member>
-        <member name="M:Ice.RouterOperationsNC_.addProxy(Ice.ObjectPrx)">
-             <summary>
-             Add new proxy information to the router's routing table.
-            
-             <para>addProxy() is deprecated, use addProxies() instead.</para>
-            
-             This operation is deprecated, and only used for old
-             Ice clients (older than version 3.1).
-             
-             </summary>
-             <param name="proxy">The proxy to add.</param>
-        </member>
         <member name="M:Ice.RouterOperationsNC_.addProxies(Ice.ObjectPrx[])">
             <summary>
             Add new proxy information to the router's routing table.
@@ -6596,6 +7277,45 @@
             
             </param>
             <returns>Proxies discarded by the router.</returns>
+        </member>
+        <member name="T:Ice.RouterFinderOperations_">
+            <summary>
+            This inferface should be implemented by services implementing the
+            Ice::Router interface.
+            It should be advertised through an Ice
+            object with the identity `Ice/RouterFinder'. This allows clients to
+            retrieve the router proxy with just the endpoint information of the
+            service.
+            </summary>
+        </member>
+        <member name="M:Ice.RouterFinderOperations_.getRouter(Ice.Current)">
+            <summary>
+            Get the router proxy implemented by the process hosting this
+            finder object.
+            The proxy might point to several replicas.
+            
+            </summary>
+            <returns>The router proxy.</returns>
+            <param name="current__">The Current object for the invocation.</param>
+        </member>
+        <member name="T:Ice.RouterFinderOperationsNC_">
+            <summary>
+            This inferface should be implemented by services implementing the
+            Ice::Router interface.
+            It should be advertised through an Ice
+            object with the identity `Ice/RouterFinder'. This allows clients to
+            retrieve the router proxy with just the endpoint information of the
+            service.
+            </summary>
+        </member>
+        <member name="M:Ice.RouterFinderOperationsNC_.getRouter">
+            <summary>
+            Get the router proxy implemented by the process hosting this
+            finder object.
+            The proxy might point to several replicas.
+            
+            </summary>
+            <returns>The router proxy.</returns>
         </member>
         <member name="T:Ice.RouterPrxHelper">
             <summary>
@@ -6623,31 +7343,6 @@
             </param>
             <returns>Proxies discarded by the router.</returns>
             <param name="context__">The Context map to send with the invocation.</param>
-        </member>
-        <member name="M:Ice.RouterPrxHelper.addProxy(Ice.ObjectPrx)">
-             <summary>
-             Add new proxy information to the router's routing table.
-            
-             <para>addProxy() is deprecated, use addProxies() instead.</para>
-            
-             This operation is deprecated, and only used for old
-             Ice clients (older than version 3.1).
-             
-             </summary>
-             <param name="proxy">The proxy to add.</param>
-        </member>
-        <member name="M:Ice.RouterPrxHelper.addProxy(Ice.ObjectPrx,System.Collections.Generic.Dictionary{System.String,System.String})">
-             <summary>
-             Add new proxy information to the router's routing table.
-            
-             <para>addProxy() is deprecated, use addProxies() instead.</para>
-            
-             This operation is deprecated, and only used for old
-             Ice clients (older than version 3.1).
-             
-             </summary>
-             <param name="proxy">The proxy to add.</param>
-             <param name="context__">The Context map to send with the invocation.</param>
         </member>
         <member name="M:Ice.RouterPrxHelper.getClientProxy">
             <summary>
@@ -6688,15 +7383,6 @@
             </param>
             <param name="ctx__">The Context map to send with the invocation.</param>
         </member>
-        <member name="M:Ice.RouterPrxHelper.begin_addProxy(Ice.ObjectPrx,System.Collections.Generic.Dictionary{System.String,System.String})">
-            <summary>
-            Add new proxy information to the router's routing table.
-            This operation is deprecated, and only used for old
-            </summary>
-            <param name="proxy">The proxy to add.</param>
-            <param name="ctx__">The Context map to send with the invocation.</param>
-            <para>addProxy() is deprecated, use addProxies() instead.</para>
-        </member>
         <member name="M:Ice.RouterPrxHelper.begin_getClientProxy(System.Collections.Generic.Dictionary{System.String,System.String})">
             <summary>
             Get the router's client proxy, i.e., the proxy to use for
@@ -6708,6 +7394,43 @@
             <summary>
             Get the router's server proxy, i.e., the proxy to use for
             forwarding requests from the server to the router.
+            </summary>
+            <param name="ctx__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="T:Ice.RouterFinderPrxHelper">
+            <summary>
+            This inferface should be implemented by services implementing the
+            Ice::Router interface.
+            It should be advertised through an Ice
+            object with the identity `Ice/RouterFinder'. This allows clients to
+            retrieve the router proxy with just the endpoint information of the
+            service.
+            </summary>
+        </member>
+        <member name="M:Ice.RouterFinderPrxHelper.getRouter">
+            <summary>
+            Get the router proxy implemented by the process hosting this
+            finder object.
+            The proxy might point to several replicas.
+            
+            </summary>
+            <returns>The router proxy.</returns>
+        </member>
+        <member name="M:Ice.RouterFinderPrxHelper.getRouter(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Get the router proxy implemented by the process hosting this
+            finder object.
+            The proxy might point to several replicas.
+            
+            </summary>
+            <returns>The router proxy.</returns>
+            <param name="context__">The Context map to send with the invocation.</param>
+        </member>
+        <member name="M:Ice.RouterFinderPrxHelper.begin_getRouter(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Get the router proxy implemented by the process hosting this
+            finder object.
+            The proxy might point to several replicas.
             </summary>
             <param name="ctx__">The Context map to send with the invocation.</param>
         </member>
@@ -6780,38 +7503,12 @@
         <member name="M:Ice.ServantLocator.deactivate(System.String)">
             <summary>
             Called when the object adapter in which this servant locator is
-            installed is deactivated.
+            installed is destroyed.
             </summary>
             <param name="category">Indicates for which category the servant locator
             is being deactivated.
             
             </param>
-        </member>
-        <member name="M:Ice.Stats.bytesSent(System.String,System.Int32)">
-             <summary>
-             Callback to report that data has been sent.
-            
-             <para>Stats is deprecated; you should use instead Ice Metrics or Ice Instrumentation</para>
-            
-             </summary>
-             <param name="protocol">The protocol over which data has been sent (for
-             example "tcp", "udp", or "ssl").
-             
-             </param>
-             <param name="num">How many bytes have been sent.</param>
-        </member>
-        <member name="M:Ice.Stats.bytesReceived(System.String,System.Int32)">
-             <summary>
-             Callback to report that data has been received.
-            
-             <para>Stats is deprecated; you should use instead Ice Metrics or Ice Instrumentation</para>
-            
-             </summary>
-             <param name="protocol">The protocol over which data has been received
-             (for example "tcp", "udp", or "ssl").
-             
-             </param>
-             <param name="num">How many bytes have been received.</param>
         </member>
     </members>
 </doc>
