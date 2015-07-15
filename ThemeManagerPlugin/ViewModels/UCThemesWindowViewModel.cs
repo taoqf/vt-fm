@@ -913,7 +913,7 @@ namespace ThemeManagerPlugin.ViewModels
                 foreach (DataRow row in dt.Rows)
                 {
                     OnLineModel model = new OnLineModel();
-                    string previewUrl = ConfigurationManager.AppSettings.Get("fileserverhttp") + "getfile?id=" + row["img_url"] + "&productid=" + ProductId;
+                    string previewUrl = ConfigurationManager.AppSettings.Get("downloadfilehttp") + "getfile?id=" + row["img_url"] + "&productid=" + ProductId;
                     
                     model.OnLineNo = row["skin_no"].ToString();
                     model.OnLineName = row["skin_name"].ToString();
