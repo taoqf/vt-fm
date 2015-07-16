@@ -327,7 +327,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <Style x:Key="MenuItemStyle" TargetType="{x:Type MenuItem}">
+    <Style x:Key="IWEMenuItemStyle" TargetType="{x:Type MenuItem}">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont" />
         <Setter Property="Template">
             <Setter.Value>
@@ -347,7 +347,6 @@
                                 <Rectangle Fill="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" HorizontalAlignment="Right" Width="1" Height="40"/>
                             </Grid>
                             <ContentPresenter Grid.Column="2" ContentSource="Header" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
-                            <!--箭头-->
                             <Path x:Name="RightArrow" Grid.Column="5" Data="M 0,0 L 4,3.5 L 0,7 Z" Fill="Black" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Path.LayoutTransform>
                                     <TransformGroup>
@@ -359,7 +358,7 @@
                                     </TransformGroup>
                                 </Path.LayoutTransform>
                             </Path>
-                            <Popup x:Name="PART_Popup" AllowsTransparency="true" Focusable="false" HorizontalOffset="15" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Bottom" VerticalOffset="-2">
+                            <Popup x:Name="PART_Popup" AllowsTransparency="true" Focusable="false" HorizontalOffset="15" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Bottom" VerticalOffset="-8">
                                 <Border x:Name="SubMenuBorder" BorderBrush="Transparent" BorderThickness="1" Background="Transparent" Padding="2">
                                     <ScrollViewer x:Name="SubMenuScrollViewer" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
                                         <ContentControl x:Name="SubMenuBorder1" IsTabStop="false" Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
