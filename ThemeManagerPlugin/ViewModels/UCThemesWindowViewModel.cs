@@ -755,7 +755,7 @@ namespace ThemeManagerPlugin.ViewModels
             Dictionary<string, object> userDic = ThemePluginOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
             if (userDic != null)
             {
-                ProductId = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "ProductId");
+                ProductId = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "SpaceId");
             }
         }
         /// <summary>

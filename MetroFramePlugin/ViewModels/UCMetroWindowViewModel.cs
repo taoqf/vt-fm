@@ -423,7 +423,7 @@ namespace MetroFramePlugin.ViewModels
             }
         }
 
-        private bool isLockMenu=false;//控制固定/浮动左侧菜单
+        private bool isLockMenu = false;//控制固定/浮动左侧菜单
         private VicButtonNormal lockbtn;
         #endregion
 
@@ -453,8 +453,8 @@ namespace MetroFramePlugin.ViewModels
                     OverlayWindow overlayWin = new OverlayWindow();
                     OverlayWindow.VicTabCtrl = mainTabControl;
                     overlayWin.Show();
-
                     UserLogin();
+                    ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
 
                 });
             }
@@ -603,7 +603,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                   
+
                     PoPupState = false;
 
                     isChangeUser = true; //切换用户时，从服务器拉取菜单必要操作
@@ -627,10 +627,9 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
                     PoPupState = false;
                     Process proc = new System.Diagnostics.Process();
-                    proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}&ProductId={3}", ConfigurationManager.AppSettings["updatepwdhttp"], UserCode, string.Format("{0}::{1}", ClientId, ProductId), ProductId);
+                    proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}", ConfigurationManager.AppSettings["updatepwdhttp"], UserCode, ClientId);
                     proc.Start();
                 });
             }
@@ -853,8 +852,8 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (isLockMenu==false)
-                    IsShowMenu = Visibility.Visible;
+                    if (isLockMenu == false)
+                        IsShowMenu = Visibility.Visible;
                 });
             }
         }
@@ -868,7 +867,7 @@ namespace MetroFramePlugin.ViewModels
                 return new RelayCommand(() =>
                 {
                     if (isLockMenu == false)
-                    IsShowMenu = Visibility.Collapsed;
+                        IsShowMenu = Visibility.Collapsed;
                 });
             }
         }
@@ -881,7 +880,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                     {
-                        VicButtonNormal lockBtn = (VicButtonNormal) x;
+                        VicButtonNormal lockBtn = (VicButtonNormal)x;
                         if (lockBtn.Content.Equals("锁定"))
                         {
                             lockBtn.Content = "解锁";
@@ -892,8 +891,8 @@ namespace MetroFramePlugin.ViewModels
                             lockBtn.Content = "锁定";
                             isLockMenu = false;
                         }
-                        
-                });
+
+                    });
             }
         }
         #endregion
@@ -1189,7 +1188,6 @@ namespace MetroFramePlugin.ViewModels
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
                     userRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
                     UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
-                    ProductId = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "ProductId");
                     this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 isFirstLogin = false;
@@ -2709,7 +2707,7 @@ namespace MetroFramePlugin.ViewModels
         private string channelId = string.Empty;
         private void GetPersonMenu()
         {
-            if (string.IsNullOrEmpty(ProductId) || string.IsNullOrEmpty(UserCode))
+            if (string.IsNullOrEmpty(ClientId) || string.IsNullOrEmpty(UserCode))
             {
                 return;
             }
@@ -2724,7 +2722,7 @@ namespace MetroFramePlugin.ViewModels
             conDic.Add("name", "pub_user_setting");
             List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
             Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConDic.Add("productid", ProductId);
+            tableConDic.Add("productid", ClientId);
             tableConDic.Add("userCode", UserCode);
             tableConList.Add(tableConDic);
             conDic.Add("tablecondition", tableConList);
@@ -2762,7 +2760,7 @@ namespace MetroFramePlugin.ViewModels
             conDic.Add("name", "pub_user_setting");
             List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
             Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConDic.Add("productid", ProductId);
+            tableConDic.Add("productid", ClientId);
             tableConDic.Add("userCode", UserCode);
             tableConList.Add(tableConDic);
             conDic.Add("tablecondition", tableConList);
@@ -2781,7 +2779,7 @@ namespace MetroFramePlugin.ViewModels
                     DataRow dr = dt.NewRow();
                     dr["_id"] = Guid.NewGuid();
                     dr["userCode"] = UserCode;
-                    dr["productid"] = ProductId;
+                    dr["productid"] = clientId;
                     dr["custom_menu"] = JsonHelper.ToJson(NewArea);
                     dt.Rows.Add(dr);
                 }

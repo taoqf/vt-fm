@@ -106,17 +106,16 @@
                             VerticalAlignment="Center"  BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
                 </controls:VicPasswordBoxKeyNormal>
                 <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Content="找回密码"  VerticalAlignment="Center"/>
-                <controls:VicComboBoxNormal Width="192" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" Height="24" Name="CloudSOAComboBox"  
+                    <controls:VicComboBoxNormal Width="192" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" Height="24" Name="CloudSOAComboBox"  
                         ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
                         SelectedValue="{Binding SelectedGallery,UpdateSourceTrigger=PropertyChanged}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding CloudSOAComboBoxSelectionChangedCommand}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </controls:VicComboBoxNormal>
-                    <controls:VicTextBoxNormal HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Row="3" Width="192" Height="24" Grid.Column="0" Name="toxProductId" VicText="{Binding LoginInfoModel.ProductId,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
-            </Grid>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding CloudSOAComboBoxSelectionChangedCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </controls:VicComboBoxNormal>
+                </Grid>
             <TextBlock Grid.Row="2" Grid.Column="0" Padding="5,0,0,0" HorizontalAlignment="Left" Name="ErrLabel"  Text="{Binding ErrMsg}" Foreground="Red" Height="22"/>
             <Border Grid.Row="2" Grid.Column="1" BorderBrush="#024672" BorderThickness="0">
                 <StackPanel Orientation="Horizontal"  VerticalAlignment="Center">

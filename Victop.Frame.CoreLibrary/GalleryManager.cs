@@ -74,7 +74,6 @@ namespace Victop.Frame.CoreLibrary
             EnterPriseGalleryInfo.RouterAddress = ConfigManager.GetAttributeOfNodeByName("Client", "Router");
             EnterPriseGalleryInfo.IsNeedRouter = ConfigManager.GetAttributeOfNodeByName("Client", "IsNeedRouter") == "0" ? true : false;
             EnterPriseGalleryInfo.ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
-            EnterPriseGalleryInfo.ProductId = string.IsNullOrEmpty(ConfigManager.GetAttributeOfNodeByName("UserInfo", "ProductId")) ? EnterPriseGalleryInfo.ClientId : ConfigManager.GetAttributeOfNodeByName("UserInfo", "ProductId");
             galleryManager.AddGallery(EnterPriseGalleryInfo);
             #endregion
             #region 内置飞道云

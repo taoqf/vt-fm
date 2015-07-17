@@ -79,8 +79,8 @@ namespace UserManagerService
                 userDic.Add("UserName", loginUserInfo.UserName);
                 userDic.Add("UserCode", loginUserInfo.UserCode);
                 userDic.Add("ClientNo", cloudGallyInfo.ClientNo);
-                userDic.Add("ProductId", cloudGallyInfo.ProductId);
                 userDic.Add("UserId", loginUserInfo.UserId);
+                userDic.Add("SpaceId", cloudGallyInfo.ClientId);
                 userDic.Add("UserImg", loginUserInfo.UserImg);
                 userDic.Add("UserRole", JsonHelper.ToJson(loginUserInfo.RoleList));
                 //20150507上午权限清空时的应急措施

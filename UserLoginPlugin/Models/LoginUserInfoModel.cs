@@ -47,24 +47,6 @@ namespace UserLoginPlugin.Models
             get { return clientNo; }
             set { clientNo = value; }
         }
-
-        private string productId;
-
-        public string ProductId
-        {
-            get
-            {
-                return productId;
-            }
-            set
-            {
-                if (productId != value)
-                {
-                    productId = value;
-                    RaisePropertyChanged("ProductId");
-                }
-            }
-        }
         /// <summary>
         /// 企业SOA
         /// </summary>

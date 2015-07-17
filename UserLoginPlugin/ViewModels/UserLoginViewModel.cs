@@ -313,7 +313,7 @@ namespace UserLoginPlugin.ViewModels
 
                             VicMessageBoxNormal.Show("密码过于简单,将转向修改密码界面！");
                             Process proc = new System.Diagnostics.Process();
-                            proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}&ProductId={3}", ConfigurationManager.AppSettings["updatepwdhttp"], LoginInfoModel.UserName, string.Format("{0}::{1}", LoginInfoModel.ClientId, LoginInfoModel.ProductId), LoginInfoModel.ProductId);
+                            proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}", ConfigurationManager.AppSettings["updatepwdhttp"], LoginInfoModel.UserName, LoginInfoModel.ClientId);
                             proc.Start();
                             return;
                         }
@@ -374,7 +374,6 @@ namespace UserLoginPlugin.ViewModels
                     setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
                     setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
                     setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-                    setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
                     setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                     setUserContentDic.Add("UserRole", SelectedRoleInfo.Role_No);
                     dataOp.SendAsyncMessage(messageType, setUserContentDic);
@@ -423,7 +422,6 @@ namespace UserLoginPlugin.ViewModels
             LoginInfoModel.UserName = ConfigManager.GetAttributeOfNodeByName("UserInfo", "User");
             LoginInfoModel.UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
             LoginInfoModel.ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
-            LoginInfoModel.ProductId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ProductId");
             switch (versionString)
             {
                 case null:
@@ -496,7 +494,6 @@ namespace UserLoginPlugin.ViewModels
                         setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
                         setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
                         setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-                        setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
                         setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                         dataOp.SendAsyncMessage(messageType, setUserContentDic);
                         Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
@@ -512,7 +509,6 @@ namespace UserLoginPlugin.ViewModels
                             setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
                             setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
                             setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-                            setUserContentDic.Add("ProductId", LoginInfoModel.ProductId);
                             setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                             setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
                             dataOp.SendAsyncMessage(messageType, setUserContentDic);
@@ -592,7 +588,6 @@ namespace UserLoginPlugin.ViewModels
             Dictionary<string, string> userDic = new Dictionary<string, string>();
             userDic.Add("User", LoginInfoModel.UserName);
             userDic.Add("Pwd", LoginInfoModel.UserPwd);
-            userDic.Add("ProductId", LoginInfoModel.ProductId);
             ConfigManager.SaveAttributeOfNodeByName("UserInfo", userDic);
             DataMessageOperation messageOp = new DataMessageOperation();
             string MessageType = "MongoDataChannelService.findBusiData";
@@ -605,7 +600,7 @@ namespace UserLoginPlugin.ViewModels
             conDic.Add("name", "pub_product");
             List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
             Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConDic.Add("productid", LoginInfoModel.ProductId);
+            tableConDic.Add("productid", LoginInfoModel.ClientId);
             tableConList.Add(tableConDic);
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
@@ -617,7 +612,7 @@ namespace UserLoginPlugin.ViewModels
                 DataSet mastDs = messageOp.GetData(channelId, "[\"pub_product\"]");
                 if (mastDs != null && mastDs.Tables.Contains("dataArray") && mastDs.Tables["dataArray"].Rows.Count > 0)
                 {
-                    DataRow[] drs = mastDs.Tables["dataArray"].Select(string.Format("productid='{0}'", LoginInfoModel.ProductId));
+                    DataRow[] drs = mastDs.Tables["dataArray"].Select(string.Format("productid='{0}'", LoginInfoModel.ClientId));
                     if (drs != null && drs.Count() > 0)
                     {
                         LoginInfoModel.ClientNo = drs[0]["client_no"].ToString();
