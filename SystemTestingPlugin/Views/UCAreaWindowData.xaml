@@ -27,8 +27,6 @@
                                 <ctrl:VicTextBoxNormal Width="200" Height="24" Name="tBoxModelId" VicText="{Binding DataInfoModel.ModelId}" TabIndex="1"/>
                                 <ctrl:VicLabelNormal>SystemId:</ctrl:VicLabelNormal>
                                 <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxSystemId" VicText="{Binding DataInfoModel.SystemId}" TabIndex="2"/>
-                                <ctrl:VicLabelNormal>ConfigsystemId</ctrl:VicLabelNormal>
-                                <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxConfigsystemId" VicText="{Binding DataInfoModel.ConfigsystemId}" TabIndex="3"/>
                                 <ctrl:VicLabelNormal>RefSystemId</ctrl:VicLabelNormal>
                                 <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxRefSystemId" VicText="{Binding DataInfoModel.RefSystemId}" TabIndex="4"/>
                                 <ctrl:VicLabelNormal>SpaceId</ctrl:VicLabelNormal>

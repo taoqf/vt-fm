@@ -17,6 +17,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// Block名称
         /// </summary>
+        [JsonIgnore]
         public string BlockName
         {
             get
@@ -33,6 +34,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 数据集类型
         /// </summary>
+        [JsonIgnore]
         public string DatasetType
         {
             get
@@ -49,6 +51,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 上级Block的名称
         /// </summary>
+        [JsonIgnore]
         public string Superiors
         {
             get
@@ -65,6 +68,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 表名
         /// </summary>
+        [JsonIgnore]
         public string TableName
         {
             get
@@ -81,6 +85,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 条件(检索条件、排序及分页)
         /// </summary>
+        [JsonIgnore]
         public ViewsBlockConditionModel Conditions
         {
             get
@@ -97,6 +102,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// Block所属View
         /// </summary>
+        [JsonIgnore]
         public DefinViewsModel ViewModel
         {
             get;
@@ -111,6 +117,7 @@ namespace Victop.Frame.CmptRuntime
             get;
             set;
         }
+        [JsonIgnore]
         private DataSet blockDataSet;
         /// <summary>
         /// 块数据集

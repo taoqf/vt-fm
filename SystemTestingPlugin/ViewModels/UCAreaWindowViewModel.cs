@@ -218,13 +218,13 @@ namespace SystemTestingPlugin.ViewModels
                         DataMessageOperation messageOp = new DataMessageOperation();
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("systemid", DataInfoModel.SystemId);
-                        contentDic.Add("configsystemid", DataInfoModel.ConfigsystemId);
+                        //contentDic.Add("configsystemid", DataInfoModel.ConfigsystemId);
                         contentDic.Add("refsystemid", string.IsNullOrEmpty(DataInfoModel.RefSystemId) ? DataInfoModel.SystemId : DataInfoModel.RefSystemId);
                         contentDic.Add("emptydataflag", DataInfoModel.EmptyFlag ? 0 : 1);
                         contentDic.Add("modelid", DataInfoModel.ModelId);
                         if (!string.IsNullOrEmpty(DataInfoModel.SpaceId))
                         {
-                            contentDic.Add("spaceId", DataInfoModel.SpaceId);
+                            contentDic.Add("spaceid", DataInfoModel.SpaceId);
                         }
                         if (!string.IsNullOrEmpty(DataInfoModel.ConditionStr))
                         {
@@ -274,11 +274,6 @@ namespace SystemTestingPlugin.ViewModels
                     if (string.IsNullOrEmpty(DataInfoModel.SystemId))
                     {
                         DataInfoModel.VertifyMsg = "请输入SystemId";
-                        return false;
-                    }
-                    if (string.IsNullOrEmpty(DataInfoModel.ConfigsystemId))
-                    {
-                        DataInfoModel.VertifyMsg = "请输入ConfigsystemId";
                         return false;
                     }
                     if (string.IsNullOrEmpty(DataInfoModel.TableName))
