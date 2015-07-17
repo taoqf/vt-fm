@@ -608,9 +608,9 @@
                     </Grid>
                     <!--</Border>-->
                     <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
+                        <!--<EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
                             <BeginStoryboard Storyboard="{StaticResource Storyboard2}"/>
-                        </EventTrigger>
+                        </EventTrigger>-->
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="StrokeThickness" Value="5" TargetName="ellipseCore"/>
                         </Trigger>
