@@ -19,6 +19,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 表条件
         /// </summary>
+        [JsonIgnore]
         public Dictionary<string, object> TableCondition
         {
             get { return tableCondition; }
@@ -32,6 +33,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 表排序
         /// </summary>
+        [JsonIgnore]
         public Dictionary<string, object> TableSort
         {
             get { return tableSort; }
@@ -41,10 +43,11 @@ namespace Victop.Frame.CmptRuntime
         /// 页面内容大小
         /// </summary>
         [JsonProperty(PropertyName = "pagesize")]
-        private int pageSize = -1;
+        private int pageSize = 0;
         /// <summary>
         /// 页面内容大小
         /// </summary>
+        [JsonIgnore]
         public int PageSize
         {
             get { return pageSize; }
@@ -58,6 +61,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 页码
         /// </summary>
+        [JsonIgnore]
         public int PageIndex
         {
             get { return pageIndex; }

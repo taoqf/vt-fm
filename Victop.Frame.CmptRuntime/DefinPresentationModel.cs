@@ -20,6 +20,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 呈现层Block
         /// </summary>
+        [JsonIgnore]
         public ObservableCollection<PresentationBlockModel> PresentationBlocks
         {
             get

@@ -21,6 +21,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 组件视图
         /// </summary>
+        [JsonIgnore]
         public ObservableCollection<DefinViewsModel> CompntViews
         {
             get
@@ -46,6 +47,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 组件展示层
         /// </summary>
+        [JsonIgnore]
         public DefinPresentationModel CompntPresentation
         {
             get

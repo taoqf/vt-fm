@@ -22,6 +22,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 区块名称
         /// </summary>
+        [JsonIgnore]
         public string BlockName
         {
             get
@@ -42,6 +43,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 上级Block名称
         /// </summary>
+        [JsonIgnore]
         public string Superiors
         {
             get { return superiors; }
@@ -55,6 +57,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 关键字(多个关键字时用"|"分隔)
         /// </summary>
+        [JsonIgnore]
         public string Keywords
         {
             get { return keywords; }
@@ -68,6 +71,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 方法
         /// </summary>
+        [JsonIgnore]
         public string Method
         {
             get { return method; }
@@ -81,6 +85,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// View层名称
         /// </summary>
+        [JsonIgnore]
         public string ViewName
         {
             get { return viewName; }
@@ -94,6 +99,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 自动加载
         /// </summary>
+        [JsonIgnore]
         public bool AutoRender
         {
             get { return autoRender; }
@@ -107,6 +113,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 绑定View中的Block名称
         /// </summary>
+        [JsonIgnore]
         public string BindingBlock
         {
             get { return bindingBlock; }
@@ -120,6 +127,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 上级视图Block
         /// </summary>
+        [JsonIgnore]
         public PresentationBlockModel ParentPreBlockModel
         {
             get { return parentPreBlockModel; }
@@ -137,10 +145,12 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 展示层Block的数据表
         /// </summary>
+        [JsonIgnore]
         private DataTable viewBlockDataTable;
         /// <summary>
         /// 展示层Block的数据表
         /// </summary>
+        [JsonIgnore]
         public DataTable ViewBlockDataTable
         {
             get
@@ -161,10 +171,12 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 展示层Block当前选择行
         /// </summary>
+        [JsonIgnore]
         private DataRow preBlockSelectedRow;
         /// <summary>
         /// 展示层Block当前选择行
         /// </summary>
+        [JsonIgnore]
         public DataRow PreBlockSelectedRow
         {
             get

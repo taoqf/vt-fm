@@ -23,6 +23,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 视图名称
         /// </summary>
+        [JsonIgnore]
         public string ViewName
         {
             get { return viewName; }
@@ -36,6 +37,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 视图模型
         /// </summary>
+        [JsonIgnore]
         public string ModelId
         {
             get { return modelId; }
@@ -49,6 +51,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 加载数据方式 0不加载, 1带缓存, 2不使用缓存 
         /// </summary>
+        [JsonIgnore]
         public int LoadData
         {
             get { return loadData; }
@@ -62,6 +65,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 是否编辑
         /// </summary>
+        [JsonIgnore]
         public bool EditAble
         {
             get { return editAble; }
@@ -76,6 +80,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 视图Block
         /// </summary>
+        [JsonIgnore]
         public ObservableCollection<ViewsBlockModel> ViewBlocks
         {
             get
@@ -110,6 +115,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// SystemId
         /// </summary>
+        [JsonIgnore]
         public string SystemId
         {
             get
@@ -129,6 +135,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 引用数据的SystemId
         /// </summary>
+        [JsonIgnore]
         public string RefSystemId
         {
             get
