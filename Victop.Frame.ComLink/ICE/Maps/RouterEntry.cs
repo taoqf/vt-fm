@@ -109,11 +109,17 @@ namespace Victop.Frame.ComLink.ICE.Maps
         /// </summary>
         public void StartRefresh()
         {
-            long TimeOut = RouterProxy.getSessionTimeout();
-            RefreshRate = TimeOut * 1000 / 2;
-            RouterEntries = this;
-            RefreshRouterThread = new Thread(new ParameterizedThreadStart(RefreshSessionThreadProc));
-            RefreshRouterThread.Start(this);
+            int acmtimeout = RouterProxy.getACMTimeout();
+            if (acmtimeout > 0)
+            {
+                Connection conn = RouterProxy.ice_getCachedConnection();
+                conn.setACM(acmtimeout, Ice.ACMClose.CloseOff, Ice.ACMHeartbeat.HeartbeatAlways);
+            }
+            //long TimeOut = RouterProxy.getSessionTimeout();
+            //RefreshRate = TimeOut * 1000 / 2;
+            //RouterEntries = this;
+            //RefreshRouterThread = new Thread(new ParameterizedThreadStart(RefreshSessionThreadProc));
+            //RefreshRouterThread.Start(this);
         }
         /// <summary>
         /// 路由刷新线程

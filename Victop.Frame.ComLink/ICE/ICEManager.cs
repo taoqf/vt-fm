@@ -486,7 +486,7 @@ namespace Victop.Frame.ComLink.ICE
         /// <returns></returns>
         private Reply DefaultSendMessage(MessageEndpointPrx serverProxy, RequestMessage message, bool isAsync, bool isCallback)
         {
-
+            isCallback = true;
             // 格式化消息，发送
             Message msg = MessageUtil.SOAmsg2ICEmsg(message);
             try
