@@ -223,10 +223,12 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 保存数据
         /// </summary>
-        public bool SaveData()
+        /// <param name="saveToServer">保存到服务端</param>
+        public bool SaveData(bool saveToServer)
         {
             if (!string.IsNullOrEmpty(ViewId))
             {
+                bool result = false;
                 ViewsBlockModel blockmodel = ViewBlocks.FirstOrDefault(it => it.Superiors.Equals("root"));
                 if (blockmodel.BlockDataPath != null && blockmodel.BlockDataPath.Count > 0)
                 {
@@ -234,7 +236,11 @@ namespace Victop.Frame.CmptRuntime
                     dataOp.SaveData(ViewId, JsonHelper.ToJson(blockmodel.BlockDataPath));
                     SaveBlockData(ViewId, blockmodel);
                 }
-                return SendSaveDataMessage();
+                if (saveToServer)
+                {
+                    result = SendSaveDataMessage();
+                }
+                return result;
             }
             else
             {
