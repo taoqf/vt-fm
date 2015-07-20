@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Victop.Wpf.Controls;
+using Victop.Frame.CmptRuntime;
+using Victop.Frame.PublicLib.Helpers;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -16,28 +18,147 @@ namespace Victop.Frame.CmptRuntime
     /// </summary>
     public class TemplateControl : UserControl
     {
+        #region 公用属性
         /// <summary>
-        /// 组件定义实体
+        /// 组件定义
         /// </summary>
-        public CompntDefinModel DefinModel;
+        private CompntDefinModel DefinModel;
+
         /// <summary>
-        /// 初始化
+        /// 系统Id
         /// </summary>
-        /// <param name="e"></param>
-        protected override void OnInitialized(EventArgs e)
+        public string SystemId
         {
-            if (!DesignerProperties.GetIsInDesignMode(this))
+            get { return (string)GetValue(SystemIdProperty); }
+            set { SetValue(SystemIdProperty, value); }
+        }
+        /// <summary>
+        /// 功能Id
+        /// </summary>
+        public string FormId
+        {
+            get { return (string)GetValue(FormIdProperty); }
+            set { SetValue(FormIdProperty, value); }
+        }
+        /// <summary>
+        /// 引用数据Id
+        /// </summary>
+        public string RefSystemId
+        {
+            get { return (string)GetValue(RefSystemIdProperty); }
+            set { SetValue(RefSystemIdProperty, value); }
+        }
+        /// <summary>
+        /// Vic错误信息
+        /// </summary>
+        public string VicErrorMsg
+        {
+            get { return (string)GetValue(VicErrorMsgProperty); }
+            set { SetValue(VicErrorMsgProperty, value); }
+        }
+        #endregion
+
+        #region 依赖属性
+        /// <summary>
+        /// 系统Id
+        /// </summary>
+        public static readonly DependencyProperty SystemIdProperty = DependencyProperty.Register("SystemId", typeof(string), typeof(TemplateControl));
+        /// <summary>
+        /// 功能Id
+        /// </summary>
+        public static readonly DependencyProperty FormIdProperty = DependencyProperty.Register("FormId", typeof(string), typeof(TemplateControl));
+        /// <summary>
+        /// 引用数据Id
+        /// </summary>
+        public static readonly DependencyProperty RefSystemIdProperty = DependencyProperty.Register("RefSystemId", typeof(string), typeof(TemplateControl));
+        /// <summary>
+        /// Vic错误信息
+        /// </summary>
+        public static readonly DependencyProperty VicErrorMsgProperty = DependencyProperty.Register("VicErrorMsg", typeof(string), typeof(TemplateControl));
+        #endregion
+        #region 公用方法
+        /// <summary>
+        /// 初始化飞道用户控件
+        /// </summary>
+        /// <param name="cmpntDefineContent">组件定义内容</param>
+        public bool InitVictopUserControl(string cmpntDefineContent)
+        {
+            try
             {
-                OrgnizeRuntime.InitCompnt(DefinModel);
-                if (DefinModel.CompntViews.Count > 0)
+                DefinModel = JsonHelper.ToObject<CompntDefinModel>(cmpntDefineContent);
+                if (DefinModel != null)
                 {
-                    foreach (DefinViewsModel item in DefinModel.CompntViews)
+                    OrgnizeRuntime.InitCompnt(DefinModel);
+                    PresentationBlockModel blockModel = DefinModel.CompntPresentation.PresentationBlocks.FirstOrDefault(it => it.Superiors.Equals("root"));
+                    if (blockModel != null)
                     {
-                        item.DoRender();
+                        return CheckPresentationBlock(this, DefinModel.CompntPresentation.PresentationBlocks.FirstOrDefault(it => it.Superiors.Equals("root")).BlockName);
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
+                else
+                {
+                    VicErrorMsg = "组件定义内容异常";
+                    return false;
+                }
             }
-            base.OnInitialized(e);
+            catch (Exception ex)
+            {
+                VicErrorMsg = ex.Message;
+                return false;
+            }
         }
+        /// <summary>
+        /// 获取展示层实体
+        /// </summary>
+        /// <param name="blockName">展示层名称</param>
+        /// <returns></returns>
+        public PresentationBlockModel GetPresentationBlockModel(string blockName)
+        {
+            try
+            {
+                PresentationBlockModel blockModel = DefinModel.CompntPresentation.PresentationBlocks.FirstOrDefault(it => it.BlockName.Equals(blockName));
+                return blockModel;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        #endregion
+        #region 私有方法
+        /// <summary>
+        /// 检查展示层Block
+        /// </summary>
+        /// <param name="obj">界面元素</param>
+        /// <param name="ctrlName">元素名称</param>
+        /// <returns></returns>
+        private bool CheckPresentationBlock(DependencyObject obj, string ctrlName)
+        {
+            bool result = false;
+            VicGridNormal pBlockGrid = XamlTreeHelper.GetChildObjectByName<VicGridNormal>(obj, ctrlName);
+            if (pBlockGrid == null)
+            {
+                VicErrorMsg = string.Format("未查询到名称为{0}的界面元素", ctrlName);
+                return result;
+            }
+            else
+            {
+                PresentationBlockModel blockModel = DefinModel.CompntPresentation.PresentationBlocks.FirstOrDefault(it => it.Superiors.Equals(ctrlName));
+                if (blockModel != null)
+                {
+                    result = CheckPresentationBlock(pBlockGrid, blockModel.BlockName);
+                }
+                else
+                {
+                    result = true;
+                }
+            }
+            return result;
+        }
+        #endregion
     }
 }

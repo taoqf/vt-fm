@@ -15,13 +15,20 @@ namespace Victop.Frame.CmptRuntime
         /// 初始化组件
         /// </summary>
         /// <param name="runtime"></param>
-        public static void InitCompnt(CompntDefinModel runtime)
+        internal static void InitCompnt(CompntDefinModel runtime)
         {
             try
             {
                 RebulidViews(runtime);
                 PresentationBindingViewBlock(runtime);
                 RebuildAllDataPath(runtime);
+                if (runtime.CompntViews.Count > 0)
+                {
+                    foreach (DefinViewsModel item in runtime.CompntViews)
+                    {
+                        item.DoRender();
+                    }
+                }
             }
             catch (Exception ex)
             {

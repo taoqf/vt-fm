@@ -10,7 +10,6 @@ namespace SystemTestingPlugin.Views
     {
         public UCTemplateControlDemo()
         {
-            DefinModel = JsonHelper.ToObject<CompntDefinModel>(FileHelper.ReadFitData("newcmpnt"));
             InitializeComponent();
         }
     }
