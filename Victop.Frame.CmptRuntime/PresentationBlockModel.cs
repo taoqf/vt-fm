@@ -333,7 +333,7 @@ namespace Victop.Frame.CmptRuntime
         /// 保存数据
         /// </summary>
 
-        public void SaveData()
+        public bool SaveData()
         {
             if (!string.IsNullOrEmpty(Keywords) || !string.IsNullOrEmpty(ParentPreBlockModel.keywords))
             {
@@ -369,7 +369,7 @@ namespace Victop.Frame.CmptRuntime
                 }
                 ViewBlockDataTable.AcceptChanges();
             }
-            ViewBlock.ViewModel.SaveData();
+            return ViewBlock.ViewModel.SaveData();
         }
     }
 }

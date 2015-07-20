@@ -54,6 +54,7 @@ namespace MetroFramePlugin.ViewModels
                     Rect workingRectangle = SystemParameters.WorkArea;
                     overlayWin.Left = workingRectangle.Width - overlayWin.Width - 10;
                     overlayWin.Top = overlayWin.Height;
+                   
                 });
             }
         }
@@ -87,11 +88,29 @@ namespace MetroFramePlugin.ViewModels
                 return new RelayCommand(() =>
                 {
                     VicGridNormal gridNormal = (VicGridNormal)overlayWin.FindName("girPluginList");
-                    gridNormal.Children.Clear();
                     gridNormal.Children.Add(GetActivePluginInfo());
+                    gridNormal.Children.Clear();
                     PluginListShow = true;
                     DisplayOverlayWindowPlugin overlay = new DisplayOverlayWindowPlugin();
                     overlay.Show();
+                });
+            }
+        }
+        public ICommand menuItemPCloseWinClickCommand
+        {
+            get {
+                return new RelayCommand(() =>
+                {
+
+                    WindowCollection WinCollection = Application.Current.Windows;
+                    foreach (Window item in WinCollection)
+                    {
+                        if (item.Name.Equals("overlayWindow"))
+                        {
+                            item.Hide();
+                            break;
+                        }
+                    }
                 });
             }
         }
