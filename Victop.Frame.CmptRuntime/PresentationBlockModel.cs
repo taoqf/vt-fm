@@ -332,8 +332,8 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 保存数据
         /// </summary>
-
-        public bool SaveData()
+        ///<param name="saveToServer">是否保存到服务端</param>
+        public bool SaveData(bool saveToServer = true)
         {
             if (!string.IsNullOrEmpty(Keywords) || !string.IsNullOrEmpty(ParentPreBlockModel.keywords))
             {
@@ -369,7 +369,7 @@ namespace Victop.Frame.CmptRuntime
                 }
                 ViewBlockDataTable.AcceptChanges();
             }
-            return ViewBlock.ViewModel.SaveData();
+            return ViewBlock.ViewModel.SaveData(saveToServer);
         }
     }
 }
