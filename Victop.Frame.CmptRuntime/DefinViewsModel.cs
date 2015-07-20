@@ -147,7 +147,9 @@ namespace Victop.Frame.CmptRuntime
                 refSystemId = value;
             }
         }
-
+        /// <summary>
+        /// 执行渲染
+        /// </summary>
         public void DoRender()
         {
             if (loadData.Equals(1))
@@ -155,6 +157,9 @@ namespace Victop.Frame.CmptRuntime
                 SearchData();
             }
         }
+        /// <summary>
+        /// 检索数据
+        /// </summary>
         public void SearchData()
         {
             string MessageType = "MongoDataChannelService.findBusiData";
@@ -218,7 +223,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 保存数据
         /// </summary>
-        public void SaveData()
+        public bool SaveData()
         {
             if (!string.IsNullOrEmpty(ViewId))
             {
@@ -229,6 +234,11 @@ namespace Victop.Frame.CmptRuntime
                     dataOp.SaveData(ViewId, JsonHelper.ToJson(blockmodel.BlockDataPath));
                     SaveBlockData(ViewId, blockmodel);
                 }
+                return SendSaveDataMessage();
+            }
+            else
+            {
+                return false;
             }
         }
         private void SaveBlockData(string viewId, ViewsBlockModel blockModel)
@@ -248,6 +258,25 @@ namespace Victop.Frame.CmptRuntime
                 {
                     SaveBlockData(viewId, item);
                 }
+            }
+        }
+        private bool SendSaveDataMessage()
+        {
+            string messageType = "MongoDataChannelService.saveBusiData";
+            DataMessageOperation messageOp = new DataMessageOperation();
+            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+            contentDic.Add("systemid", SystemId);
+            contentDic.Add("refsystemid", RefSystemId);
+            contentDic.Add("modelid", ModelId);
+            contentDic.Add("DataChannelId", ViewId);
+            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(messageType, contentDic);
+            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
