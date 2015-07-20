@@ -94,6 +94,7 @@
     <Compile Include="Helpers\WebBrowserHelperClass\WebBrowserHelper.WebBrowserEvent.cs" />
     <Compile Include="Helpers\WebBrowserHelperClass\DWebBrowserEvents2.cs" />
     <Compile Include="Helpers\WebBrowserHelperClass\HelperRegistery.cs" />
+    <Compile Include="Helpers\XamlTreeHelper.cs" />
     <Compile Include="Managers\ConfigManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

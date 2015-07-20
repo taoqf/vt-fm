@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Victop.Server.Controls.Models;
 using Victop.Frame.CmptRuntime;
 using System.Data;
+using Victop.Frame.PublicLib.Helpers;
 
 namespace SystemTestingPlugin.ViewModels
 {
@@ -75,12 +76,15 @@ namespace SystemTestingPlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     mainViewControl = (TemplateControl)x;
-                    PreOneBlockModel = mainViewControl.DefinModel.CompntPresentation.PresentationBlocks.First(it => it.BlockName.Equals("p_1"));
-                    PreOneBlockModel.GetData();
-                    PreOneBlockModel.PreBlockSelectedRow = PreOneBlockModel.ViewBlockDataTable.Rows[temp];
-                    PreOneBlockModel.SetCurrentRow(PreOneBlockModel.PreBlockSelectedRow);
-                    PreOneOfOneBlockModel = mainViewControl.DefinModel.CompntPresentation.PresentationBlocks.First(it => it.BlockName.Equals("p_1_1"));
-                    PreOneOfOneBlockModel.GetData();
+                    if (mainViewControl.InitVictopUserControl(string.Empty))
+                    {
+                        PreOneBlockModel = mainViewControl.GetPresentationBlockModel("p_1");
+                        PreOneBlockModel.GetData();
+                        PreOneBlockModel.PreBlockSelectedRow = PreOneBlockModel.ViewBlockDataTable.Rows[temp];
+                        PreOneBlockModel.SetCurrentRow(PreOneBlockModel.PreBlockSelectedRow);
+                        PreOneOfOneBlockModel = mainViewControl.GetPresentationBlockModel("p_1_1");
+                        PreOneOfOneBlockModel.GetData();
+                    }
                 });
             }
         }
