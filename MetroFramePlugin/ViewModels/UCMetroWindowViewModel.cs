@@ -778,21 +778,21 @@ namespace MetroFramePlugin.ViewModels
         #endregion
 
         #region 单击插件图标命令
-        public ICommand btnPluginIcoClickCommand
-        {
-            get
-            {
-                return new RelayCommand<object>((x) =>
-                {
-                    if (x != null)
-                    {
-                        MenuModel menuModel = (MenuModel)x;
-                        //LoadPlugin(menuModel);
-                        OpenJsonMenuPlugin(menuModel);
-                    }
-                });
-            }
-        }
+        //public ICommand btnPluginIcoClickCommand
+        //{
+        //    get
+        //    {
+        //        return new RelayCommand<object>((x) =>
+        //        {
+        //            if (x != null)
+        //            {
+        //                MenuModel menuModel = (MenuModel)x;
+        //                //LoadPlugin(menuModel);
+        //             OpenJsonMenuPlugin(menuModel);
+        //            }
+        //        });
+        //    }
+        //}
         #endregion
 
         #region 单击插件运行命令
@@ -806,7 +806,7 @@ namespace MetroFramePlugin.ViewModels
                     {
                         MenuModel menuModel = (MenuModel)x;
                         //LoadPlugin(menuModel);
-                        OpenJsonMenuPlugin(menuModel);
+                      OpenJsonMenuPlugin(menuModel);
                     }
                 });
             }
@@ -2738,6 +2738,28 @@ namespace MetroFramePlugin.ViewModels
                 {
                     string areaMenuList = staffDrs[0]["custom_menu"].ToString();
                     NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
+                    BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
+                    foreach (AreaMenu item in NewArea)
+                    {
+                        if (item.PluginList.Count > 0)
+                        {
+                            foreach (MenuModel pluginitem in item.PluginList)
+                            {
+                                MenuInfo menuInfo = resourceInfo.ResourceMnenus.FirstOrDefault(it => it.Menu_no.Equals(pluginitem.MenuNo));
+                                if (menuInfo != null)
+                                {
+                                    pluginitem.RoleAuthList.Clear();
+                                    foreach (MenuRoleInfo roleitem in menuInfo.Roles)
+                                    {
+                                       MenuRoleAuth  role=new MenuRoleAuth();
+                                        role.AuthCode = roleitem.Auth_code;
+                                        role.Role_No = roleitem.Role_no;
+                                        pluginitem.RoleAuthList.Add(role);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
