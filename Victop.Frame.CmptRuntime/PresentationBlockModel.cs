@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Data;
 using Victop.Server.Controls.Models;
 using Victop.Frame.PublicLib.Helpers;
+using Victop.Frame.DataMessageManager;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -370,6 +371,16 @@ namespace Victop.Frame.CmptRuntime
                 ViewBlockDataTable.AcceptChanges();
             }
             return ViewBlock.ViewModel.SaveData(saveToServer);
+        }
+        /// <summary>
+        /// 重置数据
+        /// </summary>
+        /// <param name="cascading">是否级联</param>
+        /// <returns></returns>
+        public bool ResetData(bool cascading)
+        {
+            DataMessageOperation dataOp = new DataMessageOperation();
+            return dataOp.ResetData(ViewBlock.ViewId, JsonHelper.ToJson(ViewBlock.BlockDataPath), cascading);
         }
     }
 }
