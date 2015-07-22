@@ -308,12 +308,12 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                     {
-                            if (LoginInfoModel.UserPwd.Equals("111111"))
+                        if (LoginInfoModel.UserPwd.Equals("111111"))
+                        {
+                            if (VicMessageBoxNormal.Show("密码过于简单,将转向修改密码界面", "标题", MessageBoxButton.OKCancel, MessageBoxImage.Information) == MessageBoxResult.OK)
                             {
-
-                                VicMessageBoxNormal.Show("密码过于简单,将转向修改密码界面！");
                                 Process proc = new System.Diagnostics.Process();
-                                proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}&ProductId={3}", ConfigurationManager.AppSettings["updatepwdhttp"], LoginInfoModel.UserName, string.Format("{0}::{1}", LoginInfoModel.ClientId,LoginInfoModel.ProductId), LoginInfoModel.ProductId);
+                                proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}&ProductId={3}", ConfigurationManager.AppSettings["updatepwdhttp"], LoginInfoModel.UserName, string.Format("{0}::{1}", LoginInfoModel.ClientId, LoginInfoModel.ProductId), LoginInfoModel.ProductId);
                                 proc.Start();
                                 return;
                             }
@@ -323,7 +323,15 @@ namespace UserLoginPlugin.ViewModels
                                 MainViewEnable = false;
                                 UserLogin();
                             }
-                      
+                           
+                        }
+                        else
+                        {
+                            IsRingShow = true;
+                            MainViewEnable = false;
+                            UserLogin();
+                        }
+                        
                     }, () => { return CheckUserLogin(); });
             }
         }
@@ -393,7 +401,7 @@ namespace UserLoginPlugin.ViewModels
                     {
                         return false;
                     }
-                    return true;
+                    return true;                     
                 });
             }
         }
