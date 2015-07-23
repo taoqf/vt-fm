@@ -777,22 +777,22 @@ namespace MetroFramePlugin.ViewModels
         }
         #endregion
 
-        #region 单击插件图标命令
-        //public ICommand btnPluginIcoClickCommand
-        //{
-        //    get
-        //    {
-        //        return new RelayCommand<object>((x) =>
-        //        {
-        //            if (x != null)
-        //            {
-        //                MenuModel menuModel = (MenuModel)x;
-        //                //LoadPlugin(menuModel);
-        //             OpenJsonMenuPlugin(menuModel);
-        //            }
-        //        });
-        //    }
-        //}
+        #region 单击左侧菜单插件命令
+        public ICommand btnPluginIcoClickCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                    if (x != null)
+                    {
+                        MenuModel menuModel = (MenuModel)x;
+                        //LoadPlugin(menuModel);
+                        OpenJsonMenuPlugin(menuModel);
+                    }
+                });
+            }
+        }
         #endregion
 
         #region 单击插件运行命令
