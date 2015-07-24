@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -468,6 +468,7 @@ namespace Victop.Frame.DataChannel
                         {
                             newCurdList.Add(item);
                         }
+                        bool existFlag = false;
                         foreach (Dictionary<string, object> item in delCurdList)
                         {
                             if (item["flag"].ToString().Equals("4") && JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
@@ -477,10 +478,7 @@ namespace Victop.Frame.DataChannel
                                 if (saveData["_id"].ToString().Equals(delKey))
                                 {
                                     newCurdList.Remove(item);
-                                }
-                                else
-                                {
-                                    newCurdList.Add(curdDic);
+                                    break;
                                 }
                             }
                             else if (JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
@@ -491,18 +489,14 @@ namespace Victop.Frame.DataChannel
                                 {
                                     newCurdList.Remove(item);
                                     newCurdList.Add(curdDic);
-                                    break;
-                                }
-                                else
-                                {
-                                    newCurdList.Add(curdDic);
+                                    existFlag = true;
                                     break;
                                 }
                             }
-                            else
-                            {
-                                newCurdList.Add(curdDic);
-                            }
+                        }
+                        if (!existFlag)
+                        {
+                            newCurdList.Add(curdDic);
                         }
                         dataOp.SaveCurdJSONData(viewId, newCurdList);
                         break;
@@ -675,7 +669,7 @@ namespace Victop.Frame.DataChannel
                             Dictionary<string, object> dataArrayDic = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ToJson(DataList[i - 1][pathList[i - 1].ToString()]));
                             string temp = JsonHelper.ToJson(dataArrayDic["dataArray"]);
                             dataArrayDic["dataArray"] = DataList[i]["dataArray"];
-                            DataList[i - 1][pathList[i - 1].ToString()]=dataArrayDic;
+                            DataList[i - 1][pathList[i - 1].ToString()] = dataArrayDic;
                         }
                     }
                     Dictionary<string, object> tempDic = new Dictionary<string, object>();
