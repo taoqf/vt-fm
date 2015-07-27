@@ -90,14 +90,19 @@ namespace Victop.Frame.CmptRuntime
                 {
                     OrgnizeRuntime.InitCompnt(DefinModel);
                     PresentationBlockModel blockModel = DefinModel.CompntPresentation.PresentationBlocks.FirstOrDefault(it => it.Superiors.Equals("root"));
-                    if (blockModel != null)
+                    foreach (var item in DefinModel.CompntPresentation.PresentationBlocks.Where(it => it.Superiors.Equals("root")))
                     {
-                        return CheckPresentationBlock(this, DefinModel.CompntPresentation.PresentationBlocks.FirstOrDefault(it => it.Superiors.Equals("root")).BlockName);
+                        bool result = CheckPresentationBlock(this, item.BlockName);
+                        if (!result)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            continue;
+                        }
                     }
-                    else
-                    {
-                        return false;
-                    }
+                    return true;
                 }
                 else
                 {
