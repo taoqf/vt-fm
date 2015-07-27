@@ -166,7 +166,10 @@ namespace Victop.Frame.CmptRuntime
             DataMessageOperation messageOp = new DataMessageOperation();
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("systemid", SystemId);
-            contentDic.Add("refsystemid", RefSystemId);
+            if (!string.IsNullOrEmpty(RefSystemId))
+            {
+                contentDic.Add("refsystemid", RefSystemId);
+            }
             contentDic.Add("modelid", ModelId);
             List<object> conditionList = new List<object>();
             foreach (ViewsBlockModel item in this.viewBlocks)
