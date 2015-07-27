@@ -222,7 +222,7 @@ namespace Victop.Frame.CmptRuntime
         public void GetData()
         {
             ViewBlock.ViewModel.GetBlockData(BindingBlock);
-            if (string.IsNullOrEmpty(keywords) && this.ParentPreBlockModel != null && string.IsNullOrEmpty(this.ParentPreBlockModel.Keywords))
+            if (string.IsNullOrEmpty(keywords) && (superiors.Equals("root") || (ParentPreBlockModel != null && string.IsNullOrEmpty(ParentPreBlockModel.Keywords))))
             {
                 ViewBlockDataTable = ViewBlock.BlockDataSet.Tables["dataArray"];
             }
