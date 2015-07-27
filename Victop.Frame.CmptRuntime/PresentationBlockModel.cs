@@ -284,6 +284,13 @@ namespace Victop.Frame.CmptRuntime
             }
         }
         /// <summary>
+        /// 查询数据
+        /// </summary>
+        public void SearchData()
+        {
+            ViewBlock.ViewModel.SearchData();
+        }
+        /// <summary>
         /// 获取完整数据集
         /// </summary>
         /// <returns></returns>
