@@ -194,6 +194,7 @@ namespace Victop.Frame.CmptRuntime
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {
                 ViewId = returnDic["DataChannelId"].ToString();
+                GetBlockData(ViewBlocks.FirstOrDefault(it => it.Superiors.Equals("root")).BlockName);
             }
         }
 

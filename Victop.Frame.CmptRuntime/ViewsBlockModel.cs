@@ -175,15 +175,12 @@ namespace Victop.Frame.CmptRuntime
                 {
                     CurrentRow = new Dictionary<string, object>();
                 }
-                else
+                CurrentRow.Clear();
+                foreach (DataColumn item in dr.Table.Columns)
                 {
-                    CurrentRow.Clear();
-                    foreach (DataColumn item in dr.Table.Columns)
-                    {
-                        CurrentRow.Add(item.ColumnName, dr[item.ColumnName]);
-                    }
-                    RebuildPath();
+                    CurrentRow.Add(item.ColumnName, dr[item.ColumnName]);
                 }
+                RebuildPath();
             }
         }
 
