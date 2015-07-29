@@ -343,7 +343,7 @@ namespace Victop.Frame.CmptRuntime
         ///<param name="saveToServer">是否保存到服务端</param>
         public bool SaveData(bool saveToServer = true)
         {
-            if (!string.IsNullOrEmpty(Keywords) || ParentPreBlockModel != null || !string.IsNullOrEmpty(ParentPreBlockModel.keywords))
+            if (!string.IsNullOrEmpty(Keywords) || (ParentPreBlockModel != null && !string.IsNullOrEmpty(ParentPreBlockModel.keywords)))
             {
                 foreach (DataRow item in ViewBlockDataTable.Rows)
                 {
