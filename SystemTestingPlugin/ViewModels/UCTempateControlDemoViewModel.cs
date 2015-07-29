@@ -76,7 +76,9 @@ namespace SystemTestingPlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     mainViewControl = (TemplateControl)x;
-                    if (mainViewControl.InitVictopUserControl(string.Empty))
+                    //if (mainViewControl.InitVictopUserControl(FileHelper.ReadFitData("newcmpnt1")))
+                    if (mainViewControl.InitVictopUserControl(FileHelper.ReadFitData("newcmpnt")))
+                    //if (mainViewControl.InitVictopUserControl(string.Empty))
                     {
                         PreOneBlockModel = mainViewControl.GetPresentationBlockModel("p_1");
                         PreOneBlockModel.GetData();
@@ -84,6 +86,11 @@ namespace SystemTestingPlugin.ViewModels
                         PreOneBlockModel.SetCurrentRow(PreOneBlockModel.PreBlockSelectedRow);
                         PreOneOfOneBlockModel = mainViewControl.GetPresentationBlockModel("p_1_1");
                         PreOneOfOneBlockModel.GetData();
+                        PreOneBlockModel.SetSearchCondition(new ViewsBlockConditionModel { });
+                        PreOneBlockModel.SearchData();
+                        PreOneBlockModel.GetData();
+                        
+                       
                     }
                 });
             }
