@@ -108,21 +108,14 @@ namespace Victop.Frame.CmptRuntime
             get;
             set;
         }
-        private string viewId;
         /// <summary>
         /// 视图标识
         /// </summary>
         [JsonIgnore]
         public string ViewId
         {
-            get
-            {
-                return ViewModel.ViewId;
-            }
-            set
-            {
-                viewId = value;
-            }
+            get;
+            set;
         }
         [JsonIgnore]
         private DataSet blockDataSet;
@@ -193,6 +186,7 @@ namespace Victop.Frame.CmptRuntime
 
         private void RebuildPath()
         {
+            ViewId = ViewModel.ViewId;
             RebuildDataPath(ViewModel, this);
         }
 
