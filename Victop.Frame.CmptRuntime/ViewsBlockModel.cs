@@ -108,14 +108,21 @@ namespace Victop.Frame.CmptRuntime
             get;
             set;
         }
+        private string viewId;
         /// <summary>
         /// 视图标识
         /// </summary>
         [JsonIgnore]
         public string ViewId
         {
-            get;
-            set;
+            get
+            {
+                return ViewModel.ViewId;
+            }
+            set
+            {
+                viewId = value;
+            }
         }
         [JsonIgnore]
         private DataSet blockDataSet;
