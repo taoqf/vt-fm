@@ -253,9 +253,9 @@ namespace Victop.Frame.DataMessageManager
                             }
                             else
                             {
-                                if (string.IsNullOrEmpty(systemId) || string.IsNullOrEmpty(configsystemId))
+                                if (string.IsNullOrEmpty(systemId))
                                 {
-                                    ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.CAST, ReplyAlertMessage = "请传入正确的systemId及ConfigsystemId" };
+                                    ReplyMessage replyMessage = new ReplyMessage() { ReplyMode = ReplyModeEnum.CAST, ReplyAlertMessage = "请传入正确的systemId" };
                                     resultMessage = JsonHelper.ToJson(replyMessage);
                                 }
                                 else
