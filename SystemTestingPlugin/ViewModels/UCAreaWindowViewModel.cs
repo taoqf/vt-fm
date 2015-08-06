@@ -13,7 +13,8 @@ using SystemTestingPlugin.Views;
 using System.Threading;
 using System.IO;
 using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Win32;
+using System.Windows;
 
 namespace SystemTestingPlugin.ViewModels
 {
@@ -412,6 +413,38 @@ namespace SystemTestingPlugin.ViewModels
                 });
             }
         }
+
+        public ICommand btnExportExcelClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    SaveFileDialog dlg = new SaveFileDialog();
+                    dlg.Filter = "Excel文件|*.xlsx;*.xls";
+                    dlg.FileName = DataInfoModel.TableName;
+                    Nullable<bool> result = dlg.ShowDialog();
+                    if (result == true)
+                    {
+                        string filename = dlg.FileName;
+                        DataTable exportDt = DataInfoModel.ResultDataTable.Copy();
+                        if (exportDt.Columns.Contains("VicCheckFlag"))
+                        {
+                            exportDt.Columns.Remove("VicCheckFlag");
+                        }
+                        bool excelResult = DataTabletoExcel(exportDt, filename, DataInfoModel.TableName);
+                        if (excelResult)
+                        {
+                            VicMessageBoxNormal.Show("导出成功!", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            VicMessageBoxNormal.Show("导出失败!", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                });
+            }
+        }
         /// <summary>
         /// 查看表结构
         /// </summary>
@@ -436,6 +469,7 @@ namespace SystemTestingPlugin.ViewModels
                 });
             }
         }
+
         /// <summary>
         /// 表结构选择改变
         /// </summary>
@@ -773,6 +807,90 @@ namespace SystemTestingPlugin.ViewModels
             }
         }
 
+        #endregion
+        #region 私有方法
+        public bool DataTabletoExcel(System.Data.DataTable tmpDataTable, string strFileName, string sheetName)
+        {
+            bool flag = false;
+            if (tmpDataTable == null)
+            {
+                return false;
+            }
+            Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+            try
+            {
+                int rowNum = tmpDataTable.Rows.Count;
+                int columnNum = tmpDataTable.Columns.Count;
+                int rowIndex = 1;
+                int columnIndex = 0;
+
+                xlApp.DefaultFilePath = "";
+                xlApp.DisplayAlerts = false;
+                xlApp.AlertBeforeOverwriting = false;
+                xlApp.SheetsInNewWorkbook = 1;
+
+                Microsoft.Office.Interop.Excel.Workbook xlBook = xlApp.Workbooks.Add(true);
+                Microsoft.Office.Interop.Excel.Worksheet worksheet = xlBook.Sheets.get_Item(1) as Microsoft.Office.Interop.Excel.Worksheet;
+                worksheet.Name = sheetName;
+                //将DataTable的列名导入Excel表第一行
+                foreach (DataColumn dc in tmpDataTable.Columns)
+                {
+                    columnIndex++;
+                    xlApp.Cells[rowIndex, columnIndex] = dc.Caption + "[" + dc.ColumnName + "]";
+                }
+                //将DataTable中的数据导入Excel中
+                for (int i = 0; i < rowNum; i++)
+                {
+                    rowIndex++;
+                    columnIndex = 0;
+                    for (int j = 0; j < columnNum; j++)
+                    {
+                        columnIndex++;
+                        xlApp.Cells[rowIndex, columnIndex] = tmpDataTable.Rows[i][j].ToString();
+                    }
+                }
+                //xlBook.SaveCopyAs(HttpUtility.UrlDecode(strFileName, System.Text.Encoding.UTF8));
+                xlBook.SaveCopyAs(strFileName);
+
+                flag = true;
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                xlApp.Quit();
+                xlApp = null;
+                System.GC.Collect();
+                KillProcess("EXCEL");
+            }
+            return flag;
+        }
+        /// <summary>
+        /// 根据进程名称杀死进程 
+        /// </summary>
+        /// <param name=" ProcessName "> DataTable</param>
+        public void KillProcess(string ProcessName)
+        {
+            System.Diagnostics.Process myproc = new System.Diagnostics.Process();
+            try
+            {
+
+                foreach (System.Diagnostics.Process thisproc in System.Diagnostics.Process.GetProcessesByName(ProcessName))
+                {
+                    if (!thisproc.CloseMainWindow())
+                    {
+                        thisproc.Kill();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.InfoFormat("杀死进程异常：{0}", ex.Message);
+            }
+        }
         #endregion
     }
 }

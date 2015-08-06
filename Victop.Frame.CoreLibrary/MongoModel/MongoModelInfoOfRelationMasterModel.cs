@@ -27,12 +27,12 @@ namespace Victop.Frame.CoreLibrary.MongoModel
         /// <summary>
         /// 主键
         /// </summary>
-        private string masterPK;
+        private object masterPK;
         /// <summary>
         /// 主键
         /// </summary>
         [JsonProperty(PropertyName="pk")]
-        public string MasterPK
+        public object MasterPK
         {
             get { return masterPK; }
             set { masterPK = value; }
