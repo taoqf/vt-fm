@@ -93,15 +93,15 @@ namespace Victop.Frame.CmptRuntime
             set { viewName = value; }
         }
         /// <summary>
-        /// 自动加载
+        /// 渲染类型
         /// </summary>
         [JsonProperty(PropertyName = "autorender")]
-        private bool autoRender;
+        private int autoRender;
         /// <summary>
-        /// 自动加载
+        /// 渲染类型
         /// </summary>
         [JsonIgnore]
-        public bool AutoRender
+        public int AutoRender
         {
             get { return autoRender; }
             set { autoRender = value; }
