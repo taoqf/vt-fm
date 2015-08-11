@@ -423,7 +423,7 @@ namespace MetroFramePlugin.ViewModels
             }
         }
 
-        private bool isLockMenu=false;//控制固定/浮动左侧菜单
+        private bool isLockMenu=false;//控制固定或浮动左侧菜单，默认固定
         private VicButtonNormal lockbtn;
         #endregion
 
@@ -611,7 +611,7 @@ namespace MetroFramePlugin.ViewModels
                     //切换用户时，自动隐藏菜单状态初始化
                     IsShowMenu = Visibility.Visible;
                     isLockMenu = false;
-                    lockbtn.Content = "锁定";
+                    lockbtn.Content = "解锁";
                     //
                     UserLogin();
                     InitPanelArea();
@@ -854,7 +854,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (isLockMenu==false)
+                    if (isLockMenu==true)
                     IsShowMenu = Visibility.Visible;
                 });
             }
@@ -868,14 +868,14 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (isLockMenu == false)
+                    if (isLockMenu == true)
                     IsShowMenu = Visibility.Collapsed;
                 });
             }
         }
         #endregion
 
-        #region 移出命令
+        #region 菜单固定或浮动命令
         public ICommand LockMenuList
         {
             get
@@ -886,12 +886,12 @@ namespace MetroFramePlugin.ViewModels
                         if (lockBtn.Content.Equals("锁定"))
                         {
                             lockBtn.Content = "解锁";
-                            isLockMenu = true;
+                            isLockMenu = false;
                         }
                         else
                         {
                             lockBtn.Content = "锁定";
-                            isLockMenu = false;
+                            isLockMenu = true;
                         }
                         
                 });
@@ -1195,7 +1195,7 @@ namespace MetroFramePlugin.ViewModels
                 }
                 isFirstLogin = false;
                 LoadStandardMenu();
-                IsShowMenu = Visibility.Collapsed;
+                IsShowMenu = Visibility.Visible;
                 //NotificationCenter notifyCenter = new NotificationCenter();
                 //notifyCenter.Show();
             }
