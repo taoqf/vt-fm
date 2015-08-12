@@ -1142,7 +1142,31 @@ namespace MetroFramePlugin.ViewModels
                         pluginCtrl.Uid = pluginModel.ObjectId;
                         VicTabItemNormal tabItem = new VicTabItemNormal();
                         tabItem.Name = pluginModel.AppId;
-                        tabItem.Header = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle;
+                        tabItem.Tag = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle;
+                        if (string.IsNullOrEmpty(HeaderTitle))
+                        {
+                            if (pluginModel.PluginInterface.PluginTitle.Length > 8)
+                            {
+                                tabItem.Header = pluginModel.PluginInterface.PluginTitle.Substring(0, 8).ToString();
+                            }
+                            else
+                            {
+                                tabItem.Header = pluginModel.PluginInterface.PluginTitle;
+                            }
+                        }
+                        else
+                        {
+                            if (HeaderTitle.Length > 8)
+                            {
+                                tabItem.Header = HeaderTitle.Substring(0, 8).ToString();
+                            }
+                            else
+                            {
+                                tabItem.Header = HeaderTitle;
+                            }
+                        }
+                        //tabItem.Header = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle.Substring(0, 8).ToString();
+                        
                         tabItem.Uid = pluginModel.ObjectId;
                         tabItem.Content = pluginCtrl;
                         tabItem.AllowDelete = true;
