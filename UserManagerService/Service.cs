@@ -87,6 +87,10 @@ namespace UserManagerService
                 {
                     userDic.Add("UserNo", loginUserInfo.CurrentUserInfo.RoleList.First(it => it.RoleNo.Equals(loginUserInfo.UserRole)).PkVal);
                 }
+                if (loginUserInfo.UserParams != null)
+                {
+                    userDic.Add("UserParams", loginUserInfo.UserParams);
+                }
                 returnDic.Add("ReplyContent", userDic);
                 returnDic.Add("ReplyMode", 1);
                 returnDic.Add("ReplyAlertMessage", null);
