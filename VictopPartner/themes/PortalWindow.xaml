@@ -886,6 +886,7 @@
                                         <ContentPresenter Name="aa" Content="{TemplateBinding Icon}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         <Border Name="bb" Margin="2,0,2,0" Grid.Column="1">
                                             <TextBlock Name="cc"
+                                                       ToolTip="{TemplateBinding Tag}"
                                                        Foreground="{DynamicResource MainFrm_TabItemNomalForeground}"
 									    Text="{TemplateBinding Header}"
 										HorizontalAlignment="Center"
@@ -1194,7 +1195,7 @@
                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                                  Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                                  CommandParameter="{Binding .}"/>
-                                        <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="12"
+                                        <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}"  FontSize="12"
                                                        Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
                                                         Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"
                                                          Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 

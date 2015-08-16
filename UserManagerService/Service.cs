@@ -74,20 +74,18 @@ namespace UserManagerService
             {
                 GalleryManager galleryManager = new GalleryManager();
                 CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
-                LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
+                LoginUserInfoModel loginUserInfo = cloudGallyInfo.ClientInfo;
                 Dictionary<string, object> userDic = new Dictionary<string, object>();
                 userDic.Add("UserName", loginUserInfo.UserName);
                 userDic.Add("UserCode", loginUserInfo.UserCode);
-                userDic.Add("ClientNo", cloudGallyInfo.ClientNo);
-                userDic.Add("UserId", loginUserInfo.UserId);
                 userDic.Add("SpaceId", cloudGallyInfo.ClientId);
                 userDic.Add("ProductId", cloudGallyInfo.ClientId);
-                userDic.Add("UserImg", loginUserInfo.UserImg);
-                userDic.Add("UserRole", JsonHelper.ToJson(loginUserInfo.RoleList));
+                userDic.Add("UserImg", loginUserInfo.CurrentUserInfo.AvatarPath);
+                userDic.Add("UserRole", loginUserInfo.CurrentUserInfo.RoleList);
                 userDic.Add("CurrentRole", loginUserInfo.UserRole);
-                if (loginUserInfo.UserFullInfo != null && loginUserInfo.UserFullInfo.ContainsKey("staff_no"))
+                if (loginUserInfo.CurrentUserInfo != null && loginUserInfo.UserRole != null)
                 {
-                    userDic.Add("UserNo", loginUserInfo.UserFullInfo["staff_no"].ToString());
+                    userDic.Add("UserNo", loginUserInfo.CurrentUserInfo.RoleList.First(it => it.RoleNo.Equals(loginUserInfo.UserRole)).PkVal);
                 }
                 returnDic.Add("ReplyContent", userDic);
                 returnDic.Add("ReplyMode", 1);

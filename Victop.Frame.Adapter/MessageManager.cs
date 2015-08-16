@@ -34,7 +34,7 @@ namespace Victop.Frame.Adapter
             {
                 GalleryManager galleryManager = new GalleryManager();
                 CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
-                LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
+                LoginUserInfoModel loginUserInfo = cloudGallyInfo.ClientInfo;
                 message.FromId = string.IsNullOrEmpty(loginUserInfo.UserCode) ? "WPF" : loginUserInfo.UserCode;
                 message.CurrentSenderId = String.IsNullOrWhiteSpace(loginUserInfo.ChannelId) ? Guid.NewGuid().ToString() : loginUserInfo.ChannelId;
                 message.SessionId = loginUserInfo.SessionId;

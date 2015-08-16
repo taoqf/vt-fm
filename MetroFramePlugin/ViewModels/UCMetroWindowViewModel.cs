@@ -83,25 +83,6 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-        /// <summary>
-        /// 用户ProductId
-        /// </summary>
-        private string productId;
-        public string ProductId
-        {
-            get
-            {
-                return productId;
-            }
-            set
-            {
-                if (productId != value)
-                {
-                    productId = value;
-                    RaisePropertyChanged("ProductId");
-                }
-            }
-        }
         private string clientId;
         public string ClientId
         {
@@ -423,7 +404,7 @@ namespace MetroFramePlugin.ViewModels
             }
         }
 
-        private bool isLockMenu = false;//控制固定/浮动左侧菜单
+        private bool isLockMenu=false;//控制固定或浮动左侧菜单，默认固定
         private VicButtonNormal lockbtn;
         #endregion
 
@@ -453,6 +434,7 @@ namespace MetroFramePlugin.ViewModels
                     OverlayWindow overlayWin = new OverlayWindow();
                     OverlayWindow.VicTabCtrl = mainTabControl;
                     overlayWin.Show();
+
                     UserLogin();
                     ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
 
@@ -611,7 +593,8 @@ namespace MetroFramePlugin.ViewModels
                     //切换用户时，自动隐藏菜单状态初始化
                     IsShowMenu = Visibility.Visible;
                     isLockMenu = false;
-                    lockbtn.Content = "锁定";
+                    lockbtn.Content = "解锁";
+                    //
                     UserLogin();
                     InitPanelArea();
 
@@ -852,7 +835,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (isLockMenu == false)
+                    if (isLockMenu==true)
                         IsShowMenu = Visibility.Visible;
                 });
             }
@@ -866,14 +849,14 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (isLockMenu == false)
+                    if (isLockMenu == true)
                         IsShowMenu = Visibility.Collapsed;
                 });
             }
         }
         #endregion
 
-        #region 移出命令
+        #region 菜单固定或浮动命令
         public ICommand LockMenuList
         {
             get
@@ -884,12 +867,12 @@ namespace MetroFramePlugin.ViewModels
                         if (lockBtn.Content.Equals("锁定"))
                         {
                             lockBtn.Content = "解锁";
-                            isLockMenu = true;
+                            isLockMenu = false;
                         }
                         else
                         {
                             lockBtn.Content = "锁定";
-                            isLockMenu = false;
+                            isLockMenu = true;
                         }
 
                     });
@@ -1029,19 +1012,6 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         private void OpenJsonMenuPlugin(MenuModel selectedFourthMenu)
         {
-            MenuRoleAuth roleAuth = selectedFourthMenu.RoleAuthList.FirstOrDefault(it => it.Role_No.Equals(UserRole));
-            if (roleAuth != null)
-            {
-                selectedFourthMenu.AuthorityCode = roleAuth.AuthCode;
-            }
-            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
-            {
-                if (roleAuth == null)
-                {
-                    VicMessageBoxNormal.Show("当前角色无启动此功能的权限");
-                    return;
-                }
-            }
             if (TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)) != null)
             {
                 TabItemList.FirstOrDefault(it => it.Header.Equals(selectedFourthMenu.MenuName)).IsSelected = true;
@@ -1065,6 +1035,10 @@ namespace MetroFramePlugin.ViewModels
                     VicMessageBoxNormal.Show(pluginModel.ErrorMsg);
                     return;
                 }
+            }
+            else
+            {
+                VicMessageBoxNormal.Show(string.Format("{0}未配置启动插件", selectedFourthMenu.MenuName));
             }
         }
         #endregion
@@ -1140,7 +1114,31 @@ namespace MetroFramePlugin.ViewModels
                         pluginCtrl.Uid = pluginModel.ObjectId;
                         VicTabItemNormal tabItem = new VicTabItemNormal();
                         tabItem.Name = pluginModel.AppId;
-                        tabItem.Header = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle;
+                        tabItem.Tag = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle;
+                        if (string.IsNullOrEmpty(HeaderTitle))
+                        {
+                            if (pluginModel.PluginInterface.PluginTitle.Length > 8)
+                            {
+                                tabItem.Header = pluginModel.PluginInterface.PluginTitle.Substring(0, 8).ToString();
+                            }
+                            else
+                            {
+                                tabItem.Header = pluginModel.PluginInterface.PluginTitle;
+                            }
+                        }
+                        else
+                        {
+                            if (HeaderTitle.Length > 8)
+                            {
+                                tabItem.Header = HeaderTitle.Substring(0, 8).ToString();
+                            }
+                            else
+                            {
+                                tabItem.Header = HeaderTitle;
+                            }
+                        }
+                        //tabItem.Header = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle.Substring(0, 8).ToString();
+                        
                         tabItem.Uid = pluginModel.ObjectId;
                         tabItem.Content = pluginCtrl;
                         tabItem.AllowDelete = true;
@@ -1192,7 +1190,7 @@ namespace MetroFramePlugin.ViewModels
                 }
                 isFirstLogin = false;
                 LoadStandardMenu();
-                IsShowMenu = Visibility.Collapsed;
+                IsShowMenu = Visibility.Visible;
                 //NotificationCenter notifyCenter = new NotificationCenter();
                 //notifyCenter.Show();
             }
@@ -2714,16 +2712,15 @@ namespace MetroFramePlugin.ViewModels
             DataMessageOperation messageOp = new DataMessageOperation();
             string MessageType = "MongoDataChannelService.findBusiData";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "12");
-            contentDic.Add("configsystemid", "11");
-            contentDic.Add("modelid", "feidao-model-pub_user_setting-0001");
+            contentDic.Add("systemid", ConfigurationManager.AppSettings["clientsystem"]);
+            contentDic.Add("modelid", "feidao-model-pub_user_setting-0002");
             List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
             Dictionary<string, object> conDic = new Dictionary<string, object>();
             conDic.Add("name", "pub_user_setting");
             List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
             Dictionary<string, object> tableConDic = new Dictionary<string, object>();
             tableConDic.Add("productid", ClientId);
-            tableConDic.Add("userCode", UserCode);
+            tableConDic.Add("usercode", UserCode);
             tableConList.Add(tableConDic);
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
@@ -2734,28 +2731,31 @@ namespace MetroFramePlugin.ViewModels
                 channelId = returnDic["DataChannelId"].ToString();
                 DataSet MenuDs = messageOp.GetData(channelId, "[\"pub_user_setting\"]");
                 DataTable dt = MenuDs.Tables["dataArray"];
-                DataRow[] staffDrs = dt.Select(string.Format("userCode = '{0}'", UserCode));
-                if (staffDrs.Count() != 0)//从服器取
+                if (dt != null && dt.Rows.Count > 0)
                 {
-                    string areaMenuList = staffDrs[0]["custom_menu"].ToString();
-                    NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
-                    BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
-                    foreach (AreaMenu item in NewArea)
+                    DataRow[] staffDrs = dt.Select(string.Format("usercode = '{0}'", UserCode));
+                    if (staffDrs.Count() != 0)//从服器取
                     {
-                        if (item.PluginList.Count > 0)
+                        string areaMenuList = staffDrs[0]["custom_menu"].ToString();
+                        NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
+                        BaseResourceInfo resourceInfo = new BaseResourceManager().GetCurrentGalleryBaseResource();
+                        foreach (AreaMenu item in NewArea)
                         {
-                            foreach (MenuModel pluginitem in item.PluginList)
+                            if (item.PluginList.Count > 0)
                             {
-                                MenuInfo menuInfo = resourceInfo.ResourceMnenus.FirstOrDefault(it => it.Menu_no.Equals(pluginitem.MenuNo));
-                                if (menuInfo != null)
+                                foreach (MenuModel pluginitem in item.PluginList)
                                 {
-                                    pluginitem.RoleAuthList.Clear();
-                                    foreach (MenuRoleInfo roleitem in menuInfo.Roles)
+                                    MenuInfo menuInfo = resourceInfo.ResourceMnenus.FirstOrDefault(it => it.Menu_no.Equals(pluginitem.MenuNo));
+                                    if (menuInfo != null)
                                     {
-                                       MenuRoleAuth  role=new MenuRoleAuth();
-                                        role.AuthCode = roleitem.Auth_code;
-                                        role.Role_No = roleitem.Role_no;
-                                        pluginitem.RoleAuthList.Add(role);
+                                        pluginitem.RoleAuthList.Clear();
+                                        foreach (MenuRoleInfo roleitem in menuInfo.Roles)
+                                        {
+                                            MenuRoleAuth role = new MenuRoleAuth();
+                                            role.AuthCode = roleitem.Auth_code;
+                                            role.Role_No = roleitem.Role_no;
+                                            pluginitem.RoleAuthList.Add(role);
+                                        }
                                     }
                                 }
                             }
@@ -2774,9 +2774,8 @@ namespace MetroFramePlugin.ViewModels
             DataMessageOperation messageOp = new DataMessageOperation();
             string MessageType = "MongoDataChannelService.findBusiData";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "12");
-            contentDic.Add("configsystemid", "11");
-            contentDic.Add("modelid", "feidao-model-pub_user_setting-0001");
+            contentDic.Add("systemid", ConfigurationManager.AppSettings["clientsystem"]);
+            contentDic.Add("modelid", "feidao-model-pub_user_setting-0002");
             List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
             Dictionary<string, object> conDic = new Dictionary<string, object>();
             conDic.Add("name", "pub_user_setting");
@@ -2814,9 +2813,9 @@ namespace MetroFramePlugin.ViewModels
                 dataOp.SaveData(channelId, "[\"pub_user_setting\"]");
                 string MessageType1 = "MongoDataChannelService.saveBusiData";
                 Dictionary<string, object> contentDic1 = new Dictionary<string, object>();
-                contentDic1.Add("systemid", "12");
+                contentDic1.Add("systemid", ConfigurationManager.AppSettings["clientsystem"]);
                 contentDic1.Add("configsystemid", "11");
-                contentDic1.Add("modelid", "feidao-model-pub_user_setting-0001");
+                contentDic1.Add("modelid", "feidao-model-pub_user_setting-0002");
                 contentDic1.Add("DataChannelId", channelId);
                 Dictionary<string, object> resultDic = messageOp.SendSyncMessage(MessageType1, contentDic1);
 

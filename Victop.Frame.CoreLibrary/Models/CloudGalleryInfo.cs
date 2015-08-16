@@ -18,16 +18,16 @@ namespace Victop.Frame.CoreLibrary.Models
 	/// <remarks>云通道信息</remarks>
 	public class CloudGalleryInfo
 	{
-        private LoginUserInfo clientInfo;
+        private LoginUserInfoModel clientInfo;
 		/// <summary>
 		/// 用户信息
 		/// </summary>
-		public virtual LoginUserInfo ClientInfo
+		public virtual LoginUserInfoModel ClientInfo
 		{
             get
             {
                 if(clientInfo==null)
-                    clientInfo=new LoginUserInfo();
+                    clientInfo=new LoginUserInfoModel();
                 return clientInfo;
             }
             set { clientInfo = value; }

@@ -40,6 +40,15 @@ namespace Victop.Frame.Connection
                     ReplyMessage replyMessage = UserLoginSubmit(adapter, messageInfo);
                     return replyMessage;
                 }
+                else if (messageInfo.MessageType.Equals("MongoDataChannelService.getuserauthInfo"))
+                {
+
+                    DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
+                    MessageOrganizeManager organizeManager = new MessageOrganizeManager();
+                    messageInfo = organizeManager.OrganizeMessage(messageInfo, out saveDataFlag);
+                    ReplyMessage replyMessage = GetUserMenuInfoSubmit(adapter, messageInfo);
+                    return replyMessage;
+                }
                 else
                 {
                     ReplyMessage replyMessage = MessageSubmit(adapter, messageInfo);
@@ -49,7 +58,7 @@ namespace Victop.Frame.Connection
                         userLoginMsg.MessageType = "LoginService.userLogin";
                         CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
                         Dictionary<string, object> loginContent = new Dictionary<string, object>();
-                        loginContent.Add("userCode", currentGallery.ClientInfo.UserCode);
+                        loginContent.Add("usercode", currentGallery.ClientInfo.UserCode);
                         loginContent.Add("userpw", currentGallery.ClientInfo.UserPwd);
                         loginContent.Add("logintypenew", GetUserLoginForm(currentGallery.ClientInfo.UserCode));
                         userLoginMsg.MessageContent = JsonHelper.ToJson(loginContent);
@@ -145,7 +154,7 @@ namespace Victop.Frame.Connection
                 currentGallery.ClientInfo.UserName = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "user_name");
                 currentGallery.ClientInfo.UserCode = replyMessage.ReplyContent.Contains("userCode") ? JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode") : JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode");
                 messageInfo.MessageContent = replyMessage.ReplyContent;
-                replyMessage = GetLoginUserMenuSubmit(adapter, messageInfo);
+                replyMessage = GetLoginUserRoleSubmit(adapter, messageInfo);
             }
             return replyMessage;
         }
@@ -199,19 +208,20 @@ namespace Victop.Frame.Connection
         }
 
         /// <summary>
-        /// 获取登陆用户信息的菜单
+        /// 获取登陆用户信息的角色
         /// </summary>
         /// <param name="adapter"></param>
         /// <param name="messageInfo"></param>
         /// <returns></returns>
-        private ReplyMessage GetLoginUserMenuSubmit(IAdapter adapter, RequestMessage messageInfo)
+        private ReplyMessage GetLoginUserRoleSubmit(IAdapter adapter, RequestMessage messageInfo)
         {
-            messageInfo.MessageType = "MongoDataChannelService.afterLogin";
+            GalleryManager galleryManager = new GalleryManager();
+            CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+            LoginUserInfoModel loginUserInfo = cloudGallyInfo.ClientInfo;
+            messageInfo.MessageType = "MongoDataChannelService.getuserroleInfo";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            string afterLoginStr = ConfigurationManager.AppSettings["afterlogin"];
-            contentDic.Add("systemid", JsonHelper.ReadJsonString(afterLoginStr, "systemid"));
-            contentDic.Add("clienttype", "3");
-            contentDic.Add("configsystemid", JsonHelper.ReadJsonString(afterLoginStr, "configsystemid"));
+            contentDic.Add("systemid", ConfigurationManager.AppSettings["clientsystem"]);
+            contentDic.Add("productid", cloudGallyInfo.ClientId);
             string userCode = messageInfo.MessageContent.Contains("usercode") ? JsonHelper.ReadJsonString(messageInfo.MessageContent, "usercode") : JsonHelper.ReadJsonString(messageInfo.MessageContent, "userCode");
             contentDic.Add("usercode", userCode);
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
@@ -221,53 +231,57 @@ namespace Victop.Frame.Connection
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
             if (replyMessage.ReplyMode == (ReplyModeEnum)0)
             {
-                replyMessage.ReplyAlertMessage = "获取当前登录用户菜单失败";
+                replyMessage.ReplyAlertMessage = "获取当前登录用户角色失败";
             }
             else
             {
                 if (!string.IsNullOrEmpty(replyMessage.ReplyContent))
                 {
-                    #region 菜单处理
-                    BaseResourceInfo baseResourceInfo = new BaseResourceInfo();
-                    baseResourceInfo.GalleryId = GalleryManager.GetCurrentGalleryId();
-                    baseResourceInfo.ResourceXml = replyMessage.ReplyContent;
-                    List<MenuInfo> menuInfo = JsonHelper.ToObject<List<MenuInfo>>(JsonHelper.ReadJsonString(replyMessage.ReplyContent, "menus"));
-                    baseResourceInfo.ResourceMnenus = menuInfo;
-                    BaseResourceManager baseResourceManager = new BaseResourceManager();
-                    bool result = baseResourceManager.AddResouce(baseResourceInfo);
-                    #endregion
                     #region 用户信息管理
                     string userInfoStr = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "user");
-                    Dictionary<string, object> userInfoList = JsonHelper.ToObject<Dictionary<string, object>>(userInfoStr);
+                    UserBaseInfoModel userInfoModel = JsonHelper.ToObject<UserBaseInfoModel>(userInfoStr);
                     CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
                     try
                     {
-                        if (userInfoList != null && userInfoList.Count > 0)
+                        if (userInfoModel != null)
                         {
-                            currentGallery.ClientInfo.UserId = userInfoList["_id"].ToString();
-                            currentGallery.ClientInfo.UserImg = (userInfoList.ContainsKey("avatar_path") && userInfoList["avatar_path"] != null) ? userInfoList["avatar_path"].ToString() : string.Empty;
-                            currentGallery.ClientInfo.UserFullInfo = userInfoList;
-                            if (userInfoList.ContainsKey("pub_user_connect") && userInfoList["pub_user_connect"] != null)
-                            {
-                                currentGallery.ClientInfo.RoleList = JsonHelper.ToObject<List<UserRoleInfo>>(userInfoList["pub_user_connect"].ToString());
-                            }
+                            currentGallery.ClientInfo.CurrentUserInfo = userInfoModel;
                         }
                         else
                         {
-                            currentGallery.ClientInfo.UserId = string.Empty;
-                            currentGallery.ClientInfo.UserImg = string.Empty;
-                            currentGallery.ClientInfo.UserFullInfo = null;
+                            currentGallery.ClientInfo.CurrentUserInfo = null;
                         }
                     }
                     catch (Exception ex)
                     {
                         LoggerHelper.ErrorFormat("用户信息:{0}", userInfoStr);
-                        currentGallery.ClientInfo.UserId = string.Empty;
-                        currentGallery.ClientInfo.UserImg = string.Empty;
-                        currentGallery.ClientInfo.UserFullInfo = null;
+                        currentGallery.ClientInfo.CurrentUserInfo = null;
                     }
                     #endregion
                 }
+            }
+            return replyMessage;
+        }
+        /// <summary>
+        /// 获取登录用户选定角色的菜单
+        /// </summary>
+        /// <param name="adapter"></param>
+        /// <param name="messageInfo"></param>
+        /// <returns></returns>
+        private ReplyMessage GetUserMenuInfoSubmit(IAdapter adapter, RequestMessage messageInfo)
+        {
+            ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
+            if (replyMessage.ReplyMode != 0)
+            {
+                BaseResourceInfo baseResourceInfo = new BaseResourceInfo();
+                baseResourceInfo.GalleryId = GalleryManager.GetCurrentGalleryId();
+                baseResourceInfo.ResourceXml = replyMessage.ReplyContent;
+                CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+                List<MenuInfo> menuInfo = JsonHelper.ToObject<List<MenuInfo>>(JsonHelper.ReadJsonString(replyMessage.ReplyContent, "menus"));
+                baseResourceInfo.ResourceMnenus = menuInfo;
+                currentGallery.ClientInfo.UserParams = JsonHelper.ToObject<Dictionary<string, object>>(JsonHelper.ReadJsonString(replyMessage.ReplyContent, "params"));
+                BaseResourceManager baseResourceManager = new BaseResourceManager();
+                bool result = baseResourceManager.AddResouce(baseResourceInfo);
             }
             return replyMessage;
         }

@@ -105,7 +105,7 @@
     <Compile Include="Models\DataStoreInfo.cs" />
     <Compile Include="Models\IPInfo.cs" />
     <Compile Include="Models\JsonMapKey.cs" />
-    <Compile Include="Models\LoginUserInfo.cs" />
+    <Compile Include="Models\LoginUserInfoModel.cs" />
     <Compile Include="Models\MenuInfo.cs" />
     <Compile Include="Models\MessageTypeModel.cs" />
     <Compile Include="Models\RefRelationInfo.cs" />
@@ -114,6 +114,7 @@
     <Compile Include="Models\RegisterServerInfo.cs" />
     <Compile Include="Models\ReplyMessage.cs" />
     <Compile Include="Models\ServerRouterInfo.cs" />
+    <Compile Include="Models\UserRoleInfoModel.cs" />
     <Compile Include="MongoModel\MongoModelInfoModel.cs" />
     <Compile Include="MongoModel\MongoModelInfoOfClientRefConditionModel.cs" />
     <Compile Include="MongoModel\MongoModelInfoOfClientRefForeRunnerModel.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="MongoModel\SimRefPropertyModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisterServerManager.cs" />
+    <Compile Include="Models\UserBaseInfoModel.cs" />
     <Compile Include="VicException\NoReceiptException.cs" />
   </ItemGroup>
   <ItemGroup>

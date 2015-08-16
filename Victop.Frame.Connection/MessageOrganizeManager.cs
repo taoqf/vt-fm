@@ -32,7 +32,7 @@ namespace Victop.Frame.Connection
             #region 通道及用户相关
             GalleryManager galleryManager = new GalleryManager();
             CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
-            LoginUserInfo loginUserInfo = cloudGallyInfo.ClientInfo;
+            LoginUserInfoModel loginUserInfo = cloudGallyInfo.ClientInfo;
             #endregion
             try
             {

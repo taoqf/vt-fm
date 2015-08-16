@@ -44,7 +44,7 @@
                         </Expander>
                   
                 </StackPanel>
-                <controls:VicButtonNormal   Name="lock" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="White" BorderThickness="0" Background="Transparent"  Content="锁定">
+                <controls:VicButtonNormal   Name="lock" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="White" BorderThickness="0" Background="Transparent"  Content="解锁">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <i:InvokeCommandAction Command="{Binding LockMenuList}" CommandParameter="{Binding ElementName=lock}"/>

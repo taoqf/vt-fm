@@ -13,12 +13,12 @@
   <Server Host="127.0.0.1:9528">
   </Server>
   <!--接入平台通讯配置 企业soa-->
-  <Client Server="192.168.40.196:9527" Router="192.168.40.196:9527" Lan="1" IsNeedRouter="0" Name="企业云">
+  <Client Server="192.168.40.166:9527" Router="192.168.40.166:9527" Lan="1" IsNeedRouter="0" Name="企业云">
   </Client>
   <!--p2p连接信息-->
   <P2PClient Server="192.168.110.213:9999">
   </P2PClient>
   <!--用户信息-->
-  <UserInfo User="wangzhaoguang" Pwd="wpfwpf" ClientId="feidao">
+  <UserInfo User="" Pwd="" ClientId="feidao">
   </UserInfo>
 </Partner>
