@@ -124,7 +124,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         </Grid>
         <Grid Margin="0,190,0,0" Name="gridOPen" Visibility="Collapsed">
             <Label Content="更新已完成" Foreground="#39A8EA" Width="80" Height="25" HorizontalAlignment="Center" Margin="226,18,219,66"></Label>
-            <Button Content="立即开启" Width="75" Height="25" Click="Button_Click" Style="{DynamicResource btnStyle}" Margin="227,58,223,22"></Button>
+            <Button Content="立即开启" IsDefault="True"  Width="75" Height="25" Click="Button_Click" Style="{DynamicResource btnStyle}" Margin="227,58,223,22"></Button>
         </Grid>
 
         <!--<Grid.RowDefinitions>
