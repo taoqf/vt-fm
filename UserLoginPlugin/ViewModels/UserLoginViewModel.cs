@@ -27,9 +27,6 @@ namespace UserLoginPlugin.ViewModels
 {
     public class UserLoginViewModel : ModelBase
     {
-        #region 字段
-
-
         private Window LoginWindow;
         //把UserControl明转为Window
         UserLoginWindow newWindow;
@@ -46,9 +43,6 @@ namespace UserLoginPlugin.ViewModels
         /// 主窗口是否可用
         /// </summary>
         private bool mainViewEnable = true;
-        #endregion
-
-        #region 属性
         private string _ErrMsg;
         public string ErrMsg
         {
@@ -200,10 +194,9 @@ namespace UserLoginPlugin.ViewModels
                 }
             }
         }
-        #endregion
 
-        #region Command命令
-        #region 窗体初始化
+
+
         /// <summary>窗体初始化命令</summary>
         public ICommand gridMainLoadedCommand
         {
@@ -244,9 +237,7 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
-        #endregion
 
-        #region 选择通道命令
         /// <summary>选择通道命令 </summary>
         public ICommand CloudSOAComboBoxSelectionChangedCommand
         {
@@ -258,9 +249,7 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
-        #endregion
 
-        #region 系统设置命令
         public ICommand btnSystemSetClickCommand
         {
             get
@@ -271,9 +260,7 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
-        #endregion
 
-        #region 窗体最小化命令
         /// <summary>窗体最小化命令 </summary>
         public ICommand btnMiniClickCommand
         {
@@ -285,9 +272,7 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
-        #endregion
 
-        #region 窗体关闭命令
         /// <summary>窗体关闭命令 </summary>
         public ICommand btnCloseClickCommand
         {
@@ -299,9 +284,7 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
-        #endregion
-
-        #region 登录命令
+  
         public ICommand btnLoginClickCommand
         {
             get
@@ -335,9 +318,6 @@ namespace UserLoginPlugin.ViewModels
                     }, () => { return CheckUserLogin(); });
             }
         }
-        #endregion
-
-        #region 取消命令
         /// <summary>取消命令 </summary>
         public ICommand btnCancelClickCommand
         {
@@ -349,7 +329,6 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
-        #endregion
         /// <summary>
         /// 角色列表窗体加载命令
         /// </summary>
@@ -375,7 +354,6 @@ namespace UserLoginPlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    #region 更新通道信息
                     Dictionary<string, object> menuDic = GetCurrentRoleMenu();
                     if (menuDic != null && !menuDic["ReplyMode"].ToString().Equals("0"))
                     {
@@ -388,18 +366,19 @@ namespace UserLoginPlugin.ViewModels
                         setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                         setUserContentDic.Add("UserRole", SelectedRoleInfo.Role_No);
                         dataOp.SendSyncMessage(messageType, setUserContentDic);
-                        #region 为关闭窗体添加动画
                         newWindow = LoginWindow as UserLoginWindow;
                         if (newWindow != null)
                         {
                             newWindow.FrontGD.tm.Tick += tm_Tick;
                             newWindow.FrontGD.tm.Start();
                         }
-                        #endregion
-                        #endregion
+                        ShowRoleList = false;
+                        MainViewEnable = true;
                     }
                     else
                     {
+                        ShowRoleList = false;
+                        MainViewEnable = true;
                         VicMessageBoxNormal.Show(menuDic["ReplyAlertMessage"].ToString());
                     }
                 }, () =>
@@ -425,12 +404,6 @@ namespace UserLoginPlugin.ViewModels
             Dictionary<string, object> resultDic = dataOp.SendSyncMessage(messageType, menuDic);
             return resultDic;
         }
-
-        #endregion
-
-        #region 自定义方法
-
-        #region 关闭窗口添加命令
         private void tm_Tick(object sender, EventArgs e)
         {
             if (newWindow != null)
@@ -440,9 +413,6 @@ namespace UserLoginPlugin.ViewModels
             ShowRoleList = false;
             LoginWindow.DialogResult = true;
         }
-        #endregion
-
-        #region 加载登录窗体
         private void UserLoginInit()
         {
             string versionString = ConfigManager.GetAttributeOfNodeByName("System", "Mode");
@@ -466,9 +436,7 @@ namespace UserLoginPlugin.ViewModels
             }
             VisualStateManager.GoToState(LoginWindow, "FirstPage", false);
         }
-        #endregion
-
-        #region 获取通道信息
+        
         /// <summary>获取通道信息 </summary>
         private void GetGalleryInfo()
         {
@@ -486,9 +454,6 @@ namespace UserLoginPlugin.ViewModels
                 }
             }
         }
-        #endregion
-
-        #region 设置通道信息
         /// <summary>设置通道信息 </summary>
         private void SetCurrentGallery()
         {
@@ -498,9 +463,6 @@ namespace UserLoginPlugin.ViewModels
             DataMessageOperation messageOp = new DataMessageOperation();
             messageOp.SendAsyncMessage(messageType, contentDic);
         }
-        #endregion
-
-        #region 登录操作
         void AfterLogin(object returnMsg)
         {
             DataMessageOperation messageOp = new DataMessageOperation();
@@ -550,7 +512,7 @@ namespace UserLoginPlugin.ViewModels
                                 Application.Current.Dispatcher.Invoke((Action)delegate
                                 {
                                     VicMessageBoxNormal.Show(resultDic["ReplyAlertMessage"].ToString());
-                                    MainViewEnable = true;
+                                    this.LoginWindow.DialogResult = true;
                                 });
                             }
 
@@ -660,8 +622,5 @@ namespace UserLoginPlugin.ViewModels
             }
 
         }
-        #endregion
-
-        #endregion
     }
 }

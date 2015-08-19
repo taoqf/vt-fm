@@ -22,7 +22,7 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition  Width="50"  />
+                            <ColumnDefinition  Width="80"  />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition  Height="20" />
@@ -45,10 +45,10 @@
                                         </LinearGradientBrush>
                                     </Rectangle.Fill>
                                 </Rectangle>
-                                <Image Width="20" Height="20" Margin="2,2,2,1"  Source="{Binding ImagePath}" />
+                                <Image Width="20" Height="20" Margin="2,2,2,1"  Source="{Binding ImagePath}" ToolTip="{Binding Role_name}" />
                             </Grid>
                         </Border>
-                        <TextBlock Grid.Row="1" FontSize="12" HorizontalAlignment="Center" Margin="5" Text="{Binding Role_Name}" />
+                        <TextBlock Grid.Row="1" FontSize="12" HorizontalAlignment="Center" Margin="5" Text="{Binding Role_Name}"/>
                     </Grid>
                 </DataTemplate>
             </Setter.Value>
