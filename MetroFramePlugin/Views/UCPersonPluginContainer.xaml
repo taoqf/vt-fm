@@ -639,7 +639,7 @@
                                 </i:Interaction.Triggers>
                             </TreeView>
                         </ScrollViewer>
-                    <ListBox Name="listBoxPopupMenuList" Grid.Row="1" Grid.Column="1"  Background="GhostWhite" Style="{StaticResource PopupMenuListStyle}" ItemsSource="{Binding NewSystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>
+                    <ListBox Name="listBoxPopupMenuList" Grid.Row="1" Grid.Column="1"  Background="GhostWhite" Style="{StaticResource PopupMenuListStyle}" ItemsSource="{Binding NewSystemFourthLevelMenuList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                    
                     <!--主界面第三行-->
                     <controls:VicStackPanelNormal Grid.Row="0"  Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">

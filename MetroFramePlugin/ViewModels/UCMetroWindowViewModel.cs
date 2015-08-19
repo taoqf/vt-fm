@@ -404,7 +404,7 @@ namespace MetroFramePlugin.ViewModels
             }
         }
 
-        private bool isLockMenu=false;//控制固定或浮动左侧菜单，默认固定
+        private bool isLockMenu = false;//控制固定或浮动左侧菜单，默认固定
         private VicButtonNormal lockbtn;
         #endregion
 
@@ -787,7 +787,7 @@ namespace MetroFramePlugin.ViewModels
                     {
                         MenuModel menuModel = (MenuModel)x;
                         //LoadPlugin(menuModel);
-                      OpenJsonMenuPlugin(menuModel);
+                        OpenJsonMenuPlugin(menuModel);
                     }
                 });
             }
@@ -835,7 +835,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (isLockMenu==true)
+                    if (isLockMenu == true)
                         IsShowMenu = Visibility.Visible;
                 });
             }
@@ -902,6 +902,7 @@ namespace MetroFramePlugin.ViewModels
                 foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.Parent_no.Equals("0") || string.IsNullOrEmpty(it.Parent_no)))
                 {
                     MenuModel menuModel = GetMenuModel(item);
+                    menuModel.ParentId = string.Empty;
                     menuModel = CreateMenuList(item.Menu_no, resourceInfo.ResourceMnenus, menuModel);
                     SystemMenuListEnterprise.Add(menuModel);
                 }
@@ -937,6 +938,7 @@ namespace MetroFramePlugin.ViewModels
             foreach (MenuInfo item in fullMenuList.Where(it => it.Parent_no.Equals(parentMenu)))
             {
                 MenuModel menuModel = GetMenuModel(item);
+                menuModel.ParentId = parentMenu;
                 menuModel = CreateMenuList(item.Menu_no, fullMenuList, menuModel);
                 parentModel.SystemMenuList.Add(menuModel);
             }
@@ -1138,7 +1140,7 @@ namespace MetroFramePlugin.ViewModels
                             }
                         }
                         //tabItem.Header = string.IsNullOrEmpty(HeaderTitle) ? pluginModel.PluginInterface.PluginTitle : HeaderTitle.Substring(0, 8).ToString();
-                        
+
                         tabItem.Uid = pluginModel.ObjectId;
                         tabItem.Content = pluginCtrl;
                         tabItem.AllowDelete = true;
@@ -1804,32 +1806,35 @@ namespace MetroFramePlugin.ViewModels
                 {
                     if (x != null)
                     {
-                        MenuModel _menuName = (MenuModel)x;
-
-                        if (_menuName.MenuName == "飞道工具")
+                        MenuModel selectedMenu = (MenuModel)x;
+                        if (string.IsNullOrEmpty(selectedMenu.ParentId))
                         {
                             VicMessageBoxNormal.Show("注意：此选项没有展示菜单，请选择其子菜单！", "提示");
                             return;
                         }
-                        foreach (MenuModel menuModel in SystemMenuListEnterprise)
+                        else
                         {
-                            MenuModel childNewModel = new MenuModel();
-                            childNewModel = menuModel.SystemMenuList.FirstOrDefault(it => it.MenuName.Equals(_menuName.MenuName));
-                            if (childNewModel != null)
-                            {
-                                NewSystemFourthLevelMenuList = childNewModel.SystemMenuList;
-                                _listbox.ItemsSource = NewSystemFourthLevelMenuList;//调试心得：这个必须有，不然搜索后清空_listbox的值，不会自动绑上了。
-                                break;
-                            }
-                            else
-                            {
-                                NewSystemFourthLevelMenuList = null;
-                                break;
-                            }
+                            GetListMenu(selectedMenu, SystemMenuListEnterprise);
                         }
 
                     }
                 });
+            }
+        }
+        private void GetListMenu(MenuModel menuModel, ObservableCollection<MenuModel> menuModelList)
+        {
+            foreach (MenuModel item in menuModelList)
+            {
+                MenuModel childModel = item.SystemMenuList.FirstOrDefault(it => (!string.IsNullOrEmpty(it.MenuNo) && it.MenuNo.Equals(menuModel.MenuNo)));
+                if (childModel != null)
+                {
+                    NewSystemFourthLevelMenuList = childModel.SystemMenuList;
+                    break;
+                }
+                else
+                {
+                    GetListMenu(menuModel, item.SystemMenuList);
+                }
             }
         }
         /// <summary>
