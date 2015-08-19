@@ -6,17 +6,18 @@
 //------------------------------------------------------------------------------
 namespace Victop.Frame.CoreLibrary.Models
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Linq;
-	using System.Text;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Newtonsoft.Json;
 
-	/// <summary>
-	/// 菜单信息
-	/// </summary>
-	/// <remarks>菜单信息</remarks>
-	public class MenuInfo
-	{
+    /// <summary>
+    /// 菜单信息
+    /// </summary>
+    /// <remarks>菜单信息</remarks>
+    public class MenuInfo
+    {
         private string _id;
 
         public string Id
@@ -157,62 +158,14 @@ namespace Victop.Frame.CoreLibrary.Models
             get { return package_url; }
             set { package_url = value; }
         }
-        private List<MenuRoleInfo> roles;
-
-        public List<MenuRoleInfo> Roles
-        {
-            get { return roles; }
-            set { roles = value; }
-        }
-
-    }
-    /// <summary>
-    /// 菜单角色信息
-    /// </summary>
-    public class MenuRoleInfo
-    {
         private long auth_code;
-
-        public long Auth_code
+        [JsonProperty(PropertyName = "auth_code")]
+        public long AuthCode
         {
             get { return auth_code; }
             set { auth_code = value; }
         }
-        private string role_no;
 
-        public string Role_no
-        {
-            get { return role_no; }
-            set { role_no = value; }
-        }
-        private string role_name;
-
-        public string Role_name
-        {
-            get { return role_name; }
-            set { role_name = value; }
-        }
-        private string tablename;
-
-        public string Tablename
-        {
-            get { return tablename; }
-            set { tablename = value; }
-        }
-        private string pk_val;
-
-        public string Pk_val
-        {
-            get { return pk_val; }
-            set { pk_val = value; }
-        }
-        private string search_field_val;
-
-        public string Search_field_val
-        {
-            get { return search_field_val; }
-            set { search_field_val = value; }
-        }
     }
 }
 

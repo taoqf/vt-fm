@@ -532,7 +532,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     IsRingShow = false;
                     MainViewEnable = true;
-                    MessageBox.Show(returnDic["ReplyAlertMessage"].ToString());
+                    MessageBox.Show(string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString()) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
                 }
             }
 

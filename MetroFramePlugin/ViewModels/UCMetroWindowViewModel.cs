@@ -959,13 +959,7 @@ namespace MetroFramePlugin.ViewModels
             menuModel.Icon = !string.IsNullOrEmpty(item.Icon) ? Regex.Unescape(item.Icon) : item.Icon;
             menuModel.PluginBG = item.Background;
             menuModel.Description = item.Description;
-            if (item.Roles != null && item.Roles.Count > 0)
-            {
-                foreach (MenuRoleInfo roleitem in item.Roles)
-                {
-                    menuModel.RoleAuthList.Add(new MenuRoleAuth() { Role_No = roleitem.Role_no, AuthCode = roleitem.Auth_code });
-                }
-            }
+            menuModel.AuthorityCode = item.AuthCode;
             return menuModel;
         }
         #endregion

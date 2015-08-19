@@ -496,7 +496,7 @@ namespace PortalFramePlugin.ViewModels
                     //    UserLogin();
                     //}
                     //UserLogin();
-                  
+
                     PoPupState = true;
                 });
             }
@@ -525,7 +525,7 @@ namespace PortalFramePlugin.ViewModels
                 {
                     PoPupState = false;
                     Process proc = new System.Diagnostics.Process();
-                    proc.StartInfo.FileName = string.Format("{0}?userCode={1}", ConfigurationManager.AppSettings["updatepwdhttp"],UserCode);
+                    proc.StartInfo.FileName = string.Format("{0}?userCode={1}", ConfigurationManager.AppSettings["updatepwdhttp"], UserCode);
                     proc.Start();
                 });
             }
@@ -799,13 +799,7 @@ namespace PortalFramePlugin.ViewModels
             menuModel.Icon = !string.IsNullOrEmpty(item.Icon) ? Regex.Unescape(item.Icon) : item.Icon;
             menuModel.PluginBG = item.Background;
             menuModel.Description = item.Description;
-            if (item.Roles != null && item.Roles.Count > 0)
-            {
-                foreach (MenuRoleInfo roleitem in item.Roles)
-                {
-                    menuModel.RoleAuthList.Add(new MenuRoleAuth() { Role_No = roleitem.Role_no, AuthCode = roleitem.Auth_code });
-                }
-            }
+            menuModel.AuthorityCode = item.AuthCode;
             return menuModel;
         }
         #endregion
