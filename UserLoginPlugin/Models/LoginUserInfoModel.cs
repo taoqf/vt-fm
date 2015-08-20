@@ -39,14 +39,6 @@ namespace UserLoginPlugin.Models
             get { return clientId; }
             set { clientId = value; }
         }
-
-        private string clientNo;
-
-        public string ClientNo
-        {
-            get { return clientNo; }
-            set { clientNo = value; }
-        }
         /// <summary>
         /// 企业SOA
         /// </summary>

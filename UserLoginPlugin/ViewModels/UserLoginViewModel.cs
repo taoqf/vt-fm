@@ -363,7 +363,6 @@ namespace UserLoginPlugin.ViewModels
                         setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
                         setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
                         setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-                        setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                         setUserContentDic.Add("UserRole", SelectedRoleInfo.Role_No);
                         dataOp.SendSyncMessage(messageType, setUserContentDic);
                         newWindow = LoginWindow as UserLoginWindow;

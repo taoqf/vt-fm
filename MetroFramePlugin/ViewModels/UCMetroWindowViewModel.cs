@@ -53,8 +53,6 @@ namespace MetroFramePlugin.ViewModels
         private VicTabItemNormal selectedTabItem;
         private VicTabControlNormal mainTabControl;
         private bool poPupState;
-        /// <summary>是否首次登录 </summary>
-        private bool isFirstLogin = true;
         private bool isFirstLoad = true;
         /// <summary>
         /// 用户名
@@ -65,7 +63,7 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         private string userImg;
         /// <summary>
-        /// 用户全拼
+        /// 用户账号
         /// </summary>
         private string userCode;
         public string UserCode
@@ -1180,11 +1178,10 @@ namespace MetroFramePlugin.ViewModels
                 if (userDic != null)
                 {
                     UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
-                    userRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
+                    UserRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
                     UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
-                    this.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
+                    UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
-                isFirstLogin = false;
                 LoadStandardMenu();
                 IsShowMenu = Visibility.Visible;
                 //NotificationCenter notifyCenter = new NotificationCenter();
@@ -2712,7 +2709,7 @@ namespace MetroFramePlugin.ViewModels
             string MessageType = "MongoDataChannelService.findBusiData";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             contentDic.Add("systemid", ConfigurationManager.AppSettings["clientsystem"]);
-            contentDic.Add("modelid", "feidao-model-pub_user_setting-0002");
+            contentDic.Add("modelid", "feidao-model-pub_user_setting-0001");
             List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
             Dictionary<string, object> conDic = new Dictionary<string, object>();
             conDic.Add("name", "pub_user_setting");
@@ -2720,6 +2717,7 @@ namespace MetroFramePlugin.ViewModels
             Dictionary<string, object> tableConDic = new Dictionary<string, object>();
             tableConDic.Add("productid", ClientId);
             tableConDic.Add("usercode", UserCode);
+            tableConDic.Add("role_no", UserRole);
             tableConList.Add(tableConDic);
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
@@ -2732,12 +2730,8 @@ namespace MetroFramePlugin.ViewModels
                 DataTable dt = MenuDs.Tables["dataArray"];
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    DataRow[] staffDrs = dt.Select(string.Format("usercode = '{0}'", UserCode));
-                    if (staffDrs.Count() != 0)//从服器取
-                    {
-                        string areaMenuList = staffDrs[0]["custom_menu"].ToString();
-                        NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
-                    }
+                    string areaMenuList = dt.Rows[0]["custom_menu"].ToString();
+                    NewArea = JsonHelper.ToObject<ObservableCollection<AreaMenu>>(areaMenuList);
                 }
             }
 
@@ -2749,85 +2743,65 @@ namespace MetroFramePlugin.ViewModels
         private void SavePersonMenu()
         {
             DataMessageOperation messageOp = new DataMessageOperation();
-            string MessageType = "MongoDataChannelService.findBusiData";
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", ConfigurationManager.AppSettings["clientsystem"]);
-            contentDic.Add("modelid", "feidao-model-pub_user_setting-0002");
-            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> conDic = new Dictionary<string, object>();
-            conDic.Add("name", "pub_user_setting");
-            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConDic.Add("productid", ClientId);
-            tableConDic.Add("userCode", UserCode);
-            tableConList.Add(tableConDic);
-            conDic.Add("tablecondition", tableConList);
-            conList.Add(conDic);
-            contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
-            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
+            DataSet MenuDs = messageOp.GetData(channelId, "[\"pub_user_setting\"]");
+            DataTable dt = MenuDs.Tables["dataArray"];
+            if (dt.Rows.Count == 0) //第一次无记录时先存到服务器
             {
-                channelId = returnDic["DataChannelId"].ToString();
-                DataSet MenuDs = messageOp.GetData(channelId, "[\"pub_user_setting\"]");
-                DataTable dt = MenuDs.Tables["dataArray"];
-                DataRow[] staffDrs = dt.Select(string.Format("userCode = '{0}'", UserCode));
-                if (dt.Rows.Count == 0 || staffDrs.Count() == 0) //第一次无记录时先存到服务器
+
+                DataRow dr = dt.NewRow();
+                dr["_id"] = Guid.NewGuid();
+                dr["userCode"] = UserCode;
+                dr["productid"] = ClientId;
+                dr["role_no"] = UserRole;
+                dr["custom_menu"] = JsonHelper.ToJson(NewArea);
+                dt.Rows.Add(dr);
+            }
+            else if (dt.Rows.Count == 1)  //用户多次修改Plugin列表时存到服务器
+            {
+                dt.Rows[0]["custom_menu"] = JsonHelper.ToJson(NewArea);
+            }
+
+            DataMessageOperation dataOp = new DataMessageOperation();
+            dataOp.SaveData(channelId, "[\"pub_user_setting\"]");
+            string MessageType1 = "MongoDataChannelService.saveBusiData";
+            Dictionary<string, object> contentDic1 = new Dictionary<string, object>();
+            contentDic1.Add("systemid", ConfigurationManager.AppSettings["clientsystem"]);
+            contentDic1.Add("configsystemid", "11");
+            contentDic1.Add("modelid", "feidao-model-pub_user_setting-0001");
+            contentDic1.Add("DataChannelId", channelId);
+            Dictionary<string, object> resultDic = messageOp.SendSyncMessage(MessageType1, contentDic1);
+
+
+            if (resultDic != null && !resultDic["ReplyMode"].ToString().Equals("0"))
+            {
+                Dictionary<string, object> replyContent = new Dictionary<string, object>();
+                replyContent = JsonHelper.ToObject<Dictionary<string, object>>(resultDic["ReplyContent"].ToString());
+                if (replyContent != null && replyContent.Keys.Contains("msg"))
                 {
 
-                    DataRow dr = dt.NewRow();
-                    dr["_id"] = Guid.NewGuid();
-                    dr["userCode"] = UserCode;
-                    dr["productid"] = clientId;
-                    dr["custom_menu"] = JsonHelper.ToJson(NewArea);
-                    dt.Rows.Add(dr);
-                }
-                else if (staffDrs.Count() == 1)  //用户多次修改Plugin列表时存到服务器
-                {
-                    staffDrs[0]["custom_menu"] = JsonHelper.ToJson(NewArea);
-                }
-
-                DataMessageOperation dataOp = new DataMessageOperation();
-                dataOp.SaveData(channelId, "[\"pub_user_setting\"]");
-                string MessageType1 = "MongoDataChannelService.saveBusiData";
-                Dictionary<string, object> contentDic1 = new Dictionary<string, object>();
-                contentDic1.Add("systemid", ConfigurationManager.AppSettings["clientsystem"]);
-                contentDic1.Add("configsystemid", "11");
-                contentDic1.Add("modelid", "feidao-model-pub_user_setting-0002");
-                contentDic1.Add("DataChannelId", channelId);
-                Dictionary<string, object> resultDic = messageOp.SendSyncMessage(MessageType1, contentDic1);
-
-
-                if (resultDic != null && !resultDic["ReplyMode"].ToString().Equals("0"))
-                {
-                    Dictionary<string, object> replyContent = new Dictionary<string, object>();
-                    replyContent = JsonHelper.ToObject<Dictionary<string, object>>(resultDic["ReplyContent"].ToString());
-                    if (replyContent != null && replyContent.Keys.Contains("msg"))
-                    {
-
-                        VicMessageBoxNormal.Show("保存成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else
-                    {
-                        VicMessageBoxNormal.Show("保存失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        return;
-                    }
-
+                    VicMessageBoxNormal.Show("保存成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
                     VicMessageBoxNormal.Show("保存失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    return;
                 }
-                //删除本地文件
-                if (File.Exists(menuPath))
+
+            }
+            else
+            {
+                VicMessageBoxNormal.Show("保存失败！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            //删除本地文件
+            if (File.Exists(menuPath))
+            {
+                FileInfo fi = new FileInfo(menuPath);
+                if (fi.Attributes.ToString().IndexOf("ReadOnly") != -1)
                 {
-                    FileInfo fi = new FileInfo(menuPath);
-                    if (fi.Attributes.ToString().IndexOf("ReadOnly") != -1)
-                    {
-                        fi.Attributes = FileAttributes.Normal;
-                    }
-                    File.Delete(menuPath);//直接删除本地文件   
+                    fi.Attributes = FileAttributes.Normal;
                 }
+                File.Delete(menuPath);//直接删除本地文件   
             }
         }
 

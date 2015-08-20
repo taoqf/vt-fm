@@ -79,7 +79,6 @@ namespace UserManagerService
                 userDic.Add("UserName", loginUserInfo.UserName);
                 userDic.Add("UserCode", loginUserInfo.UserCode);
                 userDic.Add("SpaceId", cloudGallyInfo.ClientId);
-                userDic.Add("ClientNo", cloudGallyInfo.ClientNo);
                 userDic.Add("ProductId", cloudGallyInfo.ClientId);
                 userDic.Add("UserImg", loginUserInfo.CurrentUserInfo.AvatarPath);
                 userDic.Add("UserRole", loginUserInfo.CurrentUserInfo.RoleList);
