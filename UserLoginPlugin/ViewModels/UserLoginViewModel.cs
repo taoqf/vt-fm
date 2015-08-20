@@ -484,7 +484,6 @@ namespace UserLoginPlugin.ViewModels
                         setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
                         setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
                         setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-                        setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                         dataOp.SendSyncMessage(messageType, setUserContentDic);
                         Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
 
@@ -502,7 +501,6 @@ namespace UserLoginPlugin.ViewModels
                                 setUserContentDic.Add("UserCode", LoginInfoModel.UserName);
                                 setUserContentDic.Add("UserPwd", LoginInfoModel.UserPwd);
                                 setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
-                                setUserContentDic.Add("ClientNo", LoginInfoModel.ClientNo);
                                 setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
                                 dataOp.SendSyncMessage(messageType, setUserContentDic);
                                 Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
@@ -591,36 +589,7 @@ namespace UserLoginPlugin.ViewModels
             userDic.Add("User", LoginInfoModel.UserName);
             userDic.Add("Pwd", LoginInfoModel.UserPwd);
             ConfigManager.SaveAttributeOfNodeByName("UserInfo", userDic);
-            DataMessageOperation messageOp = new DataMessageOperation();
-            string MessageType = "MongoDataChannelService.findBusiData";
-            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "18");
-            contentDic.Add("modelid", "feidao-model-pub_product-0001");
-            List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> conDic = new Dictionary<string, object>();
-            conDic.Add("name", "pub_product");
-            List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
-            Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConDic.Add("productid", LoginInfoModel.ClientId);
-            tableConList.Add(tableConDic);
-            conDic.Add("tablecondition", tableConList);
-            conList.Add(conDic);
-            contentDic.Add("conditions", conList);
-            Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
-            if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
-            {
-                string channelId = returnDic["DataChannelId"].ToString();
-                DataSet mastDs = messageOp.GetData(channelId, "[\"pub_product\"]");
-                if (mastDs != null && mastDs.Tables.Contains("dataArray") && mastDs.Tables["dataArray"].Rows.Count > 0)
-                {
-                    DataRow[] drs = mastDs.Tables["dataArray"].Select(string.Format("productid='{0}'", LoginInfoModel.ClientId));
-                    if (drs != null && drs.Count() > 0)
-                    {
-                        LoginInfoModel.ClientNo = drs[0]["client_no"].ToString();
-                    }
-                }
-            }
-
+            LoginInfoModel.ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
         }
     }
 }
