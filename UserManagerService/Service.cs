@@ -85,7 +85,8 @@ namespace UserManagerService
                 userDic.Add("CurrentRole", loginUserInfo.UserRole);
                 if (loginUserInfo.CurrentUserInfo != null && loginUserInfo.UserRole != null)
                 {
-                    userDic.Add("UserNo", loginUserInfo.CurrentUserInfo.RoleList.First(it => it.RoleNo.Equals(loginUserInfo.UserRole)).PkVal);
+                    UserRoleInfoModel roleInfo = loginUserInfo.CurrentUserInfo.RoleList.FirstOrDefault(it => it.RoleNo.Equals(loginUserInfo.UserRole));
+                    userDic.Add("UserNo", roleInfo != null ? roleInfo.PkVal : loginUserInfo.CurrentUserInfo.RoleList[0].PkVal);
                 }
                 if (loginUserInfo.UserParams != null)
                 {
