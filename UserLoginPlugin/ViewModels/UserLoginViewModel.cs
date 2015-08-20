@@ -284,7 +284,7 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
-  
+
         public ICommand btnLoginClickCommand
         {
             get
@@ -435,7 +435,7 @@ namespace UserLoginPlugin.ViewModels
             }
             VisualStateManager.GoToState(LoginWindow, "FirstPage", false);
         }
-        
+
         /// <summary>获取通道信息 </summary>
         private void GetGalleryInfo()
         {
@@ -519,7 +519,7 @@ namespace UserLoginPlugin.ViewModels
                             ShowRoleList = true;
                             if (this.LoginWindow != null)
                             {
-                                this.LoginWindow.Height = 1; this.LoginWindow.Width = 1;
+                                Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.Height = 1; this.LoginWindow.Width = 1; });
                             }
                         }
                     }
