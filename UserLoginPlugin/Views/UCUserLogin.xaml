@@ -82,10 +82,10 @@
             </Grid>
             <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                   
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="202"></ColumnDefinition>
@@ -100,13 +100,13 @@
                     "{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             VerticalAlignment="Center"  BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
                 </PasswordBox>-->
-              
-                <controls:VicPasswordBoxKeyNormal Grid.Row="1" Name="pwBox" Grid.Column="0"  Width="192" Height="28" HorizontalAlignment="Left"  
+
+                    <controls:VicPasswordBoxKeyNormal Grid.Row="1" Name="pwBox" Grid.Column="0"  Width="192" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left"  
                             PasswordText="{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                            VerticalAlignment="Center"  BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
+                              BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
                 </controls:VicPasswordBoxKeyNormal>
-                <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Content="找回密码"  VerticalAlignment="Center"/>
-                    <controls:VicComboBoxNormal Width="192" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" Height="24" Name="CloudSOAComboBox"  
+                <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Content="找回密码"  VerticalAlignment="Bottom"/>
+                    <controls:VicComboBoxNormal Width="192" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="0" Height="28" Name="CloudSOAComboBox"  
                         ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
                         SelectedValue="{Binding SelectedGallery,UpdateSourceTrigger=PropertyChanged}">
                         <i:Interaction.Triggers>
