@@ -12,12 +12,11 @@ namespace Victop.Frame.CmptRuntime
     /// </summary>
     public class ViewsBlockModel : ICloneable
     {
-        [JsonProperty(PropertyName = "blockname")]
         private string blockName;
         /// <summary>
         /// Block名称
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "blockname")]
         public string BlockName
         {
             get
@@ -29,12 +28,11 @@ namespace Victop.Frame.CmptRuntime
                 blockName = value;
             }
         }
-        [JsonProperty(PropertyName = "datasettype")]
         private string datasetType;
         /// <summary>
         /// 数据集类型
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "datasettype")]
         public string DatasetType
         {
             get
@@ -46,12 +44,11 @@ namespace Victop.Frame.CmptRuntime
                 datasetType = value;
             }
         }
-        [JsonProperty(PropertyName = "superiors")]
         private string superiors;
         /// <summary>
         /// 上级Block的名称
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "superiors")]
         public string Superiors
         {
             get
@@ -63,12 +60,11 @@ namespace Victop.Frame.CmptRuntime
                 superiors = value;
             }
         }
-        [JsonProperty(PropertyName = "tablename")]
         private string tableName;
         /// <summary>
         /// 表名
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "tablename")]
         public string TableName
         {
             get
@@ -80,12 +76,11 @@ namespace Victop.Frame.CmptRuntime
                 tableName = value;
             }
         }
-        [JsonProperty(PropertyName = "conditions")]
         private ViewsBlockConditionModel conditions;
         /// <summary>
         /// 条件(检索条件、排序及分页)
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "conditions")]
         public ViewsBlockConditionModel Conditions
         {
             get

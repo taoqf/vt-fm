@@ -18,12 +18,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 区块名称
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
         private string blockName;
         /// <summary>
         /// 区块名称
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "name")]
         public string BlockName
         {
             get
@@ -37,14 +36,26 @@ namespace Victop.Frame.CmptRuntime
             }
         }
         /// <summary>
+        /// 区块类型
+        /// </summary>
+        private int blockType;
+        /// <summary>
+        /// 区块类型
+        /// </summary>
+        [JsonProperty(PropertyName ="blocktype")]
+        public int BlockType
+        {
+            get { return blockType; }
+            set { blockType = value; }
+        }
+        /// <summary>
         /// 上级Block名称
         /// </summary>
-        [JsonProperty(PropertyName = "superiors")]
         private string superiors;
         /// <summary>
         /// 上级Block名称
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "superiors")]
         public string Superiors
         {
             get { return superiors; }
@@ -53,12 +64,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 关键字
         /// </summary>
-        [JsonProperty(PropertyName = "keyword")]
         private string keywords = string.Empty;
         /// <summary>
         /// 关键字(多个关键字时用"|"分隔)
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "keyword")]
         public string Keywords
         {
             get { return keywords; }
@@ -67,12 +77,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 方法
         /// </summary>
-        [JsonProperty(PropertyName = "method")]
         private string method;
         /// <summary>
         /// 方法
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "method")]
         public string Method
         {
             get { return method; }
@@ -81,40 +90,50 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// View层名称
         /// </summary>
-        [JsonProperty(PropertyName = "view")]
         private string viewName;
         /// <summary>
         /// View层名称
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "view")]
         public string ViewName
         {
             get { return viewName; }
             set { viewName = value; }
         }
         /// <summary>
-        /// 渲染类型
+        /// 是否渲染
         /// </summary>
-        [JsonProperty(PropertyName = "autorender")]
         private int autoRender;
         /// <summary>
-        /// 渲染类型
+        /// 是否渲染
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "autorender")]
         public int AutoRender
         {
             get { return autoRender; }
             set { autoRender = value; }
         }
         /// <summary>
+        /// 渲染类型
+        /// </summary>
+        private int renderType;
+        /// <summary>
+        /// 渲染类型
+        /// </summary>
+        [JsonProperty(PropertyName = "rendertype")]
+        public int RenderType
+        {
+            get { return renderType; }
+            set { renderType = value; }
+        }
+        /// <summary>
         /// 绑定View中的Block名称
         /// </summary>
-        [JsonProperty(PropertyName = "binding")]
         private string bindingBlock;
         /// <summary>
         /// 绑定View中的Block名称
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "binding")]
         public string BindingBlock
         {
             get { return bindingBlock; }

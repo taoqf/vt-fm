@@ -15,12 +15,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 呈现层Block
         /// </summary>
-        [JsonProperty(PropertyName = "blocks")]
         private ObservableCollection<PresentationBlockModel> presentationBlocks;
         /// <summary>
         /// 呈现层Block
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "blocks")]
         public ObservableCollection<PresentationBlockModel> PresentationBlocks
         {
             get

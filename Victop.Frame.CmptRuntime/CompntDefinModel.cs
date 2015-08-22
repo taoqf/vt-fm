@@ -16,12 +16,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 组件视图层
         /// </summary>
-        [JsonProperty(PropertyName = "views")]
         private ObservableCollection<DefinViewsModel> compntViews;
         /// <summary>
         /// 组件视图
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "views")]
         public ObservableCollection<DefinViewsModel> CompntViews
         {
             get
@@ -42,12 +41,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 组件展示层
         /// </summary>
-        [JsonProperty(PropertyName = "presentation")]
         private DefinPresentationModel compntPresentation;
         /// <summary>
         /// 组件展示层
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "presentation")]
         public DefinPresentationModel CompntPresentation
         {
             get

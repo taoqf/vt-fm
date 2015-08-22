@@ -14,12 +14,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 表条件
         /// </summary>
-        [JsonProperty(PropertyName = "tablecondition")]
         private Dictionary<string, object> tableCondition;
         /// <summary>
         /// 表条件
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "tablecondition")]
         public Dictionary<string, object> TableCondition
         {
             get { return tableCondition; }
@@ -28,12 +27,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 表排序
         /// </summary>
-        [JsonProperty(PropertyName = "sort")]
         private Dictionary<string, object> tableSort;
         /// <summary>
         /// 表排序
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "sort")]
         public Dictionary<string, object> TableSort
         {
             get { return tableSort; }
@@ -42,12 +40,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 页面内容大小
         /// </summary>
-        [JsonProperty(PropertyName = "pagesize")]
         private int pageSize = 0;
         /// <summary>
         /// 页面内容大小
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "pagesize")]
         public int PageSize
         {
             get { return pageSize; }
@@ -56,12 +53,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 页码
         /// </summary>
-        [JsonProperty(PropertyName="pageindex")]
         private int pageIndex = 1;
         /// <summary>
         /// 页码
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "pageindex")]
         public int PageIndex
         {
             get { return pageIndex; }

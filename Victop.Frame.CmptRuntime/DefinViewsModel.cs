@@ -18,12 +18,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 视图名称
         /// </summary>
-        [JsonProperty(PropertyName = "viewname")]
         private string viewName;
         /// <summary>
         /// 视图名称
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "viewname")]
         public string ViewName
         {
             get { return viewName; }
@@ -32,12 +31,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 视图模型
         /// </summary>
-        [JsonProperty(PropertyName = "modelid")]
         private string modelId;
         /// <summary>
         /// 视图模型
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "modelid")]
         public string ModelId
         {
             get { return modelId; }
@@ -46,12 +44,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 加载数据方式 0不加载, 1带缓存, 2不使用缓存 
         /// </summary>
-        [JsonProperty(PropertyName = "loaddata")]
         private int loadData;
         /// <summary>
         /// 加载数据方式 0不加载, 1带缓存, 2不使用缓存 
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "loaddata")]
         public int LoadData
         {
             get { return loadData; }
@@ -60,12 +57,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 是否编辑
         /// </summary>
-        [JsonProperty(PropertyName = "editable")]
         private bool editAble;
         /// <summary>
         /// 是否编辑
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "editable")]
         public bool EditAble
         {
             get { return editAble; }
@@ -75,12 +71,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 视图Block
         /// </summary>
-        [JsonProperty(PropertyName = "blocks")]
         private ObservableCollection<ViewsBlockModel> viewBlocks;
         /// <summary>
         /// 视图Block
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "blocks")]
         public ObservableCollection<ViewsBlockModel> ViewBlocks
         {
             get
@@ -110,12 +105,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// SystemId
         /// </summary>
-        [JsonProperty(PropertyName = "systemid")]
         private string systemId;
         /// <summary>
         /// SystemId
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "systemid")]
         public string SystemId
         {
             get
@@ -130,12 +124,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 引用数据的SystemId
         /// </summary>
-        [JsonProperty(PropertyName = "refsystemid")]
         private string refSystemId;
         /// <summary>
         /// 引用数据的SystemId
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "refsystemid")]
         public string RefSystemId
         {
             get
