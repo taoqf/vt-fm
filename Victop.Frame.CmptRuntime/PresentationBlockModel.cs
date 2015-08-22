@@ -42,7 +42,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 区块类型
         /// </summary>
-        [JsonProperty(PropertyName ="blocktype")]
+        [JsonProperty(PropertyName ="type")]
         public int BlockType
         {
             get { return blockType; }
