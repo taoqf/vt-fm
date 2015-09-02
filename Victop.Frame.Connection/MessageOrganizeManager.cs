@@ -54,6 +54,18 @@ namespace Victop.Frame.Connection
                     replyIsToChannel = DataOperateEnum.COMMIT;
                     opFlag = true;
                 }
+                else if (messageInfo.MessageType.Equals("taskScheduler"))
+                {
+                    Dictionary<string, object> dicMessageControl = new Dictionary<string, object>();
+                    dicMessageControl.Add("reply", 1);
+                    messageInfo.MessageControl = JsonHelper.ToJson(dicMessageControl);
+                    Dictionary<string, object> dicMessageContent = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
+                    if (dicMessageContent != null && dicMessageContent.ContainsKey("runserver"))
+                    {
+                        dicMessageContent["runserver"] = messageInfo.MessageId;
+                        messageInfo.MessageContent = JsonHelper.ToJson(dicMessageContent);
+                    }
+                }
                 if (!dicContent.ContainsKey("spaceid"))
                 {
                     dicContent.Add("spaceid", cloudGallyInfo.ClientId);
