@@ -59,11 +59,9 @@ namespace Victop.Frame.Connection
                     Dictionary<string, object> dicMessageControl = new Dictionary<string, object>();
                     dicMessageControl.Add("reply", 1);
                     messageInfo.MessageControl = JsonHelper.ToJson(dicMessageControl);
-                    Dictionary<string, object> dicMessageContent = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
-                    if (dicMessageContent != null && dicMessageContent.ContainsKey("runserver"))
+                    if (dicContent != null && dicContent.ContainsKey("runserver"))
                     {
-                        dicMessageContent["runserver"] = messageInfo.MessageId;
-                        messageInfo.MessageContent = JsonHelper.ToJson(dicMessageContent);
+                        dicContent["runserver"] = messageInfo.MessageId;
                     }
                 }
                 if (!dicContent.ContainsKey("spaceid"))
