@@ -284,7 +284,26 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
-
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        public ICommand btnModifyPassClickCommand
+        {
+            get { 
+                return new RelayCommand(()=>{
+                    DataMessageOperation dataOp = new DataMessageOperation();
+                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                     paramDic.Add("userCode", LoginInfoModel.UserName);
+                        PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                        if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                        {
+                            Window win = pluginModel.PluginInterface.StartWindow;
+                            win.ShowDialog();
+                        }
+                    
+            });
+            }
+        }
         public ICommand btnLoginClickCommand
         {
             get
@@ -293,12 +312,18 @@ namespace UserLoginPlugin.ViewModels
                     {
                         if (LoginInfoModel.UserPwd.Equals("111111"))
                         {
-                            if (VicMessageBoxNormal.Show("密码过于简单,将转向修改密码界面", "标题", MessageBoxButton.OKCancel, MessageBoxImage.Information) == MessageBoxResult.OK)
+                            if (VicMessageBoxNormal.Show("密码为初始化密码，请登录后修改密码", "标题", MessageBoxButton.OKCancel, MessageBoxImage.Information) == MessageBoxResult.OK)
                             {
-                                Process proc = new System.Diagnostics.Process();
-                                proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}", ConfigurationManager.AppSettings["updatepwdhttp"], LoginInfoModel.UserName, LoginInfoModel.ClientId);
-                                proc.Start();
-                                return;
+                                //DataMessageOperation dataOp = new DataMessageOperation();
+                                //Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                                //paramDic.Add("usercode", LoginInfoModel.UserName);
+                                //PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                                //if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                                //{
+                                //    Window win = pluginModel.PluginInterface.StartWindow;
+                                //    win.ShowDialog();
+                                //}
+
                             }
                             else
                             {
@@ -308,14 +333,12 @@ namespace UserLoginPlugin.ViewModels
                             }
 
                         }
-                        else
-                        {
-                            IsRingShow = true;
-                            MainViewEnable = false;
-                            UserLogin();
-                        }
 
-                    }, () => { return CheckUserLogin(); });
+                      IsRingShow = true;
+                      MainViewEnable = false;
+                      UserLogin();
+                    }, () => { return CheckUserLogin();
+                    });
             }
         }
         /// <summary>取消命令 </summary>
@@ -390,6 +413,7 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
+        
         private Dictionary<string, object> GetCurrentRoleMenu(string roleNo = null)
         {
             DataMessageOperation dataOp = new DataMessageOperation();
@@ -551,8 +575,6 @@ namespace UserLoginPlugin.ViewModels
                 DataMessageOperation messageOp = new DataMessageOperation();
                 //Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                 messageOp.SendAsyncMessage(MessageType, contentDic, new WaitCallback(AfterLogin));
-
-
             }
             catch (Exception ex)
             {

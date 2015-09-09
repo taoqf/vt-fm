@@ -105,7 +105,7 @@
                             PasswordText="{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
                 </controls:VicPasswordBoxKeyNormal>
-                <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Content="找回密码"  VerticalAlignment="Bottom"/>
+                    <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Content="找回密码"  VerticalAlignment="Bottom"/>
                     <controls:VicComboBoxNormal Width="192" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="0" Height="28" Name="CloudSOAComboBox"  
                         ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
                         SelectedValue="{Binding SelectedGallery,UpdateSourceTrigger=PropertyChanged}">

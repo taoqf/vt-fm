@@ -608,10 +608,19 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    PoPupState = false;
-                    Process proc = new System.Diagnostics.Process();
-                    proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}", ConfigurationManager.AppSettings["updatepwdhttp"], UserCode, ClientId);
-                    proc.Start();
+                    //PoPupState = false;
+                    //Process proc = new System.Diagnostics.Process();
+                    //proc.StartInfo.FileName = string.Format("{0}?userCode={1}&ClientId={2}", ConfigurationManager.AppSettings["updatepwdhttp"], UserCode, ClientId);
+                    //proc.Start();
+                    DataMessageOperation dataOp = new DataMessageOperation();
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    paramDic.Add("usercode", UserCode);
+                    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                    if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                    {
+                        Window win = pluginModel.PluginInterface.StartWindow;
+                        win.ShowDialog();
+                    }
                 });
             }
         }
