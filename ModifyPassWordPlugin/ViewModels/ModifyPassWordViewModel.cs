@@ -127,7 +127,7 @@ namespace ModifyPassWordPlugin.ViewModels
 
                         VicMessageBoxNormal.Show(ex.ToString());
                     }
-                   
+                    }, () => { return CheckUserLogin();
                 });
             }
         }
@@ -139,6 +139,29 @@ namespace ModifyPassWordPlugin.ViewModels
         #endregion
 
         #region 私方法
+        /// <summary>检查输入信息</summary>
+        private bool CheckUserLogin()
+        {
+            bool CheckStatus = true;
+            if (string.IsNullOrEmpty(PwdModel.OldUserPwd))
+            {
+                CheckStatus = false;
+                return CheckStatus;
+            }
+            
+            if (string.IsNullOrEmpty(PwdModel.NewUserPwd))
+            {
+                CheckStatus = false;
+                return CheckStatus;
+            }
+            if (string.IsNullOrEmpty(PwdModel.AffirmUserPwd))
+            {
+                CheckStatus = false;
+                return CheckStatus;
+            }
+            return CheckStatus;
+        }
+
         public static string GetUserCode()
         {
             DataMessageOperation messageOp = new DataMessageOperation();
