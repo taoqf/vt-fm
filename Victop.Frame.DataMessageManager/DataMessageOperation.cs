@@ -363,7 +363,7 @@ namespace Victop.Frame.DataMessageManager
                                     {
                                         contentDic.Add("conditions", defaultCondition);
                                     }
-                                    else if (defaultCondition == null && !isSelectAll)
+                                    else if (defaultCondition == null && !isSelectAll&&!contentDic.ContainsKey("conditions"))
                                     {
                                         List<Dictionary<string, object>> conditionList = new List<Dictionary<string, object>>();
                                         Dictionary<string, object> tableDic = new Dictionary<string, object>();
