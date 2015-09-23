@@ -52,7 +52,9 @@ namespace MetroFramePlugin.ViewModels
         private ObservableCollection<VicTabItemNormal> tabItemList;
         private VicTabItemNormal selectedTabItem;
         private VicTabControlNormal mainTabControl;
+        private ObservableCollection<UserRoleInfoModel> roleInfoList;
         private bool poPupState;
+        private VicRadioButtonRectangle rbtnRole;
         private bool isFirstLoad = true;
         /// <summary>
         /// 用户名
@@ -97,6 +99,7 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
+       
         /// <summary>
         /// 活动插件数目
         /// </summary>
@@ -401,7 +404,26 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-
+        /// <summary>
+        /// 角色信息集合
+        /// </summary>
+        public ObservableCollection<UserRoleInfoModel> RoleInfoList
+        {
+            get
+            {
+                if (roleInfoList == null)
+                    roleInfoList = new ObservableCollection<UserRoleInfoModel>();
+                return roleInfoList;
+            }
+            set
+            {
+                if (roleInfoList != value)
+                {
+                    roleInfoList = value;
+                    RaisePropertyChanged("RoleInfoList");
+                }
+            }
+        }
         private bool isLockMenu = false;//控制固定或浮动左侧菜单，默认固定
         private VicButtonNormal lockbtn;
         #endregion
@@ -419,6 +441,7 @@ namespace MetroFramePlugin.ViewModels
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
                     lockbtn = (VicButtonNormal)mainWindow.FindName("lock");
+                    rbtnRole = (VicRadioButtonRectangle)mainWindow.FindName("rbtnRole");
                     mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
@@ -433,6 +456,18 @@ namespace MetroFramePlugin.ViewModels
                     OverlayWindow.VicTabCtrl = mainTabControl;
                     overlayWin.Show();
                     UserLogin();
+                    DataMessageOperation messageOp = new DataMessageOperation();
+                    Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                   RoleInfoList= JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
+                   if (RoleInfoList.Count >= 2)
+                   {
+                       rbtnRole.Visibility = Visibility.Visible;
+                   }
+                   else
+                   {
+                       rbtnRole.Visibility = Visibility.Collapsed;
+;
+                   }
                     ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
                     string UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
                     if(UserPwd.Equals("111111"))
@@ -605,6 +640,17 @@ namespace MetroFramePlugin.ViewModels
                     lockbtn.Content = "解锁";
                     //
                     UserLogin();
+                    DataMessageOperation messageOp = new DataMessageOperation();
+                    Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                    RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
+                    if (RoleInfoList.Count >= 2)
+                    {
+                        rbtnRole.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        rbtnRole.Visibility = Visibility.Collapsed;
+                    }
                     InitPanelArea();
 
                 });
