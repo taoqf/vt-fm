@@ -1,0 +1,10 @@
+﻿<controls:VicMetroWindow x:Class="ChangeRolePlugin.Views.ChangeRoleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
+        xmlns:views="clr-namespace:ChangeRolePlugin.Views"
+        Title="切换角色" Width="450" Height="350" Style="{DynamicResource RoleWindow}"  WindowStartupLocation="CenterScreen" CanResize="False">
+    <Grid>
+        <views:UCChangeRole></views:UCChangeRole>
+    </Grid>
+</controls:VicMetroWindow>

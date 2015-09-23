@@ -432,10 +432,21 @@ namespace MetroFramePlugin.ViewModels
                     OverlayWindow overlayWin = new OverlayWindow();
                     OverlayWindow.VicTabCtrl = mainTabControl;
                     overlayWin.Show();
-
                     UserLogin();
                     ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
-
+                    string UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
+                    if(UserPwd.Equals("111111"))
+                    {
+                        DataMessageOperation dataOp = new DataMessageOperation();
+                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                        paramDic.Add("usercode", UserCode);
+                        PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                        if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                        {
+                            Window win = pluginModel.PluginInterface.StartWindow;
+                            win.ShowDialog();
+                        }
+                    }
                 });
             }
         }
@@ -600,7 +611,26 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         #endregion
-
+        #region 切换角色
+        public ICommand btnChangeRoleCommand
+        {
+            get {
+                return new RelayCommand(() =>
+                {
+                    DataMessageOperation dataOp = new DataMessageOperation();
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    //paramDic.Add("usercode", UserCode);
+                    PluginModel pluginModel = dataOp.StratPlugin("ChangeRolePlugin", paramDic, null, false);
+                    if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                    {
+                        Window win = pluginModel.PluginInterface.StartWindow;
+                        win.ShowDialog();
+                    }
+                    LoadStandardMenu();
+                });
+            }
+        }
+        #endregion
         #region 修改密码
         public ICommand btnModifiPassClickCommand
         {
@@ -1079,7 +1109,11 @@ namespace MetroFramePlugin.ViewModels
                 newThirdLevelMenu.Id = new Guid().ToString();
                 newThirdLevelMenu.MenuName = "其他";
             }
-            secondLevelMenu.SystemMenuList.Add(newThirdLevelMenu);
+            if (!newThirdLevelMenu.Id.Equals("00000000-0000-0000-0000-000000000000"))
+            {
+                secondLevelMenu.SystemMenuList.Add(newThirdLevelMenu);
+            }
+            
         }
         /// <summary>获取标准的三级菜单</summary>
         private void GetStandardThirdLevelMenu(MenuModel thirdLevelMenu)
@@ -2817,5 +2851,6 @@ namespace MetroFramePlugin.ViewModels
         #endregion
 
         #endregion
+      
     }
 }

@@ -931,5 +931,62 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+    <Style x:Key="RoleWindow" TargetType ="{ x:Type  controls:VicMetroWindow }">
+        <Setter  Property ="WindowStyle"  Value ="None"/>
+        <Setter  Property ="ResizeMode"  Value ="NoResize"/>
+        <Setter  Property ="BorderBrush"  Value ="#FF5A3D1C"/>
+        <Setter  Property ="BorderThickness"  Value ="1"/>
+        <Setter  Property ="MinWidth"  Value ="200"/>
+        <Setter  Property ="MinHeight"  Value ="33"/>
+        <Setter  Property ="VerticalContentAlignment"  Value ="Stretch"/>
+        <Setter  Property ="HorizontalContentAlignment"  Value ="Stretch"/>
+        <Setter  Property ="Template">
+            <Setter.Value >
+                <ControlTemplate  TargetType ="{x:Type  controls:VicMetroWindow}">
+                    <Border  BorderBrush ="{ TemplateBinding  BorderBrush }"  
+                    BorderThickness ="1">
+                        <Grid  SnapsToDevicePixels ="True" Background ="{DynamicResource WindowBackground}">
+                            <Grid.RowDefinitions >
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <!-- Window header-->
+                            <!--{DynamicResource SkinColor}-->
+                            <Grid  Name ="PART_HeaderContainer">
+                                
+                                <ContentPresenter   VerticalAlignment ="Stretch"  HorizontalAlignment ="Stretch"/>
+                            </Grid>
+                  
+                            <Border  x:Name ="PART_ContentBorder"  Grid.Row ="1"  
+                      BorderBrush ="Transparent"  
+                      BorderThickness ="1"  
+                      Margin ="8,0,8,8"  
+                      ClipToBounds ="True">
+                                <AdornerDecorator >
+                                    <ContentPresenter  Margin ="{ TemplateBinding  Padding }"  
+                                    VerticalAlignment ="{ TemplateBinding  VerticalContentAlignment }" 
+                                    HorizontalAlignment ="{ TemplateBinding  HorizontalContentAlignment }"/>
+                                </AdornerDecorator>
+                                <Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.6"></SolidColorBrush>
+                                </Border.Background>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger >
+                            <MultiTrigger.Conditions >
+                                <Condition  Property ="CanResize"  Value ="True"/>
+                                <Condition  Property ="WindowState"  Value ="Normal"/>
+                            </MultiTrigger.Conditions>
+                       
+                        </MultiTrigger>
+                        <Trigger  Property ="WindowState"  Value ="Maximized">
+                            <Setter  TargetName ="PART_ContentBorder"  Property ="Margin"  Value ="0"/>
+                            <Setter  TargetName ="PART_ContentBorder"  Property ="BorderThickness"  Value ="0,2,0,0"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style >
 </ResourceDictionary>
