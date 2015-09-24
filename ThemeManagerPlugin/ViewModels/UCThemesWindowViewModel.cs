@@ -23,6 +23,7 @@ using System.Net;
 using System.Xml;
 using System.Windows.Threading;
 using Victop.Frame.Units;
+using Victop.Frame.PublicLib.Managers;
 
 namespace ThemeManagerPlugin.ViewModels
 {
@@ -552,7 +553,7 @@ namespace ThemeManagerPlugin.ViewModels
                                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                                     Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
                                     ServiceParams.Add("SourceName", skinModel.ThemeName);
-                                    ServiceParams.Add("SkinPath", skinModel.SkinPath);
+                                    ServiceParams.Add("SkinPath", skinModel.SkinDllName);
                                     contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
                                     DataMessageOperation messageOp = new DataMessageOperation();
                                     messageOp.SendAsyncMessage(messageType, contentDic);
@@ -586,7 +587,7 @@ namespace ThemeManagerPlugin.ViewModels
                                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                                     Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
                                     ServiceParams.Add("SourceName", skinModel.ThemeName);
-                                    ServiceParams.Add("SkinPath", skinModel.SkinPath);
+                                    ServiceParams.Add("SkinPath", skinModel.SkinDllName);
                                     contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
                                     DataMessageOperation messageOp = new DataMessageOperation();
                                     messageOp.SendAsyncMessage(messageType, contentDic);
@@ -669,7 +670,7 @@ namespace ThemeManagerPlugin.ViewModels
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
             ServiceParams.Add("SourceName", this.SelectedListBoxItem.ThemeName);
-            ServiceParams.Add("SkinPath", this.SelectedListBoxItem.SkinPath);
+            ServiceParams.Add("SkinPath", this.SelectedListBoxItem.SkinDllName);
             contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
             DataMessageOperation messageOp = new DataMessageOperation();
             messageOp.SendAsyncMessage(messageType, contentDic);
@@ -695,10 +696,10 @@ namespace ThemeManagerPlugin.ViewModels
         /// </summary>
         private void UpdateDefaultSkin()
         {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["skinurl"].Value = this.SelectedListBoxItem.SkinPath;
-            config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("appSettings");
+            //Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            //config.AppSettings.Settings["skinurl"].Value = this.SelectedListBoxItem.SkinPath;
+            //config.Save(ConfigurationSaveMode.Modified);
+            //ConfigurationManager.RefreshSection("appSettings");
         }
       
         /// <summary>
@@ -707,7 +708,8 @@ namespace ThemeManagerPlugin.ViewModels
         private void GetDefaultThemeSkin()
         {
             /*读取配置文件中的默认皮肤路径*/
-            string skinDefaultName = ConfigurationManager.AppSettings.Get("skinurl");
+            string skinTheme = ConfigManager.GetAttributeOfNodeByName("UserInfo", "UserSkin");
+            string skinDefaultName = string.IsNullOrEmpty(skinTheme) ? ConfigurationManager.AppSettings.Get("skinurl") : string.Format("theme\\{0}.dll", skinTheme);
             if (this.SystemThemeList.Count > 0)
             {
                 foreach (ThemeModel model in SystemThemeList)
@@ -733,6 +735,7 @@ namespace ThemeManagerPlugin.ViewModels
 
                 string skinNamespace = Path.GetFileNameWithoutExtension(files[j]);//得到皮肤命名空间
                 ThemeModel model = new ThemeModel();
+                model.SkinDllName = skinNamespace;
                 this.ReflectorInfo(files[j], skinNamespace + ".Skin", model);
                 model.SkinPath = @"theme\" + skinNamespace + ".dll";
                 SystemThemeList.Add(model);
