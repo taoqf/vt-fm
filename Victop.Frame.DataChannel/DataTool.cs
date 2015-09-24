@@ -370,7 +370,7 @@ namespace Victop.Frame.DataChannel
             }
             catch (Exception ex)
             {
-                return null;
+                return GetDataByPath(viewId, dataPath);
             }
         }
 
