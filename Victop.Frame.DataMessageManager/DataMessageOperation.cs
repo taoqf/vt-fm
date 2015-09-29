@@ -343,6 +343,13 @@ namespace Victop.Frame.DataMessageManager
                                             }
                                             if (defaultCondition == null)
                                             {
+                                                if (!tableDic.ContainsKey("paging") && !isSelectAll)
+                                                {
+                                                    Dictionary<string, object> pageDic = new Dictionary<string, object>();
+                                                    pageDic.Add("size", 20);
+                                                    pageDic.Add("index", 1);
+                                                    tableDic.Add("paging", pageDic);
+                                                }
                                                 conditionList.Add(tableDic);
                                             }
                                             contentDic.Add("conditions", conditionList);
@@ -363,7 +370,7 @@ namespace Victop.Frame.DataMessageManager
                                     {
                                         contentDic.Add("conditions", defaultCondition);
                                     }
-                                    else if (defaultCondition == null && !isSelectAll&&!contentDic.ContainsKey("conditions"))
+                                    else if (defaultCondition == null && !contentDic.ContainsKey("conditions") && !isSelectAll)
                                     {
                                         List<Dictionary<string, object>> conditionList = new List<Dictionary<string, object>>();
                                         Dictionary<string, object> tableDic = new Dictionary<string, object>();
