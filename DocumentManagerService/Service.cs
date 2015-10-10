@@ -93,7 +93,7 @@ namespace DocumentManagerService
                         }
                         else
                         {
-                            string downloadUrl = ConfigurationManager.AppSettings.Get("downloadfilehttp") + "getfile?id=" + downloadFileId + "&productid=" + downloadProductId;
+                            string downloadUrl = ConfigurationManager.AppSettings.Get("downloadfilehttp") + "getfile?id=" + downloadFileId + "&productid=" + downloadProductId + "&download=true";
                             string downloadToPath = string.Empty;
                             if (serviceParams.ContainsKey("DownloadToPath"))
                             {
@@ -132,7 +132,7 @@ namespace DocumentManagerService
 
                         if (string.IsNullOrWhiteSpace(uploadMode) == false)
                         {
-                            uploadUrl = ConfigurationManager.AppSettings.Get("uploadfilehttp") + "upload?mode_id=" + uploadMode + "&productid=" + downloadProductId;
+                            uploadUrl = ConfigurationManager.AppSettings.Get("uploadfilehttp") + "upload?modelid=" + uploadMode + "&productid=" + downloadProductId;
                         }
                         else
                         {
@@ -172,7 +172,7 @@ namespace DocumentManagerService
                     }
 
                     if (CurrentMessageType == "ServerCenterService.DeleteDocument")
-                    {                        
+                    {
                         string dropuploadProductId = "feidao";
                         if (serviceParams.ContainsKey("ProductId"))
                         {
@@ -198,14 +198,14 @@ namespace DocumentManagerService
                         }
                         else
                         {
-                            string dropuploadUrl = ConfigurationManager.AppSettings.Get("uploadfilehttp") + "dropupload?productid=" + dropuploadProductId + "&delfile_name=" + deleteFilePath;                            
+                            string dropuploadUrl = ConfigurationManager.AppSettings.Get("uploadfilehttp") + "dropupload?productid=" + dropuploadProductId + "&delfile_name=" + deleteFilePath;
                             if (this.DeleteFile(dropuploadUrl))
                             {
                                 returnDic.Add("ReplyContent", "删除成功");
                                 returnDic.Add("ReplyMode", 1);
                                 result = true;
                             }
-                            else 
+                            else
                             {
                                 returnDic.Add("ReplyContent", "删除失败");
                                 returnDic.Add("ReplyMode", 0);
@@ -256,8 +256,8 @@ namespace DocumentManagerService
             string suffname = iUploadFromPath.Substring(i + 1);
             string myrequest = UploadFile(iUploadUrl, iUploadFromPath, suffname);//返回的Jason字符串 
 
-            myrequest = myrequest.Replace("[", "");
-            myrequest = myrequest.Replace("]", "");
+            //myrequest = myrequest.Replace("[", "");
+            //myrequest = myrequest.Replace("]", "");
             Match m = Regex.Match(myrequest, @"([\s\S]*?)thumbnail");
             if (m.Success)
             {
@@ -279,8 +279,8 @@ namespace DocumentManagerService
             }
             else
             {
-                Dictionary<string, string> rqobj = JsonHelper.ToObject<Dictionary<string, string>>(myrequest);
-                string fileName = rqobj["filename"].ToString();
+                List<RequestParamsModel> rqobj = JsonHelper.ToObject<List<RequestParamsModel>>(myrequest);
+                string fileName = rqobj[0].FileName;
                 returnDic.Add("imgurl", fileName);
                 returnDic.Add("imgname", fileName);
                 returnDic.Add("fileId", fileName.Substring(0, fileName.LastIndexOf(".")));
@@ -396,7 +396,7 @@ namespace DocumentManagerService
         /// </summary>
         /// <param name="dropuploadUrl">删除Url</param>
         /// <returns></returns>
-        private bool DeleteFile(string dropuploadUrl) 
+        private bool DeleteFile(string dropuploadUrl)
         {
             bool result = false;
             try
@@ -414,7 +414,7 @@ namespace DocumentManagerService
                     if (dicReturn.ContainsKey("ErrorReportDL"))
                     {
                         string error = dicReturn["ErrorReportDL"].ToString();
-                        if (error=="[]")
+                        if (error == "[]")
                         {
                             result = true;
                         }
@@ -432,6 +432,6 @@ namespace DocumentManagerService
             }
             return result;
         }
-        #endregion 
+        #endregion
     }
 }
