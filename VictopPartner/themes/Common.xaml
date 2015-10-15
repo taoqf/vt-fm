@@ -531,6 +531,45 @@
     </Style>
     <!--VicNumericUpDown样式结束-->
     <!--VicDatePickerNormal样式开始-->
+    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="TextAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border CornerRadius="0" BorderBrush="Transparent" BorderThickness="0"
+Background="{TemplateBinding Background}">
+                        <DockPanel LastChildFill="True">
+                            <ScrollViewer DockPanel.Dock="Left" x:Name="PART_ContentHost" 
+Background="{TemplateBinding Background}"/>
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition  Binding="{Binding RelativeSource={RelativeSource Mode=Self},
+Path=Text.Length}" Value="0"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=Self},
+Path=IsFocused}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter TargetName="PART_ContentHost" Property="Background">
+                                    <Setter.Value>
+                                        <VisualBrush Opacity="0.4" Stretch="None">
+                                            <VisualBrush.Visual>
+                                                <TextBlock Text="请选择日期" FontSize="12" 
+HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style TargetType="{x:Type controls:VicDatePickerNormal}">
         <Setter Property="MinWidth" Value="100"/>
         <Setter Property="Height" Value="23"/>
@@ -546,7 +585,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <controls:VicTextBoxNormal  Name="textBox" WaterMark="选择日期"  Grid.Column="0" BorderThickness="1" />
+                            <TextBox  Name="textBox" Style="{StaticResource TextBoxStyle}" Grid.Column="0" />
                             <TextBlock  x:Name="textBlock"  Grid.Column="1" Width="23"  Background="{DynamicResource CheckBoxFillNormal}"   HorizontalAlignment="Right"  >   
                                 <Path  Data="M 0 0 L 3.5 4 L 7 0 Z" Fill="Gray"  Margin="8"/>
                             </TextBlock>
