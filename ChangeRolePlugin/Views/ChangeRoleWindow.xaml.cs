@@ -19,7 +19,7 @@ namespace ChangeRolePlugin.Views
     /// <summary>
     /// ChangeRoleWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class ChangeRoleWindow : VicMetroWindow
+    public partial class ChangeRoleWindow : Window
     {
         public ChangeRoleWindow()
         {

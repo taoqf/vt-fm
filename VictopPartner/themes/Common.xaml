@@ -973,7 +973,7 @@ HorizontalAlignment="Left" VerticalAlignment="Center"/>
     <Style x:Key="RoleWindow" TargetType ="{ x:Type  controls:VicMetroWindow }">
         <Setter  Property ="WindowStyle"  Value ="None"/>
         <Setter  Property ="ResizeMode"  Value ="NoResize"/>
-        <Setter  Property ="BorderBrush"  Value ="#FF5A3D1C"/>
+        <Setter  Property ="BorderBrush"  Value ="Transparent"/>
         <Setter  Property ="BorderThickness"  Value ="1"/>
         <Setter  Property ="MinWidth"  Value ="200"/>
         <Setter  Property ="MinHeight"  Value ="33"/>
@@ -991,13 +991,12 @@ HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <!-- Window header-->
                             <!--{DynamicResource SkinColor}-->
                             <Grid  Name ="PART_HeaderContainer">
-                                
                                 <ContentPresenter   VerticalAlignment ="Stretch"  HorizontalAlignment ="Stretch"/>
                             </Grid>
                   
                             <Border  x:Name ="PART_ContentBorder"  Grid.Row ="1"  
                       BorderBrush ="Transparent"  
-                      BorderThickness ="1"  
+                      BorderThickness ="0"  
                       Margin ="8,0,8,8"  
                       ClipToBounds ="True">
                                 <AdornerDecorator >
@@ -1005,9 +1004,9 @@ HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     VerticalAlignment ="{ TemplateBinding  VerticalContentAlignment }" 
                                     HorizontalAlignment ="{ TemplateBinding  HorizontalContentAlignment }"/>
                                 </AdornerDecorator>
-                                <Border.Background>
+                                <!--<Border.Background>
                                     <SolidColorBrush Color="White" Opacity="0.6"></SolidColorBrush>
-                                </Border.Background>
+                                </Border.Background>-->
                             </Border>
                         </Grid>
                     </Border>
@@ -1021,7 +1020,7 @@ HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </MultiTrigger>
                         <Trigger  Property ="WindowState"  Value ="Maximized">
                             <Setter  TargetName ="PART_ContentBorder"  Property ="Margin"  Value ="0"/>
-                            <Setter  TargetName ="PART_ContentBorder"  Property ="BorderThickness"  Value ="0,2,0,0"/>
+                            <Setter  TargetName ="PART_ContentBorder"  Property ="BorderThickness"  Value ="0,0,0,0"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
