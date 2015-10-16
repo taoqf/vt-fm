@@ -26,17 +26,17 @@
                 </TransformGroup>
             </Grid.RenderTransform>
             <Grid.RowDefinitions>
-                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
                 <RowDefinition Height="3"></RowDefinition>
-                <RowDefinition Height="270"></RowDefinition>
+                <RowDefinition Height="260"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Text="角色选择" Margin="5,0" Grid.Row="0" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom" ></TextBlock>
+            <TextBlock Text="角色选择" Margin="5,0" Grid.Row="0" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
             <Border BorderThickness="5" Grid.Row="1" VerticalAlignment="Bottom"  BorderBrush="{DynamicResource SkinColor}"  Width="450">
             </Border>
-            <Border BorderThickness="1" Grid.Row="2" BorderBrush="{DynamicResource SkinColor}"  Width="450" Height="280">
+            <Border BorderThickness="1" Grid.Row="2" BorderBrush="{DynamicResource SkinColor}"  Width="450" Height="260">
                 <controls:VicGridNormal  Name="girdRoleList" Background="{DynamicResource WhiteShade}">
                     <controls:VicGridNormal.RowDefinitions>
-                        <RowDefinition Height="238"/>
+                        <RowDefinition Height="228"/>
                         <RowDefinition Height="25"/>
                     </controls:VicGridNormal.RowDefinitions>
                     <controls:VicListBoxNormal Style="{DynamicResource RoleListBoxStyle}" Grid.Row="0" Name="lboxRole" ItemsSource="{Binding RoleInfoList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Role_Name" SelectedValuePath="Role_No" SelectedItem="{Binding SelectedRoleInfo,UpdateSourceTrigger=PropertyChanged}"/>

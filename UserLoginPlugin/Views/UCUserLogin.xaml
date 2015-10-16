@@ -123,7 +123,7 @@
                 </StackPanel>
             </Border>
         </Grid>
-        <controls:VicPopup Grid.Row="2" AllowsTransparency="True" Name="popPluginList"  StaysOpen="True" Placement="Center" IsOpen="{Binding ShowRoleList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+            <controls:VicPopup Grid.Row="2" AllowsTransparency="True" Name="popPluginList"  StaysOpen="True" PlacementTarget="{Binding ElementName=ucUserLongin}" Placement="Center" IsOpen="{Binding ShowRoleList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
 
                 <Grid Name="Canvas1" Width="450" Height="300" Background="{DynamicResource MainBackgroundImage}">
                     <Grid.RenderTransform>
