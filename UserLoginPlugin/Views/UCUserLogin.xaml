@@ -84,7 +84,6 @@
                     <RowDefinition Height="60"></RowDefinition>
                     <RowDefinition Height="60"></RowDefinition>
                     <RowDefinition Height="60"></RowDefinition>
-                   
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="202"></ColumnDefinition>
@@ -123,7 +122,7 @@
                 </StackPanel>
             </Border>
         </Grid>
-            <controls:VicPopup Grid.Row="2" AllowsTransparency="True" Name="popPluginList"  StaysOpen="True" PlacementTarget="{Binding ElementName=ucUserLongin}" Placement="Center" IsOpen="{Binding ShowRoleList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+            <controls:VicPopup Grid.Row="2" AllowsTransparency="True" Name="popPluginList"  StaysOpen="True" HorizontalOffset="90"   VerticalOffset="90" VerticalAlignment="Center"  PlacementTarget="{Binding ElementName=ucUserLongin}" Placement="Center"  PopupAnimation="Fade"  IsOpen="{Binding ShowRoleList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
 
                 <Grid Name="Canvas1" Width="450" Height="300" Background="{DynamicResource MainBackgroundImage}">
                     <Grid.RenderTransform>

@@ -36,13 +36,13 @@
             <Border BorderThickness="1" Grid.Row="2" BorderBrush="{DynamicResource SkinColor}"  Width="450" Height="260">
                 <controls:VicGridNormal  Name="girdRoleList" Background="{DynamicResource WhiteShade}">
                     <controls:VicGridNormal.RowDefinitions>
-                        <RowDefinition Height="228"/>
-                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="215"/>
+                        <RowDefinition Height="45"/>
                     </controls:VicGridNormal.RowDefinitions>
                     <controls:VicListBoxNormal Style="{DynamicResource RoleListBoxStyle}" Grid.Row="0" Name="lboxRole" ItemsSource="{Binding RoleInfoList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Role_Name" SelectedValuePath="Role_No" SelectedItem="{Binding SelectedRoleInfo,UpdateSourceTrigger=PropertyChanged}"/>
-                    <controls:VicDockPanelNormal Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <controls:VicButtonNormal Width="100" Height="25" Margin="5,0" Content="确定" Name="btnConfirm" Command="{Binding btnConfirmClickCommand}"/>
-                        <controls:VicButtonNormal Width="100" Height="25" Margin="5,0" Content="取消" Name="btnCancel" Command="{Binding btnCancelClickCommand}"/>
+                    <controls:VicDockPanelNormal Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                        <controls:VicButtonNormal Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Margin="5,0" Content="确定" Name="btnConfirm" Command="{Binding btnConfirmClickCommand}"/>
+                        <controls:VicButtonNormal Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"  Height="25" Margin="5,0" Content="取消" Name="btnCancel" Command="{Binding btnCancelClickCommand}"/>
                     </controls:VicDockPanelNormal>
                 </controls:VicGridNormal>
             </Border>
