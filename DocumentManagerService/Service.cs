@@ -93,7 +93,7 @@ namespace DocumentManagerService
                         }
                         else
                         {
-                            string downloadUrl = ConfigurationManager.AppSettings.Get("downloadfilehttp") + "getfile?id=" + downloadFileId + "&productid=" + downloadProductId + "&download=true";
+                            string downloadUrl = ConfigurationManager.AppSettings.Get("downloadfilehttp") + "getfile?id=" + downloadFileId + "&productid=" + downloadProductId;
                             string downloadToPath = string.Empty;
                             if (serviceParams.ContainsKey("DownloadToPath"))
                             {
