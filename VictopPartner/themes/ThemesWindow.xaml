@@ -9,7 +9,7 @@
 
     <Style x:Key="WindowChangeSkinTitleBackGround" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
-    </Style>
+    </Style> 
 
     <Style  x:Key="RadioButtonListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -371,10 +371,10 @@
                                 <Border  Grid.Row="0" Background="{DynamicResource WindowBackground}"/>
                                 <Grid Name="gridTitleBar" Grid.Row="0" Style="{DynamicResource loginMainGridStyle}" Height="{TemplateBinding TitleHeight}">
                                     <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="{DynamicResource MsgBoxTitleColor}"/>
-                                    <controls:VicButtonNormal x:Name="btnMini" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  Margin="0,0,66,0" VerticalAlignment="Top"  Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最小化">
+                                    <controls:VicButtonNormal x:Name="btnMini" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  Margin="0,0,66,0" VerticalAlignment="Top"  Height="30" Width="30" FocusVisualStyle="{x:Null}" ToolTip="最小化">
                                         <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="{DynamicResource MainFrmWinBtnForeColor}"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </controls:VicButtonNormal>
-                                    <controls:VicButtonNormal x:Name="btnMax" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  Margin="0,0,33,0" VerticalAlignment="Top" Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最大化/还原">
+                                    <controls:VicButtonNormal x:Name="btnMax" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  Margin="0,0,33,0" VerticalAlignment="Top" Height="30" Width="30" FocusVisualStyle="{x:Null}" ToolTip="最大化/还原">
                                         <Grid>
                                             <Path x:Name="MaximisePath"
                                       SnapsToDevicePixels="True"
@@ -386,7 +386,7 @@
                                        Fill="{DynamicResource MainFrmWinBtnForeColor}" />
                                         </Grid>
                                     </controls:VicButtonNormal>
-                                    <controls:VicButtonNormal x:Name="btnClose"  Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  VerticalAlignment="Top" Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="关闭">
+                                    <controls:VicButtonNormal x:Name="btnClose"  Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  VerticalAlignment="Top" Height="30" Width="30" FocusVisualStyle="{x:Null}" ToolTip="关闭">
                                         <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
                                   SnapsToDevicePixels="True"
                                    Fill="{DynamicResource MainFrmWinBtnForeColor}" />

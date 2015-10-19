@@ -1355,17 +1355,17 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
 
     <!--主窗体右侧按钮样式开始-->
     <Style x:Key="btnActivePluginStyle" TargetType="{x:Type controls:VicButtonNormal}">
-        <Setter Property="Width" Value="34"/>
+        <Setter Property="Width" Value="30"/>
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="Content" Value="&#xe885;"/>
         <Setter Property="FontSize" Value="10"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Height" Value="34"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border x:Name="PART_Border"   BorderThickness="0" Padding="2" Background="Transparent">
+                    <Border x:Name="PART_Border" CornerRadius="20"  BorderThickness="0" Padding="2" Background="Transparent">
                         <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -1394,17 +1394,17 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         </Setter>
     </Style>
     <Style x:Key="btnMaxStyle" TargetType="{x:Type controls:VicButtonNormal}">
-        <Setter Property="Width" Value="34"/>
+        <Setter Property="Width" Value="30"/>
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="Content" Value="&#xe73f;"/>
         <Setter Property="FontSize" Value="10"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Height" Value="34"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border Name="PART_Border"   BorderThickness="0" Padding="1" Background="Transparent">
+                    <Border Name="PART_Border" CornerRadius="20"  BorderThickness="0" Padding="1" Background="Transparent">
                         <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -1435,15 +1435,15 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
     <Style x:Key="btnRestoreStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
-        <Setter Property="Width" Value="34"/>
+        <Setter Property="Width" Value="30"/>
         <Setter Property="Content" Value="&#xe6ee;"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="FontSize" Value="10"/>
-        <Setter Property="Height" Value="34"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border Name="PART_Border"   BorderThickness="0" Padding="2" Background="Transparent">
+                    <Border Name="PART_Border" CornerRadius="20"  BorderThickness="0" Padding="2" Background="Transparent">
                         <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -1454,7 +1454,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                         <GradientStop Color="Silver" Offset="0.0" />
                                         <GradientStop Color="White" Offset="0.5" />
                                         <GradientStop Color="Silver" Offset="0.0" />
-                                    </LinearGradientBrush>
+                                    </LinearGradientBrush> 
                                 </Setter.Value>
                             </Setter>
                             <Setter Property="Foreground"  Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
@@ -1475,16 +1475,16 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="Margin" Value="5,0,5,0"/>
-        <Setter Property="Width" Value="34"/>
+        <Setter Property="Width" Value="30"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="FontSize" Value="10"/>
         <Setter Property="Content" Value="&#xe64e;"/>
-        <Setter Property="Height" Value="34"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border x:Name="PART_Border"   BorderThickness="0"  Background="Transparent">
-                        <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
+                    <Border x:Name="PART_Border" CornerRadius="20"  BorderThickness="0"  Background="Transparent">
+                                        <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -1514,15 +1514,15 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
     <Style x:Key="btnCloseStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
-        <Setter Property="Width" Value="34"/>
+        <Setter Property="Width" Value="30"/>
         <Setter Property="Content" Value="&#xe6c4;"/>
         <Setter Property="FontSize" Value="10"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Height" Value="34"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border x:Name="PART_Border"   BorderThickness="0" Padding="2" Background="Transparent">
+                    <Border x:Name="PART_Border" CornerRadius="20"  BorderThickness="0" Padding="2" Background="Transparent">
                         <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -1553,8 +1553,8 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
 
     <Style x:Key="btnChangeSkinStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
-        <Setter Property="Width" Value="34"/>
-        <Setter Property="Height" Value="34"/>
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Margin" Value="5,0,5,0"/>
@@ -1566,7 +1566,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border x:Name="PART_Border" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="Transparent"  BorderThickness="0" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border x:Name="PART_Border" CornerRadius="20" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="Transparent"  BorderThickness="0" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -1615,7 +1615,6 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                             <DropShadowBitmapEffect Color="#000" Direction="-90" ShadowDepth="2" Softness="0.1" Opacity="0.3" />
                         </ContentPresenter.BitmapEffect>
                     </ContentPresenter>
-
                     <!--触发器-->
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
