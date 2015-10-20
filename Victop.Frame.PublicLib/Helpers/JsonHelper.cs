@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,9 @@ namespace Victop.Frame.PublicLib.Helpers
         public static string ToJson(object obj)
         {
             if (obj == null) return "";
-            string jsonstr = JsonConvert.SerializeObject(obj);
+            IsoDateTimeConverter timeConverter = new IsoDateTimeConverter();
+            timeConverter.DateTimeFormat = "yyyy'-'MM'-'dd' 'HH':'mm':'ss";
+            string jsonstr = JsonConvert.SerializeObject(obj, timeConverter);
             return jsonstr;
         }
         //json反序列化
