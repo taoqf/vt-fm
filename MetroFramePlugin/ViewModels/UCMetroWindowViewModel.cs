@@ -470,18 +470,18 @@ namespace MetroFramePlugin.ViewModels
                    }
                     ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
                     string UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
-                    if(UserPwd.Equals("111111"))
-                    {
-                        DataMessageOperation dataOp = new DataMessageOperation();
-                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                        paramDic.Add("usercode", UserCode);
-                        PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
-                        if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
-                        {
-                            Window win = pluginModel.PluginInterface.StartWindow;
-                            win.ShowDialog();
-                        }
-                    }
+                    //if (UserPwd.Equals("111111"))
+                    //{
+                    //    DataMessageOperation dataOp = new DataMessageOperation();
+                    //    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    //    paramDic.Add("usercode", UserCode);
+                    //    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                    //    if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                    //    {
+                    //        Window win = pluginModel.PluginInterface.StartWindow;
+                    //        win.ShowDialog();
+                    //    }
+                    //}
                 });
             }
         }
