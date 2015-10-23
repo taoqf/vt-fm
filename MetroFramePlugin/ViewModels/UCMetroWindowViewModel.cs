@@ -52,7 +52,9 @@ namespace MetroFramePlugin.ViewModels
         private ObservableCollection<VicTabItemNormal> tabItemList;
         private VicTabItemNormal selectedTabItem;
         private VicTabControlNormal mainTabControl;
+        private ObservableCollection<UserRoleInfoModel> roleInfoList;
         private bool poPupState;
+        private VicRadioButtonRectangle rbtnRole;
         private bool isFirstLoad = true;
         /// <summary>
         /// 用户名
@@ -97,6 +99,7 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
+       
         /// <summary>
         /// 活动插件数目
         /// </summary>
@@ -401,7 +404,26 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-
+        /// <summary>
+        /// 角色信息集合
+        /// </summary>
+        public ObservableCollection<UserRoleInfoModel> RoleInfoList
+        {
+            get
+            {
+                if (roleInfoList == null)
+                    roleInfoList = new ObservableCollection<UserRoleInfoModel>();
+                return roleInfoList;
+            }
+            set
+            {
+                if (roleInfoList != value)
+                {
+                    roleInfoList = value;
+                    RaisePropertyChanged("RoleInfoList");
+                }
+            }
+        }
         private bool isLockMenu = false;//控制固定或浮动左侧菜单，默认固定
         private VicButtonNormal lockbtn;
         #endregion
@@ -419,6 +441,7 @@ namespace MetroFramePlugin.ViewModels
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
                     lockbtn = (VicButtonNormal)mainWindow.FindName("lock");
+                    rbtnRole = (VicRadioButtonRectangle)mainWindow.FindName("rbtnRole");
                     mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
@@ -432,10 +455,33 @@ namespace MetroFramePlugin.ViewModels
                     OverlayWindow overlayWin = new OverlayWindow();
                     OverlayWindow.VicTabCtrl = mainTabControl;
                     overlayWin.Show();
-
                     UserLogin();
+                    DataMessageOperation messageOp = new DataMessageOperation();
+                    Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                   RoleInfoList= JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
+                   if (RoleInfoList.Count >= 2)
+                   {
+                       rbtnRole.Visibility = Visibility.Visible;
+                   }
+                   else
+                   {
+                       rbtnRole.Visibility = Visibility.Collapsed;
+;
+                   }
                     ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
-
+                    string UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
+                    //if (UserPwd.Equals("111111"))
+                    //{
+                    //    DataMessageOperation dataOp = new DataMessageOperation();
+                    //    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    //    paramDic.Add("usercode", UserCode);
+                    //    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                    //    if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                    //    {
+                    //        Window win = pluginModel.PluginInterface.StartWindow;
+                    //        win.ShowDialog();
+                    //    }
+                    //}
                 });
             }
         }
@@ -594,13 +640,43 @@ namespace MetroFramePlugin.ViewModels
                     lockbtn.Content = "解锁";
                     //
                     UserLogin();
+                    DataMessageOperation messageOp = new DataMessageOperation();
+                    Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                    RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
+                    if (RoleInfoList.Count >= 2)
+                    {
+                        rbtnRole.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        rbtnRole.Visibility = Visibility.Collapsed;
+                    }
                     InitPanelArea();
 
                 });
             }
         }
         #endregion
-
+        #region 切换角色
+        public ICommand btnChangeRoleCommand
+        {
+            get {
+                return new RelayCommand(() =>
+                {
+                    DataMessageOperation dataOp = new DataMessageOperation();
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    //paramDic.Add("usercode", UserCode);
+                    PluginModel pluginModel = dataOp.StratPlugin("ChangeRolePlugin", paramDic, null, false);
+                    if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                    {
+                        Window win = pluginModel.PluginInterface.StartWindow;
+                        win.ShowDialog();
+                    }
+                    LoadStandardMenu();
+                });
+            }
+        }
+        #endregion
         #region 修改密码
         public ICommand btnModifiPassClickCommand
         {
@@ -1079,7 +1155,11 @@ namespace MetroFramePlugin.ViewModels
                 newThirdLevelMenu.Id = new Guid().ToString();
                 newThirdLevelMenu.MenuName = "其他";
             }
-            secondLevelMenu.SystemMenuList.Add(newThirdLevelMenu);
+            if (!newThirdLevelMenu.Id.Equals("00000000-0000-0000-0000-000000000000"))
+            {
+                secondLevelMenu.SystemMenuList.Add(newThirdLevelMenu);
+            }
+            
         }
         /// <summary>获取标准的三级菜单</summary>
         private void GetStandardThirdLevelMenu(MenuModel thirdLevelMenu)
@@ -2817,5 +2897,6 @@ namespace MetroFramePlugin.ViewModels
         #endregion
 
         #endregion
+      
     }
 }

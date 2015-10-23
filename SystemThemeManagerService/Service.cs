@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows;
 using System.Xml;
 using Victop.Frame.PublicLib.Helpers;
+using Victop.Frame.PublicLib.Managers;
 using Victop.Server.Controls;
 
 namespace SystemThemeManagerService
@@ -134,7 +135,8 @@ namespace SystemThemeManagerService
         private void ChangeFrameWorkTheme(string ThemePath = null)
         {
             ResourceDictionary resource = new ResourceDictionary();
-            string path = string.IsNullOrEmpty(ThemePath) ? ConfigurationManager.AppSettings.Get("skinurl") : ThemePath;
+            string path = string.IsNullOrEmpty(ThemePath) ? ConfigManager.GetAttributeOfNodeByName("UserInfo", "UserSkin") : ThemePath;
+            path = string.Format("theme\\{0}.dll", path);
             resource.Source = new Uri(AppDomain.CurrentDomain.BaseDirectory + path, UriKind.RelativeOrAbsolute);
             //将资源字典合并到当前资源中
             if (Application.Current.Resources.MergedDictionaries.Count > 0 && Application.Current.Resources.MergedDictionaries[0] != null)
@@ -147,10 +149,9 @@ namespace SystemThemeManagerService
             }
             if (!string.IsNullOrEmpty(ThemePath))
             {
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                config.AppSettings.Settings["skinurl"].Value = ThemePath;
-                config.Save(ConfigurationSaveMode.Modified);
-                ConfigurationManager.RefreshSection("appSettings");
+                Dictionary<string, string> themeDic = new Dictionary<string, string>();
+                themeDic.Add("UserSkin", "Victop.Themes.MetroSkin");
+                ConfigManager.SaveAttributeOfNodeByName("UserInfo", themeDic);
             }
         }
         /// <summary>
@@ -159,7 +160,7 @@ namespace SystemThemeManagerService
         /// <param name="ThemePath"></param>
         private void ChangeFrameWorkTheme(string ThemeName, string SkinPath)
         {
-            Assembly assembly = Assembly.LoadFrom(SkinPath);
+            Assembly assembly = Assembly.LoadFrom(string.Format("theme\\{0}.dll", SkinPath));
             ResourceDictionary myResourceDictionary = Application.LoadComponent(new Uri(ThemeName, UriKind.Relative)) as ResourceDictionary;
             if (Application.Current.Resources.MergedDictionaries.Count > 0 && Application.Current.Resources.MergedDictionaries[0] != null)
             {
@@ -168,6 +169,12 @@ namespace SystemThemeManagerService
             else
             {
                 Application.Current.Resources.MergedDictionaries.Add(myResourceDictionary);
+            }
+            if (!string.IsNullOrEmpty(SkinPath))
+            {
+                Dictionary<string, string> themeDic = new Dictionary<string, string>();
+                themeDic.Add("UserSkin", SkinPath);
+                ConfigManager.SaveAttributeOfNodeByName("UserInfo", themeDic);
             }
         }
         /// <summary>

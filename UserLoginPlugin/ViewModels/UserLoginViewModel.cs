@@ -314,16 +314,18 @@ namespace UserLoginPlugin.ViewModels
                         {
                             if (VicMessageBoxNormal.Show("密码为初始化密码，请登录后修改密码", "标题", MessageBoxButton.OKCancel, MessageBoxImage.Information) == MessageBoxResult.OK)
                             {
-                                //DataMessageOperation dataOp = new DataMessageOperation();
-                                //Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                                //paramDic.Add("usercode", LoginInfoModel.UserName);
-                                //PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
-                                //if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
-                                //{
-                                //    Window win = pluginModel.PluginInterface.StartWindow;
-                                //    win.ShowDialog();
-                                //}
-
+                                IsRingShow = true;
+                                MainViewEnable = false;
+                                UserLogin();
+                                    DataMessageOperation dataOp = new DataMessageOperation();
+                                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                                    paramDic.Add("usercode", LoginInfoModel.UserName);
+                                    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                                    if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                                    {
+                                        Window win = pluginModel.PluginInterface.StartWindow;
+                                        win.ShowDialog();
+                                    }
                             }
                             else
                             {
@@ -333,10 +335,12 @@ namespace UserLoginPlugin.ViewModels
                             }
 
                         }
-
-                      IsRingShow = true;
-                      MainViewEnable = false;
-                      UserLogin();
+                        else
+                        {
+                            IsRingShow = true;
+                            MainViewEnable = false;
+                            UserLogin();
+                        }
                     }, () => { return CheckUserLogin();
                     });
             }

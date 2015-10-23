@@ -11,7 +11,6 @@
              d:DesignHeight="350" d:DesignWidth="450" Name="ucUserLongin">
     <UserControl.Resources>
         <convert:ImgeNameToBackgroundConverter x:Key="imgeNameToBackgroundConverter"/>
-        
     </UserControl.Resources>
     <UserControl.Triggers>
         <EventTrigger SourceName="btnConfirm" RoutedEvent="ButtonBase.Click">
@@ -85,7 +84,6 @@
                     <RowDefinition Height="60"></RowDefinition>
                     <RowDefinition Height="60"></RowDefinition>
                     <RowDefinition Height="60"></RowDefinition>
-                   
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="202"></ColumnDefinition>
@@ -124,17 +122,25 @@
                 </StackPanel>
             </Border>
         </Grid>
-        <controls:VicPopup Grid.Row="2" AllowsTransparency="True" Name="popPluginList"  StaysOpen="True" Placement="Center" IsOpen="{Binding ShowRoleList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
-            <Border BorderThickness="1" BorderBrush="{DynamicResource SkinColor}"  Width="450" Height="350" Background="{DynamicResource MainBackgroundImage}">
-                <Grid Name="Canvas1" Width="450" Height="350">
+            <controls:VicPopup Grid.Row="2" AllowsTransparency="True" Name="popPluginList"  StaysOpen="True" HorizontalOffset="90"   VerticalOffset="90" VerticalAlignment="Center"  PlacementTarget="{Binding ElementName=ucUserLongin}" Placement="Center"  PopupAnimation="Fade"  IsOpen="{Binding ShowRoleList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+
+                <Grid Name="Canvas1" Width="450" Height="300" Background="{DynamicResource MainBackgroundImage}">
                     <Grid.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform CenterX="100" CenterY="50"></ScaleTransform>
                             <RotateTransform CenterX="100" CenterY="50"></RotateTransform>
                         </TransformGroup>
                     </Grid.RenderTransform>
-                    <controls:VicGroupBoxClearBor Header="角色选择">
-                        <controls:VicGridNormal Background="{DynamicResource WhiteShade}" Name="girdRoleList">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45"></RowDefinition>
+                        <RowDefinition Height="3"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                    <TextBlock Text="角色选择" Margin="5,0" Grid.Row="0" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+                    <Border BorderThickness="5" Grid.Row="1"  BorderBrush="{DynamicResource SkinColor}"  Width="448">
+                    </Border>
+                    <Border BorderThickness="1" Grid.Row="2" BorderBrush="{DynamicResource SkinColor}"  Width="448" Height="251">
+                        <controls:VicGridNormal  Background="{DynamicResource WhiteShade}" Name="girdRoleList">
                             <controls:VicGridNormal.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="40"/>
@@ -144,9 +150,9 @@
                                 <controls:VicButtonNormal Width="100" Height="24" Content="确定" Name="btnConfirm" Command="{Binding btnConfirmClickCommand}"/>
                             </controls:VicDockPanelNormal>
                         </controls:VicGridNormal>
-                    </controls:VicGroupBoxClearBor>
+                    </Border>
                 </Grid>
-            </Border>
+            
 
             <!--<Grid Width="450" Name="Canvas1" Height="350">
                 <Grid.RenderTransform>

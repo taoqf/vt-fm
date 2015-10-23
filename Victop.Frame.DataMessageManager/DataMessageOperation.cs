@@ -178,8 +178,9 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="configsystemId">配置系统Id</param>
         /// <param name="foreRunnerFlag">前导标签</param>
         /// <param name="refsystemId">引用系统Id</param>
+        /// <param name="isSelectAll">是否查询所有</param>
         /// <returns>引用消息</returns>
-        public string GetRefData(string viewId, string dataPath, string fieldName, string rowValue, out DataSet RefDataSet, List<Dictionary<string, object>> defaultCondition = null, string systemId = null, string configsystemId = null, bool foreRunnerFlag = true, string refsystemId = null)
+        public string GetRefData(string viewId, string dataPath, string fieldName, string rowValue, out DataSet RefDataSet, List<Dictionary<string, object>> defaultCondition = null, string systemId = null, string configsystemId = null, bool foreRunnerFlag = true, string refsystemId = null,bool isSelectAll=false)
         {
             RefDataSet = new DataSet();
             bool wideRefFlag = true;
@@ -267,6 +268,7 @@ namespace Victop.Frame.DataMessageManager
                                     contentDic.Add("configsystemid", configsystemId);
                                     contentDic.Add("refsystemid", string.IsNullOrEmpty(refsystemId) ? systemId : refsystemId);
                                     contentDic.Add("modelid", clientRefModel.ClientRefModel);
+                                    refTableName = clientRefModel.ClientRefTableName;
                                     if (clientRefModel.ClientRefConditionFirst.Count > 0)
                                     {
                                         refTableName = string.IsNullOrEmpty(clientRefModel.ClientRefTableName) ? clientRefModel.ClientRefConditionFirst[0].ConditionRight.Substring(0, clientRefModel.ClientRefConditionFirst[0].ConditionRight.IndexOf('.')) : clientRefModel.ClientRefTableName;
@@ -341,6 +343,13 @@ namespace Victop.Frame.DataMessageManager
                                             }
                                             if (defaultCondition == null)
                                             {
+                                                if (!tableDic.ContainsKey("paging") && !isSelectAll)
+                                                {
+                                                    Dictionary<string, object> pageDic = new Dictionary<string, object>();
+                                                    pageDic.Add("size", 20);
+                                                    pageDic.Add("index", 1);
+                                                    tableDic.Add("paging", pageDic);
+                                                }
                                                 conditionList.Add(tableDic);
                                             }
                                             contentDic.Add("conditions", conditionList);
@@ -360,6 +369,22 @@ namespace Victop.Frame.DataMessageManager
                                     if (defaultCondition != null && !contentDic.ContainsKey("conditions"))
                                     {
                                         contentDic.Add("conditions", defaultCondition);
+                                    }
+                                    else if (defaultCondition == null && !contentDic.ContainsKey("conditions") && !isSelectAll)
+                                    {
+                                        List<Dictionary<string, object>> conditionList = new List<Dictionary<string, object>>();
+                                        Dictionary<string, object> tableDic = new Dictionary<string, object>();
+                                        tableDic.Add("name", refTableName);
+                                        Dictionary<string, object> pageDic = new Dictionary<string, object>();
+                                        pageDic.Add("size", 20);
+                                        pageDic.Add("index", 1);
+                                        tableDic.Add("paging", pageDic);
+                                        conditionList.Add(tableDic);
+                                        contentDic.Add("conditions", conditionList);
+                                        if (string.IsNullOrEmpty(refTableName))
+                                        {
+                                            LoggerHelper.InfoFormat("警告：refTableName未配置！");
+                                        }
                                     }
                                     DataMessageSender sender = new DataMessageSender();
                                     Dictionary<string, object> returnDic = sender.SendMessage(messageType, contentDic);

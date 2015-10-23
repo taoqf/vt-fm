@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="ChangeRolePlugin.Views.UCChangeRole"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+             xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
+             xmlns:vm="clr-namespace:ChangeRolePlugin.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Name="mainWindow">
+    <Grid>
+        <Grid.DataContext>
+            <vm:ChangeRoleViewModel></vm:ChangeRoleViewModel>
+        </Grid.DataContext>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding mainLoadedCommand}" CommandParameter="{Binding ElementName=mainWindow}"></i:InvokeCommandAction>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <Grid Name="dgrid" Width="450" Height="300" >
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterX="100" CenterY="50"></ScaleTransform>
+                    <RotateTransform CenterX="100" CenterY="50"></RotateTransform>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="3"></RowDefinition>
+                <RowDefinition Height="260"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Text="角色选择" Margin="5,0" Grid.Row="0" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
+            <Border BorderThickness="5" Grid.Row="1" VerticalAlignment="Bottom"  BorderBrush="{DynamicResource SkinColor}"  Width="450">
+            </Border>
+            <Border BorderThickness="1" Grid.Row="2" BorderBrush="{DynamicResource SkinColor}"  Width="450" Height="260">
+                <controls:VicGridNormal  Name="girdRoleList" Background="{DynamicResource WhiteShade}">
+                    <controls:VicGridNormal.RowDefinitions>
+                        <RowDefinition Height="215"/>
+                        <RowDefinition Height="45"/>
+                    </controls:VicGridNormal.RowDefinitions>
+                    <controls:VicListBoxNormal Style="{DynamicResource RoleListBoxStyle}" Grid.Row="0" Name="lboxRole" ItemsSource="{Binding RoleInfoList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Role_Name" SelectedValuePath="Role_No" SelectedItem="{Binding SelectedRoleInfo,UpdateSourceTrigger=PropertyChanged}"/>
+                    <controls:VicDockPanelNormal Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                        <controls:VicButtonNormal Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Margin="5,0" Content="确定" Name="btnConfirm" Command="{Binding btnConfirmClickCommand}"/>
+                        <controls:VicButtonNormal Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"  Height="25" Margin="5,0" Content="取消" Name="btnCancel" Command="{Binding btnCancelClickCommand}"/>
+                    </controls:VicDockPanelNormal>
+                </controls:VicGridNormal>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

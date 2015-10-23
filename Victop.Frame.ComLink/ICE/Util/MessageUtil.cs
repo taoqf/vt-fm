@@ -20,7 +20,7 @@ namespace Victop.Frame.ComLink.ICE.Util
             message.MessageType = msg.messageType;
             message.TargetAddress = msg.receiptAddress;
             message.CurrentRecepitId = msg.receiptSessionID;
-            message.ReplyToId = msg.replyToID;
+            message.ReplyToId = string.IsNullOrEmpty(msg.replyToID) ? msg.messageID : msg.replyToID;
             message.RouterAddress = msg.routerAddress;
             message.CurrentSenderId = msg.senderSessionID;
             message.SessionId = msg.sessionId;

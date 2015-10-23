@@ -1,0 +1,10 @@
+﻿<Window x:Class="ChangeRolePlugin.Views.ChangeRoleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
+        xmlns:views="clr-namespace:ChangeRolePlugin.Views"
+        Title="" Width="450" Height="300" Style="{DynamicResource RoleWindowStyle}"  WindowStartupLocation="CenterScreen">
+    <Grid>
+        <views:UCChangeRole></views:UCChangeRole>
+    </Grid>
+</Window>

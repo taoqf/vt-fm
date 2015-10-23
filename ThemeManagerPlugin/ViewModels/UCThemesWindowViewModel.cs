@@ -23,6 +23,7 @@ using System.Net;
 using System.Xml;
 using System.Windows.Threading;
 using Victop.Frame.Units;
+using Victop.Frame.PublicLib.Managers;
 
 namespace ThemeManagerPlugin.ViewModels
 {
@@ -48,7 +49,7 @@ namespace ThemeManagerPlugin.ViewModels
         private UnitPageBar pageBar1;
         private int pageCount;
         private int totalPage;
-        private int pageSize =9;
+        private int pageSize = 9;
         private int currentPage = 1;
         int pageSelect = 0;
 
@@ -321,15 +322,16 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
 
-        
+
         public ICommand ThemeTabControlSelectionChanged
         {
-            get {
+            get
+            {
                 return new RelayCommand<object>((x) =>
                 {
-                    
+
                     ThemeTabControl = (TabControl)x;
-                    if(ThemeTabControl.SelectedIndex==0)
+                    if (ThemeTabControl.SelectedIndex == 0)
                     {
                         wrapPanelPages.Children.Clear();
                         //GetThemeSkinNum();
@@ -345,7 +347,7 @@ namespace ThemeManagerPlugin.ViewModels
                         }
                         setInit(totalPage);
                     }
-                  
+
                 });
             }
         }
@@ -362,7 +364,7 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
 
-          #endregion
+        #endregion
         #region 窗体关闭命令
         public ICommand btnCloseClickCommand
         {
@@ -423,7 +425,7 @@ namespace ThemeManagerPlugin.ViewModels
                         string path = "";
                         if (saveFileDialog.ShowDialog() == true)
                         {
-                            path = saveFileDialog.FileName;
+                            path = saveFileDialog.FileName + "." + wallModel.WllPaperType;
                             Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
                             Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
                             downloadAddress.Add("DownloadFileId", wallModel.FilePath);
@@ -539,7 +541,7 @@ namespace ThemeManagerPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    if(x!=null)
+                    if (x != null)
                     {
                         OnLineModel model = (OnLineModel)x;
                         foreach (ThemeModel skinModel in SystemThemeList)
@@ -552,7 +554,7 @@ namespace ThemeManagerPlugin.ViewModels
                                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                                     Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
                                     ServiceParams.Add("SourceName", skinModel.ThemeName);
-                                    ServiceParams.Add("SkinPath", skinModel.SkinPath);
+                                    ServiceParams.Add("SkinPath", skinModel.SkinDllName);
                                     contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
                                     DataMessageOperation messageOp = new DataMessageOperation();
                                     messageOp.SendAsyncMessage(messageType, contentDic);
@@ -586,7 +588,7 @@ namespace ThemeManagerPlugin.ViewModels
                                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
                                     Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
                                     ServiceParams.Add("SourceName", skinModel.ThemeName);
-                                    ServiceParams.Add("SkinPath", skinModel.SkinPath);
+                                    ServiceParams.Add("SkinPath", skinModel.SkinDllName);
                                     contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
                                     DataMessageOperation messageOp = new DataMessageOperation();
                                     messageOp.SendAsyncMessage(messageType, contentDic);
@@ -599,7 +601,7 @@ namespace ThemeManagerPlugin.ViewModels
                             }
                         }
                     }
-                   
+
                 });
             }
         }
@@ -625,7 +627,7 @@ namespace ThemeManagerPlugin.ViewModels
                     Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
                     downloadAddress.Add("DownloadFileId", model.FilePath);
                     downloadAddress.Add("DownloadToPath", localityUrl);
-                    downloadAddress.Add("ProductId",ProductId);
+                    downloadAddress.Add("ProductId", ProductId);
                     downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
                     DataMessageOperation messageOperation = new DataMessageOperation();
                     Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
@@ -669,7 +671,7 @@ namespace ThemeManagerPlugin.ViewModels
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
             Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
             ServiceParams.Add("SourceName", this.SelectedListBoxItem.ThemeName);
-            ServiceParams.Add("SkinPath", this.SelectedListBoxItem.SkinPath);
+            ServiceParams.Add("SkinPath", this.SelectedListBoxItem.SkinDllName);
             contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
             DataMessageOperation messageOp = new DataMessageOperation();
             messageOp.SendAsyncMessage(messageType, contentDic);
@@ -695,19 +697,20 @@ namespace ThemeManagerPlugin.ViewModels
         /// </summary>
         private void UpdateDefaultSkin()
         {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["skinurl"].Value = this.SelectedListBoxItem.SkinPath;
-            config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("appSettings");
+            //Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            //config.AppSettings.Settings["skinurl"].Value = this.SelectedListBoxItem.SkinPath;
+            //config.Save(ConfigurationSaveMode.Modified);
+            //ConfigurationManager.RefreshSection("appSettings");
         }
-      
+
         /// <summary>
         /// 获取主题文件夹中默认皮肤路径
         /// </summary>
         private void GetDefaultThemeSkin()
         {
             /*读取配置文件中的默认皮肤路径*/
-            string skinDefaultName = ConfigurationManager.AppSettings.Get("skinurl");
+            string skinTheme = ConfigManager.GetAttributeOfNodeByName("UserInfo", "UserSkin");
+            string skinDefaultName = string.IsNullOrEmpty(skinTheme) ? ConfigurationManager.AppSettings.Get("skinurl") : string.Format("theme\\{0}.dll", skinTheme);
             if (this.SystemThemeList.Count > 0)
             {
                 foreach (ThemeModel model in SystemThemeList)
@@ -733,6 +736,7 @@ namespace ThemeManagerPlugin.ViewModels
 
                 string skinNamespace = Path.GetFileNameWithoutExtension(files[j]);//得到皮肤命名空间
                 ThemeModel model = new ThemeModel();
+                model.SkinDllName = skinNamespace;
                 this.ReflectorInfo(files[j], skinNamespace + ".Skin", model);
                 model.SkinPath = @"theme\" + skinNamespace + ".dll";
                 SystemThemeList.Add(model);
@@ -843,10 +847,10 @@ namespace ThemeManagerPlugin.ViewModels
         {
             foreach (WallPaperModel model in SystemWallPaperList)
             {
-                if (model.Category_No.Equals(categoryNo))   
+                if (model.Category_No.Equals(categoryNo))
                     SeletetedTabControlWallPaperList.Add(model);
             }
-           
+
         }
 
         #region 在线皮肤分类
@@ -914,7 +918,7 @@ namespace ThemeManagerPlugin.ViewModels
                 {
                     OnLineModel model = new OnLineModel();
                     string previewUrl = ConfigurationManager.AppSettings.Get("downloadfilehttp") + "getfile?id=" + row["img_url"] + "&productid=" + ProductId;
-                    
+
                     model.OnLineNo = row["skin_no"].ToString();
                     model.OnLineName = row["skin_name"].ToString();
                     model.TypeNo = row["category_no"].ToString();
@@ -923,10 +927,10 @@ namespace ThemeManagerPlugin.ViewModels
                     model.FileName = row["file_name"].ToString();
                     model.FilePath = row["file_path"].ToString();
                     model.FileType = row["file_type"].ToString();
-                   
+
                     SystemOnLineList.Add(model);
                 }
-              
+
             }
         }
         #endregion
@@ -1132,13 +1136,13 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
-     
+
         /// <summary>
         /// 点击ListBoxItem换肤
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-       private  void lbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void lbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBox listBox = sender as ListBox;
             SelectedListBoxItem = (ThemeModel)listBox.SelectedItem;
@@ -1146,197 +1150,197 @@ namespace ThemeManagerPlugin.ViewModels
             this.UpdateDefaultSkin();
         }
 
-      
-       private void imageRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-       {
-           sboardRightIamge.Begin();
-           ChangePage(true);
-       }
-       void imageRight_Click(object sender, RoutedEventArgs e)
-       {
-           sboardRightIamge.Begin();
-           ChangePage(true);
-       }
-       private void imageRight_MouseLeave(object sender, MouseEventArgs e)
-       {
-           imageRight.Effect = null;
-       }
 
-       private void imageRight_MouseEnter(object sender, MouseEventArgs e)
-       {
-           //imageRight.Effect = new System.Windows.Media.Effects.DropShadowEffect();
-       }
+        private void imageRight_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            sboardRightIamge.Begin();
+            ChangePage(true);
+        }
+        void imageRight_Click(object sender, RoutedEventArgs e)
+        {
+            sboardRightIamge.Begin();
+            ChangePage(true);
+        }
+        private void imageRight_MouseLeave(object sender, MouseEventArgs e)
+        {
+            imageRight.Effect = null;
+        }
 
-       private void imageLeft_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-       {
-           sboardLeftIamge.Begin();
-           ChangePage(false);
-       }
-       void imageLeft_Click(object sender, RoutedEventArgs e)
-       {
-           sboardLeftIamge.Begin();
-           ChangePage(false);
-       }
-       private void imageLeft_MouseLeave(object sender, MouseEventArgs e)
-       {
-           imageLeft.Effect = null;
-       }
+        private void imageRight_MouseEnter(object sender, MouseEventArgs e)
+        {
+            //imageRight.Effect = new System.Windows.Media.Effects.DropShadowEffect();
+        }
 
-       private void imageLeft_MouseEnter(object sender, MouseEventArgs e)
-       {
-          // imageLeft.Effect = new System.Windows.Media.Effects.DropShadowEffect();
-       }
+        private void imageLeft_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            sboardLeftIamge.Begin();
+            ChangePage(false);
+        }
+        void imageLeft_Click(object sender, RoutedEventArgs e)
+        {
+            sboardLeftIamge.Begin();
+            ChangePage(false);
+        }
+        private void imageLeft_MouseLeave(object sender, MouseEventArgs e)
+        {
+            imageLeft.Effect = null;
+        }
 
-       #region 翻页实现
-       /// <summary>
-       /// 翻页实现
-       /// </summary>
-       /// <param name="page"></param>
-       /// <param name="needAnimation"></param>
-       private void ChangePage(bool isRight)
-       {
-           double pageWidth = canvasPageContent.ActualWidth;
-           lock (changeLock)
-           {
-               if (isInMove)
-                   return;
-               isInMove = true;
-           }
-           if (isRight)
-           {
-               if (pageSelect == totalPage)
-               {
-                   lock (changeLock)
-                   {
-                       isInMove = false;
-                   }
-                   return;
-               }
-               else
-               {
+        private void imageLeft_MouseEnter(object sender, MouseEventArgs e)
+        {
+            // imageLeft.Effect = new System.Windows.Media.Effects.DropShadowEffect();
+        }
 
-                   isInMove = true;
-                   double listLeft_now = Canvas.GetLeft(wrapPanelPages);
-                   double listLeft_sur = -(pageSelect - 1) * pageWidth;
-                   double formX = listLeft_now + (pageSelect - 1) * pageWidth;
-                   double toX = -pageWidth;
-                   double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
-                   sboardRightBegin(formX, toX, time);
-               }
-           }
-           else
-           {
-               if (pageSelect == 1)
-               {
-                   lock (changeLock)
-                   {
-                       isInMove = false;
-                   }
-                   return;
-               }
-               else
-               {
-                   isInMove = true;
-                   double listLeft_now = Canvas.GetLeft(wrapPanelPages);
-                   double listLeft_sur = -(pageSelect - 1) * pageWidth;
-                   //启动左翻动画-翻页
-                   double formX = listLeft_now + (pageSelect - 1) * pageWidth;
-                   double toX = pageWidth;
-                   double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
-                   sboardLeftBegin(formX, toX, time);
-               }
-           }
-       }
-       #endregion
+        #region 翻页实现
+        /// <summary>
+        /// 翻页实现
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="needAnimation"></param>
+        private void ChangePage(bool isRight)
+        {
+            double pageWidth = canvasPageContent.ActualWidth;
+            lock (changeLock)
+            {
+                if (isInMove)
+                    return;
+                isInMove = true;
+            }
+            if (isRight)
+            {
+                if (pageSelect == totalPage)
+                {
+                    lock (changeLock)
+                    {
+                        isInMove = false;
+                    }
+                    return;
+                }
+                else
+                {
 
-       #region 改变翻页按钮状态
-       /// <summary>
-       /// 改变翻页按钮状态
-       /// </summary>
-       private void ChangeButtonStatus()
-       {
-           if (totalPage == 0)
-           {
-               return;
-           }
-           if (pageSelect == 1 && totalPage == 1)
-           {
-               imageLeft.Visibility = System.Windows.Visibility.Hidden;
-               imageRight.Visibility = System.Windows.Visibility.Hidden;
-           }
-           else if (pageSelect == 1 && totalPage > 1)
-           {
-               imageLeft.Visibility = System.Windows.Visibility.Hidden;
-               imageRight.Visibility = System.Windows.Visibility.Visible;
-           }
-           else
-           {
-               if (pageSelect == totalPage)
-               {
-                   imageLeft.Visibility = System.Windows.Visibility.Visible;
-                   imageRight.Visibility = System.Windows.Visibility.Hidden;
-               }
-               else
-               {
-                   imageLeft.Visibility = System.Windows.Visibility.Visible;
-                   imageRight.Visibility = System.Windows.Visibility.Visible;
-               }
-           }
-       }
-       #endregion
+                    isInMove = true;
+                    double listLeft_now = Canvas.GetLeft(wrapPanelPages);
+                    double listLeft_sur = -(pageSelect - 1) * pageWidth;
+                    double formX = listLeft_now + (pageSelect - 1) * pageWidth;
+                    double toX = -pageWidth;
+                    double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                    sboardRightBegin(formX, toX, time);
+                }
+            }
+            else
+            {
+                if (pageSelect == 1)
+                {
+                    lock (changeLock)
+                    {
+                        isInMove = false;
+                    }
+                    return;
+                }
+                else
+                {
+                    isInMove = true;
+                    double listLeft_now = Canvas.GetLeft(wrapPanelPages);
+                    double listLeft_sur = -(pageSelect - 1) * pageWidth;
+                    //启动左翻动画-翻页
+                    double formX = listLeft_now + (pageSelect - 1) * pageWidth;
+                    double toX = pageWidth;
+                    double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                    sboardLeftBegin(formX, toX, time);
+                }
+            }
+        }
+        #endregion
 
-       //左翻动画
-       private void sboardLeftBegin(double formX, double toX, double time)
-       {
-           sboard = ShareClass.CeaterAnimation_Xmove(wrapPanelPages, formX, toX, time, 0);
-           sboard.Completed += sboardLeft_Completed;
-           sboard.Begin();
-       }
+        #region 改变翻页按钮状态
+        /// <summary>
+        /// 改变翻页按钮状态
+        /// </summary>
+        private void ChangeButtonStatus()
+        {
+            if (totalPage == 0)
+            {
+                return;
+            }
+            if (pageSelect == 1 && totalPage == 1)
+            {
+                imageLeft.Visibility = System.Windows.Visibility.Hidden;
+                imageRight.Visibility = System.Windows.Visibility.Hidden;
+            }
+            else if (pageSelect == 1 && totalPage > 1)
+            {
+                imageLeft.Visibility = System.Windows.Visibility.Hidden;
+                imageRight.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                if (pageSelect == totalPage)
+                {
+                    imageLeft.Visibility = System.Windows.Visibility.Visible;
+                    imageRight.Visibility = System.Windows.Visibility.Hidden;
+                }
+                else
+                {
+                    imageLeft.Visibility = System.Windows.Visibility.Visible;
+                    imageRight.Visibility = System.Windows.Visibility.Visible;
+                }
+            }
+        }
+        #endregion
 
-       //右翻动画
-       private void sboardRightBegin(double formX, double toX, double time)
-       {
-           sboard = ShareClass.CeaterAnimation_Xmove(wrapPanelPages, formX, toX, time, 0);
-           sboard.Completed += sboardRight_Completed;
-           sboard.Begin();
-       }
+        //左翻动画
+        private void sboardLeftBegin(double formX, double toX, double time)
+        {
+            sboard = ShareClass.CeaterAnimation_Xmove(wrapPanelPages, formX, toX, time, 0);
+            sboard.Completed += sboardLeft_Completed;
+            sboard.Begin();
+        }
 
-       //翻页回滚结束
-       private void sboardNoChange_Completed(object sender, EventArgs e)
-       {
-           lock (changeLock)
-           {
-               isInMove = false;
-           }
-       }
+        //右翻动画
+        private void sboardRightBegin(double formX, double toX, double time)
+        {
+            sboard = ShareClass.CeaterAnimation_Xmove(wrapPanelPages, formX, toX, time, 0);
+            sboard.Completed += sboardRight_Completed;
+            sboard.Begin();
+        }
 
-       //右翻页结束
-       private void sboardRight_Completed(object sender, EventArgs e)
-       {
-           pageSelect++;
-           pageBar1.SelectPage(pageSelect);
-           sboard.Stop();
-           ChangeButtonStatus();
-           Canvas.SetLeft(wrapPanelPages, -(pageSelect - 1) * canvasPageContent.ActualWidth);
-           lock (changeLock)
-           {
-               isInMove = false;
-           }
-       }
+        //翻页回滚结束
+        private void sboardNoChange_Completed(object sender, EventArgs e)
+        {
+            lock (changeLock)
+            {
+                isInMove = false;
+            }
+        }
 
-       //左翻页结束
-       private void sboardLeft_Completed(object sender, EventArgs e)
-       {
-           pageSelect--;
-           pageBar1.SelectPage(pageSelect);
-           sboard.Stop();
-           ChangeButtonStatus();
-           Canvas.SetLeft(wrapPanelPages, -(pageSelect - 1) * canvasPageContent.ActualWidth);
-           lock (changeLock)
-           {
-               isInMove = false;
-           }
-       }
+        //右翻页结束
+        private void sboardRight_Completed(object sender, EventArgs e)
+        {
+            pageSelect++;
+            pageBar1.SelectPage(pageSelect);
+            sboard.Stop();
+            ChangeButtonStatus();
+            Canvas.SetLeft(wrapPanelPages, -(pageSelect - 1) * canvasPageContent.ActualWidth);
+            lock (changeLock)
+            {
+                isInMove = false;
+            }
+        }
+
+        //左翻页结束
+        private void sboardLeft_Completed(object sender, EventArgs e)
+        {
+            pageSelect--;
+            pageBar1.SelectPage(pageSelect);
+            sboard.Stop();
+            ChangeButtonStatus();
+            Canvas.SetLeft(wrapPanelPages, -(pageSelect - 1) * canvasPageContent.ActualWidth);
+            lock (changeLock)
+            {
+                isInMove = false;
+            }
+        }
         #endregion
 
         #endregion

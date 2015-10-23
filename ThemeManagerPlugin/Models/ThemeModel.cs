@@ -78,6 +78,10 @@ namespace ThemeManagerPlugin.Models
             get;
             set;
         }
+        public string SkinDllName
+        {
+            get; set;
+        }
 
         public int CompareTo(ThemeModel other)
         {
