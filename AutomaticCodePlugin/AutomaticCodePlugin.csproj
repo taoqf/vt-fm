@@ -57,10 +57,12 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NRules">
+    <Reference Include="NRules, Version=0.4.3.0, Culture=neutral, PublicKeyToken=8ad544355a4a2176, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\VictopLib\NRules.dll</HintPath>
     </Reference>
-    <Reference Include="Stateless">
+    <Reference Include="Stateless, Version=2.5.21.0, Culture=neutral, PublicKeyToken=93038f0927583c9a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\VictopLib\Stateless.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -83,6 +85,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\MainViewState.cs" />
+    <Compile Include="FSM\MainStateMachine.cs" />
+    <Compile Include="Enums\MainViewTrigger.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -97,6 +102,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Rules\MainViewLoadRule.cs" />
+    <Compile Include="Rules\MainViewSearchRule.cs" />
     <Compile Include="Views\MainViewWindow.xaml.cs">
       <DependentUpon>MainViewWindow.xaml</DependentUpon>
     </Compile>
@@ -114,6 +121,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Victop.Frame.CmptRuntime\Victop.Frame.CmptRuntime.csproj">
+      <Project>{4fd0d337-25d5-4e44-890c-afa599599999}</Project>
+      <Name>Victop.Frame.CmptRuntime</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.DataMessageManager\Victop.Frame.DataMessageManager.csproj">
       <Project>{d3ee684e-9600-460b-a3e3-39bf32180f9f}</Project>
       <Name>Victop.Frame.DataMessageManager</Name>
