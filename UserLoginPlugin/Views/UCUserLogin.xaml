@@ -145,7 +145,7 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="50"/>
                             </controls:VicGridNormal.RowDefinitions>
-                        <controls:VicListBoxNormal Grid.Row="0"  Style="{DynamicResource RoleListBoxStyle}" Name="lboxRole" ItemsSource="{Binding RoleInfoList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Role_Name" SelectedValuePath="Role_No" SelectedItem="{Binding SelectedRoleInfo,UpdateSourceTrigger=PropertyChanged}"/>
+                        <controls:VicListBoxNormal Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource RoleListBoxStyle}" Name="lboxRole" ItemsSource="{Binding RoleInfoList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Role_Name" SelectedValuePath="Role_No" SelectedItem="{Binding SelectedRoleInfo,UpdateSourceTrigger=PropertyChanged}"/>
                         <controls:VicDockPanelNormal Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">
                             <controls:VicButtonNormal Width="100" VerticalAlignment="Top" Height="25" Content="确定" Name="btnConfirm" Command="{Binding btnConfirmClickCommand}"/>
                             </controls:VicDockPanelNormal>
