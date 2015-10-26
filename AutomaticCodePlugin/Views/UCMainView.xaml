@@ -20,6 +20,9 @@
             <ctrl:VicButtonNormal Width="100" Height="24" Content="删除" Name="delBtn" Margin="0,0,10,0"/>
             <ctrl:VicButtonNormal Width="100" Height="24" Content="保存" Name="saveBtn" Margin="0,0,10,0"/>
         </ctrl:VicDockPanelNormal>
-        <ctrl:VicDataGrid Grid.Row="1" CanUserAddRows="False" Name="dgridProduct" ItemsSource="{Binding MainPBlock.ViewBlockDataTable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <ctrl:VicDataGrid Grid.Row="1" CanUserAddRows="False" Name="dgridProduct" ItemsSource="{Binding MainPBlock.ViewBlockDataTable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedCellsChanged="dgridProduct_SelectedCellsChanged"/>
+        <ctrl:VicDockPanelNormal Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tbox" Text="{Binding MainPBlock.PreBlockSelectedRow[product_name]}"/>
+        </ctrl:VicDockPanelNormal>
     </ctrl:VicGridNormal>
 </tc:TemplateControl>

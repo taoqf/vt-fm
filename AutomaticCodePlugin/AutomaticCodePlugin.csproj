@@ -103,6 +103,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Rules\MainViewLoadRule.cs" />
+    <Compile Include="Rules\MainViewRowSelectRule.cs" />
     <Compile Include="Rules\MainViewSearchRule.cs" />
     <Compile Include="Views\MainViewWindow.xaml.cs">
       <DependentUpon>MainViewWindow.xaml</DependentUpon>

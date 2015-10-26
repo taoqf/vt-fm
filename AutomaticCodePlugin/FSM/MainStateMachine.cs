@@ -33,8 +33,26 @@ namespace AutomaticCodePlugin.FSM
             myFsm.Configure(MainViewState.SearchBtnClicked)
                 .OnEntry(() => OnSearchBtnClickEntry())
                 .PermitReentry(MainViewTrigger.SearchBtnClick)
-                .OnExit(() => OnSearchBtnClickExit());
+                .OnExit(() => OnSearchBtnClickExit())
+                .Permit(MainViewTrigger.SelectedRowChange, MainViewState.SelectedRowChanged);
+            myFsm.Configure(MainViewState.SelectedRowChanged)
+                .OnEntry(() => OnSelectedRowChangedEntry())
+                .PermitReentry(MainViewTrigger.SelectedRowChange);
             CreateRuleRepository();
+        }
+
+
+        public void SelectedRow()
+        {
+            myFsm.Fire(MainViewTrigger.SelectedRowChange);
+        }
+
+        private void OnSelectedRowChangedEntry()
+        {
+            UCMainView view = mainView as UCMainView;
+            session.Insert(view.dgridProduct.SelectedItem);
+            session.Fire();
+            session.Retract(view.dgridProduct.SelectedItem);
         }
 
         public void MainLoad()
@@ -54,9 +72,10 @@ namespace AutomaticCodePlugin.FSM
 
         private void OnSearchBtnClickEntry()
         {
-            session.Insert(mainView);
+            UCMainView myView = mainView as UCMainView;
+            session.Insert(myView.MainPBlock);
             session.Fire();
-            session.Retract(mainView);
+            session.Retract(myView.MainPBlock);
         }
 
         private void OnViewLoadedExit()

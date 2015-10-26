@@ -9,6 +9,7 @@ namespace AutomaticCodePlugin.Enums
     public enum MainViewTrigger
     {
         ViewLoad,
-        SearchBtnClick
+        SearchBtnClick,
+        SelectedRowChange
     }
 }

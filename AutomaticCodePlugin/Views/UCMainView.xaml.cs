@@ -56,5 +56,10 @@ namespace AutomaticCodePlugin.Views
         {
             mainFsm.Search();
         }
+
+        private void dgridProduct_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            mainFsm.SelectedRow();
+        }
     }
 }

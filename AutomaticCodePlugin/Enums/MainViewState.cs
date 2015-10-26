@@ -10,6 +10,7 @@ namespace AutomaticCodePlugin.Enums
     {
         None,
         ViewLoaded,
-        SearchBtnClicked
+        SearchBtnClicked,
+        SelectedRowChanged
     }
 }

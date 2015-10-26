@@ -289,19 +289,21 @@ namespace UserLoginPlugin.ViewModels
         /// </summary>
         public ICommand btnModifyPassClickCommand
         {
-            get { 
-                return new RelayCommand(()=>{
+            get
+            {
+                return new RelayCommand(() =>
+                {
                     DataMessageOperation dataOp = new DataMessageOperation();
-                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                     paramDic.Add("userCode", LoginInfoModel.UserName);
-                        PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
-                        if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
-                        {
-                            Window win = pluginModel.PluginInterface.StartWindow;
-                            win.ShowDialog();
-                        }
-                    
-            });
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    paramDic.Add("userCode", LoginInfoModel.UserName);
+                    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                    if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                    {
+                        Window win = pluginModel.PluginInterface.StartWindow;
+                        win.ShowDialog();
+                    }
+
+                });
             }
         }
         public ICommand btnLoginClickCommand
@@ -317,15 +319,15 @@ namespace UserLoginPlugin.ViewModels
                                 IsRingShow = true;
                                 MainViewEnable = false;
                                 UserLogin();
-                                    DataMessageOperation dataOp = new DataMessageOperation();
-                                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                                    paramDic.Add("usercode", LoginInfoModel.UserName);
-                                    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
-                                    if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
-                                    {
-                                        Window win = pluginModel.PluginInterface.StartWindow;
-                                        win.ShowDialog();
-                                    }
+                                DataMessageOperation dataOp = new DataMessageOperation();
+                                Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                                paramDic.Add("usercode", LoginInfoModel.UserName);
+                                PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                                if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                                {
+                                    Window win = pluginModel.PluginInterface.StartWindow;
+                                    win.ShowDialog();
+                                }
                             }
                             else
                             {
@@ -341,7 +343,9 @@ namespace UserLoginPlugin.ViewModels
                             MainViewEnable = false;
                             UserLogin();
                         }
-                    }, () => { return CheckUserLogin();
+                    }, () =>
+                    {
+                        return CheckUserLogin();
                     });
             }
         }
@@ -417,7 +421,7 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
-        
+
         private Dictionary<string, object> GetCurrentRoleMenu(string roleNo = null)
         {
             DataMessageOperation dataOp = new DataMessageOperation();
@@ -557,7 +561,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     IsRingShow = false;
                     MainViewEnable = true;
-                    MessageBox.Show(string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString()) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
+                    MessageBox.Show(returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString()) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
                 }
             }
 
