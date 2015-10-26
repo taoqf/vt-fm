@@ -35,6 +35,11 @@ namespace UserLoginPlugin.ViewModels
         private ObservableCollection<UserRoleInfoModel> roleInfoList;
         private UserRoleInfoModel selectedRoleInfo;
         private bool showRoleList;
+        private Visibility visRole=Visibility.Collapsed;
+        private Visibility visLogin = Visibility.Visible;
+        private bool visSystemSet = true;
+        private bool visMini = true;
+        private bool visClose = true;
         /// <summary>
         /// 是否显示加载
         /// </summary>
@@ -59,7 +64,63 @@ namespace UserLoginPlugin.ViewModels
                 }
             }
         }
-
+        public bool VisMini
+        {
+            get { return visMini;}
+            set {
+                if (visMini != value)
+                {
+                    visMini = value;
+                }
+                RaisePropertyChanged("VisMini");
+            }
+        }
+        public bool VisClose
+        {
+            get { return visClose; }
+            set
+            {
+                if (visClose != value)
+                {
+                    visClose = value;
+                }
+                RaisePropertyChanged("VisClose");
+            }
+        }
+        public bool VisSystemSet
+        {
+            get { return visSystemSet; }
+            set
+            {
+                if (visSystemSet != value)
+                {
+                    visSystemSet = value;
+                }
+                RaisePropertyChanged("VisSystemSet");
+            }
+        }
+        public Visibility VisLogin
+        {
+            get { return visLogin; }
+            set {
+                if (visLogin != value)
+                {
+                    visLogin = value;
+                }
+                RaisePropertyChanged("VisLogin");
+            }
+        }
+        public Visibility VisRole
+        {
+            get { return visRole; }
+            set { 
+                if(visRole!=value)
+                {
+                    visRole = value;
+                }
+                RaisePropertyChanged("VisRole");
+            }
+        }
         private LoginUserInfoModel _LoginInfoModel;
         /// <summary>登录用户信息</summary>
         public LoginUserInfoModel LoginInfoModel
@@ -399,11 +460,13 @@ namespace UserLoginPlugin.ViewModels
                             newWindow.FrontGD.tm.Start();
                         }
                         ShowRoleList = false;
+                        visRole = Visibility.Collapsed;
                         MainViewEnable = true;
                     }
                     else
                     {
                         ShowRoleList = false;
+                        visRole = Visibility.Collapsed;
                         MainViewEnable = true;
                         VicMessageBoxNormal.Show(menuDic["ReplyAlertMessage"].ToString());
                     }
@@ -438,6 +501,7 @@ namespace UserLoginPlugin.ViewModels
                 newWindow.FrontGD.tm.Stop();
             }
             ShowRoleList = false;
+            visRole = Visibility.Collapsed;
             LoginWindow.DialogResult = true;
         }
         private void UserLoginInit()
@@ -531,6 +595,7 @@ namespace UserLoginPlugin.ViewModels
                                 setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
                                 dataOp.SendSyncMessage(messageType, setUserContentDic);
                                 Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
+                                
                             }
                             else
                             {
@@ -544,10 +609,16 @@ namespace UserLoginPlugin.ViewModels
                         }
                         else
                         {
+                            VisLogin = Visibility.Collapsed;
                             ShowRoleList = true;
+                            MainViewEnable = true;
+                            VisRole = Visibility.Visible;
+                            VisSystemSet = false;
+                            VisMini = false;
+                            VisClose = false;
                             if (this.LoginWindow != null)
                             {
-                                Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.Height = 1; this.LoginWindow.Width = 1; });
+                                Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.Height = 350; this.LoginWindow.Width = 450; });
                             }
                         }
                     }

@@ -13,7 +13,7 @@
         <convert:ImgeNameToBackgroundConverter x:Key="imgeNameToBackgroundConverter"/>
     </UserControl.Resources>
     <UserControl.Triggers>
-        <EventTrigger SourceName="btnConfirm" RoutedEvent="ButtonBase.Click">
+        <!--<EventTrigger SourceName="btnConfirm" RoutedEvent="ButtonBase.Click">
             <BeginStoryboard x:Name="closeQueryCanvasStoryboard" 
                       Storyboard="{StaticResource closeDW1}"/>
         </EventTrigger>
@@ -21,7 +21,7 @@
         <EventTrigger SourceName="btnLogin" RoutedEvent="ButtonBase.Click">
             <BeginStoryboard x:Name="closeQueryCanvasStoryboard2" 
                       Storyboard="{StaticResource showDW1}"/>
-        </EventTrigger>
+        </EventTrigger>-->
     </UserControl.Triggers>
     <Grid>
         <Grid.RowDefinitions>
@@ -50,14 +50,14 @@
             </Grid>-->
             <Label  HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Margin="52,20,0,20"   Width="71" Content="飞道云服务" Style="{DynamicResource LoginTopLeftGridStyle2}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                <controls:VicButtonNormal  Name="btnSystemSet" HorizontalAlignment="Right"    Style="{DynamicResource btnLoginSetStyle}"  Command="{Binding btnSystemSetClickCommand}"/>
-                <controls:VicButtonNormal  Name="btnMini" HorizontalAlignment="Right"   Style="{DynamicResource btnMiniStyle}"  Command="{Binding btnMiniClickCommand}" />
-                <controls:VicButtonNormal  Name="btnClose" HorizontalAlignment="Right"    Style="{DynamicResource btnCloseStyle}"  Command="{Binding btnCloseClickCommand}"/>
+                <controls:VicButtonNormal IsEnabled="{Binding VisSystemSet, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  Name="btnSystemSet" HorizontalAlignment="Right"    Style="{DynamicResource btnLoginSetStyle}"  Command="{Binding btnSystemSetClickCommand}"/>
+                    <controls:VicButtonNormal IsEnabled="{Binding VisMini, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  Name="btnMini" HorizontalAlignment="Right"   Style="{DynamicResource btnMiniStyle}"  Command="{Binding btnMiniClickCommand}" />
+                    <controls:VicButtonNormal IsEnabled="{Binding VisClose, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  Name="btnClose" HorizontalAlignment="Right"    Style="{DynamicResource btnCloseStyle}"  Command="{Binding btnCloseClickCommand}"/>
             </StackPanel>
         </Grid>
         <Border Grid.Row="1" Background="{DynamicResource SkinColor}"/>
         <Border Grid.Row="2" Background="White"></Border>
-        <Grid Grid.Row="2" Style="{DynamicResource loginMainGridStyle}">
+        <Grid Grid.Row="2" Visibility="{Binding VisLogin, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Style="{DynamicResource loginMainGridStyle}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="190"/>
@@ -122,32 +122,32 @@
                 </StackPanel>
             </Border>
         </Grid>
-            <controls:VicPopup Grid.Row="2" AllowsTransparency="True" Name="popPluginList"  StaysOpen="True" HorizontalOffset="90"   VerticalOffset="90" VerticalAlignment="Center"  PlacementTarget="{Binding ElementName=ucUserLongin}" Placement="Center"  PopupAnimation="Fade"  IsOpen="{Binding ShowRoleList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+            <!--<controls:VicPopup Grid.Row="2" AllowsTransparency="True" Name="popPluginList"  StaysOpen="True" HorizontalOffset="90"   VerticalOffset="90" VerticalAlignment="Center"  PlacementTarget="{Binding ElementName=ucUserLongin}" Placement="Center"  PopupAnimation="Fade"  IsOpen="{Binding ShowRoleList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">-->
 
-                <Grid Name="Canvas1" Width="450" Height="300" Background="{DynamicResource MainBackgroundImage}">
-                    <Grid.RenderTransform>
+            <Grid Visibility="{Binding VisRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Width="450" Height="300" Background="{DynamicResource MainBackgroundImage}">
+                    <!--<Grid.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform CenterX="100" CenterY="50"></ScaleTransform>
                             <RotateTransform CenterX="100" CenterY="50"></RotateTransform>
                         </TransformGroup>
-                    </Grid.RenderTransform>
+                    </Grid.RenderTransform>-->
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="45"></RowDefinition>
-                        <RowDefinition Height="3"></RowDefinition>
+                            <!--<RowDefinition Height="45"></RowDefinition>-->
+                        <!--<RowDefinition Height="3"></RowDefinition>-->
                         <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                    <TextBlock Text="角色选择" Margin="5,0" Grid.Row="0" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>
-                    <Border BorderThickness="5" Grid.Row="1"  BorderBrush="{DynamicResource SkinColor}"  Width="448">
-                    </Border>
-                    <Border BorderThickness="1" Grid.Row="2" BorderBrush="{DynamicResource SkinColor}"  Width="448" Height="251">
+                    <!--<TextBlock Text="角色选择" Margin="5,0" Grid.Row="0" Foreground="White" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" ></TextBlock>-->
+                    <!--<Border BorderThickness="5" Grid.Row="0"  BorderBrush="{DynamicResource SkinColor}"  Width="448">
+                    </Border>-->
+                    <Border BorderThickness="1" Grid.Row="0" BorderBrush="{DynamicResource SkinColor}">
                         <controls:VicGridNormal  Background="{DynamicResource WhiteShade}" Name="girdRoleList">
                             <controls:VicGridNormal.RowDefinitions>
                                 <RowDefinition Height="*"/>
-                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="50"/>
                             </controls:VicGridNormal.RowDefinitions>
-                            <controls:VicListBoxNormal Style="{DynamicResource RoleListBoxStyle}" Grid.Row="0" Name="lboxRole" ItemsSource="{Binding RoleInfoList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Role_Name" SelectedValuePath="Role_No" SelectedItem="{Binding SelectedRoleInfo,UpdateSourceTrigger=PropertyChanged}"/>
-                            <controls:VicDockPanelNormal Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <controls:VicButtonNormal Width="100" Height="24" Content="确定" Name="btnConfirm" Command="{Binding btnConfirmClickCommand}"/>
+                        <controls:VicListBoxNormal Grid.Row="0"  Style="{DynamicResource RoleListBoxStyle}" Name="lboxRole" ItemsSource="{Binding RoleInfoList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Role_Name" SelectedValuePath="Role_No" SelectedItem="{Binding SelectedRoleInfo,UpdateSourceTrigger=PropertyChanged}"/>
+                        <controls:VicDockPanelNormal Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                            <controls:VicButtonNormal Width="100" VerticalAlignment="Top" Height="25" Content="确定" Name="btnConfirm" Command="{Binding btnConfirmClickCommand}"/>
                             </controls:VicDockPanelNormal>
                         </controls:VicGridNormal>
                     </Border>
@@ -175,7 +175,7 @@
             </Grid>-->
 
 
-        </controls:VicPopup>
+        <!--</controls:VicPopup>-->
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">
                 <i:InvokeCommandAction Command="{Binding gridMainLoadedCommand}" CommandParameter="{Binding ElementName=ucUserLongin}"/>
