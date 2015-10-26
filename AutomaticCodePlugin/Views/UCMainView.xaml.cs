@@ -22,44 +22,9 @@ namespace AutomaticCodePlugin.Views
     /// </summary>
     public partial class UCMainView : TemplateControl
     {
-        #region 私有字段
-        PresentationBlockModel mainPBlock;
-        MainStateMachine mainFsm;
-        #endregion
-        #region 公共属性
-        public PresentationBlockModel MainPBlock
-        {
-            get
-            {
-                return mainPBlock;
-            }
-            set
-            {
-                mainPBlock = value;
-                RaisePropertyChanged("MainPBlock");
-            }
-        }
-        #endregion
         public UCMainView()
         {
             InitializeComponent();
-            DataContext = this;
-            mainFsm = new MainStateMachine(this);
-        }
-
-        private void mainView_Loaded(object sender, RoutedEventArgs e)
-        {
-            mainFsm.MainLoad();
-        }
-
-        private void searchBtn_Click(object sender, RoutedEventArgs e)
-        {
-            mainFsm.Search();
-        }
-
-        private void dgridProduct_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            mainFsm.SelectedRow();
         }
     }
 }

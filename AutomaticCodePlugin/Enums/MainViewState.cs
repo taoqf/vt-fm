@@ -11,6 +11,7 @@ namespace AutomaticCodePlugin.Enums
         None,
         ViewLoaded,
         SearchBtnClicked,
-        SelectedRowChanged
+        SelectRowed,
+        AddRowed,
     }
 }

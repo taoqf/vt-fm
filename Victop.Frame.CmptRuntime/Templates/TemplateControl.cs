@@ -18,6 +18,17 @@ namespace Victop.Frame.CmptRuntime
     /// </summary>
     public class TemplateControl : UserControl, INotifyPropertyChanged
     {
+        private bool initFlag;
+        /// <summary>
+        /// 是否初始化
+        /// </summary>
+        public bool InitFlag
+        {
+            get
+            {
+                return initFlag;
+            }
+        }
         #region 公用属性
         /// <summary>
         /// 组件定义
@@ -102,6 +113,7 @@ namespace Victop.Frame.CmptRuntime
                             continue;
                         }
                     }
+                    initFlag = true;
                     return true;
                 }
                 else

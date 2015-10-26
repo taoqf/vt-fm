@@ -11,19 +11,24 @@ using Victop.Frame.CmptRuntime;
 using AutomaticCodePlugin.Views;
 using NRules.Fluent;
 using AutomaticCodePlugin.Rules;
+using AutomaticCodePlugin.ViewModels;
 using NRules;
+using System.Reflection;
 
 namespace AutomaticCodePlugin.FSM
 {
     public class MainStateMachine
     {
         StateMachine<MainViewState, MainViewTrigger> myFsm;
-        TemplateControl mainView;
+        public MainViewState currentState = MainViewState.None;
+        UCMainViewViewModel mainViewModel;
         ISession session;
-        public MainStateMachine(TemplateControl mainView)
+        public MainStateMachine(UCMainViewViewModel mainViewModel)
         {
-            this.mainView = mainView;
-            myFsm = new StateMachine<MainViewState, MainViewTrigger>(MainViewState.None);
+            this.mainViewModel = mainViewModel;
+            //CreateRuleRepository();
+            CreateRuleRepositoryGroup();
+            myFsm = new StateMachine<MainViewState, MainViewTrigger>(() => currentState, s => currentState = s);
             myFsm.Configure(MainViewState.None)
                 .Permit(MainViewTrigger.ViewLoad, MainViewState.ViewLoaded);
             myFsm.Configure(MainViewState.ViewLoaded)
@@ -34,25 +39,48 @@ namespace AutomaticCodePlugin.FSM
                 .OnEntry(() => OnSearchBtnClickEntry())
                 .PermitReentry(MainViewTrigger.SearchBtnClick)
                 .OnExit(() => OnSearchBtnClickExit())
-                .Permit(MainViewTrigger.SelectedRowChange, MainViewState.SelectedRowChanged);
-            myFsm.Configure(MainViewState.SelectedRowChanged)
+                .Permit(MainViewTrigger.SelectRow, MainViewState.SelectRowed)
+                .Permit(MainViewTrigger.AddRow, MainViewState.AddRowed);
+            myFsm.Configure(MainViewState.SelectRowed)
                 .OnEntry(() => OnSelectedRowChangedEntry())
-                .PermitReentry(MainViewTrigger.SelectedRowChange);
-            CreateRuleRepository();
+                .PermitReentry(MainViewTrigger.SelectRow)
+                .Permit(MainViewTrigger.SearchBtnClick, MainViewState.SearchBtnClicked)
+                .Permit(MainViewTrigger.AddRow, MainViewState.AddRowed);
+            myFsm.Configure(MainViewState.AddRowed)
+                .OnEntry(() => OnAddRowedEntry())
+                .Permit(MainViewTrigger.SearchBtnClick, MainViewState.SearchBtnClicked)
+                .Permit(MainViewTrigger.SelectRow, MainViewState.SelectRowed);
         }
 
 
-        public void SelectedRow()
+        public void AddRow()
         {
-            myFsm.Fire(MainViewTrigger.SelectedRowChange);
+            myFsm.Fire(MainViewTrigger.AddRow);
+        }
+
+        private void OnAddRowedEntry()
+        {
+            Console.WriteLine("OnAddRowedEntry");
+            session.Insert(this);
+            session.Insert(mainViewModel.MainView);
+            session.Fire();
+            session.Retract(mainViewModel.MainView);
+            session.Retract(this);
+        }
+
+        public void SelectRow()
+        {
+            myFsm.Fire(MainViewTrigger.SelectRow);
         }
 
         private void OnSelectedRowChangedEntry()
         {
-            UCMainView view = mainView as UCMainView;
-            session.Insert(view.dgridProduct.SelectedItem);
+            Console.WriteLine("OnSelectedRowChangedEntry");
+            session.TryInsert(this);
+            session.TryInsert(mainViewModel.MainView);
             session.Fire();
-            session.Retract(view.dgridProduct.SelectedItem);
+            session.TryRetract(mainViewModel.MainView);
+            session.TryRetract(this);
         }
 
         public void MainLoad()
@@ -67,15 +95,17 @@ namespace AutomaticCodePlugin.FSM
 
         private void OnSearchBtnClickExit()
         {
-            Console.WriteLine("OnViewLoadedExit");
+            Console.WriteLine("OnSearchBtnClickExit");
         }
 
         private void OnSearchBtnClickEntry()
         {
-            UCMainView myView = mainView as UCMainView;
-            session.Insert(myView.MainPBlock);
+            Console.WriteLine("OnSearchBtnClickEntry");
+            session.TryInsert(this);
+            session.TryInsert(mainViewModel.MainView);
             session.Fire();
-            session.Retract(myView.MainPBlock);
+            session.TryRetract(mainViewModel.MainView);
+            session.TryRetract(this);
         }
 
         private void OnViewLoadedExit()
@@ -85,9 +115,11 @@ namespace AutomaticCodePlugin.FSM
 
         private void OnViewLoadedEntry()
         {
-            session.Insert(mainView);
+            session.TryInsert(this);
+            session.TryInsert(mainViewModel.MainView);
             session.Fire();
-            session.Retract(mainView);
+            session.TryRetract(mainViewModel.MainView);
+            session.TryRetract(this);
         }
 
         #region NRules
@@ -97,6 +129,18 @@ namespace AutomaticCodePlugin.FSM
             repository.Load(x => x.From(typeof(MainViewLoadRule).Assembly));
             ISessionFactory factory = repository.Compile();
             session = factory.CreateSession();
+        }
+
+        private void CreateRuleRepositoryGroup()
+        {
+            RuleRepository fullRepository = new RuleRepository();
+            fullRepository.Load(x => x.From(Assembly.GetExecutingAssembly()).Where(it => it.IsTagged("User")).To("UserRoles"));
+            fullRepository.Load(x => x.From(Assembly.GetExecutingAssembly()).Where(it => it.IsTagged("Row")).To("RowRoles"));
+            var sets = fullRepository.GetRuleSets();
+            var complier = new RuleCompiler();
+            var factory = complier.Compile(sets);
+            session = factory.CreateSession();
+            Console.WriteLine(sets.Count());
         }
         #endregion
     }
