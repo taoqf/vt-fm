@@ -34,7 +34,6 @@ namespace AutomaticCodePlugin.Rules
             {
                 mainViewModel.MainPBlock = view.GetPresentationBlockModel("masterPBlock");
             }
-            ctx.Update(userCtrl);
         }
     }
 }

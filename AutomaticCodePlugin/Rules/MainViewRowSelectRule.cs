@@ -38,7 +38,6 @@ namespace AutomaticCodePlugin.Rules
                     mainViewModel.MainPBlock.PreBlockSelectedRow = dr;
                     mainViewModel.MainPBlock.SetCurrentRow(dr);
                     mainViewModel.Test = dr["product_name"].ToString();
-                    ctx.Update(mainView);
                 }
             }
         }

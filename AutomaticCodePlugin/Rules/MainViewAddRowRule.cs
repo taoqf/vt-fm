@@ -33,7 +33,6 @@ namespace AutomaticCodePlugin.Rules
             DataRow dr = mainViewModel.MainPBlock.ViewBlockDataTable.NewRow();
             dr["_id"] = Guid.NewGuid().ToString();
             mainViewModel.MainPBlock.ViewBlockDataTable.Rows.Add(dr);
-            ctx.Update(userCtrl);
         }
     }
 }

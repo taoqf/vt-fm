@@ -198,6 +198,7 @@ namespace Victop.Frame.ComLink.ICE
                         }
                         catch (ConnectFailedException connFailedEx)
                         {
+                            LoggerHelper.ErrorFormat("Message:{0},Data:{1},Source:{2}", connFailedEx.Message,connFailedEx.Data,connFailedEx.Source);
                             if (i >= reSendTime)
                             {
                                 throw connFailedEx;
