@@ -35,7 +35,7 @@ namespace UserLoginPlugin.ViewModels
         private ObservableCollection<UserRoleInfoModel> roleInfoList;
         private UserRoleInfoModel selectedRoleInfo;
         private bool showRoleList;
-        private Visibility visRole=Visibility.Collapsed;
+        private Visibility visRole = Visibility.Collapsed;
         private Visibility visLogin = Visibility.Visible;
         private bool visSystemSet = true;
         private bool visMini = true;
@@ -66,8 +66,9 @@ namespace UserLoginPlugin.ViewModels
         }
         public bool VisMini
         {
-            get { return visMini;}
-            set {
+            get { return visMini; }
+            set
+            {
                 if (visMini != value)
                 {
                     visMini = value;
@@ -102,7 +103,8 @@ namespace UserLoginPlugin.ViewModels
         public Visibility VisLogin
         {
             get { return visLogin; }
-            set {
+            set
+            {
                 if (visLogin != value)
                 {
                     visLogin = value;
@@ -113,8 +115,9 @@ namespace UserLoginPlugin.ViewModels
         public Visibility VisRole
         {
             get { return visRole; }
-            set { 
-                if(visRole!=value)
+            set
+            {
+                if (visRole != value)
                 {
                     visRole = value;
                 }
@@ -350,19 +353,21 @@ namespace UserLoginPlugin.ViewModels
         /// </summary>
         public ICommand btnModifyPassClickCommand
         {
-            get { 
-                return new RelayCommand(()=>{
+            get
+            {
+                return new RelayCommand(() =>
+                {
                     DataMessageOperation dataOp = new DataMessageOperation();
-                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                     paramDic.Add("userCode", LoginInfoModel.UserName);
-                        PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
-                        if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
-                        {
-                            Window win = pluginModel.PluginInterface.StartWindow;
-                            win.ShowDialog();
-                        }
-                    
-            });
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    paramDic.Add("userCode", LoginInfoModel.UserName);
+                    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                    if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                    {
+                        Window win = pluginModel.PluginInterface.StartWindow;
+                        win.ShowDialog();
+                    }
+
+                });
             }
         }
         public ICommand btnLoginClickCommand
@@ -378,15 +383,15 @@ namespace UserLoginPlugin.ViewModels
                                 IsRingShow = true;
                                 MainViewEnable = false;
                                 UserLogin();
-                                    DataMessageOperation dataOp = new DataMessageOperation();
-                                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                                    paramDic.Add("usercode", LoginInfoModel.UserName);
-                                    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
-                                    if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
-                                    {
-                                        Window win = pluginModel.PluginInterface.StartWindow;
-                                        win.ShowDialog();
-                                    }
+                                DataMessageOperation dataOp = new DataMessageOperation();
+                                Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                                paramDic.Add("usercode", LoginInfoModel.UserName);
+                                PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                                if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
+                                {
+                                    Window win = pluginModel.PluginInterface.StartWindow;
+                                    win.ShowDialog();
+                                }
                             }
                             else
                             {
@@ -402,7 +407,9 @@ namespace UserLoginPlugin.ViewModels
                             MainViewEnable = false;
                             UserLogin();
                         }
-                    }, () => { return CheckUserLogin();
+                    }, () =>
+                    {
+                        return CheckUserLogin();
                     });
             }
         }
@@ -480,7 +487,7 @@ namespace UserLoginPlugin.ViewModels
                 });
             }
         }
-        
+
         private Dictionary<string, object> GetCurrentRoleMenu(string roleNo = null)
         {
             DataMessageOperation dataOp = new DataMessageOperation();
@@ -595,7 +602,7 @@ namespace UserLoginPlugin.ViewModels
                                 setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
                                 dataOp.SendSyncMessage(messageType, setUserContentDic);
                                 Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
-                                
+
                             }
                             else
                             {
@@ -628,7 +635,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     IsRingShow = false;
                     MainViewEnable = true;
-                    MessageBox.Show(string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString()) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
+                    MessageBox.Show(returnDic["ReplyAlertMessage"] == null || string.IsNullOrEmpty(returnDic["ReplyAlertMessage"].ToString()) ? returnDic["ReplyContent"].ToString() : returnDic["ReplyAlertMessage"].ToString());
                 }
             }
 
