@@ -35,7 +35,7 @@ namespace UserLoginPlugin.ViewModels
         private ObservableCollection<UserRoleInfoModel> roleInfoList;
         private UserRoleInfoModel selectedRoleInfo;
         private bool showRoleList;
-        private Visibility visRole=Visibility.Collapsed;
+        private Visibility visRole = Visibility.Collapsed;
         private Visibility visLogin = Visibility.Visible;
         private bool visSystemSet = true;
         private bool visMini = true;
@@ -66,8 +66,9 @@ namespace UserLoginPlugin.ViewModels
         }
         public bool VisMini
         {
-            get { return visMini;}
-            set {
+            get { return visMini; }
+            set
+            {
                 if (visMini != value)
                 {
                     visMini = value;
@@ -102,7 +103,8 @@ namespace UserLoginPlugin.ViewModels
         public Visibility VisLogin
         {
             get { return visLogin; }
-            set {
+            set
+            {
                 if (visLogin != value)
                 {
                     visLogin = value;
@@ -113,8 +115,9 @@ namespace UserLoginPlugin.ViewModels
         public Visibility VisRole
         {
             get { return visRole; }
-            set { 
-                if(visRole!=value)
+            set
+            {
+                if (visRole != value)
                 {
                     visRole = value;
                 }
@@ -599,7 +602,7 @@ namespace UserLoginPlugin.ViewModels
                                 setUserContentDic.Add("UserRole", RoleInfoList[0].Role_No);
                                 dataOp.SendSyncMessage(messageType, setUserContentDic);
                                 Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.DialogResult = true; });
-                                
+
                             }
                             else
                             {

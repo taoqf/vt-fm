@@ -198,7 +198,7 @@ namespace Victop.Frame.ComLink.ICE
                         }
                         catch (ConnectFailedException connFailedEx)
                         {
-                            LoggerHelper.ErrorFormat("Message:{0},Data:{1},Source:{2}", connFailedEx.Message,connFailedEx.Data,connFailedEx.Source);
+                            LoggerHelper.ErrorFormat("ConnectFailedException:Message:{0},Data:{1},Source:{2},error:{3}", connFailedEx.Message, connFailedEx.Data, connFailedEx.Source, connFailedEx.error);
                             if (i >= reSendTime)
                             {
                                 throw connFailedEx;
@@ -213,6 +213,7 @@ namespace Victop.Frame.ComLink.ICE
             }
             catch (ConnectionLostException connLost)
             {
+                LoggerHelper.ErrorFormat("ConnectionLostException:Message:{0},Data:{1},Source:{2},error:{3}", connLost.Message, connLost.Data, connLost.Source, connLost.error);
                 throw connLost.InnerException;
             }
             catch (System.Exception ex)
@@ -648,7 +649,8 @@ namespace Victop.Frame.ComLink.ICE
         /// </summary>
         public void Reset()
         {
-            throw new System.NotImplementedException(); //TODO:方法实现
+            iceApp.run(new string[] { "" });
+            //throw new System.NotImplementedException(); //TODO:方法实现
         }
 
         /// <summary>
