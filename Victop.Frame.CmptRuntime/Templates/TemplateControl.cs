@@ -16,7 +16,7 @@ namespace Victop.Frame.CmptRuntime
     /// <summary>
     /// 用户控件模板类
     /// </summary>
-    public class TemplateControl : UserControl
+    public class TemplateControl : UserControl, INotifyPropertyChanged
     {
         #region 公用属性
         /// <summary>
@@ -165,5 +165,23 @@ namespace Victop.Frame.CmptRuntime
             return result;
         }
         #endregion
+
+        public static Dictionary<string, object> ParamDict
+        {
+            get; set;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// 属性改变通知
+        /// </summary>
+        /// <param name="propertyName"></param>
+        public void RaisePropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 }
