@@ -15,6 +15,9 @@ using Victop.Frame.PublicLib.Managers;
 
 namespace Victop.Frame.PublicLib.Helpers
 {
+    /// <summary>
+    /// 日志辅助类
+    /// </summary>
 
     public class LoggerHelper
     {
@@ -156,7 +159,10 @@ namespace Victop.Frame.PublicLib.Helpers
                 }
             }
         }
-
+        /// <summary>
+        /// 调试输出
+        /// </summary>
+        /// <param name="message">输出对象</param>
         public static void Debug(object message)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -165,7 +171,11 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.Debug(message);
             }
         }
-
+        /// <summary>
+        /// 调试输出
+        /// </summary>
+        /// <param name="message">输出对象</param>
+        /// <param name="ex">异常信息</param>
         public static void Debug(object message, Exception ex)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -174,6 +184,11 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.Debug(message, ex);
             }
         }
+        /// <summary>
+        /// 调试输出
+        /// </summary>
+        /// <param name="format">输出格式</param>
+        /// <param name="args">输出参数</param>
         public static void DebugFormat(string format, params object[] args)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -182,7 +197,10 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.DebugFormat(format, args);
             }
         }
-
+        /// <summary>
+        /// 错误输出
+        /// </summary>
+        /// <param name="message">输出对象</param>
         public static void Error(object message)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -191,6 +209,11 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.Error(message);
             }
         }
+        /// <summary>
+        /// 错误输出
+        /// </summary>
+        /// <param name="message">输出对象</param>
+        /// <param name="ex">异常信息</param>
         public static void Error(object message, Exception ex)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -199,6 +222,11 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.Error(message, ex);
             }
         }
+        /// <summary>
+        /// 错误输出
+        /// </summary>
+        /// <param name="format">输出格式</param>
+        /// <param name="args">输出参数</param>
         public static void ErrorFormat(string format, params object[] args)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -207,7 +235,10 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.ErrorFormat(format, args);
             }
         }
-
+        /// <summary>
+        /// 毁灭输出
+        /// </summary>
+        /// <param name="message">输出对象</param>
         public static void Fatal(object message)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -216,6 +247,11 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.Fatal(message);
             }
         }
+        /// <summary>
+        /// 毁灭输出
+        /// </summary>
+        /// <param name="message">输出对象</param>
+        /// <param name="ex">异常信息</param>
         public static void Fatal(object message, Exception ex)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -224,6 +260,11 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.Fatal(message, ex);
             }
         }
+        /// <summary>
+        /// 毁灭输出
+        /// </summary>
+        /// <param name="format">输出格式</param>
+        /// <param name="args">输出参数</param>
         public static void FatalFormat(string format, params object[] args)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -232,7 +273,10 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.FatalFormat(format, args);
             }
         }
-
+        /// <summary>
+        /// 信息输出
+        /// </summary>
+        /// <param name="message">输出对象</param>
         public static void Info(object message)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -241,6 +285,11 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.Info(message);
             }
         }
+        /// <summary>
+        /// 信息输出
+        /// </summary>
+        /// <param name="message">输出对象</param>
+        /// <param name="ex">错误信息</param>
         public static void Info(object message, Exception ex)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -249,6 +298,11 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.Info(message, ex);
             }
         }
+        /// <summary>
+        /// 信息输出
+        /// </summary>
+        /// <param name="format">输出格式</param>
+        /// <param name="args">输出参数</param>
         public static void InfoFormat(string format, params object[] args)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -257,7 +311,10 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.InfoFormat(format, args);
             }
         }
-
+        /// <summary>
+        /// 警告输出
+        /// </summary>
+        /// <param name="message">输出对象</param>
         public static void Warn(object message)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -266,6 +323,11 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.Warn(message);
             }
         }
+        /// <summary>
+        /// 警告输出
+        /// </summary>
+        /// <param name="message">输出对象</param>
+        /// <param name="ex">异常信息</param>
         public static void Warn(object message, Exception ex)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
@@ -274,6 +336,11 @@ namespace Victop.Frame.PublicLib.Helpers
                 logger.Warn(message, ex);
             }
         }
+        /// <summary>
+        /// 警告输出
+        /// </summary>
+        /// <param name="format">输出格式</param>
+        /// <param name="args">输出参数</param>
         public static void WarnFormat(string format, params object[] args)
         {
             ILog logger = LogManager.GetLogger((new StackTrace(false)).GetFrame(1).GetMethod().DeclaringType);
