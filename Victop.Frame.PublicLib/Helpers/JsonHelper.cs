@@ -14,7 +14,11 @@ namespace Victop.Frame.PublicLib.Helpers
     /// </summary>
     public class JsonHelper
     {
-        //json序列化
+        /// <summary>
+        /// json序列化
+        /// </summary>
+        /// <param name="obj">序列化对象</param>
+        /// <returns></returns>
         public static string ToJson(object obj)
         {
             if (obj == null) return "";
@@ -23,7 +27,12 @@ namespace Victop.Frame.PublicLib.Helpers
             string jsonstr = JsonConvert.SerializeObject(obj, timeConverter);
             return jsonstr;
         }
-        //json反序列化
+        /// <summary>
+        /// json反序列化
+        /// </summary>
+        /// <typeparam name="T">反序列化对象类型</typeparam>
+        /// <param name="jsonStr">JSON字符串</param>
+        /// <returns></returns>
         public static T ToObject<T>(string jsonStr)
         {
             try
@@ -37,6 +46,13 @@ namespace Victop.Frame.PublicLib.Helpers
             }
 
         }
+        /// <summary>
+        /// json反序列化
+        /// </summary>
+        /// <typeparam name="T">反序列化对象类型</typeparam>
+        /// <param name="jsonStr">JSON字符串</param>
+        /// <param name="depthLength">反序列化深度</param>
+        /// <returns></returns>
         public static T ToObject<T>(string jsonStr, int depthLength)
         {
             try
@@ -53,7 +69,7 @@ namespace Victop.Frame.PublicLib.Helpers
         /// <summary>
         /// Json反序列化
         /// </summary>
-        /// <param name="jsonStr"></param>
+        /// <param name="jsonStr">JSON字符串</param>
         /// <returns></returns>
         public static dynamic DeserializeObject(string jsonStr)
         {
@@ -68,7 +84,12 @@ namespace Victop.Frame.PublicLib.Helpers
                 throw;
             }
         }
-        //查找特定的值
+        /// <summary>
+        /// 查找特定的值
+        /// </summary>
+        /// <param name="jsonStr">JSON字符串</param>
+        /// <param name="key">指定的Key</param>
+        /// <returns></returns>
         public static string ReadJsonString(string jsonStr, string key)
         {
             try
@@ -81,6 +102,13 @@ namespace Victop.Frame.PublicLib.Helpers
                 return "";
             }
         }
+        /// <summary>
+        /// 指定Key的字符串反序列化
+        /// </summary>
+        /// <typeparam name="T">反序列化的类型</typeparam>
+        /// <param name="jsonStr">JSON字符串</param>
+        /// <param name="key">指定的Key</param>
+        /// <returns></returns>
         public static T ReadJsonObject<T>(string jsonStr, string key)
         {
             try
@@ -93,6 +121,12 @@ namespace Victop.Frame.PublicLib.Helpers
                 return default(T);
             }
         }
+        /// <summary>
+        /// 读取字符串反序列化
+        /// </summary>
+        /// <typeparam name="T">反序列化的类型</typeparam>
+        /// <param name="jsonStr">JSON字符串</param>
+        /// <returns></returns>
         public static T ReadJsonObject<T>(string jsonStr)
         {
             try
@@ -105,7 +139,11 @@ namespace Victop.Frame.PublicLib.Helpers
                 return default(T);
             }
         }
-        //XML对象转换为Json字符串
+        /// <summary>
+        /// XML对象转换为Json字符串
+        /// </summary>
+        /// <param name="doc">XML文档</param>
+        /// <returns></returns>
         public static string XmlToJson(XmlDocument doc)
         {
             try
@@ -118,7 +156,11 @@ namespace Victop.Frame.PublicLib.Helpers
 
             } return "";
         }
-        //Json字符串转换为XML对象
+        /// <summary>
+        /// Json字符串转换为XML对象
+        /// </summary>
+        /// <param name="jsonStr">Json字符串</param>
+        /// <returns></returns>
         public static XmlDocument JsonToXml(string jsonStr)
         {
             try
