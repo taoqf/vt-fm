@@ -766,11 +766,16 @@ namespace MetroFramePlugin.ViewModels
                         DataMessageOperation dataMsgOp = new DataMessageOperation();
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         Dictionary<string, object> resultDic = dataMsgOp.SendSyncMessage("MongoDataChannelService.loginout", contentDic);
-                        if (resultDic["ReplyMode"].ToString().Equals("1"))
+                        long replyMode = Convert.ToInt64(resultDic["ReplyMode"].ToString());
+                        if (replyMode > 0)
                         {
                             UserName = string.Empty;
+                            UserLogin();
                         }
-                        UserLogin();
+                        else
+                        {
+                            VicMessageBoxNormal.Show(resultDic["ReplyAlertMessage"].ToString());
+                        }
                     }
                 });
             }
