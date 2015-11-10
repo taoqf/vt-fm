@@ -58,6 +58,30 @@ namespace MetroFramePlugin.ViewModels
         private bool isFirstLoad = true;
         private bool isDebug=true;
         /// <summary>
+        /// 门户插件用户信息
+        /// </summary>
+        private UserInfoModel userInfo;
+        /// <summary>
+        /// 门户插件用户信息
+        /// </summary>
+        public UserInfoModel UserInfo
+        {
+            get
+            {
+                if (userInfo == null)
+                    userInfo = new UserInfoModel();
+                return userInfo;
+            }
+            set
+            {
+                if (userInfo != value)
+                {
+                    userInfo = value;
+                    RaisePropertyChanged("UserInfo");
+                }
+            }
+        }
+        /// <summary>
         /// 是否为调试状态
         /// </summary>
         public bool IsDebug
@@ -75,49 +99,8 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-        /// <summary>
-        /// 用户名
-        /// </summary>
-        private string userName;
-        /// <summary>
-        /// 用户头像
-        /// </summary>
-        private string userImg;
-        /// <summary>
-        /// 用户账号
-        /// </summary>
-        private string userCode;
-        public string UserCode
-        {
-            get
-            {
-                return userCode;
-            }
-            set
-            {
-                if (userCode != value)
-                {
-                    userCode = value;
-                    RaisePropertyChanged("UserCode");
-                }
-            }
-        }
-        private string clientId;
-        public string ClientId
-        {
-            get
-            {
-                return clientId;
-            }
-            set
-            {
-                if (clientId != value)
-                {
-                    clientId = value;
-                    RaisePropertyChanged("ClientId");
-                }
-            }
-        }
+        
+        
 
         /// <summary>
         /// 活动插件数目
@@ -304,69 +287,8 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-        /// <summary>
-        /// 用户名
-        /// </summary>
-        public string UserName
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(userName))
-                {
-                    Random rd = new Random();
-                    userName = "";
-                }
-                return userName;
-            }
-            set
-            {
-                if (userName != value)
-                {
-                    userName = value;
-                    RaisePropertyChanged("UserName");
-                }
-            }
-        }
-        /// <summary>
-        /// 用户角色
-        /// </summary>
-        private string userRole;
-        /// <summary>
-        /// 用户角色
-        /// </summary>
-        public string UserRole
-        {
-            get
-            {
-                return userRole;
-            }
-            set
-            {
-                if (userRole != value)
-                {
-                    userRole = value;
-                    RaisePropertyChanged("UserRole");
-                }
-            }
-        }
-        /// <summary>
-        /// 用户头像
-        /// </summary>
-        public string UserImg
-        {
-            get
-            {
-                return userImg;
-            }
-            set
-            {
-                if (userImg != value)
-                {
-                    userImg = value;
-                    RaisePropertyChanged("UserImg");
-                }
-            }
-        }
+        
+        
         /// <summary>
         /// 活动插件数目
         /// </summary>
@@ -487,7 +409,7 @@ namespace MetroFramePlugin.ViewModels
                         rbtnRole.Visibility = Visibility.Collapsed;
                         ;
                     }
-                    ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
+                    UserInfo.ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
                     string UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
                     //if (UserPwd.Equals("111111"))
                     //{
@@ -710,7 +632,7 @@ namespace MetroFramePlugin.ViewModels
                     //proc.Start();
                     DataMessageOperation dataOp = new DataMessageOperation();
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    paramDic.Add("usercode", UserCode);
+                    paramDic.Add("usercode", UserInfo);
                     PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
                     if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                     {
@@ -788,7 +710,7 @@ namespace MetroFramePlugin.ViewModels
                         long replyMode = Convert.ToInt64(resultDic["ReplyMode"].ToString());
                         if (replyMode > 0)
                         {
-                            UserName = string.Empty;
+                            UserInfo.UserName = string.Empty;
                             UserLogin();
                         }
                         else
@@ -1315,10 +1237,10 @@ namespace MetroFramePlugin.ViewModels
                 Dictionary<string, object> userDic = pluginOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                 if (userDic != null)
                 {
-                    UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
-                    UserRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
-                    UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
-                    UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
+                    UserInfo.UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
+                    UserInfo.UserRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
+                    UserInfo.UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
+                    UserInfo.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 LoadStandardMenu();
                 IsShowMenu = Visibility.Visible;
@@ -2839,7 +2761,7 @@ namespace MetroFramePlugin.ViewModels
         private string channelId = string.Empty;
         private void GetPersonMenu()
         {
-            if (string.IsNullOrEmpty(ClientId) || string.IsNullOrEmpty(UserCode))
+            if (string.IsNullOrEmpty(UserInfo.ClientId) || string.IsNullOrEmpty(UserInfo.UserCode))
             {
                 return;
             }
@@ -2853,9 +2775,9 @@ namespace MetroFramePlugin.ViewModels
             conDic.Add("name", "pub_user_setting");
             List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
             Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConDic.Add("productid", ClientId);
-            tableConDic.Add("usercode", UserCode);
-            tableConDic.Add("role_no", UserRole);
+            tableConDic.Add("productid", UserInfo.ClientId);
+            tableConDic.Add("usercode", UserInfo.UserCode);
+            tableConDic.Add("role_no", UserInfo.UserRole);
             tableConList.Add(tableConDic);
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
@@ -2888,9 +2810,9 @@ namespace MetroFramePlugin.ViewModels
 
                 DataRow dr = dt.NewRow();
                 dr["_id"] = Guid.NewGuid();
-                dr["userCode"] = UserCode;
-                dr["productid"] = ClientId;
-                dr["role_no"] = UserRole;
+                dr["userCode"] = UserInfo.UserCode;
+                dr["productid"] = UserInfo.ClientId;
+                dr["role_no"] = UserInfo.UserRole;
                 dr["custom_menu"] = JsonHelper.ToJson(NewArea);
                 dt.Rows.Add(dr);
             }
