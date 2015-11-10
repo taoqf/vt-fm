@@ -56,6 +56,25 @@ namespace MetroFramePlugin.ViewModels
         private bool poPupState;
         private VicRadioButtonRectangle rbtnRole;
         private bool isFirstLoad = true;
+        private bool isDebug=true;
+        /// <summary>
+        /// 是否为调试状态
+        /// </summary>
+        public bool IsDebug
+        {
+            get
+            {
+                return isDebug;
+            }
+            set
+            {
+                if (isDebug != value)
+                {
+                    isDebug = value;
+                    RaisePropertyChanged("IsDebug");
+                }
+            }
+        }
         /// <summary>
         /// 用户名
         /// </summary>
@@ -255,7 +274,7 @@ namespace MetroFramePlugin.ViewModels
                     homeItem.AllowDelete = false;
                     homeItem.Header = "飞道科技";
                     WebBrowser browser = new WebBrowser();
-                    //browser.Source = new Uri("http://www.baidu.com");
+                    browser.Source = new Uri("http://www.daokes.com");
                     homeItem.Content = browser;
                     tabItemList.Add(homeItem);
 
@@ -1092,6 +1111,7 @@ namespace MetroFramePlugin.ViewModels
             localMenuListEx = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             {
+                IsDebug = false;
                 this.SystemMenuListLocal.Clear();
             }
 

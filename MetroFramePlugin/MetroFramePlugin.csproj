@@ -94,7 +94,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convert\ImgeNameToBackgroundConverter.cs" />
+    <Compile Include="Converters\BooleanToVisbilityConverter.cs" />
+    <Compile Include="Converters\ImgeNameToBackgroundConverter.cs" />
     <Compile Include="Models\ChineseCalendar.cs" />
     <Compile Include="Models\HolidayArrangement.cs" />
     <Compile Include="Models\MenuModel.cs" />
