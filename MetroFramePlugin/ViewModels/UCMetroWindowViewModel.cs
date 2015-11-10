@@ -99,7 +99,7 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-       
+
         /// <summary>
         /// 活动插件数目
         /// </summary>
@@ -458,16 +458,16 @@ namespace MetroFramePlugin.ViewModels
                     UserLogin();
                     DataMessageOperation messageOp = new DataMessageOperation();
                     Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
-                   RoleInfoList= JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
-                   if (RoleInfoList.Count >= 2)
-                   {
-                       rbtnRole.Visibility = Visibility.Visible;
-                   }
-                   else
-                   {
-                       rbtnRole.Visibility = Visibility.Collapsed;
-;
-                   }
+                    RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
+                    if (RoleInfoList.Count >= 2)
+                    {
+                        rbtnRole.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        rbtnRole.Visibility = Visibility.Collapsed;
+                        ;
+                    }
                     ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
                     string UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
                     //if (UserPwd.Equals("111111"))
@@ -660,7 +660,8 @@ namespace MetroFramePlugin.ViewModels
         #region 切换角色
         public ICommand btnChangeRoleCommand
         {
-            get {
+            get
+            {
                 return new RelayCommand(() =>
                 {
                     DataMessageOperation dataOp = new DataMessageOperation();
@@ -739,9 +740,10 @@ namespace MetroFramePlugin.ViewModels
                     MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
                     {
-
                         DataMessageOperation dataMsgOp = new DataMessageOperation();
                         dataMsgOp.RemoveDataLock();
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        Dictionary<string, object> resultDic = dataMsgOp.SendSyncMessage("MongoDataChannelService.loginout", contentDic);
                         mainWindow.Close();
                         FrameInit.GetInstance().FrameUnload();
                         GC.Collect();
@@ -751,7 +753,29 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         #endregion
-
+        #region 注销用户命令
+        public ICommand btnUserLogOutClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    MessageBoxResult result = VicMessageBoxNormal.Show("确定要注销么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        DataMessageOperation dataMsgOp = new DataMessageOperation();
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        Dictionary<string, object> resultDic = dataMsgOp.SendSyncMessage("MongoDataChannelService.loginout", contentDic);
+                        if (resultDic["ReplyMode"].ToString().Equals("1"))
+                        {
+                            UserName = string.Empty;
+                        }
+                        UserLogin();
+                    }
+                });
+            }
+        }
+        #endregion
         #region 本地按钮点击命令
         public ICommand localBtnClickCommand
         {
@@ -1159,7 +1183,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 secondLevelMenu.SystemMenuList.Add(newThirdLevelMenu);
             }
-            
+
         }
         /// <summary>获取标准的三级菜单</summary>
         private void GetStandardThirdLevelMenu(MenuModel thirdLevelMenu)
@@ -2897,6 +2921,6 @@ namespace MetroFramePlugin.ViewModels
         #endregion
 
         #endregion
-      
+
     }
 }

@@ -23,6 +23,10 @@ namespace Victop.Frame.CoreLibrary.Enums
         /// <summary>
         /// 提交数据
         /// </summary>
-        COMMIT
+        COMMIT,
+        /// <summary>
+        /// 取消
+        /// </summary>
+        CANNEL
     }
 }

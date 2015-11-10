@@ -148,6 +148,13 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </controls:VicRadioButtonRectangle>
+                        <controls:VicRadioButtonRectangle Name="rbtnLogOut" Content="注销">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding btnUserLogOutClickCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </controls:VicRadioButtonRectangle>
                         </StackPanel>
                     </Grid>
                 </controls:VicPopup>
