@@ -115,5 +115,51 @@ namespace MetroFramePlugin.Models
                 }
             }
         }
+        /// <summary>
+        /// 是否登陆
+        /// </summary>
+        private bool isLogin = false;
+        /// <summary>
+        /// 是否登陆
+        /// </summary>
+        public bool IsLogin
+        {
+            get
+            {
+                return isLogin;
+            }
+
+            set
+            {
+                if (isLogin != value)
+                {
+                    isLogin = value;
+                    RaisePropertyChanged("IsLogin");
+                }
+            }
+        }
+        /// <summary>
+        /// 是否为多角色
+        /// </summary>
+        private bool isMultipleRole;
+        /// <summary>
+        /// 是否为多角色
+        /// </summary>
+        public bool IsMultipleRole
+        {
+            get
+            {
+                return isMultipleRole;
+            }
+
+            set
+            {
+                if (isMultipleRole != value)
+                {
+                    isMultipleRole = value;
+                    RaisePropertyChanged("IsMultipleRole");
+                }
+            }
+        }
     }
 }

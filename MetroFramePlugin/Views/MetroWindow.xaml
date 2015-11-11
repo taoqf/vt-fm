@@ -135,21 +135,21 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </controls:VicRadioButtonRectangle>
-                        <controls:VicRadioButtonRectangle Name="rbtnRole" Content="切换角色">
+                        <controls:VicRadioButtonRectangle Name="rbtnRole" Content="切换角色" Visibility="{Binding UserInfo.IsMultipleRole,Converter={StaticResource booltovisbility}}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction Command="{Binding btnChangeRoleCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </controls:VicRadioButtonRectangle>
-                        <controls:VicRadioButtonRectangle Content="修改密码">
+                        <controls:VicRadioButtonRectangle Content="修改密码" Visibility="{Binding UserInfo.IsLogin,Converter={StaticResource booltovisbility}}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction Command="{Binding btnModifiPassClickCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </controls:VicRadioButtonRectangle>
-                        <controls:VicRadioButtonRectangle Name="rbtnLogOut" Content="注销">
+                        <controls:VicRadioButtonRectangle Name="rbtnLogOut" Content="注销" Visibility="{Binding UserInfo.IsLogin,Converter={StaticResource booltovisbility}}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction Command="{Binding btnUserLogOutClickCommand}"/>

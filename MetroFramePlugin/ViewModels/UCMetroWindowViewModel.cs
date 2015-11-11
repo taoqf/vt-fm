@@ -54,9 +54,8 @@ namespace MetroFramePlugin.ViewModels
         private VicTabControlNormal mainTabControl;
         private ObservableCollection<UserRoleInfoModel> roleInfoList;
         private bool poPupState;
-        private VicRadioButtonRectangle rbtnRole;
         private bool isFirstLoad = true;
-        private bool isDebug=true;
+        private bool isDebug = true;
         /// <summary>
         /// 门户插件用户信息
         /// </summary>
@@ -99,8 +98,8 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-        
-        
+
+
 
         /// <summary>
         /// 活动插件数目
@@ -287,8 +286,8 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-        
-        
+
+
         /// <summary>
         /// 活动插件数目
         /// </summary>
@@ -382,7 +381,6 @@ namespace MetroFramePlugin.ViewModels
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
                     lockbtn = (VicButtonNormal)mainWindow.FindName("lock");
-                    rbtnRole = (VicRadioButtonRectangle)mainWindow.FindName("rbtnRole");
                     mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
@@ -400,15 +398,7 @@ namespace MetroFramePlugin.ViewModels
                     DataMessageOperation messageOp = new DataMessageOperation();
                     Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                     RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
-                    if (RoleInfoList.Count >= 2)
-                    {
-                        rbtnRole.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        rbtnRole.Visibility = Visibility.Collapsed;
-                        ;
-                    }
+                    UserInfo.IsMultipleRole = RoleInfoList.Count >= 2;
                     UserInfo.ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
                     string UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
                     //if (UserPwd.Equals("111111"))
@@ -584,14 +574,7 @@ namespace MetroFramePlugin.ViewModels
                     DataMessageOperation messageOp = new DataMessageOperation();
                     Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                     RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
-                    if (RoleInfoList.Count >= 2)
-                    {
-                        rbtnRole.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        rbtnRole.Visibility = Visibility.Collapsed;
-                    }
+                    UserInfo.IsMultipleRole = RoleInfoList.Count >= 2;
                     InitPanelArea();
 
                 });
@@ -710,7 +693,9 @@ namespace MetroFramePlugin.ViewModels
                         long replyMode = Convert.ToInt64(resultDic["ReplyMode"].ToString());
                         if (replyMode > 0)
                         {
+                            UserInfo.IsLogin = false;
                             UserInfo.UserName = string.Empty;
+                            UserInfo.IsMultipleRole = false;
                             UserLogin();
                         }
                         else
@@ -1233,7 +1218,7 @@ namespace MetroFramePlugin.ViewModels
             bool? result = loginWin.ShowDialog();
             if (result == true)
             {
-
+                UserInfo.IsLogin = true;
                 Dictionary<string, object> userDic = pluginOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                 if (userDic != null)
                 {
