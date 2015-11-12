@@ -615,7 +615,7 @@ namespace MetroFramePlugin.ViewModels
                     //proc.Start();
                     DataMessageOperation dataOp = new DataMessageOperation();
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    paramDic.Add("usercode", UserInfo);
+                    paramDic.Add("usercode", UserInfo.UserCode);
                     PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
                     if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                     {
