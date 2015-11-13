@@ -109,6 +109,7 @@
     <Compile Include="ViewModels\DisplayOverlayWindowPluginViewModel.cs" />
     <Compile Include="ViewModels\OverlayWindowViewModel.cs" />
     <Compile Include="ViewModels\UCMetroWindowViewModel.cs" />
+    <Compile Include="ViewModels\UpdateLogWindowViewModel.cs" />
     <Compile Include="Views\CalendarDayButtonEx.xaml.cs">
       <DependentUpon>CalendarDayButtonEx.xaml</DependentUpon>
     </Compile>
@@ -133,6 +134,9 @@
     </Compile>
     <Compile Include="Views\UCPluginContainer.xaml.cs">
       <DependentUpon>UCPluginContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UpdateLogWindow.xaml.cs">
+      <DependentUpon>UpdateLogWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UCPluginContainer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UpdateLogWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

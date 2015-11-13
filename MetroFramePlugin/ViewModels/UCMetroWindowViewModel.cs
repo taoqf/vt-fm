@@ -917,6 +917,21 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         #endregion
+
+        #region 查看更新日志
+        public ICommand btnViewUpdateLogClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    UpdateLogWindow logWin = new UpdateLogWindow();
+                    //logWin.Owner = mainWindow;
+                    logWin.ShowDialog();
+                });
+            }
+        }
+        #endregion
         #endregion
 
         #region 自定义方法
