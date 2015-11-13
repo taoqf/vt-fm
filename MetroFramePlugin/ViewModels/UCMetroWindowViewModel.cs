@@ -926,7 +926,7 @@ namespace MetroFramePlugin.ViewModels
                 return new RelayCommand(() =>
                 {
                     UpdateLogWindow logWin = new UpdateLogWindow();
-                    //logWin.Owner = mainWindow;
+                    logWin.Owner = mainWindow;
                     logWin.ShowDialog();
                 });
             }

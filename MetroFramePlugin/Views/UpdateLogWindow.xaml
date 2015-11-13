@@ -4,22 +4,31 @@
         xmlns:ctrl="http://schemas.ifeidao.com/wpfcontrol"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels"              
         mc:Ignorable="d"
-        Title="更新日志" Height="400" Width="500" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Style="{DynamicResource  WindowMessageSkin}">
+        Title="更新日志" Name="mainView" Height="400" Width="500" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Style="{DynamicResource  WindowMessageSkin}">
+    <ctrl:VicWindowNormal.DataContext>
+        <vm:UpdateLogWindowViewModel/>
+    </ctrl:VicWindowNormal.DataContext>
     <ctrl:VicGridNormal>
         <ctrl:VicGridNormal.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
         </ctrl:VicGridNormal.RowDefinitions>
-        <ctrl:VicTextBlockNormal Grid.Row="0" Text="飞道体系V2.0.2版本更新日志" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
-        <ctrl:VicRichTextBoxNormal Grid.Row="1" VicText="afaasdasdasdadasdasdasdasdasdasdasdafaasdasdasdadasdasdasdasdasdasdasdafaasdasdasdadasdasdasdasdasdasdasd"/>
+        <ctrl:VicTextBlockNormal Grid.Row="0" Text="{Binding FirstLogModel.LogVersion}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16"/>
+        <ctrl:VicRichTextBoxNormal Grid.Row="1" VicText="{Binding FirstLogModel.LogContent}"/>
         <ctrl:VicDockPanelNormal Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right">
-            <ctrl:VicLabelNormal>更新人：</ctrl:VicLabelNormal>
-            <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="飞道" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-            <ctrl:VicLabelNormal>更新时间：</ctrl:VicLabelNormal>
-            <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="2015年11月13日14:50:46" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+            <ctrl:VicLabelNormal FontWeight="Bold">更新人：</ctrl:VicLabelNormal>
+            <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding FirstLogModel.LogCreater}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+            <ctrl:VicLabelNormal FontWeight="Bold">更新时间：</ctrl:VicLabelNormal>
+            <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding FirstLogModel.LogDate}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
         </ctrl:VicDockPanelNormal>
     </ctrl:VicGridNormal>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding mainViewLoadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 </ctrl:VicWindowNormal>
