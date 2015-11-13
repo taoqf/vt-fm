@@ -56,15 +56,14 @@ namespace Victop.Frame.Connection
                         replyIsToChannel = DataOperateEnum.COMMIT;
                         opFlag = true;
                     }
-                    else if (messageInfo.MessageType.Equals("taskScheduler"))
+                    else if (messageInfo.MessageType.Equals("postServiceIntranet"))
                     {
                         Dictionary<string, object> dicMessageControl = new Dictionary<string, object>();
-                        dicMessageControl.Add("reply", 1);
-                        messageInfo.MessageControl = JsonHelper.ToJson(dicMessageControl);
-                        if (dicContent != null && dicContent.ContainsKey("runserver"))
+                        if (dicContent != null && dicContent.ContainsKey("doccode"))
                         {
-                            dicContent["runserver"] = messageInfo.MessageId;
+                            dicMessageControl.Add("BusinessKey", dicContent["doccode"]);
                         }
+                        messageInfo.MessageControl = JsonHelper.ToJson(dicMessageControl);
                     }
                     if (!dicContent.ContainsKey("spaceid"))
                     {
