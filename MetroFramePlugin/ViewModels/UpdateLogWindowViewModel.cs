@@ -116,22 +116,28 @@ namespace MetroFramePlugin.ViewModels
             {
                 for (int i = 0; i < logDt.Rows.Count; i++)
                 {
-                    if (i == 0)
-                    {
-                        FirstLogModel.LogVersion = "飞道体系"+logDt.Rows[0]["version_code"].ToString() + "(" + logDt.Rows[0]["version"].ToString()+")更新日志";
-                        FirstLogModel.LogDate = ((DateTime)logDt.Rows[0]["update_date"]).ToString("yyyy年MM月dd日 HH时mm分ss秒");
-                        FirstLogModel.LogCreater = logDt.Rows[0]["creater"].ToString();
-                        FirstLogModel.LogContent = logDt.Rows[0]["update_content"].ToString();
-                    }
-                    else
-                    {
-                        UpdateLogModel logModel = new UpdateLogModel();
-                        logModel.LogVersion = "飞道体系" + logDt.Rows[i]["version_code"].ToString() + "(" + logDt.Rows[i]["version"].ToString() + ")更新日志";
-                        logModel.LogDate = ((DateTime)logDt.Rows[i]["update_date"]).ToString("yyyy年MM月dd日 HH时mm分ss秒");
-                        logModel.LogCreater = logDt.Rows[i]["creater"].ToString();
-                        logModel.LogContent = logDt.Rows[i]["update_content"].ToString();
-                        LogInfoList.Add(logModel);
-                    }
+                    UpdateLogModel logModel = new UpdateLogModel();
+                    logModel.LogVersion = "飞道体系" + logDt.Rows[i]["version_code"].ToString() + "(" + logDt.Rows[i]["version"].ToString() + ")";
+                    logModel.LogDate = ((DateTime)logDt.Rows[i]["update_date"]).ToString("yyyy年MM月dd日 HH时mm分ss秒");
+                    logModel.LogCreater = logDt.Rows[i]["creater"].ToString();
+                    logModel.LogContent = logDt.Rows[i]["update_content"].ToString();
+                    LogInfoList.Add(logModel);
+                    //if (i == 0) 
+                    //{
+                    //    FirstLogModel.LogVersion = "飞道体系"+logDt.Rows[0]["version_code"].ToString() + "(" + logDt.Rows[0]["version"].ToString()+")更新日志";
+                    //    FirstLogModel.LogDate = ((DateTime)logDt.Rows[0]["update_date"]).ToString("yyyy年MM月dd日 HH时mm分ss秒");
+                    //    FirstLogModel.LogCreater = logDt.Rows[0]["creater"].ToString();
+                    //    FirstLogModel.LogContent = logDt.Rows[0]["update_content"].ToString();
+                    //}
+                    //else
+                    //{
+                    //    UpdateLogModel logModel = new UpdateLogModel();
+                    //    logModel.LogVersion = "飞道体系" + logDt.Rows[i]["version_code"].ToString() + "(" + logDt.Rows[i]["version"].ToString() + ")更新日志";
+                    //    logModel.LogDate = ((DateTime)logDt.Rows[i]["update_date"]).ToString("yyyy年MM月dd日 HH时mm分ss秒");
+                    //    logModel.LogCreater = logDt.Rows[i]["creater"].ToString();
+                    //    logModel.LogContent = logDt.Rows[i]["update_content"].ToString();
+                    //    LogInfoList.Add(logModel);
+                    //}
                 }
             }
         }

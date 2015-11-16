@@ -7,12 +7,72 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels"              
         mc:Ignorable="d"
-        Title="更新日志" Name="mainView" Height="400" Width="500" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Style="{DynamicResource  WindowMessageSkin}">
+        Title="飞道体系更新"  Name="mainView" Height="400" Width="600" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Style="{DynamicResource  WindowMessageSkin}">
+    <Window.Resources>
+        <Style  x:Key="ListStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Width" Value="600"></Setter>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility"   Value="Auto"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <ScrollViewer>
+                            <StackPanel IsItemsHost="True" />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                        <Setter Property="Margin"  Value="10,0"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                                        <Border Name="border" BorderBrush="#666666"  BorderThickness="0,0,0,1" Width="590">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="30"></RowDefinition>
+                                                    <RowDefinition Height="auto"></RowDefinition>
+                                                    <RowDefinition Height="30"></RowDefinition>
+                                                </Grid.RowDefinitions>
+                                                <ctrl:VicTextBlockNormal Grid.Row="0" Text="{Binding LogVersion}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16"/>
+                                                <ctrl:VicTextBlockNormal Grid.Row="1"  TextWrapping="Wrap" Text="{Binding LogContent}"/>
+                                                <ctrl:VicDockPanelNormal Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                                    <ctrl:VicLabelNormal>更新人：</ctrl:VicLabelNormal>
+                                                    <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding LogCreater}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                                                    <ctrl:VicLabelNormal>更新时间：</ctrl:VicLabelNormal>
+                                                    <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding LogDate}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                                                </ctrl:VicDockPanelNormal>
+                                            </Grid>
+
+                                        </Border>
+                                        <TextBlock Text="{Binding SkinName}" MinWidth="60" MinHeight="30" TextAlignment="Center"/>
+                                    </StackPanel>
+                                    <ControlTemplate.Triggers>
+                                        <!--<Trigger Property="IsSelected" Value="true" >
+                                            <Setter Property="BorderBrush" TargetName="border"  Value="Black"/>
+                                            <Setter Property="BorderThickness" TargetName="border"  Value="2"/>
+                                        </Trigger>-->
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <ctrl:VicWindowNormal.DataContext>
         <vm:UpdateLogWindowViewModel/>
     </ctrl:VicWindowNormal.DataContext>
     <ctrl:VicGridNormal>
-        <ctrl:VicGridNormal.RowDefinitions>
+        <ListBox Style="{DynamicResource ListStyle}" ItemsSource="{Binding LogInfoList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ListBox>
+        <!--<ctrl:VicGridNormal.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
@@ -24,7 +84,7 @@
             <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding FirstLogModel.LogCreater}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
             <ctrl:VicLabelNormal FontWeight="Bold">更新时间：</ctrl:VicLabelNormal>
             <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding FirstLogModel.LogDate}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-        </ctrl:VicDockPanelNormal>
+        </ctrl:VicDockPanelNormal>-->
     </ctrl:VicGridNormal>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
