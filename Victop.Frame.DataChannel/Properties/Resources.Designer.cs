@@ -81,30 +81,29 @@ namespace Victop.Frame.DataChannel.Properties {
         }
         
         /// <summary>
-        ///   查找类似 var result= (function(jsonData, curdList) { 
-        ///var isString = function(it) { 
-        ///// summary: 
-        /////	 Return true if it is a String 
-        ///// it: anything 
-        /////	 Item to test. 
-        ///return (typeof it == &quot;string&quot; || it instanceof String); // Boolean 
-        ///}; 
-        ///if (!jsonData || !curdList) { 
-        ///return; 
-        ///} 
-        ///if (isString(jsonData)) { 
-        ///jsonData = JSON.parse(jsonData); 
-        ///} 
-        ///if (isString(curdList)) { 
-        ///curdList = JSON.parse(curdList); 
-        ///} 
+        ///   查找类似 var result= (function(jsonData, curdList) {
+        ///	var isString = function(it) {
+        ///		// summary:
+        ///		//		Return true if it is a String
+        ///		// it: anything
+        ///		//		Item to test.
+        ///		return (typeof it == &quot;string&quot; || it instanceof String); // Boolean
+        ///	};
+        ///	if (!jsonData || !curdList) {
+        ///		return;
+        ///	}
+        ///	if (isString(jsonData)) {
+        ///		jsonData = JSON.parse(jsonData);
+        ///	}
+        ///	if (isString(curdList)) {
+        ///		curdList = JSON.parse(curdList);
+        ///	}
         ///
-        ///var docDataStore = jsonData.docDataStore; 
-        ///if (!docDataStore) { 
-        ///return; 
-        ///} 
-        ///
-        ///var _mi [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///	var docDataStore = jsonData.docDataStore;
+        ///	if (!docDataStore) {
+        ///		return;
+        ///	}
+        ///        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string SaveOriginalDataScript {
             get {

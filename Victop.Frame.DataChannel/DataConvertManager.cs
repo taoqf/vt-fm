@@ -1043,13 +1043,13 @@ namespace Victop.Frame.DataChannel
                                 }
 
                             }
-                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, null, OpreateStateEnum.Added);
+                            //editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, null, OpreateStateEnum.Added);
                             saveDataList.Add(new SaveDataModel() { OpStatus = OpreateStateEnum.Added, DataPath = JsonHelper.ToObject<List<object>>(dataPath), SaveDataDic = addDic, OriginalDataDic = null });
                             break;
                         case DataRowState.Deleted:
                             Dictionary<string, object> delDic = new Dictionary<string, object>();
                             delDic.Add("_id", dr["_id", DataRowVersion.Original]);
-                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), delDic, null, OpreateStateEnum.Deleted);
+                            //editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), delDic, null, OpreateStateEnum.Deleted);
                             saveDataList.Add(new SaveDataModel() { OpStatus = OpreateStateEnum.Deleted, DataPath = JsonHelper.ToObject<List<object>>(dataPath), SaveDataDic = delDic, OriginalDataDic = null });
                             break;
                         case DataRowState.Detached:
@@ -1139,7 +1139,7 @@ namespace Victop.Frame.DataChannel
                                 pathDic.Add("value", dr["_id"]);
                                 pathList.Add(pathDic);
                             }
-                            editFlag = DataTool.SaveCurdDataByPath(viewId, pathList, modDic, originDic, OpreateStateEnum.Modified);
+                            //editFlag = DataTool.SaveCurdDataByPath(viewId, pathList, modDic, originDic, OpreateStateEnum.Modified);
                             saveDataList.Add(new SaveDataModel() { OpStatus = OpreateStateEnum.Modified, DataPath = pathList, SaveDataDic = modDic, OriginalDataDic = originDic });
                             break;
                         case DataRowState.Unchanged:
@@ -1153,11 +1153,11 @@ namespace Victop.Frame.DataChannel
                     break;
                 }
             }
-            //if (saveDataList.Count > 0)
-            //{
-            //    //TODO:保存数据
-            //    editFlag = DataTool.SaveCurdDataByPath(viewId, saveDataList);
-            //}
+            if (saveDataList.Count > 0)
+            {
+                //TODO:保存数据
+                editFlag = DataTool.SaveCurdDataByPath(viewId, saveDataList);
+            }
             if (editFlag)
             {
                 dt.AcceptChanges();

@@ -152,200 +152,204 @@
     <comment>获取数据的JS的脚本</comment>
   </data>
   <data name="SaveOriginalDataScript" xml:space="preserve">
-    <value>var result= (function(jsonData, curdList) { 
-var isString = function(it) { 
-// summary: 
-//	 Return true if it is a String 
-// it: anything 
-//	 Item to test. 
-return (typeof it == "string" || it instanceof String); // Boolean 
-}; 
-if (!jsonData || !curdList) { 
-return; 
-} 
-if (isString(jsonData)) { 
-jsonData = JSON.parse(jsonData); 
-} 
-if (isString(curdList)) { 
-curdList = JSON.parse(curdList); 
-} 
+    <value>var result= (function(jsonData, curdList) {
+	var isString = function(it) {
+		// summary:
+		//		Return true if it is a String
+		// it: anything
+		//		Item to test.
+		return (typeof it == "string" || it instanceof String); // Boolean
+	};
+	if (!jsonData || !curdList) {
+		return;
+	}
+	if (isString(jsonData)) {
+		jsonData = JSON.parse(jsonData);
+	}
+	if (isString(curdList)) {
+		curdList = JSON.parse(curdList);
+	}
 
-var docDataStore = jsonData.docDataStore; 
-if (!docDataStore) { 
-return; 
-} 
+	var docDataStore = jsonData.docDataStore;
+	if (!docDataStore) {
+		return;
+	}
 
-var _mixin = function(dest, source) { 
-var name, s, i, empty = {}; 
-for (name in source) { 
-s = source[name]; 
-if (!(name in dest) || (dest[name] !== s &amp;&amp; (!(name in empty) || empty[name] !== s))) { 
-dest[name] = s; 
-} 
-} 
+	var _mixin = function(dest, source) {
+		var name, s, i, empty = {};
+		for (name in source) {
+			s = source[name];
+			if (!(name in dest) || (dest[name] !== s &amp;&amp; (!(name in empty) || empty[name] !== s))) {
+				dest[name] = s;
+			}
+		}
 
-return dest; // Object 
-}; 
-var mixin = function(dest, sources) { 
-if (!dest) { 
-dest = {}; 
-} 
-for (var i = 1, l = arguments.length; i &lt; l; i++) { 
-_mixin(dest, arguments[i]); 
-} 
-return dest; // Object 
-}; 
-var isArray = function(it) { 
-// summary: 
-//	 Return true if it is an Array. 
-//	 Does not work on Arrays created in other windows. 
-// it: anything 
-//	 Item to test. 
-return it &amp;&amp; (it instanceof Array || typeof it == "array"); // Boolean 
-}; 
-var isObject = function(it) { 
-// summary: 
-//	 Returns true if it is a JavaScript object (or an Array, a Function 
-//	 or null) 
-// it: anything 
-//	 Item to test. 
-return it !== undefined &amp;&amp; 
-(it === null || typeof it == "object" || isArray(it) || isFunction(it)); // Boolean 
-}; 
-var isFunction = function(it) { 
-// summary: 
-//	 Return true if it is a Function 
-// it: anything 
-//	 Item to test. 
-return Object.prototype.toString.call(it) === "[object Function]"; 
-}; 
-var equals = function(p_o1, p_o2) { 
-// both are undefined 
-if (p_o1 === undefined &amp;&amp; p_o2 === undefined) { 
-return true; 
-} 
-// both are null 
-if (p_o1 === null &amp;&amp; p_o2 === null) { 
-return true; 
-} 
-// one of them is null or undefined, while the other is not 
-if (p_o1 === undefined || p_o1 === null || p_o2 === undefined || p_o2 === null) { 
-return false; 
-} 
-// both are arrays 
-if (isArray(p_o1) &amp;&amp; isArray(p_o2)) { 
-if (p_o1.length !== p_o2.length) { 
-return false; 
-} 
-for (var i = p_o1.length; i--;) { 
-if (!equals(p_o1[i], p_o2[i])) { 
-return false; 
-} 
-} 
-return true; 
-} 
-// both are strings 
-if (isString(p_o1) &amp;&amp; isString(p_o2)) { 
-return p_o1 === p_o2; 
-} 
-// both are objects 
-if (isObject(p_o1) &amp;&amp; isObject(p_o2)) { 
-var o = mixin({}, p_o1, p_o2); 
-for (var key in o) { 
-if ((p_o1.hasOwnProperty(key) &amp;&amp; !p_o2.hasOwnProperty(key)) || (!p_o1.hasOwnProperty(key) &amp;&amp; p_o2.hasOwnProperty(key))) { 
-return false; 
-} else if (p_o1.hasOwnProperty(key) &amp;&amp; p_o2.hasOwnProperty(key) &amp;&amp; !equals(p_o1[key], p_o2[key])) { 
-return false; 
-} 
-} 
-return true; 
-} 
-// todo: when p_o1 and p_o2 are functions 
-return p_o1 === p_o2; 
-}; 
-var get_data_by_path = function(data, path) { 
-if (!path || path.length === 0) { 
-return null; 
-} 
-if (data) { 
-// console.debug('get_data_by_path:begin:', locale.format(new Date(), { 
-// selector: 'time', 
-// timePattern: 'a HH:mm:ss.SSS' 
-// })); 
+		return dest; // Object
+	};
+	var mixin = function(dest, sources) {
+		if (!dest) {
+			dest = {};
+		}
+		for (var i = 1, l = arguments.length; i &lt; l; i++) {
+			_mixin(dest, arguments[i]);
+		}
+		return dest; // Object
+	};
+	var isArray = function(it) {
+		// summary:
+		//		Return true if it is an Array.
+		//		Does not work on Arrays created in other windows.
+		// it: anything
+		//		Item to test.
+		return it &amp;&amp; (it instanceof Array || typeof it == "array"); // Boolean
+	};
+	var isObject = function(it) {
+		// summary:
+		//		Returns true if it is a JavaScript object (or an Array, a Function
+		//		or null)
+		// it: anything
+		//		Item to test.
+		return it !== undefined &amp;&amp;
+			(it === null || typeof it == "object" || isArray(it) || isFunction(it)); // Boolean
+	};
+	var isFunction = function(it) {
+		// summary:
+		//		Return true if it is a Function
+		// it: anything
+		//		Item to test.
+		return Object.prototype.toString.call(it) === "[object Function]";
+	};
+	var equals = function(p_o1, p_o2) {
+		// both are undefined
+		if (p_o1 === undefined &amp;&amp; p_o2 === undefined) {
+			return true;
+		}
+		// both are null
+		if (p_o1 === null &amp;&amp; p_o2 === null) {
+			return true;
+		}
+		// one of them is null or undefined, while the other is not
+		if (p_o1 === undefined || p_o1 === null || p_o2 === undefined || p_o2 === null) {
+			return false;
+		}
+		// both are arrays
+		if (isArray(p_o1) &amp;&amp; isArray(p_o2)) {
+			if (p_o1.length !== p_o2.length) {
+				return false;
+			}
+			for (var i = p_o1.length; i--;) {
+				if (!equals(p_o1[i], p_o2[i])) {
+					return false;
+				}
+			}
+			return true;
+		}
+		// both are strings
+		if (isString(p_o1) &amp;&amp; isString(p_o2)) {
+			return p_o1 === p_o2;
+		}
+		// both are objects
+		if (isObject(p_o1) &amp;&amp; isObject(p_o2)) {
+			var o = mixin({}, p_o1, p_o2);
+			for (var key in o) {
+				if ((p_o1.hasOwnProperty(key) &amp;&amp; !p_o2.hasOwnProperty(key)) || (!p_o1.hasOwnProperty(key) &amp;&amp; p_o2.hasOwnProperty(key))) {
+					return false;
+				} else if (p_o1.hasOwnProperty(key) &amp;&amp; p_o2.hasOwnProperty(key) &amp;&amp; !equals(p_o1[key], p_o2[key])) {
+					return false;
+				}
+			}
+			return true;
+		}
+		// todo: when p_o1 and p_o2 are functions
+		return p_o1 === p_o2;
+	};
+	var get_data_by_path = function(data, path) {
+		if (!path || path.length === 0) {
+			return null;
+		}
+		if (data) {
+			// console.debug('get_data_by_path:begin:', locale.format(new Date(), {
+			// 	selector: 'time',
+			// 	timePattern: 'a HH:mm:ss.SSS'
+			// }));
 
-for (var i = 0; i &lt; path.length; i++) { 
-if (i % 2 === 0) { 
-data = data[path[i]]; 
-if (!data) { 
-return null; 
-} 
-} else if (i % 2 === 1) { 
-data = data.dataArray; 
-var key_val = path[i]; 
-var field = key_val.key; 
-var value = key_val.value; 
-if (!data.some(function(item) { 
-if (equals(value, item[field])) { 
-data = item; 
-return true; 
-} 
-})) { 
-console.error('未查找到数据'); 
-return {}; 
-} 
-} 
-} 
-} else { 
-console.info("数据不存在！"); 
-console.log(data, path); 
-} 
-return data; 
-}; 
-/* 
-* 1 （原数据） 
-* 2 （删除） 
-* 4 (新增) 
-* 8 (修改) 
-*/ 
-curdList.forEach(function(data, idx) { 
-// debugger; 
-var ora_data = data.OriginalDataDic; 
-var cur_data = data.SaveDataDic; 
-switch (data.OpStatus) { 
-case 8: 
-var d = get_data_by_path(docDataStore, data.DataPath); 
-mixin(d, cur_data); 
-break; 
-case 4: 
-if (data.DataPath.length % 2 === 0) { 
-data.DataPath.pop(); 
-} 
-var d = get_data_by_path(docDataStore, data.DataPath); 
-d &amp;&amp; d.dataArray &amp;&amp; d.dataArray.push(cur_data); 
-break; 
-case 2: 
-if (data.DataPath.length % 2 === 0) { 
-var key_val = data.DataPath.pop(); 
-} 
-debugger; 
-var d = get_data_by_path(docDataStore, data.DataPath); 
-if (d &amp;&amp; d.dataArray) { 
-d = d.dataArray; 
-d.some(function(item, idx){ 
-if (equals(cur_data._id, item['_id'])) { 
-data = item; 
-d = d.splice(idx, 1); 
-return true; 
-} 
-}); 
-} 
-break; 
-case 1: 
-break; 
-} 
-}); 
-// delete json.curdList; 
-return JSON.stringify(jsonData); 
+			for (var i = 0; i &lt; path.length; i++) {
+				if (i % 2 === 0) {
+					if (!data[path[i]]) {
+						data[path[i]] = {
+							dataArray: []
+						};
+					}
+					data = data[path[i]];
+				} else if (i % 2 === 1) {
+					if (!data.dataArray) {
+						data.dataArray = [];
+					}
+					data = data.dataArray;
+					var key_val = path[i];
+					var field = key_val.key;
+					var value = key_val.value;
+					if (!data.some(function(item) {
+							if (equals(value, item[field])) {
+								data = item;
+								return true;
+							}
+						})) {
+						console.error('未查找到数据');
+						return {};
+					}
+				}
+			}
+		} else {
+			console.info("数据不存在！");
+			console.log(data, path);
+		}
+		return data;
+	};
+	/*
+	 *  1   （原数据）
+	 *  2   （删除）
+	 *  4   (新增)
+	 *  8   (修改)
+	 */
+	curdList.forEach(function(data, idx) {
+		var ora_data = data.OriginalDataDic;
+		var cur_data = data.SaveDataDic;
+		switch (data.OpStatus) {
+			case 8:
+				var d = get_data_by_path(docDataStore, data.DataPath);
+				mixin(d, cur_data);
+				break;
+			case 4:
+				if (data.DataPath.length % 2 === 0) {
+					data.DataPath.pop();
+				}
+				var d = get_data_by_path(docDataStore, data.DataPath);
+				d &amp;&amp; d.dataArray &amp;&amp; d.dataArray.push(cur_data);
+				break;
+			case 2:
+				if (data.DataPath.length % 2 === 0) {
+					var key_val = data.DataPath.pop();
+				}
+					debugger;
+				var d = get_data_by_path(docDataStore, data.DataPath);
+				if (d &amp;&amp; d.dataArray) {
+					d = d.dataArray;
+					d.some(function(item, idx){
+						if (equals(cur_data._id, item['_id'])) {
+							data = item;
+							d = d.splice(idx, 1);
+							return true;
+						}
+					});
+				}
+				break;
+			case 1:
+				break;
+		}
+	});
+	// delete json.curdList;
+	return JSON.stringify(jsonData);
 })(data, curdList);</value>
     <comment>保存原始JSON</comment>
   </data>
