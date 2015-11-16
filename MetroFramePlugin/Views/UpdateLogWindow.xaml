@@ -28,21 +28,34 @@
                 <Setter.Value>
                     <Style TargetType="{x:Type ListBoxItem}">
                         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                        <Setter Property="Margin"  Value="10,0"/>
+                        <Setter Property="Margin"  Value="0"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                                        <Border Name="border" BorderBrush="#666666"  BorderThickness="0,0,0,1" Width="590">
+                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <Border Name="border"  BorderThickness="0,0,0,1" Width="580">
+                                            <Border.BorderBrush>
+                                                <LinearGradientBrush SpreadMethod="Repeat" StartPoint="0,5" EndPoint="5,0" MappingMode="Absolute">
+                                                    <LinearGradientBrush.GradientStops>
+                                                        <GradientStop Color="#666666" Offset="0"/>
+                                                        <GradientStop Color="#666666" Offset="0.2"/>
+                                                        <GradientStop Color="Transparent" Offset="0.4"/>
+                                                        <GradientStop Color="Transparent" Offset="0.6"/>
+                                                        <GradientStop Color="#666666" Offset="0.8"/>
+                                                        <GradientStop Color="#666666" Offset="1"/>
+                                                    </LinearGradientBrush.GradientStops>
+                                                </LinearGradientBrush>
+                                            </Border.BorderBrush>
+
                                             <Grid>
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="30"></RowDefinition>
+                                                    <RowDefinition Height="25"></RowDefinition>
                                                     <RowDefinition Height="auto"></RowDefinition>
                                                     <RowDefinition Height="30"></RowDefinition>
                                                 </Grid.RowDefinitions>
                                                 <ctrl:VicTextBlockNormal Grid.Row="0" Text="{Binding LogVersion}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16"/>
                                                 <ctrl:VicTextBlockNormal Grid.Row="1"  TextWrapping="Wrap" Text="{Binding LogContent}"/>
-                                                <ctrl:VicDockPanelNormal Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                                <ctrl:VicDockPanelNormal Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                                                     <ctrl:VicLabelNormal>更新人：</ctrl:VicLabelNormal>
                                                     <ctrl:VicTextBlockNormal Width="Auto" Height="24" Text="{Binding LogCreater}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
                                                     <ctrl:VicLabelNormal>更新时间：</ctrl:VicLabelNormal>
@@ -51,7 +64,6 @@
                                             </Grid>
 
                                         </Border>
-                                        <TextBlock Text="{Binding SkinName}" MinWidth="60" MinHeight="30" TextAlignment="Center"/>
                                     </StackPanel>
                                     <ControlTemplate.Triggers>
                                         <!--<Trigger Property="IsSelected" Value="true" >
