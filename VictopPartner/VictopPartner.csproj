@@ -152,6 +152,7 @@
   <ItemGroup>
     <Compile Include="Convert\StringToBackgroundConverter.cs" />
     <Compile Include="Convert\TreeViewMarginConverter.cs" />
+    <Compile Include="Convert\VisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

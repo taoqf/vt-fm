@@ -1046,8 +1046,8 @@ HorizontalAlignment="Left" VerticalAlignment="Center"/>
     <!--凭证Window-->
     <Style x:Key="WindowMessageSkin" TargetType="{x:Type controls:VicWindowNormal}">
         <Setter Property="BorderBrush" Value="#024672"/>
-        <Setter Property="Icon" Value="..\victop.ico"/>
         <Setter Property="BorderThickness" Value="1"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicWindowNormal}">
@@ -1061,7 +1061,7 @@ HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                 </Grid.RowDefinitions>
                                 <Border  Grid.Row="0" Background="{DynamicResource WindowBackground}"/>
                                 <Grid Name="gridTitleBar" Grid.Row="0" Style="{DynamicResource loginMainGridStyle}" Height="{TemplateBinding TitleHeight}">
-                                    <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="{DynamicResource MsgBoxTitleColor}"/>
+                                    <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="{DynamicResource MsgBoxTitleColor}"/>
                                     <controls:VicButtonNormal x:Name="btnMini" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  Margin="0,0,66,0" VerticalAlignment="Top"  Height="30" Width="30" FocusVisualStyle="{x:Null}" ToolTip="最小化">
                                         <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="{DynamicResource MainFrmWinBtnForeColor}"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </controls:VicButtonNormal>
