@@ -524,27 +524,25 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
-                    <Grid SnapsToDevicePixels="true" Margin="5">
-                        <Border x:Name="Bd" BorderBrush="Transparent" BorderThickness="1"  Background="{TemplateBinding Background}" Padding="10,5,10,15">
-                            <ContentPresenter x:Name="Content" ContentSource="Header" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                    <Grid SnapsToDevicePixels="true" Margin="3,0">
+                        <Border x:Name="Bd" Width="100"  Height="30" BorderBrush="#FFFDDA" BorderThickness="1"  Background="#FFFDDA">
+                            <ContentPresenter x:Name="Content" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header"/>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="Background" TargetName="Bd" Value="{StaticResource TabItemHotBackground}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Panel.ZIndex" Value="1"/>
                             <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="Background" TargetName="Bd">
-                                <Setter.Value>
-                                    <VisualBrush>
-                                        <VisualBrush.Visual>
-                                            <Path Grid.Row="1" Fill="{DynamicResource SkinColor}" Data="M173.75,114.5 C174.62503,115.24951 245.50038,114.50034 246.25,114.25 246.99962,113.99966 250.25,116.5 249.625,117.625 249.84422,118.78026 249.65636,148.30505 249.25,147.75 250.37432,147.24982 246.75036,151.37516 246.5,150.625 246.24964,149.87484 214.83333,150.70833 199,150.75 L194,166.25 184.5,151.375 C180.58333,151.25 172.62502,151.62515 172.75,151 172.16613,150.9058 169.44043,149.58516 169.625,147.5 L169.875,117 C169.37506,115.62451 172.87497,113.75049 173.75,114.5 z" HorizontalAlignment="Left" Height="60" Margin="169.616,114.233,0,0" Stretch="Fill" Stroke="{DynamicResource SkinColor}" VerticalAlignment="Top" Width="100"/>
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
