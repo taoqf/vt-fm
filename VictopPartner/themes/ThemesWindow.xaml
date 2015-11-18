@@ -220,26 +220,30 @@
                                                 <ImageBrush ImageSource="{Binding OnLinePreview}" Stretch="UniformToFill"/>
                                             </Grid.Background>
 
-                                            <StackPanel Name="borderSelect" Opacity="0" Background="Transparent"  HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                <controls:VicButtonNormal Width="75" Visibility="{Binding StateType,Converter={StaticResource visibilityConverter}}" Height="25" x:Name="btnDown" Content="下载"
+                                            <StackPanel Name="borderSelect" Opacity="0"  Background="Transparent"  HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <controls:VicButtonNormal  Width="75" Tag="{Binding StateChange}" Height="25" x:Name="btnDown" Content="下载"
                                                                       Command="{Binding DataContext.btnOnLineDownloadCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                         CommandParameter="{Binding ElementName=btnDown}">
+                                                         CommandParameter="{Binding .}">
 
                                             </controls:VicButtonNormal>
 
                                             <ProgressBar x:Name="progressBar" Visibility="Collapsed"  Value="{Binding CurrentRate}" Style="{DynamicResource progressBarStyle}">
 
                                             </ProgressBar>
-                                                <controls:VicButtonNormal Visibility="{Binding StateType,Converter={StaticResource visibilityConverterEx}}" x:Name="btnUse" Content="应用" Width="75" Height="25"
+                                                <controls:VicButtonNormal Tag="{Binding StateChange}" x:Name="btnUse" Content="应用" Width="75" Height="25"
                                              Command="{Binding DataContext.btnOnLineUseCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                         CommandParameter="{Binding ElementName=btnUse}" />
-                                            <Button Name="btnAccomplish" Style="{DynamicResource btnStyle}" Visibility="Collapsed" Content="完成" Width="25" Height="25"></Button>
+                                                         CommandParameter="{Binding .}" />
+                                                <Button Name="btnAccomplish" Tag="{Binding StateChange}" Style="{DynamicResource btnStyle}" Command="{Binding DataContext.btnOnLineUseCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                         CommandParameter="{Binding .}" Content="完成" Width="25" Height="25"></Button>
                                         </StackPanel>
                                         </Grid>
                                     </Border>
 
                                     <!--<Grid>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    
+                                     Visibility="{Binding StateType,Converter={StaticResource visibilityConverter}}"
+                                    
                                             <controls:VicButtonNormal BorderThickness="0"  Content="应用" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30" VerticalAlignment="Center"
                                              Command="{Binding DataContext.btnOnLineUseCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                          CommandParameter="{Binding .}" />
@@ -271,6 +275,21 @@
                                             <Condition Property="IsSelected" Value="True"/>
                                         </MultiTrigger.Conditions>
                                     </MultiTrigger>-->
+                                    <DataTrigger Binding="{Binding ElementName=btnDown,Path=Tag}" Value="1">
+                                        <Setter TargetName="btnDown" Property="Visibility" Value="Visible"></Setter>
+                                        <Setter TargetName="btnUse" Property="Visibility" Value="Collapsed"></Setter>
+                                        <Setter TargetName="btnAccomplish" Property="Visibility" Value="Collapsed"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=btnUse,Path=Tag}" Value="2">
+                                        <Setter TargetName="btnUse" Property="Visibility" Value="Visible"></Setter>
+                                        <Setter TargetName="btnDown" Property="Visibility" Value="Collapsed"></Setter>
+                                        <Setter TargetName="btnAccomplish" Property="Visibility" Value="Collapsed"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=btnAccomplish,Path=Tag}" Value="3">
+                                        <Setter TargetName="btnAccomplish" Property="Visibility" Value="Visible"></Setter>
+                                        <Setter TargetName="btnDown" Property="Visibility" Value="Collapsed"></Setter>
+                                        <Setter TargetName="btnUse" Property="Visibility" Value="Collapsed"></Setter>
+                                    </DataTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -372,7 +391,7 @@
     <!--壁纸分类样式控制开始-->
     <Style  x:Key="RadioButtonWallPaperCategoryListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility"   Value="Auto"/>
         <Setter Property="Template">
@@ -386,11 +405,11 @@
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    <Setter Property="Margin"  Value="10"/>
+                    <Setter Property="Margin"  Value="5"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}"  BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"  SnapsToDevicePixels="True">
                                     <ContentPresenter  Content="{Binding Category_Name}" Width="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
@@ -613,7 +632,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="PART_Border"   BorderThickness="0"  Background="Transparent">
-                        <Path Grid.Row="1" Data="M148,185 C172.5,165.83333 219.5,130.5 221.5,127.5 223.5,124.5 226.83333,132.16667 229.5,134.5 L191.5,186.5 228.5,239.5 220.5,244.5 145.5,188.5" Fill="{DynamicResource SkinColor}"  HorizontalAlignment="Left" Height="20"  Stretch="Fill" Stroke="{DynamicResource SkinColor}" VerticalAlignment="Top" Width="10" />
+                        <Path Grid.Row="1" Data="M148,185 C172.5,165.83333 219.5,130.5 221.5,127.5 223.5,124.5 226.83333,132.16667 229.5,134.5 L191.5,186.5 228.5,239.5 220.5,244.5 145.5,188.5" Fill="{DynamicResource SkinColor}"  HorizontalAlignment="Left" Height="30"  Stretch="Fill" Stroke="{DynamicResource SkinColor}" VerticalAlignment="Top" Width="20" />
                     </Border>
 
                 </ControlTemplate>
@@ -629,7 +648,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="PART_Border"   BorderThickness="0"  Background="Transparent">
-                        <Path Grid.Row="1"  Data="M387,223 L349.5,277.5 358.5,283.5 430.5,224.5 358.5,164.5 348.5,169.5 z" Fill="{DynamicResource SkinColor}"  HorizontalAlignment="Left" Height="20"  Stretch="Fill" Stroke="{DynamicResource SkinColor}" VerticalAlignment="Top" Width="10" />
+                        <Path Grid.Row="1"  Data="M387,223 L349.5,277.5 358.5,283.5 430.5,224.5 358.5,164.5 348.5,169.5 z" Fill="{DynamicResource SkinColor}"  HorizontalAlignment="Left" Height="30"  Stretch="Fill" Stroke="{DynamicResource SkinColor}" VerticalAlignment="Top" Width="20" />
                     </Border>
 
                 </ControlTemplate>

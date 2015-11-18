@@ -25,6 +25,22 @@ namespace ThemeManagerPlugin.Models
             }
         }
         /// <summary>
+        /// 状态改变
+        /// </summary>
+        private int stateChange;
+        public int StateChange
+        {
+            get { return stateChange; }
+            set
+            {
+                if (stateChange != value)
+                {
+                    stateChange = value;
+                    RaisePropertyChanged("StateChange");
+                }
+            }
+        }
+        /// <summary>
         /// 状态
         /// </summary>
         private bool stateType;

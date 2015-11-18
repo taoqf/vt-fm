@@ -5,7 +5,7 @@
         xmlns:vm="clr-namespace:ThemeManagerPlugin.ViewModels" 
         xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
        xmlns:Unit="clr-namespace:Victop.Frame.Units;assembly=Victop.Frame.Units"
-       Title="飞道皮肤中心" Name="portalWindow" Height="620" Width="740" ShowInTaskbar="False"
+       Title="飞道皮肤中心" Name="portalWindow" Height="620" Width="760" ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"  WindowStyle="None" ResizeMode="NoResize" RenderTransformOrigin="0.5,0.5">
     <Window.Resources>
             <Storyboard x:Key="StoryboardRightImage">
@@ -103,6 +103,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition RowDefinition.Height="30"/>
                         <RowDefinition RowDefinition.Height="*"/>
+                        <RowDefinition RowDefinition.Height="20"/>
                         <!--<RowDefinition RowDefinition.Height="30"/>-->
                     </Grid.RowDefinitions>
                     <Grid Background="{DynamicResource WhiteShade}">
@@ -114,9 +115,9 @@
                     <!--<ScrollViewer CanContentScroll="True"  Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3">-->
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
                             <ColumnDefinition Width="700"></ColumnDefinition>
-                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Canvas  Grid.Column="1" Margin="10,0,0,0"  Width="700" Height="460" Name="canvasPageContent">
                             <Canvas.Clip>
@@ -143,7 +144,7 @@
                                 </TransformGroup>
                             </Button.RenderTransform>
                         </Button>
-                        <!--<Unit:UnitPageBar  x:Name="pageBar1" Margin="0,5" Visibility="Hidden"/>-->
+                        
                         <Button Grid.Column="2" x:Name="imageRight" RenderTransformOrigin="0.5,0.5" Style="{DynamicResource RightPageStyle}">
                             <Button.RenderTransform>
                                 <TransformGroup>
@@ -155,7 +156,7 @@
                             </Button.RenderTransform>
                         </Button>
                     </Grid>
-                        
+                    <Unit:UnitPageBar Grid.Row="2" x:Name="pageBar1" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
                     <!--<StackPanel Height="20" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">-->
                         <!--<Button  x:Name="imageLeft" RenderTransformOrigin="0.5,0.5" Style="{DynamicResource LeftPageStyle}" >
                             <Button.RenderTransform>
@@ -188,6 +189,7 @@
                         <RowDefinition Height="40"></RowDefinition>
                         <RowDefinition Height="2"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="20"></RowDefinition>
                     </Grid.RowDefinitions>
                     <ListBox Name="listboxCategory" SelectedIndex="0" Grid.Row="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource RadioButtonWallPaperCategoryListStyle}">
                         <i:Interaction.Triggers>
@@ -197,11 +199,11 @@
                         </i:Interaction.Triggers>
                     </ListBox>
                     <Border Grid.Row="1" BorderBrush="{DynamicResource SkinColor}" BorderThickness="1"></Border>
-                    <!--<Grid Grid.Row="2">
+                    <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
                             <ColumnDefinition Width="700"></ColumnDefinition>
-                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="30"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Canvas  Grid.Column="1" Margin="10,0,0,0"  Width="700" Height="460" Name="canvasPageContentOnline">
                             <Canvas.Clip>
@@ -239,8 +241,9 @@
                                 </TransformGroup>
                             </Button.RenderTransform>
                         </Button>
-                    </Grid>-->
-                    <ScrollViewer CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MouseUp="ScrollViewer_MouseUp">
+                    </Grid>
+                    <Unit:UnitPageBar Grid.Row="3" x:Name="pageBarOnline" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
+                    <!--<ScrollViewer CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MouseUp="ScrollViewer_MouseUp">
                         <ListBox Name="listBoxOnLineList"  Style="{DynamicResource RadioButtonOnLineListStyle}" ItemsSource="{Binding SystemOnLineList,UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseUp">
@@ -248,7 +251,7 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ListBox>                       
-                    </ScrollViewer>
+                    </ScrollViewer>-->
                 </Grid>
             </TabItem>
             <TabItem Header="壁纸"  Style="{DynamicResource ThemeTabItemStyle}">
