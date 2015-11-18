@@ -32,11 +32,6 @@ namespace ThemeManagerPlugin.Views
 
         }
 
-        private void ScrollViewer_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
     }
 
 }

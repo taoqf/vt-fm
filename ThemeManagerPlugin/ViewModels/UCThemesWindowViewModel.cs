@@ -54,7 +54,7 @@ namespace ThemeManagerPlugin.ViewModels
         private UnitPageBar pageBarOnline;
         private int pageCount;
         private int totalPage;
-        private int pageSize = 9;
+        private int pageSize = 12;
         private int currentPage = 1;
         int pageSelect = 0;
 
@@ -90,7 +90,7 @@ namespace ThemeManagerPlugin.ViewModels
         private UnitPageBar pageBar1Online;
         private int pageCountOnline;
         private int totalPageOnline;
-        private int pageSizeOnline = 9;
+        private int pageSizeOnline = 12;
         private int currentPageOnline = 1;
         int pageSelectOnline = 0;
 
@@ -341,7 +341,7 @@ namespace ThemeManagerPlugin.ViewModels
                     sboardRightIamge = (System.Windows.Media.Animation.Storyboard)portalWindow.FindResource("StoryboardRightImage");
                     pageBar1 = (UnitPageBar)portalWindow.FindName("pageBar1");
                     pageBarOnline = (UnitPageBar)portalWindow.FindName("pageBarOnline");
-                    stdEnd = (Storyboard)portalWindow.Resources["end"];
+                    //stdEnd = (Storyboard)portalWindow.Resources["end"];
                     #region 翻页按钮事件
                     imageLeft.MouseEnter += imageLeft_MouseEnter;
                     imageLeft.MouseLeave += imageLeft_MouseLeave;
@@ -386,10 +386,10 @@ namespace ThemeManagerPlugin.ViewModels
                     #endregion
 
                     #endregion
-                    stdEnd.Completed += (c, d) =>
-                    {
-                        portalWindow.Close();
-                    };
+                    //stdEnd.Completed += (c, d) =>
+                    //{
+                       // portalWindow.Close();
+                    //};
                     GetProductId();
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
@@ -498,8 +498,9 @@ namespace ThemeManagerPlugin.ViewModels
                     //MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     //if (result == MessageBoxResult.Yes)
                     //{
-                    stdEnd.Begin();
+                    //stdEnd.Begin();
                     //}
+                    portalWindow.Close();
                 });
             }
         }
@@ -1520,7 +1521,7 @@ namespace ThemeManagerPlugin.ViewModels
                     WrapPanel rectangle = new WrapPanel();
                     rectangle.Children.Clear();
                     rectangle.Orientation = Orientation.Vertical;
-                    rectangle.Width = 700;
+                    rectangle.Width = 960;
                     rectangle.Height = 460;
                     ObservableCollection<OnLineModel> currentPageList = new ObservableCollection<OnLineModel>();
                     lbox = new ListBox();
@@ -1583,7 +1584,7 @@ namespace ThemeManagerPlugin.ViewModels
             {
                 WrapPanel rectangle = new WrapPanel();
                 rectangle.Orientation = Orientation.Vertical;
-                rectangle.Width = 700;
+                rectangle.Width = 960;
                 rectangle.Height = 460;
                 ObservableCollection<ThemeModel> currentPageList = new ObservableCollection<ThemeModel>();
                 ListBox lbox = new ListBox();

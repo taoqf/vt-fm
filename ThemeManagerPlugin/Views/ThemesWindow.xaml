@@ -5,7 +5,7 @@
         xmlns:vm="clr-namespace:ThemeManagerPlugin.ViewModels" 
         xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
        xmlns:Unit="clr-namespace:Victop.Frame.Units;assembly=Victop.Frame.Units"
-       Title="飞道皮肤中心" Name="portalWindow" Height="620" Width="760" ShowInTaskbar="False"
+       Title="飞道皮肤中心" Name="portalWindow" Height="620" Width="960" ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"  WindowStyle="None" ResizeMode="NoResize" RenderTransformOrigin="0.5,0.5">
     <Window.Resources>
             <Storyboard x:Key="StoryboardRightImage">
@@ -107,23 +107,23 @@
                         <!--<RowDefinition RowDefinition.Height="30"/>-->
                     </Grid.RowDefinitions>
                     <Grid Background="{DynamicResource WhiteShade}">
-                        <TextBlock HorizontalAlignment="Left" Margin="543,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" Text="共有"/>
-                        <TextBlock Name="tblockSkinNum" Text="{Binding SkinNum}" HorizontalAlignment="Left" Margin="570,7,0,0" TextWrapping="Wrap"   VerticalAlignment="Top" Width="22" Height="16" TextAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="594,7,0,0" TextWrapping="Wrap" Text="款皮肤" VerticalAlignment="Top" RenderTransformOrigin="0.655,-0.688"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="823,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" Text="共有"/>
+                        <TextBlock Name="tblockSkinNum" Text="{Binding SkinNum}" HorizontalAlignment="Left" Margin="850,7,0,0" TextWrapping="Wrap"   VerticalAlignment="Top" Width="22" Height="16" TextAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Left" Margin="874,7,0,0" TextWrapping="Wrap" Text="款皮肤" VerticalAlignment="Top" RenderTransformOrigin="0.655,-0.688"/>
                     </Grid>
                     <Border Background="{DynamicResource WhiteShade}" Grid.Row="1"></Border>
                     <!--<ScrollViewer CanContentScroll="True"  Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3">-->
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30"></ColumnDefinition>
-                            <ColumnDefinition Width="700"></ColumnDefinition>
+                            <ColumnDefinition Width="900"></ColumnDefinition>
                             <ColumnDefinition Width="30"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Canvas  Grid.Column="1" Margin="10,0,0,0"  Width="700" Height="460" Name="canvasPageContent">
+                        <Canvas  Grid.Column="1" Margin="0,0,0,0"  Width="960" Height="460" Name="canvasPageContent">
                             <Canvas.Clip>
-                                <RectangleGeometry x:Name="canvasPageRectangle" RadiusX="0" RadiusY="0" Rect="0,0,700,460" />
+                                <RectangleGeometry x:Name="canvasPageRectangle" RadiusX="0" RadiusY="0" Rect="0,0,960,460" />
                             </Canvas.Clip>
-                            <WrapPanel Orientation="Vertical" Canvas.Left="0" Name="wrapPanelPages" Width="700" Height="460">
+                            <WrapPanel Orientation="Vertical" Canvas.Left="0" Name="wrapPanelPages" Width="960" Height="460">
                                 <WrapPanel.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
@@ -191,7 +191,7 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="20"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <ListBox Name="listboxCategory" SelectedIndex="0" Grid.Row="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource RadioButtonWallPaperCategoryListStyle}">
+                    <ListBox Name="listboxCategory"  SelectedIndex="0" Grid.Row="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource RadioButtonWallPaperCategoryListStyle}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding OnLineListBoxSelectionChangedCommand}" CommandParameter="{Binding ElementName=listboxCategory,Path=SelectedItem}"/>
@@ -202,14 +202,14 @@
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30"></ColumnDefinition>
-                            <ColumnDefinition Width="700"></ColumnDefinition>
+                            <ColumnDefinition Width="900"></ColumnDefinition>
                             <ColumnDefinition Width="30"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Canvas  Grid.Column="1" Margin="10,0,0,0"  Width="700" Height="460" Name="canvasPageContentOnline">
+                        <Canvas  Grid.Column="1" Margin="2,0,0,0"  Width="960" Height="460" Name="canvasPageContentOnline">
                             <Canvas.Clip>
-                                <RectangleGeometry x:Name="canvasPageRectangleOnline" RadiusX="0" RadiusY="0" Rect="0,0,700,460" />
+                                <RectangleGeometry x:Name="canvasPageRectangleOnline" RadiusX="0" RadiusY="0" Rect="0,0,960,460" />
                             </Canvas.Clip>
-                            <WrapPanel Orientation="Vertical" Canvas.Left="0" Name="wrapPanelPagesOnline" Width="700" Height="460">
+                            <WrapPanel Orientation="Vertical" Canvas.Left="0" Name="wrapPanelPagesOnline" Width="960" Height="460">
                                 <WrapPanel.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
