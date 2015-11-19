@@ -1,0 +1,44 @@
+﻿<tc:TemplateControl x:Class="AutomaticCodePlugin.Views.UCMainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ctrl="http://schemas.ifeidao.com/wpfcontrol"
+             xmlns:tc="clr-namespace:Victop.Frame.CmptRuntime;assembly=Victop.Frame.CmptRuntime"     
+             xmlns:local="clr-namespace:AutomaticCodePlugin.Views"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:vm="clr-namespace:AutomaticCodePlugin.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Name="mainView">
+    <tc:TemplateControl.DataContext>
+        <vm:UCMainViewViewModel />
+    </tc:TemplateControl.DataContext>
+    <ctrl:VicGridNormal Name="masterPBlock">
+        <ctrl:VicGridNormal.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
+        </ctrl:VicGridNormal.RowDefinitions>
+        <ctrl:VicDockPanelNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <ctrl:VicButtonNormal Width="100" Height="24" Content="查询" Name="searchBtn" Margin="0,0,10,0" Command="{Binding btnSearchClickCommand}"/>
+            <ctrl:VicButtonNormal Width="100" Height="24" Content="添加" Name="addBtn" Margin="0,0,10,0" Command="{Binding btnAddClickCommand}"/>
+            <ctrl:VicButtonNormal Width="100" Height="24" Content="删除" Name="delBtn" Margin="0,0,10,0"/>
+            <ctrl:VicButtonNormal Width="100" Height="24" Content="保存" Name="saveBtn" Margin="0,0,10,0"/>
+        </ctrl:VicDockPanelNormal>
+        <ctrl:VicDataGrid Grid.Row="1" CanUserAddRows="False" Name="dgridProduct" ItemsSource="{Binding MainPBlock.ViewBlockDataTable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding dgridSelectionChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ctrl:VicDataGrid>
+        <ctrl:VicDockPanelNormal Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <TextBox Width="100" Height="24" Name="tbox" Text="{Binding Test,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        </ctrl:VicDockPanelNormal>
+    </ctrl:VicGridNormal>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding mainViewLoadedCommand}" CommandParameter="{Binding ElementName=mainView}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+</tc:TemplateControl>
