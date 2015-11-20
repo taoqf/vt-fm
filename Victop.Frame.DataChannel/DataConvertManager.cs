@@ -10,6 +10,7 @@ using Victop.Frame.CoreLibrary.Enums;
 using Victop.Frame.CoreLibrary.Models;
 using Victop.Frame.CoreLibrary.MongoModel;
 using Victop.Frame.DataChannel.Enums;
+using Victop.Frame.DataChannel.Models;
 using Victop.Frame.PublicLib.Helpers;
 
 namespace Victop.Frame.DataChannel
@@ -43,7 +44,7 @@ namespace Victop.Frame.DataChannel
         /// <returns></returns>
         public DataSet GetDataSet(string viewId, string dataPath, DataSet structDs = null)
         {
-            if (string.IsNullOrEmpty(dataPath))
+            if (string.IsNullOrEmpty(dataPath) || string.IsNullOrEmpty(viewId))
                 return null;
             DataSet newDs = structDs == null ? new DataSet() : structDs.Copy();
             newDs.Clear();
@@ -967,6 +968,7 @@ namespace Victop.Frame.DataChannel
         {
             bool editFlag = true;
             DataTable dt = new DataTable();
+            List<SaveDataModel> saveDataList = new List<SaveDataModel>();
             foreach (JsonMapKey item in JsonTableMap.Keys)
             {
                 if (item.ViewId.Equals(viewId) && item.DataPath.Equals(dataPath))
@@ -1041,12 +1043,14 @@ namespace Victop.Frame.DataChannel
                                 }
 
                             }
-                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, null, OpreateStateEnum.Added);
+                            //editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), addDic, null, OpreateStateEnum.Added);
+                            saveDataList.Add(new SaveDataModel() { OpStatus = OpreateStateEnum.Added, DataPath = JsonHelper.ToObject<List<object>>(dataPath), SaveDataDic = addDic, OriginalDataDic = null });
                             break;
                         case DataRowState.Deleted:
                             Dictionary<string, object> delDic = new Dictionary<string, object>();
                             delDic.Add("_id", dr["_id", DataRowVersion.Original]);
-                            editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), delDic, null, OpreateStateEnum.Deleted);
+                            //editFlag = DataTool.SaveCurdDataByPath(viewId, JsonHelper.ToObject<List<object>>(dataPath), delDic, null, OpreateStateEnum.Deleted);
+                            saveDataList.Add(new SaveDataModel() { OpStatus = OpreateStateEnum.Deleted, DataPath = JsonHelper.ToObject<List<object>>(dataPath), SaveDataDic = delDic, OriginalDataDic = null });
                             break;
                         case DataRowState.Detached:
                             break;
@@ -1135,7 +1139,8 @@ namespace Victop.Frame.DataChannel
                                 pathDic.Add("value", dr["_id"]);
                                 pathList.Add(pathDic);
                             }
-                            editFlag = DataTool.SaveCurdDataByPath(viewId, pathList, modDic, originDic, OpreateStateEnum.Modified);
+                            //editFlag = DataTool.SaveCurdDataByPath(viewId, pathList, modDic, originDic, OpreateStateEnum.Modified);
+                            saveDataList.Add(new SaveDataModel() { OpStatus = OpreateStateEnum.Modified, DataPath = pathList, SaveDataDic = modDic, OriginalDataDic = originDic });
                             break;
                         case DataRowState.Unchanged:
                             break;
@@ -1147,6 +1152,11 @@ namespace Victop.Frame.DataChannel
                 {
                     break;
                 }
+            }
+            if (saveDataList.Count > 0)
+            {
+                //TODO:保存数据
+                editFlag = DataTool.SaveCurdDataByPath(viewId, saveDataList);
             }
             if (editFlag)
             {
@@ -1195,62 +1205,6 @@ namespace Victop.Frame.DataChannel
             {
                 return string.Empty;
             }
-
-        }
-        /// <summary>
-        /// 检查数据权限
-        /// </summary>
-        /// <param name="viewId"></param>
-        /// <returns></returns>
-        public bool CheckDataAuthority(string viewId)
-        {
-            DataChannelManager dataChannelManager = new DataChannelManager();
-            Hashtable hashData = dataChannelManager.GetData(viewId);
-            ChannelData channelData = hashData["Data"] as ChannelData;
-            MongoModelInfoModel modelDefInfo = channelData.ModelDefInfo;
-            if (modelDefInfo == null) //非模型
-            {
-                return true;
-            }
-            #region JS代码
-
-            try
-            {
-                if (string.IsNullOrEmpty(channelData.DatapermString))
-                {
-                    return true;
-                }
-                string curdList = JsonHelper.ToJson(channelData.CrudJSONData);
-                if (string.IsNullOrEmpty(curdList)) //无修改信息
-                {
-                    return true;
-                }
-                using (JavascriptContext context = new JavascriptContext())
-                {
-                    string modelTables = JsonHelper.ToJson(modelDefInfo.ModelTables);
-                    context.SetParameter("data", modelTables);
-                    context.SetParameter("path", channelData.DatapermString);
-                    context.SetParameter("curdList", curdList);
-                    context.Run(Properties.Resources.CheckDataAuthorityScript);
-                    context.Run(";require(['victop/core/_data/data_limit_verify'],function(wpf){result = JSON.stringify(wpf(curdList, path, data));});");
-                    object result = context.GetParameter("result");
-                    if (result != null && result.ToString() != "[]")
-                    {
-                        LoggerHelper.InfoFormat("验证数据权限不通过！原因：" + result.ToString());
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LoggerHelper.InfoFormat("验证数据权限失败！失败原因：" + ex.ToString());
-                return false;
-            }
-            #endregion
 
         }
     }

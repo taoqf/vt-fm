@@ -40,6 +40,12 @@ namespace Victop.Frame.Connection
                     ReplyMessage replyMessage = UserLoginSubmit(adapter, messageInfo);
                     return replyMessage;
                 }
+                if (messageInfo.MessageType.Equals("MongoDataChannelService.loginout"))
+                {
+                    ReplyMessage replyMessage = UserLoginOutSubmit(adapter, messageInfo);
+                    return replyMessage;
+
+                }
                 else if (messageInfo.MessageType.Equals("MongoDataChannelService.getuserauthInfo"))
                 {
 
@@ -88,6 +94,31 @@ namespace Victop.Frame.Connection
                 return replyMessage;
             }
         }
+
+        private ReplyMessage UserLoginOutSubmit(IAdapter adapter, RequestMessage messageInfo)
+        {
+            Dictionary<string, string> contentDic = JsonHelper.ToObject<Dictionary<string, string>>(messageInfo.MessageContent);
+            if (!contentDic.ContainsKey("systemid"))
+            {
+                contentDic.Add("systemid", ConfigurationManager.AppSettings["clientsystem"]);
+            }
+            messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
+            MessageOrganizeManager organizeManager = new MessageOrganizeManager();
+            DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
+            messageInfo = organizeManager.OrganizeMessage(messageInfo, out saveDataFlag);
+            ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
+            replyMessage.MessageId = messageInfo.MessageId;
+            if (replyMessage.ReplyMode != (ReplyModeEnum)0)
+            {
+                CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
+                currentGallery.IsLogin = false;
+                currentGallery.ClientInfo.SessionId = string.Empty;
+                currentGallery.ClientInfo.UserName = string.Empty;
+                currentGallery.ClientInfo.UserCode = string.Empty;
+            }
+            return replyMessage;
+        }
+
         /// <summary>
         /// 获取登录方式
         /// </summary>
@@ -150,6 +181,7 @@ namespace Victop.Frame.Connection
             }
             else
             {
+                currentGallery.IsLogin = true;
                 currentGallery.ClientInfo.SessionId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "sessionID");
                 currentGallery.ClientInfo.UserName = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "user_name");
                 currentGallery.ClientInfo.UserCode = replyMessage.ReplyContent.Contains("userCode") ? JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode") : JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode");
@@ -172,32 +204,40 @@ namespace Victop.Frame.Connection
             messageInfo = organizeManager.OrganizeMessage(messageInfo, out saveDataFlag);
             string DataSource = ConfigurationManager.AppSettings.Get("DataSource").ToLower();
             ReplyMessage replyMessage = new ReplyMessage();
-            switch (DataSource)
+            if (saveDataFlag != DataOperateEnum.CANNEL)
             {
-                case "local":
-                    SimulatedDataManager simDataManager = new SimulatedDataManager();
-                    replyMessage = simDataManager.SubmitRequest(messageInfo);
-                    break;
-                case "remote":
-                default:
-                    replyMessage = adapter.SubmitRequest(messageInfo);
-                    break;
-            }
-            if (!(replyMessage.ReplyMode == (ReplyModeEnum)0))
-            {
-                ReplyMessageResolver replyMessageResolver = new ReplyMessageResolver();
-                switch (saveDataFlag)
+                switch (DataSource)
                 {
-                    case DataOperateEnum.SAVE:
-                        replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo);
+                    case "local":
+                        SimulatedDataManager simDataManager = new SimulatedDataManager();
+                        replyMessage = simDataManager.SubmitRequest(messageInfo);
                         break;
-                    case DataOperateEnum.COMMIT:
-                        bool result = replyMessageResolver.CommitDataSetChange(DataChannelId);
-                        break;
-                    case DataOperateEnum.NONE:
+                    case "remote":
                     default:
+                        replyMessage = adapter.SubmitRequest(messageInfo);
                         break;
                 }
+                if (!(replyMessage.ReplyMode == (ReplyModeEnum)0))
+                {
+                    ReplyMessageResolver replyMessageResolver = new ReplyMessageResolver();
+                    switch (saveDataFlag)
+                    {
+                        case DataOperateEnum.SAVE:
+                            replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo);
+                            break;
+                        case DataOperateEnum.COMMIT:
+                            bool result = replyMessageResolver.CommitDataSetChange(DataChannelId);
+                            break;
+                        case DataOperateEnum.NONE:
+                        default:
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                replyMessage.ReplyMode = 0;
+                replyMessage.ReplyAlertMessage = "请先登录";
             }
             if (string.IsNullOrEmpty(replyMessage.ReplyAlertMessage))
             {

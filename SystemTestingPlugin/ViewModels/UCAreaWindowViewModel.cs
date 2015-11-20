@@ -218,14 +218,14 @@ namespace SystemTestingPlugin.ViewModels
                         string MessageType = "MongoDataChannelService.findBusiData";
                         DataMessageOperation messageOp = new DataMessageOperation();
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                        contentDic.Add("systemid", DataInfoModel.SystemId);
+                        contentDic.Add("systemid", DataInfoModel.SystemId.Trim());
                         //contentDic.Add("configsystemid", DataInfoModel.ConfigsystemId);
-                        contentDic.Add("refsystemid", string.IsNullOrEmpty(DataInfoModel.RefSystemId) ? DataInfoModel.SystemId : DataInfoModel.RefSystemId);
+                        contentDic.Add("refsystemid", string.IsNullOrEmpty(DataInfoModel.RefSystemId) ? DataInfoModel.SystemId.Trim() : DataInfoModel.RefSystemId.Trim());
                         contentDic.Add("emptydataflag", DataInfoModel.EmptyFlag ? 0 : 1);
-                        contentDic.Add("modelid", DataInfoModel.ModelId);
+                        contentDic.Add("modelid", DataInfoModel.ModelId.Trim());
                         if (!string.IsNullOrEmpty(DataInfoModel.SpaceId))
                         {
-                            contentDic.Add("spaceid", DataInfoModel.SpaceId);
+                            contentDic.Add("spaceid", DataInfoModel.SpaceId.Trim());
                         }
                         if (!string.IsNullOrEmpty(DataInfoModel.ConditionStr))
                         {

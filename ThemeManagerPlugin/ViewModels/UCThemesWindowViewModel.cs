@@ -30,7 +30,11 @@ namespace ThemeManagerPlugin.ViewModels
     public class UCThemesWindowViewModel : ModelBase
     {
         #region 字段&属性
-
+        private ListBox listBoxOnLineList;
+        private Button  btnDown;
+        private  StackPanel spLayout;
+        private Button btnUse;
+        private Button btnAccomplish;
         #region 分屏字段属性
         /// <summary>
         /// 左翻页
@@ -47,9 +51,10 @@ namespace ThemeManagerPlugin.ViewModels
         private RectangleGeometry canvasPageRectangle;
         private WrapPanel wrapPanelPages;
         private UnitPageBar pageBar1;
+        private UnitPageBar pageBarOnline;
         private int pageCount;
         private int totalPage;
-        private int pageSize = 9;
+        private int pageSize = 12;
         private int currentPage = 1;
         int pageSelect = 0;
 
@@ -64,6 +69,42 @@ namespace ThemeManagerPlugin.ViewModels
         System.Windows.Media.Animation.Storyboard sboard;
         System.Windows.Media.Animation.Storyboard sboardLeftIamge;
         System.Windows.Media.Animation.Storyboard sboardRightIamge;
+        #endregion
+
+        #region 在线皮肤分屏字段
+        /// <summary>
+        /// 左翻页
+        /// </summary>
+        private Button imageOnlineLeft;
+        /// <summary>
+        /// 右翻页
+        /// </summary>
+        private Button imageOnlineRight;
+        /// <summary>
+        /// 内容容器
+        /// </summary>
+        private Canvas canvasPageContentOnline;
+        ListBox lbox;
+        private RectangleGeometry canvasPageRectangleOnline;
+        private WrapPanel wrapPanelPagesOnline;
+        private UnitPageBar pageBar1Online;
+        private int pageCountOnline;
+        private int totalPageOnline;
+        private int pageSizeOnline = 12;
+        private int currentPageOnline = 1;
+        int pageSelectOnline = 0;
+
+        bool isDownOnline = false;
+        double down_pXOnline = 0;
+        double down_pYOnline = 0;
+        bool isMoveSureOnline = false;
+        double oldXOnline = 0;
+
+        bool isInMoveOnline = false;
+        object changeLockOnline = new object();
+        System.Windows.Media.Animation.Storyboard sboardOnline;
+        System.Windows.Media.Animation.Storyboard sboardLeftIamgeOnline;
+        System.Windows.Media.Animation.Storyboard sboardRightIamgeOnline;
         #endregion
 
         Storyboard stdEnd;
@@ -108,6 +149,27 @@ namespace ThemeManagerPlugin.ViewModels
                 {
                     sumPageThemeList = value;
                     RaisePropertyChanged("SumPageThemeList");
+                }
+            }
+        }
+         /// <summary>
+        /// 在线皮肤分屏集合
+        /// </summary>
+        private ObservableCollection<OnLineModel> sumPageThemeListOnline;
+        public ObservableCollection<OnLineModel> SumPageThemeListOnline
+        {
+            get
+            {
+                if (sumPageThemeListOnline == null)
+                    sumPageThemeListOnline = new ObservableCollection<OnLineModel>();
+                return sumPageThemeListOnline;
+            }
+            set
+            {
+                if (sumPageThemeListOnline != value)
+                {
+                    sumPageThemeListOnline = value;
+                    RaisePropertyChanged("SumPageThemeListOnline");
                 }
             }
         }
@@ -268,6 +330,7 @@ namespace ThemeManagerPlugin.ViewModels
                 {
 
                     portalWindow = (Window)x;
+                    listBoxOnLineList = (ListBox)portalWindow.FindName("listBoxOnLineList");
                     ThemeTabControl = (TabControl)portalWindow.FindName("ThemeTabControl");
                     wrapPanelPages = (WrapPanel)portalWindow.FindName("wrapPanelPages");
                     canvasPageContent = (Canvas)portalWindow.FindName("canvasPageContent");
@@ -277,7 +340,8 @@ namespace ThemeManagerPlugin.ViewModels
                     sboardLeftIamge = (System.Windows.Media.Animation.Storyboard)portalWindow.FindResource("StoryboardLeftImage");
                     sboardRightIamge = (System.Windows.Media.Animation.Storyboard)portalWindow.FindResource("StoryboardRightImage");
                     pageBar1 = (UnitPageBar)portalWindow.FindName("pageBar1");
-                    stdEnd = (Storyboard)portalWindow.Resources["end"];
+                    pageBarOnline = (UnitPageBar)portalWindow.FindName("pageBarOnline");
+                    //stdEnd = (Storyboard)portalWindow.Resources["end"];
                     #region 翻页按钮事件
                     imageLeft.MouseEnter += imageLeft_MouseEnter;
                     imageLeft.MouseLeave += imageLeft_MouseLeave;
@@ -294,20 +358,44 @@ namespace ThemeManagerPlugin.ViewModels
                     canvasPageContent.SizeChanged += canvasPageContent_SizeChanged;
                     canvasPageContent.MouseUp += canvasPageContent_MouseUp;
                     #endregion
-                    stdEnd.Completed += (c, d) =>
-                    {
-                        portalWindow.Close();
-                    };
+
+                    #region 在线皮肤获取控件名
+                    wrapPanelPagesOnline = (WrapPanel)portalWindow.FindName("wrapPanelPagesOnline");
+                    canvasPageContentOnline = (Canvas)portalWindow.FindName("canvasPageContentOnline");
+                    imageOnlineLeft = (Button)portalWindow.FindName("imageLeftOnline");
+                    imageOnlineRight = (Button)portalWindow.FindName("imageRightOnline");
+                    canvasPageRectangleOnline = (RectangleGeometry)portalWindow.FindName("canvasPageRectangleOnline");
+                    sboardLeftIamgeOnline = (System.Windows.Media.Animation.Storyboard)portalWindow.FindResource("StoryboardLeftImageOnline");
+                    sboardRightIamgeOnline = (System.Windows.Media.Animation.Storyboard)portalWindow.FindResource("StoryboardRightImageOnline");
+                    #region 在线翻页按钮事件
+                    imageOnlineLeft.Click += imageOnlineLeft_Click;
+                    imageOnlineLeft.MouseEnter += imageOnlineLeft_MouseEnter;
+                    imageOnlineLeft.MouseLeave += imageOnlineLeft_MouseLeave;
+                    imageOnlineRight.Click += imageOnlineRight_Click;
+                    imageOnlineRight.MouseEnter += imageOnlineRight_MouseEnter;
+                    imageOnlineRight.MouseLeave += imageOnlineRight_MouseLeave;
+                    #endregion
+
+                    #region 在线内容容器事件
+                    canvasPageContentOnline.PreviewMouseLeftButtonDown += canvasPageContentOnline_PreviewMouseLeftButtonDown;
+                    canvasPageContentOnline.PreviewMouseLeftButtonUp += canvasPageContentOnline_PreviewMouseLeftButtonUp;
+                    canvasPageContentOnline.PreviewMouseMove += canvasPageContentOnline_PreviewMouseMove;
+                    canvasPageContentOnline.MouseLeave += canvasPageContentOnline_MouseLeave;
+                    canvasPageContentOnline.SizeChanged += canvasPageContentOnline_SizeChanged;
+                    canvasPageContentOnline.MouseUp += canvasPageContentOnline_MouseUp;
+                    #endregion
+
+                    #endregion
+                    //stdEnd.Completed += (c, d) =>
+                    //{
+                       // portalWindow.Close();
+                    //};
                     GetProductId();
                     GetThemeSkinNum();
                     GetDefaultThemeSkin();
                     GetOnLineCategory();
                     if (SystemOnLineCategoryList.Count == 0) return;//服务器登录不上时异常控制
                     GetOnLineTheme(SystemOnLineCategoryList[0].Category_No);
-                    GetWallPaperCategory();
-                    GetWallPaperDisplay();//一次从服务器取到所有壁纸
-                    if (WallPaperCategoryList.Count == 0) return;
-                    GetSelectedTabControlWallPaperDisplay(WallPaperCategoryList[0].Category_No);
                     totalPage = SystemThemeList.Count / pageSize;
                     if ((SystemThemeList.Count % pageSize) == 0)
                     {
@@ -318,9 +406,27 @@ namespace ThemeManagerPlugin.ViewModels
                         totalPage = SystemThemeList.Count / pageSize + 1;
                     }
                     setInit(totalPage);
+                    if ((SystemOnLineList.Count % pageSize) == 0)
+                    {
+                        totalPageOnline = SystemOnLineList.Count / pageSizeOnline;
+                    }
+                    else
+                    {
+                        totalPageOnline = SystemOnLineList.Count / pageSizeOnline + 1;
+                    }
+                    setOnlineInit(totalPageOnline);
+                    GetWallPaperCategory();
+                    GetWallPaperDisplay();//一次从服务器取到所有壁纸
+                    if (WallPaperCategoryList.Count == 0) return;
+                    GetSelectedTabControlWallPaperDisplay(WallPaperCategoryList[0].Category_No);
+                    
                 });
             }
         }
+
+        
+
+       
 
 
         public ICommand ThemeTabControlSelectionChanged
@@ -343,9 +449,25 @@ namespace ThemeManagerPlugin.ViewModels
                         }
                         else
                         {
-                            totalPage = SystemThemeList.Count / pageSize + 1; ;
+                            totalPage = SystemThemeList.Count / pageSize + 1;
                         }
-                        setInit(totalPage);
+                       setInit(totalPage);
+
+                    }
+
+                    //GetOnLineTheme(SystemOnLineCategoryList[0].Category_No);
+                    if (ThemeTabControl.SelectedIndex == 1)
+                    {
+                        totalPageOnline = SystemOnLineList.Count / pageSizeOnline;
+                        if ((SystemOnLineList.Count % pageSize) == 0)
+                        {
+                            totalPageOnline = SystemOnLineList.Count / pageSizeOnline;
+                        }
+                        else
+                        {
+                            totalPageOnline = SystemOnLineList.Count / pageSizeOnline + 1;
+                        }
+                        setOnlineInit(totalPageOnline);
                     }
 
                 });
@@ -365,6 +487,7 @@ namespace ThemeManagerPlugin.ViewModels
         }
 
         #endregion
+
         #region 窗体关闭命令
         public ICommand btnCloseClickCommand
         {
@@ -375,13 +498,13 @@ namespace ThemeManagerPlugin.ViewModels
                     //MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     //if (result == MessageBoxResult.Yes)
                     //{
-                    stdEnd.Begin();
+                    //stdEnd.Begin();
                     //}
+                    portalWindow.Close();
                 });
             }
         }
         #endregion
-
 
         #region 在主题列表选中主题皮肤触发命令
         public ICommand listBoxSystemThemeListSelectionChangedCommand
@@ -461,11 +584,21 @@ namespace ThemeManagerPlugin.ViewModels
                     OnLineCategory model = (OnLineCategory)x;
                     SystemOnLineList.Clear();
                     GetOnLineTheme(model.Category_No);
-
+                    totalPageOnline = SystemOnLineList.Count / pageSizeOnline;
+                    if ((SystemOnLineList.Count % pageSize) == 0)
+                    {
+                        totalPageOnline = SystemOnLineList.Count / pageSizeOnline;
+                    }
+                    else
+                    {
+                        totalPageOnline = SystemOnLineList.Count / pageSizeOnline + 1;
+                    }
+                    setOnlineInit(totalPageOnline);
                 });
             }
         }
         #endregion
+
         #region 在线皮肤应用
         public ICommand btnOnLineUseCommand
         {
@@ -474,76 +607,13 @@ namespace ThemeManagerPlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     OnLineModel model = (OnLineModel)x;
-                    foreach (ThemeModel skinModel in SystemThemeList)
-                    {
-                        if (skinModel.SkinName.Equals(model.OnLineName))
-                        {
-                            try
-                            {
-                                string messageType = "ServerCenterService.ChangeThemeByDll";
-                                Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                                Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
-                                ServiceParams.Add("SourceName", skinModel.ThemeName);
-                                ServiceParams.Add("SkinPath", skinModel.SkinPath);
-                                contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
-                                DataMessageOperation messageOp = new DataMessageOperation();
-                                messageOp.SendAsyncMessage(messageType, contentDic);
-                                return;
-                            }
-                            catch (Exception ex)
-                            {
-                                VicMessageBoxNormal.Show("Change error: " + ex.Message);
-                            }
-                        }
-                    }
-                    string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
-                    Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
-                    Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
-                    downloadAddress.Add("DownloadFileId", model.FilePath);
-                    downloadAddress.Add("DownloadToPath", localityUrl);
-                    downloadAddress.Add("ProductId", ProductId);
-                    downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
-                    DataMessageOperation messageOperation = new DataMessageOperation();
-                    Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
-                                                           downloadMessageContent);
-                    SystemThemeList.Clear();
-                    GetThemeSkinNum();
-                    foreach (ThemeModel skinModel in SystemThemeList)
-                    {
-                        if (skinModel.SkinName.Equals(model.OnLineName))
-                        {
-                            try
-                            {
-                                string messageType = "ServerCenterService.ChangeThemeByDll";
-                                Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                                Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
-                                ServiceParams.Add("SourceName", skinModel.ThemeName);
-                                ServiceParams.Add("SkinPath", skinModel.SkinPath);
-                                contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
-                                DataMessageOperation messageOp = new DataMessageOperation();
-                                messageOp.SendAsyncMessage(messageType, contentDic);
-                                return;
-                            }
-                            catch (Exception ex)
-                            {
-                                VicMessageBoxNormal.Show("Change error: " + ex.Message);
-                            }
-                        }
-                    }
-                });
-            }
-        }
-        #endregion
-        #region 选中ListBox在线换肤
-        public ICommand OnLineListBoxSkinSelectionChangedCommand
-        {
-            get
-            {
-                return new RelayCommand<object>((x) =>
-                {
-                    if (x != null)
-                    {
-                        OnLineModel model = (OnLineModel)x;
+                   // OnLineModel model = btnUse.Tag as OnLineModel;
+                    model.StateChange = 3;
+                    //var curItem = ((ListBoxItem)listBoxOnLineList.ContainerFromElement(btnUse)).Content;
+                    //OnLineModel model = curItem as OnLineModel;
+                    //OnLineModel model = (OnLineModel)x;
+                    //spLayout = GetParentObject<StackPanel>(btnUse);
+                    //btnAccomplish = GetChildObjectByName<Button>(spLayout, "btnAccomplish");
                         foreach (ThemeModel skinModel in SystemThemeList)
                         {
                             if (skinModel.SkinName.Equals(model.OnLineName))
@@ -566,6 +636,7 @@ namespace ThemeManagerPlugin.ViewModels
                                 }
                             }
                         }
+                        
                         string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
                         Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
                         Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
@@ -600,12 +671,86 @@ namespace ThemeManagerPlugin.ViewModels
                                 }
                             }
                         }
-                    }
+                });
+            }
+        }
+        #endregion
+
+        #region 选中ListBox在线换肤
+        public ICommand OnLineListBoxSkinMouseUpCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                    MessageBox.Show("aaa");
+                    //if (x != null)
+                    //{
+                    //    OnLineModel model = (OnLineModel)x;
+                    //    foreach (ThemeModel skinModel in SystemThemeList)
+                    //    {
+                    //        if (skinModel.SkinName.Equals(model.OnLineName))
+                    //        {
+                    //            try
+                    //            {
+                    //                string messageType = "ServerCenterService.ChangeThemeByDll";
+                    //                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    //                Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
+                    //                ServiceParams.Add("SourceName", skinModel.ThemeName);
+                    //                ServiceParams.Add("SkinPath", skinModel.SkinDllName);
+                    //                contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
+                    //                DataMessageOperation messageOp = new DataMessageOperation();
+                    //                messageOp.SendAsyncMessage(messageType, contentDic);
+                    //                return;
+                    //            }
+                    //            catch (Exception ex)
+                    //            {
+                    //                VicMessageBoxNormal.Show("Change error: " + ex.Message);
+                    //            }
+                    //        }
+                    //    }
+                    //    string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
+                    //    Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
+                    //    Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
+                    //    downloadAddress.Add("DownloadFileId", model.FilePath);
+                    //    downloadAddress.Add("DownloadToPath", localityUrl);
+                    //    downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
+                    //    DataMessageOperation messageOperation = new DataMessageOperation();
+                    //    Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
+                    //                                           downloadMessageContent);
+                    //    SystemThemeList.Clear();
+                    //    GetThemeSkinNum();
+
+                    //    foreach (ThemeModel skinModel in SystemThemeList)
+                    //    {
+                    //        if (skinModel.SkinName.Equals(model.OnLineName))
+                    //        {
+                    //            try
+                    //            {
+                    //                string messageType = "ServerCenterService.ChangeThemeByDll";
+                    //                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    //                Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
+                    //                ServiceParams.Add("SourceName", skinModel.ThemeName);
+                    //                ServiceParams.Add("SkinPath", skinModel.SkinDllName);
+                    //                contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
+                    //                DataMessageOperation messageOp = new DataMessageOperation();
+                    //                messageOp.SendAsyncMessage(messageType, contentDic);
+                    //                return;
+                    //            }
+                    //            catch (Exception ex)
+                    //            {
+                    //                VicMessageBoxNormal.Show("Change error: " + ex.Message);
+                    //            }
+                    //        }
+                    //    }
+                    //}
 
                 });
             }
         }
         #endregion
+
+      
         #region 在线皮肤下载命令
         public ICommand btnOnLineDownloadCommand
         {
@@ -613,35 +758,86 @@ namespace ThemeManagerPlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    OnLineModel model = (OnLineModel)x;
-                    foreach (ThemeModel skinModel in SystemThemeList)
+                    try
                     {
-                        if (skinModel.SkinName.Equals(model.OnLineName))
-                        {
-                            VicMessageBoxNormal.Show("此皮肤本地已存在");
-                            return;
-                        }
+                        OnLineModel model = (OnLineModel)x;
+                        model.StateChange = 2;
+                        //foreach (ThemeModel skinModel in SystemThemeList)
+                        //{
+                        //    if (skinModel.SkinName.Equals(model.OnLineName))
+                        //    {
+                        //        VicMessageBoxNormal.Show("此皮肤本地已存在");
+                        //        return;
+                        //    }
+                        //}
+                        string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
+                        Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
+                        Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
+                        downloadAddress.Add("DownloadFileId", model.FilePath);
+                        downloadAddress.Add("DownloadToPath", localityUrl);
+                        downloadAddress.Add("ProductId", ProductId);
+                        downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
+                        DataMessageOperation messageOperation = new DataMessageOperation();
+                        Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
+                                                               downloadMessageContent);
+                        //if (downloadResult != null && !downloadResult["ReplyMode"].ToString().Equals("0"))
+                        //{
+                        //    VicMessageBoxNormal.Show(downloadResult["ReplyAlertMessage"].ToString(), "标题");
+                        //}
+                        //清空本地皮肤重新加载
+                        SystemThemeList.Clear();
+                        GetThemeSkinNum();
                     }
-                    string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
-                    Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
-                    Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
-                    downloadAddress.Add("DownloadFileId", model.FilePath);
-                    downloadAddress.Add("DownloadToPath", localityUrl);
-                    downloadAddress.Add("ProductId", ProductId);
-                    downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
-                    DataMessageOperation messageOperation = new DataMessageOperation();
-                    Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
-                                                           downloadMessageContent);
-                    if (downloadResult != null && !downloadResult["ReplyMode"].ToString().Equals("0"))
+                    catch (Exception ex)
                     {
-                        VicMessageBoxNormal.Show(downloadResult["ReplyAlertMessage"].ToString(), "标题");
+
+                        VicMessageBoxNormal.Show("下载皮肤异常");
                     }
-                    //清空本地皮肤重新加载
-                    SystemThemeList.Clear();
-                    GetThemeSkinNum();
+
                 });
             }
         }
+        /// <summary> 
+        /// 获取父级控件 
+        /// </summary> 
+        /// <typeparam name="T"></typeparam> 
+        /// <param name="obj"></param> 
+        /// <returns></returns> 
+        private T GetParentObject<T>(DependencyObject obj) where T : FrameworkElement
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(obj);
+            while (parent != null)
+            {
+                if (parent is T)
+                {
+                    return (T)parent;
+                }
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+            return null;
+        }
+
+        public T GetChildObjectByName<T>(DependencyObject obj, string name) where T : FrameworkElement
+        {
+            DependencyObject child = null;
+            T grandChild = null;
+            for (int i = 0; i <= VisualTreeHelper.GetChildrenCount(obj) - 1; i++)
+            {
+                child = VisualTreeHelper.GetChild(obj, i);
+                if (child is T && (((T)child).Name == name | string.IsNullOrEmpty(name)))
+                {
+                    return (T)child;
+                }
+                else
+                {
+                    grandChild = GetChildObjectByName<T>(child, name);
+                    if (grandChild != null)
+                        return grandChild;
+                }
+            }
+            return null;
+        }
+
         #endregion
 
         #region  选择不同壁纸分类展示相关壁纸列表
@@ -661,7 +857,362 @@ namespace ThemeManagerPlugin.ViewModels
         #endregion
 
         #region 私有方法
-        /// <summary>
+
+        #region 在线换肤分屏事件，方法
+        #region 左右按钮方法
+        private void imageOnlineRight_MouseLeave(object sender, MouseEventArgs e)
+        {
+            imageOnlineRight.Effect = null;
+        }
+
+       private void imageOnlineRight_MouseEnter(object sender, MouseEventArgs e)
+        {
+           // imageOnlineRight.Effect = new System.Windows.Media.Effects.DropShadowEffect();
+        }
+
+       private void imageOnlineLeft_MouseLeave(object sender, MouseEventArgs e)
+        {
+            imageOnlineLeft.Effect = null;
+        }
+
+       private void imageOnlineLeft_MouseEnter(object sender, MouseEventArgs e)
+        {
+            //imageOnlineLeft.Effect = new System.Windows.Media.Effects.DropShadowEffect();
+        }
+
+       private void imageOnlineRight_Click(object sender, RoutedEventArgs e)
+        {
+            sboardRightIamgeOnline.Begin();
+            ChangePageOnline(true);
+        }
+
+       private void imageOnlineLeft_Click(object sender, RoutedEventArgs e)
+        {
+            sboardLeftIamgeOnline.Begin();
+            ChangePageOnline(false);
+        }
+        #endregion
+
+        #region 容器事件
+      private void canvasPageContentOnline_MouseUp(object sender, MouseButtonEventArgs e)
+       {
+           Mouse.Capture(null);
+       }
+
+      private void canvasPageContentOnline_SizeChanged(object sender, SizeChangedEventArgs e)
+       {
+           canvasPageRectangleOnline.Rect = new Rect(0, 0, canvasPageContentOnline.ActualWidth, canvasPageContentOnline.ActualHeight);
+       }
+
+      private void canvasPageContentOnline_MouseLeave(object sender, MouseEventArgs e)
+       {
+           if (isDownOnline)
+           {
+               changePosOnline();
+           }
+       }
+
+      private void canvasPageContentOnline_PreviewMouseMove(object sender, MouseEventArgs e)
+       {
+           if (isDownOnline)
+           {
+               System.Windows.Point position = e.GetPosition(canvasPageContentOnline);
+               Canvas.SetLeft(wrapPanelPagesOnline, Canvas.GetLeft(wrapPanelPagesOnline) + (position.X - oldX));
+               oldX = position.X;
+
+               if (Math.Abs(down_pX - position.X) > 150)
+               {
+                   isMoveSureOnline = true;
+               }
+           }
+       }
+
+      private void canvasPageContentOnline_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+       {
+           if (isDownOnline)
+           {
+               e.Handled = isMoveSureOnline;
+               changePosOnline();
+           }
+       }
+
+      private void canvasPageContentOnline_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+       {
+           isDownOnline = true;
+           System.Windows.Point position = e.GetPosition(canvasPageContentOnline);
+           down_pX = position.X;
+           down_pY = position.Y;
+           oldX = down_pX;
+       }
+       #endregion
+
+        #region 翻页方法
+       #region 翻页实现
+       /// <summary>
+       /// 翻页实现
+       /// </summary>
+       /// <param name="page"></param>
+       /// <param name="needAnimation"></param>
+       private void ChangePageOnline(bool isRight)
+       {
+           try
+           {
+               double pageWidth = canvasPageContentOnline.ActualWidth;
+               lock (changeLockOnline)
+               {
+                   if (isInMoveOnline)
+                       return;
+                   isInMoveOnline = true;
+               }
+               if (isRight)
+               {
+                   if (pageSelectOnline == totalPageOnline)
+                   {
+                       lock (changeLockOnline)
+                       {
+                           isInMoveOnline = false;
+                       }
+                       return;
+                   }
+                   else
+                   {
+
+                       isInMoveOnline = true;
+                       double listLeft_now = Canvas.GetLeft(wrapPanelPagesOnline);
+                       double listLeft_sur = -(pageSelectOnline - 1) * pageWidth;
+                       double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                       double toX = -pageWidth;
+                       double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                       sboardRightBeginOnline(formX, toX, time);
+                   }
+               }
+               else
+               {
+                   if (pageSelectOnline == 1)
+                   {
+                       lock (changeLockOnline)
+                       {
+                           isInMoveOnline = false;
+                       }
+                       return;
+                   }
+                   else
+                   {
+                       isInMoveOnline = true;
+                       double listLeft_now = Canvas.GetLeft(wrapPanelPagesOnline);
+                       double listLeft_sur = -(pageSelectOnline - 1) * pageWidth;
+                       //启动左翻动画-翻页
+                       double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                       double toX = pageWidth;
+                       double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                       sboardLeftBeginOnline(formX, toX, time);
+                   }
+               }
+           }
+           catch (Exception ex)
+           {
+
+               VicMessageBoxNormal.Show("下一页异常，请稍后重试");
+           }
+       }
+       #endregion
+
+       #region 改变翻页按钮状态
+       /// <summary>
+       /// 改变翻页按钮状态
+       /// </summary>
+       private void ChangeButtonStatusOnline()
+       {
+           if (totalPageOnline == 0)
+           {
+               return;
+           }
+           if (pageSelectOnline == 1 && totalPageOnline == 1)
+           {
+               imageOnlineLeft.Visibility = System.Windows.Visibility.Hidden;
+               imageOnlineRight.Visibility = System.Windows.Visibility.Hidden;
+           }
+           else if (pageSelectOnline == 1 && totalPageOnline > 1)
+           {
+               imageOnlineLeft.Visibility = System.Windows.Visibility.Hidden;
+               imageOnlineRight.Visibility = System.Windows.Visibility.Visible;
+           }
+           else
+           {
+               if (pageSelectOnline == totalPageOnline)
+               {
+                   imageOnlineLeft.Visibility = System.Windows.Visibility.Visible;
+                   imageOnlineRight.Visibility = System.Windows.Visibility.Hidden;
+               }
+               else
+               {
+                   imageOnlineLeft.Visibility = System.Windows.Visibility.Visible;
+                   imageOnlineRight.Visibility = System.Windows.Visibility.Visible;
+               }
+           }
+       }
+       #endregion
+
+       //左翻动画
+       private void sboardLeftBeginOnline(double formX, double toX, double time)
+       {
+           sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+           sboardOnline.Completed += sboardLeft_CompletedOnline;
+           sboardOnline.Begin();
+       }
+
+       //右翻动画
+       private void sboardRightBeginOnline(double formX, double toX, double time)
+       {
+           sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+           sboardOnline.Completed += sboardRight_CompletedOnline;
+           sboardOnline.Begin();
+       }
+
+       //翻页回滚结束
+       private void sboardNoChange_CompletedOnline(object sender, EventArgs e)
+       {
+           lock (changeLockOnline)
+           {
+               isInMoveOnline = false;
+           }
+       }
+
+       //右翻页结束
+       private void sboardRight_CompletedOnline(object sender, EventArgs e)
+       {
+           pageSelectOnline++;
+           pageBarOnline.SelectPage(pageSelect);
+           sboardOnline.Stop();
+          // ChangeButtonStatusOnline();
+           Canvas.SetLeft(wrapPanelPagesOnline, -(pageSelectOnline - 1) * canvasPageContentOnline.ActualWidth);
+           lock (changeLockOnline)
+           {
+               isInMoveOnline = false;
+           }
+       }
+
+       //左翻页结束
+       private void sboardLeft_CompletedOnline(object sender, EventArgs e)
+       {
+           pageSelectOnline--;
+           pageBarOnline.SelectPage(pageSelect);
+           sboardOnline.Stop();
+          // ChangeButtonStatusOnline();
+           Canvas.SetLeft(wrapPanelPagesOnline, -(pageSelectOnline - 1) * canvasPageContentOnline.ActualWidth);
+           lock (changeLockOnline)
+           {
+               isInMoveOnline = false;
+           }
+       }
+
+       
+       private void changePosOnline()
+       {
+           try
+           {
+               double pageWidth = canvasPageContentOnline.ActualWidth;
+               isDownOnline = false;
+               isMoveSureOnline = false;
+               double listLeft_now = Canvas.GetLeft(wrapPanelPagesOnline);
+               double listLeft_sur = -(pageSelectOnline - 1) * pageWidth;
+               if (listLeft_now < listLeft_sur)
+               {
+                   if (pageSelectOnline == totalPageOnline)
+                   {
+                       isInMoveOnline = true;
+                       double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                       double toX = 0;
+                       double time = 1000 * Math.Abs(formX) / pageWidth;
+                       Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
+                       sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+                       sboardOnline.Completed += sboardNoChange_CompletedOnline;
+                       sboardOnline.Begin();
+                   }
+                   else
+                   {
+                       bool SureRight = false;
+                       double dis = Math.Abs(listLeft_now - listLeft_sur);
+                       if (dis >= 150)
+                           SureRight = true;
+                       if (SureRight)
+                       {
+                           isInMoveOnline = true;
+                           double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                           double toX = -pageWidth;
+                           double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                           Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
+                           sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+                           sboardOnline.Completed += sboardNoChange_CompletedOnline;
+                           sboardOnline.Begin();
+                       }
+                       else
+                       {
+                           isInMoveOnline = true;
+                           double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                           double toX = 0;
+                           double time = 1000 * Math.Abs(formX) / pageWidth;
+                           Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
+                           sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+                           sboardOnline.Completed += sboardNoChange_CompletedOnline;
+                           sboardOnline.Begin();
+                       }
+                   }
+               }
+               else
+               {
+                   if (pageSelectOnline == 1)
+                   {
+                       isInMove = true;
+                       double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                       double toX = 0;
+                       double time = 1000 * Math.Abs(formX) / pageWidth;
+                       Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
+                       sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+                       sboardOnline.Completed += sboardNoChange_CompletedOnline;
+                       sboardOnline.Begin();
+                   }
+                   else
+                   {
+                       bool SureLeft = false;
+                       double dis = Math.Abs(listLeft_now - listLeft_sur);
+                       if (dis >= 150)
+                           SureLeft = true;
+                       if (SureLeft)
+                       {
+                           isInMove = true;
+                           double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                           double toX = pageWidth;
+                           double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                           Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
+                           sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+                           sboardOnline.Completed += sboardNoChange_CompletedOnline;
+                           sboardOnline.Begin();
+                       }
+                       else
+                       {
+                           isInMoveOnline = true;
+                           double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                           double toX = 0;
+                           double time = 1000 * Math.Abs(formX) / pageWidth;
+                           Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
+                           sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+                           sboardOnline.Completed += sboardNoChange_CompletedOnline;
+                           sboardOnline.Begin();
+                       }
+                   }
+               }
+           }
+           catch (Exception ex)
+           {
+
+               VicMessageBoxNormal.Show("滑动分屏异常，请稍后重试");
+           }
+       }
+       #endregion
+        #endregion
+
+       /// <summary>
         /// 主题皮肤改变发送消息
         /// </summary>
         /// <param name="model"></param>
@@ -853,6 +1404,8 @@ namespace ThemeManagerPlugin.ViewModels
 
         }
 
+        #region 在线皮肤方法及事件
+
         #region 在线皮肤分类
         private void GetOnLineCategory()
         {
@@ -888,9 +1441,11 @@ namespace ThemeManagerPlugin.ViewModels
             }
         }
         #endregion
+
         #region 在线皮肤展示
         private void GetOnLineTheme(string categoryNo)
         {
+           
             DataMessageOperation messageOp = new DataMessageOperation();
             string channelId = string.Empty;
             string MessageType = "MongoDataChannelService.findBusiData";
@@ -916,7 +1471,17 @@ namespace ThemeManagerPlugin.ViewModels
                 DataTable dt = MenuDs.Tables["dataArray"];
                 foreach (DataRow row in dt.Rows)
                 {
-                    OnLineModel model = new OnLineModel();
+                   OnLineModel model = new OnLineModel();
+                   List<ThemeModel> themeList = SystemThemeList.Where(s => s.SkinName == row["skin_name"].ToString()).ToList();
+                   if (themeList != null && themeList.Count > 0)
+                   {
+                       model.StateType = true;
+                       model.StateChange = 2;
+                   }
+                   else {
+                       model.StateType = false;
+                       model.StateChange =1;
+                   }
                     string previewUrl = ConfigurationManager.AppSettings.Get("downloadfilehttp") + "getfile?id=" + row["img_url"] + "&productid=" + ProductId;
 
                     model.OnLineNo = row["skin_no"].ToString();
@@ -935,7 +1500,75 @@ namespace ThemeManagerPlugin.ViewModels
         }
         #endregion
 
-        #region 分屏方法
+        #region 在线分屏方法
+        private void setOnlineInit(int totalPageOnline)
+        {
+            try
+            {
+                //设置wrapPanelPages宽度
+                //canvasPageContentOnline.Children.Clear();
+                wrapPanelPagesOnline.Width = canvasPageContentOnline.ActualWidth * totalPageOnline;
+                wrapPanelPagesOnline.Children.Clear();
+                SumPageThemeListOnline.Clear();
+                for (int i = 0; i < SystemOnLineList.Count; i++)
+                {
+                    SumPageThemeListOnline.Add(SystemOnLineList[i]);
+                }
+                int articleWindowCount = SumPageThemeListOnline.Count;
+
+                for (int i = 0; i < totalPageOnline; i++)
+                {
+                    WrapPanel rectangle = new WrapPanel();
+                    rectangle.Children.Clear();
+                    rectangle.Orientation = Orientation.Vertical;
+                    rectangle.Width = 960;
+                    rectangle.Height = 460;
+                    ObservableCollection<OnLineModel> currentPageList = new ObservableCollection<OnLineModel>();
+                    lbox = new ListBox();
+                    if (articleWindowCount > 0)
+                    {
+                        foreach (var menuModel in SystemOnLineList.Skip(i * pageSize).Take(pageSize).ToList<OnLineModel>())
+                        {
+                            if (menuModel != null)
+                            {
+                                currentPageList.Add(menuModel);
+                            }
+                        }
+                    }
+                    lbox.ItemsSource = currentPageList;
+                    lbox.SelectedItem = SelectedListBoxItem;
+                    //lbox.SelectionChanged += lbox_SelectionChanged;
+                    lbox.SetResourceReference(ListBox.StyleProperty, "RadioButtonOnLineListStyle");
+                    rectangle.Children.Add(lbox);
+
+                    Viewbox viewbox = new Viewbox();
+                    viewbox.Stretch = Stretch.Fill;
+                    viewbox.Width = canvasPageContentOnline.ActualWidth;
+                    viewbox.Height = canvasPageContentOnline.ActualHeight;
+                    viewbox.Child = rectangle;
+                    wrapPanelPagesOnline.Children.Add(viewbox);
+                }
+
+                //改变页   pageSelect = defaultPageNum;
+                if (pageSelectOnline > totalPageOnline)
+                    pageSelectOnline = totalPageOnline;
+                if (pageSelectOnline == 0)
+                    pageSelectOnline = 1;
+                Canvas.SetLeft(wrapPanelPagesOnline, -canvasPageContentOnline.ActualWidth * (pageSelectOnline - 1));
+                pageBarOnline.CreatePageEllipse(totalPageOnline);
+                pageBarOnline.SelectPage(pageSelectOnline);
+                pageBarOnline.Visibility = System.Windows.Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+
+                VicMessageBoxNormal.Show("加载在线皮肤异常，请稍后重试");
+            }
+        }
+        #endregion
+        #endregion
+
+        #region 本地皮肤分屏方法
         private void setInit(int totalPage)
         {
             //设置wrapPanelPages宽度
@@ -951,7 +1584,7 @@ namespace ThemeManagerPlugin.ViewModels
             {
                 WrapPanel rectangle = new WrapPanel();
                 rectangle.Orientation = Orientation.Vertical;
-                rectangle.Width = 700;
+                rectangle.Width = 960;
                 rectangle.Height = 460;
                 ObservableCollection<ThemeModel> currentPageList = new ObservableCollection<ThemeModel>();
                 ListBox lbox = new ListBox();

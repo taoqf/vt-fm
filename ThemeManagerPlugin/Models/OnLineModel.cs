@@ -25,6 +25,38 @@ namespace ThemeManagerPlugin.Models
             }
         }
         /// <summary>
+        /// 状态改变
+        /// </summary>
+        private int stateChange;
+        public int StateChange
+        {
+            get { return stateChange; }
+            set
+            {
+                if (stateChange != value)
+                {
+                    stateChange = value;
+                    RaisePropertyChanged("StateChange");
+                }
+            }
+        }
+        /// <summary>
+        /// 状态
+        /// </summary>
+        private bool stateType;
+        public bool StateType
+        {
+            get { return stateType; }
+            set
+            {
+                if (stateType != value)
+                {
+                    stateType = value;
+                    RaisePropertyChanged("StateType");
+                }
+            }
+        }
+        /// <summary>
         /// 皮肤名称
         /// </summary>
         private string onLineName;

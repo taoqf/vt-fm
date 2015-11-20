@@ -34,49 +34,55 @@ namespace Victop.Frame.Connection
             CloudGalleryInfo cloudGallyInfo = galleryManager.GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
             LoginUserInfoModel loginUserInfo = cloudGallyInfo.ClientInfo;
             #endregion
-            try
+            if (cloudGallyInfo.IsLogin)
             {
-                Dictionary<string, object> dicContent = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
-                bool opFlag = false;
-                if (CoreDataCollection.ClientMessageTypeList.NoneMessageType.Contains(messageInfo.MessageType))
+                try
                 {
-                    opFlag = true;
-                }
-                if (!opFlag && CoreDataCollection.ClientMessageTypeList.SearchMessageType.Contains(messageInfo.MessageType))
-                {
-                    dicContent = GetFindMongoTableDataMessage(dicContent);
-                    replyIsToChannel = DataOperateEnum.SAVE;
-                    opFlag = true;
-                }
-                if (!opFlag && CoreDataCollection.ClientMessageTypeList.SaveMessageType.Contains(messageInfo.MessageType))
-                {
-                    dicContent = GetSaveMongoTableDataMessage(dicContent);
-                    replyIsToChannel = DataOperateEnum.COMMIT;
-                    opFlag = true;
-                }
-                else if (messageInfo.MessageType.Equals("taskScheduler"))
-                {
-                    Dictionary<string, object> dicMessageControl = new Dictionary<string, object>();
-                    dicMessageControl.Add("reply", 1);
-                    messageInfo.MessageControl = JsonHelper.ToJson(dicMessageControl);
-                    if (dicContent != null && dicContent.ContainsKey("runserver"))
+                    Dictionary<string, object> dicContent = JsonHelper.ToObject<Dictionary<string, object>>(messageInfo.MessageContent);
+                    bool opFlag = false;
+                    if (CoreDataCollection.ClientMessageTypeList.NoneMessageType.Contains(messageInfo.MessageType))
                     {
-                        dicContent["runserver"] = messageInfo.MessageId;
+                        opFlag = true;
                     }
+                    if (!opFlag && CoreDataCollection.ClientMessageTypeList.SearchMessageType.Contains(messageInfo.MessageType))
+                    {
+                        dicContent = GetFindMongoTableDataMessage(dicContent);
+                        replyIsToChannel = DataOperateEnum.SAVE;
+                        opFlag = true;
+                    }
+                    if (!opFlag && CoreDataCollection.ClientMessageTypeList.SaveMessageType.Contains(messageInfo.MessageType))
+                    {
+                        dicContent = GetSaveMongoTableDataMessage(dicContent);
+                        replyIsToChannel = DataOperateEnum.COMMIT;
+                        opFlag = true;
+                    }
+                    else if (messageInfo.MessageType.Equals("postServiceIntranet"))
+                    {
+                        Dictionary<string, object> dicMessageControl = new Dictionary<string, object>();
+                        if (dicContent != null && dicContent.ContainsKey("doccode"))
+                        {
+                            dicMessageControl.Add("BusinessKey", dicContent["doccode"]);
+                        }
+                        messageInfo.MessageControl = JsonHelper.ToJson(dicMessageControl);
+                    }
+                    if (!dicContent.ContainsKey("spaceid"))
+                    {
+                        dicContent.Add("spaceid", cloudGallyInfo.ClientId);
+                    }
+                    if (dicContent != null && !dicContent.ContainsKey("usercode"))
+                    {
+                        dicContent.Add("usercode", loginUserInfo.UserCode);
+                    }
+                    messageInfo.MessageContent = JsonHelper.ToJson(dicContent);
                 }
-                if (!dicContent.ContainsKey("spaceid"))
+                catch (Exception)
                 {
-                    dicContent.Add("spaceid", cloudGallyInfo.ClientId);
+                    return messageInfo;
                 }
-                if (dicContent != null && !dicContent.ContainsKey("usercode"))
-                {
-                    dicContent.Add("usercode", loginUserInfo.UserCode);
-                }
-                messageInfo.MessageContent = JsonHelper.ToJson(dicContent);
             }
-            catch (Exception)
+            else
             {
-                return messageInfo;
+                replyIsToChannel = DataOperateEnum.CANNEL;
             }
             return messageInfo;
         }

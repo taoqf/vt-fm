@@ -43,16 +43,7 @@ namespace Victop.Frame.DataChannel
         public virtual bool SaveData(string channelId, string dataPath)
         {
             DataConvertManager convertManager = new DataConvertManager();
-            if (convertManager.SaveData(channelId, dataPath))
-            {
-                //TODO:调用JS方法检查操作的数据权限，传入CurdList数据,数据权限数据
-                return convertManager.CheckDataAuthority(channelId);
-                //return true;
-            }
-            else
-            {
-                return false;
-            }
+            return convertManager.SaveData(channelId, dataPath);
 
         }
         /// <summary>

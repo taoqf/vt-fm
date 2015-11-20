@@ -59,7 +59,7 @@ namespace Victop.Frame.Adapter
                         if (pluginInfo != null)
                         {
                             IPlugin pluginInstance = pluginInfo.PluginInstance as IPlugin;
-                            pluginInstance.ParamDict["result"] = result;
+                            pluginInstance.ParamDict["result"] = requestMessage.MessageControl;
                             pluginInstance.Init();
                         }
                     }

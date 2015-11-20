@@ -1,7 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls">
+                    xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
+                    xmlns:converters="clr-namespace:VictopPartner">
 
+    <converters:VisibilityConverter x:Key="visibilityConverter"/>
+    <converters:VisibilityConverterEx x:Key="visibilityConverterEx"></converters:VisibilityConverterEx>
     <Style x:Key="WindowChangeSkinBackground" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
 
@@ -134,6 +137,43 @@
         </Style.Triggers>
     </Style>
 
+
+
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontSize" Value="14"></Setter>
+        <Setter Property="MinWidth" Value="30"></Setter>
+        <Setter Property="Height" Value="31"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+
+                    <Border Background="Yellow" CornerRadius="20" Width="25" Height="25">
+                        <Path Fill="{DynamicResource SkinColor}" HorizontalAlignment="Center" 
+                                                  StrokeThickness="0" 
+                                                  VerticalAlignment="Top"  
+                                                  Margin="8.383,10.541,0,0" 
+                                                  Data="M0,0 L12,0 12,0.38199188 12.230031,0.36226721 12.913506,8.3330173 10.920817,8.5038862 10.363123,2 0,2 z" 
+                                                  Height="8.504" 
+                                                  RenderTransformOrigin="0.464629838490983,0.117593290001535" 
+                                                  Stretch="Fill" 
+                                                  Width="12.914">
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform/>
+                                                <SkewTransform/>
+                                                <RotateTransform Angle="135.502"/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                    </Path>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style  x:Key="RadioButtonOnLineListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
@@ -150,7 +190,7 @@
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    <Setter Property="Margin"  Value="10"/>
+                    <Setter Property="Margin"  Value="10,15"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -167,23 +207,43 @@
                                     </Storyboard>
                                 </ControlTemplate.Resources>
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-                                    <Border Name="border" BorderBrush="Transparent"  BorderThickness="0" Height="122" Width="203">
+                                    <Border Name="border" BorderBrush="Transparent" Background="{DynamicResource DefaultSkin}" BorderThickness="1" Height="122" Width="203">
                                         <Border.ToolTip>
                                             <ToolTip Style="{DynamicResource ToolTipStyle}" Content="{Binding OnLineName}"></ToolTip>
                                         </Border.ToolTip>
-                                        <Border.Background>
-                                            <ImageBrush ImageSource="{Binding OnLinePreview}" Stretch="UniformToFill"/>
-                                        </Border.Background>
+                                        <!--<Border.Background>
+                                            <ImageBrush ImageSource="{DynamicResource DefaultSkin}" Stretch="Uniform"/>
+                                        </Border.Background>-->
 
-                                        <Border Name="borderSelect" Opacity="0" Background="Transparent"  Height="10" Margin="10,0,0,0"  Width="100">
-                                            <ProgressBar x:Name="progressBar" Value="{Binding CurrentRate}" Style="{DynamicResource progressBarStyle}">
+                                        <Grid Height="122" Width="203">
+                                            <Grid.Background>
+                                                <ImageBrush ImageSource="{Binding OnLinePreview}" Stretch="UniformToFill"/>
+                                            </Grid.Background>
+
+                                            <StackPanel Name="borderSelect" Opacity="0"  Background="Transparent"  HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <controls:VicButtonNormal  Width="75" Tag="{Binding StateChange}" Height="25" x:Name="btnDown" Content="下载"
+                                                                      Command="{Binding DataContext.btnOnLineDownloadCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                         CommandParameter="{Binding .}">
+
+                                            </controls:VicButtonNormal>
+
+                                            <ProgressBar x:Name="progressBar" Visibility="Collapsed"  Value="{Binding CurrentRate}" Style="{DynamicResource progressBarStyle}">
 
                                             </ProgressBar>
-                                        </Border>
+                                                <controls:VicButtonNormal Tag="{Binding StateChange}" x:Name="btnUse" Content="应用" Width="75" Height="25"
+                                             Command="{Binding DataContext.btnOnLineUseCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                         CommandParameter="{Binding .}" />
+                                                <Button Name="btnAccomplish" Tag="{Binding StateChange}" Style="{DynamicResource btnStyle}" Command="{Binding DataContext.btnOnLineUseCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                         CommandParameter="{Binding .}" Content="完成" Width="25" Height="25"></Button>
+                                        </StackPanel>
+                                        </Grid>
                                     </Border>
 
                                     <!--<Grid>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    
+                                     Visibility="{Binding StateType,Converter={StaticResource visibilityConverter}}"
+                                    
                                             <controls:VicButtonNormal BorderThickness="0"  Content="应用" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30" VerticalAlignment="Center"
                                              Command="{Binding DataContext.btnOnLineUseCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                          CommandParameter="{Binding .}" />
@@ -200,19 +260,36 @@
                                         <Setter Property="BorderBrush" Value="Yellow" TargetName="border"/>
                                         <Setter Property="BorderThickness" Value="3" TargetName="border"/>
                                         <Setter Property="CornerRadius" Value="5" TargetName="border"></Setter>
+                                        <Setter Property="Opacity" TargetName="borderSelect"  Value="1"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true" >
                                         <Setter Property="BorderBrush" TargetName="border"  Value="Yellow"/>
-                                        <Setter Property="Opacity" TargetName="borderSelect"  Value="1"/>
+                                        <Setter Property="BorderThickness" Value="3" TargetName="border"/>
+                                        <Setter Property="CornerRadius" Value="5" TargetName="border"></Setter>
                                     </Trigger>
-                                    <MultiTrigger>
+                                    <!--<MultiTrigger>
                                         <MultiTrigger.EnterActions>
                                             <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
                                         </MultiTrigger.EnterActions>
                                         <MultiTrigger.Conditions>
                                             <Condition Property="IsSelected" Value="True"/>
                                         </MultiTrigger.Conditions>
-                                    </MultiTrigger>
+                                    </MultiTrigger>-->
+                                    <DataTrigger Binding="{Binding ElementName=btnDown,Path=Tag}" Value="1">
+                                        <Setter TargetName="btnDown" Property="Visibility" Value="Visible"></Setter>
+                                        <Setter TargetName="btnUse" Property="Visibility" Value="Collapsed"></Setter>
+                                        <Setter TargetName="btnAccomplish" Property="Visibility" Value="Collapsed"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=btnUse,Path=Tag}" Value="2">
+                                        <Setter TargetName="btnUse" Property="Visibility" Value="Visible"></Setter>
+                                        <Setter TargetName="btnDown" Property="Visibility" Value="Collapsed"></Setter>
+                                        <Setter TargetName="btnAccomplish" Property="Visibility" Value="Collapsed"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=btnAccomplish,Path=Tag}" Value="3">
+                                        <Setter TargetName="btnAccomplish" Property="Visibility" Value="Visible"></Setter>
+                                        <Setter TargetName="btnDown" Property="Visibility" Value="Collapsed"></Setter>
+                                        <Setter TargetName="btnUse" Property="Visibility" Value="Collapsed"></Setter>
+                                    </DataTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -314,13 +391,14 @@
     <!--壁纸分类样式控制开始-->
     <Style  x:Key="RadioButtonWallPaperCategoryListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility"   Value="Auto"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
-                    <WrapPanel Orientation="Horizontal" IsItemsHost="True" />
+                    <WrapPanel Margin="30,0,0,0" Orientation="Horizontal" IsItemsHost="True" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -328,12 +406,12 @@
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    <Setter Property="Margin"  Value="10"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}"  BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-                                    <ContentPresenter  Content="{Binding Category_Name}" Width="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <Border x:Name="Bd" Margin="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"  SnapsToDevicePixels="True">
+                                    <!--<ContentPresenter  Content="{Binding Category_Name}" Width="40"  VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+                                    <TextBlock Text="{Binding Category_Name}" Padding="7,3,0,0" Width="40" Height="20"  HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="true">
@@ -466,27 +544,25 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
-                    <Grid SnapsToDevicePixels="true" Margin="5">
-                        <Border x:Name="Bd" BorderBrush="Transparent" BorderThickness="1"  Background="{TemplateBinding Background}" Padding="10,5,10,15">
-                            <ContentPresenter x:Name="Content" ContentSource="Header" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                    <Grid SnapsToDevicePixels="true" Margin="3,0">
+                        <Border x:Name="Bd" Width="100"  Height="30" BorderBrush="#FFFDDA" BorderThickness="1"  Background="#FFFDDA">
+                            <ContentPresenter x:Name="Content" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header"/>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="Background" TargetName="Bd" Value="{StaticResource TabItemHotBackground}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Panel.ZIndex" Value="1"/>
                             <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="Background" TargetName="Bd">
-                                <Setter.Value>
-                                    <VisualBrush>
-                                        <VisualBrush.Visual>
-                                            <Path Grid.Row="1" Fill="{DynamicResource SkinColor}" Data="M173.75,114.5 C174.62503,115.24951 245.50038,114.50034 246.25,114.25 246.99962,113.99966 250.25,116.5 249.625,117.625 249.84422,118.78026 249.65636,148.30505 249.25,147.75 250.37432,147.24982 246.75036,151.37516 246.5,150.625 246.24964,149.87484 214.83333,150.70833 199,150.75 L194,166.25 184.5,151.375 C180.58333,151.25 172.62502,151.62515 172.75,151 172.16613,150.9058 169.44043,149.58516 169.625,147.5 L169.875,117 C169.37506,115.62451 172.87497,113.75049 173.75,114.5 z" HorizontalAlignment="Left" Height="60" Margin="169.616,114.233,0,0" Stretch="Fill" Stroke="{DynamicResource SkinColor}" VerticalAlignment="Top" Width="100"/>
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -557,7 +633,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="PART_Border"   BorderThickness="0"  Background="Transparent">
-                        <Path Grid.Row="1" Data="M148,185 C172.5,165.83333 219.5,130.5 221.5,127.5 223.5,124.5 226.83333,132.16667 229.5,134.5 L191.5,186.5 228.5,239.5 220.5,244.5 145.5,188.5" Fill="{DynamicResource SkinColor}"  HorizontalAlignment="Left" Height="20"  Stretch="Fill" Stroke="{DynamicResource SkinColor}" VerticalAlignment="Top" Width="10" />
+                        <Path Grid.Row="1" Data="M148,185 C172.5,165.83333 219.5,130.5 221.5,127.5 223.5,124.5 226.83333,132.16667 229.5,134.5 L191.5,186.5 228.5,239.5 220.5,244.5 145.5,188.5" Fill="{DynamicResource SkinColor}"  HorizontalAlignment="Left" Height="30"  Stretch="Fill" Stroke="{DynamicResource SkinColor}" VerticalAlignment="Top" Width="20" />
                     </Border>
 
                 </ControlTemplate>
@@ -573,7 +649,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="PART_Border"   BorderThickness="0"  Background="Transparent">
-                        <Path Grid.Row="1"  Data="M387,223 L349.5,277.5 358.5,283.5 430.5,224.5 358.5,164.5 348.5,169.5 z" Fill="{DynamicResource SkinColor}"  HorizontalAlignment="Left" Height="20"  Stretch="Fill" Stroke="{DynamicResource SkinColor}" VerticalAlignment="Top" Width="10" />
+                        <Path Grid.Row="1"  Data="M387,223 L349.5,277.5 358.5,283.5 430.5,224.5 358.5,164.5 348.5,169.5 z" Fill="{DynamicResource SkinColor}"  HorizontalAlignment="Left" Height="30"  Stretch="Fill" Stroke="{DynamicResource SkinColor}" VerticalAlignment="Top" Width="20" />
                     </Border>
 
                 </ControlTemplate>

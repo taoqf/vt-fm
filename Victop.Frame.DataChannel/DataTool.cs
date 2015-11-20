@@ -13,6 +13,7 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Noesis.Javascript;
+using Victop.Frame.DataChannel.Models;
 
 namespace Victop.Frame.DataChannel
 {
@@ -390,127 +391,157 @@ namespace Victop.Frame.DataChannel
                 {
                     return false;
                 }
-                Dictionary<string, object> curdDic = new Dictionary<string, object>();
-                curdDic.Add("flag", rowState);
-                curdDic.Add("path", dataPath);
-                curdDic.Add("rowdata", saveData);
-                DataOperation dataOp = new DataOperation();
-                switch (rowState)
-                {
-                    case OpreateStateEnum.Added:
-                        List<object> addCurdList = dataOp.GetCurdJSONData(viewId);
-                        if (addCurdList == null)
-                        {
-                            addCurdList = new List<object>();
-                            addCurdList.Add(curdDic);
-                        }
-                        else
-                        {
-                            bool addFalg = true;
-                            foreach (Dictionary<string, object> item in addCurdList)
-                            {
-                                if (item["flag"].ToString().Equals(curdDic["flag"].ToString()) && JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
-                                {
-                                    Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
-                                    if (rowDataDic["_id"].ToString().Equals(saveData["_id"].ToString()))
-                                    {
-                                        addFalg = false;
-                                        break;
-                                    }
-                                }
-                            }
-                            if (addFalg)
-                            {
-                                addCurdList.Add(curdDic);
-                            }
-                        }
-                        dataOp.SaveCurdJSONData(viewId, addCurdList);
-
-                        break;
-                    case OpreateStateEnum.Modified:
-                        curdDic.Add("origindata", originalData);
-                        List<object> modCurdList = dataOp.GetCurdJSONData(viewId);
-                        if (modCurdList == null)
-                        {
-                            modCurdList = new List<object>();
-                            modCurdList.Add(curdDic);
-                        }
-                        bool modFlag = true;
-                        //TODO:修改是增加对修改内总键值的判断，若cud池中已经存在键，则将新的值存入其中，若没有，则将新的键值加入对应的rowdata中
-                        foreach (Dictionary<string, object> item in modCurdList)
-                        {
-                            if (JsonHelper.ToJson(item["path"]) == JsonHelper.ToJson(dataPath))
-                            {
-                                Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
-                                if (rowDataDic["_id"].ToString().Equals(saveData["_id"].ToString()))
-                                {
-                                    item["rowdata"] = saveData;
-                                    modFlag = false;
-                                    break;
-                                }
-                            }
-                        }
-                        if (modFlag)
-                        {
-                            modCurdList.Add(curdDic);
-                        }
-                        dataOp.SaveCurdJSONData(viewId, modCurdList);
-                        break;
-                    case OpreateStateEnum.Deleted:
-                        List<object> delCurdList = dataOp.GetCurdJSONData(viewId);
-                        if (delCurdList == null || delCurdList.Count <= 0)
-                        {
-                            delCurdList = new List<object>();
-                            delCurdList.Add(curdDic);
-                        }
-                        List<object> newCurdList = new List<object>();
-                        foreach (var item in delCurdList)
-                        {
-                            newCurdList.Add(item);
-                        }
-                        bool existFlag = false;
-                        foreach (Dictionary<string, object> item in delCurdList)
-                        {
-                            if (item["flag"].ToString().Equals("4") && JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
-                            {
-                                Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
-                                string delKey = rowDataDic["_id"].ToString();
-                                if (saveData["_id"].ToString().Equals(delKey))
-                                {
-                                    newCurdList.Remove(item);
-                                    break;
-                                }
-                            }
-                            else if (JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
-                            {
-                                Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
-                                string delKey = rowDataDic["_id"].ToString();
-                                if (saveData["_id"].ToString().Equals(delKey))
-                                {
-                                    newCurdList.Remove(item);
-                                    newCurdList.Add(curdDic);
-                                    existFlag = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if (!existFlag)
-                        {
-                            newCurdList.Add(curdDic);
-                        }
-                        dataOp.SaveCurdJSONData(viewId, newCurdList);
-                        break;
-                    case OpreateStateEnum.None:
-                        break;
-                    default:
-                        break;
-                }
+                UpdateCurdList(viewId, dataPath, saveData, originalData, rowState);
             }
             catch (Exception ex)
             {
                 LoggerHelper.InfoFormat("curd保存异常:{0}", ex.Message);
             }
             return true;
+        }
+
+        private static void UpdateCurdList(string viewId, List<object> dataPath, Dictionary<string, object> saveData, Dictionary<string, object> originalData, OpreateStateEnum rowState)
+        {
+            Dictionary<string, object> curdDic = new Dictionary<string, object>();
+            curdDic.Add("flag", rowState);
+            curdDic.Add("path", dataPath);
+            curdDic.Add("rowdata", saveData);
+            DataOperation dataOp = new DataOperation();
+            switch (rowState)
+            {
+                case OpreateStateEnum.Added:
+                    List<object> addCurdList = dataOp.GetCurdJSONData(viewId);
+                    if (addCurdList == null)
+                    {
+                        addCurdList = new List<object>();
+                        addCurdList.Add(curdDic);
+                    }
+                    else
+                    {
+                        bool addFalg = true;
+                        foreach (Dictionary<string, object> item in addCurdList)
+                        {
+                            if (item["flag"].ToString().Equals(curdDic["flag"].ToString()) && JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
+                            {
+                                Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
+                                if (rowDataDic["_id"].ToString().Equals(saveData["_id"].ToString()))
+                                {
+                                    addFalg = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (addFalg)
+                        {
+                            addCurdList.Add(curdDic);
+                        }
+                    }
+                    dataOp.SaveCurdJSONData(viewId, addCurdList);
+
+                    break;
+                case OpreateStateEnum.Modified:
+                    curdDic.Add("origindata", originalData);
+                    List<object> modCurdList = dataOp.GetCurdJSONData(viewId);
+                    if (modCurdList == null)
+                    {
+                        modCurdList = new List<object>();
+                        modCurdList.Add(curdDic);
+                    }
+                    bool modFlag = true;
+                    //TODO:修改是增加对修改内总键值的判断，若cud池中已经存在键，则将新的值存入其中，若没有，则将新的键值加入对应的rowdata中
+                    foreach (Dictionary<string, object> item in modCurdList)
+                    {
+                        if (JsonHelper.ToJson(item["path"]) == JsonHelper.ToJson(dataPath))
+                        {
+                            Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
+                            if (rowDataDic["_id"].ToString().Equals(saveData["_id"].ToString()))
+                            {
+                                item["rowdata"] = saveData;
+                                modFlag = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (modFlag)
+                    {
+                        modCurdList.Add(curdDic);
+                    }
+                    dataOp.SaveCurdJSONData(viewId, modCurdList);
+                    break;
+                case OpreateStateEnum.Deleted:
+                    List<object> delCurdList = dataOp.GetCurdJSONData(viewId);
+                    if (delCurdList == null || delCurdList.Count <= 0)
+                    {
+                        delCurdList = new List<object>();
+                        delCurdList.Add(curdDic);
+                    }
+                    List<object> newCurdList = new List<object>();
+                    foreach (var item in delCurdList)
+                    {
+                        newCurdList.Add(item);
+                    }
+                    bool existFlag = false;
+                    foreach (Dictionary<string, object> item in delCurdList)
+                    {
+                        if (item["flag"].ToString().Equals("4") && JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
+                        {
+                            Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
+                            string delKey = rowDataDic["_id"].ToString();
+                            if (saveData["_id"].ToString().Equals(delKey))
+                            {
+                                newCurdList.Remove(item);
+                                break;
+                            }
+                        }
+                        else if (JsonHelper.ToJson(item["path"]).Equals(JsonHelper.ToJson(curdDic["path"])))
+                        {
+                            Dictionary<string, object> rowDataDic = item["rowdata"] as Dictionary<string, object>;
+                            string delKey = rowDataDic["_id"].ToString();
+                            if (saveData["_id"].ToString().Equals(delKey))
+                            {
+                                newCurdList.Remove(item);
+                                newCurdList.Add(curdDic);
+                                existFlag = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!existFlag)
+                    {
+                        newCurdList.Add(curdDic);
+                    }
+                    dataOp.SaveCurdJSONData(viewId, newCurdList);
+                    break;
+                case OpreateStateEnum.None:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public static bool SaveCurdDataByPath(string viewId, List<SaveDataModel> saveDataList)
+        {
+            DataOperation dataOp = new DataOperation();
+            string jsonData = dataOp.GetJSONData(viewId);
+            using (JavascriptContext context = new JavascriptContext())
+            {
+                string paramWpf = string.Format("var data={0};var curdList={1};", jsonData, JsonHelper.ToJson(saveDataList));
+                string script = paramWpf + Properties.Resources.SaveOriginalDataScript;
+                context.Run(script);
+                jsonData = context.GetParameter("result") as string;
+            }
+            if (dataOp.SaveJSONData(viewId, jsonData))
+            {
+                foreach (SaveDataModel item in saveDataList)
+                {
+                    UpdateCurdList(viewId, item.DataPath, item.SaveDataDic, item.OriginalDataDic, item.OpStatus);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         /// <summary>
         /// 将修改内容保存到原始数据中

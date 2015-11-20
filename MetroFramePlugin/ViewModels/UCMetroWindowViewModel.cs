@@ -54,52 +54,53 @@ namespace MetroFramePlugin.ViewModels
         private VicTabControlNormal mainTabControl;
         private ObservableCollection<UserRoleInfoModel> roleInfoList;
         private bool poPupState;
-        private VicRadioButtonRectangle rbtnRole;
         private bool isFirstLoad = true;
+        private bool isDebug = true;
         /// <summary>
-        /// 用户名
+        /// 门户插件用户信息
         /// </summary>
-        private string userName;
+        private UserInfoModel userInfo;
         /// <summary>
-        /// 用户头像
+        /// 门户插件用户信息
         /// </summary>
-        private string userImg;
-        /// <summary>
-        /// 用户账号
-        /// </summary>
-        private string userCode;
-        public string UserCode
+        public UserInfoModel UserInfo
         {
             get
             {
-                return userCode;
+                if (userInfo == null)
+                    userInfo = new UserInfoModel();
+                return userInfo;
             }
             set
             {
-                if (userCode != value)
+                if (userInfo != value)
                 {
-                    userCode = value;
-                    RaisePropertyChanged("UserCode");
+                    userInfo = value;
+                    RaisePropertyChanged("UserInfo");
                 }
             }
         }
-        private string clientId;
-        public string ClientId
+        /// <summary>
+        /// 是否为调试状态
+        /// </summary>
+        public bool IsDebug
         {
             get
             {
-                return clientId;
+                return isDebug;
             }
             set
             {
-                if (clientId != value)
+                if (isDebug != value)
                 {
-                    clientId = value;
-                    RaisePropertyChanged("ClientId");
+                    isDebug = value;
+                    RaisePropertyChanged("IsDebug");
                 }
             }
         }
-       
+
+
+
         /// <summary>
         /// 活动插件数目
         /// </summary>
@@ -255,7 +256,7 @@ namespace MetroFramePlugin.ViewModels
                     homeItem.AllowDelete = false;
                     homeItem.Header = "飞道科技";
                     WebBrowser browser = new WebBrowser();
-                    //browser.Source = new Uri("http://www.baidu.com");
+                    browser.Source = new Uri("http://www.daokes.com");
                     homeItem.Content = browser;
                     tabItemList.Add(homeItem);
 
@@ -285,69 +286,8 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-        /// <summary>
-        /// 用户名
-        /// </summary>
-        public string UserName
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(userName))
-                {
-                    Random rd = new Random();
-                    userName = "";
-                }
-                return userName;
-            }
-            set
-            {
-                if (userName != value)
-                {
-                    userName = value;
-                    RaisePropertyChanged("UserName");
-                }
-            }
-        }
-        /// <summary>
-        /// 用户角色
-        /// </summary>
-        private string userRole;
-        /// <summary>
-        /// 用户角色
-        /// </summary>
-        public string UserRole
-        {
-            get
-            {
-                return userRole;
-            }
-            set
-            {
-                if (userRole != value)
-                {
-                    userRole = value;
-                    RaisePropertyChanged("UserRole");
-                }
-            }
-        }
-        /// <summary>
-        /// 用户头像
-        /// </summary>
-        public string UserImg
-        {
-            get
-            {
-                return userImg;
-            }
-            set
-            {
-                if (userImg != value)
-                {
-                    userImg = value;
-                    RaisePropertyChanged("UserImg");
-                }
-            }
-        }
+
+
         /// <summary>
         /// 活动插件数目
         /// </summary>
@@ -441,7 +381,6 @@ namespace MetroFramePlugin.ViewModels
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
                     lockbtn = (VicButtonNormal)mainWindow.FindName("lock");
-                    rbtnRole = (VicRadioButtonRectangle)mainWindow.FindName("rbtnRole");
                     mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
@@ -458,17 +397,9 @@ namespace MetroFramePlugin.ViewModels
                     UserLogin();
                     DataMessageOperation messageOp = new DataMessageOperation();
                     Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
-                   RoleInfoList= JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
-                   if (RoleInfoList.Count >= 2)
-                   {
-                       rbtnRole.Visibility = Visibility.Visible;
-                   }
-                   else
-                   {
-                       rbtnRole.Visibility = Visibility.Collapsed;
-;
-                   }
-                    ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
+                    RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
+                    UserInfo.IsMultipleRole = RoleInfoList.Count >= 2;
+                    UserInfo.ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
                     string UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
                     //if (UserPwd.Equals("111111"))
                     //{
@@ -643,14 +574,7 @@ namespace MetroFramePlugin.ViewModels
                     DataMessageOperation messageOp = new DataMessageOperation();
                     Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                     RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
-                    if (RoleInfoList.Count >= 2)
-                    {
-                        rbtnRole.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        rbtnRole.Visibility = Visibility.Collapsed;
-                    }
+                    UserInfo.IsMultipleRole = RoleInfoList.Count >= 2;
                     InitPanelArea();
 
                 });
@@ -660,7 +584,8 @@ namespace MetroFramePlugin.ViewModels
         #region 切换角色
         public ICommand btnChangeRoleCommand
         {
-            get {
+            get
+            {
                 return new RelayCommand(() =>
                 {
                     DataMessageOperation dataOp = new DataMessageOperation();
@@ -690,7 +615,7 @@ namespace MetroFramePlugin.ViewModels
                     //proc.Start();
                     DataMessageOperation dataOp = new DataMessageOperation();
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    paramDic.Add("usercode", UserCode);
+                    paramDic.Add("usercode", UserInfo.UserCode);
                     PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
                     if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                     {
@@ -739,9 +664,10 @@ namespace MetroFramePlugin.ViewModels
                     MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
                     {
-
                         DataMessageOperation dataMsgOp = new DataMessageOperation();
                         dataMsgOp.RemoveDataLock();
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        Dictionary<string, object> resultDic = dataMsgOp.SendSyncMessage("MongoDataChannelService.loginout", contentDic);
                         mainWindow.Close();
                         FrameInit.GetInstance().FrameUnload();
                         GC.Collect();
@@ -751,7 +677,36 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         #endregion
-
+        #region 注销用户命令
+        public ICommand btnUserLogOutClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    MessageBoxResult result = VicMessageBoxNormal.Show("确定要注销么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        DataMessageOperation dataMsgOp = new DataMessageOperation();
+                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                        Dictionary<string, object> resultDic = dataMsgOp.SendSyncMessage("MongoDataChannelService.loginout", contentDic);
+                        long replyMode = Convert.ToInt64(resultDic["ReplyMode"].ToString());
+                        if (replyMode > 0)
+                        {
+                            UserInfo.IsLogin = false;
+                            UserInfo.UserName = string.Empty;
+                            UserInfo.IsMultipleRole = false;
+                            UserLogin();
+                        }
+                        else
+                        {
+                            VicMessageBoxNormal.Show(resultDic["ReplyAlertMessage"].ToString());
+                        }
+                    }
+                });
+            }
+        }
+        #endregion
         #region 本地按钮点击命令
         public ICommand localBtnClickCommand
         {
@@ -962,6 +917,21 @@ namespace MetroFramePlugin.ViewModels
             }
         }
         #endregion
+
+        #region 查看更新日志
+        public ICommand btnViewUpdateLogClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    UpdateLogWindow logWin = new UpdateLogWindow();
+                    logWin.Owner = mainWindow;
+                    logWin.ShowDialog();
+                });
+            }
+        }
+        #endregion
         #endregion
 
         #region 自定义方法
@@ -1063,6 +1033,7 @@ namespace MetroFramePlugin.ViewModels
             localMenuListEx = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             {
+                IsDebug = false;
                 this.SystemMenuListLocal.Clear();
             }
 
@@ -1159,7 +1130,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 secondLevelMenu.SystemMenuList.Add(newThirdLevelMenu);
             }
-            
+
         }
         /// <summary>获取标准的三级菜单</summary>
         private void GetStandardThirdLevelMenu(MenuModel thirdLevelMenu)
@@ -1262,14 +1233,14 @@ namespace MetroFramePlugin.ViewModels
             bool? result = loginWin.ShowDialog();
             if (result == true)
             {
-
+                UserInfo.IsLogin = true;
                 Dictionary<string, object> userDic = pluginOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                 if (userDic != null)
                 {
-                    UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
-                    UserRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
-                    UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
-                    UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
+                    UserInfo.UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
+                    UserInfo.UserRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
+                    UserInfo.UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
+                    UserInfo.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
                 }
                 LoadStandardMenu();
                 IsShowMenu = Visibility.Visible;
@@ -2790,7 +2761,7 @@ namespace MetroFramePlugin.ViewModels
         private string channelId = string.Empty;
         private void GetPersonMenu()
         {
-            if (string.IsNullOrEmpty(ClientId) || string.IsNullOrEmpty(UserCode))
+            if (string.IsNullOrEmpty(UserInfo.ClientId) || string.IsNullOrEmpty(UserInfo.UserCode))
             {
                 return;
             }
@@ -2804,9 +2775,9 @@ namespace MetroFramePlugin.ViewModels
             conDic.Add("name", "pub_user_setting");
             List<Dictionary<string, object>> tableConList = new List<Dictionary<string, object>>();
             Dictionary<string, object> tableConDic = new Dictionary<string, object>();
-            tableConDic.Add("productid", ClientId);
-            tableConDic.Add("usercode", UserCode);
-            tableConDic.Add("role_no", UserRole);
+            tableConDic.Add("productid", UserInfo.ClientId);
+            tableConDic.Add("usercode", UserInfo.UserCode);
+            tableConDic.Add("role_no", UserInfo.UserRole);
             tableConList.Add(tableConDic);
             conDic.Add("tablecondition", tableConList);
             conList.Add(conDic);
@@ -2839,9 +2810,9 @@ namespace MetroFramePlugin.ViewModels
 
                 DataRow dr = dt.NewRow();
                 dr["_id"] = Guid.NewGuid();
-                dr["userCode"] = UserCode;
-                dr["productid"] = ClientId;
-                dr["role_no"] = UserRole;
+                dr["userCode"] = UserInfo.UserCode;
+                dr["productid"] = UserInfo.ClientId;
+                dr["role_no"] = UserInfo.UserRole;
                 dr["custom_menu"] = JsonHelper.ToJson(NewArea);
                 dt.Rows.Add(dr);
             }
@@ -2897,6 +2868,6 @@ namespace MetroFramePlugin.ViewModels
         #endregion
 
         #endregion
-      
+
     }
 }
