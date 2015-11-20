@@ -31,8 +31,8 @@ namespace ThemeManagerPlugin.ViewModels
     {
         #region 字段&属性
         private ListBox listBoxOnLineList;
-        private Button  btnDown;
-        private  StackPanel spLayout;
+        private Button btnDown;
+        private StackPanel spLayout;
         private Button btnUse;
         private Button btnAccomplish;
         #region 分屏字段属性
@@ -152,7 +152,7 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
-         /// <summary>
+        /// <summary>
         /// 在线皮肤分屏集合
         /// </summary>
         private ObservableCollection<OnLineModel> sumPageThemeListOnline;
@@ -315,7 +315,7 @@ namespace ThemeManagerPlugin.ViewModels
         /// 用户ProductId
         /// </summary>
         private string productId;
-        public string ProductId  
+        public string ProductId
         {
             get
             {
@@ -401,7 +401,7 @@ namespace ThemeManagerPlugin.ViewModels
                     #endregion
                     //stdEnd.Completed += (c, d) =>
                     //{
-                       // portalWindow.Close();
+                    // portalWindow.Close();
                     //};
                     GetProductId();
                     GetThemeSkinNum();
@@ -432,14 +432,14 @@ namespace ThemeManagerPlugin.ViewModels
                     GetWallPaperDisplay();//一次从服务器取到所有壁纸
                     if (WallPaperCategoryList.Count == 0) return;
                     GetSelectedTabControlWallPaperDisplay(WallPaperCategoryList[0].Category_No);
-                    
+
                 });
             }
         }
 
-        
 
-       
+
+
 
 
         public ICommand ThemeTabControlSelectionChanged
@@ -464,7 +464,7 @@ namespace ThemeManagerPlugin.ViewModels
                         {
                             totalPage = SystemThemeList.Count / pageSize + 1;
                         }
-                       setInit(totalPage);
+                        setInit(totalPage);
 
                     }
 
@@ -500,6 +500,43 @@ namespace ThemeManagerPlugin.ViewModels
         }
 
         #endregion
+
+        #region 本地皮肤应用
+        public ICommand btnUseCommand
+        {
+            get
+            {
+                return new RelayCommand<object>((x) =>
+                {
+                    SelectedListBoxItem = (ThemeModel)x;
+                    foreach (var item in SystemThemeList)
+                    {
+                        item.StateType = false;
+                    }
+                    SelectedListBoxItem.StateType = true;
+                    ChangeFrameWorkTheme();
+                    this.UpdateDefaultSkin();
+
+                });
+            }
+        }
+        #endregion
+
+        public List<T> GetChildObjects<T>(DependencyObject obj, string name) where T : FrameworkElement
+        {
+            DependencyObject child = null;
+            List<T> childList = new List<T>();
+            for (int i = 0; i <= VisualTreeHelper.GetChildrenCount(obj) - 1; i++)
+            {
+                child = VisualTreeHelper.GetChild(obj, i);
+                if (child is T && (((T)child).Name == name || string.IsNullOrEmpty(name)))
+                {
+                    childList.Add((T)child);
+                }
+                childList.AddRange(GetChildObjects<T>(child, ""));//指定集合的元素添加到List队尾 
+            }
+            return childList;
+        }
 
         #region 窗体关闭命令
         public ICommand btnCloseClickCommand
@@ -620,70 +657,70 @@ namespace ThemeManagerPlugin.ViewModels
                 return new RelayCommand<object>((x) =>
                 {
                     OnLineModel model = (OnLineModel)x;
-                   // OnLineModel model = btnUse.Tag as OnLineModel;
+                    // OnLineModel model = btnUse.Tag as OnLineModel;
                     model.StateChange = 3;
                     //var curItem = ((ListBoxItem)listBoxOnLineList.ContainerFromElement(btnUse)).Content;
                     //OnLineModel model = curItem as OnLineModel;
                     //OnLineModel model = (OnLineModel)x;
                     //spLayout = GetParentObject<StackPanel>(btnUse);
                     //btnAccomplish = GetChildObjectByName<Button>(spLayout, "btnAccomplish");
-                        foreach (ThemeModel skinModel in SystemThemeList)
+                    foreach (ThemeModel skinModel in SystemThemeList)
+                    {
+                        if (skinModel.SkinName.Equals(model.OnLineName))
                         {
-                            if (skinModel.SkinName.Equals(model.OnLineName))
+                            try
                             {
-                                try
-                                {
-                                    string messageType = "ServerCenterService.ChangeThemeByDll";
-                                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                                    Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
-                                    ServiceParams.Add("SourceName", skinModel.ThemeName);
-                                    ServiceParams.Add("SkinPath", skinModel.SkinDllName);
-                                    contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
-                                    DataMessageOperation messageOp = new DataMessageOperation();
-                                    messageOp.SendAsyncMessage(messageType, contentDic);
-                                    return;
-                                }
-                                catch (Exception ex)
-                                {
-                                    VicMessageBoxNormal.Show("Change error: " + ex.Message);
-                                }
+                                string messageType = "ServerCenterService.ChangeThemeByDll";
+                                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                                Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
+                                ServiceParams.Add("SourceName", skinModel.ThemeName);
+                                ServiceParams.Add("SkinPath", skinModel.SkinDllName);
+                                contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
+                                DataMessageOperation messageOp = new DataMessageOperation();
+                                messageOp.SendAsyncMessage(messageType, contentDic);
+                                return;
+                            }
+                            catch (Exception ex)
+                            {
+                                VicMessageBoxNormal.Show("Change error: " + ex.Message);
                             }
                         }
-                        
-                        string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
-                        Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
-                        Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
-                        downloadAddress.Add("DownloadFileId", model.FilePath);
-                        downloadAddress.Add("DownloadToPath", localityUrl);
-                        downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
-                        DataMessageOperation messageOperation = new DataMessageOperation();
-                        Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
-                                                               downloadMessageContent);
-                        SystemThemeList.Clear();
-                        GetThemeSkinNum();
+                    }
 
-                        foreach (ThemeModel skinModel in SystemThemeList)
+                    string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
+                    Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
+                    Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
+                    downloadAddress.Add("DownloadFileId", model.FilePath);
+                    downloadAddress.Add("DownloadToPath", localityUrl);
+                    downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
+                    DataMessageOperation messageOperation = new DataMessageOperation();
+                    Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
+                                                           downloadMessageContent);
+                    SystemThemeList.Clear();
+                    GetThemeSkinNum();
+
+                    foreach (ThemeModel skinModel in SystemThemeList)
+                    {
+                        if (skinModel.SkinName.Equals(model.OnLineName))
                         {
-                            if (skinModel.SkinName.Equals(model.OnLineName))
+                            try
                             {
-                                try
-                                {
-                                    string messageType = "ServerCenterService.ChangeThemeByDll";
-                                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                                    Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
-                                    ServiceParams.Add("SourceName", skinModel.ThemeName);
-                                    ServiceParams.Add("SkinPath", skinModel.SkinDllName);
-                                    contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
-                                    DataMessageOperation messageOp = new DataMessageOperation();
-                                    messageOp.SendAsyncMessage(messageType, contentDic);
-                                    return;
-                                }
-                                catch (Exception ex)
-                                {
-                                    VicMessageBoxNormal.Show("Change error: " + ex.Message);
-                                }
+                                string messageType = "ServerCenterService.ChangeThemeByDll";
+                                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                                Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
+                                ServiceParams.Add("SourceName", skinModel.ThemeName);
+                                ServiceParams.Add("SkinPath", skinModel.SkinDllName);
+                                contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
+                                DataMessageOperation messageOp = new DataMessageOperation();
+                                messageOp.SendAsyncMessage(messageType, contentDic);
+                                return;
+                            }
+                            catch (Exception ex)
+                            {
+                                VicMessageBoxNormal.Show("Change error: " + ex.Message);
                             }
                         }
+                    }
                 });
             }
         }
@@ -763,7 +800,7 @@ namespace ThemeManagerPlugin.ViewModels
         }
         #endregion
 
-      
+
         #region 在线皮肤下载命令
         public ICommand btnOnLineDownloadCommand
         {
@@ -878,28 +915,28 @@ namespace ThemeManagerPlugin.ViewModels
             imageOnlineRight.Effect = null;
         }
 
-       private void imageOnlineRight_MouseEnter(object sender, MouseEventArgs e)
+        private void imageOnlineRight_MouseEnter(object sender, MouseEventArgs e)
         {
-           // imageOnlineRight.Effect = new System.Windows.Media.Effects.DropShadowEffect();
+            // imageOnlineRight.Effect = new System.Windows.Media.Effects.DropShadowEffect();
         }
 
-       private void imageOnlineLeft_MouseLeave(object sender, MouseEventArgs e)
+        private void imageOnlineLeft_MouseLeave(object sender, MouseEventArgs e)
         {
             imageOnlineLeft.Effect = null;
         }
 
-       private void imageOnlineLeft_MouseEnter(object sender, MouseEventArgs e)
+        private void imageOnlineLeft_MouseEnter(object sender, MouseEventArgs e)
         {
             //imageOnlineLeft.Effect = new System.Windows.Media.Effects.DropShadowEffect();
         }
 
-       private void imageOnlineRight_Click(object sender, RoutedEventArgs e)
+        private void imageOnlineRight_Click(object sender, RoutedEventArgs e)
         {
             sboardRightIamgeOnline.Begin();
             ChangePageOnline(true);
         }
 
-       private void imageOnlineLeft_Click(object sender, RoutedEventArgs e)
+        private void imageOnlineLeft_Click(object sender, RoutedEventArgs e)
         {
             sboardLeftIamgeOnline.Begin();
             ChangePageOnline(false);
@@ -907,325 +944,325 @@ namespace ThemeManagerPlugin.ViewModels
         #endregion
 
         #region 容器事件
-      private void canvasPageContentOnline_MouseUp(object sender, MouseButtonEventArgs e)
-       {
-           Mouse.Capture(null);
-       }
+        private void canvasPageContentOnline_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Mouse.Capture(null);
+        }
 
-      private void canvasPageContentOnline_SizeChanged(object sender, SizeChangedEventArgs e)
-       {
-           canvasPageRectangleOnline.Rect = new Rect(0, 0, canvasPageContentOnline.ActualWidth, canvasPageContentOnline.ActualHeight);
-       }
+        private void canvasPageContentOnline_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            canvasPageRectangleOnline.Rect = new Rect(0, 0, canvasPageContentOnline.ActualWidth, canvasPageContentOnline.ActualHeight);
+        }
 
-      private void canvasPageContentOnline_MouseLeave(object sender, MouseEventArgs e)
-       {
-           if (isDownOnline)
-           {
-               changePosOnline();
-           }
-       }
+        private void canvasPageContentOnline_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (isDownOnline)
+            {
+                changePosOnline();
+            }
+        }
 
-      private void canvasPageContentOnline_PreviewMouseMove(object sender, MouseEventArgs e)
-       {
-           if (isDownOnline)
-           {
-               System.Windows.Point position = e.GetPosition(canvasPageContentOnline);
-               Canvas.SetLeft(wrapPanelPagesOnline, Canvas.GetLeft(wrapPanelPagesOnline) + (position.X - oldX));
-               oldX = position.X;
+        private void canvasPageContentOnline_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDownOnline)
+            {
+                System.Windows.Point position = e.GetPosition(canvasPageContentOnline);
+                Canvas.SetLeft(wrapPanelPagesOnline, Canvas.GetLeft(wrapPanelPagesOnline) + (position.X - oldX));
+                oldX = position.X;
 
-               if (Math.Abs(down_pX - position.X) > 150)
-               {
-                   isMoveSureOnline = true;
-               }
-           }
-       }
+                if (Math.Abs(down_pX - position.X) > 150)
+                {
+                    isMoveSureOnline = true;
+                }
+            }
+        }
 
-      private void canvasPageContentOnline_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-       {
-           if (isDownOnline)
-           {
-               e.Handled = isMoveSureOnline;
-               changePosOnline();
-           }
-       }
+        private void canvasPageContentOnline_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (isDownOnline)
+            {
+                e.Handled = isMoveSureOnline;
+                changePosOnline();
+            }
+        }
 
-      private void canvasPageContentOnline_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-       {
-           isDownOnline = true;
-           System.Windows.Point position = e.GetPosition(canvasPageContentOnline);
-           down_pX = position.X;
-           down_pY = position.Y;
-           oldX = down_pX;
-       }
-       #endregion
-
-        #region 翻页方法
-       #region 翻页实现
-       /// <summary>
-       /// 翻页实现
-       /// </summary>
-       /// <param name="page"></param>
-       /// <param name="needAnimation"></param>
-       private void ChangePageOnline(bool isRight)
-       {
-           try
-           {
-               double pageWidth = canvasPageContentOnline.ActualWidth;
-               lock (changeLockOnline)
-               {
-                   if (isInMoveOnline)
-                       return;
-                   isInMoveOnline = true;
-               }
-               if (isRight)
-               {
-                   if (pageSelectOnline == totalPageOnline)
-                   {
-                       lock (changeLockOnline)
-                       {
-                           isInMoveOnline = false;
-                       }
-                       return;
-                   }
-                   else
-                   {
-
-                       isInMoveOnline = true;
-                       double listLeft_now = Canvas.GetLeft(wrapPanelPagesOnline);
-                       double listLeft_sur = -(pageSelectOnline - 1) * pageWidth;
-                       double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
-                       double toX = -pageWidth;
-                       double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
-                       sboardRightBeginOnline(formX, toX, time);
-                   }
-               }
-               else
-               {
-                   if (pageSelectOnline == 1)
-                   {
-                       lock (changeLockOnline)
-                       {
-                           isInMoveOnline = false;
-                       }
-                       return;
-                   }
-                   else
-                   {
-                       isInMoveOnline = true;
-                       double listLeft_now = Canvas.GetLeft(wrapPanelPagesOnline);
-                       double listLeft_sur = -(pageSelectOnline - 1) * pageWidth;
-                       //启动左翻动画-翻页
-                       double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
-                       double toX = pageWidth;
-                       double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
-                       sboardLeftBeginOnline(formX, toX, time);
-                   }
-               }
-           }
-           catch (Exception ex)
-           {
-
-               VicMessageBoxNormal.Show("下一页异常，请稍后重试");
-           }
-       }
-       #endregion
-
-       #region 改变翻页按钮状态
-       /// <summary>
-       /// 改变翻页按钮状态
-       /// </summary>
-       private void ChangeButtonStatusOnline()
-       {
-           if (totalPageOnline == 0)
-           {
-               return;
-           }
-           if (pageSelectOnline == 1 && totalPageOnline == 1)
-           {
-               imageOnlineLeft.Visibility = System.Windows.Visibility.Hidden;
-               imageOnlineRight.Visibility = System.Windows.Visibility.Hidden;
-           }
-           else if (pageSelectOnline == 1 && totalPageOnline > 1)
-           {
-               imageOnlineLeft.Visibility = System.Windows.Visibility.Hidden;
-               imageOnlineRight.Visibility = System.Windows.Visibility.Visible;
-           }
-           else
-           {
-               if (pageSelectOnline == totalPageOnline)
-               {
-                   imageOnlineLeft.Visibility = System.Windows.Visibility.Visible;
-                   imageOnlineRight.Visibility = System.Windows.Visibility.Hidden;
-               }
-               else
-               {
-                   imageOnlineLeft.Visibility = System.Windows.Visibility.Visible;
-                   imageOnlineRight.Visibility = System.Windows.Visibility.Visible;
-               }
-           }
-       }
-       #endregion
-
-       //左翻动画
-       private void sboardLeftBeginOnline(double formX, double toX, double time)
-       {
-           sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
-           sboardOnline.Completed += sboardLeft_CompletedOnline;
-           sboardOnline.Begin();
-       }
-
-       //右翻动画
-       private void sboardRightBeginOnline(double formX, double toX, double time)
-       {
-           sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
-           sboardOnline.Completed += sboardRight_CompletedOnline;
-           sboardOnline.Begin();
-       }
-
-       //翻页回滚结束
-       private void sboardNoChange_CompletedOnline(object sender, EventArgs e)
-       {
-           lock (changeLockOnline)
-           {
-               isInMoveOnline = false;
-           }
-       }
-
-       //右翻页结束
-       private void sboardRight_CompletedOnline(object sender, EventArgs e)
-       {
-           pageSelectOnline++;
-           pageBarOnline.SelectPage(pageSelect);
-           sboardOnline.Stop();
-          // ChangeButtonStatusOnline();
-           Canvas.SetLeft(wrapPanelPagesOnline, -(pageSelectOnline - 1) * canvasPageContentOnline.ActualWidth);
-           lock (changeLockOnline)
-           {
-               isInMoveOnline = false;
-           }
-       }
-
-       //左翻页结束
-       private void sboardLeft_CompletedOnline(object sender, EventArgs e)
-       {
-           pageSelectOnline--;
-           pageBarOnline.SelectPage(pageSelect);
-           sboardOnline.Stop();
-          // ChangeButtonStatusOnline();
-           Canvas.SetLeft(wrapPanelPagesOnline, -(pageSelectOnline - 1) * canvasPageContentOnline.ActualWidth);
-           lock (changeLockOnline)
-           {
-               isInMoveOnline = false;
-           }
-       }
-
-       
-       private void changePosOnline()
-       {
-           try
-           {
-               double pageWidth = canvasPageContentOnline.ActualWidth;
-               isDownOnline = false;
-               isMoveSureOnline = false;
-               double listLeft_now = Canvas.GetLeft(wrapPanelPagesOnline);
-               double listLeft_sur = -(pageSelectOnline - 1) * pageWidth;
-               if (listLeft_now < listLeft_sur)
-               {
-                   if (pageSelectOnline == totalPageOnline)
-                   {
-                       isInMoveOnline = true;
-                       double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
-                       double toX = 0;
-                       double time = 1000 * Math.Abs(formX) / pageWidth;
-                       Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
-                       sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
-                       sboardOnline.Completed += sboardNoChange_CompletedOnline;
-                       sboardOnline.Begin();
-                   }
-                   else
-                   {
-                       bool SureRight = false;
-                       double dis = Math.Abs(listLeft_now - listLeft_sur);
-                       if (dis >= 150)
-                           SureRight = true;
-                       if (SureRight)
-                       {
-                           isInMoveOnline = true;
-                           double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
-                           double toX = -pageWidth;
-                           double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
-                           Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
-                           sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
-                           sboardOnline.Completed += sboardNoChange_CompletedOnline;
-                           sboardOnline.Begin();
-                       }
-                       else
-                       {
-                           isInMoveOnline = true;
-                           double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
-                           double toX = 0;
-                           double time = 1000 * Math.Abs(formX) / pageWidth;
-                           Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
-                           sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
-                           sboardOnline.Completed += sboardNoChange_CompletedOnline;
-                           sboardOnline.Begin();
-                       }
-                   }
-               }
-               else
-               {
-                   if (pageSelectOnline == 1)
-                   {
-                       isInMove = true;
-                       double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
-                       double toX = 0;
-                       double time = 1000 * Math.Abs(formX) / pageWidth;
-                       Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
-                       sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
-                       sboardOnline.Completed += sboardNoChange_CompletedOnline;
-                       sboardOnline.Begin();
-                   }
-                   else
-                   {
-                       bool SureLeft = false;
-                       double dis = Math.Abs(listLeft_now - listLeft_sur);
-                       if (dis >= 150)
-                           SureLeft = true;
-                       if (SureLeft)
-                       {
-                           isInMove = true;
-                           double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
-                           double toX = pageWidth;
-                           double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
-                           Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
-                           sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
-                           sboardOnline.Completed += sboardNoChange_CompletedOnline;
-                           sboardOnline.Begin();
-                       }
-                       else
-                       {
-                           isInMoveOnline = true;
-                           double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
-                           double toX = 0;
-                           double time = 1000 * Math.Abs(formX) / pageWidth;
-                           Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
-                           sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
-                           sboardOnline.Completed += sboardNoChange_CompletedOnline;
-                           sboardOnline.Begin();
-                       }
-                   }
-               }
-           }
-           catch (Exception ex)
-           {
-
-               VicMessageBoxNormal.Show("滑动分屏异常，请稍后重试");
-           }
-       }
-       #endregion
+        private void canvasPageContentOnline_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            isDownOnline = true;
+            System.Windows.Point position = e.GetPosition(canvasPageContentOnline);
+            down_pX = position.X;
+            down_pY = position.Y;
+            oldX = down_pX;
+        }
         #endregion
 
-       /// <summary>
+        #region 翻页方法
+        #region 翻页实现
+        /// <summary>
+        /// 翻页实现
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="needAnimation"></param>
+        private void ChangePageOnline(bool isRight)
+        {
+            try
+            {
+                double pageWidth = canvasPageContentOnline.ActualWidth;
+                lock (changeLockOnline)
+                {
+                    if (isInMoveOnline)
+                        return;
+                    isInMoveOnline = true;
+                }
+                if (isRight)
+                {
+                    if (pageSelectOnline == totalPageOnline)
+                    {
+                        lock (changeLockOnline)
+                        {
+                            isInMoveOnline = false;
+                        }
+                        return;
+                    }
+                    else
+                    {
+
+                        isInMoveOnline = true;
+                        double listLeft_now = Canvas.GetLeft(wrapPanelPagesOnline);
+                        double listLeft_sur = -(pageSelectOnline - 1) * pageWidth;
+                        double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                        double toX = -pageWidth;
+                        double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                        sboardRightBeginOnline(formX, toX, time);
+                    }
+                }
+                else
+                {
+                    if (pageSelectOnline == 1)
+                    {
+                        lock (changeLockOnline)
+                        {
+                            isInMoveOnline = false;
+                        }
+                        return;
+                    }
+                    else
+                    {
+                        isInMoveOnline = true;
+                        double listLeft_now = Canvas.GetLeft(wrapPanelPagesOnline);
+                        double listLeft_sur = -(pageSelectOnline - 1) * pageWidth;
+                        //启动左翻动画-翻页
+                        double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                        double toX = pageWidth;
+                        double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                        sboardLeftBeginOnline(formX, toX, time);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                VicMessageBoxNormal.Show("下一页异常，请稍后重试");
+            }
+        }
+        #endregion
+
+        #region 改变翻页按钮状态
+        /// <summary>
+        /// 改变翻页按钮状态
+        /// </summary>
+        private void ChangeButtonStatusOnline()
+        {
+            if (totalPageOnline == 0)
+            {
+                return;
+            }
+            if (pageSelectOnline == 1 && totalPageOnline == 1)
+            {
+                imageOnlineLeft.Visibility = System.Windows.Visibility.Hidden;
+                imageOnlineRight.Visibility = System.Windows.Visibility.Hidden;
+            }
+            else if (pageSelectOnline == 1 && totalPageOnline > 1)
+            {
+                imageOnlineLeft.Visibility = System.Windows.Visibility.Hidden;
+                imageOnlineRight.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                if (pageSelectOnline == totalPageOnline)
+                {
+                    imageOnlineLeft.Visibility = System.Windows.Visibility.Visible;
+                    imageOnlineRight.Visibility = System.Windows.Visibility.Hidden;
+                }
+                else
+                {
+                    imageOnlineLeft.Visibility = System.Windows.Visibility.Visible;
+                    imageOnlineRight.Visibility = System.Windows.Visibility.Visible;
+                }
+            }
+        }
+        #endregion
+
+        //左翻动画
+        private void sboardLeftBeginOnline(double formX, double toX, double time)
+        {
+            sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+            sboardOnline.Completed += sboardLeft_CompletedOnline;
+            sboardOnline.Begin();
+        }
+
+        //右翻动画
+        private void sboardRightBeginOnline(double formX, double toX, double time)
+        {
+            sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+            sboardOnline.Completed += sboardRight_CompletedOnline;
+            sboardOnline.Begin();
+        }
+
+        //翻页回滚结束
+        private void sboardNoChange_CompletedOnline(object sender, EventArgs e)
+        {
+            lock (changeLockOnline)
+            {
+                isInMoveOnline = false;
+            }
+        }
+
+        //右翻页结束
+        private void sboardRight_CompletedOnline(object sender, EventArgs e)
+        {
+            pageSelectOnline++;
+            pageBarOnline.SelectPage(pageSelect);
+            sboardOnline.Stop();
+            // ChangeButtonStatusOnline();
+            Canvas.SetLeft(wrapPanelPagesOnline, -(pageSelectOnline - 1) * canvasPageContentOnline.ActualWidth);
+            lock (changeLockOnline)
+            {
+                isInMoveOnline = false;
+            }
+        }
+
+        //左翻页结束
+        private void sboardLeft_CompletedOnline(object sender, EventArgs e)
+        {
+            pageSelectOnline--;
+            pageBarOnline.SelectPage(pageSelect);
+            sboardOnline.Stop();
+            // ChangeButtonStatusOnline();
+            Canvas.SetLeft(wrapPanelPagesOnline, -(pageSelectOnline - 1) * canvasPageContentOnline.ActualWidth);
+            lock (changeLockOnline)
+            {
+                isInMoveOnline = false;
+            }
+        }
+
+
+        private void changePosOnline()
+        {
+            try
+            {
+                double pageWidth = canvasPageContentOnline.ActualWidth;
+                isDownOnline = false;
+                isMoveSureOnline = false;
+                double listLeft_now = Canvas.GetLeft(wrapPanelPagesOnline);
+                double listLeft_sur = -(pageSelectOnline - 1) * pageWidth;
+                if (listLeft_now < listLeft_sur)
+                {
+                    if (pageSelectOnline == totalPageOnline)
+                    {
+                        isInMoveOnline = true;
+                        double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                        double toX = 0;
+                        double time = 1000 * Math.Abs(formX) / pageWidth;
+                        Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
+                        sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+                        sboardOnline.Completed += sboardNoChange_CompletedOnline;
+                        sboardOnline.Begin();
+                    }
+                    else
+                    {
+                        bool SureRight = false;
+                        double dis = Math.Abs(listLeft_now - listLeft_sur);
+                        if (dis >= 150)
+                            SureRight = true;
+                        if (SureRight)
+                        {
+                            isInMoveOnline = true;
+                            double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                            double toX = -pageWidth;
+                            double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                            Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
+                            sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+                            sboardOnline.Completed += sboardNoChange_CompletedOnline;
+                            sboardOnline.Begin();
+                        }
+                        else
+                        {
+                            isInMoveOnline = true;
+                            double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                            double toX = 0;
+                            double time = 1000 * Math.Abs(formX) / pageWidth;
+                            Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
+                            sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+                            sboardOnline.Completed += sboardNoChange_CompletedOnline;
+                            sboardOnline.Begin();
+                        }
+                    }
+                }
+                else
+                {
+                    if (pageSelectOnline == 1)
+                    {
+                        isInMove = true;
+                        double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                        double toX = 0;
+                        double time = 1000 * Math.Abs(formX) / pageWidth;
+                        Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
+                        sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+                        sboardOnline.Completed += sboardNoChange_CompletedOnline;
+                        sboardOnline.Begin();
+                    }
+                    else
+                    {
+                        bool SureLeft = false;
+                        double dis = Math.Abs(listLeft_now - listLeft_sur);
+                        if (dis >= 150)
+                            SureLeft = true;
+                        if (SureLeft)
+                        {
+                            isInMove = true;
+                            double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                            double toX = pageWidth;
+                            double time = 1000 * Math.Abs(Math.Abs(toX) - Math.Abs(formX)) / pageWidth;
+                            Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
+                            sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+                            sboardOnline.Completed += sboardNoChange_CompletedOnline;
+                            sboardOnline.Begin();
+                        }
+                        else
+                        {
+                            isInMoveOnline = true;
+                            double formX = listLeft_now + (pageSelectOnline - 1) * pageWidth;
+                            double toX = 0;
+                            double time = 1000 * Math.Abs(formX) / pageWidth;
+                            Canvas.SetLeft(wrapPanelPagesOnline, listLeft_sur);
+                            sboardOnline = ShareClass.CeaterAnimation_Xmove(wrapPanelPagesOnline, formX, toX, time, 0);
+                            sboardOnline.Completed += sboardNoChange_CompletedOnline;
+                            sboardOnline.Begin();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                VicMessageBoxNormal.Show("滑动分屏异常，请稍后重试");
+            }
+        }
+        #endregion
+        #endregion
+
+        /// <summary>
         /// 主题皮肤改变发送消息
         /// </summary>
         /// <param name="model"></param>
@@ -1282,6 +1319,7 @@ namespace ThemeManagerPlugin.ViewModels
                     if (model.SkinPath == skinDefaultName)
                     {
                         SelectedListBoxItem = model;
+                        SelectedListBoxItem.StateType = true;
                         break;
                     }
                 }
@@ -1303,13 +1341,14 @@ namespace ThemeManagerPlugin.ViewModels
                 model.SkinDllName = skinNamespace;
                 this.ReflectorInfo(files[j], skinNamespace + ".Skin", model);
                 model.SkinPath = @"theme\" + skinNamespace + ".dll";
+                model.StateType = false;
                 SystemThemeList.Add(model);
             }
 
             if (this.SystemThemeList.Count > 0)
             {
                 List<ThemeModel> list = this.SystemThemeList.ToList();
-                list.Sort();
+                list.OrderBy(it => it.ThemeName);
                 this.SystemThemeList = new ObservableCollection<ThemeModel>(list);
             }
         }
@@ -1458,7 +1497,7 @@ namespace ThemeManagerPlugin.ViewModels
         #region 在线皮肤展示
         private void GetOnLineTheme(string categoryNo)
         {
-           
+
             DataMessageOperation messageOp = new DataMessageOperation();
             string channelId = string.Empty;
             string MessageType = "MongoDataChannelService.findBusiData";
@@ -1484,17 +1523,18 @@ namespace ThemeManagerPlugin.ViewModels
                 DataTable dt = MenuDs.Tables["dataArray"];
                 foreach (DataRow row in dt.Rows)
                 {
-                   OnLineModel model = new OnLineModel();
-                   List<ThemeModel> themeList = SystemThemeList.Where(s => s.SkinName == row["skin_name"].ToString()).ToList();
-                   if (themeList != null && themeList.Count > 0)
-                   {
-                       model.StateType = true;
-                       model.StateChange = 2;
-                   }
-                   else {
-                       model.StateType = false;
-                       model.StateChange =1;
-                   }
+                    OnLineModel model = new OnLineModel();
+                    List<ThemeModel> themeList = SystemThemeList.Where(s => s.SkinName == row["skin_name"].ToString()).ToList();
+                    if (themeList != null && themeList.Count > 0)
+                    {
+                        model.StateType = true;
+                        model.StateChange = 2;
+                    }
+                    else
+                    {
+                        model.StateType = false;
+                        model.StateChange = 1;
+                    }
                     string previewUrl = ConfigurationManager.AppSettings.Get("downloadfilehttp") + "getfile?id=" + row["img_url"] + "&productid=" + ProductId;
 
                     model.OnLineNo = row["skin_no"].ToString();
@@ -1534,7 +1574,7 @@ namespace ThemeManagerPlugin.ViewModels
                     WrapPanel rectangle = new WrapPanel();
                     rectangle.Children.Clear();
                     rectangle.Orientation = Orientation.Vertical;
-                    rectangle.Width = 960;
+                    rectangle.Width = 900;
                     rectangle.Height = 460;
                     ObservableCollection<OnLineModel> currentPageList = new ObservableCollection<OnLineModel>();
                     lbox = new ListBox();
@@ -1613,7 +1653,7 @@ namespace ThemeManagerPlugin.ViewModels
                 }
                 lbox.ItemsSource = currentPageList;
                 lbox.SelectedItem = SelectedListBoxItem;
-                lbox.SelectionChanged += lbox_SelectionChanged;
+                //lbox.SelectionChanged += lbox_SelectionChanged;
                 lbox.SetResourceReference(ListBox.StyleProperty, "RadioButtonListStyle");
                 rectangle.Children.Add(lbox);
 
@@ -1790,10 +1830,10 @@ namespace ThemeManagerPlugin.ViewModels
         /// <param name="e"></param>
         private void lbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ListBox listBox = sender as ListBox;
-            SelectedListBoxItem = (ThemeModel)listBox.SelectedItem;
-            ChangeFrameWorkTheme();
-            this.UpdateDefaultSkin();
+            //ListBox listBox = sender as ListBox;
+            //SelectedListBoxItem = (ThemeModel)listBox.SelectedItem;
+            //ChangeFrameWorkTheme();
+            //this.UpdateDefaultSkin();
         }
 
 

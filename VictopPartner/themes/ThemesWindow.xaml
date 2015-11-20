@@ -5,6 +5,7 @@
 
     <converters:VisibilityConverter x:Key="visibilityConverter"/>
     <converters:VisibilityConverterEx x:Key="visibilityConverterEx"></converters:VisibilityConverterEx>
+    <converters:ColorConverterEx x:Key="colorConverter"></converters:ColorConverterEx>
     <Style x:Key="WindowChangeSkinBackground" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
 
@@ -35,12 +36,18 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
-                                    <Border Name="border" BorderBrush="White" CornerRadius="5" BorderThickness="3" Height="122" Width="205">
+                                    <Border Name="border" BorderBrush="{Binding StateType, Converter={StaticResource colorConverter}}" CornerRadius="5" BorderThickness="3" Height="122" Width="205">
                                         <Border.Background>
                                             <ImageBrush  ImageSource="{Binding SkinFace}" Stretch="UniformToFill"/>
                                         </Border.Background>
-                                        <Border Name="borderSelect" Opacity="0" Background="Yellow" CornerRadius="24" HorizontalAlignment="Left" Height="24" Margin="154,90,0,0" VerticalAlignment="Top" Width="24">
-                                            <Grid>
+                                        <StackPanel x:Name="stackPanel" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <controls:VicButtonNormal  x:Name="btnLocaUse" Visibility="{Binding StateType, Converter={StaticResource visibilityConverter}}" Content="应用" Width="75" Height="25"
+                                             Command="{Binding DataContext.btnUseCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                         CommandParameter="{Binding .}" />
+                                            <Button x:Name="btnLocaAccomplish" Visibility="{Binding StateType, Converter={StaticResource visibilityConverterEx}}" Style="{DynamicResource btnStyle}"
+                                                     Content="完成" Width="25" Height="25"></Button>
+                                        </StackPanel>
+                                        <!--<Grid>
                                                 <Path Fill="Red" HorizontalAlignment="Left" 
                                                   StrokeThickness="0" 
                                                   VerticalAlignment="Top"  
@@ -59,16 +66,28 @@
                                                         </TransformGroup>
                                                     </Path.RenderTransform>
                                                 </Path>
-                                            </Grid>
-                                        </Border>
+                                            </Grid>-->
+                                    
                                     </Border>
                                     <TextBlock Text="{Binding SkinName}" MinWidth="60" MinHeight="30" TextAlignment="Center"/>
                                 </StackPanel>
                                 <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="true" >
-                                        <Setter Property="BorderBrush" TargetName="border"  Value="Yellow"/>
-                                        <Setter Property="Opacity" TargetName="borderSelect"  Value="1"/>
+                                    <Trigger Property="IsMouseOver" Value="true" >
+                                        <Setter Property="Opacity" TargetName="stackPanel" Value="1"></Setter>
                                     </Trigger>
+                                    <Trigger Property="IsSelected" Value="true" >
+                                        <!--<Setter Property="BorderBrush" TargetName="border"  Value="Yellow"/>
+                                        <Setter Property="Opacity" TargetName="stackPanel"  Value="1"/>
+                                        <Setter Property="Visibility" TargetName="btnLocaUse" Value="Collapsed"></Setter>
+                                        <Setter Property="Visibility" TargetName="btnLocaAccomplish" Value="Visible"></Setter>-->
+                                    </Trigger>
+                                    
+                                    <!--<DataTrigger Binding="{Binding ElementName=btnUse,Path=Tag}" Value="2">
+                                        <Setter TargetName="btnUse" Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=btnAccomplish,Path=Tag}" Value="3">
+                                        <Setter TargetName="btnUse" Property="Visibility" Value="Collapsed"></Setter>
+                                    </DataTrigger>-->
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -206,15 +225,11 @@
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </ControlTemplate.Resources>
-                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" >
+                                <StackPanel Margin="2,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" >
                                     <Border Name="border" BorderBrush="Transparent" Background="{DynamicResource DefaultSkin}" BorderThickness="1" Height="122" Width="203">
                                         <Border.ToolTip>
                                             <ToolTip Style="{DynamicResource ToolTipStyle}" Content="{Binding OnLineName}"></ToolTip>
                                         </Border.ToolTip>
-                                        <!--<Border.Background>
-                                            <ImageBrush ImageSource="{DynamicResource DefaultSkin}" Stretch="Uniform"/>
-                                        </Border.Background>-->
-
                                         <Grid Height="122" Width="203">
                                             <Grid.Background>
                                                 <ImageBrush ImageSource="{Binding OnLinePreview}" Stretch="UniformToFill"/>
@@ -226,10 +241,6 @@
                                                          CommandParameter="{Binding .}">
 
                                             </controls:VicButtonNormal>
-
-                                            <ProgressBar x:Name="progressBar" Visibility="Collapsed"  Value="{Binding CurrentRate}" Style="{DynamicResource progressBarStyle}">
-
-                                            </ProgressBar>
                                                 <controls:VicButtonNormal Tag="{Binding StateChange}" x:Name="btnUse" Content="应用" Width="75" Height="25"
                                              Command="{Binding DataContext.btnOnLineUseCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                          CommandParameter="{Binding .}" />
@@ -238,22 +249,6 @@
                                         </StackPanel>
                                         </Grid>
                                     </Border>
-
-                                    <!--<Grid>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    
-                                     Visibility="{Binding StateType,Converter={StaticResource visibilityConverter}}"
-                                    
-                                            <controls:VicButtonNormal BorderThickness="0"  Content="应用" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30" VerticalAlignment="Center"
-                                             Command="{Binding DataContext.btnOnLineUseCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                         CommandParameter="{Binding .}" />
-                                            <controls:VicButtonNormal Name="downLoadRun" BorderThickness="0"  Content="下 载" HorizontalAlignment="Center" FontSize="12" MinWidth="60" MinHeight="30"
-                                                         VerticalAlignment="Center"
-                                                         Command="{Binding DataContext.btnOnLineDownloadCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                         CommandParameter="{Binding .}"/>
-                                        </StackPanel>
-                                    </Grid>-->
-
                                 </StackPanel>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver"  Value="True" >
