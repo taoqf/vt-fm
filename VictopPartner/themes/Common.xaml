@@ -9,7 +9,11 @@
     <controls:CheckboxBoolConverter x:Key="CheckboxBoolConverter"/>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <controls:TextInputToVisibilityConverter x:Key="TextInputToVisibilityConverter" />
-
+    <Style x:Key="TextBlockPageMenu" TargetType="controls:VicTextBlockNormal">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+    </Style>
     <Style x:Key="WindowButtonStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalContentAlignment"  Value="Center" />

@@ -297,12 +297,25 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
-
+        /// <summary>在线N款皮肤 </summary>
+        private int skinOnlinNum;
+        public int SkinOnlinNum
+        {
+            get { return skinOnlinNum; }
+            set
+            {
+                if (skinOnlinNum != value)
+                {
+                    skinOnlinNum = value;
+                    RaisePropertyChanged("SkinOnlinNum");
+                }
+            }
+        }
         /// <summary>
         /// 用户ProductId
         /// </summary>
         private string productId;
-        public string ProductId
+        public string ProductId  
         {
             get
             {
@@ -1515,7 +1528,7 @@ namespace ThemeManagerPlugin.ViewModels
                     SumPageThemeListOnline.Add(SystemOnLineList[i]);
                 }
                 int articleWindowCount = SumPageThemeListOnline.Count;
-
+                SkinOnlinNum = SumPageThemeListOnline.Count;
                 for (int i = 0; i < totalPageOnline; i++)
                 {
                     WrapPanel rectangle = new WrapPanel();
@@ -1584,7 +1597,7 @@ namespace ThemeManagerPlugin.ViewModels
             {
                 WrapPanel rectangle = new WrapPanel();
                 rectangle.Orientation = Orientation.Vertical;
-                rectangle.Width = 960;
+                rectangle.Width = 930;
                 rectangle.Height = 460;
                 ObservableCollection<ThemeModel> currentPageList = new ObservableCollection<ThemeModel>();
                 ListBox lbox = new ListBox();
