@@ -442,7 +442,7 @@
     </Style>
     <!--凭证详情Button引用图标样式-->
     
-    <Style x:Key="BillDetailBtn" TargetType="controls:VicButtonNormal">
+    <Style x:Key="BillDetailBtn" TargetType="Button">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="MinHeight" Value="30"></Setter>
         <Setter Property="MinWidth" Value="30"></Setter>
