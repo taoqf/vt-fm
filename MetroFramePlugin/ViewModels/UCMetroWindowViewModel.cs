@@ -578,6 +578,15 @@ namespace MetroFramePlugin.ViewModels
                     InitPanelArea();
                     for (int i = 2; i < TabItemList.Count; i++)
                     {
+                       UserControl tabCtrl = (UserControl)(TabItemList[i].Content);
+                       if (!string.IsNullOrEmpty(tabCtrl.Uid))
+                       {
+                           string messageType = "PluginService.PluginStop";
+                           Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                           contentDic.Add("ObjectId", tabCtrl.Uid);
+                           messageOp.SendAsyncMessage(messageType, contentDic);
+                       }
+                       ActivePluginNum = messageOp.GetPluginInfo().Count;
                        TabItemList.Remove(TabItemList[i]);
                     }
                 });
@@ -603,6 +612,15 @@ namespace MetroFramePlugin.ViewModels
                     }
                     for (int i = 2; i < TabItemList.Count; i++)
                     {
+                        UserControl tabCtrl = (UserControl)(TabItemList[i].Content);
+                        if (!string.IsNullOrEmpty(tabCtrl.Uid))
+                        {
+                            string messageType = "PluginService.PluginStop";
+                            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                            contentDic.Add("ObjectId", tabCtrl.Uid);
+                            dataOp.SendAsyncMessage(messageType, contentDic);
+                        }
+                        ActivePluginNum = dataOp.GetPluginInfo().Count;
                         TabItemList.Remove(TabItemList[i]);
                     }
                     LoadStandardMenu();
