@@ -576,24 +576,12 @@ namespace MetroFramePlugin.ViewModels
                     RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
                     UserInfo.IsMultipleRole = RoleInfoList.Count >= 2;
                     InitPanelArea();
-                    for (int i = 2; i < TabItemList.Count; i++)
-                    {
-                       UserControl tabCtrl = (UserControl)(TabItemList[i].Content);
-                       if (!string.IsNullOrEmpty(tabCtrl.Uid))
-                       {
-                           string messageType = "PluginService.PluginStop";
-                           Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                           contentDic.Add("ObjectId", tabCtrl.Uid);
-                           messageOp.SendAsyncMessage(messageType, contentDic);
-                       }
-                       ActivePluginNum = messageOp.GetPluginInfo().Count;
-                       TabItemList.Remove(TabItemList[i]);
-                    }
+                    CloseUserCtrlTabItem(messageOp);
                 });
             }
         }
         #endregion
-       
+
         #region 切换角色
         public ICommand btnChangeRoleCommand
         {
@@ -610,22 +598,30 @@ namespace MetroFramePlugin.ViewModels
                         Window win = pluginModel.PluginInterface.StartWindow;
                         win.ShowDialog();
                     }
-                    for (int i = 2; i < TabItemList.Count; i++)
-                    {
-                        UserControl tabCtrl = (UserControl)(TabItemList[i].Content);
-                        if (!string.IsNullOrEmpty(tabCtrl.Uid))
-                        {
-                            string messageType = "PluginService.PluginStop";
-                            Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                            contentDic.Add("ObjectId", tabCtrl.Uid);
-                            dataOp.SendAsyncMessage(messageType, contentDic);
-                        }
-                        ActivePluginNum = dataOp.GetPluginInfo().Count;
-                        TabItemList.Remove(TabItemList[i]);
-                    }
+
+                    CloseUserCtrlTabItem(dataOp);
                     LoadStandardMenu();
-                    
+
                 });
+            }
+        }
+
+        private void CloseUserCtrlTabItem(DataMessageOperation dataOp)
+        {
+            while (TabItemList.Count > 2)
+            {
+                if (TabItemList.Last().Equals("homeItem"))
+                    continue;
+                UserControl tabCtrl = (UserControl)(TabItemList.Last().Content);
+                if (!string.IsNullOrEmpty(tabCtrl.Uid))
+                {
+                    string messageType = "PluginService.PluginStop";
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("ObjectId", tabCtrl.Uid);
+                    dataOp.SendAsyncMessage(messageType, contentDic);
+                }
+                ActivePluginNum = dataOp.GetPluginInfo().Count;
+                TabItemList.Remove(TabItemList.Last());
             }
         }
         #endregion
@@ -979,7 +975,7 @@ namespace MetroFramePlugin.ViewModels
             SystemMenuListEnterprise.Clear();
             if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
             {
-                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.Parent_no.Equals("0") || string.IsNullOrEmpty(it.Parent_no)).OrderBy(it=>it.Priority))
+                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.Parent_no.Equals("0") || string.IsNullOrEmpty(it.Parent_no)).OrderBy(it => it.Priority))
                 {
                     MenuModel menuModel = GetMenuModel(item);
                     menuModel.ParentId = string.Empty;
@@ -1015,7 +1011,7 @@ namespace MetroFramePlugin.ViewModels
         /// <summary>创建完整的菜单模型 </summary>
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
         {
-            foreach (MenuInfo item in fullMenuList.Where(it => it.Parent_no.Equals(parentMenu)).OrderBy(it=>it.Priority))
+            foreach (MenuInfo item in fullMenuList.Where(it => it.Parent_no.Equals(parentMenu)).OrderBy(it => it.Priority))
             {
                 MenuModel menuModel = GetMenuModel(item);
                 menuModel.ParentId = parentMenu;
