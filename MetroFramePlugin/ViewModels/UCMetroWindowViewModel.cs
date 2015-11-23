@@ -576,11 +576,15 @@ namespace MetroFramePlugin.ViewModels
                     RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
                     UserInfo.IsMultipleRole = RoleInfoList.Count >= 2;
                     InitPanelArea();
-
+                    for (int i = 2; i < TabItemList.Count; i++)
+                    {
+                       TabItemList.Remove(TabItemList[i]);
+                    }
                 });
             }
         }
         #endregion
+       
         #region 切换角色
         public ICommand btnChangeRoleCommand
         {
@@ -597,7 +601,12 @@ namespace MetroFramePlugin.ViewModels
                         Window win = pluginModel.PluginInterface.StartWindow;
                         win.ShowDialog();
                     }
+                    for (int i = 2; i < TabItemList.Count; i++)
+                    {
+                        TabItemList.Remove(TabItemList[i]);
+                    }
                     LoadStandardMenu();
+                    
                 });
             }
         }
@@ -952,7 +961,7 @@ namespace MetroFramePlugin.ViewModels
             SystemMenuListEnterprise.Clear();
             if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
             {
-                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.Parent_no.Equals("0") || string.IsNullOrEmpty(it.Parent_no)))
+                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.Parent_no.Equals("0") || string.IsNullOrEmpty(it.Parent_no)).OrderBy(it=>it.Priority))
                 {
                     MenuModel menuModel = GetMenuModel(item);
                     menuModel.ParentId = string.Empty;
@@ -988,7 +997,7 @@ namespace MetroFramePlugin.ViewModels
         /// <summary>创建完整的菜单模型 </summary>
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
         {
-            foreach (MenuInfo item in fullMenuList.Where(it => it.Parent_no.Equals(parentMenu)))
+            foreach (MenuInfo item in fullMenuList.Where(it => it.Parent_no.Equals(parentMenu)).OrderBy(it=>it.Priority))
             {
                 MenuModel menuModel = GetMenuModel(item);
                 menuModel.ParentId = parentMenu;
