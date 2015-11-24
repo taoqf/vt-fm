@@ -33,7 +33,8 @@
             </i:Interaction.Triggers>
         </ctrl:VicDataGrid>
         <ctrl:VicDockPanelNormal Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <TextBox Width="100" Height="24" Name="tbox" Text="{Binding Test,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <!--<TextBox Width="100" Height="24" Name="tbox" Text="{Binding Test,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>-->
+            <local:UCDetailView/>
         </ctrl:VicDockPanelNormal>
     </ctrl:VicGridNormal>
     <i:Interaction.Triggers>

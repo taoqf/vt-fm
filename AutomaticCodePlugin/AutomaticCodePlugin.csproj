@@ -123,6 +123,9 @@
     <Compile Include="Views\MainViewWindow.xaml.cs">
       <DependentUpon>MainViewWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UCDetailView.xaml.cs">
+      <DependentUpon>UCDetailView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UCMainView.xaml.cs">
       <DependentUpon>UCMainView.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\MainViewWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UCDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

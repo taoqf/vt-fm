@@ -10,6 +10,8 @@ using Victop.Frame.CmptRuntime;
 using AutomaticCodePlugin.FSM;
 using AutomaticCodePlugin.ViewModels;
 using System.Data;
+using Victop.Server.Controls.Models;
+using System.Windows.Controls;
 
 namespace AutomaticCodePlugin.Rules
 {
@@ -19,20 +21,41 @@ namespace AutomaticCodePlugin.Rules
     {
         public override void Define()
         {
-            TemplateControl userCtrl = null;
+            OAVModel oav = null;
+            OAVModel oav1 = null;
             MainStateMachine fsm = null;
-            When().Match<TemplateControl>(() => userCtrl, uctrl => userCtrl.InitFlag == true)
+            When().Match<OAVModel>(() => oav, o => oav.AtrributeName.Equals("userdt"))
+                .Match<OAVModel>(() => oav1, o => oav1.AtrributeName.Equals("btn"))
                 .Match<MainStateMachine>(() => fsm, f => f.currentState == Enums.MainViewState.AddRowed);
-            Then().Do(ctx => OnAddRow(ctx, userCtrl));
+            Then().Do(ctx => OnAddRow(ctx, oav))
+                .Do(ctx => OnUpdateUI(ctx, oav1));
         }
 
-        private void OnAddRow(IContext ctx, TemplateControl userCtrl)
+        private void OnUpdateUI(IContext ctx, OAVModel oav)
         {
-            UCMainView mainView = userCtrl as UCMainView;
-            UCMainViewViewModel mainViewModel = mainView.DataContext as UCMainViewViewModel;
-            DataRow dr = mainViewModel.MainPBlock.ViewBlockDataTable.NewRow();
-            dr["_id"] = Guid.NewGuid().ToString();
-            mainViewModel.MainPBlock.ViewBlockDataTable.Rows.Add(dr);
+            SetButtonEnabled(oav, false);
         }
+
+        private void OnAddRow(IContext ctx, OAVModel userCtrl)
+        {
+            AddRow(userCtrl, string.Empty);
+        }
+
+        #region 原子操作
+
+        private void SetButtonEnabled(OAVModel oav, bool enabled)
+        {
+            Button btn = (Button)oav.AtrributeValue;
+            btn.IsEnabled = enabled;
+        }
+
+        private void AddRow(OAVModel oav, string rowJson)
+        {
+            DataTable dt = (DataTable)oav.AtrributeValue;
+            DataRow dr = dt.NewRow();
+            dr["_id"] = Guid.NewGuid().ToString();
+            dt.Rows.Add(dr);
+        } 
+        #endregion
     }
 }

@@ -14,6 +14,7 @@ using AutomaticCodePlugin.Rules;
 using AutomaticCodePlugin.ViewModels;
 using NRules;
 using System.Reflection;
+using Victop.Server.Controls.Models;
 
 namespace AutomaticCodePlugin.FSM
 {
@@ -60,11 +61,22 @@ namespace AutomaticCodePlugin.FSM
 
         private void OnAddRowedEntry()
         {
+            OAVModel oav = new OAVModel();
+            oav.ObjectName = "dt";
+            oav.AtrributeName = "userdt";
+            oav.AtrributeValue = mainViewModel.MainPBlock.ViewBlockDataTable;
+
+            OAVModel oavctrl = new OAVModel();
+            oavctrl.ObjectName = "dt";
+            oavctrl.AtrributeName = "btn";
+            oavctrl.AtrributeValue = mainViewModel.MainView.addBtn;
             Console.WriteLine("OnAddRowedEntry");
             session.Insert(this);
-            session.Insert(mainViewModel.MainView);
+            session.Insert(oav);
+            session.Insert(oavctrl);
             session.Fire();
-            session.Retract(mainViewModel.MainView);
+            session.Retract(oav);
+            session.Retract(oavctrl);
             session.Retract(this);
         }
 
