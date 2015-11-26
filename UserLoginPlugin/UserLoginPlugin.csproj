@@ -99,8 +99,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convert\CheckboxBoolConverter.cs" />
-    <Compile Include="Convert\ImgeNameToBackgroundConverter.cs" />
+    <Compile Include="Converters\CheckboxBoolConverter.cs" />
+    <Compile Include="Converters\ImgeNameToBackgroundConverter.cs" />
     <Compile Include="Models\LoginUserInfoModel.cs" />
     <Compile Include="Models\SystemConfigModel.cs" />
     <Compile Include="Models\UserRoleInfoModel.cs" />

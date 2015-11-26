@@ -4,7 +4,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:convert="clr-namespace:UserLoginPlugin.Convert"
+             xmlns:convert="clr-namespace:UserLoginPlugin.Converters"
              xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
              xmlns:my="clr-namespace:UserLoginPlugin.Views"
              mc:Ignorable="d" 

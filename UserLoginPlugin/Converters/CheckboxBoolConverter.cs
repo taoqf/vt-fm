@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Data;
 
-namespace UserLoginPlugin.Convert
+namespace UserLoginPlugin.Converters
 {
     /// <summary>
     /// CheckBox从整型转换为bool类型（前提是0：否 1：是）

@@ -8,7 +8,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace UserLoginPlugin.Convert
+namespace UserLoginPlugin.Converters
 {
     /// <summary>
     /// 转换器。

@@ -175,7 +175,7 @@ namespace Victop.Frame.Connection
             }
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
-            if (replyMessage.ReplyMode == (ReplyModeEnum)0)
+            if (replyMessage.ReplyMode <= (ReplyModeEnum)0)
             {
                 replyMessage.MessageId = messageInfo.MessageId;
             }

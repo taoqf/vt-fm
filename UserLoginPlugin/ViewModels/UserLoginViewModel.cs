@@ -567,7 +567,7 @@ namespace UserLoginPlugin.ViewModels
             Dictionary<string, object> returnDic = JsonHelper.ToObject<Dictionary<string, object>>(returnMsg.ToString());
             if (returnDic != null)
             {
-                if (!returnDic["ReplyMode"].ToString().Equals("0"))
+                if (returnDic["ReplyMode"].ToString().Equals("1"))
                 {
                     IsRingShow = false;
                     SaveLoginUserInfo();
