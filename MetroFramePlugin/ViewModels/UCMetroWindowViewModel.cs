@@ -605,7 +605,7 @@ namespace MetroFramePlugin.ViewModels
                     }
                     try
                     {
-                        if(!UserInfo.OldRole.Equals(UserInfo.UserRole))
+                        if(result==true && !UserInfo.OldRole.Equals(UserInfo.UserRole))
                         {
                             CloseUserCtrlTabItem(dataOp);
                             CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
