@@ -182,6 +182,7 @@ namespace ChangeRolePlugin.ViewModels
                    {
                        VicMessageBoxNormal.Show(menuDic["ReplyAlertMessage"].ToString());
                    }
+                   roleWindow.DialogResult = true;
                    roleWindow.Close();
                });
            }

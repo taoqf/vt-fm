@@ -245,7 +245,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     tabItemList = new ObservableCollection<VicTabItemNormal>();
                     VicTabItemNormal personItem = new VicTabItemNormal();
-                    personItem.Name = "homeItem";
+                    personItem.Name = "personItem";
                     personItem.AllowDelete = false;
                     personItem.Header = "个人收藏";
                     UCPersonPluginContainer personPluginContainer = new UCPersonPluginContainer();
@@ -579,6 +579,7 @@ namespace MetroFramePlugin.ViewModels
                     if (!UserInfo.OldUserCode.Equals(UserInfo.UserCode))
                     {
                         CloseUserCtrlTabItem(messageOp);
+                        CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
                     }
                 });
             }
@@ -595,11 +596,12 @@ namespace MetroFramePlugin.ViewModels
                     DataMessageOperation dataOp = new DataMessageOperation();
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
                     //paramDic.Add("usercode", UserCode);
+                    bool result = false;
                     PluginModel pluginModel = dataOp.StratPlugin("ChangeRolePlugin", paramDic, null, false);
                     if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                     {
                         Window win = pluginModel.PluginInterface.StartWindow;
-                        win.ShowDialog();
+                        result = (bool)win.ShowDialog();
                     }
 
                     CloseUserCtrlTabItem(dataOp);
@@ -613,7 +615,7 @@ namespace MetroFramePlugin.ViewModels
         {
             while (TabItemList.Count > 2)
             {
-                if (TabItemList.Last().Equals("homeItem"))
+                if (TabItemList.Last().Equals("homeItem") || TabItemList.Last().Equals("personItem"))
                     continue;
                 UserControl tabCtrl = (UserControl)(TabItemList.Last().Content);
                 if (!string.IsNullOrEmpty(tabCtrl.Uid))
@@ -1463,13 +1465,30 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         /// <param name="url"></param>
         /// <param name="title"></param>
-        private void CreateBrowser(string url, string title)
+        private void CreateBrowser(string url, string title, string tabName = null)
         {
             WebBrowser browser = new WebBrowser();
             browser.Navigating += browser_Navigating;
             browser.Source = new Uri(string.Format("http://{0}", url));
-            TabItemList[0].Content = browser;
-            TabItemList[0].Header = title;
+            VicTabItemNormal tabItem;
+            if (string.IsNullOrEmpty(tabName))
+            {
+                tabItem = TabItemList[1];
+            }
+            else
+            {
+                tabItem = TabItemList.FirstOrDefault(it => it.Name.Equals(tabName));
+                if (tabItem != null)
+                {
+                    tabItem.Content = browser;
+                    tabItem.Header = title;
+                }
+                else
+                {
+                    TabItemList[1].Content = browser;
+                    TabItemList[1].Header = title;
+                }
+            }
         }
         void browser_Navigating(object sender, NavigatingCancelEventArgs e)
         {
