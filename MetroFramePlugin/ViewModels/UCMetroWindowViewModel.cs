@@ -594,10 +594,8 @@ namespace MetroFramePlugin.ViewModels
                 return new RelayCommand(() =>
                 {
                     DataMessageOperation dataOp = new DataMessageOperation();
-                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    paramDic.Add("uu", "111");
                     bool result = false;
-                    PluginModel pluginModel = dataOp.StratPlugin("ChangeRolePlugin", paramDic, null, false);
+                    PluginModel pluginModel = dataOp.StratPlugin("ChangeRolePlugin");
                     if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                     {
                         Window win = pluginModel.PluginInterface.StartWindow;
@@ -605,19 +603,23 @@ namespace MetroFramePlugin.ViewModels
                     }
                     try
                     {
-                        UserInfo.OldRole = paramDic["RoleNo"].ToString();
-                        if(result==true && !UserInfo.OldRole.Equals(UserInfo.UserRole))
+                        UserInfo.OldRole = UserInfo.UserRole;
+                        if (result == true)
                         {
-                            CloseUserCtrlTabItem(dataOp);
-                            CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
+                            var rect = dataOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                            UserInfo.UserRole = JsonHelper.ReadJsonString(rect["ReplyContent"].ToString(), "CurrentRole");
+                            if (!UserInfo.OldRole.Equals(UserInfo.UserRole))
+                            {
+                                CloseUserCtrlTabItem(dataOp);
+                                CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
+                            }
                         }
                     }
                     catch (Exception ex)
                     {
-
                         MessageBox.Show(ex.ToString());
                     }
-                    
+
                     LoadStandardMenu();
 
                 });
