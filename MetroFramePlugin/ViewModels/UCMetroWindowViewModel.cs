@@ -576,7 +576,10 @@ namespace MetroFramePlugin.ViewModels
                     RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
                     UserInfo.IsMultipleRole = RoleInfoList.Count >= 2;
                     InitPanelArea();
-                    CloseUserCtrlTabItem(messageOp);
+                    if (!UserInfo.OldUserCode.Equals(UserInfo.UserCode))
+                    {
+                        CloseUserCtrlTabItem(messageOp);
+                    }
                 });
             }
         }
@@ -1253,6 +1256,7 @@ namespace MetroFramePlugin.ViewModels
             Window loginWin = PluginInstance.StartWindow;
             loginWin.Uid = pluginModel.ObjectId;
             loginWin.Owner = mainWindow;
+            UserInfo.OldUserCode = UserInfo.UserCode;
             bool? result = loginWin.ShowDialog();
             if (result == true)
             {

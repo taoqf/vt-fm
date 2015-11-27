@@ -97,6 +97,9 @@ namespace MetroFramePlugin.Models
         /// 用户账号
         /// </summary>
         private string userCode;
+
+        public string OldUserCode { get; set; }
+
         /// <summary>
         /// 用户账号
         /// </summary>
