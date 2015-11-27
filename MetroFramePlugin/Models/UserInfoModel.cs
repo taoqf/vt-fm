@@ -37,6 +37,7 @@ namespace MetroFramePlugin.Models
         /// 用户角色
         /// </summary>
         private string userRole;
+        public string OldRole { get; set; }
         /// <summary>
         /// 用户角色
         /// </summary>

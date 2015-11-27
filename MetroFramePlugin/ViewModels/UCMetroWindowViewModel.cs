@@ -603,8 +603,20 @@ namespace MetroFramePlugin.ViewModels
                         Window win = pluginModel.PluginInterface.StartWindow;
                         result = (bool)win.ShowDialog();
                     }
+                    try
+                    {
+                        if(!UserInfo.OldRole.Equals(UserInfo.UserRole))
+                        {
+                            CloseUserCtrlTabItem(dataOp);
+                            CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
 
-                    CloseUserCtrlTabItem(dataOp);
+                        MessageBox.Show(ex.ToString());
+                    }
+                    
                     LoadStandardMenu();
 
                 });
@@ -1259,6 +1271,7 @@ namespace MetroFramePlugin.ViewModels
             loginWin.Uid = pluginModel.ObjectId;
             loginWin.Owner = mainWindow;
             UserInfo.OldUserCode = UserInfo.UserCode;
+            UserInfo.OldRole = UserInfo.UserRole;
             bool? result = loginWin.ShowDialog();
             if (result == true)
             {
