@@ -27,7 +27,9 @@ namespace ChangeRolePlugin.Views
 
         public static Dictionary<string, object> ParamDict
         {
-            get { return UCChangeRole.paramDict; }
+            get { 
+                return UCChangeRole.paramDict; 
+            }
             set { UCChangeRole.paramDict = value; }
         }
 

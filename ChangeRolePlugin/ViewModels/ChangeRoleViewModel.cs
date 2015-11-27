@@ -14,6 +14,7 @@ using System.Windows;
 using Victop.Wpf.Controls;
 using System.Configuration;
 using Victop.Frame.PublicLib.Managers;
+using ChangeRolePlugin.Views;
 namespace ChangeRolePlugin.ViewModels
 {
    public class ChangeRoleViewModel:ModelBase
@@ -176,6 +177,8 @@ namespace ChangeRolePlugin.ViewModels
                        setUserContentDic.Add("ClientId",ClientId);
                        setUserContentDic.Add("UserRole", SelectedRoleInfo.Role_No);
                        dataOp.SendSyncMessage(messageType, setUserContentDic);
+                       UCChangeRole.ParamDict.Add("RoleNo", SelectedRoleInfo.Role_No);
+                    
                        
                    }
                    else

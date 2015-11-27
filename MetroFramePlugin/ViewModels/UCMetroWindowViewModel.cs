@@ -595,7 +595,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     DataMessageOperation dataOp = new DataMessageOperation();
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    //paramDic.Add("usercode", UserCode);
+                    paramDic.Add("uu", "111");
                     bool result = false;
                     PluginModel pluginModel = dataOp.StratPlugin("ChangeRolePlugin", paramDic, null, false);
                     if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
@@ -605,6 +605,7 @@ namespace MetroFramePlugin.ViewModels
                     }
                     try
                     {
+                        UserInfo.OldRole = paramDic["RoleNo"].ToString();
                         if(result==true && !UserInfo.OldRole.Equals(UserInfo.UserRole))
                         {
                             CloseUserCtrlTabItem(dataOp);
