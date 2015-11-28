@@ -576,7 +576,14 @@ namespace MetroFramePlugin.ViewModels
                     RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
                     UserInfo.IsMultipleRole = RoleInfoList.Count >= 2;
                     InitPanelArea();
-                    if (!UserInfo.OldUserCode.Equals(UserInfo.UserCode))
+                    var rect = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                    UserInfo.UserRole = JsonHelper.ReadJsonString(rect["ReplyContent"].ToString(), "CurrentRole");
+                    if (!UserInfo.OldUserCode.Equals(UserInfo.UserCode)&&!UserInfo.OldRole.Equals(UserInfo.UserRole))
+                    {
+                        CloseUserCtrlTabItem(messageOp);
+                        CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
+                    }
+                    if (UserInfo.OldUserCode.Equals(UserInfo.UserCode) && !UserInfo.OldRole.Equals(UserInfo.UserRole))
                     {
                         CloseUserCtrlTabItem(messageOp);
                         CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
