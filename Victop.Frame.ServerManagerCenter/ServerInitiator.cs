@@ -268,12 +268,13 @@ namespace Victop.Frame.ServerManagerCenter
                 string pluginPath = JsonHelper.ReadJsonString(messageInfo.MessageContent, "PluginPath");
                 string pluginParam = JsonHelper.ReadJsonString(messageInfo.MessageContent, "PluginParam");
                 string pluginVisibile = JsonHelper.ReadJsonString(messageInfo.MessageContent, "VisiblePlugin");
+                string pluginIsLoading = JsonHelper.ReadJsonString(messageInfo.MessageContent, "IsLoading");
                 Dictionary<string, object> paramDict = new Dictionary<string, object>();
                 if (!string.IsNullOrEmpty(pluginParam))
                 {
                     paramDict = JsonHelper.ToObject<Dictionary<string, object>>(pluginParam);
                 }
-                Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName(pluginName, pluginPath);
+                Assembly pluginAssembly = ServerFactory.GetServerAssemblyByName(pluginName, pluginPath, true, Convert.ToBoolean(pluginIsLoading));
                 Type[] types = pluginAssembly.GetTypes();
                 bool validPlugin = false;
                 foreach (Type t in types)

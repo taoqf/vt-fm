@@ -24,13 +24,13 @@ namespace Victop.Frame.CoreLibrary
         /// <param name="serverName">服务名称</param>
         /// <param name="serverPath">服务路径</param>
         /// </summary>
-        public static Assembly GetServerAssemblyByName(string serverName, string serverPath = "", bool userPathFlag = true)
+        public static Assembly GetServerAssemblyByName(string serverName, string serverPath = "", bool userPathFlag = true, bool isLoading = false)
         {
             if (string.IsNullOrWhiteSpace(serverName))
             {
                 return null;
             }
-            if (!assemblyInfoList.ContainsKey(serverName))
+            if (!assemblyInfoList.ContainsKey(serverName) || isLoading)
             {
                 if (string.IsNullOrWhiteSpace(serverPath) && userPathFlag)
                 {
@@ -42,7 +42,14 @@ namespace Victop.Frame.CoreLibrary
                 {
                     byte[] fileBytes = LoadServerFile(filePath);
                     Assembly assemblyLoad = AppDomain.CurrentDomain.Load(fileBytes);
-                    assemblyInfoList.Add(serverName, assemblyLoad);
+                    if (!isLoading)
+                    {
+                        assemblyInfoList.Add(serverName, assemblyLoad);
+                    }
+                    else
+                    {
+                        assemblyInfoList[serverName] = assemblyLoad;
+                    }
                     return assemblyLoad;
                 }
                 else
