@@ -578,6 +578,10 @@ namespace MetroFramePlugin.ViewModels
                     InitPanelArea();
                     var rect = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                     UserInfo.UserRole = JsonHelper.ReadJsonString(rect["ReplyContent"].ToString(), "CurrentRole");
+                    if (UserInfo.OldUserCode == null || UserInfo.OldUserCode == "")
+                    {
+                        return;
+                    }
                     if (!UserInfo.OldUserCode.Equals(UserInfo.UserCode))
                     {
                         CloseUserCtrlTabItem(messageOp);
