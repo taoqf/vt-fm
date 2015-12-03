@@ -12,6 +12,7 @@ using AutomaticCodePlugin.ViewModels;
 using System.Data;
 using Victop.Server.Controls.Models;
 using System.Windows.Controls;
+using NRules;
 
 namespace AutomaticCodePlugin.Rules
 {
@@ -24,11 +25,13 @@ namespace AutomaticCodePlugin.Rules
             OAVModel oav = null;
             OAVModel oav1 = null;
             MainStateMachine fsm = null;
+            OAVModel oavsession = null;
             When().Match<OAVModel>(() => oav, o => oav.AtrributeName.Equals("userdt"))
                 .Match<OAVModel>(() => oav1, o => oav1.AtrributeName.Equals("btn"))
+                .Match<OAVModel>(() => oavsession, o => oavsession.AtrributeName.Equals("session"))
                 .Match<MainStateMachine>(() => fsm, f => f.currentState == Enums.MainViewState.AddRowed);
-            Then().Do(ctx => OnAddRow(ctx, oav))
-                .Do(ctx => OnUpdateUI(ctx, oav1));
+            Then().Do(ctx => OnAddRow(ctx, oav, oavsession));
+                //.Do(ctx => OnUpdateUI(ctx, oav1));
         }
 
         private void OnUpdateUI(IContext ctx, OAVModel oav)
@@ -36,9 +39,14 @@ namespace AutomaticCodePlugin.Rules
             SetButtonEnabled(oav, false);
         }
 
-        private void OnAddRow(IContext ctx, OAVModel userCtrl)
+        private void OnAddRow(IContext ctx, OAVModel userCtrl, OAVModel session)
         {
+            ISession temp = (ISession)session.AtrributeValue;
             AddRow(userCtrl, string.Empty);
+            //OAVModel oav = new OAVModel();
+            //oav.AtrributeName = "abc";
+            //oav.AtrributeValue = "test";
+            //temp.Insert(oav);
         }
 
         #region 原子操作
@@ -55,7 +63,7 @@ namespace AutomaticCodePlugin.Rules
             DataRow dr = dt.NewRow();
             dr["_id"] = Guid.NewGuid().ToString();
             dt.Rows.Add(dr);
-        } 
+        }
         #endregion
     }
 }

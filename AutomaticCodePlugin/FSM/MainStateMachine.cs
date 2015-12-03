@@ -70,13 +70,21 @@ namespace AutomaticCodePlugin.FSM
             oavctrl.ObjectName = "dt";
             oavctrl.AtrributeName = "btn";
             oavctrl.AtrributeValue = mainViewModel.MainView.addBtn;
+
+            OAVModel oavsession = new OAVModel();
+            oavsession.ObjectName = "rules";
+            oavsession.AtrributeName = "session";
+            oavsession.AtrributeValue = session;
+
             Console.WriteLine("OnAddRowedEntry");
             session.Insert(this);
             session.Insert(oav);
             session.Insert(oavctrl);
+            session.Insert(oavsession);
             session.Fire();
             session.Retract(oav);
             session.Retract(oavctrl);
+            session.Retract(oavsession);
             session.Retract(this);
         }
 

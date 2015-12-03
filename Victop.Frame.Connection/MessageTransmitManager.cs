@@ -61,6 +61,7 @@ namespace Victop.Frame.Connection
                     if (replyMessage.ReplyMode == ReplyModeEnum.ROUTER)
                     {
                         RequestMessage userLoginMsg = new RequestMessage();
+                        userLoginMsg.MessageId = messageInfo.MessageId;
                         userLoginMsg.MessageType = "LoginService.userLogin";
                         CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
                         Dictionary<string, object> loginContent = new Dictionary<string, object>();
@@ -184,7 +185,7 @@ namespace Victop.Frame.Connection
                 currentGallery.IsLogin = true;
                 currentGallery.ClientInfo.SessionId = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "sessionID");
                 currentGallery.ClientInfo.UserName = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "user_name");
-                currentGallery.ClientInfo.UserCode = replyMessage.ReplyContent.Contains("userCode") ? JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode") : JsonHelper.ReadJsonString(replyMessage.ReplyContent, "userCode");
+                currentGallery.ClientInfo.UserCode = JsonHelper.ReadJsonString(replyMessage.ReplyContent, "usercode");
                 messageInfo.MessageContent = replyMessage.ReplyContent;
                 replyMessage = GetLoginUserRoleSubmit(adapter, messageInfo);
             }
@@ -217,7 +218,7 @@ namespace Victop.Frame.Connection
                         replyMessage = adapter.SubmitRequest(messageInfo);
                         break;
                 }
-                if (!(replyMessage.ReplyMode == (ReplyModeEnum)0))
+                if (replyMessage.ReplyMode == ReplyModeEnum.SYNCH)
                 {
                     ReplyMessageResolver replyMessageResolver = new ReplyMessageResolver();
                     switch (saveDataFlag)

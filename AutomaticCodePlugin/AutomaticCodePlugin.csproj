@@ -115,6 +115,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Rules\MainViewAddRowInfoRule.cs" />
     <Compile Include="Rules\MainViewAddRowRule.cs" />
     <Compile Include="Rules\MainViewLoadRule.cs" />
     <Compile Include="Rules\MainViewRowSelectRule.cs" />
