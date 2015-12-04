@@ -80,7 +80,7 @@
             <Grid Name="gridMid" Grid.Row="1" Visibility="{Binding ShowWorkSpace}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="18"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Column="0">
                     <controls:VicTabControlNormal Name="MainTabControl" Style="{DynamicResource MainVicTabControlStyle}" ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
@@ -92,7 +92,7 @@
                     </controls:VicTabControlNormal>
                 </Grid>
                 <DockPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0">
-                    <controls:VicButtonNormal Width="Auto" Height="24" Cursor="Hand"  BorderThickness="0" Content="{Binding AppVersionCode}" Foreground="{DynamicResource MainFrmUserNameColor}" Background="Transparent" Command="{Binding btnViewUpdateLogClickCommand}"/>
+                    <controls:VicButtonNormal Width="Auto" Height="18" FontSize="10" Cursor="Hand" BorderThickness="0" Content="{Binding AppVersionCode}" Foreground="{DynamicResource MainFrmUserNameColor}" Background="Transparent" Command="{Binding btnViewUpdateLogClickCommand}"/>
                 </DockPanel>
             </Grid>
             <Grid Name="gridLock" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding ShowLockView}">
