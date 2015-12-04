@@ -21,7 +21,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Border>
-        <ScrollViewer x:Name="scrollViewer"  Visibility="{Binding IsShowMenu}"  Style="{DynamicResource MenuScrollViewer}">
+        <ScrollViewer x:Name="scrollViewer" Visibility="{Binding IsShowMenu}"  Style="{DynamicResource MenuScrollViewer}">
             <Grid Style="{DynamicResource LeftGrid}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeave">
@@ -43,14 +43,8 @@
                     <Expander Header="  企业云" Style="{DynamicResource ExpanderFirstLevel}" IsExpanded="True">
                         <ListBox x:Name="listSecondMenuEnterprise" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListEnterprise,UpdateSourceTrigger=PropertyChanged}"/>
                     </Expander>
-
                 </StackPanel>
-                <controls:VicButtonNormal   Name="lock" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="White" BorderThickness="0" Background="Transparent"  Content="解锁">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding LockMenuList}" CommandParameter="{Binding ElementName=lock}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                <controls:VicButtonNormal   Name="lock" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="White" BorderThickness="0" Background="Transparent"  Content="解锁" Command="{Binding LockMenuList}" CommandParameter="{Binding ElementName=lock}">
                 </controls:VicButtonNormal>
             </Grid>
         </ScrollViewer>
@@ -71,45 +65,19 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </controls:VicButtonNormal>
-                    <controls:VicButtonNormal Name="btnChangeSkin" Style="{DynamicResource btnChangeSkinStyle}"  ToolTip="皮肤管理">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnChangeSkinClickCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                    <controls:VicButtonNormal Name="btnChangeSkin" Style="{DynamicResource btnChangeSkinStyle}"  ToolTip="皮肤管理" Command="{Binding btnChangeSkinClickCommand}">
                     </controls:VicButtonNormal>
-                    <controls:VicButtonNormal Name="btnSet" Visibility="Collapsed" Style="{DynamicResource btnSetStyle}" >
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnSetClickCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                    <controls:VicButtonNormal Name="btnSet" Style="{DynamicResource btnSetStyle}" ToolTip="锁定工作区" Command="{Binding btnLockSpaceClickCommand}">
                     </controls:VicButtonNormal>
-                    <controls:VicButtonNormal Name="btnMini" Style="{DynamicResource btnMiniStyle}" ToolTip="最小化">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnMiniClickCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                    <controls:VicButtonNormal Name="btnMini" Style="{DynamicResource btnMiniStyle}" ToolTip="最小化" Command="{Binding btnMiniClickCommand}">
                     </controls:VicButtonNormal>
-                    <controls:VicButtonNormal Name="btnMax" Style="{DynamicResource btnRestoreStyle}" ToolTip="最大化/还原">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnMaxClickCommand}" CommandParameter="{Binding ElementName=btnMax}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                    <controls:VicButtonNormal Name="btnMax" Style="{DynamicResource btnRestoreStyle}" ToolTip="最大化/还原" Command="{Binding btnMaxClickCommand}" CommandParameter="{Binding ElementName=btnMax}">
                     </controls:VicButtonNormal>
-
-                    <controls:VicButtonNormal Name="btnClose" Style="{DynamicResource btnCloseStyle}" ToolTip="关闭">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding btnCloseClickCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                    <controls:VicButtonNormal Name="btnClose" Style="{DynamicResource btnCloseStyle}" ToolTip="关闭" Command="{Binding btnCloseClickCommand}">
                     </controls:VicButtonNormal>
                 </StackPanel>
             </Grid>
-            <Grid Name="gridMid" Grid.Row="1">
+            <Grid Name="gridMid" Grid.Row="1" Visibility="{Binding ShowWorkSpace}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="25"/>
@@ -127,36 +95,31 @@
                     <controls:VicButtonNormal Width="Auto" Height="24" Cursor="Hand"  BorderThickness="0" Content="{Binding AppVersionCode}" Foreground="{DynamicResource MainFrmUserNameColor}" Background="Transparent" Command="{Binding btnViewUpdateLogClickCommand}"/>
                 </DockPanel>
             </Grid>
+            <Grid Name="gridLock" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding ShowLockView}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Background="{DynamicResource DefaultUserPic}" Width="160" Height="200">
+                    <controls:VicButtonImage Width="160" Height="200" Background="{Binding UserInfo.UserImg, Converter={StaticResource imgeNameToBackgroundConverter}}"/>
+                </Grid>
+                <TextBlock Grid.Row="1" Text="{Binding UserInfo.UserName}" FontSize="15pt" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource SkinColor}" FontWeight="Bold"/>
+                <DockPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <controls:VicPasswordBoxNormal WateMark="密码" Width="150" Height="25" Password="{Binding UserInfo.UnLockPwd,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"/>
+                    <controls:VicButtonNormal Width="75" Height="25" Content="解锁工作区" Name="btnUnLockSpace" Command="{Binding btnUnLockSpaceClickCommand}" IsDefault="True"/>
+                </DockPanel>
+            </Grid>
             <controls:VicPopup IsOpen="{Binding PoPupState}"  AllowsTransparency="True" Name="TitlePopup" PlacementTarget="{Binding ElementName= btnUserLogin}" Placement="Left" Width="200" StaysOpen="False">
                 <Grid Background="White"  Width="200" >
                     <StackPanel>
-                        <controls:VicRadioButtonRectangle Content="切换用户">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnChangeUserClickCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
+                        <controls:VicRadioButtonRectangle Content="切换用户" Command="{Binding btnChangeUserClickCommand}">
                         </controls:VicRadioButtonRectangle>
-                        <controls:VicRadioButtonRectangle Name="rbtnRole" Content="切换角色" Visibility="{Binding UserInfo.IsMultipleRole,Converter={StaticResource booltovisbility}}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnChangeRoleCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
+                        <controls:VicRadioButtonRectangle Name="rbtnRole" Content="切换角色" Visibility="{Binding UserInfo.IsMultipleRole,Converter={StaticResource booltovisbility}}" Command="{Binding btnChangeRoleCommand}">
                         </controls:VicRadioButtonRectangle>
-                        <controls:VicRadioButtonRectangle Content="修改密码" Visibility="{Binding UserInfo.IsLogin,Converter={StaticResource booltovisbility}}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnModifiPassClickCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
+                        <controls:VicRadioButtonRectangle Content="修改密码" Visibility="{Binding UserInfo.IsLogin,Converter={StaticResource booltovisbility}}" Command="{Binding btnModifiPassClickCommand}">
                         </controls:VicRadioButtonRectangle>
-                        <controls:VicRadioButtonRectangle Name="rbtnLogOut" Content="注销" Visibility="{Binding UserInfo.IsLogin,Converter={StaticResource booltovisbility}}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding btnUserLogOutClickCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
+                        <controls:VicRadioButtonRectangle Name="rbtnLogOut" Content="注销" Visibility="{Binding UserInfo.IsLogin,Converter={StaticResource booltovisbility}}" Command="{Binding btnUserLogOutClickCommand}">
                         </controls:VicRadioButtonRectangle>
                     </StackPanel>
                 </Grid>

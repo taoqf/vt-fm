@@ -12,6 +12,7 @@ using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.PublicLib.Managers;
 using Victop.Server.Controls;
+using Victop.Wpf.Controls;
 
 namespace VictopPartner
 {
@@ -20,6 +21,26 @@ namespace VictopPartner
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            DispatcherUnhandledException += App_DispatcherUnhandledException;
+        }
+
+        private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            string errorInfo = string.Empty;
+            string alertInfo = string.Empty;
+            if (e.Exception.InnerException != null)
+            {
+                errorInfo = string.Format("异常源:{0},异常位置:{1},异常信息:{2}", e.Exception.InnerException.Source, e.Exception.InnerException.StackTrace, e.Exception.InnerException.Message);
+                alertInfo = string.Format("{0}异常位置:{1}", e.Exception.Message, e.Exception.InnerException.StackTrace);
+            }
+            VicMessageBoxNormal.Show(alertInfo, "未知错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            LoggerHelper.Error(errorInfo);
+            e.Handled = true;
+
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -91,7 +112,7 @@ namespace VictopPartner
         private void GetCurrentSkin()
         {
             string skinName = ConfigManager.GetAttributeOfNodeByName("UserInfo", "UserSkin");
-            string skinNamespace = System.IO.Path.GetFileNameWithoutExtension(string.Format("theme\\{0}.dll",skinName));//得到皮肤命名空间
+            string skinNamespace = System.IO.Path.GetFileNameWithoutExtension(string.Format("theme\\{0}.dll", skinName));//得到皮肤命名空间
             this.ChangeFrameWorkTheme("/" + skinNamespace + ";component/Styles.xaml", skinName);
         }
         /// <summary>

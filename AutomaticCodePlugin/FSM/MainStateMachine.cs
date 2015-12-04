@@ -61,6 +61,7 @@ namespace AutomaticCodePlugin.FSM
 
         private void OnAddRowedEntry()
         {
+            
             OAVModel oav = new OAVModel();
             oav.ObjectName = "dt";
             oav.AtrributeName = "userdt";
@@ -90,7 +91,10 @@ namespace AutomaticCodePlugin.FSM
 
         public void SelectRow()
         {
-            myFsm.Fire(MainViewTrigger.SelectRow);
+            if (myFsm.CanFire(MainViewTrigger.SelectRow))
+            {
+                myFsm.Fire(MainViewTrigger.SelectRow,"a","b","c");
+            }
         }
 
         private void OnSelectedRowChangedEntry()

@@ -142,6 +142,27 @@ namespace MetroFramePlugin.Models
                 }
             }
         }
+
+        private string unLockPwd;
+        /// <summary>
+        /// 解锁密码
+        /// </summary>
+
+        public string UnLockPwd
+        {
+            get
+            {
+                return unLockPwd;
+            }
+            set
+            {
+                if (unLockPwd != value)
+                {
+                    unLockPwd = value;
+                    RaisePropertyChanged("UnLockPwd");
+                }
+            }
+        }
         /// <summary>
         /// 是否为多角色
         /// </summary>

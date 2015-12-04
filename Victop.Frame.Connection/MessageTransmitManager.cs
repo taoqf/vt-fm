@@ -109,13 +109,16 @@ namespace Victop.Frame.Connection
             messageInfo = organizeManager.OrganizeMessage(messageInfo, out saveDataFlag);
             ReplyMessage replyMessage = adapter.SubmitRequest(messageInfo);
             replyMessage.MessageId = messageInfo.MessageId;
-            if (replyMessage.ReplyMode != (ReplyModeEnum)0)
+            if (replyMessage.ReplyMode == ReplyModeEnum.SYNCH)
             {
                 CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
                 currentGallery.IsLogin = false;
                 currentGallery.ClientInfo.SessionId = string.Empty;
                 currentGallery.ClientInfo.UserName = string.Empty;
                 currentGallery.ClientInfo.UserCode = string.Empty;
+                currentGallery.ClientInfo.UserRole = string.Empty;
+                BaseResourceManager baseResourceManager = new BaseResourceManager();
+                bool result = baseResourceManager.RemoveResource(GalleryManager.GetCurrentGalleryId().ToString());
             }
             return replyMessage;
         }

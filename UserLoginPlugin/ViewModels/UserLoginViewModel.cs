@@ -650,11 +650,13 @@ namespace UserLoginPlugin.ViewModels
         {
             try
             {
+                DataMessageOperation messageOp = new DataMessageOperation();
+                Dictionary<string, object> loginDic = new Dictionary<string, object>();
+                var dic = messageOp.SendSyncMessage("MongoDataChannelService.loginout", loginDic);
                 Dictionary<string, object> contentDic = new Dictionary<string, object>();
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
                 string MessageType = "LoginService.userLogin";
-                DataMessageOperation messageOp = new DataMessageOperation();
                 //Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                 messageOp.SendAsyncMessage(MessageType, contentDic, new WaitCallback(AfterLogin));
             }

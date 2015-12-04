@@ -344,6 +344,47 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
+
+        private Visibility showWorkSpace = Visibility.Visible;
+        /// <summary>
+        /// 工作区是否可见
+        /// </summary>
+        public Visibility ShowWorkSpace
+        {
+            get
+            {
+                return showWorkSpace;
+            }
+            set
+            {
+                if (showWorkSpace != value)
+                {
+                    showWorkSpace = value;
+                    RaisePropertyChanged("ShowWorkSpace");
+                }
+            }
+        }
+
+        private Visibility showLockView = Visibility.Collapsed;
+        /// <summary>
+        /// 锁屏是否可见
+        /// </summary>
+        public Visibility ShowLockView
+        {
+            get
+            {
+                return showLockView;
+            }
+            set
+            {
+                if (showLockView != value)
+                {
+                    showLockView = value;
+                    RaisePropertyChanged("ShowLockView");
+                }
+            }
+        }
+
         /// <summary>
         /// 角色信息集合
         /// </summary>
@@ -401,18 +442,6 @@ namespace MetroFramePlugin.ViewModels
                     UserInfo.IsMultipleRole = RoleInfoList.Count >= 2;
                     UserInfo.ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
                     string UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
-                    //if (UserPwd.Equals("111111"))
-                    //{
-                    //    DataMessageOperation dataOp = new DataMessageOperation();
-                    //    Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    //    paramDic.Add("usercode", UserCode);
-                    //    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
-                    //    if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
-                    //    {
-                    //        Window win = pluginModel.PluginInterface.StartWindow;
-                    //        win.ShowDialog();
-                    //    }
-                    //}
                 });
             }
         }
@@ -539,6 +568,53 @@ namespace MetroFramePlugin.ViewModels
         }
         #endregion
 
+        #region 锁定工作区命令
+        /// <summary>
+        /// 锁定工作区
+        /// </summary>
+        public ICommand btnLockSpaceClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    ShowWorkSpace = Visibility.Collapsed;
+                    ShowLockView = Visibility.Visible;
+                    IsShowMenu = Visibility.Collapsed;
+                    isLockMenu = false;
+                });
+            }
+        }
+        #endregion
+
+        #region 解锁工作区命令
+        /// <summary>
+        /// 解锁工作区
+        /// </summary>
+        public ICommand btnUnLockSpaceClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    string pwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
+                    if (UserInfo.UnLockPwd.Equals(pwd))
+                    {
+                        ShowWorkSpace = Visibility.Visible;
+                        ShowLockView = Visibility.Collapsed;
+                        IsShowMenu = Visibility.Visible;
+                        isLockMenu = true;
+                        UserInfo.UnLockPwd = string.Empty;
+                    }
+                    else
+                    {
+                        VicMessageBoxNormal.Show("请输入正确的登陆密码", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                });
+            }
+        }
+        #endregion
+
         #region 窗体最小化命令
         /// <summary>窗体最小化命令 </summary>
         public ICommand btnMiniClickCommand
@@ -583,7 +659,7 @@ namespace MetroFramePlugin.ViewModels
                         CloseUserCtrlTabItem(messageOp);
                         CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
                     }
-                    if (!UserInfo.OldUserCode.Equals(UserInfo.UserCode)&&!UserInfo.OldRole.Equals(UserInfo.UserRole))
+                    if (!UserInfo.OldUserCode.Equals(UserInfo.UserCode) && !UserInfo.OldRole.Equals(UserInfo.UserRole))
                     {
                         CloseUserCtrlTabItem(messageOp);
                         CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
@@ -746,7 +822,7 @@ namespace MetroFramePlugin.ViewModels
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         Dictionary<string, object> resultDic = dataMsgOp.SendSyncMessage("MongoDataChannelService.loginout", contentDic);
                         long replyMode = Convert.ToInt64(resultDic["ReplyMode"].ToString());
-                        if (replyMode > 0)
+                        if (replyMode == 1)
                         {
                             UserInfo.IsLogin = false;
                             UserInfo.UserName = string.Empty;
@@ -1130,7 +1206,7 @@ namespace MetroFramePlugin.ViewModels
                 paramDic.Add("configsystemid", "11");
                 paramDic.Add("formid", selectedFourthMenu.FormId);
                 paramDic.Add("authoritycode", selectedFourthMenu.AuthorityCode);
-                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.PackageUrl, paramDic, selectedFourthMenu.MenuName,true);
+                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.PackageUrl, paramDic, selectedFourthMenu.MenuName, true);
                 if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {
                     PluginShow(pluginModel, selectedFourthMenu.MenuName);
@@ -1291,20 +1367,17 @@ namespace MetroFramePlugin.ViewModels
             if (result == true)
             {
                 UserInfo.IsLogin = true;
-                Dictionary<string, object> userDic = pluginOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
-                if (userDic != null)
-                {
-                    UserInfo.UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
-                    UserInfo.UserRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
-                    UserInfo.UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
-                    UserInfo.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
-                }
-                LoadStandardMenu();
-                IsShowMenu = Visibility.Visible;
-                //NotificationCenter notifyCenter = new NotificationCenter();
-                //notifyCenter.Show();
             }
-
+            Dictionary<string, object> userDic = pluginOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+            if (userDic != null)
+            {
+                UserInfo.UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
+                UserInfo.UserRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
+                UserInfo.UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
+                UserInfo.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
+            }
+            IsShowMenu = Visibility.Visible;
+            LoadStandardMenu();
         }
 
         private string DownLoadUserImg(string userCode, string fileInfo)

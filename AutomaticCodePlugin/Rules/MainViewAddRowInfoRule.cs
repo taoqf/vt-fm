@@ -12,27 +12,28 @@ namespace AutomaticCodePlugin.Rules
 {
     [Repeatability(RuleRepeatability.NonRepeatable)]
     [Tag("Row")]
-    public class MainViewAddRowInfoRule : NRules.Fluent.Dsl.Rule
+    public class MainViewAddRowInfoRule : MainRule
     {
         public override void Define()
         {
             OAVModel oavCtrl = null;
-            OAVModel oavSession = null;
             OAVModel oavCtrlInfo = null;
             When().Match<OAVModel>(() => oavCtrl, o => o.AtrributeName.Equals("btn"))
-                .Match<OAVModel>(() => oavSession, o => o.AtrributeName.Equals("session"))
+                .Match<OAVModel>(() => sessionOAV, o => o.AtrributeName.Equals("session"))
                 .Match<OAVModel>(() => oavCtrlInfo, o => o.AtrributeName.Equals("abc"));
-            Then().Do(ctx => CtrlUI(ctx, oavCtrl, oavSession, oavCtrlInfo));
+            Then().Do(ctx => CtrlUI(ctx, oavCtrl, oavCtrlInfo));
 
         }
 
-        private void CtrlUI(IContext ctx, OAVModel atrributeValue, OAVModel session, OAVModel oavCtrlInfo)
+        private void CtrlUI(IContext ctx, OAVModel atrributeValue,OAVModel oavCtrlInfo)
         {
-            Console.WriteLine(atrributeValue.AtrributeName);
-            ISession se = session.AtrributeValue as ISession;
-            Button btn = atrributeValue.AtrributeValue as Button;
-            btn.IsEnabled = false;
-            se.Retract(oavCtrlInfo);
+            SetButtonEnabled(atrributeValue, false);
+            Remove(oavCtrlInfo);
+        }
+        private void SetButtonEnabled(OAVModel oav, bool enabled)
+        {
+            Button btn = (Button)oav.AtrributeValue;
+            btn.IsEnabled = enabled;
         }
     }
 }

@@ -18,44 +18,30 @@ namespace AutomaticCodePlugin.Rules
 {
     [Repeatability(RuleRepeatability.NonRepeatable)]
     [Tag("Row")]
-    public class MainViewAddRowRule : NRules.Fluent.Dsl.Rule
+    public class MainViewAddRowRule : MainRule
     {
         public override void Define()
         {
             OAVModel oav = null;
             OAVModel oav1 = null;
             MainStateMachine fsm = null;
-            OAVModel oavsession = null;
             When().Match<OAVModel>(() => oav, o => oav.AtrributeName.Equals("userdt"))
                 .Match<OAVModel>(() => oav1, o => oav1.AtrributeName.Equals("btn"))
-                .Match<OAVModel>(() => oavsession, o => oavsession.AtrributeName.Equals("session"))
+                .Match<OAVModel>(() => sessionOAV, o => sessionOAV.AtrributeName.Equals("session"))
                 .Match<MainStateMachine>(() => fsm, f => f.currentState == Enums.MainViewState.AddRowed);
-            Then().Do(ctx => OnAddRow(ctx, oav, oavsession));
-                //.Do(ctx => OnUpdateUI(ctx, oav1));
+            Then().Do(ctx => OnAddRow(ctx, oav));
         }
 
-        private void OnUpdateUI(IContext ctx, OAVModel oav)
+        private void OnAddRow(IContext ctx, OAVModel userCtrl)
         {
-            SetButtonEnabled(oav, false);
-        }
-
-        private void OnAddRow(IContext ctx, OAVModel userCtrl, OAVModel session)
-        {
-            ISession temp = (ISession)session.AtrributeValue;
             AddRow(userCtrl, string.Empty);
-            //OAVModel oav = new OAVModel();
-            //oav.AtrributeName = "abc";
-            //oav.AtrributeValue = "test";
-            //temp.Insert(oav);
+            OAVModel oav = new OAVModel();
+            oav.AtrributeName = "abc";
+            oav.AtrributeValue = "test";
+            Add(oav);
         }
 
         #region 原子操作
-
-        private void SetButtonEnabled(OAVModel oav, bool enabled)
-        {
-            Button btn = (Button)oav.AtrributeValue;
-            btn.IsEnabled = enabled;
-        }
 
         private void AddRow(OAVModel oav, string rowJson)
         {
