@@ -143,7 +143,7 @@ namespace MetroFramePlugin.Models
             }
         }
 
-        private string unLockPwd;
+        private string unLockPwd=string.Empty;
         /// <summary>
         /// 解锁密码
         /// </summary>
