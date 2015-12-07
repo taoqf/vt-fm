@@ -115,5 +115,24 @@ namespace Victop.Frame.CoreLibrary.MongoModel
             }
             set { modelSetting = value; }
         }
+
+        /// <summary>
+        /// 扩展信息:原ref
+        /// </summary>
+        private List<MongoModelInfoOfExtInfoModel> modelExtInfo;
+        [JsonProperty(PropertyName = "extInfo")]
+        public List<MongoModelInfoOfExtInfoModel> ModelExtInfo
+        {
+            get
+            {
+                if (modelExtInfo == null)
+                    modelExtInfo = new List<MongoModelInfoOfExtInfoModel>();
+                return modelExtInfo;
+            }
+            set
+            {
+                modelExtInfo = value;
+            }
+        }
     }
 }

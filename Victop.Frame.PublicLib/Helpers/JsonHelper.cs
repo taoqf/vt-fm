@@ -116,7 +116,7 @@ namespace Victop.Frame.PublicLib.Helpers
                 JObject jsonObj = JObject.Parse(jsonStr);
                 return jsonObj[key].ToObject<T>();
             }
-            catch
+            catch(Exception ex)
             {
                 return default(T);
             }

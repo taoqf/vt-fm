@@ -400,12 +400,13 @@ namespace Victop.Frame.DataChannel
             return true;
         }
 
-        private static void UpdateCurdList(string viewId, List<object> dataPath, Dictionary<string, object> saveData, Dictionary<string, object> originalData, OpreateStateEnum rowState)
+        private static void UpdateCurdList(string viewId, List<object> dataPath, Dictionary<string, object> saveData, Dictionary<string, object> originalData, OpreateStateEnum rowState, int bakFlag = 0)
         {
             Dictionary<string, object> curdDic = new Dictionary<string, object>();
             curdDic.Add("flag", rowState);
             curdDic.Add("path", dataPath);
             curdDic.Add("rowdata", saveData);
+            curdDic.Add("bakflag", bakFlag);
             DataOperation dataOp = new DataOperation();
             switch (rowState)
             {
@@ -519,7 +520,7 @@ namespace Victop.Frame.DataChannel
             }
         }
 
-        public static bool SaveCurdDataByPath(string viewId, List<SaveDataModel> saveDataList)
+        public static bool SaveCurdDataByPath(string viewId, List<SaveDataModel> saveDataList, int bakFlag = 0)
         {
             DataOperation dataOp = new DataOperation();
             string jsonData = dataOp.GetJSONData(viewId);
@@ -542,7 +543,7 @@ namespace Victop.Frame.DataChannel
             {
                 foreach (SaveDataModel item in saveDataList)
                 {
-                    UpdateCurdList(viewId, item.DataPath, item.SaveDataDic, item.OriginalDataDic, item.OpStatus);
+                    UpdateCurdList(viewId, item.DataPath, item.SaveDataDic, item.OriginalDataDic, item.OpStatus,bakFlag);
                 }
                 return true;
             }

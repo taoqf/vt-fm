@@ -99,6 +99,7 @@ namespace Victop.Frame.Connection
             definition.Add("clientRef");
             definition.Add("ref");
             definition.Add("version");
+            definition.Add("extInfo");
             if (dicContent.ContainsKey("modeldefinition"))
             {
                 dicContent["modeldefinition"] = definition;

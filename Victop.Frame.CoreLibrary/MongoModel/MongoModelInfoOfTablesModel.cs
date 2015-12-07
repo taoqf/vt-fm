@@ -76,5 +76,21 @@ namespace Victop.Frame.CoreLibrary.MongoModel
                 entityFlag = value;
             }
         }
+        private int bakFlag = 0;
+        /// <summary>
+        /// 备份表标识
+        /// </summary>
+        [JsonProperty(PropertyName = "bakflag")]
+        public int BakFlag
+        {
+            get
+            {
+                return bakFlag;
+            }
+            set
+            {
+                bakFlag = value;
+            }
+        }
     }
 }

@@ -126,6 +126,8 @@
     <Compile Include="MongoModel\MongoModelInfoOfDummyRelationDetailModel.cs" />
     <Compile Include="MongoModel\MongoModelInfoOfDummyRelationMasterModel.cs" />
     <Compile Include="MongoModel\MongoModelInfoOfDummyRelationModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfExtInfoAttrModel.cs" />
+    <Compile Include="MongoModel\MongoModelInfoOfExtInfoModel.cs" />
     <Compile Include="MongoModel\MongoModelInfoOfRefConditionContentModel.cs" />
     <Compile Include="MongoModel\MongoModelInfoOfRefModel.cs" />
     <Compile Include="MongoModel\MongoModelInfoOfRelationDetailModel.cs" />

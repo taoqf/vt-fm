@@ -49,6 +49,7 @@ namespace Victop.Frame.DataChannel
             DataSet newDs = structDs == null ? new DataSet() : structDs.Copy();
             newDs.Clear();
             List<object> pathList = JsonHelper.ToObject<List<object>>(dataPath);
+            string tableName = pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString();
             #region 获取模型定义及简单引用
             DataChannelManager dataChannelManager = new DataChannelManager();
             Hashtable hashData = dataChannelManager.GetData(viewId);
@@ -76,7 +77,7 @@ namespace Victop.Frame.DataChannel
             else
             {
                 DataTable itemDt = new DataTable("dataArray");
-                itemDt = GetDataTableStructByModel(modelDefInfo, simpleRefInfo, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
+                itemDt = GetDataTableStructByModel(modelDefInfo, simpleRefInfo, tableName, viewId, dataPath);
                 itemDt.AcceptChanges();
                 if (!newDs.Tables.Contains("dataArray"))
                 {
@@ -98,7 +99,7 @@ namespace Victop.Frame.DataChannel
             if (!checkFlag)
             {
                 JsonMapKey mapKey = new JsonMapKey() { ViewId = viewId, DataPath = dataPath };
-                JsonTableMap.Add(mapKey, new DataStoreInfo() { ActualDataInfo = newDs });
+                JsonTableMap.Add(mapKey, new DataStoreInfo() { ActualDataInfo = newDs, BakFlag = modelDefInfo.ModelTables.First(it => it.TableName.Equals(tableName)).BakFlag });
             }
             return newDs;
         }
@@ -355,28 +356,176 @@ namespace Victop.Frame.DataChannel
         private DataTable GetDataTableStructByModel(MongoModelInfoModel modelDefInfo, MongoSimpleRefInfoModel simpleRefInfo, string tableName, string viewId, string dataPath)
         {
             DataTable newDt = new DataTable("dataArray");
-            if (modelDefInfo != null)
+            if (modelDefInfo.ModelVersion != null && modelDefInfo.ModelVersion.Equals("2.0"))
             {
-                MongoModelInfoOfTablesModel modelInfoOfTableInfo = null;
-                if (modelDefInfo.ModelTables != null && modelDefInfo.ModelTables.Count > 0)
+                BuildColumnsOfDataTableV2(modelDefInfo, simpleRefInfo, tableName, dataPath, newDt);
+            }
+            else
+            {
+                if (modelDefInfo != null)
                 {
-                    modelInfoOfTableInfo = modelDefInfo.ModelTables.FirstOrDefault(it => it.TableName.Equals(tableName));
-                    if (modelInfoOfTableInfo != null)
+                    MongoModelInfoOfTablesModel modelInfoOfTableInfo = null;
+                    if (modelDefInfo.ModelTables != null && modelDefInfo.ModelTables.Count > 0)
                     {
-                        BuildColumnsOfDataTable(tableName, newDt, modelInfoOfTableInfo.TableStructure, modelDefInfo, simpleRefInfo, viewId, dataPath);
-                    }
-                    else
-                    {
-                        foreach (MongoModelInfoOfTablesModel item in modelDefInfo.ModelTables)
+                        modelInfoOfTableInfo = modelDefInfo.ModelTables.FirstOrDefault(it => it.TableName.Equals(tableName));
+                        if (modelInfoOfTableInfo != null)
                         {
-                            BuildColumnsOfDataTable(tableName, newDt, item.TableStructure, modelDefInfo, simpleRefInfo, viewId, dataPath, false);
+                            BuildColumnsOfDataTable(tableName, newDt, modelInfoOfTableInfo.TableStructure, modelDefInfo, simpleRefInfo, viewId, dataPath);
                         }
-                    }
+                        else
+                        {
+                            foreach (MongoModelInfoOfTablesModel item in modelDefInfo.ModelTables)
+                            {
+                                BuildColumnsOfDataTable(tableName, newDt, item.TableStructure, modelDefInfo, simpleRefInfo, viewId, dataPath, false);
+                            }
+                        }
 
+                    }
                 }
             }
             return newDt;
         }
+        /// <summary>
+        /// 构建模型2.0的表结构
+        /// </summary>
+        /// <param name="modelDefInfo"></param>
+        /// <param name="simpleRefInfo"></param>
+        /// <param name="tableName"></param>
+        /// <param name="dataPath"></param>
+        /// <param name="newDt"></param>
+        private void BuildColumnsOfDataTableV2(MongoModelInfoModel modelDefInfo, MongoSimpleRefInfoModel simpleRefInfo, string tableName, string dataPath, DataTable newDt)
+        {
+            List<object> dataPathList = JsonHelper.ToObject<List<object>>(dataPath);
+            string RebuildPath = string.Empty;
+            #region 构建Path
+            for (int i = 0; i < dataPathList.Count; i++)
+            {
+                if (dataPathList[i].GetType().Name.Equals("String"))
+                {
+                    RebuildPath += dataPathList[i].ToString() + ".";
+                    if (i == dataPathList.Count - 1)
+                    {
+                        RebuildPath += "dataArray.";
+                    }
+                }
+                else
+                {
+                    RebuildPath += "dataArray.";
+                }
+            }
+            #endregion
+            MongoModelInfoOfTablesModel modelInfoOfTableInfo = modelDefInfo.ModelTables.FirstOrDefault(it => it.TableName.Equals(tableName) && it.EntityFlag == 1);
+            #region 表结构字段
+            if (modelInfoOfTableInfo != null)
+            {
+                foreach (var item in modelInfoOfTableInfo.TableStructure)
+                {
+                    if (item.FieldValue.ValueSelectFlag == 1)
+                    {
+                        DataColumn dc = new DataColumn(item.FieldKey);
+                        if (modelDefInfo.ModelClientRef != null && modelDefInfo.ModelClientRef.Count > 0)
+                        {
+                            MongoModelInfoOfClientRefModel clientRefInfo = modelDefInfo.ModelClientRef.Find(it => (
+                                it.ClientRefField.Equals(RebuildPath + item.FieldKey)));
+                            if (clientRefInfo != null)
+                            {
+                                dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefInfo));
+                            }
+                        }
+                        SetDataColumnDataType(item, dc);
+                        DataSet ds = GetSimpleRef(simpleRefInfo, dataPath, item.FieldKey, null);
+                        if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
+                        {
+                            dc.ExtendedProperties.Add("ComboBox", ds.Tables["dataArray"]);
+                        }
+                        if (!newDt.Columns.Contains(dc.ColumnName))
+                        {
+                            newDt.Columns.Add(dc);
+                        }
+                    }
+                }
+            }
+            #endregion
+            #region 引用字段
+            foreach (var item in modelDefInfo.ModelExtInfo.Where(it => it.ExtPath.Contains(tableName)))
+            {
+                foreach (var attrItem in item.ExtAttr.Where(it => it.AttrRefFlag == 1 && it.AttrLeft.StartsWith(tableName)))
+                {
+                    string[] leftStrs = attrItem.AttrLeft.Split('.');
+                    string[] rightStrs = attrItem.AttrRight.Split('.');
+                    DataColumn refDc = new DataColumn(leftStrs[1]);
+                    refDc.ExtendedProperties.Add("ColType", "ref");
+                    if (modelDefInfo.ModelClientRef != null && modelDefInfo.ModelClientRef.Count > 0)
+                    {
+                        MongoModelInfoOfClientRefModel clientRefInfo = modelDefInfo.ModelClientRef.Find(it => (
+                            it.ClientRefField.Equals(RebuildPath + leftStrs[1])));
+                        if (clientRefInfo != null)
+                        {
+                            refDc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefInfo));
+                        }
+                    }
+                    MongoModelInfoOfTableStructureModel refFieldModel = modelDefInfo.ModelTables.First(it => it.TableName.Equals(rightStrs[0])).TableStructure.First(it => it.FieldKey.Equals(rightStrs[1]));
+                    refDc.ExtendedProperties.Add("RefType", refFieldModel.FieldValue.ValueType);
+                    SetDataColumnDataType(refFieldModel, refDc, false);
+                    DataSet ds = GetSimpleRef(simpleRefInfo, dataPath, leftStrs[1], null);
+                    if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
+                    {
+                        refDc.ExtendedProperties.Add("ComboBox", ds.Tables["dataArray"]);
+                    }
+                    if (!newDt.Columns.Contains(refDc.ColumnName))
+                    {
+                        newDt.Columns.Add(refDc);
+                    }
+                }
+            }
+            #endregion
+        }
+        /// <summary>
+        /// 设置数据列数据类型
+        /// </summary>
+        /// <param name="item">列信息</param>
+        /// <param name="dc">数据列</param>
+        /// <param name="entityField">是否为实体字段</param>
+        private static void SetDataColumnDataType(MongoModelInfoOfTableStructureModel item, DataColumn dc, bool entityField = true)
+        {
+            switch (item.FieldValue.ValueType)
+            {
+                case "int":
+                    dc.DataType = typeof(int);
+                    break;
+                case "long":
+                    dc.DataType = typeof(long);
+                    break;
+                case "double":
+                    dc.DataType = typeof(double);
+                    break;
+                case "float":
+                    dc.DataType = typeof(float);
+                    break;
+                case "boolean":
+                    dc.DataType = typeof(bool);
+                    break;
+                case "date":
+                    dc.DataType = typeof(DateTime);
+                    break;
+                case "timestamp":
+                    dc.DataType = typeof(DateTime);
+                    break;
+                case "array":
+                    dc.DataType = typeof(string);
+                    break;
+                case "document":
+                    dc.DataType = typeof(string);
+                    break;
+                case "string":
+                default:
+                    dc.DataType = typeof(string);
+                    break;
+            }
+            if (entityField)
+                dc.ExtendedProperties.Add("ColType", item.FieldValue.ValueType);
+        }
+
         /// <summary>
         /// 构建DataTable的列信息
         /// </summary>
@@ -436,50 +585,7 @@ namespace Victop.Frame.DataChannel
                                     dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefInfo));
                                 }
                             }
-                            switch (item.FieldValue.ValueType)
-                            {
-                                case "int":
-                                    dc.DataType = typeof(Int32);
-                                    dc.ExtendedProperties.Add("ColType", "int");
-                                    break;
-                                case "long":
-                                    dc.DataType = typeof(Int64);
-                                    dc.ExtendedProperties.Add("ColType", "long");
-                                    break;
-                                case "double":
-                                    dc.DataType = typeof(double);
-                                    dc.ExtendedProperties.Add("ColType", "double");
-                                    break;
-                                case "float":
-                                    dc.DataType = typeof(float);
-                                    dc.ExtendedProperties.Add("ColType", "float");
-                                    break;
-                                case "boolean":
-                                    dc.DataType = typeof(Boolean);
-                                    dc.ExtendedProperties.Add("ColType", "boolean");
-                                    break;
-                                case "date":
-                                    dc.DataType = typeof(DateTime);
-                                    dc.ExtendedProperties.Add("ColType", "date");
-                                    break;
-                                case "timestamp":
-                                    dc.DataType = typeof(DateTime);
-                                    dc.ExtendedProperties.Add("ColType", "timestamp");
-                                    break;
-                                case "array":
-                                    dc.DataType = typeof(String);
-                                    dc.ExtendedProperties.Add("ColType", "array");
-                                    break;
-                                case "document":
-                                    dc.DataType = typeof(String);
-                                    dc.ExtendedProperties.Add("ColType", "document");
-                                    break;
-                                case "string":
-                                default:
-                                    dc.DataType = typeof(String);
-                                    dc.ExtendedProperties.Add("ColType", "string");
-                                    break;
-                            }
+                            SetDataColumnDataType(item, dc);
                             DataSet ds = GetSimpleRef(simpleRefList, dataPath, keyStr, null);
                             if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
                             {
@@ -510,50 +616,7 @@ namespace Victop.Frame.DataChannel
                                     dc.ExtendedProperties.Add("DataReference", JsonHelper.ToJson(clientRefInfo));
                                 }
                             }
-                            switch (item.FieldValue.ValueType)
-                            {
-                                case "int":
-                                    dc.DataType = typeof(Int32);
-                                    dc.ExtendedProperties.Add("ColType", "int");
-                                    break;
-                                case "long":
-                                    dc.DataType = typeof(Int64);
-                                    dc.ExtendedProperties.Add("ColType", "long");
-                                    break;
-                                case "double":
-                                    dc.DataType = typeof(double);
-                                    dc.ExtendedProperties.Add("ColType", "double");
-                                    break;
-                                case "float":
-                                    dc.DataType = typeof(float);
-                                    dc.ExtendedProperties.Add("ColType", "float");
-                                    break;
-                                case "boolean":
-                                    dc.DataType = typeof(Boolean);
-                                    dc.ExtendedProperties.Add("ColType", "boolean");
-                                    break;
-                                case "date":
-                                    dc.DataType = typeof(DateTime);
-                                    dc.ExtendedProperties.Add("ColType", "date");
-                                    break;
-                                case "timestamp":
-                                    dc.DataType = typeof(DateTime);
-                                    dc.ExtendedProperties.Add("ColType", "timestamp");
-                                    break;
-                                case "array":
-                                    dc.DataType = typeof(String);
-                                    dc.ExtendedProperties.Add("ColType", "array");
-                                    break;
-                                case "document":
-                                    dc.DataType = typeof(String);
-                                    dc.ExtendedProperties.Add("ColType", "document");
-                                    break;
-                                case "string":
-                                default:
-                                    dc.DataType = typeof(String);
-                                    dc.ExtendedProperties.Add("ColType", "string");
-                                    break;
-                            }
+                            SetDataColumnDataType(item, dc, true);
                             DataSet ds = GetSimpleRef(simpleRefList, dataPath, item.FieldKey, null);
                             if (ds != null && ds.Tables.Count > 0 && ds.Tables.Contains("dataArray"))
                             {
@@ -967,6 +1030,7 @@ namespace Victop.Frame.DataChannel
         public bool SaveData(string viewId, string dataPath)
         {
             bool editFlag = true;
+            int bakFlag = 0;
             DataTable dt = new DataTable();
             List<SaveDataModel> saveDataList = new List<SaveDataModel>();
             foreach (JsonMapKey item in JsonTableMap.Keys)
@@ -975,6 +1039,7 @@ namespace Victop.Frame.DataChannel
                 {
                     DataStoreInfo storeInfo = JsonTableMap[item] as DataStoreInfo;
                     dt = storeInfo.ActualDataInfo.Tables["dataArray"];
+                    bakFlag = storeInfo.BakFlag;
                     break;
                 }
             }
@@ -1156,7 +1221,7 @@ namespace Victop.Frame.DataChannel
             if (saveDataList.Count > 0)
             {
                 //TODO:保存数据
-                editFlag = DataTool.SaveCurdDataByPath(viewId, saveDataList);
+                editFlag = DataTool.SaveCurdDataByPath(viewId, saveDataList, bakFlag);
             }
             if (editFlag)
             {
