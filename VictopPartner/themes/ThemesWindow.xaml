@@ -9,7 +9,7 @@
     <Style x:Key="WindowChangeSkinBackground" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
 
-    </Style>
+    </Style> 
 
     <Style x:Key="WindowChangeSkinTitleBackGround" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
@@ -156,8 +156,6 @@
         </Style.Triggers>
     </Style>
 
-
-
     <Style TargetType="{x:Type Button}">
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="FontSize" Value="14"></Setter>
@@ -239,8 +237,10 @@
                                                 <controls:VicButtonNormal  Width="75" Tag="{Binding StateChange}" Height="25" x:Name="btnDown" Content="下载"
                                                                       Command="{Binding DataContext.btnOnLineDownloadCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                          CommandParameter="{Binding .}">
-
                                             </controls:VicButtonNormal>
+                                                <controls:VicButtonNormal Tag="{Binding StateChange}" x:Name="btnUpdate" Content="更新" Width="75" Height="25"
+                                             Command="{Binding DataContext.btnOnLineUpdateCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                         CommandParameter="{Binding .}" />
                                                 <controls:VicButtonNormal Tag="{Binding StateChange}" x:Name="btnUse" Content="应用" Width="75" Height="25"
                                              Command="{Binding DataContext.btnOnLineUseCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
                                                          CommandParameter="{Binding .}" />
@@ -274,14 +274,23 @@
                                         <Setter TargetName="btnDown" Property="Visibility" Value="Visible"></Setter>
                                         <Setter TargetName="btnUse" Property="Visibility" Value="Collapsed"></Setter>
                                         <Setter TargetName="btnAccomplish" Property="Visibility" Value="Collapsed"></Setter>
+                                        <Setter TargetName="btnUpdate" Property="Visibility" Value="Collapsed"></Setter>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding ElementName=btnUse,Path=Tag}" Value="2">
                                         <Setter TargetName="btnUse" Property="Visibility" Value="Visible"></Setter>
                                         <Setter TargetName="btnDown" Property="Visibility" Value="Collapsed"></Setter>
                                         <Setter TargetName="btnAccomplish" Property="Visibility" Value="Collapsed"></Setter>
+                                        <Setter TargetName="btnUpdate" Property="Visibility" Value="Collapsed"></Setter>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding ElementName=btnAccomplish,Path=Tag}" Value="3">
                                         <Setter TargetName="btnAccomplish" Property="Visibility" Value="Visible"></Setter>
+                                        <Setter TargetName="btnDown" Property="Visibility" Value="Collapsed"></Setter>
+                                        <Setter TargetName="btnUse" Property="Visibility" Value="Collapsed"></Setter>
+                                        <Setter TargetName="btnUpdate" Property="Visibility" Value="Collapsed"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=btnAccomplish,Path=Tag}" Value="4">
+                                        <Setter TargetName="btnUpdate" Property="Visibility" Value="Visible"></Setter>
+                                        <Setter TargetName="btnAccomplish" Property="Visibility" Value="Collapsed"></Setter>
                                         <Setter TargetName="btnDown" Property="Visibility" Value="Collapsed"></Setter>
                                         <Setter TargetName="btnUse" Property="Visibility" Value="Collapsed"></Setter>
                                     </DataTrigger>
@@ -293,7 +302,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 
     <Style  x:Key="OnLineCategoryListStyle" TargetType="{x:Type ListBox}">
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -425,76 +433,12 @@
         </Setter>
     </Style>
     <!--壁纸分类样式控制结束-->
-    <!--窗体弹出框样式开始-->
-    <Style x:Key="WindowMessageSkin" TargetType="{x:Type controls:VicWindowNormal}">
-        <Setter Property="BorderBrush" Value="#024672"/>
-        <Setter Property="Icon" Value="..\victop.ico"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VicWindowNormal}">
-                    <Grid Background="{DynamicResource WindowBackground}">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" CornerRadius="0">
-                            <Grid Name="gridRoot">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                    <RowDefinition Height="*"></RowDefinition>
-                                    <RowDefinition Height="Auto"></RowDefinition>
-                                </Grid.RowDefinitions>
-                                <Border  Grid.Row="0" Background="{DynamicResource WindowBackground}"/>
-                                <Grid Name="gridTitleBar" Grid.Row="0" Style="{DynamicResource loginMainGridStyle}" Height="{TemplateBinding TitleHeight}">
-                                    <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="{TemplateBinding Title}" FontWeight="Bold" Foreground="{DynamicResource MsgBoxTitleColor}"/>
-                                    <controls:VicButtonNormal x:Name="btnMini" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  Margin="0,0,66,0" VerticalAlignment="Top"  Height="30" Width="30" FocusVisualStyle="{x:Null}" ToolTip="最小化">
-                                        <Line x:Name="PART_Path" X1="2"  X2="10" Y1="2" Y2="2" Stroke="{DynamicResource MainFrmWinBtnForeColor}"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </controls:VicButtonNormal>
-                                    <controls:VicButtonNormal x:Name="btnMax" Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  Margin="0,0,33,0" VerticalAlignment="Top" Height="30" Width="30" FocusVisualStyle="{x:Null}" ToolTip="最大化/还原">
-                                        <Grid>
-                                            <Path x:Name="MaximisePath"
-                                      SnapsToDevicePixels="True"
-                                      Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"
-                                       Fill="{DynamicResource MainFrmWinBtnForeColor}" />
-                                            <Path x:Name="RestorePath"
-                                      SnapsToDevicePixels="True"
-                                      Data="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z"
-                                       Fill="{DynamicResource MainFrmWinBtnForeColor}" />
-                                        </Grid>
-                                    </controls:VicButtonNormal>
-                                    <controls:VicButtonNormal x:Name="btnClose"  Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  VerticalAlignment="Top" Height="30" Width="30" FocusVisualStyle="{x:Null}" ToolTip="关闭">
-                                        <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
-                                  SnapsToDevicePixels="True"
-                                   Fill="{DynamicResource MainFrmWinBtnForeColor}" />
-                                    </controls:VicButtonNormal>
-                                </Grid>
-                                <Grid Name="gridBody" Grid.Row="1">
-                                    <Grid.Background>
-                                        <SolidColorBrush Color="White" Opacity="0.6"/>
-                                    </Grid.Background>
-                                    <AdornerDecorator>
-                                        <ContentPresenter/>
-                                    </AdornerDecorator>
-                                </Grid>
-                                <Grid Name="statusBar" Grid.Row="2" Visibility="Collapsed">
-                                    <Label Content="状态栏" FontFamily="SimSun"  Foreground="#828282" Padding="15,0,0,0"></Label>
-                                </Grid>
-                            </Grid>
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <!--窗体弹出框样式结束-->
     <!--皮肤窗口TabControl样式开始-->
-    <LinearGradientBrush x:Key="background" EndPoint="0.5,1" StartPoint="0.5,0">
+    <!--<LinearGradientBrush x:Key="background" EndPoint="0.5,1" StartPoint="0.5,0">
         <GradientStop Color="#FF006691" Offset="1"/>
         <GradientStop Color="White"/>
-    </LinearGradientBrush>
-    <Style x:Key="ThemeTabControlStyle" TargetType="{x:Type TabControl}">
-        <!--<Setter Property="Effect">
-            <Setter.Value>
-                <DropShadowEffect/>
-            </Setter.Value>
-        </Setter>-->
+    </LinearGradientBrush>-->
+    <!--<Style x:Key="ThemeTabControlStyle" TargetType="{x:Type TabControl}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
@@ -520,7 +464,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <SolidColorBrush x:Key="TabControlNormalBorderBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="ButtonNormalBackground" Color="Transparent"/>
     <SolidColorBrush x:Key="TabItemHotBackground" Color="Transparent"/>
@@ -528,7 +471,6 @@
     <SolidColorBrush x:Key="TabItemHotBorderBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="TabItemDisabledBackground" Color="Transparent"/>
     <SolidColorBrush x:Key="TabItemDisabledBorderBrush" Color="Transparent"/>
-
     <Style x:Key="ThemeTabItemStyle" TargetType="{x:Type TabItem}">
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Padding" Value="6,1,6,1"/>
@@ -617,7 +559,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
     <!--皮肤窗口TabControl样式结束-->
     <!--本地皮肤分屏左右按钮样式开始-->
     <Style x:Key="PageStyle" TargetType="Button">

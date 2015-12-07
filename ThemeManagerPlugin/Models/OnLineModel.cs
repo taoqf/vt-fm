@@ -9,6 +9,22 @@ namespace ThemeManagerPlugin.Models
     public class OnLineModel : PropertyModelBase
     {
         /// <summary>
+        /// 版本号
+        /// </summary>
+        private int themeVerion = 0;
+        public int ThemeVerion
+        {
+            get { return themeVerion; }
+            set
+            {
+                if (themeVerion != value)
+                {
+                    themeVerion = value;
+                    RaisePropertyChanged("ThemeVerion");
+                }
+            }
+        }
+        /// <summary>
         /// 皮肤编号
         /// </summary>
         private string onLineNo;

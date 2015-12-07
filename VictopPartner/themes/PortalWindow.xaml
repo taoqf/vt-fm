@@ -3,258 +3,7 @@
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
                     xmlns:local="clr-namespace:VictopPartner"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
-    <!--自定义机台主题颜色开始-->
-    <local:StringToBackgroundConverter x:Key="StringToBackgroundConverter"/>
-    <SolidColorBrush x:Key="MetroBGColor" Color="#3e287d"/>
-    <SolidColorBrush x:Key="MetroFGColor" Color="White"/>
-    <Style x:Key="MetroListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    <Setter Property="Width" Value="130"/>
-                    <Setter Property="Height" Value="100"/>
-                    <Setter Property="Margin" Value="10"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border Name="Bd"  BorderThickness="0"  Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="80"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <controls:VicRadioButtonNormal
-                                                                 FontWeight="Bold" 
-                                                                 Foreground="{TemplateBinding Foreground}"
-                                                                 Style="{DynamicResource ButtonFourthLevelMenu}" 
-                                                                 FontSize="45"
-                                                                 IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
-                                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                                 Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                                 CommandParameter="{Binding .}"/>
-                                        <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="12"
-                                                       Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
-                                                        Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"
-                                                         Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                       CommandParameter="{Binding .}"/>
-
-                                    </Grid>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Effect">
-                                            <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="0" Color="Blue"/>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Setter Property="Cursor" Value="Hand"/>
-                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListBox}">
-                    <ScrollViewer HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
-                        <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
-                    </ScrollViewer>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="LargeListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    <Setter Property="Width" Value="150"/>
-                    <Setter Property="Height" Value="120"/>
-                    <Setter Property="Margin" Value="10"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border Name="Bd"  BorderThickness="0" Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="100"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <controls:VicRadioButtonNormal 
-                                                                 FontWeight="Bold" 
-                                                                 Foreground="{TemplateBinding Foreground}"
-                                                                 Style="{DynamicResource ButtonFourthLevelMenu}" 
-                                                                 FontSize="55"
-                                                                 IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
-                                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                                 Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                                 CommandParameter="{Binding .}"/>
-                                        <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="16"
-                                                       Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
-                                                        Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"
-                                                         Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                       CommandParameter="{Binding .}"/>
-
-                                    </Grid>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Effect">
-                                            <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="0" Color="Blue"/>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Setter Property="Cursor" Value="Hand"/>
-                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListBox}">
-                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
-                        <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
-                    </ScrollViewer>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="SmallListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    <Setter Property="Width" Value="110"/>
-                    <Setter Property="Height" Value="80"/>
-                    <Setter Property="Margin" Value="10"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border Name="Bd"  BorderThickness="0"  Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="60"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <controls:VicRadioButtonNormal 
-                                                                 FontWeight="Bold" 
-                                                                 Foreground="{TemplateBinding Foreground}"
-                                                                 Style="{DynamicResource ButtonFourthLevelMenu}" 
-                                                                 FontSize="35"
-                                                                 IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
-                                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                                 Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                                 CommandParameter="{Binding .}"/>
-                                        <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="10"
-                                                       Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
-                                                        Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"
-                                                         Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                       CommandParameter="{Binding .}"/>
-
-                                    </Grid>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Effect">
-                                            <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="0" Color="Blue"/>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Setter Property="Cursor" Value="Hand"/>
-                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListBox}">
-                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
-                        <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
-                    </ScrollViewer>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="btnCloseMetroStyle" TargetType="{x:Type controls:VicButtonNormal}">
-        <Setter Property="Width" Value="34"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Height" Value="34"/>
-        <Setter Property="Template" >
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
-                        <Path x:Name="PART_Path" Data="M2,2 L2,2 10,10 M10,2 L10,2 2,10" Stroke="Black"  Stretch="None" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="PART_Border">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                                        <GradientStop Color="Silver" Offset="0.0" />
-                                        <GradientStop Color="White" Offset="0.5" />
-                                        <GradientStop Color="Silver" Offset="0.0" />
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Stroke" TargetName="PART_Path" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="UIElement.Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <!--自定义机台主题颜色结束-->
-
     <local:HorizontalOffsetConverter x:Key="HorizontalOffsetConverter"/>
-    
     <LinearGradientBrush x:Key="borStyle" EndPoint="0,1" StartPoint="0,0">
         <GradientStop Color="#F510A7" Offset="1" />
         <GradientStop Color="#10F556" Offset="0" />
@@ -269,245 +18,13 @@
         <GradientStop Color="#E8381B" Offset="0" />
         <GradientStop Color="#0FDEF1" Offset="1" />
     </LinearGradientBrush>
-    <!--分页控件样式-->
-    <Style x:Key="btnNextPageStyle" TargetType="Button">
-        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
-        <Setter Property="MinHeight" Value="30"></Setter>
-        <Setter Property="MinWidth" Value="30"></Setter>
-        <Setter Property="FontSize" Value="25"></Setter>
-        <Setter Property="Foreground" Value="Cyan"/>
-        <!--修改模板属性-->
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Grid>
-                        <Ellipse x:Name="ellipse" StrokeThickness="2" Width="30" Height="30" Stroke="White"/>
-                        <ContentPresenter HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Stroke" Value="Cyan" TargetName="ellipse"></Setter>
-                            <!--<Setter Property="StrokeThickness" Value="2" TargetName="ellipse"></Setter>-->
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <!--凭证定义MenuItem引用图标样式-->
-    <Style x:Key="FontAweSome" TargetType="{x:Type MenuItem}">
-        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont" />
-        <Setter Property="MenuItem.MinWidth" Value="80"/>
-        <Setter Property="MenuItem.MinHeight" Value="28"/>
-        <Setter Property="MenuItem.FontSize" Value="16"/>
-        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
-        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-        <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-        <Style.Triggers>
-            <Trigger Property="Role" Value="TopLevelHeader">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="LightGray"/>
-                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-            </Trigger>
-            <Trigger Property="Role" Value="TopLevelItem">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="LightGray"/>
-                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-                <Setter Property="Padding" Value="15,6"/>
-            </Trigger>
-            <Trigger Property="Role" Value="SubmenuHeader">
-                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="White"></Setter>
-                <Setter Property="BorderBrush" Value="#EEE1E1"></Setter>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-    <Style x:Key="IWEMenuItemStyle" TargetType="{x:Type MenuItem}">
-        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type MenuItem}">
-                    <Border x:Name="templateRoot" Width="Auto" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="Transparent" Height="40" SnapsToDevicePixels="true">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0"/>
-                                <ColumnDefinition Width="2"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="1"/>
-                                <ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto"/>
-                                <ColumnDefinition Width="15"/>
-                            </Grid.ColumnDefinitions>
-                            <ContentPresenter  x:Name="Icon" ContentSource="Icon" HorizontalAlignment="Center" Height="40" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="0"/>
-                            <Grid Grid.ColumnSpan="1" Visibility="Collapsed" Background="Red" Grid.Column="1" HorizontalAlignment="Right" Height="40" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="2">
-                                <Rectangle Fill="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" HorizontalAlignment="Right" Width="1" Height="40"/>
-                            </Grid>
-                            <ContentPresenter Grid.Column="2" ContentSource="Header" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
-                            <Path x:Name="RightArrow" Grid.Column="5" Data="M 0,0 L 4,3.5 L 0,7 Z" Fill="Black" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <Path.LayoutTransform>
-                                    <TransformGroup>
-                                        <TransformGroup.Children>
-                                            <TransformCollection>
-                                                <RotateTransform Angle="450"/>
-                                            </TransformCollection>
-                                        </TransformGroup.Children>
-                                    </TransformGroup>
-                                </Path.LayoutTransform>
-                            </Path>
-                            <Popup x:Name="PART_Popup" AllowsTransparency="true" Focusable="false" HorizontalOffset="15" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Bottom" VerticalOffset="-8">
-                                <Border x:Name="SubMenuBorder" BorderBrush="Transparent" BorderThickness="1" Background="Transparent" Padding="2">
-                                    <ScrollViewer x:Name="SubMenuScrollViewer" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                                        <ContentControl x:Name="SubMenuBorder1" IsTabStop="false" Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                                            <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle" Grid.IsSharedSizeScope="true" Margin="2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" KeyboardNavigation.TabNavigation="Cycle"/>
-                                        </ContentControl>
-                                    </ScrollViewer>
-                                </Border>
-                            </Popup>
-
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsSuspendingPopupAnimation" Value="true">
-                            <Setter Property="PopupAnimation" TargetName="PART_Popup" Value="None"/>
-                        </Trigger>
-                        <Trigger Property="Icon" Value="{x:Null}">
-                            <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
-                        </Trigger>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
-                        </Trigger>
-                        <Trigger Property="IsHighlighted" Value="True">
-                            <!--<Setter Property="BorderBrush" TargetName="templateRoot" Value="#68BBD6"/>-->
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="Green"/>
-                            <Setter Property="Fill" TargetName="RightArrow" Value="Blue"/>
-                        </Trigger>
-
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="SetFontAweSome" TargetType="{x:Type controls:VicMenuItemNormal}">
-        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont" />
-        <Setter Property="MenuItem.MinWidth" Value="35"/>
-        <Setter Property="MenuItem.MinHeight" Value="28"/>
-        <Setter Property="MenuItem.FontSize" Value="20"/>
-        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
-        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-        <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type controls:VicMenuItemNormal}}}"/>
-        <Style.Triggers>
-            <Trigger Property="Role" Value="TopLevelHeader">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="Transparent"/>
-            </Trigger>
-            <Trigger Property="Role" Value="TopLevelItem">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="LightGray"/>
-                <Setter Property="Padding" Value="15,6"/>
-            </Trigger>
-            <Trigger Property="Role" Value="SubmenuHeader">
-                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type controls:VicMenuItemNormal}}}"/>
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="White"></Setter>
-                <Setter Property="BorderBrush" Value="#EEE1E1"></Setter>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-    <Style x:Key="IDEBtnStyle" TargetType="{x:Type controls:VicLabelNormal}">
-        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
-        <Setter Property="MinHeight" Value="18"></Setter>
-        <Setter Property="MinWidth" Value="18"></Setter>
-        <Setter Property="FontSize" Value="18"></Setter>
-        <Setter Property="Foreground" Value="#7F7F7F"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VicLabelNormal}">
-                    <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}">
-                        <ContentPresenter.BitmapEffect>
-                            <DropShadowBitmapEffect Color="#7F7F7F" Direction="-90" ShadowDepth="2" Softness="0.1" Opacity="1" />
-                        </ContentPresenter.BitmapEffect>
-                    </ContentPresenter>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <!--凭证详情Button引用图标样式-->
     
-    <Style x:Key="BillDetailBtn" TargetType="Button">
-        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
-        <Setter Property="MinHeight" Value="30"></Setter>
-        <Setter Property="MinWidth" Value="30"></Setter>
-        <Setter Property="FontSize" Value="20"></Setter>
-        <Setter Property="Foreground" Value="Black"/>
-        <!--修改模板属性-->
-        <Setter Property="Template">
-            <Setter.Value>
-                <!--控件模板-->
-                <ControlTemplate TargetType="Button">
-                    <!--背景色-->
-                    <Border x:Name="back" Opacity="0.8" CornerRadius="3">
-                        <Border.BitmapEffect>
-                            <OuterGlowBitmapEffect Opacity="0.7" GlowSize="0" GlowColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Button.Background).(SolidColorBrush.Color)}" />
-                        </Border.BitmapEffect>
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1.5">
-                                <GradientBrush.GradientStops>
-                                    <GradientStopCollection>
-                                        <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Button.Background).(SolidColorBrush.Color)}" Offset="0"/>
-                                        <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Button.Background).(SolidColorBrush.Color)}" Offset="0.4"/>
-                                        <GradientStop Color="#FFF" Offset="1"/>
-                                    </GradientStopCollection>
-                                </GradientBrush.GradientStops>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <!--前景色及边框-->
-                        <Border x:Name="fore" BorderThickness="1" CornerRadius="3" BorderBrush="#5555">
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientBrush.GradientStops>
-                                        <GradientStopCollection>
-                                            <GradientStop Color="#6FFF" Offset="0.5"/>
-                                            <GradientStop Color="#1111" Offset="0.51"/>
-                                        </GradientStopCollection>
-                                    </GradientBrush.GradientStops>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <!--按钮内容-->
-                            <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding  Content}">
-                                <ContentPresenter.BitmapEffect>
-                                    <DropShadowBitmapEffect Color="#000" Direction="-90" ShadowDepth="2" Softness="0.1" Opacity="0.3" />
-                                </ContentPresenter.BitmapEffect>
-                            </ContentPresenter>
-                        </Border>
-                    </Border>
-                    <!--触发器-->
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="White"></Setter>
-                            <Setter Property="BorderBrush" Value="#EEE1E1"></Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
     <Storyboard x:Key="Storyboard2">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ellipseOuter">
             <EasingDoubleKeyFrame KeyTime="0" Value="360"/>
             <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="722.49"/>
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
-
-    
     
     <Style x:Key="FloatWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Background" Value="Blue" />
@@ -651,6 +168,24 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="LockUserImg" TargetType="{x:Type controls:VicButtonImage}">
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Height" Value="200"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicButtonImage}">
+                    <Border x:Name="back" Background="{TemplateBinding Background}" CornerRadius="100">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{TemplateBinding ImgSource}"/>
+                            <ContentPresenter x:Name="content" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style x:Key="MainFrmUserName" TargetType="{x:Type controls:VicTextBlockNormal}">
         <Setter Property="TextWrapping" Value="Wrap"/>
@@ -690,34 +225,45 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style x:Key="btnSetStyle" TargetType="{x:Type controls:VicButtonNormal}">
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+        <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
+        <Setter Property="Content" Value="&#xe605;"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Themes:ButtonChrome x:Name="Chrome" OpacityMask="{DynamicResource Set}" Background="{DynamicResource Set}">
-                    </Themes:ButtonChrome>
+                    <Border x:Name="PART_Border" CornerRadius="20"  BorderThickness="0" Padding="2" Background="Transparent">
+                        <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
+                    </Border>
+                    <!--<Border Name="PART_Border" CornerRadius="20"  BorderThickness="0" Background="Transparent">
+                        <Themes:ButtonChrome x:Name="Chrome" OpacityMask="{DynamicResource Set}" Background="{DynamicResource Set}">
+                        </Themes:ButtonChrome>
+                    </Border>-->
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter Property="RenderDefaulted" TargetName="Chrome" Value="true"/>
-                        </Trigger>
-                        <Trigger Property="ToggleButton.IsChecked" Value="true">
-                            <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
-                        </Trigger>
+                       
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="Chrome" Value="{DynamicResource SetMouseOver}"/>
-                            <Setter Property="OpacityMask" TargetName="Chrome" Value="{DynamicResource SetMouseOver}"/>
+                            <!--<Setter Property="Background" TargetName="Chrome" Value="{DynamicResource SetMouseOver}"/>
+                            <Setter Property="OpacityMask" TargetName="Chrome" Value="{DynamicResource SetMouseOver}"/>-->
+                            <Setter Property="Background" TargetName="PART_Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                        <GradientStop Color="White" Offset="0.5" />
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground"  Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
-
-
     <Style x:Key="btnStretchStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -982,171 +528,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-
-    <!--主窗体内容插件三四级菜单开始--> 
-    <Style x:Key="ListBoxThirdMenuListStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Height" Value="35"/>
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Background" Value="{DynamicResource DataGridHeaderBgColor}"/>
-        <Setter Property="Foreground" Value="{DynamicResource DataGridHeaderForeColor}"/>
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                    <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-                    <Setter Property="Padding" Value="5"/>
-                    <Setter Property="FontSize" Value="12"/>
-                    <Setter Property="Height" Value="25"/>
-                    <Setter Property="Margin" Value="5,5,5,5"/>
-                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
-                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
-                                    </Trigger>
-                                    <MultiTrigger>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsSelected" Value="true"/>
-                                            <Condition Property="Selector.IsSelectionActive" Value="false"/>
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
-                                    </MultiTrigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListBox}">
-                    <ScrollViewer FocusVisualStyle="{x:Null}"  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
-                        <WrapPanel FocusVisualStyle="{x:Null}" Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
-                    </ScrollViewer>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="ButtonFourthLevelMenu" TargetType="{x:Type controls:VicRadioButtonNormal}">
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="FontSize" Value="30"></Setter>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Margin" Value="0"></Setter>
-        <Setter Property="Padding" Value="2,0,0,0"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type controls:VicRadioButtonNormal}">
-                    <BulletDecorator Background="Transparent">
-                        <Border x:Name="border"  
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}">
-                            <Grid>
-                                <controls:VicTextBlockNormal  
-                                                             Style="{DynamicResource TextBlockMenu}" 
-                                                             FontSize="{TemplateBinding FontSize}"
-                                                             ToolTip="{Binding Description}"
-                                                             Text="{Binding Icon}"
-                                                             Margin="{TemplateBinding Padding}"
-                                                           />
-                            </Grid>
-                        </Border>
-                    </BulletDecorator>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="ListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource DataGridRowForeground}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    <Setter Property="Width" Value="130"/>
-                    <Setter Property="Height" Value="100"/>
-                    <Setter Property="Margin" Value="10"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border Name="Bd"  BorderThickness="0"  Background="{TemplateBinding Background}">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="80"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <controls:VicRadioButtonNormal
-                                                                 FontWeight="Bold" 
-                                                                 Foreground="{TemplateBinding Foreground}"
-                                                                 Style="{DynamicResource ButtonFourthLevelMenu}" 
-                                                                 FontSize="45"
-                                                                 IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
-                                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                                 Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                                 CommandParameter="{Binding .}"/>
-                                        <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}"  FontSize="12"
-                                                       Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
-                                                        Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"
-                                                         Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-                                                       CommandParameter="{Binding .}"/>
-                                       
-                                    </Grid>
-                                </Border>
-                                <ControlTemplate.Triggers>
-                                    <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemHotForeground}"/>
-                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>   
-                                        <Setter Property="Cursor" Value="Hand"/>
-                                    </Trigger>
-                                    <Trigger  Property="IsSelected" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource SkinColor}"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListBox}">
-                    <ScrollViewer HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
-                        <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
-                    </ScrollViewer>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-  
     <!--新增四级菜单样式-->
     <Style x:Key="btnDeleteStyle" TargetType="{x:Type Button}" >
         <Setter Property="Width" Value="16"></Setter>
@@ -1264,8 +645,6 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
             </Setter.Value>
         </Setter>
     </Style>
-    <!--主窗体内容插件三四级菜单结束-->
-
     <!--主窗体右侧按钮样式开始-->
     <Style x:Key="btnActivePluginStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="Width" Value="30"/>
@@ -1463,7 +842,6 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style x:Key="btnChangeSkinStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="Width" Value="30"/>
@@ -1494,6 +872,36 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 </Setter.Value>
                             </Setter>
                             <Setter Property="Foreground"  Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="UIElement.Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="btnLockStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+        <Setter Property="MinWidth" Value="20"/>
+        <Setter Property="MinHeight" Value="20"/>
+        <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="FontSize" Value="28"></Setter>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
+                    <Border x:Name="PART_Border"  Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="Transparent"  HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="FontSize" Value="25"></Setter>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="UIElement.Effect">
