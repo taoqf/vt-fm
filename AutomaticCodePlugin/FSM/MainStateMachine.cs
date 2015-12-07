@@ -93,7 +93,7 @@ namespace AutomaticCodePlugin.FSM
         {
             if (myFsm.CanFire(MainViewTrigger.SelectRow))
             {
-                myFsm.Fire(MainViewTrigger.SelectRow,"a","b","c");
+                //myFsm.Fire(MainViewTrigger.SelectRow,"a","b","c");
             }
         }
 

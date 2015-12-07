@@ -35,6 +35,11 @@ namespace VictopPartner
                 errorInfo = string.Format("异常源:{0},异常位置:{1},异常信息:{2}", e.Exception.InnerException.Source, e.Exception.InnerException.StackTrace, e.Exception.InnerException.Message);
                 alertInfo = string.Format("{0}异常位置:{1}", e.Exception.Message, e.Exception.InnerException.StackTrace);
             }
+            else
+            {
+                errorInfo = string.Format("异常源:{0},异常位置:{1},异常信息:{2}", e.Exception.Source, e.Exception.StackTrace, e.Exception.Message);
+                alertInfo = string.Format("{0}异常位置:{1}", e.Exception.Message, e.Exception.StackTrace);
+            }
             VicMessageBoxNormal.Show(alertInfo, "未知错误", MessageBoxButton.OK, MessageBoxImage.Error);
             LoggerHelper.Error(errorInfo);
             e.Handled = true;
