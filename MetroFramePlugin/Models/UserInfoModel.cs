@@ -142,27 +142,6 @@ namespace MetroFramePlugin.Models
                 }
             }
         }
-
-        private string unLockPwd=string.Empty;
-        /// <summary>
-        /// 解锁密码
-        /// </summary>
-
-        public string UnLockPwd
-        {
-            get
-            {
-                return unLockPwd;
-            }
-            set
-            {
-                if (unLockPwd != value)
-                {
-                    unLockPwd = value;
-                    RaisePropertyChanged("UnLockPwd");
-                }
-            }
-        }
         /// <summary>
         /// 是否为多角色
         /// </summary>
@@ -183,6 +162,46 @@ namespace MetroFramePlugin.Models
                 {
                     isMultipleRole = value;
                     RaisePropertyChanged("IsMultipleRole");
+                }
+            }
+        }
+        private string unLockPwd = string.Empty;
+        /// <summary>
+        /// 解锁密码
+        /// </summary>
+
+        public string UnLockPwd
+        {
+            get
+            {
+                return unLockPwd;
+            }
+            set
+            {
+                if (unLockPwd != value)
+                {
+                    unLockPwd = value;
+                    RaisePropertyChanged("UnLockPwd");
+                }
+            }
+        }
+        /// <summary>
+        /// 锁定区输入密码错误提示
+        /// </summary>
+        private string errorPwd;
+        public string ErrorPwd
+        { 
+           get
+            {
+                return errorPwd;
+            }
+
+            set
+            {
+                if (errorPwd != value)
+                {
+                    errorPwd = value;
+                    RaisePropertyChanged("ErrorPwd");
                 }
             }
         }

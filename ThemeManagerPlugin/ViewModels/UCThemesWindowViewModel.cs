@@ -687,40 +687,40 @@ namespace ThemeManagerPlugin.ViewModels
                         }
                     }
 
-                    string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
-                    Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
-                    Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
-                    downloadAddress.Add("DownloadFileId", model.FilePath);
-                    downloadAddress.Add("DownloadToPath", localityUrl);
-                    downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
-                    DataMessageOperation messageOperation = new DataMessageOperation();
-                    Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
-                                                           downloadMessageContent);
-                    SystemThemeList.Clear();
-                    GetThemeSkinNum();
+                    //string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
+                    //Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
+                    //Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
+                    //downloadAddress.Add("DownloadFileId", model.FilePath);
+                    //downloadAddress.Add("DownloadToPath", localityUrl);
+                    //downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
+                    //DataMessageOperation messageOperation = new DataMessageOperation();
+                    //Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
+                    //                                       downloadMessageContent);
+                    //SystemThemeList.Clear();
+                    //GetThemeSkinNum();
 
-                    foreach (ThemeModel skinModel in SystemThemeList)
-                    {
-                        if (skinModel.SkinName.Equals(model.OnLineName))
-                        {
-                            try
-                            {
-                                string messageType = "ServerCenterService.ChangeThemeByDll";
-                                Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                                Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
-                                ServiceParams.Add("SourceName", skinModel.ThemeName);
-                                ServiceParams.Add("SkinPath", skinModel.SkinDllName);
-                                contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
-                                DataMessageOperation messageOp = new DataMessageOperation();
-                                messageOp.SendAsyncMessage(messageType, contentDic);
-                                return;
-                            }
-                            catch (Exception ex)
-                            {
-                                VicMessageBoxNormal.Show("Change error: " + ex.Message);
-                            }
-                        }
-                    }
+                    //foreach (ThemeModel skinModel in SystemThemeList)
+                    //{
+                    //    if (skinModel.SkinName.Equals(model.OnLineName))
+                    //    {
+                    //        try
+                    //        {
+                    //            string messageType = "ServerCenterService.ChangeThemeByDll";
+                    //            Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    //            Dictionary<string, string> ServiceParams = new Dictionary<string, string>();
+                    //            ServiceParams.Add("SourceName", skinModel.ThemeName);
+                    //            ServiceParams.Add("SkinPath", skinModel.SkinDllName);
+                    //            contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
+                    //            DataMessageOperation messageOp = new DataMessageOperation();
+                    //            messageOp.SendAsyncMessage(messageType, contentDic);
+                    //            return;
+                    //        }
+                    //        catch (Exception ex)
+                    //        {
+                    //            VicMessageBoxNormal.Show("Change error: " + ex.Message);
+                    //        }
+                    //    }
+                    //}
                 });
             }
         }
@@ -811,7 +811,6 @@ namespace ThemeManagerPlugin.ViewModels
                     try
                     {
                         OnLineModel model = (OnLineModel)x;
-                        model.StateChange = 2;
                         //foreach (ThemeModel skinModel in SystemThemeList)
                         //{
                         //    if (skinModel.SkinName.Equals(model.OnLineName))
@@ -830,6 +829,10 @@ namespace ThemeManagerPlugin.ViewModels
                         DataMessageOperation messageOperation = new DataMessageOperation();
                         Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument",
                                                                downloadMessageContent);
+                        if (downloadResult.ContainsKey("ReplyContent") && downloadResult["ReplyContent"].ToString() == "下载成功")
+                        {
+                            model.StateChange = 2;
+                        }
                         //if (downloadResult != null && !downloadResult["ReplyMode"].ToString().Equals("0"))
                         //{
                         //    VicMessageBoxNormal.Show(downloadResult["ReplyAlertMessage"].ToString(), "标题");
@@ -844,6 +847,46 @@ namespace ThemeManagerPlugin.ViewModels
                         VicMessageBoxNormal.Show("下载皮肤异常");
                     }
 
+                });
+            }
+        }
+        /// <summary>
+        /// 在线皮肤更新
+        /// </summary>
+        public ICommand btnOnLineUpdateCommand
+        {
+            get {
+                return new RelayCommand<object>((x) =>
+                {
+                    try
+                    {
+                        OnLineModel model = (OnLineModel)x;
+                        string skinName = ConfigManager.GetAttributeOfNodeByName("UserInfo", "UserSkin");
+                        if(model.FileName.Equals(skinName))
+                        {
+                            VicMessageBoxNormal.Show("当前正在用此套皮肤暂不能更新，请切换其他皮肤", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        string localityUrl = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "theme", model.FileName + ".dll");
+                        Dictionary<string, object> downloadMessageContent = new Dictionary<string, object>();
+                        Dictionary<string, string> downloadAddress = new Dictionary<string, string>();
+                        downloadAddress.Add("DownloadFileId", model.FilePath);
+                        downloadAddress.Add("DownloadToPath", localityUrl);
+                        downloadAddress.Add("ProductId", ProductId);
+                        downloadMessageContent.Add("ServiceParams", JsonHelper.ToJson(downloadAddress));
+                        DataMessageOperation messageOperation = new DataMessageOperation();
+                        Dictionary<string, object> downloadResult = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument", downloadMessageContent);
+                        if (downloadResult.ContainsKey("ReplyContent") && downloadResult["ReplyContent"].ToString() == "下载成功")
+                        {
+                            model.StateChange = 2;
+                        }
+                        SystemThemeList.Clear();
+                        GetThemeSkinNum();
+                    }
+                    catch (Exception ex)
+                    {
+
+                        VicMessageBoxNormal.Show("更新皮肤异常");
+                    }
                 });
             }
         }
@@ -1284,13 +1327,18 @@ namespace ThemeManagerPlugin.ViewModels
         /// </summary> 
         private void ReflectorInfo(string dllPath, string skinNamespace, ThemeModel model)
         {
-            Assembly ass = Assembly.LoadFrom(dllPath); // 加载程序集 
+           // Assembly ass = Assembly.LoadFrom(dllPath); // 加载程序集老方法不能释放
+            Assembly ass = Assembly.Load(File.ReadAllBytes(dllPath)); // 加载程序集 
             Type type = ass.GetType(skinNamespace); // 获取该程序集所包含的类型 
             object obj = Activator.CreateInstance(type);
             model.SkinOrder = (int)type.GetField("SkinOrder").GetValue(obj);
             model.SkinName = type.GetField("SkinName").GetValue(obj).ToString();
             model.ThemeName = type.GetField("ThemeName").GetValue(obj).ToString();
             model.SkinFace = type.GetField("SkinFace").GetValue(obj).ToString();
+            if (type.GetField("ThemeVerion") != null)
+            {
+                model.ThemeVerion = (int)type.GetField("ThemeVerion").GetValue(obj);
+            }
         }
 
         /// <summary>
@@ -1335,7 +1383,6 @@ namespace ThemeManagerPlugin.ViewModels
             SkinNum = files.Count();
             for (int j = 0; j < files.Count(); j++)
             {
-
                 string skinNamespace = Path.GetFileNameWithoutExtension(files[j]);//得到皮肤命名空间
                 ThemeModel model = new ThemeModel();
                 model.SkinDllName = skinNamespace;
@@ -1525,12 +1572,24 @@ namespace ThemeManagerPlugin.ViewModels
                 {
                     OnLineModel model = new OnLineModel();
                     List<ThemeModel> themeList = SystemThemeList.Where(s => s.SkinName == row["skin_name"].ToString()).ToList();
+                    int verion = 0;
                     if (themeList != null && themeList.Count > 0)
+                    {
+                        foreach (ThemeModel item in themeList)
+                        {
+                            verion = item.ThemeVerion;
+                            break;
+                        }
+                    }
+                    if (themeList != null && themeList.Count > 0 && verion<Convert.ToInt32(row["version"]))
+                    {
+                        model.StateChange = 4;
+                    }
+                    else if (themeList != null && themeList.Count > 0)
                     {
                         model.StateType = true;
                         model.StateChange = 2;
-                    }
-                    else
+                    }                    else
                     {
                         model.StateType = false;
                         model.StateChange = 1;
@@ -1545,7 +1604,7 @@ namespace ThemeManagerPlugin.ViewModels
                     model.FileName = row["file_name"].ToString();
                     model.FilePath = row["file_path"].ToString();
                     model.FileType = row["file_type"].ToString();
-
+                    model.ThemeVerion = (int)row["version"];
                     SystemOnLineList.Add(model);
                 }
 

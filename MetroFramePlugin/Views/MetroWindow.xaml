@@ -95,20 +95,26 @@
                     <controls:VicButtonNormal Width="Auto" Height="18" FontSize="10" Cursor="Hand" BorderThickness="0" Content="{Binding AppVersionCode}" Foreground="{DynamicResource MainFrmUserNameColor}" Background="Transparent" Command="{Binding btnViewUpdateLogClickCommand}"/>
                 </DockPanel>
             </Grid>
-            <Grid Name="gridLock" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding ShowLockView}">
+            <Grid Name="gridLock" Grid.Row="1" Margin="0,200" HorizontalAlignment="Center" Visibility="{Binding ShowLockView}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="200"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Background="{DynamicResource DefaultUserPic}" Width="160" Height="200">
-                    <controls:VicButtonImage Width="160" Height="200" Background="{Binding UserInfo.UserImg, Converter={StaticResource imgeNameToBackgroundConverter}}"/>
-                </Grid>
-                <TextBlock Grid.Row="1" Text="{Binding UserInfo.UserName}" FontSize="15pt" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource SkinColor}" FontWeight="Bold"/>
-                <DockPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <controls:VicPasswordBoxNormal WateMark="密码" Width="150" Height="25" Password="{Binding UserInfo.UnLockPwd,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"/>
-                    <controls:VicButtonNormal Width="75" Height="25" Content="解锁工作区" Name="btnUnLockSpace" Command="{Binding btnUnLockSpaceClickCommand}" IsDefault="True"/>
+                <Ellipse Grid.Row="0" Fill="White" Height="200" Width="200">
+
+                </Ellipse>
+                <Border  Grid.Row="0" Background="{DynamicResource DefaultUserPic}" CornerRadius="100" Height="200" Width="200">
+                    <controls:VicButtonImage Style="{DynamicResource LockUserImg}" Width="200" Height="200" Background="{Binding UserInfo.UserImg, Converter={StaticResource imgeNameToBackgroundConverter}}"/>
+                 
+                </Border>
+                <TextBlock Grid.Row="1" Height="25" Text="{Binding UserInfo.UserName}" FontSize="15pt" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource SkinColor}" FontWeight="Bold"/>
+                <DockPanel Grid.Row="2" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <controls:VicPasswordBoxNormal WateMark="请输入登录密码" Width="260" Height="25" VerticalAlignment="Bottom" Password="{Binding UserInfo.UnLockPwd,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"/>
+                    <controls:VicButtonNormal Style="{DynamicResource btnLockStyle}" VerticalAlignment="Bottom" Width="30" Height="35" Content="&#xe61d;" Name="btnUnLockSpace" Command="{Binding btnUnLockSpaceClickCommand}" IsDefault="True"/>
                 </DockPanel>
+                <controls:VicTextBlockNormal HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" FontSize="12" Foreground="Red" Text="{Binding UserInfo.ErrorPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></controls:VicTextBlockNormal>
             </Grid>
             <controls:VicPopup IsOpen="{Binding PoPupState}"  AllowsTransparency="True" Name="TitlePopup" PlacementTarget="{Binding ElementName= btnUserLogin}" Placement="Left" Width="200" StaysOpen="False">
                 <Grid Background="White"  Width="200" >

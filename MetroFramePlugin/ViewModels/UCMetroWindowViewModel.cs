@@ -605,10 +605,12 @@ namespace MetroFramePlugin.ViewModels
                         IsShowMenu = Visibility.Visible;
                         isLockMenu = true;
                         UserInfo.UnLockPwd = string.Empty;
+                        userInfo.ErrorPwd = string.Empty;
                     }
                     else
                     {
-                        VicMessageBoxNormal.Show("请输入正确的登陆密码", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                        userInfo.ErrorPwd = "请输入正确的登陆密码";
+                        //VicMessageBoxNormal.Show("请输入正确的登陆密码", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 });
             }
