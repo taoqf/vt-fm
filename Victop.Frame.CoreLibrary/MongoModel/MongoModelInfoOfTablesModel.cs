@@ -60,5 +60,21 @@ namespace Victop.Frame.CoreLibrary.MongoModel
             }
             set { tableStructure = value; }
         }
+        private int entityFlag = 1;
+        /// <summary>
+        /// 实体表标识(1:实体表,0:非实体表)
+        /// </summary>
+        [JsonProperty(PropertyName = "entityFlag")]
+        public int EntityFlag
+        {
+            get
+            {
+                return entityFlag;
+            }
+            set
+            {
+                entityFlag = value;
+            }
+        }
     }
 }

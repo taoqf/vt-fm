@@ -54,7 +54,7 @@ namespace Victop.Frame.CoreLibrary.MongoModel
         /// <summary>
         /// 模型定义引用集合
         /// </summary>
-        [JsonProperty(PropertyName="ref")]
+        [JsonProperty(PropertyName = "ref")]
         public List<MongoModelInfoOfRefModel> ModelRef
         {
             get
@@ -79,6 +79,23 @@ namespace Victop.Frame.CoreLibrary.MongoModel
                 return modelClientRef;
             }
             set { modelClientRef = value; }
+        }
+
+        private string modelVersion;
+        /// <summary>
+        /// 模板版本
+        /// </summary>
+        [JsonProperty(PropertyName = "version")]
+        public string ModelVersion
+        {
+            get
+            {
+                return modelVersion;
+            }
+            set
+            {
+                modelVersion = value;
+            }
         }
         /// <summary>
         /// 模型设置

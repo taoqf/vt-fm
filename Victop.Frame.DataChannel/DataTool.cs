@@ -523,12 +523,20 @@ namespace Victop.Frame.DataChannel
         {
             DataOperation dataOp = new DataOperation();
             string jsonData = dataOp.GetJSONData(viewId);
-            using (JavascriptContext context = new JavascriptContext())
+            try
             {
-                string paramWpf = string.Format("var data={0};var curdList={1};", jsonData, JsonHelper.ToJson(saveDataList));
-                string script = paramWpf + Properties.Resources.SaveOriginalDataScript;
-                context.Run(script);
-                jsonData = context.GetParameter("result") as string;
+                using (JavascriptContext context = new JavascriptContext())
+                {
+                    string paramWpf = string.Format("var data={0};var curdList={1};", jsonData, JsonHelper.ToJson(saveDataList));
+                    string script = paramWpf + Properties.Resources.SaveOriginalDataScript;
+                    context.Run(script);
+                    jsonData = context.GetParameter("result") as string;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.ErrorFormat("更新数据异常:{0}", ex.Message ?? ex.InnerException.Message);
+                return false;
             }
             if (dataOp.SaveJSONData(viewId, jsonData))
             {
