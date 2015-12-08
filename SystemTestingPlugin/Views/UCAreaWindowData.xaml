@@ -71,7 +71,7 @@
                                             <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewNarrowData" Content="查看窄表引用" Command="{Binding btnViewNarrowDataClickCommand}"/>
                                             <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSetNarrowData" Content="回填数据" Command="{Binding btnSetNarrowDataClickCommand}"/>
                                         </ctrl:VicWrapPanelNormal>
-                                        <ctrl:VicMediaImage Grid.Row="1" Name="img" Source=""/>
+                                        <!--<ctrl:VicMediaImage Grid.Row="1" Name="img" Source=""/>-->
                                         <!--<DataGrid Grid.Row="1" Name="dgridNarrowRefData" ItemsSource="{Binding DataInfoModel.RefDataTable}" SelectedValue="{Binding DataInfoModel.NarrowGridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="val"/>-->
                                     </ctrl:VicGridNormal>
                                 </ctrl:VicTabItemNormal>
