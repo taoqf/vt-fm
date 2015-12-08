@@ -972,7 +972,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="PART_Border"   BorderThickness="0"  Background="Transparent">
+                    <Border x:Name="PART_Border" BorderThickness="0"  Background="Transparent">
                         <Path Grid.Row="1"  Data="M387,223 L349.5,277.5 358.5,283.5 430.5,224.5 358.5,164.5 348.5,169.5 z" Fill="Cyan"  HorizontalAlignment="Left" Height="75"  Stretch="Fill" Stroke="Cyan" VerticalAlignment="Top" Width="35" />
                     </Border>
 
@@ -981,4 +981,253 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         </Setter>
     </Style>
     <!--浮窗分屏按钮样式结束-->
+    <!--自定义机台主题颜色开始-->
+    <local:StringToBackgroundConverter x:Key="StringToBackgroundConverter"/>
+    <!--<SolidColorBrush x:Key="MetroBGColor" Color="#3e287d"/>-->
+    <SolidColorBrush x:Key="MetroFGColor" Color="White"/>
+    <Style x:Key="MetroListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Width" Value="130"/>
+                    <Setter Property="Height" Value="100"/>
+                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border Name="Bd"  BorderThickness="0"  Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="80"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <controls:VicRadioButtonNormal
+                                                                 FontWeight="Bold" 
+                                                                 Foreground="{TemplateBinding Foreground}"
+                                                                 Style="{DynamicResource ButtonFourthLevelMenu}" 
+                                                                 FontSize="45"
+                                                                 IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                 Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                                 CommandParameter="{Binding .}"/>
+                                        <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="12"
+                                                       Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
+                                                        Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"
+                                                         Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                       CommandParameter="{Binding .}"/>
+
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger  Property="IsMouseOver" Value="true">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect ShadowDepth="0" Color="Blue"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled"  VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
+                        <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LargeListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Width" Value="150"/>
+                    <Setter Property="Height" Value="120"/>
+                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border Name="Bd"  BorderThickness="0" Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="100"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <controls:VicRadioButtonNormal 
+                                                                 FontWeight="Bold" 
+                                                                 Foreground="{TemplateBinding Foreground}"
+                                                                 Style="{DynamicResource ButtonFourthLevelMenu}" 
+                                                                 FontSize="55"
+                                                                 IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                 Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                                 CommandParameter="{Binding .}"/>
+                                        <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="16"
+                                                       Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
+                                                        Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"
+                                                         Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                       CommandParameter="{Binding .}"/>
+
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger  Property="IsMouseOver" Value="true">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect ShadowDepth="0" Color="Blue"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
+                        <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SmallListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Width" Value="110"/>
+                    <Setter Property="Height" Value="80"/>
+                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border Name="Bd"  BorderThickness="0"  Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="60"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <controls:VicRadioButtonNormal 
+                                                                 FontWeight="Bold" 
+                                                                 Foreground="{TemplateBinding Foreground}"
+                                                                 Style="{DynamicResource ButtonFourthLevelMenu}" 
+                                                                 FontSize="35"
+                                                                 IsChecked="{Binding Path=IsSelected,RelativeSource={RelativeSource TemplatedParent},Mode=TwoWay}"
+                                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                 Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                                 CommandParameter="{Binding .}"/>
+                                        <controls:VicButtonNormal  Grid.Row="1"   Name="btnPluginRun" BorderThickness="0"  Content="{Binding MenuName}" FontSize="10"
+                                                       Width="{TemplateBinding Width}" Foreground="{TemplateBinding Foreground}"
+                                                        Background="{TemplateBinding Background}" Margin="0" VerticalAlignment="Center"
+                                                         Command="{Binding DataContext.btnPluginRunClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                       CommandParameter="{Binding .}"/>
+
+                                    </Grid>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger  Property="IsMouseOver" Value="true">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <DropShadowEffect ShadowDepth="0" Color="Blue"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{TemplateBinding Background}">
+                        <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="btnCloseMetroStyle" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="Width" Value="34"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Height" Value="34"/>
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
+                    <Border x:Name="PART_Border"   BorderThickness="0" Padding="2">
+                        <Path x:Name="PART_Path" Data="M2,2 L2,2 10,10 M10,2 L10,2 2,10" Stroke="Black"  Stretch="None" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="PART_Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                        <GradientStop Color="White" Offset="0.5" />
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Stroke" TargetName="PART_Path" Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="UIElement.Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="10" Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--自定义机台主题颜色结束-->
 </ResourceDictionary>

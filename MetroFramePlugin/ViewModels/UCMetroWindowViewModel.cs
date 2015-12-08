@@ -56,6 +56,7 @@ namespace MetroFramePlugin.ViewModels
         private bool poPupState;
         private bool isFirstLoad = true;
         private bool isDebug = true;
+        private VicPasswordBoxNormal pwdLockSpace;
         /// <summary>
         /// 门户插件用户信息
         /// </summary>
@@ -422,6 +423,7 @@ namespace MetroFramePlugin.ViewModels
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
                     lockbtn = (VicButtonNormal)mainWindow.FindName("lock");
+                    pwdLockSpace = (VicPasswordBoxNormal)mainWindow.FindName("pwdLockSpace");
                     mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
@@ -578,10 +580,11 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
+                    pwdLockSpace.Focus();
                     ShowWorkSpace = Visibility.Collapsed;
                     ShowLockView = Visibility.Visible;
                     IsShowMenu = Visibility.Collapsed;
-                    isLockMenu = false;
+                    isLockMenu =false;
                 });
             }
         }
@@ -602,8 +605,8 @@ namespace MetroFramePlugin.ViewModels
                     {
                         ShowWorkSpace = Visibility.Visible;
                         ShowLockView = Visibility.Collapsed;
-                        IsShowMenu = Visibility.Visible;
-                        isLockMenu = true;
+                        IsShowMenu = Visibility.Visible; 
+                        isLockMenu = false;
                         UserInfo.UnLockPwd = string.Empty;
                         userInfo.ErrorPwd = string.Empty;
                     }
@@ -2914,6 +2917,7 @@ namespace MetroFramePlugin.ViewModels
         private string channelId = string.Empty;
         private void GetPersonMenu()
         {
+            return;
             if (string.IsNullOrEmpty(UserInfo.ClientId) || string.IsNullOrEmpty(UserInfo.UserCode))
             {
                 return;

@@ -111,7 +111,7 @@
                 </Border>
                 <TextBlock Grid.Row="1" Height="25" Text="{Binding UserInfo.UserName}" FontSize="15pt" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource SkinColor}" FontWeight="Bold"/>
                 <DockPanel Grid.Row="2" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <controls:VicPasswordBoxNormal WateMark="请输入登录密码" Width="260" Height="25" VerticalAlignment="Bottom" Password="{Binding UserInfo.UnLockPwd,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"/>
+                    <controls:VicPasswordBoxNormal Name="pwdLockSpace"   Width="260" Height="25" VerticalAlignment="Bottom" Password="{Binding UserInfo.UnLockPwd,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"/>
                     <controls:VicButtonNormal Style="{DynamicResource btnLockStyle}" VerticalAlignment="Bottom" Width="30" Height="35" Content="&#xe61d;" Name="btnUnLockSpace" Command="{Binding btnUnLockSpaceClickCommand}" IsDefault="True"/>
                 </DockPanel>
                 <controls:VicTextBlockNormal HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" FontSize="12" Foreground="Red" Text="{Binding UserInfo.ErrorPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></controls:VicTextBlockNormal>
