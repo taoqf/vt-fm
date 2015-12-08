@@ -345,8 +345,6 @@
                             <Grid.RowDefinitions >
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <!-- Window header-->
-                            <!--{DynamicResource SkinColor}-->
                             <Grid  Name ="PART_HeaderContainer">
                                 <ContentPresenter   VerticalAlignment ="Stretch"  HorizontalAlignment ="Stretch"/>
                             </Grid>
@@ -361,10 +359,6 @@
                                     VerticalAlignment ="{ TemplateBinding  VerticalContentAlignment }" 
                                     HorizontalAlignment ="{ TemplateBinding  HorizontalContentAlignment }"/>
                                 </AdornerDecorator>
-                                
-                                <!--<Border.Background>
-                                    <SolidColorBrush Color="White" Opacity="0.6"></SolidColorBrush>
-                                </Border.Background>-->
                             </Border>
                         </Grid>
                     </Border>
