@@ -2917,7 +2917,6 @@ namespace MetroFramePlugin.ViewModels
         private string channelId = string.Empty;
         private void GetPersonMenu()
         {
-            return;
             if (string.IsNullOrEmpty(UserInfo.ClientId) || string.IsNullOrEmpty(UserInfo.UserCode))
             {
                 return;
