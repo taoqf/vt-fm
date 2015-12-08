@@ -99,7 +99,7 @@ namespace Victop.Frame.DataChannel
             if (!checkFlag)
             {
                 JsonMapKey mapKey = new JsonMapKey() { ViewId = viewId, DataPath = dataPath };
-                JsonTableMap.Add(mapKey, new DataStoreInfo() { ActualDataInfo = newDs, BakFlag = modelDefInfo.ModelTables.First(it => it.TableName.Equals(tableName)).BakFlag });
+                JsonTableMap.Add(mapKey, new DataStoreInfo() { ActualDataInfo = newDs, BakFlag = modelDefInfo != null ? modelDefInfo.ModelTables.First(it => it.TableName.Equals(tableName)).BakFlag : 0 });
             }
             return newDs;
         }
