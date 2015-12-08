@@ -99,7 +99,16 @@ namespace Victop.Frame.DataChannel
             if (!checkFlag)
             {
                 JsonMapKey mapKey = new JsonMapKey() { ViewId = viewId, DataPath = dataPath };
-                JsonTableMap.Add(mapKey, new DataStoreInfo() { ActualDataInfo = newDs, BakFlag = modelDefInfo.ModelTables.First(it => it.TableName.Equals(tableName)).BakFlag });
+                DataStoreInfo storeInfo = new DataStoreInfo() { ActualDataInfo = newDs };
+                if (modelDefInfo != null)
+                {
+                    MongoModelInfoOfTablesModel tableModel = modelDefInfo.ModelTables.FirstOrDefault(it => it.TableName.Equals(tableName));
+                    if (tableModel != null)
+                    {
+                        storeInfo.BakFlag = tableModel.BakFlag;
+                    }
+                }
+                JsonTableMap.Add(mapKey, storeInfo);
             }
             return newDs;
         }
@@ -182,19 +191,26 @@ namespace Victop.Frame.DataChannel
                             case "JArray":
                             case "Object[]":
                                 List<Dictionary<string, object>> arrayList = JsonHelper.ToObject<List<Dictionary<string, object>>>(JsonHelper.ToJson(jsonDic[item]));
-                                itemDt = new DataTable(item);
-                                if (modelData != null && item.Equals("dataArray"))
-                                {
-                                    itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
-                                }
-                                if (itemDt.Columns.Count <= 0)
-                                {
-                                    itemDt = GetDataTableStruct(item, arrayList.Count > 0 ? arrayList[0] : null, newDs);
-                                }
-                                itemDt.AcceptChanges();
                                 if (!newDs.Tables.Contains(item))
                                 {
-                                    newDs.Tables.Add(itemDt);
+                                    itemDt = new DataTable(item);
+                                    if (modelData != null && item.Equals("dataArray"))
+                                    {
+                                        itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("String") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
+                                    }
+                                    if (itemDt.Columns.Count <= 0)
+                                    {
+                                        itemDt = GetDataTableStruct(item, arrayList.Count > 0 ? arrayList[0] : null, newDs);
+                                    }
+                                    itemDt.AcceptChanges();
+                                    if (!newDs.Tables.Contains(item))
+                                    {
+                                        newDs.Tables.Add(itemDt);
+                                    }
+                                }
+                                else
+                                {
+                                    itemDt = newDs.Tables[item];
                                 }
                                 foreach (Dictionary<string, object> rowItem in arrayList)
                                 {
@@ -223,18 +239,25 @@ namespace Victop.Frame.DataChannel
                             case "JObject":
                             case "Object":
                                 Dictionary<string, object> itemDic = JsonHelper.ToObject<Dictionary<string, object>>(jsonDic[item].ToString());
-                                if (modelData != null && item.Equals("dataArray"))
-                                {
-                                    itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("string") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
-                                }
-                                if (itemDt.Columns.Count <= 0)
-                                {
-                                    itemDt = GetDataTableStruct(item, itemDic != null ? itemDic : null, newDs);
-                                }
-                                itemDt.AcceptChanges();
                                 if (!newDs.Tables.Contains(item))
                                 {
-                                    newDs.Tables.Add(itemDt);
+                                    if (modelData != null && item.Equals("dataArray"))
+                                    {
+                                        itemDt = GetDataTableStructByModel(modelData, simpleRefData, pathList[pathList.Count - 1].GetType().Name.Equals("string") ? pathList[pathList.Count - 1].ToString() : pathList[pathList.Count - 2].ToString(), viewId, dataPath);
+                                    }
+                                    if (itemDt.Columns.Count <= 0)
+                                    {
+                                        itemDt = GetDataTableStruct(item, itemDic != null ? itemDic : null, newDs);
+                                    }
+                                    itemDt.AcceptChanges();
+                                    if (!newDs.Tables.Contains(item))
+                                    {
+                                        newDs.Tables.Add(itemDt);
+                                    }
+                                }
+                                else
+                                {
+                                    itemDt = newDs.Tables[item];
                                 }
                                 DataRow objectDr = itemDt.NewRow();
                                 foreach (DataColumn dtCol in itemDt.Columns)
