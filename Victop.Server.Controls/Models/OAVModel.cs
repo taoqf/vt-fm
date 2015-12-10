@@ -11,6 +11,25 @@ namespace Victop.Server.Controls.Models
     public class OAVModel
     {
         /// <summary>
+        /// 对象事实构造函数
+        /// </summary>
+        public OAVModel()
+        {
+
+        }
+        /// <summary>
+        /// 对象事实构造函数
+        /// </summary>
+        /// <param name="objectName">对象名称</param>
+        /// <param name="atrributeName">属性名称</param>
+        /// <param name="atrributeValue">属性值</param>
+        public OAVModel(string objectName, string atrributeName, object atrributeValue)
+        {
+            this.ObjectName = objectName;
+            this.AtrributeName = atrributeName;
+            this.AtrributeValue = atrributeValue;
+        }
+        /// <summary>
         /// 对象名称
         /// </summary>
         public string ObjectName { get; set; }

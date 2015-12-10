@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Stateless;
-using System.Windows;
-using System.Windows.Controls;
 using Victop.Frame.CmptRuntime;
-using AutomaticCodePlugin.Views;
-using NRules.Fluent;
-using AutomaticCodePlugin.Rules;
-using NRules;
 using System.Reflection;
 using Victop.Server.Controls.Models;
 
@@ -31,7 +20,7 @@ namespace AutomaticCodePlugin.FSM
                 .PermitReentry("SearchBtnClick")
                 .OnExit(() => OnSearchBtnClickExit())
                 .Permit("SelectRow", "SelectRowed")
-                .Permit("AddRow", "AddRowed");
+                .PermitIf("AddRow", "AddRowed", () => CheckSource());
             FeiDaoFSM.Configure("SelectRowed")
                 .OnEntry(() => OnSelectedRowChangedEntry())
                 .PermitReentry("SelectRow")
@@ -42,48 +31,24 @@ namespace AutomaticCodePlugin.FSM
                 .Permit("SearchBtnClick", "SearchBtnClicked")
                 .Permit("SelectRow", "SelectRowed");
         }
+
+        private bool CheckSource()
+        {
+            return MainView.GetPresentationBlockModel("masterPBlock").ViewBlockDataTable != null;
+        }
+
         private void OnAddRowedEntry()
         {
             Console.WriteLine("OnAddRowedEntry");
-            OAVModel oav = new OAVModel()
-            {
-                ObjectName = "masterPBlock",
-                AtrributeName = "AddData",
-                AtrributeValue = ((UCMainView)MainView).MainPBlock.ViewBlockDataTable
-            };
-            OAVModel oavbtn = new OAVModel()
-            {
-                ObjectName = "masterPBlock",
-                AtrributeName = "addBtn",
-                AtrributeValue = ((UCMainView)MainView).addBtn
-            };
-            InsertOAV(oav);
-            InsertOAV(oavbtn);
-            Fire();
-            RetractOAV(oav);
-            RetractOAV(oavbtn);
+            Fire(new OAVModel("masterPBlock", "AddData", MainView.GetPresentationBlockModel("masterPBlock").ViewBlockDataTable),
+           new OAVModel("masterPBlock", "addBtn", MainView.FindName("addBtn")));
         }
 
         private void OnSelectedRowChangedEntry()
         {
             Console.WriteLine("OnSelectedRowChangedEntry");
-            OAVModel oav = new OAVModel()
-            {
-                ObjectName = "masterPBlock",
-                AtrributeName = "selectedItem",
-                AtrributeValue = ((UCMainView)MainView).dgridProduct.SelectedItem
-            };
-            OAVModel oavP = new OAVModel()
-            {
-                ObjectName = "masterPBlock",
-                AtrributeName = "PBlock",
-                AtrributeValue = ((UCMainView)MainView).MainPBlock
-            };
-            InsertOAV(oav);
-            InsertOAV(oavP);
-            Fire();
-            InsertOAV(oavP);
-            RetractOAV(oav);
+            Fire(new OAVModel("masterPBlock", "selectedItem", MainView.FindName("dgridProduct")),
+                new OAVModel("masterPBlock", "PBlock", MainView.GetPresentationBlockModel("masterPBlock")));
         }
         private void OnSearchBtnClickExit()
         {
@@ -93,15 +58,7 @@ namespace AutomaticCodePlugin.FSM
         private void OnSearchBtnClickEntry()
         {
             Console.WriteLine("OnSearchBtnClickEntry");
-            OAVModel oav = new OAVModel()
-            {
-                ObjectName = "masterPBlock",
-                AtrributeName = "GetData",
-                AtrributeValue = ((UCMainView)MainView).MainPBlock
-            };
-            InsertOAV(oav);
-            Fire();
-            RetractOAV(oav);
+            Fire(new OAVModel("masterPBlock", "GetData", MainView.GetPresentationBlockModel("masterPBlock")));
         }
 
         private void OnViewLoadedExit()
@@ -111,15 +68,7 @@ namespace AutomaticCodePlugin.FSM
 
         private void OnViewLoadedEntry()
         {
-            OAVModel oav = new OAVModel()
-            {
-                ObjectName = "UCMaster",
-                AtrributeName = "UserControl",
-                AtrributeValue = MainView
-            };
-            InsertOAV(oav);
-            Fire();
-            RetractOAV(oav);
+            Fire(new OAVModel("UCMaster", "UserControl", MainView));
         }
     }
 }

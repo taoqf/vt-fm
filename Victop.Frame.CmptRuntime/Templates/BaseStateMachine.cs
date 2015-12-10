@@ -70,9 +70,17 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 启动规则引擎
         /// </summary>
-        public void Fire()
+        public void Fire(params OAVModel[] oavs)
         {
+            foreach (var item in oavs)
+            {
+                session.TryInsert(item);
+            }
             session.Fire();
+            foreach (var item in oavs)
+            {
+                session.TryRetract(item);
+            }
         }
         /// <summary>
         /// 插入事实
