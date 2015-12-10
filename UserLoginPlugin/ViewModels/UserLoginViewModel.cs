@@ -22,6 +22,7 @@ using Victop.Frame.DataMessageManager;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.Configuration;
+using Victop.Frame.DataMessageManager.Models;
 
 namespace UserLoginPlugin.ViewModels
 {
@@ -360,7 +361,7 @@ namespace UserLoginPlugin.ViewModels
                     DataMessageOperation dataOp = new DataMessageOperation();
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
                     paramDic.Add("userCode", LoginInfoModel.UserName);
-                    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                    PluginModel pluginModel = dataOp.StartPlugin(new ExcutePluginParamModel() { PluginName = "ModifyPassWordPlugin", VisiblePlugin = false }, paramDic);
                     if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                     {
                         Window win = pluginModel.PluginInterface.StartWindow;
@@ -386,7 +387,7 @@ namespace UserLoginPlugin.ViewModels
                                 DataMessageOperation dataOp = new DataMessageOperation();
                                 Dictionary<string, object> paramDic = new Dictionary<string, object>();
                                 paramDic.Add("usercode", LoginInfoModel.UserName);
-                                PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                                PluginModel pluginModel = dataOp.StartPlugin(new ExcutePluginParamModel() { PluginName= "ModifyPassWordPlugin",VisiblePlugin=false},paramDic);
                                 if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                                 {
                                     Window win = pluginModel.PluginInterface.StartWindow;

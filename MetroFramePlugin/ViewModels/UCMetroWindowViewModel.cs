@@ -29,6 +29,7 @@ using Victop.Frame.DataMessageManager;
 using System.Xml;
 using System.Text.RegularExpressions;
 using Victop.Frame.PublicLib.Managers;
+using Victop.Frame.DataMessageManager.Models;
 
 namespace MetroFramePlugin.ViewModels
 {
@@ -584,7 +585,7 @@ namespace MetroFramePlugin.ViewModels
                     ShowWorkSpace = Visibility.Collapsed;
                     ShowLockView = Visibility.Visible;
                     IsShowMenu = Visibility.Collapsed;
-                    isLockMenu =false;
+                    isLockMenu = false;
                 });
             }
         }
@@ -605,7 +606,7 @@ namespace MetroFramePlugin.ViewModels
                     {
                         ShowWorkSpace = Visibility.Visible;
                         ShowLockView = Visibility.Collapsed;
-                        IsShowMenu = Visibility.Visible; 
+                        IsShowMenu = Visibility.Visible;
                         isLockMenu = false;
                         UserInfo.UnLockPwd = string.Empty;
                         userInfo.ErrorPwd = string.Empty;
@@ -692,7 +693,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     DataMessageOperation dataOp = new DataMessageOperation();
                     bool result = false;
-                    PluginModel pluginModel = dataOp.StratPlugin("ChangeRolePlugin");
+                    PluginModel pluginModel = dataOp.StartPlugin(new Victop.Frame.DataMessageManager.Models.ExcutePluginParamModel() { PluginName = "ChangeRolePlugin" });
                     if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                     {
                         Window win = pluginModel.PluginInterface.StartWindow;
@@ -756,7 +757,8 @@ namespace MetroFramePlugin.ViewModels
                     DataMessageOperation dataOp = new DataMessageOperation();
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
                     paramDic.Add("usercode", UserInfo.UserCode);
-                    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                    //PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                    PluginModel pluginModel = dataOp.StartPlugin(new ExcutePluginParamModel() { PluginName = "ModifyPassWordPlugin" }, paramDic);
                     if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                     {
                         Window win = pluginModel.PluginInterface.StartWindow;
@@ -1215,7 +1217,7 @@ namespace MetroFramePlugin.ViewModels
                 paramDic.Add("configsystemid", "11");
                 paramDic.Add("formid", selectedFourthMenu.FormId);
                 paramDic.Add("authoritycode", selectedFourthMenu.AuthorityCode);
-                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.PackageUrl, paramDic, selectedFourthMenu.MenuName, true);
+                PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = selectedFourthMenu.PackageUrl, ShowTitle = selectedFourthMenu.MenuName });
                 if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {
                     PluginShow(pluginModel, selectedFourthMenu.MenuName);
@@ -1365,7 +1367,7 @@ namespace MetroFramePlugin.ViewModels
         {
             DataMessageOperation pluginOp = new DataMessageOperation();
             string loginPlugin = ConfigurationManager.AppSettings["loginWindow"];
-            PluginModel pluginModel = pluginOp.StratPlugin(loginPlugin);
+            PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = loginPlugin });
             IPlugin PluginInstance = pluginModel.PluginInterface;
             Window loginWin = PluginInstance.StartWindow;
             loginWin.Uid = pluginModel.ObjectId;
@@ -1430,7 +1432,7 @@ namespace MetroFramePlugin.ViewModels
         private void ChangeTheme()
         {
             DataMessageOperation pluginOp = new DataMessageOperation();
-            PluginModel pluginModel = pluginOp.StratPlugin("ThemeManagerPlugin");
+            PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = "ThemeManagerPlugin" });
             IPlugin PluginInstance = pluginModel.PluginInterface;
             Window themeWin = PluginInstance.StartWindow;
             themeWin.Uid = pluginModel.ObjectId;
