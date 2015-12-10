@@ -22,10 +22,22 @@ namespace Victop.Frame.DataMessageManager.Models
         /// 展示标题
         /// </summary>
         public string ShowTitle { get; set; }
+
+        private bool visiblePlugin = true;
         /// <summary>
         /// 是否在活动列表中展示
         /// </summary>
-        public bool VisiblePlugin { get; set; } = true;
+        public bool VisiblePlugin
+        {
+            get
+            {
+                return visiblePlugin;
+            }
+            set
+            {
+                visiblePlugin = value;
+            }
+        }
         /// <summary>
         /// 是否强制加载
         /// </summary>
