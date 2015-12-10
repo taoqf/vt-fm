@@ -16,7 +16,7 @@ using NRules;
 namespace AutomaticCodePlugin.Rules
 {
     [Repeatability(RuleRepeatability.NonRepeatable)]
-    [Tag("Row")]
+    [Tag("MainPage")]
     public class MainViewAddRowRule : MainRule
     {
         public override void Define()

@@ -23,11 +23,12 @@ namespace AutomaticCodePlugin.Views
     public partial class UCMainView : TemplateControl
     {
         PresentationBlockModel mainPBlock;
-        MainStateMachine MyFsm;
         public UCMainView()
         {
             InitializeComponent();
             this.DataContext = this;
+            FeiDaoFSM = new MainStateMachine();
+            FeiDaoFSM.MainView = this;
         }
         public PresentationBlockModel MainPBlock
         {
@@ -43,24 +44,22 @@ namespace AutomaticCodePlugin.Views
         }
         private void searchBtn_Click(object sender, RoutedEventArgs e)
         {
-            MyFsm.Search();
+            FeiDaoFSM.Do("SearchBtnClick");
         }
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
-            MyFsm.AddRow();
+            FeiDaoFSM.Do("AddRow");
         }
 
         private void dgridProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MyFsm.SelectRow();
+            FeiDaoFSM.Do("SelectRow");
         }
 
         private void mainView_Loaded(object sender, RoutedEventArgs e)
         {
-            MyFsm = new MainStateMachine();
-            MyFsm.MainView = this;
-            MyFsm.MainLoad();
+            FeiDaoFSM.Do("ViewLoad");
         }
     }
 }

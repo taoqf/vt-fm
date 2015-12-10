@@ -8,28 +8,51 @@ using NRules.Fluent;
 using System.Reflection;
 using Victop.Server.Controls.Models;
 
-namespace AutomaticCodePlugin.FSM
+namespace Victop.Frame.CmptRuntime
 {
     /// <summary>
     /// 基础状态机
     /// </summary>
     public class BaseStateMachine
     {
-        public StateMachine<string, string> FSM;
-        public string currentState = "None";
-        public ISession session;
-        public BaseStateMachine(string groupName)
+        /// <summary>
+        /// 状态机实例
+        /// </summary>
+        public StateMachine<string, string> FeiDaoFSM;
+        /// <summary>
+        /// 界面实例
+        /// </summary>
+        public TemplateControl MainView;
+        private string currentState = "None";
+        private ISession session;
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="groupName">规则分组名</param>
+        /// <param name="pluginAssembly">插件程序集</param>
+        public BaseStateMachine(string groupName, Assembly pluginAssembly)
         {
-            CreateRuleRepositoryGroup(groupName);
-            FSM = new StateMachine<string, string>(() => currentState, s => currentState = s);
+            CreateRuleRepositoryGroup(groupName, pluginAssembly);
+            FeiDaoFSM = new StateMachine<string, string>(() => currentState, s => currentState = s);
+        }
+        /// <summary>
+        /// 执行动作
+        /// </summary>
+        /// <param name="triggerName">动作名称</param>
+        public void Do(string triggerName)
+        {
+            if (FeiDaoFSM.CanFire(triggerName))
+            {
+                FeiDaoFSM.Fire(triggerName);
+            }
         }
         #region NRules
-        private void CreateRuleRepositoryGroup(string groupName)
+        private void CreateRuleRepositoryGroup(string groupName, Assembly pluginAssembly)
         {
             RuleRepository fullRepository = new RuleRepository();
             if (!string.IsNullOrEmpty(groupName))
             {
-                fullRepository.Load(x => x.From(Assembly.GetExecutingAssembly()).Where(it => it.IsTagged(groupName)).To(groupName));
+                fullRepository.Load(x => x.From(pluginAssembly).Where(it => it.IsTagged(groupName)).To(groupName));
                 var sets = fullRepository.GetRuleSets().Where(it => it.Name.Equals(groupName));
                 var complier = new RuleCompiler();
                 var factory = complier.Compile(sets);
@@ -37,7 +60,7 @@ namespace AutomaticCodePlugin.FSM
             }
             else
             {
-                fullRepository.Load(x => x.From(Assembly.GetExecutingAssembly()));
+                fullRepository.Load(x => x.From(pluginAssembly));
                 ISessionFactory factory = fullRepository.Compile();
                 session = factory.CreateSession();
             }
@@ -51,10 +74,18 @@ namespace AutomaticCodePlugin.FSM
         {
             session.Fire();
         }
+        /// <summary>
+        /// 插入事实
+        /// </summary>
+        /// <param name="obj">事实对象</param>
         public void InsertOAV(Object obj)
         {
             session.TryInsert(obj);
         }
+        /// <summary>
+        /// 移除事实
+        /// </summary>
+        /// <param name="obj">事实对象</param>
         public void RetractOAV(Object obj)
         {
             session.TryRetract(obj);

@@ -18,41 +18,30 @@ namespace AutomaticCodePlugin.FSM
 {
     public class MainStateMachine : BaseStateMachine
     {
-        public TemplateControl MainView;
-        public MainStateMachine() : base("")
+        public MainStateMachine() : base("MainPage", Assembly.GetExecutingAssembly())
         {
-            FSM.Configure("None")
+            FeiDaoFSM.Configure("None")
                 .Permit("ViewLoad", "ViewLoaded");
-            FSM.Configure("ViewLoaded")
+            FeiDaoFSM.Configure("ViewLoaded")
                 .OnEntry(() => OnViewLoadedEntry())
                 .OnExit(() => OnViewLoadedExit())
                 .Permit("SearchBtnClick", "SearchBtnClicked");
-            FSM.Configure("SearchBtnClicked")
+            FeiDaoFSM.Configure("SearchBtnClicked")
                 .OnEntry(() => OnSearchBtnClickEntry())
                 .PermitReentry("SearchBtnClick")
                 .OnExit(() => OnSearchBtnClickExit())
                 .Permit("SelectRow", "SelectRowed")
                 .Permit("AddRow", "AddRowed");
-            FSM.Configure("SelectRowed")
+            FeiDaoFSM.Configure("SelectRowed")
                 .OnEntry(() => OnSelectedRowChangedEntry())
                 .PermitReentry("SelectRow")
                 .Permit("SearchBtnClick", "SearchBtnClicked")
                 .Permit("AddRow", "AddRowed");
-            FSM.Configure("AddRowed")
+            FeiDaoFSM.Configure("AddRowed")
                 .OnEntry(() => OnAddRowedEntry())
                 .Permit("SearchBtnClick", "SearchBtnClicked")
                 .Permit("SelectRow", "SelectRowed");
         }
-
-
-        public void AddRow()
-        {
-            if (FSM.CanFire("AddRow"))
-            {
-                FSM.Fire("AddRow");
-            }
-        }
-
         private void OnAddRowedEntry()
         {
             Console.WriteLine("OnAddRowedEntry");
@@ -62,24 +51,17 @@ namespace AutomaticCodePlugin.FSM
                 AtrributeName = "AddData",
                 AtrributeValue = ((UCMainView)MainView).MainPBlock.ViewBlockDataTable
             };
-            OAVModel oavbtn = new OAVModel() {
-                ObjectName="masterPBlock",
-                AtrributeName="addBtn",
-                AtrributeValue= ((UCMainView)MainView).addBtn
+            OAVModel oavbtn = new OAVModel()
+            {
+                ObjectName = "masterPBlock",
+                AtrributeName = "addBtn",
+                AtrributeValue = ((UCMainView)MainView).addBtn
             };
             InsertOAV(oav);
             InsertOAV(oavbtn);
             Fire();
             RetractOAV(oav);
             RetractOAV(oavbtn);
-        }
-
-        public void SelectRow()
-        {
-            if (FSM.CanFire("SelectRow"))
-            {
-                FSM.Fire("SelectRow");
-            }
         }
 
         private void OnSelectedRowChangedEntry()
@@ -91,10 +73,11 @@ namespace AutomaticCodePlugin.FSM
                 AtrributeName = "selectedItem",
                 AtrributeValue = ((UCMainView)MainView).dgridProduct.SelectedItem
             };
-            OAVModel oavP = new OAVModel() {
-                ObjectName= "masterPBlock",
-                AtrributeName="PBlock",
-                AtrributeValue= ((UCMainView)MainView).MainPBlock
+            OAVModel oavP = new OAVModel()
+            {
+                ObjectName = "masterPBlock",
+                AtrributeName = "PBlock",
+                AtrributeValue = ((UCMainView)MainView).MainPBlock
             };
             InsertOAV(oav);
             InsertOAV(oavP);
@@ -102,23 +85,6 @@ namespace AutomaticCodePlugin.FSM
             InsertOAV(oavP);
             RetractOAV(oav);
         }
-
-        public void MainLoad()
-        {
-            if (FSM.CanFire("ViewLoad"))
-            {
-                FSM.Fire("ViewLoad");
-            }
-        }
-
-        public void Search()
-        {
-            if (FSM.CanFire("SearchBtnClick"))
-            {
-                FSM.Fire("SearchBtnClick");
-            }
-        }
-
         private void OnSearchBtnClickExit()
         {
             Console.WriteLine("OnSearchBtnClickExit");

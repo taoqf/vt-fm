@@ -14,7 +14,7 @@ using Victop.Server.Controls.Models;
 namespace AutomaticCodePlugin.Rules
 {
     [Repeatability(RuleRepeatability.NonRepeatable)]
-    [Tag("Row")]
+    [Tag("MainPage")]
     public class MainViewRowSelectRule : MainRule
     {
         public override void Define()

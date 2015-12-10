@@ -14,7 +14,7 @@ using Victop.Server.Controls.Models;
 namespace AutomaticCodePlugin.Rules
 {
     [Repeatability(RuleRepeatability.NonRepeatable)]
-    [Tag("User")]
+    [Tag("MainPage")]
     public class MainViewLoadRule : MainRule
     {
         public override void Define()
