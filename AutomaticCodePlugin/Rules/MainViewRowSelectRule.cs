@@ -9,36 +9,31 @@ using System.Data;
 using Victop.Frame.CmptRuntime;
 using AutomaticCodePlugin.Views;
 using AutomaticCodePlugin.FSM;
-using AutomaticCodePlugin.ViewModels;
+using Victop.Server.Controls.Models;
 
 namespace AutomaticCodePlugin.Rules
 {
     [Repeatability(RuleRepeatability.NonRepeatable)]
     [Tag("Row")]
-    public class MainViewRowSelectRule : NRules.Fluent.Dsl.Rule
+    public class MainViewRowSelectRule : MainRule
     {
         public override void Define()
         {
-            TemplateControl userControl = null;
-            MainStateMachine fsm = null;
-            When().Match<TemplateControl>(() => userControl, p => p != null && p.InitFlag == true)
-                .Match<MainStateMachine>(() => fsm, f => f.currentState == Enums.MainViewState.SelectRowed);
-            Then().Do(ctx => UpdateDetialUI(ctx, userControl, fsm));
+            OAVModel oav = null;
+            OAVModel oavP = null;
+            When().Match<OAVModel>(() => oav, o => o.ObjectName.Equals("masterPBlock") && o.AtrributeName.Equals("selectedItem"))
+                .Match<OAVModel>(()=>oavP,p=>p.ObjectName.Equals("masterPBlock")&&p.AtrributeName.Equals("PBlock"));
+            Then().Do(ctx => UpdateDetialUI(ctx, oav,oavP));
         }
 
-        private void UpdateDetialUI(IContext ctx, TemplateControl mainView, MainStateMachine fsm)
+        private void UpdateDetialUI(IContext ctx, OAVModel oav,OAVModel oavP)
         {
-            if (mainView != null)
+            if (oav.AtrributeValue != null)
             {
-                UCMainView myView = mainView as UCMainView;
-                UCMainViewViewModel mainViewModel = myView.DataContext as UCMainViewViewModel;
-                if (myView.dgridProduct.SelectedItem != null)
-                {
-                    DataRow dr = (myView.dgridProduct.SelectedItem as DataRowView).Row;
-                    mainViewModel.MainPBlock.PreBlockSelectedRow = dr;
-                    mainViewModel.MainPBlock.SetCurrentRow(dr);
-                    mainViewModel.Test = dr["product_name"].ToString();
-                }
+                DataRow dr = (oav.AtrributeValue as DataRowView).Row;
+                PresentationBlockModel pBlock = oavP.AtrributeValue as PresentationBlockModel;
+                pBlock.PreBlockSelectedRow = dr;
+                pBlock.SetCurrentRow(dr);
             }
         }
     }

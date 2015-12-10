@@ -98,9 +98,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\MainViewState.cs" />
+    <Compile Include="FSM\BaseStateMachine.cs" />
     <Compile Include="FSM\MainStateMachine.cs" />
-    <Compile Include="Enums\MainViewTrigger.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -121,12 +120,8 @@
     <Compile Include="Rules\MainViewLoadRule.cs" />
     <Compile Include="Rules\MainViewRowSelectRule.cs" />
     <Compile Include="Rules\MainViewSearchRule.cs" />
-    <Compile Include="ViewModels\UCMainViewViewModel.cs" />
     <Compile Include="Views\MainViewWindow.xaml.cs">
       <DependentUpon>MainViewWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UCDetailView.xaml.cs">
-      <DependentUpon>UCDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UCMainView.xaml.cs">
       <DependentUpon>UCMainView.xaml</DependentUpon>
@@ -164,10 +159,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UCDetailView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\UCMainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -175,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\VictopLib\GalaSoft.MvvmLight.Extras.WPF4.dll" />

@@ -8,7 +8,6 @@ using NRules.RuleModel;
 using AutomaticCodePlugin.Views;
 using Victop.Frame.CmptRuntime;
 using AutomaticCodePlugin.FSM;
-using AutomaticCodePlugin.ViewModels;
 using System.Data;
 using Victop.Server.Controls.Models;
 using System.Windows.Controls;
@@ -23,22 +22,18 @@ namespace AutomaticCodePlugin.Rules
         public override void Define()
         {
             OAVModel oav = null;
-            OAVModel oav1 = null;
-            MainStateMachine fsm = null;
-            When().Match<OAVModel>(() => oav, o => oav.AtrributeName.Equals("userdt"))
-                .Match<OAVModel>(() => oav1, o => oav1.AtrributeName.Equals("btn"))
-                .Match<OAVModel>(() => sessionOAV, o => sessionOAV.AtrributeName.Equals("session"))
-                .Match<MainStateMachine>(() => fsm, f => f.currentState == Enums.MainViewState.AddRowed);
-            Then().Do(ctx => OnAddRow(ctx, oav));
+            When().Match<OAVModel>(() => oav, o => o.ObjectName.Equals("masterPBlock") && oav.AtrributeName.Equals("AddData"));
+            Then().Do(session => OnAddRow(session, oav));
         }
 
-        private void OnAddRow(IContext ctx, OAVModel userCtrl)
+        private void OnAddRow(IContext session, OAVModel userCtrl)
         {
             AddRow(userCtrl, string.Empty);
             OAVModel oav = new OAVModel();
-            oav.AtrributeName = "abc";
-            oav.AtrributeValue = "test";
-            Add(oav);
+            oav.ObjectName = userCtrl.ObjectName;
+            oav.AtrributeName = "AddBtnEnble";
+            oav.AtrributeValue = false;
+            session.Insert(oav);
         }
 
         #region 原子操作

@@ -9,16 +9,8 @@ namespace AutomaticCodePlugin.Rules
 {
     public abstract class MainRule : NRules.Fluent.Dsl.Rule
     {
-        public OAVModel sessionOAV;
-        public void Add(OAVModel OAV)
+        public MainRule()
         {
-            ISession session = (ISession)sessionOAV.AtrributeValue;
-            session.TryInsert(OAV);
-        }
-        public void Remove(OAVModel OAV)
-        {
-            ISession session = (ISession)sessionOAV.AtrributeValue;
-            session.TryRetract(OAV);
         }
     }
 }

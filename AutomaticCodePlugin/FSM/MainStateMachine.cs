@@ -4,117 +4,119 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Stateless;
-using AutomaticCodePlugin.Enums;
 using System.Windows;
 using System.Windows.Controls;
 using Victop.Frame.CmptRuntime;
 using AutomaticCodePlugin.Views;
 using NRules.Fluent;
 using AutomaticCodePlugin.Rules;
-using AutomaticCodePlugin.ViewModels;
 using NRules;
 using System.Reflection;
 using Victop.Server.Controls.Models;
 
 namespace AutomaticCodePlugin.FSM
 {
-    public class MainStateMachine
+    public class MainStateMachine : BaseStateMachine
     {
-        StateMachine<MainViewState, MainViewTrigger> myFsm;
-        public MainViewState currentState = MainViewState.None;
-        UCMainViewViewModel mainViewModel;
-        ISession session;
-        public MainStateMachine(UCMainViewViewModel mainViewModel)
+        public TemplateControl MainView;
+        public MainStateMachine() : base("")
         {
-            this.mainViewModel = mainViewModel;
-            //CreateRuleRepository();
-            CreateRuleRepositoryGroup();
-            myFsm = new StateMachine<MainViewState, MainViewTrigger>(() => currentState, s => currentState = s);
-            myFsm.Configure(MainViewState.None)
-                .Permit(MainViewTrigger.ViewLoad, MainViewState.ViewLoaded);
-            myFsm.Configure(MainViewState.ViewLoaded)
+            FSM.Configure("None")
+                .Permit("ViewLoad", "ViewLoaded");
+            FSM.Configure("ViewLoaded")
                 .OnEntry(() => OnViewLoadedEntry())
                 .OnExit(() => OnViewLoadedExit())
-                .Permit(MainViewTrigger.SearchBtnClick, MainViewState.SearchBtnClicked);
-            myFsm.Configure(MainViewState.SearchBtnClicked)
+                .Permit("SearchBtnClick", "SearchBtnClicked");
+            FSM.Configure("SearchBtnClicked")
                 .OnEntry(() => OnSearchBtnClickEntry())
-                .PermitReentry(MainViewTrigger.SearchBtnClick)
+                .PermitReentry("SearchBtnClick")
                 .OnExit(() => OnSearchBtnClickExit())
-                .Permit(MainViewTrigger.SelectRow, MainViewState.SelectRowed)
-                .Permit(MainViewTrigger.AddRow, MainViewState.AddRowed);
-            myFsm.Configure(MainViewState.SelectRowed)
+                .Permit("SelectRow", "SelectRowed")
+                .Permit("AddRow", "AddRowed");
+            FSM.Configure("SelectRowed")
                 .OnEntry(() => OnSelectedRowChangedEntry())
-                .PermitReentry(MainViewTrigger.SelectRow)
-                .Permit(MainViewTrigger.SearchBtnClick, MainViewState.SearchBtnClicked)
-                .Permit(MainViewTrigger.AddRow, MainViewState.AddRowed);
-            myFsm.Configure(MainViewState.AddRowed)
+                .PermitReentry("SelectRow")
+                .Permit("SearchBtnClick", "SearchBtnClicked")
+                .Permit("AddRow", "AddRowed");
+            FSM.Configure("AddRowed")
                 .OnEntry(() => OnAddRowedEntry())
-                .Permit(MainViewTrigger.SearchBtnClick, MainViewState.SearchBtnClicked)
-                .Permit(MainViewTrigger.SelectRow, MainViewState.SelectRowed);
+                .Permit("SearchBtnClick", "SearchBtnClicked")
+                .Permit("SelectRow", "SelectRowed");
         }
 
 
         public void AddRow()
         {
-            myFsm.Fire(MainViewTrigger.AddRow);
+            if (FSM.CanFire("AddRow"))
+            {
+                FSM.Fire("AddRow");
+            }
         }
 
         private void OnAddRowedEntry()
         {
-            
-            OAVModel oav = new OAVModel();
-            oav.ObjectName = "dt";
-            oav.AtrributeName = "userdt";
-            oav.AtrributeValue = mainViewModel.MainPBlock.ViewBlockDataTable;
-
-            OAVModel oavctrl = new OAVModel();
-            oavctrl.ObjectName = "dt";
-            oavctrl.AtrributeName = "btn";
-            oavctrl.AtrributeValue = mainViewModel.MainView.addBtn;
-
-            OAVModel oavsession = new OAVModel();
-            oavsession.ObjectName = "rules";
-            oavsession.AtrributeName = "session";
-            oavsession.AtrributeValue = session;
-
             Console.WriteLine("OnAddRowedEntry");
-            session.Insert(this);
-            session.Insert(oav);
-            session.Insert(oavctrl);
-            session.Insert(oavsession);
-            session.Fire();
-            session.Retract(oav);
-            session.Retract(oavctrl);
-            session.Retract(oavsession);
-            session.Retract(this);
+            OAVModel oav = new OAVModel()
+            {
+                ObjectName = "masterPBlock",
+                AtrributeName = "AddData",
+                AtrributeValue = ((UCMainView)MainView).MainPBlock.ViewBlockDataTable
+            };
+            OAVModel oavbtn = new OAVModel() {
+                ObjectName="masterPBlock",
+                AtrributeName="addBtn",
+                AtrributeValue= ((UCMainView)MainView).addBtn
+            };
+            InsertOAV(oav);
+            InsertOAV(oavbtn);
+            Fire();
+            RetractOAV(oav);
+            RetractOAV(oavbtn);
         }
 
         public void SelectRow()
         {
-            if (myFsm.CanFire(MainViewTrigger.SelectRow))
+            if (FSM.CanFire("SelectRow"))
             {
-                //myFsm.Fire(MainViewTrigger.SelectRow,"a","b","c");
+                FSM.Fire("SelectRow");
             }
         }
 
         private void OnSelectedRowChangedEntry()
         {
             Console.WriteLine("OnSelectedRowChangedEntry");
-            session.TryInsert(this);
-            session.TryInsert(mainViewModel.MainView);
-            session.Fire();
-            session.TryRetract(mainViewModel.MainView);
-            session.TryRetract(this);
+            OAVModel oav = new OAVModel()
+            {
+                ObjectName = "masterPBlock",
+                AtrributeName = "selectedItem",
+                AtrributeValue = ((UCMainView)MainView).dgridProduct.SelectedItem
+            };
+            OAVModel oavP = new OAVModel() {
+                ObjectName= "masterPBlock",
+                AtrributeName="PBlock",
+                AtrributeValue= ((UCMainView)MainView).MainPBlock
+            };
+            InsertOAV(oav);
+            InsertOAV(oavP);
+            Fire();
+            InsertOAV(oavP);
+            RetractOAV(oav);
         }
 
         public void MainLoad()
         {
-            myFsm.Fire(MainViewTrigger.ViewLoad);
+            if (FSM.CanFire("ViewLoad"))
+            {
+                FSM.Fire("ViewLoad");
+            }
         }
 
         public void Search()
         {
-            myFsm.Fire(MainViewTrigger.SearchBtnClick);
+            if (FSM.CanFire("SearchBtnClick"))
+            {
+                FSM.Fire("SearchBtnClick");
+            }
         }
 
         private void OnSearchBtnClickExit()
@@ -125,11 +127,15 @@ namespace AutomaticCodePlugin.FSM
         private void OnSearchBtnClickEntry()
         {
             Console.WriteLine("OnSearchBtnClickEntry");
-            session.TryInsert(this);
-            session.TryInsert(mainViewModel.MainView);
-            session.Fire();
-            session.TryRetract(mainViewModel.MainView);
-            session.TryRetract(this);
+            OAVModel oav = new OAVModel()
+            {
+                ObjectName = "masterPBlock",
+                AtrributeName = "GetData",
+                AtrributeValue = ((UCMainView)MainView).MainPBlock
+            };
+            InsertOAV(oav);
+            Fire();
+            RetractOAV(oav);
         }
 
         private void OnViewLoadedExit()
@@ -139,33 +145,15 @@ namespace AutomaticCodePlugin.FSM
 
         private void OnViewLoadedEntry()
         {
-            session.TryInsert(this);
-            session.TryInsert(mainViewModel.MainView);
-            session.Fire();
-            session.TryRetract(mainViewModel.MainView);
-            session.TryRetract(this);
+            OAVModel oav = new OAVModel()
+            {
+                ObjectName = "UCMaster",
+                AtrributeName = "UserControl",
+                AtrributeValue = MainView
+            };
+            InsertOAV(oav);
+            Fire();
+            RetractOAV(oav);
         }
-
-        #region NRules
-        private void CreateRuleRepository()
-        {
-            RuleRepository repository = new RuleRepository();
-            repository.Load(x => x.From(typeof(MainViewLoadRule).Assembly));
-            ISessionFactory factory = repository.Compile();
-            session = factory.CreateSession();
-        }
-
-        private void CreateRuleRepositoryGroup()
-        {
-            RuleRepository fullRepository = new RuleRepository();
-            fullRepository.Load(x => x.From(Assembly.GetExecutingAssembly()).Where(it => it.IsTagged("User")).To("UserRoles"));
-            fullRepository.Load(x => x.From(Assembly.GetExecutingAssembly()).Where(it => it.IsTagged("Row")).To("RowRoles"));
-            var sets = fullRepository.GetRuleSets();
-            var complier = new RuleCompiler();
-            var factory = complier.Compile(sets);
-            session = factory.CreateSession();
-            Console.WriteLine(sets.Count());
-        }
-        #endregion
     }
 }

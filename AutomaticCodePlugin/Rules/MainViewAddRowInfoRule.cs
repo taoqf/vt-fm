@@ -16,19 +16,19 @@ namespace AutomaticCodePlugin.Rules
     {
         public override void Define()
         {
+            OAVModel oavEnable = null;
             OAVModel oavCtrl = null;
-            OAVModel oavCtrlInfo = null;
-            When().Match<OAVModel>(() => oavCtrl, o => o.AtrributeName.Equals("btn"))
-                .Match<OAVModel>(() => sessionOAV, o => o.AtrributeName.Equals("session"))
-                .Match<OAVModel>(() => oavCtrlInfo, o => o.AtrributeName.Equals("abc"));
-            Then().Do(ctx => CtrlUI(ctx, oavCtrl, oavCtrlInfo));
+            When().Match<OAVModel>(() => oavEnable, o => o.ObjectName.Equals("masterPBlock") && o.AtrributeName.Equals("AddBtnEnble"))
+                .Match<OAVModel>(() => oavCtrl, o => o.ObjectName.Equals("masterPBlock") && o.AtrributeName.Equals("addBtn"));
+            Then().Do(session => CtrlUI(session, oavEnable, oavCtrl));
 
         }
 
-        private void CtrlUI(IContext ctx, OAVModel atrributeValue,OAVModel oavCtrlInfo)
+        private void CtrlUI(IContext session, OAVModel atrributeValue, OAVModel oavCtrl)
         {
-            SetButtonEnabled(atrributeValue, false);
-            Remove(oavCtrlInfo);
+            SetButtonEnabled(oavCtrl, (bool)atrributeValue.AtrributeValue);
+            session.Retract(atrributeValue);
+
         }
         private void SetButtonEnabled(OAVModel oav, bool enabled)
         {

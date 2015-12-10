@@ -8,32 +8,25 @@ using NRules.Fluent.Dsl;
 using NRules.RuleModel;
 using AutomaticCodePlugin.Views;
 using AutomaticCodePlugin.FSM;
-using AutomaticCodePlugin.ViewModels;
+using Victop.Server.Controls.Models;
 
 namespace AutomaticCodePlugin.Rules
 {
     [Repeatability(RuleRepeatability.NonRepeatable)]
     [Tag("User")]
-    public class MainViewSearchRule : Rule
+    public class MainViewSearchRule : MainRule
     {
         public override void Define()
         {
-            TemplateControl userCtrl = null;
-            MainStateMachine fsm = null;
-            When().Match<TemplateControl>(() => userCtrl, p => p != null && p.InitFlag == true)
-                .Match<MainStateMachine>(() => fsm, f => f.currentState == Enums.MainViewState.SearchBtnClicked);
-            Then().Do(ctx => GetBlockData(ctx, userCtrl));
+            OAVModel oav = null;
+            When().Match<OAVModel>(() => oav, p => p.ObjectName.Equals("masterPBlock") && p.AtrributeName.Equals("GetData"));
+            Then().Do(ctx => GetBlockData(ctx, oav));
 
         }
-
-        private void GetBlockData(IContext ctx, TemplateControl userCtrl)
+        private void GetBlockData(IContext ctx, OAVModel oav)
         {
-            UCMainView mainView = userCtrl as UCMainView;
-            UCMainViewViewModel mainViewModel = mainView.DataContext as UCMainViewViewModel;
-            if (mainViewModel.MainPBlock.ViewBlock.ViewId != null)
-            {
-                mainViewModel.MainPBlock.GetData();
-            }
+            PresentationBlockModel pBlock = oav.AtrributeValue as PresentationBlockModel;
+            pBlock.GetData();
         }
     }
 }
