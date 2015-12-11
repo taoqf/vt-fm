@@ -1,11 +1,7 @@
 ﻿using ChangeRolePlugin.Models;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using Victop.Server.Controls.Models;
-using GalaSoft.MvvmLight.Command;
 using System.Windows.Input;
 using System.Windows.Controls;
 using Victop.Frame.PublicLib.Helpers;
@@ -14,10 +10,11 @@ using System.Windows;
 using Victop.Wpf.Controls;
 using System.Configuration;
 using Victop.Frame.PublicLib.Managers;
-using ChangeRolePlugin.Views;
+using Victop.Server.Controls.MVVM;
+
 namespace ChangeRolePlugin.ViewModels
 {
-   public class ChangeRoleViewModel:ModelBase
+    public class ChangeRoleViewModel:ModelBase
    {
        #region 字段
        private UserControl mainWindow;

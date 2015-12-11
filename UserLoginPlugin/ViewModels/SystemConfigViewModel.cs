@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using GalaSoft.MvvmLight.Command;
 using UserLoginPlugin.Models;
 using Victop.Frame.PublicLib.Managers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
-using System.Diagnostics;
 using Victop.Frame.DataMessageManager;
+using Victop.Server.Controls.MVVM;
 
 namespace UserLoginPlugin.ViewModels
 {

@@ -5,11 +5,9 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using GalaSoft.MvvmLight.Command;
 using Microsoft.Win32;
 using ThemeManagerPlugin.Models;
 using Victop.Frame.PublicLib.Helpers;
@@ -19,11 +17,10 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using Victop.Frame.DataMessageManager;
-using System.Net;
-using System.Xml;
 using System.Windows.Threading;
 using Victop.Frame.Units;
 using Victop.Frame.PublicLib.Managers;
+using Victop.Server.Controls.MVVM;
 
 namespace ThemeManagerPlugin.ViewModels
 {

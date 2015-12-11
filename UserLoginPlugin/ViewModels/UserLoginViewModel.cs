@@ -1,28 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using UserLoginPlugin.Models;
 using UserLoginPlugin.Views;
 using System.Windows.Input;
-using System.IO;
 using System.Collections.ObjectModel;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using Victop.Server.Controls.Models;
 using Victop.Frame.PublicLib.Managers;
 using Victop.Frame.PublicLib.Helpers;
 using System.Threading;
-using System.Data;
 using Victop.Wpf.Controls;
 using Victop.Frame.DataMessageManager;
-using System.Windows.Threading;
-using System.Diagnostics;
 using System.Configuration;
 using Victop.Frame.DataMessageManager.Models;
+using Victop.Server.Controls.MVVM;
 
 namespace UserLoginPlugin.ViewModels
 {

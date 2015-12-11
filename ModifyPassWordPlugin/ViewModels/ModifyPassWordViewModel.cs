@@ -1,16 +1,14 @@
-﻿using GalaSoft.MvvmLight.Command;
-using ModifyPassWordPlugin.Models;
+﻿using ModifyPassWordPlugin.Models;
 using ModifyPassWordPlugin.Views;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
+using Victop.Server.Controls.MVVM;
 using Victop.Wpf.Controls;
 
 namespace ModifyPassWordPlugin.ViewModels
