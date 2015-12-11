@@ -10,7 +10,7 @@ namespace Victop.Server.Controls.Models
     /// <summary>
     /// Model基类
     /// </summary>
-    public class ModelBase :ViewModelBase, INotifyPropertyChanged
+    public class ModelBase : INotifyPropertyChanged
     {
         /// <summary>
         /// 事件定义

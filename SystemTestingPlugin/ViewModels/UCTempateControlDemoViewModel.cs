@@ -1,13 +1,10 @@
-﻿using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Windows.Input;
 using Victop.Server.Controls.Models;
 using Victop.Frame.CmptRuntime;
 using System.Data;
 using Victop.Frame.PublicLib.Helpers;
+using Victop.Server.Controls.MVVM;
 
 namespace SystemTestingPlugin.ViewModels
 {
