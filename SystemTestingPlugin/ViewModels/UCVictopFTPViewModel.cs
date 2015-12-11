@@ -173,7 +173,6 @@ namespace SystemTestingPlugin.ViewModels
                 {
                     if (isFirstLoad)
                     {
-                        Messenger.
                         SiteInfoModel.LocalPath = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
                         SiteInfoModel.RemotePath = "/";
                         #region 登陆用户名及FTP地址默认
