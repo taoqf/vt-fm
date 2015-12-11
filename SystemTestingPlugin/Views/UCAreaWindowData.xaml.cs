@@ -24,5 +24,7 @@ namespace SystemTestingPlugin.Views
         {
             InitializeComponent();
         }
+
+        public static Dictionary<string, object> ParamDict { get; internal set; }
     }
 }

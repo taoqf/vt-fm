@@ -42,6 +42,9 @@ namespace AutomaticCodePlugin.Views
                 RaisePropertyChanged(() => MainPBlock);
             }
         }
+
+        public static Dictionary<string, object> ParamDict { get; internal set; }
+
         private void searchBtn_Click(object sender, RoutedEventArgs e)
         {
             FeiDaoFSM.Do("SearchBtnClick");

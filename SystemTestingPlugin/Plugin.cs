@@ -66,11 +66,10 @@ namespace SystemTestingPlugin
             get
             {
                 return UCAreaWindowData.ParamDict;
-
             }
             set
             {
-                UCAreaWindowData.ParamDict = value;
+                UCAreaWindowData.ParamDict=value;
             }
         }
     }
