@@ -183,13 +183,6 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         public BaseStateMachine FeiDaoFSM;
         /// <summary>
-        /// 参数值列
-        /// </summary>
-        public static Dictionary<string, object> ParamDict
-        {
-            get; set;
-        }
-        /// <summary>
         /// 属性改变
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
