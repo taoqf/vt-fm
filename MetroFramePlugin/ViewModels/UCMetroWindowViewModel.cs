@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
@@ -9,7 +8,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Victop.Frame.Units;
 using Victop.Server.Controls.Models;
-using GalaSoft.MvvmLight.Command;
 using Victop.Frame.CoreLibrary;
 using Victop.Frame.CoreLibrary.Models;
 using Victop.Frame.PublicLib.Helpers;
@@ -30,6 +28,7 @@ using System.Xml;
 using System.Text.RegularExpressions;
 using Victop.Frame.PublicLib.Managers;
 using Victop.Frame.DataMessageManager.Models;
+using Victop.Server.Controls.MVVM;
 
 namespace MetroFramePlugin.ViewModels
 {
@@ -1249,7 +1248,7 @@ namespace MetroFramePlugin.ViewModels
                 paramDic.Add("configsystemid", "11");
                 paramDic.Add("formid", selectedFourthMenu.FormId);
                 paramDic.Add("authoritycode", selectedFourthMenu.AuthorityCode);
-                PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = selectedFourthMenu.PackageUrl, ShowTitle = selectedFourthMenu.MenuName });
+                PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = selectedFourthMenu.PackageUrl, ShowTitle = selectedFourthMenu.MenuName },paramDic);
                 if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {
                     PluginShow(pluginModel, selectedFourthMenu.MenuName);

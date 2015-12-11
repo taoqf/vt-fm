@@ -1,5 +1,4 @@
 ﻿using SystemTestingPlugin.Models;
-using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,14 +6,13 @@ using System.Windows.Input;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
-using System.Diagnostics;
 using Victop.Frame.DataMessageManager;
 using SystemTestingPlugin.Views;
 using System.Threading;
-using System.IO;
 using System.Collections.ObjectModel;
 using Microsoft.Win32;
 using System.Windows;
+using Victop.Server.Controls.MVVM;
 
 namespace SystemTestingPlugin.ViewModels
 {

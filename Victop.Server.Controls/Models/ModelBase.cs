@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
-using GalaSoft.MvvmLight;
+﻿using System.ComponentModel;
 
 namespace Victop.Server.Controls.Models
 {
     /// <summary>
     /// Model基类
     /// </summary>
-    public class ModelBase :ViewModelBase, INotifyPropertyChanged
+    public class ModelBase : INotifyPropertyChanged
     {
         /// <summary>
         /// 事件定义

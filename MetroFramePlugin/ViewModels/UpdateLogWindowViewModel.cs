@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Victop.Server.Controls.Models;
-using GalaSoft.MvvmLight.Command;
 using System.Windows.Input;
 using Victop.Frame.DataMessageManager;
 using System.Data;
 using MetroFramePlugin.Models;
 using System.Collections.ObjectModel;
+using Victop.Server.Controls.MVVM;
 
 namespace MetroFramePlugin.ViewModels
 {

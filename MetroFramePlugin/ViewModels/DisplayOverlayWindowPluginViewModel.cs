@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using Victop.Server.Controls.Models;
-using GalaSoft.MvvmLight.Command;
 using Victop.Wpf.Controls;
-using Victop.Frame.CoreLibrary;
-using Victop.Frame.CoreLibrary.Models;
 using Victop.Frame.DataMessageManager;
 using Victop.Server.Controls;
 using Victop.Frame.PublicLib.Helpers;
@@ -18,11 +14,11 @@ using MetroFramePlugin.Models;
 using MetroFramePlugin.Views;
 using System.Windows.Media;
 using Victop.Frame.Units;
-
+using Victop.Server.Controls.MVVM;
 
 namespace MetroFramePlugin.ViewModels
 {
-   public class DisplayOverlayWindowPluginViewModel:ModelBase
+    public class DisplayOverlayWindowPluginViewModel:ModelBase
    {
        #region 字段
        private Window displayOverlayWindow;

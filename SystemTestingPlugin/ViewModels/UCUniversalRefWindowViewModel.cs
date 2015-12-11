@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using Victop.Server.Controls.Models;
-using GalaSoft.MvvmLight.Command;
 using SystemTestingPlugin.Models;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -15,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Victop.Wpf.Controls;
 using Victop.Frame.Units;
+using Victop.Server.Controls.MVVM;
 
 namespace SystemTestingPlugin.ViewModels
 {

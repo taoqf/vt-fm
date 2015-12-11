@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Victop.Server.Controls.Models;
-using GalaSoft.MvvmLight.Command;
 using PortalFramePlugin.Views;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -13,8 +10,7 @@ using Victop.Server.Controls;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.DataMessageManager;
 using System.Data;
-using System.Xml;
-using System.IO;
+using Victop.Server.Controls.MVVM;
 
 namespace PortalFramePlugin.ViewModels
 {
