@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Victop.Frame.CmptRuntime;
+using Victop.Server.Controls;
 
 namespace AutomaticCodePlugin.Views
 {
@@ -23,12 +24,13 @@ namespace AutomaticCodePlugin.Views
     public partial class UCMainView : TemplateControl
     {
         PresentationBlockModel mainPBlock;
-        public UCMainView()
+        public UCMainView(Dictionary<string,object> paramDict)
         {
             InitializeComponent();
             this.DataContext = this;
             FeiDaoFSM = new MainStateMachine();
             FeiDaoFSM.MainView = this;
+            ParamDict = paramDict;
         }
         public PresentationBlockModel MainPBlock
         {
@@ -42,9 +44,6 @@ namespace AutomaticCodePlugin.Views
                 RaisePropertyChanged(() => MainPBlock);
             }
         }
-
-        public static Dictionary<string, object> ParamDict { get; internal set; }
-
         private void searchBtn_Click(object sender, RoutedEventArgs e)
         {
             FeiDaoFSM.Do("SearchBtnClick");

@@ -46,14 +46,14 @@ namespace AutomaticCodePlugin
 
         public Window StartWindow
         {
-            get { return new MainViewWindow(); }
+            get { return new MainViewWindow(ParamDict); }
         }
 
         public UserControl StartControl
         {
             get
             {
-                return new UCMainView();
+                return new UCMainView(ParamDict);
             }
         }
 
@@ -63,15 +63,7 @@ namespace AutomaticCodePlugin
 
         public Dictionary<string, object> ParamDict
         {
-            get
-            {
-                return UCMainView.ParamDict;
-
-            }
-            set
-            {
-                UCMainView.ParamDict = value;
-            }
+            get; set;
         }
     }
 }

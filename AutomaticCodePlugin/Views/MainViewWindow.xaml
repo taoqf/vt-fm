@@ -7,6 +7,5 @@
         mc:Ignorable="d"
         Title="MainViewWindow" Height="300" Width="300">
     <Grid>
-        <local:UCMainView/>
     </Grid>
 </Window>

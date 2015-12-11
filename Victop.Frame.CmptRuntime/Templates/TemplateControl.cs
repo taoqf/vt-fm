@@ -11,6 +11,7 @@ using Victop.Wpf.Controls;
 using Victop.Frame.CmptRuntime;
 using Victop.Frame.PublicLib.Helpers;
 using System.Linq.Expressions;
+using Victop.Server.Controls;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -182,6 +183,10 @@ namespace Victop.Frame.CmptRuntime
         /// 飞道状态机
         /// </summary>
         public BaseStateMachine FeiDaoFSM;
+        /// <summary>
+        /// 参数键值对
+        /// </summary>
+        public Dictionary<string,object> ParamDict { get; set; }
         /// <summary>
         /// 属性改变
         /// </summary>

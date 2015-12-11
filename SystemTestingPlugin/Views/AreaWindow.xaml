@@ -5,6 +5,5 @@
         xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
         Title="AreaWindow" Height="300" Width="300"  ResizeMode="CanResize">
     <Grid>
-        <local:UCAreaWindowData/>
     </Grid>
 </Window>

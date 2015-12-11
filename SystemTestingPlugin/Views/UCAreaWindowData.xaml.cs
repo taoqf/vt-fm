@@ -20,11 +20,10 @@ namespace SystemTestingPlugin.Views
     /// </summary>
     public partial class UCAreaWindowData : TemplateControl
     {
-        public UCAreaWindowData()
+        public UCAreaWindowData(Dictionary<string,object> paramDict)
         {
             InitializeComponent();
+            ParamDict = paramDict;
         }
-
-        public static Dictionary<string, object> ParamDict { get; internal set; }
     }
 }
