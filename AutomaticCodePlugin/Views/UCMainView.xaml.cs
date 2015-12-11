@@ -39,7 +39,7 @@ namespace AutomaticCodePlugin.Views
             set
             {
                 mainPBlock = value;
-                RaisePropertyChanged("MainPBlock");
+                RaisePropertyChanged(() => MainPBlock);
             }
         }
         private void searchBtn_Click(object sender, RoutedEventArgs e)

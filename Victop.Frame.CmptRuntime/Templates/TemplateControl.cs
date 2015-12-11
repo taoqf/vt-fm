@@ -10,6 +10,7 @@ using System.Windows.Media;
 using Victop.Wpf.Controls;
 using Victop.Frame.CmptRuntime;
 using Victop.Frame.PublicLib.Helpers;
+using System.Linq.Expressions;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -193,11 +194,12 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
         /// <summary>
-        /// 属性改变通知
+        /// 属性值变化时发生
         /// </summary>
-        /// <param name="propertyName"></param>
-        public void RaisePropertyChanged(string propertyName)
+        /// <param name="propertyExpression">属性表达式</param>
+        public void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
+            var propertyName = (propertyExpression.Body as MemberExpression).Member.Name;
             if (this.PropertyChanged != null)
             {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
