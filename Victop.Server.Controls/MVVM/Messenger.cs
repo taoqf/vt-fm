@@ -8,7 +8,6 @@ using System.Text;
 namespace Victop.Server.Controls.MVVM
 {
     /// <summary>
-    /// Provides loosely-coupled messaging between various colleague objects.  All references to objects are stored weakly, to prevent memory leaks.
     /// 提供松散耦合的消息通知机制，为防止内存泄漏，所有对象都使用了弱引用（WeakReference）
     /// </summary>
     public class Messenger
@@ -23,6 +22,9 @@ namespace Victop.Server.Controls.MVVM
 
         private static readonly object CreationLock = new object();
         private static Messenger _defaultInstance;
+        /// <summary>
+        /// 消息管理器默认
+        /// </summary>
         public static Messenger Default
         {
             get
@@ -44,22 +46,20 @@ namespace Victop.Server.Controls.MVVM
         #region Register
 
         /// <summary>
-        /// Registers a callback method, with no parameter, to be invoked when a specific message is broadcasted.
-        /// 注册消息监听
+        /// 注册消息监听,没有参数
         /// </summary>
-        /// <param name="message">The message to register for.</param>
-        /// <param name="callback">The callback to be called when this message is broadcasted.</param>
+        /// <param name="message">注册的消息名称</param>
+        /// <param name="callback">消息被广播时回调方法</param>
         public void Register(string message, Action callback)
         {
             this.Register(message, callback, null);
         }
 
         /// <summary>
-        /// Registers a callback method, with a parameter, to be invoked when a specific message is broadcasted.
-        /// 注册消息监听
+        /// 注册消息监听，带参数
         /// </summary>
-        /// <param name="message">The message to register for.</param>
-        /// <param name="callback">The callback to be called when this message is broadcasted.</param>
+        /// <param name="message">注册的消息名称</param>
+        /// <param name="callback">消息被广播时回调方法</param>
         public void Register<T>(string message, Action<T> callback)
         {
             this.Register(message, callback, typeof(T));
@@ -113,11 +113,10 @@ namespace Victop.Server.Controls.MVVM
         #region Notify
 
         /// <summary>
-        /// Notifies all registered parties that a message is being broadcasted.
         /// 发送消息通知，触发监听执行
         /// </summary>
-        /// <param name="message">The message to broadcast.</param>
-        /// <param name="parameter">The parameter to pass together with the message.</param>
+        /// <param name="message">消息名称</param>
+        /// <param name="parameter">参数</param>
         public void Notify(string message, object parameter)
         {
             if (String.IsNullOrEmpty(message))
@@ -136,10 +135,9 @@ namespace Victop.Server.Controls.MVVM
         }
 
         /// <summary>
-        /// Notifies all registered parties that a message is being broadcasted.
         /// 发送消息通知，触发监听执行
         /// </summary>
-        /// <param name="message">The message to broadcast.</param>
+        /// <param name="message">消息名称</param>
         public void Notify(string message)
         {
             if (String.IsNullOrEmpty(message))
