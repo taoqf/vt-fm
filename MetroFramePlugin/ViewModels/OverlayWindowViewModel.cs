@@ -35,7 +35,7 @@ namespace MetroFramePlugin.ViewModels
                 if (pluginListShow != value)
                 {
                     pluginListShow = value;
-                    RaisePropertyChanged("PluginListShow");
+                    RaisePropertyChanged(()=> PluginListShow);
                 }
             }
         }

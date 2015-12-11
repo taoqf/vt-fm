@@ -89,7 +89,7 @@ namespace MetroFramePlugin.ViewModels
                if (activePluginNum != value)
                {
                    activePluginNum = value;
-                   RaisePropertyChanged("ActivePluginNum");
+                   RaisePropertyChanged(()=> ActivePluginNum);
                }
            }
        }
@@ -105,7 +105,7 @@ namespace MetroFramePlugin.ViewModels
                if (nextPageVis != value)
                {
                    nextPageVis = value;
-                   RaisePropertyChanged("NextPageVis");
+                   RaisePropertyChanged(()=> NextPageVis);
                }
            }
        }
@@ -122,7 +122,7 @@ namespace MetroFramePlugin.ViewModels
                if (upPageVis != value)
                {
                    upPageVis = value;
-                   RaisePropertyChanged("UpPageVis");
+                   RaisePropertyChanged(()=> UpPageVis);
                }
            }
        }
@@ -139,7 +139,7 @@ namespace MetroFramePlugin.ViewModels
                if (systemFourthLevelMenuList != value)
                {
                    systemFourthLevelMenuList = value;
-                   RaisePropertyChanged("SystemFourthLevelMenuList");
+                   RaisePropertyChanged(()=> SystemFourthLevelMenuList);
                }
            }
        }
@@ -680,7 +680,7 @@ namespace MetroFramePlugin.ViewModels
                if (tabItemList != value)
                {
                    tabItemList = value;
-                   RaisePropertyChanged("TabItemList");
+                   RaisePropertyChanged(()=> TabItemList);
                }
            }
        }

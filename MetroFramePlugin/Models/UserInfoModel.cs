@@ -29,7 +29,7 @@ namespace MetroFramePlugin.Models
                 if (userName != value)
                 {
                     userName = value;
-                    RaisePropertyChanged("UserName");
+                    RaisePropertyChanged(() => UserName);
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace MetroFramePlugin.Models
                 if (userRole != value)
                 {
                     userRole = value;
-                    RaisePropertyChanged("UserRole");
+                    RaisePropertyChanged(() => UserRole);
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace MetroFramePlugin.Models
                 if (userImg != value)
                 {
                     userImg = value;
-                    RaisePropertyChanged("UserImg");
+                    RaisePropertyChanged(() => UserImg);
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace MetroFramePlugin.Models
                 if (clientId != value)
                 {
                     clientId = value;
-                    RaisePropertyChanged("ClientId");
+                    RaisePropertyChanged(() => ClientId);
                 }
             }
         }
@@ -115,7 +115,7 @@ namespace MetroFramePlugin.Models
                 if (userCode != value)
                 {
                     userCode = value;
-                    RaisePropertyChanged("UserCode");
+                    RaisePropertyChanged(() => UserCode);
                 }
             }
         }
@@ -138,7 +138,7 @@ namespace MetroFramePlugin.Models
                 if (isLogin != value)
                 {
                     isLogin = value;
-                    RaisePropertyChanged("IsLogin");
+                    RaisePropertyChanged(() => IsLogin);
                 }
             }
         }
@@ -161,7 +161,7 @@ namespace MetroFramePlugin.Models
                 if (isMultipleRole != value)
                 {
                     isMultipleRole = value;
-                    RaisePropertyChanged("IsMultipleRole");
+                    RaisePropertyChanged(() => IsMultipleRole);
                 }
             }
         }
@@ -181,7 +181,7 @@ namespace MetroFramePlugin.Models
                 if (unLockPwd != value)
                 {
                     unLockPwd = value;
-                    RaisePropertyChanged("UnLockPwd");
+                    RaisePropertyChanged(() => UnLockPwd);
                 }
             }
         }
@@ -190,8 +190,8 @@ namespace MetroFramePlugin.Models
         /// </summary>
         private string errorPwd;
         public string ErrorPwd
-        { 
-           get
+        {
+            get
             {
                 return errorPwd;
             }
@@ -201,7 +201,7 @@ namespace MetroFramePlugin.Models
                 if (errorPwd != value)
                 {
                     errorPwd = value;
-                    RaisePropertyChanged("ErrorPwd");
+                    RaisePropertyChanged(() => ErrorPwd);
                 }
             }
         }

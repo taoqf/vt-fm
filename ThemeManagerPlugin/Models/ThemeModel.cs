@@ -22,7 +22,7 @@ namespace ThemeManagerPlugin.Models
                 if (themeVerion != value)
                 {
                     themeVerion = value;
-                    RaisePropertyChanged("ThemeVerion");
+                    RaisePropertyChanged(()=> ThemeVerion);
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace ThemeManagerPlugin.Models
                 if (stateType != value)
                 {
                     stateType = value;
-                    RaisePropertyChanged("StateType");
+                    RaisePropertyChanged(()=> StateType);
                 }
             }
         }

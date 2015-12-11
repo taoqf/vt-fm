@@ -35,7 +35,7 @@ namespace UserLoginPlugin.ViewModels
                 if (sysConfigModel != value)
                 {
                     sysConfigModel = value;
-                    RaisePropertyChanged("SysConfigModel");
+                    RaisePropertyChanged(()=> SysConfigModel);
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace UserLoginPlugin.ViewModels
                 if (cleanUnitList != value)
                 {
                     cleanUnitList = value;
-                    RaisePropertyChanged("CleanUnitList");
+                    RaisePropertyChanged(()=> CleanUnitList);
                 }
             }
         }

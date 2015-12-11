@@ -34,7 +34,7 @@ namespace Victop.Frame.CmptRuntime
                 if (compntViews != value)
                 {
                     compntViews = value;
-                    RaisePropertyChanged("CompntViews");
+                    RaisePropertyChanged(()=>CompntViews);
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace Victop.Frame.CmptRuntime
                 if (compntPresentation != value)
                 {
                     compntPresentation = value;
-                    RaisePropertyChanged("CompntPresentation");
+                    RaisePropertyChanged(()=> CompntPresentation);
                 }
             }
         }

@@ -29,7 +29,7 @@ namespace SystemTestingPlugin.Models
                 if (fieldId != value)
                 {
                     fieldId = value;
-                    RaisePropertyChanged("FieldId");
+                    RaisePropertyChanged(()=> FieldId);
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace SystemTestingPlugin.Models
                 if (downLoadPath != value)
                 {
                     downLoadPath = value;
-                    RaisePropertyChanged("DownLoadPath");
+                    RaisePropertyChanged(()=> DownLoadPath);
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace SystemTestingPlugin.Models
                 if (productId != value)
                 {
                     productId = value;
-                    RaisePropertyChanged("ProductId");
+                    RaisePropertyChanged(()=> ProductId);
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace SystemTestingPlugin.Models
                 if (downLoadResult != value)
                 {
                     downLoadResult = value;
-                    RaisePropertyChanged("DownLoadResult");
+                    RaisePropertyChanged(()=> DownLoadResult);
                 }
             }
         }

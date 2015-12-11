@@ -32,7 +32,7 @@ namespace Victop.Frame.CmptRuntime
             set
             {
                 blockName = value;
-                RaisePropertyChanged("BlockName");
+                RaisePropertyChanged(()=> BlockName);
             }
         }
         /// <summary>
@@ -184,7 +184,7 @@ namespace Victop.Frame.CmptRuntime
                 if (viewBlockDataTable != value)
                 {
                     viewBlockDataTable = value;
-                    RaisePropertyChanged("ViewBlockDataTable");
+                    RaisePropertyChanged(()=> ViewBlockDataTable);
                 }
             }
         }
@@ -208,7 +208,7 @@ namespace Victop.Frame.CmptRuntime
                 if (preBlockSelectedRow != value)
                 {
                     preBlockSelectedRow = value;
-                    RaisePropertyChanged("PreBlockSelectedRow");
+                    RaisePropertyChanged(()=> PreBlockSelectedRow);
                 }
             }
         }

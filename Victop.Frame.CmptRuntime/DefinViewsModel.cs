@@ -89,7 +89,7 @@ namespace Victop.Frame.CmptRuntime
                 if (viewBlocks != value)
                 {
                     viewBlocks = value;
-                    RaisePropertyChanged("ViewBlocks");
+                    RaisePropertyChanged(()=> ViewBlocks);
                 }
             }
         }

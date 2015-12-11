@@ -22,7 +22,7 @@ namespace MetroFramePlugin.Models
                 if (string.IsNullOrWhiteSpace(value) == false)
                 {
                     areaName = value;
-                    RaisePropertyChanged("AreaName");
+                    RaisePropertyChanged(()=> AreaName);
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace MetroFramePlugin.Models
                 if (string.IsNullOrWhiteSpace(value) == false)
                 {
                     menuForm = value;
-                    RaisePropertyChanged("MenuForm");
+                    RaisePropertyChanged(()=> MenuForm);
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace MetroFramePlugin.Models
             set
             {
                 leftSpan = value;
-                RaisePropertyChanged("LeftSpan");
+                RaisePropertyChanged(()=> LeftSpan);
 
             }
         }
@@ -74,7 +74,7 @@ namespace MetroFramePlugin.Models
             set
             {
                 topSpan = value;
-                RaisePropertyChanged("TopSpan");
+                RaisePropertyChanged(()=> TopSpan);
 
             }
         }
@@ -88,7 +88,7 @@ namespace MetroFramePlugin.Models
             set
             {
                 areaWidth = value;
-                RaisePropertyChanged("AreaWidth");
+                RaisePropertyChanged(()=> AreaWidth);
 
             }
         }
@@ -102,7 +102,7 @@ namespace MetroFramePlugin.Models
             set
             {
                 areaHeight = value;
-                RaisePropertyChanged("AreaHeight");
+                RaisePropertyChanged(()=> AreaHeight);
 
             }
         }
@@ -124,7 +124,7 @@ namespace MetroFramePlugin.Models
                 if (pluginList != value)
                 {
                     pluginList = value;
-                    RaisePropertyChanged("PluginList");
+                    RaisePropertyChanged(()=> PluginList);
                 }
             }
         }

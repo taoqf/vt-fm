@@ -39,7 +39,7 @@ namespace MetroFramePlugin.ViewModels
                 if (firstLogModel != value)
                 {
                     firstLogModel = value;
-                    RaisePropertyChanged("FirstLogModel");
+                    RaisePropertyChanged(()=> FirstLogModel);
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace MetroFramePlugin.ViewModels
                 if (logInfoList != value)
                 {
                     logInfoList = value;
-                    RaisePropertyChanged("LogInfoList");
+                    RaisePropertyChanged(()=> LogInfoList);
                 }
             }
         }

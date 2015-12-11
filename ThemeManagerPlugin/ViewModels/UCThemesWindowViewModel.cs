@@ -124,7 +124,7 @@ namespace ThemeManagerPlugin.ViewModels
                 if (_systemThemeList != value)
                 {
                     _systemThemeList = value;
-                    RaisePropertyChanged("SystemThemeList");
+                    RaisePropertyChanged(()=> SystemThemeList);
                 }
             }
         }
@@ -145,7 +145,7 @@ namespace ThemeManagerPlugin.ViewModels
                 if (sumPageThemeList != value)
                 {
                     sumPageThemeList = value;
-                    RaisePropertyChanged("SumPageThemeList");
+                    RaisePropertyChanged(()=> SumPageThemeList);
                 }
             }
         }
@@ -166,7 +166,7 @@ namespace ThemeManagerPlugin.ViewModels
                 if (sumPageThemeListOnline != value)
                 {
                     sumPageThemeListOnline = value;
-                    RaisePropertyChanged("SumPageThemeListOnline");
+                    RaisePropertyChanged(()=> SumPageThemeListOnline);
                 }
             }
         }
@@ -180,7 +180,7 @@ namespace ThemeManagerPlugin.ViewModels
                 if (_selectedItem != value)
                 {
                     _selectedItem = value;
-                    RaisePropertyChanged("SelectedListBoxItem");
+                    RaisePropertyChanged(()=> SelectedListBoxItem);
                 }
             }
         }
@@ -200,7 +200,7 @@ namespace ThemeManagerPlugin.ViewModels
                 if (systemWallPaperList != value)
                 {
                     systemWallPaperList = value;
-                    RaisePropertyChanged("SystemWallPaperList");
+                    RaisePropertyChanged(()=> SystemWallPaperList);
                 }
             }
         }
@@ -219,7 +219,7 @@ namespace ThemeManagerPlugin.ViewModels
                 if (wallPaperCategoryList != value)
                 {
                     wallPaperCategoryList = value;
-                    RaisePropertyChanged("WallPaperCategoryList");
+                    RaisePropertyChanged(()=> WallPaperCategoryList);
                 }
             }
         }
@@ -238,7 +238,7 @@ namespace ThemeManagerPlugin.ViewModels
                 if (seletetedTabControlWallPaperList != value)
                 {
                     seletetedTabControlWallPaperList = value;
-                    RaisePropertyChanged("SeletetedTabControlWallPaperList");
+                    RaisePropertyChanged(()=> SeletetedTabControlWallPaperList);
                 }
             }
         }
@@ -257,7 +257,7 @@ namespace ThemeManagerPlugin.ViewModels
                 if (_systemOnLineList != value)
                 {
                     _systemOnLineList = value;
-                    RaisePropertyChanged("SystemOnLineList");
+                    RaisePropertyChanged(()=> SystemOnLineList);
                 }
             }
         }
@@ -276,7 +276,7 @@ namespace ThemeManagerPlugin.ViewModels
                 if (_systemOnLineCategoryList != value)
                 {
                     _systemOnLineCategoryList = value;
-                    RaisePropertyChanged("SystemOnLineCategoryList");
+                    RaisePropertyChanged(()=> SystemOnLineCategoryList);
                 }
             }
         }
@@ -290,7 +290,7 @@ namespace ThemeManagerPlugin.ViewModels
                 if (_skinNum != value)
                 {
                     _skinNum = value;
-                    RaisePropertyChanged("SkinNum");
+                    RaisePropertyChanged(()=> SkinNum);
                 }
             }
         }
@@ -304,7 +304,7 @@ namespace ThemeManagerPlugin.ViewModels
                 if (skinOnlinNum != value)
                 {
                     skinOnlinNum = value;
-                    RaisePropertyChanged("SkinOnlinNum");
+                    RaisePropertyChanged(()=> SkinOnlinNum);
                 }
             }
         }
@@ -323,7 +323,7 @@ namespace ThemeManagerPlugin.ViewModels
                 if (productId != value)
                 {
                     productId = value;
-                    RaisePropertyChanged("ProductId");
+                    RaisePropertyChanged(()=> ProductId);
                 }
             }
         }

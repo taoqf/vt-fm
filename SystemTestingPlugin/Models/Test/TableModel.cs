@@ -19,7 +19,7 @@ namespace SystemTestingPlugin.Models
                 if (tableId != value)
                 {
                     tableId = value;
-                    RaisePropertyChanged("TableId");
+                    RaisePropertyChanged(()=> TableId);
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace SystemTestingPlugin.Models
                 if (tableName != value)
                 {
                     tableName = value;
-                    RaisePropertyChanged("TableName");
+                    RaisePropertyChanged(()=> TableName);
                 }
             }
         }
@@ -55,7 +55,7 @@ namespace SystemTestingPlugin.Models
                 if (dataInfo != value)
                 {
                     dataInfo = value;
-                    RaisePropertyChanged("DataInfo");
+                    RaisePropertyChanged(()=> DataInfo);
                 }
             }
         }

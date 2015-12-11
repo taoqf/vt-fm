@@ -14,7 +14,7 @@ namespace UserLoginPlugin.Models
                 if (_UserName != value)
                 {
                     _UserName = value;
-                    RaisePropertyChanged("UserName");
+                    RaisePropertyChanged(()=> UserName);
                 }
             }
         }
@@ -28,7 +28,7 @@ namespace UserLoginPlugin.Models
                 if (_UserPwd != value)
                 {
                     _UserPwd = value;
-                    RaisePropertyChanged("UserPwd");
+                    RaisePropertyChanged(()=> UserPwd);
                 }
             }
         }
@@ -54,7 +54,7 @@ namespace UserLoginPlugin.Models
                 if (_SOAIP != value)
                 {
                     _SOAIP = value;
-                    RaisePropertyChanged("SOAIP");
+                    RaisePropertyChanged(()=> SOAIP);
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace UserLoginPlugin.Models
                 if (_MiniSOAIP != value)
                 {
                     _MiniSOAIP = value;
-                    RaisePropertyChanged("MiniSOAIP");
+                    RaisePropertyChanged(()=> MiniSOAIP);
                 }
             }
         }

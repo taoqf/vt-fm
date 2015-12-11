@@ -41,7 +41,7 @@ namespace ModifyPassWordPlugin.ViewModels
                 if(pwdModel!=value)
                 {
                     PwdModel = value;
-                    RaisePropertyChanged("PwdModel");
+                    RaisePropertyChanged(()=> PwdModel);
                 }
             }
         }

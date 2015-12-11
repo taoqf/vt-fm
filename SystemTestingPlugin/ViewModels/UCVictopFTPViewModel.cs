@@ -62,7 +62,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (siteInfoModel != value)
                 {
                     siteInfoModel = value;
-                    RaisePropertyChanged("SiteInfoModel");
+                    RaisePropertyChanged(()=> SiteInfoModel);
                 }
             }
         }
@@ -82,7 +82,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (localFileList != value)
                 {
                     localFileList = value;
-                    RaisePropertyChanged("LocalFileList");
+                    RaisePropertyChanged(()=> LocalFileList);
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (remoteFileList != value)
                 {
                     remoteFileList = value;
-                    RaisePropertyChanged("RemoteFileList");
+                    RaisePropertyChanged(()=> RemoteFileList);
                 }
             }
         }
@@ -120,7 +120,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (selectedRmoteFile != value)
                 {
                     selectedRmoteFile = value;
-                    RaisePropertyChanged("SelectedRmoteFile");
+                    RaisePropertyChanged(()=> SelectedRmoteFile);
                 }
             }
         }
@@ -138,7 +138,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (selectedLocalFile != value)
                 {
                     selectedLocalFile = value;
-                    RaisePropertyChanged("SelectedLocalFile");
+                    RaisePropertyChanged(()=> SelectedLocalFile);
                 }
             }
         }
@@ -156,7 +156,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (errorMsg != value)
                 {
                     errorMsg = value;
-                    RaisePropertyChanged("ErrorMsg");
+                    RaisePropertyChanged(()=> ErrorMsg);
                 }
             }
         }

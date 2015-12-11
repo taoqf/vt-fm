@@ -29,7 +29,7 @@ namespace SystemTestingPlugin.Models
                 if (fileName != value)
                 {
                     fileName = value;
-                    RaisePropertyChanged("FileName");
+                    RaisePropertyChanged(()=> FileName);
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace SystemTestingPlugin.Models
                 if (fileSize != value)
                 {
                     fileSize = value;
-                    RaisePropertyChanged("FileSize");
+                    RaisePropertyChanged(()=> FileSize);
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace SystemTestingPlugin.Models
                 if (fileType != value)
                 {
                     fileType = value;
-                    RaisePropertyChanged("FileType");
+                    RaisePropertyChanged(()=> FileType);
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace SystemTestingPlugin.Models
                 if (lastModifyTime != value)
                 {
                     lastModifyTime = value;
-                    RaisePropertyChanged("LastModifyTime");
+                    RaisePropertyChanged(()=> LastModifyTime);
                 }
             }
         }
@@ -117,7 +117,7 @@ namespace SystemTestingPlugin.Models
                 if (fileOwner != value)
                 {
                     fileOwner = value;
-                    RaisePropertyChanged("FileOwner");
+                    RaisePropertyChanged(()=> FileOwner);
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace SystemTestingPlugin.Models
                 if (fileGroup != value)
                 {
                     fileGroup = value;
-                    RaisePropertyChanged("FileGroup");
+                    RaisePropertyChanged(()=> FileGroup);
                 }
             }
         }
@@ -161,7 +161,7 @@ namespace SystemTestingPlugin.Models
                 if (isDirectory != value)
                 {
                     isDirectory = value;
-                    RaisePropertyChanged("IsDirectory");
+                    RaisePropertyChanged(()=> IsDirectory);
                 }
             }
         }
@@ -178,7 +178,7 @@ namespace SystemTestingPlugin.Models
                 if (flags != value)
                 {
                     flags = value;
-                    RaisePropertyChanged("Flags");
+                    RaisePropertyChanged(()=> Flags);
                 }
             }
         }

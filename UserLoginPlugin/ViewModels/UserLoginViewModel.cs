@@ -54,7 +54,7 @@ namespace UserLoginPlugin.ViewModels
                 if (_ErrMsg != value)
                 {
                     _ErrMsg = value;
-                    RaisePropertyChanged("ErrMsg");
+                    RaisePropertyChanged(() => ErrMsg);
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     visMini = value;
                 }
-                RaisePropertyChanged("VisMini");
+                RaisePropertyChanged(() => VisMini);
             }
         }
         public bool VisClose
@@ -79,7 +79,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     visClose = value;
                 }
-                RaisePropertyChanged("VisClose");
+                RaisePropertyChanged(() => VisClose);
             }
         }
         public bool VisSystemSet
@@ -91,7 +91,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     visSystemSet = value;
                 }
-                RaisePropertyChanged("VisSystemSet");
+                RaisePropertyChanged(() => VisSystemSet);
             }
         }
         public Visibility VisLogin
@@ -103,7 +103,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     visLogin = value;
                 }
-                RaisePropertyChanged("VisLogin");
+                RaisePropertyChanged(() => VisLogin);
             }
         }
         public Visibility VisRole
@@ -115,7 +115,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     visRole = value;
                 }
-                RaisePropertyChanged("VisRole");
+                RaisePropertyChanged(() => VisRole);
             }
         }
         private LoginUserInfoModel _LoginInfoModel;
@@ -133,7 +133,7 @@ namespace UserLoginPlugin.ViewModels
                 if (_LoginInfoModel != value)
                 {
                     _LoginInfoModel = value;
-                    RaisePropertyChanged("LoginInfoModel");
+                    RaisePropertyChanged(() => LoginInfoModel);
                 }
             }
         }
@@ -153,7 +153,7 @@ namespace UserLoginPlugin.ViewModels
                 if (galleryList != value)
                 {
                     galleryList = value;
-                    RaisePropertyChanged("GalleryList");
+                    RaisePropertyChanged(() => GalleryList);
                 }
             }
         }
@@ -166,7 +166,7 @@ namespace UserLoginPlugin.ViewModels
             set
             {
                 selectedGallery = value;
-                RaisePropertyChanged("SelectedGallery");
+                RaisePropertyChanged(() => SelectedGallery);
             }
         }
         /// <summary>
@@ -185,7 +185,7 @@ namespace UserLoginPlugin.ViewModels
                 if (roleInfoList != value)
                 {
                     roleInfoList = value;
-                    RaisePropertyChanged("RoleInfoList");
+                    RaisePropertyChanged(() => RoleInfoList);
                 }
             }
         }
@@ -203,7 +203,7 @@ namespace UserLoginPlugin.ViewModels
                 if (selectedRoleInfo != value)
                 {
                     selectedRoleInfo = value;
-                    RaisePropertyChanged("SelectedRoleInfo");
+                    RaisePropertyChanged(() => SelectedRoleInfo);
                 }
             }
         }
@@ -218,7 +218,7 @@ namespace UserLoginPlugin.ViewModels
                 if (isRingShow != value)
                 {
                     isRingShow = value;
-                    RaisePropertyChanged("IsRingShow");
+                    RaisePropertyChanged(() => IsRingShow);
                 }
             }
         }
@@ -236,7 +236,7 @@ namespace UserLoginPlugin.ViewModels
                 if (mainViewEnable != value)
                 {
                     mainViewEnable = value;
-                    RaisePropertyChanged("MainViewEnable");
+                    RaisePropertyChanged(() => MainViewEnable);
                 }
             }
         }
@@ -248,7 +248,7 @@ namespace UserLoginPlugin.ViewModels
                 if (showRoleList != value)
                 {
                     showRoleList = value;
-                    RaisePropertyChanged("ShowRoleList");
+                    RaisePropertyChanged(() => ShowRoleList);
                 }
             }
         }
@@ -380,7 +380,7 @@ namespace UserLoginPlugin.ViewModels
                                 DataMessageOperation dataOp = new DataMessageOperation();
                                 Dictionary<string, object> paramDic = new Dictionary<string, object>();
                                 paramDic.Add("usercode", LoginInfoModel.UserName);
-                                PluginModel pluginModel = dataOp.StartPlugin(new ExcutePluginParamModel() { PluginName= "ModifyPassWordPlugin",VisiblePlugin=false},paramDic);
+                                PluginModel pluginModel = dataOp.StartPlugin(new ExcutePluginParamModel() { PluginName = "ModifyPassWordPlugin", VisiblePlugin = false }, paramDic);
                                 if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                                 {
                                     Window win = pluginModel.PluginInterface.StartWindow;

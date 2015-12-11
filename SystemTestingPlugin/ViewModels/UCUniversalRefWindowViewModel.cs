@@ -80,7 +80,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (treeVisibility != value)
                 {
                     treeVisibility = value;
-                    RaisePropertyChanged("TreeVisibility");
+                    RaisePropertyChanged(()=> TreeVisibility);
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (gridDataTable != value)
                 {
                     gridDataTable = value;
-                    RaisePropertyChanged("GridDataTable");
+                    RaisePropertyChanged(()=> GridDataTable);
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (gridSelectionMode != value)
                 {
                     gridSelectionMode = value;
-                    RaisePropertyChanged("GridSelectionMode");
+                    RaisePropertyChanged(()=> GridSelectionMode);
                 }
             }
         }
@@ -134,7 +134,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (foreTreeSelectedNode != value)
                 {
                     foreTreeSelectedNode = value;
-                    RaisePropertyChanged("ForeTreeSelectedNode");
+                    RaisePropertyChanged(()=> ForeTreeSelectedNode);
                 }
             }
         }
@@ -154,7 +154,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (forerunnerTreeList != value)
                 {
                     forerunnerTreeList = value;
-                    RaisePropertyChanged("ForerunnerTreeList");
+                    RaisePropertyChanged(()=> ForerunnerTreeList);
                 }
             }
         }
@@ -172,7 +172,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (searchFieldCaption != value)
                 {
                     searchFieldCaption = value;
-                    RaisePropertyChanged("SearchFieldCaption");
+                    RaisePropertyChanged(()=> SearchFieldCaption);
                 }
             }
         }
@@ -191,7 +191,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (conditionValue != value)
                 {
                     conditionValue = value;
-                    RaisePropertyChanged("ConditionValue");
+                    RaisePropertyChanged(()=> ConditionValue);
                 }
             }
         }

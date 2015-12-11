@@ -42,7 +42,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (preOneBlockModel != value)
                 {
                     preOneBlockModel = value;
-                    RaisePropertyChanged("PreOneBlockModel");
+                    RaisePropertyChanged(()=> PreOneBlockModel);
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (preOneOfOneBlockModel != value)
                 {
                     preOneOfOneBlockModel = value;
-                    RaisePropertyChanged("PreOneOfOneBlockModel");
+                    RaisePropertyChanged(()=> PreOneOfOneBlockModel);
                 }
             }
         }

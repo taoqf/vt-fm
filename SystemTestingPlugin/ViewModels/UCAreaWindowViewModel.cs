@@ -71,7 +71,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (dataInfoModel != value)
                 {
                     dataInfoModel = value;
-                    RaisePropertyChanged("DataInfoModel");
+                    RaisePropertyChanged(()=> DataInfoModel);
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (selectedStructInfo != value)
                 {
                     selectedStructInfo = value;
-                    RaisePropertyChanged("SelectedStructInfo");
+                    RaisePropertyChanged(()=> SelectedStructInfo);
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (tableStructInfoList != value)
                 {
                     tableStructInfoList = value;
-                    RaisePropertyChanged("TableStructInfoList");
+                    RaisePropertyChanged(()=> TableStructInfoList);
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (codeInfoModel != value)
                 {
                     codeInfoModel = value;
-                    RaisePropertyChanged("CodeInfoModel");
+                    RaisePropertyChanged(()=> CodeInfoModel);
                 }
             }
         }
@@ -151,7 +151,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (userInfoModel != value)
                 {
                     userInfoModel = value;
-                    RaisePropertyChanged("UserInfoModel");
+                    RaisePropertyChanged(()=> UserInfoModel);
                 }
             }
         }
@@ -171,7 +171,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (otherInfoModel != value)
                 {
                     otherInfoModel = value;
-                    RaisePropertyChanged("OtherInfoModel");
+                    RaisePropertyChanged(()=> OtherInfoModel);
                 }
             }
         }
@@ -191,7 +191,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (downInfoModel != value)
                 {
                     downInfoModel = value;
-                    RaisePropertyChanged("DownInfoModel");
+                    RaisePropertyChanged(()=> DownInfoModel);
                 }
             }
         }
