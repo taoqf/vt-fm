@@ -14,7 +14,7 @@
         <vm:UCPortalWindowViewModel/>
     </Window.DataContext>
     <DockPanel LastChildFill="True">
-        <ScrollViewer x:Name="scrollViewer" Width="70" Style="{DynamicResource MenuScrollViewer}">
+        <ScrollViewer x:Name="scrollViewer" Width="65" Style="{DynamicResource MenuScrollViewer}">
             <Grid Style="{DynamicResource LeftGrid}">
                 <StackPanel>
                     <Image Style="{DynamicResource logoImage}" />
@@ -32,8 +32,8 @@
                             </Path.RenderTransform>
                         </Path>
                     </Grid>-->
-                    <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="46" Height="1" HorizontalAlignment="Center" Margin="0,17,0,0"/>
-                    <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="46" Height="1" HorizontalAlignment="Center"/>
+                    <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="65" Height="1" HorizontalAlignment="Center" Margin="0,17,0,0"/>
+                    <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="65" Height="1" HorizontalAlignment="Center"/>
                     <controls:VicRadioButtonNormal Content="飞道云" Margin="0,14,0,0" Style="{DynamicResource RadioButtonFirstLevelMenu}"/>
                     <!--<controls:VicRadioButtonNormal Content="本地云" Style="{DynamicResource RadioButtonFirstLevelMenu}">
                         <i:Interaction.Triggers>

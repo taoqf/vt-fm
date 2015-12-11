@@ -130,6 +130,9 @@
     <Compile Include="Views\ShowCalendarWindow.xaml.cs">
       <DependentUpon>ShowCalendarWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TimeWindow.xaml.cs">
+      <DependentUpon>TimeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UCPersonPluginContainer.xaml.cs">
       <DependentUpon>UCPersonPluginContainer.xaml</DependentUpon>
     </Compile>
@@ -180,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShowCalendarWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TimeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

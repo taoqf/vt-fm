@@ -4,6 +4,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:vm="clr-namespace:MetroFramePlugin.ViewModels"
         xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
+        xmlns:unit="http://schemas.ifeidao.com/wpfunits"
         xmlns:converter="clr-namespace:MetroFramePlugin.Converters"
         Name="mainWindow" Style="{DynamicResource ShadowWindow}">
     <Window.Resources>
@@ -22,7 +23,7 @@
             </i:Interaction.Triggers>
         </Border>
         <ScrollViewer x:Name="scrollViewer" Visibility="{Binding IsShowMenu}"  Style="{DynamicResource MenuScrollViewer}">
-            <Grid Style="{DynamicResource LeftGrid}">
+            <Grid Style="{DynamicResource LeftGrid}" Width="66">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeave">
                         <i:InvokeCommandAction Command="{Binding BtnSystemSet_OnMouseLeave}"/>
@@ -34,18 +35,23 @@
                                          Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}"/>
                         <controls:VicTextBlockNormal  Text="{Binding UserInfo.UserName}" Style="{DynamicResource MainFrmUserName}"/>
                     </StackPanel>
-                    <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="46" Height="1" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                    <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="46" Height="1" HorizontalAlignment="Center"/>
-                    <controls:VicRadioButtonNormal Content="  飞道云" Margin="0,14,0,0" Style="{DynamicResource RadioButtonFirstLevelMenu}"/>
-                    <Expander Header="  本地云" Style="{DynamicResource ExpanderFirstLevel}" IsExpanded="True" Visibility="{Binding IsDebug,Converter={StaticResource booltovisbility}}">
+                    <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="65" Height="1" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                    <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="65" Height="1" HorizontalAlignment="Center"/>
+                    <controls:VicRadioButtonNormal Content="飞道云" Margin="0,14,0,0" Style="{DynamicResource RadioButtonFirstLevelMenu}"/>
+                    <Expander Header="本地" Style="{DynamicResource ExpanderFirstLevel}" IsExpanded="True" Visibility="{Binding IsDebug,Converter={StaticResource booltovisbility}}">
                         <ListBox x:Name="listSecondMenuLocal" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListLocal,UpdateSourceTrigger=PropertyChanged}"/>
                     </Expander>
-                    <Expander Header="  企业云" Style="{DynamicResource ExpanderFirstLevel}" IsExpanded="True">
+                    <Expander Header="企业" Style="{DynamicResource ExpanderFirstLevel}" IsExpanded="True">
                         <ListBox x:Name="listSecondMenuEnterprise" Style="{DynamicResource ListBoxSecondLevelMenu}" SelectedItem="{Binding SelectedSecondMenuModel}" ItemsSource="{Binding SystemMenuListEnterprise,UpdateSourceTrigger=PropertyChanged}"/>
                     </Expander>
                 </StackPanel>
-                <controls:VicButtonNormal   Name="lock" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="White" BorderThickness="0" Background="Transparent"  Content="解锁" Command="{Binding LockMenuList}" CommandParameter="{Binding ElementName=lock}">
-                </controls:VicButtonNormal>
+                <!--<controls:VicButtonNormal   Name="lock" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="White" BorderThickness="0" Background="Transparent"  Content="解锁" Command="{Binding LockMenuList}" CommandParameter="{Binding ElementName=lock}">
+                </controls:VicButtonNormal>-->
+                <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="65" Height="1" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="65" Height="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    <controls:VicToggleSwitchNormal  Name="toggleLock" VerticalAlignment="Bottom" HorizontalAlignment="Center" IsChecked="{Binding IsLockMenu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></controls:VicToggleSwitchNormal>
+                </StackPanel>
             </Grid>
         </ScrollViewer>
         <Grid Name="gridMain">
@@ -58,6 +64,16 @@
                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <!--<Button Name="btnFeedBack" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>-->
                     <!--插件集合-->
+                    <controls:VicButtonNormal Name="btnCountDown"  Style="{DynamicResource btnCountDownStyle}" ToolTip="倒计时">
+                        <i:Interaction.Triggers>
+                            <!--<i:EventTrigger EventName="MouseEnter">
+                                <i:InvokeCommandAction Command="{Binding btnCountDownMouseEnterCommand}"/>
+                            </i:EventTrigger>-->
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding btnCountDownClickCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </controls:VicButtonNormal>
                     <controls:VicButtonNormal Name="btnPluginList" Style="{DynamicResource btnActivePluginStyle}" ToolTip="窗体切换">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseEnter">
@@ -112,7 +128,7 @@
                 <TextBlock Grid.Row="1" Height="25" Text="{Binding UserInfo.UserName}" FontSize="15pt" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource SkinColor}" FontWeight="Bold"/>
                 <DockPanel Grid.Row="2" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <controls:VicPasswordBoxNormal Name="pwdLockSpace"   Width="260" Height="25" VerticalAlignment="Bottom" Password="{Binding UserInfo.UnLockPwd,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"/>
-                    <controls:VicButtonNormal Style="{DynamicResource btnLockStyle}" VerticalAlignment="Bottom" Width="30" Height="35" Content="&#xe61d;" Name="btnUnLockSpace" Command="{Binding btnUnLockSpaceClickCommand}" IsDefault="True"/>
+                    <controls:VicButtonNormal Style="{DynamicResource btnLockStyle}" VerticalAlignment="Bottom" Width="30" Height="35" Content="&#xe605;" Name="btnUnLockSpace" Command="{Binding btnUnLockSpaceClickCommand}" IsDefault="True"/>
                 </DockPanel>
                 <controls:VicTextBlockNormal HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" FontSize="12" Foreground="Red" Text="{Binding UserInfo.ErrorPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></controls:VicTextBlockNormal>
             </Grid>
@@ -130,7 +146,7 @@
                     </StackPanel>
                 </Grid>
             </controls:VicPopup>
-
+    
         </Grid>
     </DockPanel>
     <i:Interaction.Triggers>

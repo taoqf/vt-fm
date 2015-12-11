@@ -407,8 +407,25 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-        private bool isLockMenu = false;//控制固定或浮动左侧菜单，默认固定
         private VicButtonNormal lockbtn;
+        private VicToggleSwitchNormal toggleLock;
+        private bool isLockMenu = false;//控制固定或浮动左侧菜单，默认固定
+        public bool IsLockMenu
+        {
+            get
+            {
+                return isLockMenu;
+            }
+            set
+            {
+                if (isLockMenu != value)
+                {
+                    isLockMenu = value;
+                    RaisePropertyChanged("IsLockMenu");
+                }
+            }
+        }
+       
         #endregion
 
         #region 命令
@@ -423,11 +440,12 @@ namespace MetroFramePlugin.ViewModels
                 {
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
-                    lockbtn = (VicButtonNormal)mainWindow.FindName("lock");
+                    toggleLock = (VicToggleSwitchNormal)mainWindow.FindName("toggleLock");
                     pwdLockSpace = (VicPasswordBoxNormal)mainWindow.FindName("pwdLockSpace");
                     mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
+                    //toggleLock.IsCheckedChanged += toggleLock_IsCheckedChanged;
                     Rect rect = SystemParameters.WorkArea;
                     mainWindow.MaxWidth = rect.Width;
                     mainWindow.MaxHeight = rect.Height;
@@ -448,7 +466,21 @@ namespace MetroFramePlugin.ViewModels
                 });
             }
         }
+        /// <summary>
+        /// 倒计时
+        /// </summary>
+        public ICommand btnCountDownClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    TimeWindow win = new TimeWindow();
+                    win.ShowDialog();
 
+                });
+            }
+        }
         #region 插件按钮鼠标进入事件命令
         /// 
         /// <summary>
@@ -585,7 +617,7 @@ namespace MetroFramePlugin.ViewModels
                     ShowWorkSpace = Visibility.Collapsed;
                     ShowLockView = Visibility.Visible;
                     IsShowMenu = Visibility.Collapsed;
-                    isLockMenu = false;
+                    IsLockMenu = false;
                 });
             }
         }
@@ -607,7 +639,7 @@ namespace MetroFramePlugin.ViewModels
                         ShowWorkSpace = Visibility.Visible;
                         ShowLockView = Visibility.Collapsed;
                         IsShowMenu = Visibility.Visible;
-                        isLockMenu = false;
+                        IsLockMenu = false;
                         UserInfo.UnLockPwd = string.Empty;
                         userInfo.ErrorPwd = string.Empty;
                     }
@@ -649,8 +681,8 @@ namespace MetroFramePlugin.ViewModels
 
                     //切换用户时，自动隐藏菜单状态初始化
                     IsShowMenu = Visibility.Visible;
-                    isLockMenu = false;
-                    lockbtn.Content = "解锁";
+                    IsLockMenu = false;
+                    //lockbtn.Content = "解锁";
                     //
                     UserLogin();
                     DataMessageOperation messageOp = new DataMessageOperation();
@@ -1015,7 +1047,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (isLockMenu == true)
+                    if (IsLockMenu == true)
                         IsShowMenu = Visibility.Visible;
                 });
             }
@@ -1029,7 +1061,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (isLockMenu == true)
+                    if (IsLockMenu == true)
                         IsShowMenu = Visibility.Collapsed;
                 });
             }
@@ -1043,17 +1075,17 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                     {
-                        VicButtonNormal lockBtn = (VicButtonNormal)x;
-                        if (lockBtn.Content.Equals("锁定"))
-                        {
-                            lockBtn.Content = "解锁";
-                            isLockMenu = false;
-                        }
-                        else
-                        {
-                            lockBtn.Content = "锁定";
-                            isLockMenu = true;
-                        }
+                        //VicButtonNormal lockBtn = (VicButtonNormal)x;
+                        //if (lockBtn.Content.Equals("锁定"))
+                        //{
+                        //    lockBtn.Content = "解锁";
+                        //    IsLockMenu = false;
+                        //}
+                        //else
+                        //{
+                        //    lockBtn.Content = "锁定";
+                        //    IsLockMenu = true;
+                        //}
 
                     });
             }
