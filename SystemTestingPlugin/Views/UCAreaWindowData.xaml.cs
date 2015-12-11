@@ -11,24 +11,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Victop.Frame.CmptRuntime;
 
 namespace SystemTestingPlugin.Views
 {
     /// <summary>
     /// UCAreaWindowData.xaml 的交互逻辑
     /// </summary>
-    public partial class UCAreaWindowData : UserControl
+    public partial class UCAreaWindowData : TemplateControl
     {
         public UCAreaWindowData()
         {
             InitializeComponent();
-        }
-        private static Dictionary<string, object> paramDict;
-
-        public static Dictionary<string, object> ParamDict
-        {
-            get { return paramDict; }
-            set { paramDict = value; }
         }
     }
 }
