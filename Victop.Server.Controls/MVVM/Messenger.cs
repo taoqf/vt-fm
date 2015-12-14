@@ -77,6 +77,16 @@ namespace Victop.Server.Controls.MVVM
 
             _messageToActionsMap.AddAction(message, callback.Target, callback.Method, parameterType);
         }
+        /// <summary>
+        /// 取消注册
+        /// </summary>
+        /// <param name="message">消息名称</param>
+        public void UnRegister(string message)
+        {
+            if (String.IsNullOrEmpty(message))
+                throw new ArgumentException("'message' cannot be null or empty.");
+            _messageToActionsMap.RemoveAction(message);
+        }
 
         [Conditional("DEBUG")]
         void VerifyParameterType(string message, Type parameterType)
@@ -195,6 +205,18 @@ namespace Victop.Server.Controls.MVVM
                         _map[message] = new List<WeakAction>();
 
                     _map[message].Add(new WeakAction(target, method, actionType));
+                }
+            }
+            internal void RemoveAction(string message)
+            {
+                if (message == null)
+                    throw new ArgumentNullException("message");
+                lock (_map)
+                {
+                    if (_map.ContainsKey(message))
+                    {
+                        _map.Remove(message);
+                    }
                 }
             }
 
