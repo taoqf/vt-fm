@@ -24,13 +24,14 @@ namespace AutomaticCodePlugin.Views
     public partial class UCMainView : TemplateControl
     {
         PresentationBlockModel mainPBlock;
-        public UCMainView(Dictionary<string,object> paramDict)
+        public UCMainView(Dictionary<string,object> paramDict,int showType)
         {
             InitializeComponent();
             this.DataContext = this;
             FeiDaoFSM = new MainStateMachine();
             FeiDaoFSM.MainView = this;
             ParamDict = paramDict;
+            ShowType = showType;
         }
         public PresentationBlockModel MainPBlock
         {

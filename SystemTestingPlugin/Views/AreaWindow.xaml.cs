@@ -19,10 +19,10 @@ namespace SystemTestingPlugin.Views
     /// </summary>
     public partial class AreaWindow : Window
     {
-        public AreaWindow(Dictionary<string, object> paramDict)
+        public AreaWindow(Dictionary<string, object> paramDict,int showType)
         {
             InitializeComponent();
-            UCAreaWindowData ucData = new UCAreaWindowData(paramDict);
+            UCAreaWindowData ucData = new UCAreaWindowData(paramDict,showType);
             Content = ucData;
         }
     }

@@ -45,7 +45,7 @@ namespace SystemTestingPlugin
 
         public Window StartWindow
         {
-            get { return new AreaWindow(ParamDict); }
+            get { return new AreaWindow(ParamDict,ShowType); }
         }
 
         public UserControl StartControl
@@ -53,7 +53,7 @@ namespace SystemTestingPlugin
             get
             {
                 //return new UCTemplateControlDemo();
-                return new UCAreaWindowData(ParamDict);
+                return new UCAreaWindowData(ParamDict,ShowType);
             }
         }
 

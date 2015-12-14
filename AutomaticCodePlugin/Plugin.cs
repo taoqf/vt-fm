@@ -46,14 +46,14 @@ namespace AutomaticCodePlugin
 
         public Window StartWindow
         {
-            get { return new MainViewWindow(ParamDict); }
+            get { return new MainViewWindow(ParamDict,ShowType); }
         }
 
         public UserControl StartControl
         {
             get
             {
-                return new UCMainView(ParamDict);
+                return new UCMainView(ParamDict,ShowType);
             }
         }
 

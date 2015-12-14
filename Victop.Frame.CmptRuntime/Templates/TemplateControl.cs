@@ -188,6 +188,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         public Dictionary<string,object> ParamDict { get; set; }
         /// <summary>
+        /// 展示方式
+        /// </summary>
+        public int ShowType { get; set; }
+        /// <summary>
         /// 属性改变
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
