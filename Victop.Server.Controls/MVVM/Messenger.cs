@@ -110,14 +110,14 @@ namespace Victop.Server.Controls.MVVM
 
         #endregion // Register
 
-        #region Notify
+        #region Send
 
         /// <summary>
         /// 发送消息通知，触发监听执行
         /// </summary>
         /// <param name="message">消息名称</param>
         /// <param name="parameter">参数</param>
-        public void Notify(string message, object parameter)
+        public void Send(string message, object parameter)
         {
             if (String.IsNullOrEmpty(message))
                 throw new ArgumentException("'message' cannot be null or empty.");
@@ -138,7 +138,7 @@ namespace Victop.Server.Controls.MVVM
         /// 发送消息通知，触发监听执行
         /// </summary>
         /// <param name="message">消息名称</param>
-        public void Notify(string message)
+        public void Send(string message)
         {
             if (String.IsNullOrEmpty(message))
                 throw new ArgumentException("'message' cannot be null or empty.");
