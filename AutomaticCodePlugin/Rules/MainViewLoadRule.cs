@@ -15,7 +15,7 @@ namespace AutomaticCodePlugin.Rules
 {
     [Repeatability(RuleRepeatability.NonRepeatable)]
     [Tag("MainPage")]
-    public class MainViewLoadRule : MainRule
+    public class MainViewLoadRule : BaseRule
     {
         public override void Define()
         {

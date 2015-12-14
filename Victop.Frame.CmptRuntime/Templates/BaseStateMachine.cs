@@ -7,6 +7,7 @@ using NRules;
 using NRules.Fluent;
 using System.Reflection;
 using Victop.Server.Controls.Models;
+using Victop.Frame.PublicLib.Helpers;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -45,6 +46,10 @@ namespace Victop.Frame.CmptRuntime
             {
                 FeiDaoFSM.Fire(triggerName);
             }
+            else
+            {
+                LoggerHelper.DebugFormat("currentState:{0} can not  trigger:{1}", currentState, triggerName);
+            }
         }
         #region NRules
         private void CreateRuleRepositoryGroup(string groupName, Assembly pluginAssembly)
@@ -81,22 +86,6 @@ namespace Victop.Frame.CmptRuntime
             {
                 session.TryRetract(item);
             }
-        }
-        /// <summary>
-        /// 插入事实
-        /// </summary>
-        /// <param name="obj">事实对象</param>
-        public void InsertOAV(Object obj)
-        {
-            session.TryInsert(obj);
-        }
-        /// <summary>
-        /// 移除事实
-        /// </summary>
-        /// <param name="obj">事实对象</param>
-        public void RetractOAV(Object obj)
-        {
-            session.TryRetract(obj);
         }
         private void Events_FactRetractedEvent(object sender, NRules.Diagnostics.WorkingMemoryEventArgs e)
         {

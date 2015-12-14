@@ -106,6 +106,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Templates\BaseStateMachine.cs" />
+    <Compile Include="Templates\MainRule.cs" />
     <Compile Include="Templates\TemplateControl.cs" />
     <Compile Include="ViewsBlockConditionModel.cs" />
     <Compile Include="ViewsBlockModel.cs" />

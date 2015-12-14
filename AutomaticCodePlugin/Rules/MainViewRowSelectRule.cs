@@ -16,7 +16,7 @@ namespace AutomaticCodePlugin.Rules
 {
     [Repeatability(RuleRepeatability.NonRepeatable)]
     [Tag("MainPage")]
-    public class MainViewRowSelectRule : MainRule
+    public class MainViewRowSelectRule : BaseRule
     {
         public override void Define()
         {

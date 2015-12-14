@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Controls;
+using Victop.Frame.CmptRuntime;
 using Victop.Server.Controls.Models;
 
 namespace AutomaticCodePlugin.Rules
 {
     [Repeatability(RuleRepeatability.NonRepeatable)]
     [Tag("MainPage")]
-    public class MainViewAddRowInfoRule : MainRule
+    public class MainViewAddRowInfoRule : BaseRule
     {
         public override void Define()
         {
