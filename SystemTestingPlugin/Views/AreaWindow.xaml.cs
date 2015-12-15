@@ -23,6 +23,7 @@ namespace SystemTestingPlugin.Views
         {
             InitializeComponent();
             UCAreaWindowData ucData = new UCAreaWindowData(paramDict,showType);
+            ucData.Uid = Uid;
             Content = ucData;
         }
     }

@@ -23,6 +23,7 @@ namespace AutomaticCodePlugin.Views
         {
             InitializeComponent();
             UCMainView mainView = new UCMainView(paramDict,showType);
+            mainView.Uid = Uid;
             this.Content = mainView;
         }
     }

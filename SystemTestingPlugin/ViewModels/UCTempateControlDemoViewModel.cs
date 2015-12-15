@@ -5,6 +5,7 @@ using Victop.Frame.CmptRuntime;
 using System.Data;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.MVVM;
+using System.Linq;
 
 namespace SystemTestingPlugin.ViewModels
 {
@@ -42,7 +43,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (preOneBlockModel != value)
                 {
                     preOneBlockModel = value;
-                    RaisePropertyChanged(()=> PreOneBlockModel);
+                    RaisePropertyChanged(() => PreOneBlockModel);
                 }
             }
         }
@@ -60,7 +61,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (preOneOfOneBlockModel != value)
                 {
                     preOneOfOneBlockModel = value;
-                    RaisePropertyChanged(()=> PreOneOfOneBlockModel);
+                    RaisePropertyChanged(() => PreOneOfOneBlockModel);
                 }
             }
         }
@@ -86,8 +87,6 @@ namespace SystemTestingPlugin.ViewModels
                         PreOneBlockModel.SetSearchCondition(new ViewsBlockConditionModel { });
                         PreOneBlockModel.SearchData();
                         PreOneBlockModel.GetData();
-                        
-                       
                     }
                 });
             }
