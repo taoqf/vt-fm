@@ -523,7 +523,7 @@ namespace Victop.Frame.DataChannel
                     dc.DataType = typeof(double);
                     break;
                 case "float":
-                    dc.DataType = typeof(float);
+                    dc.DataType = typeof(decimal);
                     break;
                 case "boolean":
                     dc.DataType = typeof(bool);
