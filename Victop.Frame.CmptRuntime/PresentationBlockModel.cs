@@ -310,6 +310,14 @@ namespace Victop.Frame.CmptRuntime
             ViewBlock.ViewModel.SearchData();
         }
         /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="spaceId">SpaceId</param>
+        public void SearchData(string spaceId)
+        {
+            ViewBlock.ViewModel.SearchData(spaceId);
+        }
+        /// <summary>
         /// 获取完整数据集
         /// </summary>
         /// <returns></returns>

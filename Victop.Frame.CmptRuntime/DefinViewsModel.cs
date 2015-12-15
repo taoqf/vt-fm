@@ -89,7 +89,7 @@ namespace Victop.Frame.CmptRuntime
                 if (viewBlocks != value)
                 {
                     viewBlocks = value;
-                    RaisePropertyChanged(()=> ViewBlocks);
+                    RaisePropertyChanged(() => ViewBlocks);
                 }
             }
         }
@@ -153,7 +153,8 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 检索数据
         /// </summary>
-        public void SearchData()
+        /// <param name="spaceId">SpaceId</param>
+        public void SearchData(string spaceId = "")
         {
             string MessageType = "MongoDataChannelService.findBusiData";
             DataMessageOperation messageOp = new DataMessageOperation();
@@ -164,6 +165,10 @@ namespace Victop.Frame.CmptRuntime
                 contentDic.Add("refsystemid", RefSystemId);
             }
             contentDic.Add("modelid", ModelId);
+            if (!string.IsNullOrEmpty(spaceId))
+            {
+                contentDic.Add("spaceid", spaceId);
+            }
             List<object> conditionList = new List<object>();
             foreach (ViewsBlockModel item in this.viewBlocks)
             {
