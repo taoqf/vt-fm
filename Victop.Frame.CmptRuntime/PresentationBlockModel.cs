@@ -32,7 +32,7 @@ namespace Victop.Frame.CmptRuntime
             set
             {
                 blockName = value;
-                RaisePropertyChanged(()=> BlockName);
+                RaisePropertyChanged(() => BlockName);
             }
         }
         /// <summary>
@@ -42,7 +42,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 区块类型
         /// </summary>
-        [JsonProperty(PropertyName ="type")]
+        [JsonProperty(PropertyName = "type")]
         public int BlockType
         {
             get { return blockType; }
@@ -184,7 +184,7 @@ namespace Victop.Frame.CmptRuntime
                 if (viewBlockDataTable != value)
                 {
                     viewBlockDataTable = value;
-                    RaisePropertyChanged(()=> ViewBlockDataTable);
+                    RaisePropertyChanged(() => ViewBlockDataTable);
                 }
             }
         }
@@ -208,7 +208,7 @@ namespace Victop.Frame.CmptRuntime
                 if (preBlockSelectedRow != value)
                 {
                     preBlockSelectedRow = value;
-                    RaisePropertyChanged(()=> PreBlockSelectedRow);
+                    RaisePropertyChanged(() => PreBlockSelectedRow);
                 }
             }
         }
@@ -300,6 +300,10 @@ namespace Victop.Frame.CmptRuntime
                     }
                     ViewBlockDataTable = dt;
                 }
+            }
+            if (ViewBlockDataTable != null && ViewBlockDataTable.Rows.Count > 0)
+            {
+                PreBlockSelectedRow = ViewBlockDataTable.Rows[0];
             }
         }
         /// <summary>
