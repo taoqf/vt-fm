@@ -322,6 +322,29 @@ namespace Victop.Frame.CmptRuntime
             ViewBlock.ViewModel.SearchData(spaceId);
         }
         /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="conditionModel">查询条件</param>
+        /// <param name="spaceId">SpaceId</param>
+        public void SearchData(ViewsConditionModel conditionModel, string spaceId = "")
+        {
+            if (conditionModel != null && conditionModel.TableCondition != null)
+            {
+                ViewBlock.ViewModel.Condition.TableCondition = conditionModel.TableCondition;
+            }
+            if (conditionModel != null && conditionModel.TableSort != null)
+            {
+                ViewBlock.ViewModel.Condition.TableSort = conditionModel.TableSort;
+            }
+            if (conditionModel != null)
+            {
+                ViewBlock.ViewModel.Condition.PageSize = conditionModel.PageSize;
+                ViewBlock.ViewModel.Condition.PageIndex = conditionModel.PageIndex;
+            }
+            ViewBlock.ViewModel.SearchData(spaceId);
+        }
+
+        /// <summary>
         /// 获取完整数据集
         /// </summary>
         /// <returns></returns>
