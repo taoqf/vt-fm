@@ -8,6 +8,7 @@ namespace Victop.Frame.CoreLibrary
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -34,7 +35,7 @@ namespace Victop.Frame.CoreLibrary
             {
                 if (string.IsNullOrWhiteSpace(serverPath) && userPathFlag)
                 {
-                    serverPath = "Plugin";
+                    serverPath = ConfigurationManager.AppSettings["pluginpath"];
                 }
                 string serverFullName = string.Concat(serverName, ".dll");
                 string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, serverPath, serverFullName);

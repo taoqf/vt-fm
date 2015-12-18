@@ -197,7 +197,14 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="sender">事件对象</param>
         /// <param name="paramDic">事件参数</param>
         public delegate void TemplateDelegateEvent(object sender, Dictionary<string, object> paramDic);
+        /// <summary>
+        /// 执行通用方法
+        /// </summary>
+        /// <param name="paramDic">通用参数</param>
+        public virtual void Excute(Dictionary<string, object> paramDic)
+        {
 
+        }
         /// <summary>
         /// 属性改变
         /// </summary>
