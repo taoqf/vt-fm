@@ -202,9 +202,10 @@ namespace Victop.Server.Controls.MVVM
                 lock (_map)
                 {
                     if (!_map.ContainsKey(message))
+                    {
                         _map[message] = new List<WeakAction>();
-
-                    _map[message].Add(new WeakAction(target, method, actionType));
+                        _map[message].Add(new WeakAction(target, method, actionType));
+                    }
                 }
             }
             internal void RemoveAction(string message)
