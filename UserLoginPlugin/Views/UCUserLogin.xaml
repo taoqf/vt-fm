@@ -124,7 +124,7 @@
         </Grid>
             <!--<controls:VicPopup Grid.Row="2" AllowsTransparency="True" Name="popPluginList"  StaysOpen="True" HorizontalOffset="90"   VerticalOffset="90" VerticalAlignment="Center"  PlacementTarget="{Binding ElementName=ucUserLongin}" Placement="Center"  PopupAnimation="Fade"  IsOpen="{Binding ShowRoleList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">-->
 
-            <Grid Visibility="{Binding VisRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Width="450" Height="300" Background="{DynamicResource MainBackgroundImage}">
+            <Grid Visibility="{Binding VisRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Width="450" Height="300" Background="{DynamicResource WindowBackground}">
                     <!--<Grid.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform CenterX="100" CenterY="50"></ScaleTransform>
