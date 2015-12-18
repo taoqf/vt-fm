@@ -21,6 +21,6 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListBox>
-        <ListBox Grid.Row="1" Name="listBoxFourthMenuList" SelectedIndex="0" Style="{DynamicResource ListBoxFourthMenuListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>
+        <ListBox Grid.Row="1" Margin="60,60,0,0" Name="listBoxFourthMenuList" SelectedIndex="0" Style="{DynamicResource ListBoxFourthMenuListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>
