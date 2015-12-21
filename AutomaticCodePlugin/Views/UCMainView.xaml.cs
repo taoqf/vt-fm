@@ -24,15 +24,28 @@ namespace AutomaticCodePlugin.Views
     public partial class UCMainView : TemplateControl
     {
         PresentationBlockModel mainPBlock;
-        public UCMainView(Dictionary<string,object> paramDict,int showType)
+        public UCMainView(Dictionary<string, object> paramDict, int showType)
         {
             InitializeComponent();
             this.DataContext = this;
-            FeiDaoFSM = new MainStateMachine();
+            FeiDaoFSM = new MainViewStateMachine();
             FeiDaoFSM.MainView = this;
             ParamDict = paramDict;
             ShowType = showType;
+            ucBtnOp.SearchBtnClick += OnSearchBtnClick;
+            ucBtnOp.AddBtnClick += OnAddBtnClick;
         }
+
+        private void OnAddBtnClick(object sender, Dictionary<string, object> paramDic)
+        {
+            MessageBox.Show("Add");
+        }
+
+        private void OnSearchBtnClick(object sender, Dictionary<string, object> paramDic)
+        {
+            FeiDaoFSM.Do("Search");
+        }
+
         public PresentationBlockModel MainPBlock
         {
             get
@@ -45,24 +58,16 @@ namespace AutomaticCodePlugin.Views
                 RaisePropertyChanged(() => MainPBlock);
             }
         }
-        private void searchBtn_Click(object sender, RoutedEventArgs e)
-        {
-            FeiDaoFSM.Do("SearchBtnClick");
-        }
 
-        private void addBtn_Click(object sender, RoutedEventArgs e)
-        {
-            FeiDaoFSM.Do("AddRow");
-        }
 
         private void dgridProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            FeiDaoFSM.Do("SelectRow");
+            //FeiDaoFSM.Do("SelectRow");
         }
 
         private void mainView_Loaded(object sender, RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("ViewLoad");
+            FeiDaoFSM.Do("Load");
         }
     }
 }
