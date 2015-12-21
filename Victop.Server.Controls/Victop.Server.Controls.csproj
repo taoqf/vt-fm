@@ -19,6 +19,7 @@
     </SccAuxPath>
     <SccProvider>
     </SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,6 +30,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +39,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +50,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>..\Bin\Victop.Server.Controls.XML</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -56,6 +60,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -86,6 +91,26 @@
     <Compile Include="Models\OAVModel.cs" />
     <Compile Include="Models\PluginModel.cs" />
     <Compile Include="Models\PropertyModelBase.cs" />
+    <Compile Include="MVVM\Helpers\DesignerPlatformLibrary.cs" />
+    <Compile Include="MVVM\Helpers\Empty.cs" />
+    <Compile Include="MVVM\Helpers\FeatureDetection.cs" />
+    <Compile Include="MVVM\Helpers\IExecuteWithObject.cs" />
+    <Compile Include="MVVM\Helpers\IExecuteWithObjectAndResult.cs" />
+    <Compile Include="MVVM\Helpers\WeakAction.cs" />
+    <Compile Include="MVVM\Helpers\WeakActionGeneric.cs" />
+    <Compile Include="MVVM\Helpers\WeakFunc.cs" />
+    <Compile Include="MVVM\Helpers\WeakFuncGeneric.cs" />
+    <Compile Include="MVVM\Messaging\GenericMessage.cs" />
+    <Compile Include="MVVM\Messaging\IMessenger.cs" />
+    <Compile Include="MVVM\Messaging\MessageBase.cs" />
+    <Compile Include="MVVM\Messaging\Messenger.cs" />
+    <Compile Include="MVVM\Messaging\NotificationMessage.cs" />
+    <Compile Include="MVVM\Messaging\NotificationMessageAction.cs" />
+    <Compile Include="MVVM\Messaging\NotificationMessageActionGeneric.cs" />
+    <Compile Include="MVVM\Messaging\NotificationMessageGeneric.cs" />
+    <Compile Include="MVVM\Messaging\NotificationMessageWithCallback.cs" />
+    <Compile Include="MVVM\Messaging\PropertyChangedMessage.cs" />
+    <Compile Include="MVVM\Messaging\PropertyChangedMessageBase.cs" />
     <Compile Include="MVVM\Messenger.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
