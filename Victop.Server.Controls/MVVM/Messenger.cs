@@ -206,6 +206,11 @@ namespace Victop.Server.Controls.MVVM
                         _map[message] = new List<WeakAction>();
                         _map[message].Add(new WeakAction(target, method, actionType));
                     }
+                    else
+                    {
+                        _map[message].Clear();
+                        _map[message].Add(new WeakAction(target, method, actionType));
+                    }
                 }
             }
             internal void RemoveAction(string message)
