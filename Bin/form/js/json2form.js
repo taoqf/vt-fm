@@ -521,53 +521,59 @@
                     temp.push(" <a class='json_form_action' href='javascript:void(null)' onclick='JsonFormHelper.addRow(this.parentNode.parentNode)' title='增加一行'>" + addRowText + "</a> ")
                 }
                 temp.push("</caption>");
-                var len = input.length;
-                var isRegular = (len > 0 && input[0].constructor == Object);
-                var attrIndexDisplay = this.config.arrayIndex.show ? "width:40px" : "display:none";
-                if (isRegular) {
-                    temp.push("<thead><tr>");
-                    temp.push("<th style='" + attrIndexDisplay + "'>" + this.config.arrayIndex.text + "</th>");
-                    var firstEle = input[0];
-                    for (var k in firstEle) {
-                        var fieldConf = this.config.fields[k];
-                        temp.push("<th>");
-                        temp.push(FormElementFactory.getLabelText(fieldConf, k));
-                        if (fieldConf && fieldConf.tips) {
-                            var tipsTpl = this.config.thTipsTpl;
-                            temp.push(tipsTpl.replace(/\{tips\}/g, fieldConf.tips))
+                if(input!=null && input!==""){
+                	var len = input.length;
+                    var dd = input[0];
+	                var isRegular = (len > 0 && input[0] && input[0].constructor == Object);
+	                var attrIndexDisplay = this.config.arrayIndex.show ? "width:40px" : "display:none";
+	                if (isRegular) {
+	                    temp.push("<thead><tr>");
+	                    temp.push("<th style='" + attrIndexDisplay + "'>" + this.config.arrayIndex.text + "</th>");
+	                    var firstEle = input[0];
+	                    for (var k in firstEle) {
+	                        var fieldConf = this.config.fields[k];
+	                        temp.push("<th>");
+	                        temp.push(FormElementFactory.getLabelText(fieldConf, k));
+	                        if (fieldConf && fieldConf.tips) {
+	                            var tipsTpl = this.config.thTipsTpl;
+	                            temp.push(tipsTpl.replace(/\{tips\}/g, fieldConf.tips))
+	                        }
+	                        temp.push("</th>")
+	                    }
+	                    if (!fieldConfig.noDelete) {
+	                        temp.push("<th style='width:40px'>操作</th>")
+	                    }
+	                    temp.push("</tr></thead>")
+	                }
+	                for (var i = 0; i < len; i++) {
+	                    var curEle = input[i];
+                        if(!curEle){
+                            break ;
                         }
-                        temp.push("</th>")
-                    }
-                    if (!fieldConfig.noDelete) {
-                        temp.push("<th style='width:40px'>操作</th>")
-                    }
-                    temp.push("</tr></thead>")
+	                    var eleType = JsonFormHelper.getObjType(curEle);
+	                    var basicClass = JsonFormHelper.isInArray(eleType, ["String", "Number", "Boolean"]) ? " json_basic_element" : "";
+	                    temp.push("<tr class='" + basicClass + "json_" + eleType + "'>");
+	                    if (isRegular && curEle.constructor == Object) {
+	                        temp.push("<td style='" + attrIndexDisplay + "' class='json_form_rowNumber'>" + (i + 1) + "</td>");
+	                        for (var p in curEle) {
+	                            temp.push("<td>");
+	                            temp.push(this.renderData(curEle[p], p, true, true));
+	                            temp.push("</td>")
+	                        }
+	                    } else {
+	                        temp.push("<td class='json_form_rowNumber'>" + (i + 1) + "</td><td>");
+	                        temp.push(this.renderData(curEle, i));
+	                        temp.push("</td>")
+	                    }
+	                    if (!fieldConfig.noDelete) {
+	                        temp.push("<td class='json_form_actionCell'><a class='json_form_action' href='javascript:void(null)' title='删除' onclick='if(!confirm(\"确定删除该行吗？\"))return false;var row = this.parentNode.parentNode;JsonFormHelper.removeRow(row);'>×<a></td>")
+	                    }
+	                    temp.push("</tr>")
+	                }
+	                temp.push("</table>");
+	                return temp.join("");
+	                break
                 }
-                for (var i = 0; i < len; i++) {
-                    var curEle = input[i];
-                    var eleType = JsonFormHelper.getObjType(curEle);
-                    var basicClass = JsonFormHelper.isInArray(eleType, ["String", "Number", "Boolean"]) ? " json_basic_element" : "";
-                    temp.push("<tr class='" + basicClass + "json_" + eleType + "'>");
-                    if (isRegular && curEle.constructor == Object) {
-                        temp.push("<td style='" + attrIndexDisplay + "' class='json_form_rowNumber'>" + (i + 1) + "</td>");
-                        for (var p in curEle) {
-                            temp.push("<td>");
-                            temp.push(this.renderData(curEle[p], p, true, true));
-                            temp.push("</td>")
-                        }
-                    } else {
-                        temp.push("<td class='json_form_rowNumber'>" + (i + 1) + "</td><td>");
-                        temp.push(this.renderData(curEle, i));
-                        temp.push("</td>")
-                    }
-                    if (!fieldConfig.noDelete) {
-                        temp.push("<td class='json_form_actionCell'><a class='json_form_action' href='javascript:void(null)' title='删除' onclick='if(!confirm(\"确定删除该行吗？\"))return false;var row = this.parentNode.parentNode;JsonFormHelper.removeRow(row);'>×<a></td>")
-                    }
-                    temp.push("</tr>")
-                }
-                temp.push("</table>");
-                return temp.join("");
-                break
         }
     };
     window.JsonForm = JsonForm;

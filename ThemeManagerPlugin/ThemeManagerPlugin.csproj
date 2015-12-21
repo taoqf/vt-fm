@@ -104,6 +104,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Victop.Frame.CmptRuntime\Victop.Frame.CmptRuntime.csproj">
+      <Project>{4fd0d337-25d5-4e44-890c-afa599599999}</Project>
+      <Name>Victop.Frame.CmptRuntime</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.DataMessageManager\Victop.Frame.DataMessageManager.csproj">
       <Project>{d3ee684e-9600-460b-a3e3-39bf32180f9f}</Project>
       <Name>Victop.Frame.DataMessageManager</Name>
