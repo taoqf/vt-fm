@@ -48,7 +48,7 @@ namespace MetroFramePlugin.ViewModels
 
         private MenuModel selectedSecondMenuModel;
         private MenuModel selectedThirdMenuModel;
-
+        private MenuModel selectedFourMenuModel;
         private ObservableCollection<VicTabItemNormal> tabItemList;
         private VicTabItemNormal selectedTabItem;
         private VicTabControlNormal mainTabControl;
@@ -424,7 +424,24 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-       
+        public MenuModel SelectedFourMenuModel
+        {
+            get {
+                if (selectedFourMenuModel==null)
+                {
+                    selectedFourMenuModel = new MenuModel();
+                }
+                return selectedFourMenuModel;
+            }
+            set {
+                if (selectedFourMenuModel!=value)
+                {
+                    selectedFourMenuModel = value;
+                }
+                RaisePropertyChanged((() => SelectedFourMenuModel));
+            }
+        }
+
         #endregion
 
         #region 命令
@@ -987,7 +1004,7 @@ namespace MetroFramePlugin.ViewModels
         }
         #endregion
 
-        #region 单击插件运行命令
+        #region 单击插件运行命令 
         public ICommand btnPluginRunClickCommand
         {
             get
@@ -996,9 +1013,9 @@ namespace MetroFramePlugin.ViewModels
                 {
                     if (x != null)
                     {
-                        MenuModel menuModel = (MenuModel)x;
+                        SelectedFourMenuModel = (MenuModel)x;
                         //LoadPlugin(menuModel);
-                        OpenJsonMenuPlugin(menuModel);
+                        OpenJsonMenuPlugin(SelectedFourMenuModel);
                     }
                 });
             }
@@ -1261,7 +1278,7 @@ namespace MetroFramePlugin.ViewModels
             }
             else
             {
-                VicMessageBoxNormal.Show(string.Format("{0}未配置启动插件", selectedFourthMenu.MenuName));
+                //VicMessageBoxNormal.Show(string.Format("{0}未配置启动插件", selectedFourthMenu.MenuName));
             }
         }
         #endregion
