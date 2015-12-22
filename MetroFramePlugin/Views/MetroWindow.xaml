@@ -7,6 +7,9 @@
         xmlns:unit="http://schemas.ifeidao.com/wpfunits"
         xmlns:converter="clr-namespace:MetroFramePlugin.Converters"
         Name="mainWindow" Style="{DynamicResource ShadowWindow}">
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Alt" Key="L" Command="{Binding btnLockSpaceClickCommand}"/>
+    </Window.InputBindings>
     <Window.Resources>
         <converter:ImgeNameToBackgroundConverter x:Key="imgeNameToBackgroundConverter"/>
         <converter:BooleanToVisbilityConverter x:Key="booltovisbility"/>

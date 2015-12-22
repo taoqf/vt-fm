@@ -629,7 +629,6 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    pwdLockSpace.Focus();
                     ShowWorkSpace = Visibility.Collapsed;
                     ShowLockView = Visibility.Visible;
                     IsShowMenu = Visibility.Collapsed;
