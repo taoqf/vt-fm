@@ -154,7 +154,9 @@ namespace SystemTestingPlugin.Models
         }
 
         private string conditionStr = string.Empty;
-
+        /// <summary>
+        /// 查询
+        /// </summary>
         public string ConditionStr
         {
             get { return conditionStr; }
@@ -164,6 +166,46 @@ namespace SystemTestingPlugin.Models
                 {
                     conditionStr = value;
                     RaisePropertyChanged(() => ConditionStr);
+                }
+            }
+        }
+
+        private string sortStr = string.Empty;
+        /// <summary>
+        /// 排序
+        /// </summary>
+        public string SortStr
+        {
+            get
+            {
+                return sortStr;
+            }
+            set
+            {
+                if (sortStr != value)
+                {
+                    sortStr = value;
+                    RaisePropertyChanged(() => SortStr);
+                }
+            }
+        }
+
+        private string pagingStr = string.Empty;
+        /// <summary>
+        /// 分页
+        /// </summary>
+        public string PagingStr
+        {
+            get
+            {
+                return pagingStr;
+            }
+            set
+            {
+                if (pagingStr != value)
+                {
+                    pagingStr = value;
+                    RaisePropertyChanged(() => PagingStr);
                 }
             }
         }

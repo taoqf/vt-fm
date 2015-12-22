@@ -71,7 +71,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (dataInfoModel != value)
                 {
                     dataInfoModel = value;
-                    RaisePropertyChanged(()=> DataInfoModel);
+                    RaisePropertyChanged(() => DataInfoModel);
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (selectedStructInfo != value)
                 {
                     selectedStructInfo = value;
-                    RaisePropertyChanged(()=> SelectedStructInfo);
+                    RaisePropertyChanged(() => SelectedStructInfo);
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (tableStructInfoList != value)
                 {
                     tableStructInfoList = value;
-                    RaisePropertyChanged(()=> TableStructInfoList);
+                    RaisePropertyChanged(() => TableStructInfoList);
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (codeInfoModel != value)
                 {
                     codeInfoModel = value;
-                    RaisePropertyChanged(()=> CodeInfoModel);
+                    RaisePropertyChanged(() => CodeInfoModel);
                 }
             }
         }
@@ -151,7 +151,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (userInfoModel != value)
                 {
                     userInfoModel = value;
-                    RaisePropertyChanged(()=> UserInfoModel);
+                    RaisePropertyChanged(() => UserInfoModel);
                 }
             }
         }
@@ -171,7 +171,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (otherInfoModel != value)
                 {
                     otherInfoModel = value;
-                    RaisePropertyChanged(()=> OtherInfoModel);
+                    RaisePropertyChanged(() => OtherInfoModel);
                 }
             }
         }
@@ -191,7 +191,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (downInfoModel != value)
                 {
                     downInfoModel = value;
-                    RaisePropertyChanged(()=> DownInfoModel);
+                    RaisePropertyChanged(() => DownInfoModel);
                 }
             }
         }
@@ -231,6 +231,20 @@ namespace SystemTestingPlugin.ViewModels
                             if (conList != null)
                             {
                                 contentDic.Add("conditions", conList);
+                            }
+                            else
+                            {
+                                Dictionary<string, object> conDic = new Dictionary<string, object>();
+                                conDic.Add("param", JsonHelper.ToObject<Dictionary<string, object>>(DataInfoModel.ConditionStr) != null ? JsonHelper.ToObject<Dictionary<string, object>>(DataInfoModel.ConditionStr) : new Dictionary<string, object>());
+                                if (!string.IsNullOrEmpty(DataInfoModel.SortStr))
+                                {
+                                    conDic.Add("sort", JsonHelper.ToObject<Dictionary<string, object>>(DataInfoModel.SortStr) != null ? JsonHelper.ToObject<Dictionary<string, object>>(DataInfoModel.SortStr) : new Dictionary<string, object>());
+                                }
+                                if (!string.IsNullOrEmpty(DataInfoModel.PagingStr))
+                                {
+                                    conDic.Add("paging", JsonHelper.ToObject<Dictionary<string, object>>(DataInfoModel.PagingStr) != null ? JsonHelper.ToObject<Dictionary<string, object>>(DataInfoModel.PagingStr) : new Dictionary<string, object>());
+                                }
+                                contentDic.Add("condition", conDic);
                             }
                         }
                         Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);

@@ -454,12 +454,7 @@ namespace UserLoginPlugin.ViewModels
                         setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
                         setUserContentDic.Add("UserRole", SelectedRoleInfo.Role_No);
                         dataOp.SendSyncMessage(messageType, setUserContentDic);
-                        newWindow = LoginWindow as UserLoginWindow;
-                        if (newWindow != null)
-                        {
-                            newWindow.FrontGD.tm.Tick += tm_Tick;
-                            newWindow.FrontGD.tm.Start();
-                        }
+                        LoginWindow.DialogResult = true;
                         ShowRoleList = false;
                         visRole = Visibility.Collapsed;
                         MainViewEnable = true;
@@ -494,16 +489,6 @@ namespace UserLoginPlugin.ViewModels
             menuDic.Add("client_type", "3");
             Dictionary<string, object> resultDic = dataOp.SendSyncMessage(messageType, menuDic);
             return resultDic;
-        }
-        private void tm_Tick(object sender, EventArgs e)
-        {
-            if (newWindow != null)
-            {
-                newWindow.FrontGD.tm.Stop();
-            }
-            ShowRoleList = false;
-            visRole = Visibility.Collapsed;
-            LoginWindow.DialogResult = true;
         }
         private void UserLoginInit()
         {

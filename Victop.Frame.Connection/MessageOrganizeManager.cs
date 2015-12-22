@@ -8,6 +8,7 @@ namespace Victop.Frame.Connection
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using System.Text;
     using Victop.Frame.CoreLibrary;
@@ -95,11 +96,15 @@ namespace Victop.Frame.Connection
         {
             List<object> definition = new List<object>();
             definition.Add("tables");
-            definition.Add("relation");
             definition.Add("clientRef");
             definition.Add("ref");
             definition.Add("version");
             definition.Add("extInfo");
+            if (ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+            {
+                definition.Add("relation");
+                definition.Add("params");
+            }
             if (dicContent.ContainsKey("modeldefinition"))
             {
                 dicContent["modeldefinition"] = definition;

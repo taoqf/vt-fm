@@ -13,7 +13,7 @@
     <UserControl.Resources>
         <vm:UCAreaWindowViewModel x:Key="areaViewModel"/>
     </UserControl.Resources>
-    <ctrl:VicGridNormal DataContext="{StaticResource ResourceKey=areaViewModel}" Name="gridmain">
+    <ctrl:VicGridNormal DataContext="{StaticResource ResourceKey=areaViewModel}" Name="gridmain" Style="{DynamicResource PluginContentGrid}">
         <ctrl:VicTabControlNormal Background="Transparent">
             <ctrl:VicTabItemNormal Header="数据测试" AllowDelete="False">
                 <ctrl:VicStackPanelNormal>
@@ -47,7 +47,22 @@
                             </ctrl:VicWrapPanelNormal>
                             <ctrl:VicTabControlNormal Grid.Row="1">
                                 <ctrl:VicTabItemNormal Header="查询条件" AllowDelete="False">
-                                    <ctrl:VicRichTextBoxNormal Name="rTBoxCondition" VicText="{Binding DataInfoModel.ConditionStr,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                                    <ctrl:VicGridNormal>
+                                        <ctrl:VicGridNormal.RowDefinitions>
+                                            <RowDefinition Height="0.4*"/>
+                                            <RowDefinition Height="0.3*"/>
+                                            <RowDefinition Height="0.3*"/>
+                                        </ctrl:VicGridNormal.RowDefinitions>
+                                        <ctrl:VicGroupBoxNormal Header="查询" Grid.Row="0" BorderThickness="0">
+                                            <ctrl:VicRichTextBoxNormal Name="rTBoxCondition" VicText="{Binding DataInfoModel.ConditionStr,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                                        </ctrl:VicGroupBoxNormal>
+                                        <ctrl:VicGroupBoxNormal Header="排序(适用model2.1)" Grid.Row="1" BorderThickness="0">
+                                            <ctrl:VicRichTextBoxNormal Name="rTBoxSort" VicText="{Binding DataInfoModel.SortStr,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                                        </ctrl:VicGroupBoxNormal>
+                                        <ctrl:VicGroupBoxNormal Header="分页(适用model2.1)" Grid.Row="2" BorderThickness="0">
+                                            <ctrl:VicRichTextBoxNormal Name="rTBoxPaging" VicText="{Binding DataInfoModel.PagingStr,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                                        </ctrl:VicGroupBoxNormal>
+                                    </ctrl:VicGridNormal>
                                 </ctrl:VicTabItemNormal>
                                 <ctrl:VicTabItemNormal Header="数据路径" AllowDelete="False">
                                     <ctrl:VicRichTextBoxNormal Name="rTBoxDataPath" VicText="{Binding DataInfoModel.DataPath,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
@@ -56,7 +71,7 @@
                                     <ctrl:VicDataGrid AutoGenerateColumns="False" IsShowCheckBox="True" IsUserSetColumn="False" Name="dgridSearch" ItemsSource="{Binding DataInfoModel.ResultDataTable}" SelectedValue="{Binding DataInfoModel.GridSelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="_id"/>
                                 </ctrl:VicTabItemNormal>
                                 <ctrl:VicTabItemNormal Header="Json数据" AllowDelete="False">
-                                    <ctrl:VicRichTextBoxNormal Name="rTBoxJsonData" VicText="{Binding DataInfoModel.JsonData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                                    <ctrl:VicRichTextBoxNormal Name="rTBoxJsonData" VicText="{Binding DataInfoModel.JsonData,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                                 </ctrl:VicTabItemNormal>
                                 <ctrl:VicTabItemNormal Header="窄表引用测试" AllowDelete="False">
                                     <ctrl:VicGridNormal>
@@ -92,7 +107,7 @@
                                             </ctrl:VicListBoxNormal>
                                         </ctrl:VicGroupBoxNormal>
                                         <ctrl:VicGroupBoxNormal Grid.Column="1" Header="表结构">
-                                            <ctrl:VicRichTextBoxNormal VicText="{Binding SelectedStructInfo.TableFields,UpdateSourceTrigger=PropertyChanged}"/>
+                                            <ctrl:VicRichTextBoxNormal VicText="{Binding SelectedStructInfo.TableFields,UpdateSourceTrigger=PropertyChanged}" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
                                         </ctrl:VicGroupBoxNormal>
                                     </ctrl:VicGridNormal>
                                 </ctrl:VicTabItemNormal>
