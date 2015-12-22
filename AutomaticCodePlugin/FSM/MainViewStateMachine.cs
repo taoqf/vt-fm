@@ -21,7 +21,17 @@ namespace AutomaticCodePlugin.FSM
             FeiDaoFSM.Configure("Searched")
                 .OnEntry(() => OnSearchedEntry())
                 .OnExit(() => OnSearchedExit())
-                .PermitReentry("Search");
+                .PermitReentry("Search")
+                .Permit("Add","Added");
+            FeiDaoFSM.Configure("Added")
+                .OnEntry(() => OnAddedEntry());
+        }
+
+        private void OnAddedEntry()
+        {
+            Console.WriteLine("MainView:OnAddedEntry");
+            Fire(new OAVModel() { ObjectName = "MainView", AtrributeName = "GridControl", AtrributeValue = MainView.FindName("ucdgrid") },
+                new OAVModel() { ObjectName = "MainView", AtrributeName = "State", AtrributeValue = "Add" });
         }
 
         private void OnSearchedExit()

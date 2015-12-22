@@ -18,7 +18,7 @@ namespace AutomaticCodePlugin.Rules
             OAVModel oavCtrl = null;
             OAVModel oavState = null;
             When().Match<OAVModel>(() => oavCtrl, ctrl => ctrl.ObjectName.Equals("MainView") && ctrl.AtrributeName.Equals("GridControl"))
-                .Match<OAVModel>(() => oavState, state => state.ObjectName.Equals("MainView") && state.AtrributeName.Equals("State") && state.AtrributeValue.Equals("Search"));
+                .Match<OAVModel>(() => oavState, state => state.ObjectName.Equals("MainView") && state.AtrributeName.Equals("State"));
             Then().Do(session => OnSearch(session, oavCtrl, oavState));
         }
 

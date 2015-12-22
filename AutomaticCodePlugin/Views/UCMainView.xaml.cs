@@ -24,6 +24,18 @@ namespace AutomaticCodePlugin.Views
     public partial class UCMainView : TemplateControl
     {
         PresentationBlockModel mainPBlock;
+        public PresentationBlockModel MainPBlock
+        {
+            get
+            {
+                return mainPBlock;
+            }
+            set
+            {
+                mainPBlock = value;
+                RaisePropertyChanged(() => MainPBlock);
+            }
+        }
         public UCMainView(Dictionary<string, object> paramDict, int showType)
         {
             InitializeComponent();
@@ -38,27 +50,13 @@ namespace AutomaticCodePlugin.Views
 
         private void OnAddBtnClick(object sender, Dictionary<string, object> paramDic)
         {
-            MessageBox.Show("Add");
+            FeiDaoFSM.Do("Add");
         }
 
         private void OnSearchBtnClick(object sender, Dictionary<string, object> paramDic)
         {
             FeiDaoFSM.Do("Search");
         }
-
-        public PresentationBlockModel MainPBlock
-        {
-            get
-            {
-                return mainPBlock;
-            }
-            set
-            {
-                mainPBlock = value;
-                RaisePropertyChanged(() => MainPBlock);
-            }
-        }
-
 
         private void dgridProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

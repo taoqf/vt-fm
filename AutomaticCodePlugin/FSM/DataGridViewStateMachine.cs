@@ -21,7 +21,23 @@ namespace AutomaticCodePlugin.FSM
             FeiDaoFSM.Configure("Searched")
                 .OnEntry(() => OnSearchedEntry())
                 .OnExit(() => OnSearchExit())
-                .PermitReentry("Search");
+                .PermitReentry("Search")
+                .Permit("Add", "Added");
+            FeiDaoFSM.Configure("Added")
+                .OnEntry(() => OnAddedEntry())
+                .OnExit(() => OnAddedExit())
+                .Permit("Search", "Searched");
+        }
+
+        private void OnAddedExit()
+        {
+            Console.WriteLine("DataGridView:OnAddedExit");
+        }
+
+        private void OnAddedEntry()
+        {
+            Console.WriteLine("DataGridView:OnAddedEntry");
+            Fire(new OAVModel() { ObjectName = "masterPBlock", AtrributeName = "AddData", AtrributeValue = MainView.GetPresentationBlockModel("masterPBlock").ViewBlockDataTable });
         }
 
         private void OnSearchExit()
