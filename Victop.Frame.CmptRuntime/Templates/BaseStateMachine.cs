@@ -57,7 +57,7 @@ namespace Victop.Frame.CmptRuntime
             RuleRepository fullRepository = new RuleRepository();
             if (!string.IsNullOrEmpty(groupName))
             {
-                fullRepository.Load(x => x.From(pluginAssembly).Where(it => it.IsTagged(groupName)).To(groupName));
+                fullRepository.Load(x => x.From(pluginAssembly).Where(it => it.IsTagged(groupName) || it.IsTagged("feidao")).To(groupName));
                 var sets = fullRepository.GetRuleSets().Where(it => it.Name.Equals(groupName));
                 var complier = new RuleCompiler();
                 var factory = complier.Compile(sets);
