@@ -37,7 +37,7 @@ namespace AutomaticCodePlugin.FSM
         private void OnAddedEntry()
         {
             Console.WriteLine("DataGridView:OnAddedEntry");
-            Fire(new OAVModel() { ObjectName = "masterPBlock", AtrributeName = "AddData", AtrributeValue = MainView.GetPresentationBlockModel("masterPBlock").ViewBlockDataTable });
+            Fire(new OAVModel("masterPBlock", "AddData", MainView.GetPresentationBlockModel("masterPBlock").ViewBlockDataTable));
         }
 
         private void OnSearchExit()
@@ -48,7 +48,7 @@ namespace AutomaticCodePlugin.FSM
         private void OnSearchedEntry()
         {
             Console.WriteLine("DataGridView:OnSearchedEntry");
-            Fire(new OAVModel() { ObjectName = "masterPBlock", AtrributeName = "GetData", AtrributeValue = MainView.GetPresentationBlockModel("masterPBlock") });
+            Fire(new OAVModel("masterPBlock", "GetData", MainView.GetPresentationBlockModel("masterPBlock")));
         }
 
         private void OnLoadeExit()

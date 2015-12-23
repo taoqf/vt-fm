@@ -132,6 +132,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Victop.Frame.AtomicOperation\Victop.Frame.AtomicOperation.csproj">
+      <Project>{111ce838-049a-49ae-aad6-ff93d6f0cabf}</Project>
+      <Name>Victop.Frame.AtomicOperation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.CmptRuntime\Victop.Frame.CmptRuntime.csproj">
       <Project>{4fd0d337-25d5-4e44-890c-afa599599999}</Project>
       <Name>Victop.Frame.CmptRuntime</Name>

@@ -36,8 +36,8 @@ namespace AutomaticCodePlugin.FSM
         private void OnAddedEntry()
         {
             Console.WriteLine("BtnOpView:OnAddedEntry");
-            Fire(new OAVModel() { ObjectName = "opView", AtrributeName = "TemplateControl", AtrributeValue = MainView },
-                new OAVModel() { ObjectName = "opView", AtrributeName = "opName", AtrributeValue = "AddBtnClick" });
+            Fire(new OAVModel("opView", "TemplateControl", MainView),
+                new OAVModel("opView", "opName", "AddBtnClick"));
         }
 
         private void OnSearchedExit()
@@ -48,8 +48,8 @@ namespace AutomaticCodePlugin.FSM
         private void OnSearchedEntry()
         {
             Console.WriteLine("BtnOpView:OnSearchedEntry");
-            Fire(new OAVModel() { ObjectName = "opView", AtrributeName = "TemplateControl", AtrributeValue = MainView },
-                new OAVModel() { ObjectName = "opView", AtrributeName = "opName", AtrributeValue = "SearchBtnClick" });
+            Fire(new OAVModel("opView", "TemplateControl", MainView),
+                new OAVModel("opView", "opName", "SearchBtnClick"));
         }
 
         private void OnLoadedExit()
