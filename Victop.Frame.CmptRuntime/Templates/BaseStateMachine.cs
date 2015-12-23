@@ -71,6 +71,7 @@ namespace Victop.Frame.CmptRuntime
             }
             session.Events.FactInsertedEvent += Events_FactInsertedEvent;
             session.Events.FactRetractedEvent += Events_FactRetractedEvent;
+            session.Events.RuleFiredEvent += Events_RuleFiredEvent;
         }
         /// <summary>
         /// 启动规则引擎
@@ -89,7 +90,7 @@ namespace Victop.Frame.CmptRuntime
         }
         private void Events_FactRetractedEvent(object sender, NRules.Diagnostics.WorkingMemoryEventArgs e)
         {
-            Console.WriteLine("FactRetracted:" + e.Fact.Type.FullName);
+            Console.WriteLine("移除事实:" + e.Fact.Type.FullName);
             if (e.Fact.Type.Name.Equals("OAVModel"))
             {
                 OAVModel oav = e.Fact.Value as OAVModel;
@@ -99,12 +100,16 @@ namespace Victop.Frame.CmptRuntime
 
         private void Events_FactInsertedEvent(object sender, NRules.Diagnostics.WorkingMemoryEventArgs e)
         {
-            Console.WriteLine("FactInserted:" + e.Fact.Type.FullName);
+            Console.WriteLine("插入事实:" + e.Fact.Type.FullName);
             if (e.Fact.Type.Name.Equals("OAVModel"))
             {
                 OAVModel oav = e.Fact.Value as OAVModel;
                 Console.WriteLine("ObjectName:{0},AtrributeName:{1}", oav.ObjectName, oav.AtrributeName);
             }
+        }
+        private void Events_RuleFiredEvent(object sender, NRules.Diagnostics.AgendaEventArgs e)
+        {
+            Console.WriteLine("规则执行后:" + e.Rule.Name);
         }
         #endregion
     }
