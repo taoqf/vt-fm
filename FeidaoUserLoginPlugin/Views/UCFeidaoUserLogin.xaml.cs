@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace FeidaoUserLoginPlugin.Views
 {
@@ -22,6 +23,12 @@ namespace FeidaoUserLoginPlugin.Views
         public UCFeidaoUserLogin()
         {
             InitializeComponent();
+            this.Loaded+=UCFeidaoUserLogin_Loaded;
         }
+        void UCFeidaoUserLogin_Loaded(object sender, RoutedEventArgs e)
+        {
+            tm.Interval = TimeSpan.FromSeconds(0.2);
+        }
+        public DispatcherTimer tm = new DispatcherTimer();
     }
 }

@@ -77,10 +77,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
-                    <Border Background="Transparent"  BorderBrush="Transparent"  BorderThickness="0">
+                    <Border Background="Transparent" BorderBrush="Transparent"  BorderThickness="0">
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                             <WrapPanel IsItemsHost="True" />
-
                         </ScrollViewer>
                     </Border>
                 </ControlTemplate>
@@ -918,7 +917,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
                     <Grid x:Name="Root" Margin="0" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" RenderTransformOrigin="0.5,0.5" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
-                        <!--<VisualStateManager.VisualStateGroups>
+                        <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="WindowStates">
                                 <VisualState x:Name="Open">
                                     <Storyboard>
@@ -1048,7 +1047,7 @@
                                 <VisualState x:Name="InvalidFocused"/>
                                 <VisualState x:Name="InvalidUnfocused"/>
                             </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>-->
+                        </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="Overlay" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0" Background="{TemplateBinding Background}" Opacity="{TemplateBinding Opacity}"/>
                         <Grid x:Name="ContentRoot" Margin="0" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" RenderTransformOrigin="0.5,0.5" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
                             <Grid.RenderTransform>
