@@ -51,6 +51,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -70,9 +71,12 @@
   <ItemGroup>
     <Compile Include="Converters\CheckboxBoolConverter.cs" />
     <Compile Include="Converters\ImgeNameToBackgroundConverter.cs" />
+    <Compile Include="Models\FeidaoSystemConfigModel.cs" />
     <Compile Include="Models\FeidaoUserLoginModel.cs" />
+    <Compile Include="Models\FeidaoUserRoleInfoModel.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\FeidaoSystemConfigViewModel.cs" />
     <Compile Include="ViewModels\FeidaoUserLoginViewModel.cs" />
     <Compile Include="Views\FeidaoUserLoginWindow.xaml.cs">
       <DependentUpon>FeidaoUserLoginWindow.xaml</DependentUpon>

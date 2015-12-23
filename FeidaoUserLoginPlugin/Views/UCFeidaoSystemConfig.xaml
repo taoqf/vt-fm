@@ -5,9 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
               xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
+             xmlns:vm="clr-namespace:FeidaoUserLoginPlugin.ViewModels"
+             xmlns:convert="clr-namespace:FeidaoUserLoginPlugin.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Name="ucSystemConfig">
     <UserControl.Resources>
+        <convert:CheckboxBoolConverter x:Key="CheckboxBoolConverter"/>
         <Style x:Key="logoTextBlockStyle" TargetType="{x:Type controls:VicTextBlockNormal}">
             <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
             <Setter Property="FontSize" Value="14"></Setter>
@@ -17,24 +20,32 @@
         </Style>
     </UserControl.Resources>
     <controls:VicGridNormal>
+        <Grid.DataContext>
+            <vm:FeidaoSystemConfigViewModel></vm:FeidaoSystemConfigViewModel>
+        </Grid.DataContext>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding gridSysConfigLoadedCommand}" CommandParameter="{Binding ElementName=ucSystemConfig}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
         <controls:VicTabControlNormal Style="{DynamicResource ThemeTabControlStyle}" HorizontalAlignment="Center" Grid.Row="1">
             <controls:VicTabItemNormal Header="系统和日志" Height="30" Style="{DynamicResource ThemeTabItemStyle}" AllowDelete="False" >
                 <controls:VicGridNormal>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.6*"/>
@@ -76,14 +87,14 @@
                 <controls:VicGridNormal>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="60"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="48"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="46"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -96,15 +107,15 @@
                     <controls:VicTextBoxNormal Width="150" Margin="5,0" Grid.Row="1" Grid.Column="1" VicText="{Binding SysConfigModel.CloudServerIP}"/>
                     <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="1" Grid.Column="2" Margin="10,0,0,0" Text="端口"/>
                     <controls:VicNumericUpDown  Grid.Row="1" Grid.Column="3" Value="{Binding SysConfigModel.CloudServerPort}"/>
-                    <controls:VicTextBlockNormal VerticalAlignment="Center" HorizontalAlignment="Right"  Style="{DynamicResource logoTextBlockStyle}" Grid.Row="2" Grid.Column="0" Text="路由地址"/>
+                    <controls:VicTextBlockNormal  Style="{DynamicResource logoTextBlockStyle}" Grid.Row="2" Grid.Column="0" Text="路由地址"/>
                     <controls:VicTextBoxNormal Width="150" Margin="5,0" Grid.Row="2" Grid.Column="1" VicText="{Binding SysConfigModel.CloudRouterIP}"/>
-                    <controls:VicTextBlockNormal VerticalAlignment="Center" Grid.Row="2" Grid.Column="2" Margin="10,0,0,0" Text="端口"/>
+                    <controls:VicTextBlockNormal VerticalAlignment="Center" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="2" Grid.Column="2" Margin="10,0,0,0" Text="端口"/>
                     <controls:VicNumericUpDown  Grid.Row="2" Grid.Column="3" Value="{Binding SysConfigModel.CloudRouterPort}"/>
                     <controls:VicTextBlockNormal  Style="{DynamicResource logoTextBlockStyle}"  Grid.Row="3" Grid.Column="0" Text="协助通讯地址"/>
                     <controls:VicTextBoxNormal Width="150" Margin="5,0" Grid.Row="3" Grid.Column="1" VicText="{Binding SysConfigModel.CloudHostIP}"/>
                     <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="3" Grid.Column="2" Margin="10,0,0,0" Text="端口"/>
                     <controls:VicNumericUpDown  Grid.Row="3" Grid.Column="3" Value="{Binding SysConfigModel.CloudHostPort}"/>
-                    <controls:VicTextBlockNormal VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"  Text="企业SOA和P2P(*重启后生效)"/>
+                    <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"  Text="企业SOA和P2P(*重启后生效)"/>
                     <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}"  Grid.Row="5" Grid.Column="0" Text="服务器地址"/>
                     <controls:VicTextBoxNormal Width="150" Margin="5,0" Grid.Row="5" Grid.Column="1" VicText="{Binding SysConfigModel.EnterpriseServerIP}"/>
                     <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="5" Grid.Column="2" Margin="10,0,0,0" Text="端口"/>
@@ -128,8 +139,8 @@
                 <controls:VicGridNormal>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
-                    <RowDefinition Height="48"/>
-                    <RowDefinition Height="48"/>
+                    <RowDefinition Height="46"/>
+                    <RowDefinition Height="46"/>
                     <RowDefinition Height="300"/>
                 </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -138,16 +149,17 @@
                     </Grid.ColumnDefinitions>
                     <controls:VicTextBlockNormal Margin="0,20,0,0" HorizontalAlignment="Left" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Text="用户信息"/>
                     <controls:VicTextBlockNormal  HorizontalAlignment="Right" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="1" Grid.Column="0" Text="用户名"/>
-                    <controls:VicTextBoxNormal Grid.Row="1" Grid.Column="1" Width="190" Margin="5,0" VicText="{Binding SysConfigModel.UserName}"/>
+                    <controls:VicTextBoxNormal Grid.Row="1" Grid.Column="1" Width="190" Margin="0,0" VicText="{Binding SysConfigModel.UserName}"/>
                     <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="2" Grid.Column="0" Text="客户端ID"/>
                     <controls:VicTextBoxNormal Grid.Row="2" Width="190" Margin="5,0" Grid.Column="1" VicText="{Binding SysConfigModel.ClientId}"/>
                   
                 </controls:VicGridNormal>
             </controls:VicTabItemNormal>
         </controls:VicTabControlNormal>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top">
             <controls:VicButtonNormal Style="{DynamicResource LoginButtonStyle}" Content="确定"  Command="{Binding btnConfirmClickCommand}" />
-            <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消"  Command="{Binding btnCancelClickCommand}"/>
+            <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消"  Command="{Binding btnSystemCancelClickCommand}"/>
+           
         </StackPanel>
     </controls:VicGridNormal>
 </UserControl>

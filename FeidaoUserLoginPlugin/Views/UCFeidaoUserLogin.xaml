@@ -5,70 +5,107 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
               xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
+             xmlns:vm="clr-namespace:FeidaoUserLoginPlugin.ViewModels"
+             xmlns:convert="clr-namespace:FeidaoUserLoginPlugin.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Name="ucUserLongin">
     <UserControl.Resources>
-       
+        <convert:ImgeNameToBackgroundConverter x:Key="imgeNameToBackgroundConverter"/>
     </UserControl.Resources>
+    <!--主界面分五行-->
     <controls:VicGridNormal>
-        <!--主界面分五行-->
+        <Grid.DataContext>
+            <vm:FeidaoUserLoginViewModel/>
+        </Grid.DataContext>
         <Grid.RowDefinitions>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="68"/>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="1"/>
-            <RowDefinition Height="152"/>
-            <RowDefinition Height="186"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="193"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <controls:VicGridNormal Grid.Row="1"  Width="234"  Height="68" Background="{DynamicResource loginlogo}"></controls:VicGridNormal>
-        <controls:VicGridNormal Grid.Row="2"></controls:VicGridNormal>
-        <Border Grid.Row="4" HorizontalAlignment="Center"  Width="300" BorderBrush="{DynamicResource loginBorder}" BorderThickness="1" ></Border>
-        <controls:VicGridNormal VerticalAlignment="Center" Grid.Row="5">
-            <Border BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100" CornerRadius="5">
-                <Border.BorderBrush>
-                    <LinearGradientBrush SpreadMethod="Repeat" StartPoint="0,5" EndPoint="5,0" MappingMode="Absolute">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="#6E6E6E" Offset="0"/>
-                            <GradientStop Color="#6E6E6E" Offset="0.2"/>
-                            <GradientStop Color="Transparent" Offset="0.4"/>
-                            <GradientStop Color="Transparent" Offset="0.6"/>
-                            <GradientStop Color="#6E6E6E" Offset="0.8"/>
-                            <GradientStop Color="#6E6E6E" Offset="1"/>
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                </Border.BorderBrush>
-            </Border>
-        </controls:VicGridNormal>
-        <controls:VicGridNormal Grid.Row="6">
+        <controls:VicGridNormal Grid.Row="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="46"/>
-                <RowDefinition Height="46"/>
-                <RowDefinition Height="46"/>
-                <RowDefinition Height="46"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="68"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="1"/>
             </Grid.RowDefinitions>
-            <TextBox Grid.Row="0" Width="192" Height="28"   HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding LoginInfoModel.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalContentAlignment="Center"/>
-            <controls:VicPasswordBoxKeyNormal Grid.Row="1" Name="pwBox" Width="192" Height="28" VerticalAlignment="Center" HorizontalAlignment="Center"  
+            <controls:VicGridNormal Grid.Row="1"  Width="234"  Height="68" Background="{DynamicResource loginlogo}"></controls:VicGridNormal>
+            <controls:VicGridNormal Grid.Row="2" Width="234"  Height="56" VerticalAlignment="Top" Background="{DynamicResource loginlogotime}"></controls:VicGridNormal>
+            <Border Grid.Row="4" HorizontalAlignment="Center"  Width="300" BorderBrush="{DynamicResource loginBorder}" BorderThickness="1" ></Border>
+        </controls:VicGridNormal>
+        <controls:VicGridNormal Grid.Row="1" Visibility="{Binding VisLogin, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="152"/>
+                <RowDefinition Height="186"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <controls:VicGridNormal VerticalAlignment="Center" Grid.Row="0">
+                <Border BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100" CornerRadius="5">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush SpreadMethod="Repeat" StartPoint="0,5" EndPoint="5,0" MappingMode="Absolute">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStop Color="#6E6E6E" Offset="0"/>
+                                <GradientStop Color="#6E6E6E" Offset="0.2"/>
+                                <GradientStop Color="Transparent" Offset="0.4"/>
+                                <GradientStop Color="Transparent" Offset="0.6"/>
+                                <GradientStop Color="#6E6E6E" Offset="0.8"/>
+                                <GradientStop Color="#6E6E6E" Offset="1"/>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
+                    <Image Source="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}" Stretch="UniformToFill"/>
+                </Border>
+            </controls:VicGridNormal>
+            <controls:VicGridNormal Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="46"/>
+                    <RowDefinition Height="46"/>
+                    <RowDefinition Height="46"/>
+                    <RowDefinition Height="46"/>
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="0" Width="192" Height="28"   HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding LoginInfoModel.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalContentAlignment="Center"/>
+                <controls:VicPasswordBoxKeyNormal Grid.Row="1" Name="pwBox" Width="192" Height="28" VerticalAlignment="Center" HorizontalAlignment="Center"  
                             PasswordText="{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
-            </controls:VicPasswordBoxKeyNormal>
-            <controls:VicComboBoxNormal Width="192" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="2" Height="28" Name="CloudSOAComboBox"  
+                </controls:VicPasswordBoxKeyNormal>
+                <controls:VicComboBoxNormal Width="192" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="2" Height="28" Name="CloudSOAComboBox"  
                         ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
                         SelectedValue="{Binding SelectedGallery,UpdateSourceTrigger=PropertyChanged}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding CloudSOAComboBoxSelectionChangedCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </controls:VicComboBoxNormal>
-            <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center"  VerticalAlignment="Center">
-                <controls:VicButtonNormal  x:Name="btnLogin" Margin="-10,0,0,0" IsDefault="True" Style="{DynamicResource LoginButtonStyle}" Content="登录" Command="{Binding btnLoginClickCommand}"  TabIndex="5" />
-                <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消" IsCancel="True"  Command="{Binding btnCancelClickCommand}"/>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding CloudSOAComboBoxSelectionChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </controls:VicComboBoxNormal>
+                <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center"  VerticalAlignment="Center">
+                    <controls:VicButtonNormal  x:Name="btnLogin" Margin="-10,0,0,0" IsDefault="True" Style="{DynamicResource LoginButtonStyle}" Content="登录" Command="{Binding btnLoginClickCommand}"  TabIndex="5" />
+                    <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消" IsCancel="True"  Command="{Binding btnCancelClickCommand}"/>
+                </StackPanel>
+            </controls:VicGridNormal>
+            <StackPanel Orientation="Horizontal" Margin="70,0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" >
+                <controls:VicButtonNormal IsEnabled="{Binding VisSystemSet, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  Name="btnSystemSet" HorizontalAlignment="Right" Style="{DynamicResource btnLoginSetStyle}"  Command="{Binding btnSystemSetClickCommand}"/>
             </StackPanel>
         </controls:VicGridNormal>
-        <StackPanel Orientation="Horizontal" Margin="70,0" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Left" >
-            <controls:VicButtonNormal IsEnabled="{Binding VisSystemSet, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  Name="btnSystemSet" HorizontalAlignment="Right"    Style="{DynamicResource btnLoginSetStyle}"  Command="{Binding btnSystemSetClickCommand}"/>
-        </StackPanel>
+        <controls:VicGridNormal Grid.Row="1" Height="400" Width="352" Visibility="{Binding VisRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <controls:VicGridNormal.RowDefinitions>
+                    <RowDefinition Height="280"/>
+                    <RowDefinition Height="50"/>
+                </controls:VicGridNormal.RowDefinitions>
+                <controls:VicListBoxNormal Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource RoleListBoxStyle}" Name="lboxRole" ItemsSource="{Binding RoleInfoList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Role_Name" SelectedValuePath="Role_No" SelectedItem="{Binding SelectedRoleInfo,UpdateSourceTrigger=PropertyChanged}"/>
+                <controls:VicDockPanelNormal Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <controls:VicButtonNormal VerticalAlignment="Top" Height="25" Content="确定" Name="btnConfirm" Command="{Binding btnConfirmClickCommand}"/>
+                </controls:VicDockPanelNormal>
+            </controls:VicGridNormal>
+        <controls:VicProgressRingNormal Grid.Row="0" IsLarge="False" HorizontalAlignment="Center" VerticalAlignment="Bottom" x:Name="load" Background="Transparent" IsActive="{Binding IsRingShow,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding gridMainLoadedCommand}" CommandParameter="{Binding ElementName=ucUserLongin}"/>
+            </i:EventTrigger>
+            <i:EventTrigger EventName="Unloaded">
+                <i:InvokeCommandAction Command="{Binding gridMainUnloadedCommand}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+      
     </controls:VicGridNormal>
+    
 </UserControl>
