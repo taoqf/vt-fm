@@ -10,7 +10,7 @@ namespace AutomaticCodePlugin.FSM
 {
     public class MainViewStateMachine : BaseStateMachine
     {
-        public MainViewStateMachine() : base("MainView", Assembly.GetExecutingAssembly())
+        public MainViewStateMachine(TemplateControl mainView) : base("MainView", Assembly.GetExecutingAssembly(),mainView)
         {
             FeiDaoFSM.Configure("None")
                 .Permit("Load", "Loaded");
@@ -29,7 +29,7 @@ namespace AutomaticCodePlugin.FSM
         private void OnAddedEntry()
         {
             Console.WriteLine("MainView:OnAddedEntry");
-            Fire(new OAVModel("MainView", "GridControl", MainView.FindName("ucdgrid")),
+            Fire(new OAVModel("MainView", "GridControl", "ucdgrid"),
                 new OAVModel("MainView", "State", "Add"));
         }
 
@@ -41,7 +41,7 @@ namespace AutomaticCodePlugin.FSM
         private void OnSearchedEntry()
         {
             Console.WriteLine("MainView:OnSearchedEntry");
-            Fire(new OAVModel("MainView", "GridControl", MainView.FindName("ucdgrid")),
+            Fire(new OAVModel("MainView", "GridControl", "ucdgrid"),
                 new OAVModel("MainView", "State", "Search"));
         }
 

@@ -10,7 +10,7 @@ namespace AutomaticCodePlugin.FSM
 {
     public class DataGridViewStateMachine : BaseStateMachine
     {
-        public DataGridViewStateMachine() : base("DataGridView", Assembly.GetExecutingAssembly())
+        public DataGridViewStateMachine(TemplateControl mainView) : base("DataGridView", Assembly.GetExecutingAssembly(),mainView)
         {
             FeiDaoFSM.Configure("None")
                 .Permit("Load", "Loaded");
@@ -59,7 +59,7 @@ namespace AutomaticCodePlugin.FSM
         private void OnLoadedEntry()
         {
             Console.WriteLine("DataGridView:OnLoadedEntry");
-            Fire(new OAVModel("UCDataGridView", "TemplateControl", MainView));
+            Fire();
         }
     }
 }

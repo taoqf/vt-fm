@@ -19,8 +19,7 @@ namespace AutomaticCodePlugin.Views
         public UCBtnOperationView()
         {
             InitializeComponent();
-            FeiDaoFSM = new BtnOpViewStateMachine();
-            FeiDaoFSM.MainView = this;
+            FeiDaoFSM = new BtnOpViewStateMachine(this);
             this.Loaded += UCBtnOperationView_Loaded;
         }
 

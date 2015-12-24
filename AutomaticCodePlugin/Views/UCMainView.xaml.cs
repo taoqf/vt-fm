@@ -40,8 +40,7 @@ namespace AutomaticCodePlugin.Views
         {
             InitializeComponent();
             this.DataContext = this;
-            FeiDaoFSM = new MainViewStateMachine();
-            FeiDaoFSM.MainView = this;
+            FeiDaoFSM = new MainViewStateMachine(this);
             ParamDict = paramDict;
             ShowType = showType;
             ucBtnOp.SearchBtnClick += OnSearchBtnClick;

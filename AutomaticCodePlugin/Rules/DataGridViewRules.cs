@@ -11,27 +11,25 @@ using Victop.Server.Controls.Models;
 
 namespace AutomaticCodePlugin.Rules
 {
-    [Repeatability(RuleRepeatability.NonRepeatable)]
     [Tag("DataGridView")]
     public class DataGridViewRuleLoad : BaseRule
     {
         public override void Define()
         {
-            OAVModel oav = null;
-            When().Match<OAVModel>(() => oav, o => o.ObjectName.Equals("UCDataGridView") && o.AtrributeName.Equals("TemplateControl"));
+            TemplateControl oav = null;
+            When().Match<TemplateControl>(() => oav);
             Then().Do(session => InitPBlockInfo(session, oav));
         }
 
-        private void InitPBlockInfo(IContext session, OAVModel oav)
+        private void InitPBlockInfo(IContext session, TemplateControl oav)
         {
-            UCDataGridView view = oav.AtrributeValue as UCDataGridView;
+            UCDataGridView view = oav as UCDataGridView;
             if (view.InitVictopUserControl(Properties.Resources.masterPVDString))
             {
                 view.MainPBlock = view.GetPresentationBlockModel("masterPBlock");
             }
         }
     }
-    [Repeatability(RuleRepeatability.NonRepeatable)]
     [Tag("DataGridView")]
     public class DataGridViewRuleSearch : BaseRule
     {
@@ -47,7 +45,7 @@ namespace AutomaticCodePlugin.Rules
             pBlock.GetData();
         }
     }
-    [Repeatability(RuleRepeatability.NonRepeatable)]
+    [Repeatability(RuleRepeatability.Repeatable)]
     [Tag("DataGridView")]
     public class DataGridViewRuleAdd : BaseRule
     {

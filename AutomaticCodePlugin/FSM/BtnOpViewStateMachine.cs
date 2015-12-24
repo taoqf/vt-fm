@@ -10,7 +10,7 @@ namespace AutomaticCodePlugin.FSM
 {
     public class BtnOpViewStateMachine : BaseStateMachine
     {
-        public BtnOpViewStateMachine() : base("BtnOpView", Assembly.GetExecutingAssembly())
+        public BtnOpViewStateMachine(TemplateControl mainView) : base("BtnOpView", Assembly.GetExecutingAssembly(),mainView)
         {
             FeiDaoFSM.Configure("None")
                 .Permit("Load", "Loaded");
@@ -36,8 +36,7 @@ namespace AutomaticCodePlugin.FSM
         private void OnAddedEntry()
         {
             Console.WriteLine("BtnOpView:OnAddedEntry");
-            Fire(new OAVModel("opView", "TemplateControl", MainView),
-                new OAVModel("opView", "opName", "AddBtnClick"));
+            Fire(new OAVModel("opView", "opName", "AddBtnClick"));
         }
 
         private void OnSearchedExit()
@@ -48,8 +47,7 @@ namespace AutomaticCodePlugin.FSM
         private void OnSearchedEntry()
         {
             Console.WriteLine("BtnOpView:OnSearchedEntry");
-            Fire(new OAVModel("opView", "TemplateControl", MainView),
-                new OAVModel("opView", "opName", "SearchBtnClick"));
+            Fire(new OAVModel("opView", "opName", "SearchBtnClick"));
         }
 
         private void OnLoadedExit()

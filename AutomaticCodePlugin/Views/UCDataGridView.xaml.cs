@@ -24,8 +24,7 @@ namespace AutomaticCodePlugin.Views
         public UCDataGridView()
         {
             InitializeComponent();
-            FeiDaoFSM = new DataGridViewStateMachine();
-            FeiDaoFSM.MainView = this;
+            FeiDaoFSM = new DataGridViewStateMachine(this);
             DataContext = this;
             this.Loaded += UCDataGridView_Loaded;
         }

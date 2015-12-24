@@ -23,7 +23,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 界面实例
         /// </summary>
-        public TemplateControl MainView;
+        protected TemplateControl MainView;
         private string currentState = "None";
         private ISession session;
         /// <summary>
@@ -31,9 +31,12 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="groupName">规则分组名</param>
         /// <param name="pluginAssembly">插件程序集</param>
-        public BaseStateMachine(string groupName, Assembly pluginAssembly)
+        /// <param name="mainView">主应用程序</param>
+        public BaseStateMachine(string groupName, Assembly pluginAssembly, TemplateControl mainView)
         {
+            MainView = mainView;
             CreateRuleRepositoryGroup(groupName, pluginAssembly);
+            session.TryInsert(MainView);
             FeiDaoFSM = new StateMachine<string, string>(() => currentState, s => currentState = s);
         }
         /// <summary>
