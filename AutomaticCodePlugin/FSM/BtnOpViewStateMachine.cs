@@ -10,7 +10,7 @@ namespace AutomaticCodePlugin.FSM
 {
     public class BtnOpViewStateMachine : BaseStateMachine
     {
-        public BtnOpViewStateMachine(TemplateControl mainView) : base("BtnOpView", Assembly.GetExecutingAssembly(),mainView)
+        public BtnOpViewStateMachine(TemplateControl mainView) : base("BtnOpView", Assembly.GetExecutingAssembly(), mainView)
         {
             FeiDaoFSM.Configure("None")
                 .Permit("Load", "Loaded");
@@ -27,7 +27,6 @@ namespace AutomaticCodePlugin.FSM
                 .OnEntry(() => OnAddedEntry())
                 .OnExit(() => OnAddedExit());
         }
-
         private void OnAddedExit()
         {
             Console.WriteLine("BtnOpView:OnAddedExit");

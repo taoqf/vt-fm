@@ -11,6 +11,323 @@
             <typeparam name="TState">The type used to represent the states.</typeparam>
             <typeparam name="TTrigger">The type used to represent the triggers that cause state transitions.</typeparam>
         </member>
+        <member name="T:Stateless.StateMachine`2.StateConfiguration">
+            <summary>
+            The configuration for a single state value.
+            </summary>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.Permit(`1,`0)">
+            <summary>
+            Accept the specified trigger and transition to the destination state.
+            </summary>
+            <param name="trigger">The accepted trigger.</param>
+            <param name="destinationState">The state that the trigger will cause a
+            transition to.</param>
+            <returns>The reciever.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitIf(`1,`0,System.Func{System.Boolean},System.String)">
+            <summary>
+            Accept the specified trigger and transition to the destination state.
+            </summary>
+            <param name="trigger">The accepted trigger.</param>
+            <param name="destinationState">The state that the trigger will cause a
+            transition to.</param>
+            <param name="guard">Function that must return true in order for the
+            trigger to be accepted.</param>
+            <param name="guardDescription">Guard description</param>
+            <returns>The reciever.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitReentry(`1)">
+            <summary>
+            Accept the specified trigger, execute exit actions and re-execute entry actions.
+            Reentry behaves as though the configured state transitions to an identical sibling state.
+            </summary>
+            <param name="trigger">The accepted trigger.</param>
+            <returns>The reciever.</returns>
+            <remarks>
+            Applies to the current state only. Will not re-execute superstate actions, or
+            cause actions to execute transitioning between super- and sub-states.
+            </remarks>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitReentryIf(`1,System.Func{System.Boolean},System.String)">
+            <summary>
+            Accept the specified trigger, execute exit actions and re-execute entry actions.
+            Reentry behaves as though the configured state transitions to an identical sibling state.
+            </summary>
+            <param name="trigger">The accepted trigger.</param>
+            <param name="guard">Function that must return true in order for the
+            trigger to be accepted.</param>
+            <param name="guardDescription">Guard description</param>
+            <returns>The reciever.</returns>
+            <remarks>
+            Applies to the current state only. Will not re-execute superstate actions, or
+            cause actions to execute transitioning between super- and sub-states.
+            </remarks>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.Ignore(`1)">
+            <summary>
+            Ignore the specified trigger when in the configured state.
+            </summary>
+            <param name="trigger">The trigger to ignore.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.IgnoreIf(`1,System.Func{System.Boolean},System.String)">
+            <summary>
+            Ignore the specified trigger when in the configured state, if the guard
+            returns true..
+            </summary>
+            <param name="trigger">The trigger to ignore.</param>
+            <param name="guardDescription">Guard description</param>
+            <param name="guard">Function that must return true in order for the
+            trigger to be ignored.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntry(System.Action,System.String)">
+            <summary>
+            Specify an action that will execute when transitioning into
+            the configured state.
+            </summary>
+            <param name="entryAction">Action to execute.</param>
+            <param name="entryActionDescription">Action description.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntry(System.Action{Stateless.StateMachine{`0,`1}.Transition},System.String)">
+            <summary>
+            Specify an action that will execute when transitioning into
+            the configured state.
+            </summary>
+            <param name="entryAction">Action to execute, providing details of the transition.</param>
+            <param name="entryActionDescription">Action description.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom(`1,System.Action,System.String)">
+            <summary>
+            Specify an action that will execute when transitioning into
+            the configured state.
+            </summary>
+            <param name="entryAction">Action to execute.</param>
+            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
+            <param name="entryActionDescription">Action description.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom(`1,System.Action{Stateless.StateMachine{`0,`1}.Transition},System.String)">
+            <summary>
+            Specify an action that will execute when transitioning into
+            the configured state.
+            </summary>
+            <param name="entryAction">Action to execute, providing details of the transition.</param>
+            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
+            <param name="entryActionDescription">Action description.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom``1(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0},System.Action{``0},System.String)">
+            <summary>
+            Specify an action that will execute when transitioning into
+            the configured state.
+            </summary>
+            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
+            <param name="entryAction">Action to execute, providing details of the transition.</param>
+            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
+            <param name="entryActionDescription">Action description.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom``1(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0},System.Action{``0,Stateless.StateMachine{`0,`1}.Transition},System.String)">
+            <summary>
+            Specify an action that will execute when transitioning into
+            the configured state.
+            </summary>
+            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
+            <param name="entryAction">Action to execute, providing details of the transition.</param>
+            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
+            <param name="entryActionDescription">Action description.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom``2(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1},System.Action{``0,``1},System.String)">
+            <summary>
+            Specify an action that will execute when transitioning into
+            the configured state.
+            </summary>
+            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
+            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
+            <param name="entryAction">Action to execute, providing details of the transition.</param>
+            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
+            <param name="entryActionDescription">Action description.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom``2(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1},System.Action{``0,``1,Stateless.StateMachine{`0,`1}.Transition},System.String)">
+            <summary>
+            Specify an action that will execute when transitioning into
+            the configured state.
+            </summary>
+            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
+            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
+            <param name="entryAction">Action to execute, providing details of the transition.</param>
+            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
+            <param name="entryActionDescription">Action description.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom``3(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1,``2},System.Action{``0,``1,``2},System.String)">
+            <summary>
+            Specify an action that will execute when transitioning into
+            the configured state.
+            </summary>
+            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
+            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
+            <typeparam name="TArg2">Type of the third trigger argument.</typeparam>
+            <param name="entryAction">Action to execute, providing details of the transition.</param>
+            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
+            <param name="entryActionDescription">Action description.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom``3(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1,``2},System.Action{``0,``1,``2,Stateless.StateMachine{`0,`1}.Transition},System.String)">
+            <summary>
+            Specify an action that will execute when transitioning into
+            the configured state.
+            </summary>
+            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
+            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
+            <typeparam name="TArg2">Type of the third trigger argument.</typeparam>
+            <param name="entryAction">Action to execute, providing details of the transition.</param>
+            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
+            <param name="entryActionDescription">Action description.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnExit(System.Action,System.String)">
+            <summary>
+            Specify an action that will execute when transitioning from
+            the configured state.
+            </summary>
+            <param name="exitAction">Action to execute.</param>
+            <param name="exitActionDescription">Action description.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnExit(System.Action{Stateless.StateMachine{`0,`1}.Transition},System.String)">
+            <summary>
+            Specify an action that will execute when transitioning from
+            the configured state.
+            </summary>
+            <param name="exitAction">Action to execute, providing details of the transition.</param>
+            <param name="exitActionDescription">Action description.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.SubstateOf(`0)">
+            <summary>
+            Sets the superstate that the configured state is a substate of.
+            </summary>
+            <remarks>
+            Substates inherit the allowed transitions of their superstate.
+            When entering directly into a substate from outside of the superstate,
+            entry actions for the superstate are executed.
+            Likewise when leaving from the substate to outside the supserstate,
+            exit actions for the superstate will execute.
+            </remarks>
+            <param name="superstate">The superstate.</param>
+            <returns>The receiver.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamic(`1,System.Func{`0})">
+            <summary>
+            Accept the specified trigger and transition to the destination state, calculated
+            dynamically by the supplied function.
+            </summary>
+            <param name="trigger">The accepted trigger.</param>
+            <param name="destinationStateSelector">Function to calculate the state 
+            that the trigger will cause a transition to.</param>
+            <returns>The reciever.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamic``1(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0},System.Func{``0,`0})">
+            <summary>
+            Accept the specified trigger and transition to the destination state, calculated
+            dynamically by the supplied function.
+            </summary>
+            <param name="trigger">The accepted trigger.</param>
+            <param name="destinationStateSelector">Function to calculate the state 
+            that the trigger will cause a transition to.</param>
+            <returns>The reciever.</returns>
+            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamic``2(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1},System.Func{``0,``1,`0})">
+            <summary>
+            Accept the specified trigger and transition to the destination state, calculated
+            dynamically by the supplied function.
+            </summary>
+            <param name="trigger">The accepted trigger.</param>
+            <param name="destinationStateSelector">Function to calculate the state 
+            that the trigger will cause a transition to.</param>
+            <returns>The reciever.</returns>
+            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
+            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamic``3(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1,``2},System.Func{``0,``1,``2,`0})">
+            <summary>
+            Accept the specified trigger and transition to the destination state, calculated
+            dynamically by the supplied function.
+            </summary>
+            <param name="trigger">The accepted trigger.</param>
+            <param name="destinationStateSelector">Function to calculate the state 
+            that the trigger will cause a transition to.</param>
+            <returns>The reciever.</returns>
+            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
+            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
+            <typeparam name="TArg2">Type of the third trigger argument.</typeparam>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamicIf(`1,System.Func{`0},System.Func{System.Boolean},System.String)">
+            <summary>
+            Accept the specified trigger and transition to the destination state, calculated
+            dynamically by the supplied function.
+            </summary>
+            <param name="trigger">The accepted trigger.</param>
+            <param name="destinationStateSelector">Function to calculate the state 
+            that the trigger will cause a transition to.</param>
+            <param name="guard">Function that must return true in order for the
+            trigger to be accepted.</param>
+            <param name="guardDescription">Guard description</param>
+            <returns>The reciever.</returns>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamicIf``1(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0},System.Func{``0,`0},System.Func{System.Boolean},System.String)">
+            <summary>
+            Accept the specified trigger and transition to the destination state, calculated
+            dynamically by the supplied function.
+            </summary>
+            <param name="trigger">The accepted trigger.</param>
+            <param name="destinationStateSelector">Function to calculate the state 
+            that the trigger will cause a transition to.</param>
+            <param name="guard">Function that must return true in order for the
+            trigger to be accepted.</param>
+            <param name="guardDescription">Guard description</param>
+            <returns>The reciever.</returns>
+            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamicIf``2(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1},System.Func{``0,``1,`0},System.Func{System.Boolean},System.String)">
+            <summary>
+            Accept the specified trigger and transition to the destination state, calculated
+            dynamically by the supplied function.
+            </summary>
+            <param name="trigger">The accepted trigger.</param>
+            <param name="destinationStateSelector">Function to calculate the state 
+            that the trigger will cause a transition to.</param>
+            <param name="guard">Function that must return true in order for the
+            trigger to be accepted.</param>
+            <param name="guardDescription">Guard description</param>
+            <returns>The reciever.</returns>
+            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
+            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
+        </member>
+        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamicIf``3(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1,``2},System.Func{``0,``1,``2,`0},System.Func{System.Boolean},System.String)">
+            <summary>
+            Accept the specified trigger and transition to the destination state, calculated
+            dynamically by the supplied function.
+            </summary>
+            <param name="trigger">The accepted trigger.</param>
+            <param name="destinationStateSelector">Function to calculate the state 
+            that the trigger will cause a transition to.</param>
+            <returns>The reciever.</returns>
+            <param name="guard">Function that must return true in order for the
+            trigger to be accepted.</param>
+            <param name="guardDescription">Guard description</param>
+            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
+            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
+            <typeparam name="TArg2">Type of the third trigger argument.</typeparam>
+        </member>
         <member name="M:Stateless.StateMachine`2.#ctor(System.Func{`0},System.Action{`0})">
             <summary>
             Construct a state machine with external state storage.
@@ -23,6 +340,16 @@
             Construct a state machine.
             </summary>
             <param name="initialState">The initial state.</param>
+        </member>
+        <member name="P:Stateless.StateMachine`2.State">
+            <summary>
+            The current state.
+            </summary>
+        </member>
+        <member name="P:Stateless.StateMachine`2.PermittedTriggers">
+            <summary>
+            The currently-permissible trigger values.
+            </summary>
         </member>
         <member name="M:Stateless.StateMachine`2.Configure(`0)">
             <summary>
@@ -155,314 +482,6 @@
             <param name="onTransitionAction">The action to execute, accepting the details
             of the transition.</param>
         </member>
-        <member name="P:Stateless.StateMachine`2.State">
-            <summary>
-            The current state.
-            </summary>
-        </member>
-        <member name="P:Stateless.StateMachine`2.PermittedTriggers">
-            <summary>
-            The currently-permissible trigger values.
-            </summary>
-        </member>
-        <member name="T:Stateless.StateMachine`2.StateConfiguration">
-            <summary>
-            The configuration for a single state value.
-            </summary>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.Permit(`1,`0)">
-            <summary>
-            Accept the specified trigger and transition to the destination state.
-            </summary>
-            <param name="trigger">The accepted trigger.</param>
-            <param name="destinationState">The state that the trigger will cause a
-            transition to.</param>
-            <returns>The reciever.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitIf(`1,`0,System.Func{System.Boolean})">
-            <summary>
-            Accept the specified trigger and transition to the destination state.
-            </summary>
-            <param name="trigger">The accepted trigger.</param>
-            <param name="destinationState">The state that the trigger will cause a
-            transition to.</param>
-            <param name="guard">Function that must return true in order for the
-            trigger to be accepted.</param>
-            <returns>The reciever.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitReentry(`1)">
-            <summary>
-            Accept the specified trigger, execute exit actions and re-execute entry actions.
-            Reentry behaves as though the configured state transitions to an identical sibling state.
-            </summary>
-            <param name="trigger">The accepted trigger.</param>
-            <returns>The reciever.</returns>
-            <remarks>
-            Applies to the current state only. Will not re-execute superstate actions, or
-            cause actions to execute transitioning between super- and sub-states.
-            </remarks>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitReentryIf(`1,System.Func{System.Boolean})">
-            <summary>
-            Accept the specified trigger, execute exit actions and re-execute entry actions.
-            Reentry behaves as though the configured state transitions to an identical sibling state.
-            </summary>
-            <param name="trigger">The accepted trigger.</param>
-            <param name="guard">Function that must return true in order for the
-            trigger to be accepted.</param>
-            <returns>The reciever.</returns>
-            <remarks>
-            Applies to the current state only. Will not re-execute superstate actions, or
-            cause actions to execute transitioning between super- and sub-states.
-            </remarks>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.Ignore(`1)">
-            <summary>
-            Ignore the specified trigger when in the configured state.
-            </summary>
-            <param name="trigger">The trigger to ignore.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.IgnoreIf(`1,System.Func{System.Boolean})">
-            <summary>
-            Ignore the specified trigger when in the configured state, if the guard
-            returns true..
-            </summary>
-            <param name="trigger">The trigger to ignore.</param>
-            <param name="guard">Function that must return true in order for the
-            trigger to be ignored.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntry(System.Action)">
-            <summary>
-            Specify an action that will execute when transitioning into
-            the configured state.
-            </summary>
-            <param name="entryAction">Action to execute.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntry(System.Action{Stateless.StateMachine{`0,`1}.Transition})">
-            <summary>
-            Specify an action that will execute when transitioning into
-            the configured state.
-            </summary>
-            <param name="entryAction">Action to execute, providing details of the transition.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom(`1,System.Action)">
-            <summary>
-            Specify an action that will execute when transitioning into
-            the configured state.
-            </summary>
-            <param name="entryAction">Action to execute.</param>
-            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom(`1,System.Action{Stateless.StateMachine{`0,`1}.Transition})">
-            <summary>
-            Specify an action that will execute when transitioning into
-            the configured state.
-            </summary>
-            <param name="entryAction">Action to execute, providing details of the transition.</param>
-            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom``1(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0},System.Action{``0})">
-            <summary>
-            Specify an action that will execute when transitioning into
-            the configured state.
-            </summary>
-            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
-            <param name="entryAction">Action to execute, providing details of the transition.</param>
-            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom``1(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0},System.Action{``0,Stateless.StateMachine{`0,`1}.Transition})">
-            <summary>
-            Specify an action that will execute when transitioning into
-            the configured state.
-            </summary>
-            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
-            <param name="entryAction">Action to execute, providing details of the transition.</param>
-            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom``2(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1},System.Action{``0,``1})">
-            <summary>
-            Specify an action that will execute when transitioning into
-            the configured state.
-            </summary>
-            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
-            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
-            <param name="entryAction">Action to execute, providing details of the transition.</param>
-            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom``2(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1},System.Action{``0,``1,Stateless.StateMachine{`0,`1}.Transition})">
-            <summary>
-            Specify an action that will execute when transitioning into
-            the configured state.
-            </summary>
-            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
-            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
-            <param name="entryAction">Action to execute, providing details of the transition.</param>
-            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom``3(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1,``2},System.Action{``0,``1,``2})">
-            <summary>
-            Specify an action that will execute when transitioning into
-            the configured state.
-            </summary>
-            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
-            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
-            <typeparam name="TArg2">Type of the third trigger argument.</typeparam>
-            <param name="entryAction">Action to execute, providing details of the transition.</param>
-            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnEntryFrom``3(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1,``2},System.Action{``0,``1,``2,Stateless.StateMachine{`0,`1}.Transition})">
-            <summary>
-            Specify an action that will execute when transitioning into
-            the configured state.
-            </summary>
-            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
-            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
-            <typeparam name="TArg2">Type of the third trigger argument.</typeparam>
-            <param name="entryAction">Action to execute, providing details of the transition.</param>
-            <param name="trigger">The trigger by which the state must be entered in order for the action to execute.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnExit(System.Action)">
-            <summary>
-            Specify an action that will execute when transitioning from
-            the configured state.
-            </summary>
-            <param name="exitAction">Action to execute.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.OnExit(System.Action{Stateless.StateMachine{`0,`1}.Transition})">
-            <summary>
-            Specify an action that will execute when transitioning from
-            the configured state.
-            </summary>
-            <param name="exitAction">Action to execute, providing details of the transition.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.SubstateOf(`0)">
-            <summary>
-            Sets the superstate that the configured state is a substate of.
-            </summary>
-            <remarks>
-            Substates inherit the allowed transitions of their superstate.
-            When entering directly into a substate from outside of the superstate,
-            entry actions for the superstate are executed.
-            Likewise when leaving from the substate to outside the supserstate,
-            exit actions for the superstate will execute.
-            </remarks>
-            <param name="superstate">The superstate.</param>
-            <returns>The receiver.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamic(`1,System.Func{`0})">
-            <summary>
-            Accept the specified trigger and transition to the destination state, calculated
-            dynamically by the supplied function.
-            </summary>
-            <param name="trigger">The accepted trigger.</param>
-            <param name="destinationStateSelector">Function to calculate the state 
-            that the trigger will cause a transition to.</param>
-            <returns>The reciever.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamic``1(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0},System.Func{``0,`0})">
-            <summary>
-            Accept the specified trigger and transition to the destination state, calculated
-            dynamically by the supplied function.
-            </summary>
-            <param name="trigger">The accepted trigger.</param>
-            <param name="destinationStateSelector">Function to calculate the state 
-            that the trigger will cause a transition to.</param>
-            <returns>The reciever.</returns>
-            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamic``2(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1},System.Func{``0,``1,`0})">
-            <summary>
-            Accept the specified trigger and transition to the destination state, calculated
-            dynamically by the supplied function.
-            </summary>
-            <param name="trigger">The accepted trigger.</param>
-            <param name="destinationStateSelector">Function to calculate the state 
-            that the trigger will cause a transition to.</param>
-            <returns>The reciever.</returns>
-            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
-            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamic``3(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1,``2},System.Func{``0,``1,``2,`0})">
-            <summary>
-            Accept the specified trigger and transition to the destination state, calculated
-            dynamically by the supplied function.
-            </summary>
-            <param name="trigger">The accepted trigger.</param>
-            <param name="destinationStateSelector">Function to calculate the state 
-            that the trigger will cause a transition to.</param>
-            <returns>The reciever.</returns>
-            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
-            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
-            <typeparam name="TArg2">Type of the third trigger argument.</typeparam>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamicIf(`1,System.Func{`0},System.Func{System.Boolean})">
-            <summary>
-            Accept the specified trigger and transition to the destination state, calculated
-            dynamically by the supplied function.
-            </summary>
-            <param name="trigger">The accepted trigger.</param>
-            <param name="destinationStateSelector">Function to calculate the state 
-            that the trigger will cause a transition to.</param>
-            <param name="guard">Function that must return true in order for the
-            trigger to be accepted.</param>
-            <returns>The reciever.</returns>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamicIf``1(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0},System.Func{``0,`0},System.Func{System.Boolean})">
-            <summary>
-            Accept the specified trigger and transition to the destination state, calculated
-            dynamically by the supplied function.
-            </summary>
-            <param name="trigger">The accepted trigger.</param>
-            <param name="destinationStateSelector">Function to calculate the state 
-            that the trigger will cause a transition to.</param>
-            <param name="guard">Function that must return true in order for the
-            trigger to be accepted.</param>
-            <returns>The reciever.</returns>
-            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamicIf``2(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1},System.Func{``0,``1,`0},System.Func{System.Boolean})">
-            <summary>
-            Accept the specified trigger and transition to the destination state, calculated
-            dynamically by the supplied function.
-            </summary>
-            <param name="trigger">The accepted trigger.</param>
-            <param name="destinationStateSelector">Function to calculate the state 
-            that the trigger will cause a transition to.</param>
-            <param name="guard">Function that must return true in order for the
-            trigger to be accepted.</param>
-            <returns>The reciever.</returns>
-            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
-            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
-        </member>
-        <member name="M:Stateless.StateMachine`2.StateConfiguration.PermitDynamicIf``3(Stateless.StateMachine{`0,`1}.TriggerWithParameters{``0,``1,``2},System.Func{``0,``1,``2,`0},System.Func{System.Boolean})">
-            <summary>
-            Accept the specified trigger and transition to the destination state, calculated
-            dynamically by the supplied function.
-            </summary>
-            <param name="trigger">The accepted trigger.</param>
-            <param name="destinationStateSelector">Function to calculate the state 
-            that the trigger will cause a transition to.</param>
-            <returns>The reciever.</returns>
-            <param name="guard">Function that must return true in order for the
-            trigger to be accepted.</param>
-            <typeparam name="TArg0">Type of the first trigger argument.</typeparam>
-            <typeparam name="TArg1">Type of the second trigger argument.</typeparam>
-            <typeparam name="TArg2">Type of the third trigger argument.</typeparam>
-        </member>
         <member name="T:Stateless.StateMachine`2.Transition">
             <summary>
             Describes a state transition.
@@ -508,17 +527,17 @@
             <param name="underlyingTrigger">Trigger represented by this trigger configuration.</param>
             <param name="argumentTypes">The argument types expected by the trigger.</param>
         </member>
+        <member name="P:Stateless.StateMachine`2.TriggerWithParameters.Trigger">
+            <summary>
+            Gets the underlying trigger value that has been configured.
+            </summary>
+        </member>
         <member name="M:Stateless.StateMachine`2.TriggerWithParameters.ValidateParameters(System.Object[])">
             <summary>
             Ensure that the supplied arguments are compatible with those configured for this
             trigger.
             </summary>
             <param name="args"></param>
-        </member>
-        <member name="P:Stateless.StateMachine`2.TriggerWithParameters.Trigger">
-            <summary>
-            Gets the underlying trigger value that has been configured.
-            </summary>
         </member>
         <member name="T:Stateless.StateMachine`2.TriggerWithParameters`1">
             <summary>
@@ -558,6 +577,12 @@
             Create a configured trigger.
             </summary>
             <param name="underlyingTrigger">Trigger represented by this trigger configuration.</param>
+        </member>
+        <member name="M:Stateless.StateMachine`2.ToDotGraph">
+            <summary>
+            A string representation of the state machine in the DOT graph language.
+            </summary>
+            <returns>A description of all simple source states, triggers and destination states.</returns>
         </member>
         <member name="T:Stateless.ParameterConversionResources">
             <summary>
