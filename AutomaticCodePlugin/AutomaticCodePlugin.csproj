@@ -175,11 +175,6 @@
     <Folder Include="Models\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\VictopLib\GalaSoft.MvvmLight.Extras.WPF4.dll" />
-    <Analyzer Include="..\VictopLib\GalaSoft.MvvmLight.WPF4.dll" />
-    <Analyzer Include="..\VictopLib\System.Windows.Interactivity.dll" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
