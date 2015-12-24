@@ -16,42 +16,18 @@ namespace Victop.Frame.AtomicOperation.UIAtOperation
         /// <summary>
         /// 设置Button是否可用
         /// </summary>
-        /// <param name="buttonValue">Button对象值</param>
-        /// <param name="isEnable">是否可用,true:可以;false:不可用</param>
-        public static void SetButtonEnable(object buttonValue, bool isEnable)
-        {
-            if (buttonValue != null)
-            {
-                Button btn = buttonValue as Button;
-                btn.IsEnabled = isEnable;
-            }
-        }
-        /// <summary>
-        /// 设置Button是否可用
-        /// </summary>
         /// <param name="viewValue">Button所属界面值</param>
         /// <param name="btnName">Button名称</param>
         /// <param name="isEnable">是否可用,true:可以;false:不可用</param>
-        public static void SetButtonEnable(object viewValue, string btnName, bool isEnable)
+        public static void SetButtonEnable(TemplateControl viewValue, string btnName, bool isEnable)
         {
             if (viewValue != null)
             {
-                TemplateControl tcCtrl = viewValue as TemplateControl;
-                Button btn = tcCtrl.FindName(btnName) as Button;
-                btn.IsEnabled = isEnable;
-            }
-        }
-        /// <summary>
-        /// 设置按钮显示状态
-        /// </summary>
-        /// <param name="buttonValue">Button对象值</param>
-        /// <param name="isEnable">是否可用,true:可见;false:隐藏</param>
-        public static void SetButtonVisibility(object buttonValue, bool isEnable)
-        {
-            if (buttonValue != null)
-            {
-                Button btn = buttonValue as Button;
-                btn.Visibility = isEnable ? Visibility.Visible : Visibility.Collapsed;
+                Button btn = viewValue.FindName(btnName) as Button;
+                if (btn != null)
+                {
+                    btn.IsEnabled = isEnable;
+                }
             }
         }
         /// <summary>
@@ -60,13 +36,15 @@ namespace Victop.Frame.AtomicOperation.UIAtOperation
         /// <param name="viewValue">Button所属界面值</param>
         /// <param name="btnName">Button名称</param>
         /// <param name="isEnable">是否可用,true:可见;false:隐藏</param>
-        public static void SetButtonVisibility(object viewValue, string btnName, bool isEnable)
+        public static void SetButtonVisibility(TemplateControl viewValue, string btnName, bool isEnable)
         {
             if (viewValue != null)
             {
-                TemplateControl tcCtrl = viewValue as TemplateControl;
-                Button btn = tcCtrl.FindName(btnName) as Button;
-                btn.Visibility = isEnable ? Visibility.Visible : Visibility.Collapsed;
+                Button btn = viewValue.FindName(btnName) as Button;
+                if (btn != null)
+                {
+                    btn.Visibility = isEnable ? Visibility.Visible : Visibility.Collapsed;
+                }
             }
         }
     }
