@@ -81,6 +81,9 @@
     <Compile Include="Views\FeidaoUserLoginWindow.xaml.cs">
       <DependentUpon>FeidaoUserLoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UCCountDown.xaml.cs">
+      <DependentUpon>UCCountDown.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UCFeidaoSystemConfig.xaml.cs">
       <DependentUpon>UCFeidaoSystemConfig.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\FeidaoUserLoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UCCountDown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
