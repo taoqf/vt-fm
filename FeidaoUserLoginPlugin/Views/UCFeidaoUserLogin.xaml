@@ -40,7 +40,7 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <controls:VicGridNormal VerticalAlignment="Center" Grid.Row="0">
-                <Border BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100" CornerRadius="5">
+                <Border BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="120" CornerRadius="8">
                     <Border.BorderBrush>
                         <LinearGradientBrush SpreadMethod="Repeat" StartPoint="0,5" EndPoint="5,0" MappingMode="Absolute">
                             <LinearGradientBrush.GradientStops>
@@ -53,7 +53,7 @@
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
                     </Border.BorderBrush>
-                    <Image Source="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}" Stretch="UniformToFill"/>
+                    <Image Width="80" Height="100" Source="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}" Stretch="Uniform"/>
                 </Border>
             </controls:VicGridNormal>
             <controls:VicGridNormal Grid.Row="1">
@@ -63,12 +63,12 @@
                     <RowDefinition Height="46"/>
                     <RowDefinition Height="46"/>
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="0" Width="192" Height="28"   HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding LoginInfoModel.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalContentAlignment="Center"/>
-                <controls:VicPasswordBoxKeyNormal Grid.Row="1" Name="pwBox" Width="192" Height="28" VerticalAlignment="Center" HorizontalAlignment="Center"  
+                <TextBox Grid.Row="0" Width="192" Height="30"   HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding LoginInfoModel.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalContentAlignment="Center"/>
+                <controls:VicPasswordBoxKeyNormal Grid.Row="1" Name="pwBox" Width="192" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"  
                             PasswordText="{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
                 </controls:VicPasswordBoxKeyNormal>
-                <controls:VicComboBoxNormal Width="192" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="2" Height="28" Name="CloudSOAComboBox"  
+                <controls:VicComboBoxNormal Width="192" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="2" Height="30" Name="CloudSOAComboBox"  
                         ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
                         SelectedValue="{Binding SelectedGallery,UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Triggers>
