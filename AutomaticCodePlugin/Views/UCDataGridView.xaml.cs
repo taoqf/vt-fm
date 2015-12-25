@@ -43,7 +43,11 @@ namespace AutomaticCodePlugin.Views
         }
         private void UCDataGridView_Loaded(object sender, RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("Load",sender);
+            if (InitVictopUserControl(Properties.Resources.masterPVDString))
+            {
+                MainPBlock = GetPresentationBlockModel("masterPBlock");
+            }
+            FeiDaoFSM.Do("Load", sender);
         }
     }
 }

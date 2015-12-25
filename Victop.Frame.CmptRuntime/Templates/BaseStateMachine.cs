@@ -47,7 +47,8 @@ namespace Victop.Frame.CmptRuntime
 
         private void OnTransitioned(StateMachine<string, string>.Transition x)
         {
-            Console.WriteLine("{0}:OnTransitioned",MainView.Name);
+            //Console.WriteLine("{0}:OnTransitioned",MainView.Name);
+            //Console.WriteLine("CurrentState:{0}", FeiDaoFSM.State);
         }
 
         /// <summary>

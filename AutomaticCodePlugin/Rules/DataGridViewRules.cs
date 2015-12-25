@@ -17,17 +17,13 @@ namespace AutomaticCodePlugin.Rules
         public override void Define()
         {
             StateTransitionModel stateModel = null;
-            When().Match<StateTransitionModel>(() => stateModel,s=>s.ActionName.Equals("Load"));
+            When().Match<StateTransitionModel>(() => stateModel, s => s.ActionName.Equals("Load"));
             Then().Do(session => InitPBlockInfo(session, stateModel));
         }
 
         private void InitPBlockInfo(IContext session, StateTransitionModel stateModel)
         {
-            UCDataGridView view = stateModel.MainView as UCDataGridView;
-            if (view.InitVictopUserControl(Properties.Resources.masterPVDString))
-            {
-                view.MainPBlock = view.GetPresentationBlockModel("masterPBlock");
-            }
+
         }
     }
     [Tag("DataGridView")]

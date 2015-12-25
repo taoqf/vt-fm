@@ -31,23 +31,26 @@ namespace AutomaticCodePlugin.FSM
         private void OnAddedExit()
         {
             Console.WriteLine("BtnOpView:OnAddedExit");
+            Console.WriteLine("CurrentState:{0}", FeiDaoFSM.State);
         }
 
         private void OnAddedEntry()
         {
             Console.WriteLine("BtnOpView:OnAddedEntry");
-            Fire(new OAVModel("opView", "opName", "AddBtnClick"));
+            Fire();
         }
 
         private void OnSearchedExit()
         {
             Console.WriteLine("BtnOpView:OnSearchedExit");
+            Console.WriteLine("CurrentState:{0}", FeiDaoFSM.State);
         }
 
         private void OnSearchedEntry()
         {
             Console.WriteLine("BtnOpView:OnSearchedEntry");
-            Fire(new OAVModel("opView", "opName", "SearchBtnClick"));
+            Console.WriteLine("CurrentState:{0}", FeiDaoFSM.State);
+            Fire();
         }
 
         private void OnLoadedExit()
