@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using Victop.Server.Controls.Models;
 
 namespace Victop.Frame.CmptRuntime
 {
     /// <summary>
     /// 组件定义呈现层实体
     /// </summary>
-    public class DefinPresentationModel
+    public class DefinPresentationModel : PropertyModelBase
     {
         /// <summary>
         /// 呈现层Block
@@ -28,7 +29,11 @@ namespace Victop.Frame.CmptRuntime
                     presentationBlocks = new ObservableCollection<PresentationBlockModel>();
                 return presentationBlocks;
             }
-            set { presentationBlocks = value; }
+            set
+            {
+                presentationBlocks = value;
+                RaisePropertyChanged(() => PresentationBlocks);
+            }
         }
     }
 }

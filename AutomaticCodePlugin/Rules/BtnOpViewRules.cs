@@ -15,20 +15,14 @@ namespace AutomaticCodePlugin.Rules
     {
         public override void Define()
         {
-            TemplateControl oavCtrl = null;
-            OAVModel oavOpName = null;
-            When().Match<TemplateControl>(() => oavCtrl)
-                .Match<OAVModel>(() => oavOpName, op => op.ObjectName.Equals("opView") && op.AtrributeName.Equals("opName") && op.AtrributeValue.Equals("SearchBtnClick"));
-            Then().Do(session => OnSearch(session, oavCtrl, oavOpName));
+            StateTransitionModel stateModel = null;
+            When().Match<StateTransitionModel>(() => stateModel,s=>s.ActionName.Equals("Search"));
+            Then().Do(session => OnSearch(session, stateModel));
         }
 
-        private void OnSearch(IContext session, TemplateControl oavCtrl, OAVModel oavOpName)
+        private void OnSearch(IContext session, StateTransitionModel stateModel)
         {
-            UCBtnOperationView opView = oavCtrl as UCBtnOperationView;
-            if (opView.SearchBtnClick != null)
-            {
-                opView.SearchBtnClick(opView.searchBtn, opView.ParamDict);
-            }
+            stateModel.MainView.ParentControl.FeiDaoFSM.Do("Search",stateModel.ActionSourceElement);
         }
     }
     [Tag("BtnOpView")]
@@ -36,20 +30,14 @@ namespace AutomaticCodePlugin.Rules
     {
         public override void Define()
         {
-            TemplateControl oavCtrl = null;
-            OAVModel oavOpName = null;
-            When().Match<TemplateControl>(() => oavCtrl)
-                .Match<OAVModel>(() => oavOpName, op => op.ObjectName.Equals("opView") && op.AtrributeName.Equals("opName") && op.AtrributeValue.Equals("AddBtnClick"));
-            Then().Do(session => OnAdd(session, oavCtrl, oavOpName));
+            StateTransitionModel stateModel = null;
+            When().Match<StateTransitionModel>(() => stateModel,s=>s.ActionName.Equals("Add"));
+            Then().Do(session => OnAdd(session, stateModel));
         }
 
-        private void OnAdd(IContext session, TemplateControl oavCtrl, OAVModel oavOpName)
+        private void OnAdd(IContext session, StateTransitionModel stateModel)
         {
-            UCBtnOperationView opView = oavCtrl as UCBtnOperationView;
-            if (opView.AddBtnClick != null)
-            {
-                opView.AddBtnClick(opView.addBtn, opView.ParamDict);
-            }
+            stateModel.MainView.ParentControl.FeiDaoFSM.Do("Add",stateModel.ActionSourceElement);
         }
     }
 }

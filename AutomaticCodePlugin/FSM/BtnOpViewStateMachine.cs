@@ -25,7 +25,8 @@ namespace AutomaticCodePlugin.FSM
                 .Permit("Add", "Added");
             FeiDaoFSM.Configure("Added")
                 .OnEntry(() => OnAddedEntry())
-                .OnExit(() => OnAddedExit());
+                .OnExit(() => OnAddedExit())
+                .Permit("Search", "Searched");
         }
         private void OnAddedExit()
         {

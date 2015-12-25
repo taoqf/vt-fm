@@ -28,7 +28,6 @@ namespace AutomaticCodePlugin.Views
             DataContext = this;
             this.Loaded += UCDataGridView_Loaded;
         }
-
         PresentationBlockModel mainPBlock;
         public PresentationBlockModel MainPBlock
         {
@@ -44,14 +43,7 @@ namespace AutomaticCodePlugin.Views
         }
         private void UCDataGridView_Loaded(object sender, RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("Load");
-        }
-        public override void Excute(Dictionary<string, object> paramDic)
-        {
-            if (paramDic != null && paramDic.ContainsKey("State"))
-            {
-                FeiDaoFSM.Do(paramDic["State"].ToString());
-            }
+            FeiDaoFSM.Do("Load",sender);
         }
     }
 }

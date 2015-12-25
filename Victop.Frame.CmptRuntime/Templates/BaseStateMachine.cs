@@ -8,6 +8,7 @@ using NRules.Fluent;
 using System.Reflection;
 using Victop.Server.Controls.Models;
 using Victop.Frame.PublicLib.Helpers;
+using System.Windows;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -25,6 +26,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         protected TemplateControl MainView;
         private string currentState = "None";
+        private StateTransitionModel stateModel;
         private ISession session;
         /// <summary>
         /// 构造函数
@@ -36,17 +38,30 @@ namespace Victop.Frame.CmptRuntime
         {
             MainView = mainView;
             CreateRuleRepositoryGroup(groupName, pluginAssembly);
-            session.TryInsert(MainView);
+            stateModel = new StateTransitionModel() { ActionName = "None", ActionSourceElement = mainView, MainView = mainView };
+            session.Insert(stateModel);
             FeiDaoFSM = new StateMachine<string, string>(() => currentState, s => currentState = s);
+            FeiDaoFSM.OnTransitioned((x) => OnTransitioned(x));
+
         }
+
+        private void OnTransitioned(StateMachine<string, string>.Transition x)
+        {
+            Console.WriteLine("{0}:OnTransitioned",MainView.Name);
+        }
+
         /// <summary>
         /// 执行动作
         /// </summary>
         /// <param name="triggerName">动作名称</param>
-        public void Do(string triggerName)
+        /// <param name="triggerSource">动作触发源</param>
+        public void Do(string triggerName, object triggerSource)
         {
             if (FeiDaoFSM.CanFire(triggerName))
             {
+                stateModel.ActionName = triggerName;
+                stateModel.ActionSourceElement = triggerSource as FrameworkElement;
+                session.Update(stateModel);
                 FeiDaoFSM.Fire(triggerName);
             }
             else

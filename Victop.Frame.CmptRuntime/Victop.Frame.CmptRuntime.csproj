@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="Templates\BaseStateMachine.cs" />
     <Compile Include="Templates\MainRule.cs" />
+    <Compile Include="Templates\StateTransitionModel.cs" />
     <Compile Include="Templates\TemplateControl.cs" />
     <Compile Include="ViewsConditionModel.cs" />
     <Compile Include="ViewsBlockConditionModel.cs" />

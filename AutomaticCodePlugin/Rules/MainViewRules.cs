@@ -14,21 +14,15 @@ namespace AutomaticCodePlugin.Rules
     {
         public override void Define()
         {
-            OAVModel oavCtrl = null;
-            OAVModel oavState = null;
-            TemplateControl mainView = null;
-            When().Match<OAVModel>(() => oavCtrl, ctrl => ctrl.ObjectName.Equals("MainView") && ctrl.AtrributeName.Equals("GridControl"))
-                .Match<TemplateControl>(() => mainView)
-                .Match<OAVModel>(() => oavState, state => state.ObjectName.Equals("MainView") && state.AtrributeName.Equals("State"));
-            Then().Do(session => OnSearch(session, mainView, oavCtrl, oavState));
+            StateTransitionModel stateModel = null;
+            When().Match<StateTransitionModel>(() => stateModel);
+            Then().Do(session => OnSearch(session, stateModel));
         }
 
-        private void OnSearch(IContext session, TemplateControl control, OAVModel oavCtrl, OAVModel oavState)
+        private void OnSearch(IContext session, StateTransitionModel stateModel)
         {
-            TemplateControl tc = control.FindName(oavCtrl.AtrributeValue.ToString()) as TemplateControl;
-            Dictionary<string, object> paramDic = new Dictionary<string, object>();
-            paramDic.Add(oavState.AtrributeName, oavState.AtrributeValue);
-            tc.Excute(paramDic);
+            TemplateControl tc = stateModel.MainView.FindName("ucdgrid") as TemplateControl;
+            tc.FeiDaoFSM.Do(stateModel.ActionName, stateModel.ActionSourceElement);
         }
     }
 }

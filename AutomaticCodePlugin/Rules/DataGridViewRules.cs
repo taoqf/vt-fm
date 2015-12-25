@@ -16,14 +16,14 @@ namespace AutomaticCodePlugin.Rules
     {
         public override void Define()
         {
-            TemplateControl oav = null;
-            When().Match<TemplateControl>(() => oav);
-            Then().Do(session => InitPBlockInfo(session, oav));
+            StateTransitionModel stateModel = null;
+            When().Match<StateTransitionModel>(() => stateModel,s=>s.ActionName.Equals("Load"));
+            Then().Do(session => InitPBlockInfo(session, stateModel));
         }
 
-        private void InitPBlockInfo(IContext session, TemplateControl oav)
+        private void InitPBlockInfo(IContext session, StateTransitionModel stateModel)
         {
-            UCDataGridView view = oav as UCDataGridView;
+            UCDataGridView view = stateModel.MainView as UCDataGridView;
             if (view.InitVictopUserControl(Properties.Resources.masterPVDString))
             {
                 view.MainPBlock = view.GetPresentationBlockModel("masterPBlock");
@@ -35,13 +35,15 @@ namespace AutomaticCodePlugin.Rules
     {
         public override void Define()
         {
-            OAVModel oav = null;
-            When().Match<OAVModel>(() => oav, p => p.ObjectName.Equals("masterPBlock") && p.AtrributeName.Equals("GetData"));
-            Then().Do(session => GetBlockData(session, oav));
+            StateTransitionModel stateModel = null;
+            OAVModel oavModel = null;
+            When().Match<StateTransitionModel>(() => stateModel, p => p.ActionName.Equals("Search"))
+                .Match<OAVModel>(() => oavModel, o => o.ObjectName.Equals("masterPBlock"));
+            Then().Do(session => GetBlockData(session, stateModel, oavModel));
         }
-        private void GetBlockData(IContext session, OAVModel oav)
+        private void GetBlockData(IContext session, StateTransitionModel stateModel, OAVModel oavModel)
         {
-            PresentationBlockModel pBlock = oav.AtrributeValue as PresentationBlockModel;
+            PresentationBlockModel pBlock = stateModel.MainView.GetPresentationBlockModel(oavModel.ObjectName);
             pBlock.GetData();
         }
     }
@@ -51,13 +53,15 @@ namespace AutomaticCodePlugin.Rules
     {
         public override void Define()
         {
-            OAVModel oav = null;
-            When().Match<OAVModel>(() => oav, p => p.ObjectName.Equals("masterPBlock") && p.AtrributeName.Equals("AddData"));
-            Then().Do(session => GetBlockData(session, oav));
+            StateTransitionModel stateModel = null;
+            OAVModel oavModel = null;
+            When().Match<StateTransitionModel>(() => stateModel, p => p.ActionName.Equals("Add"))
+                .Match<OAVModel>(() => oavModel, o => o.ObjectName.Equals("masterPBlock"));
+            Then().Do(session => GetBlockData(session, stateModel, oavModel));
         }
-        private void GetBlockData(IContext session, OAVModel oav)
+        private void GetBlockData(IContext session, StateTransitionModel stateModel, OAVModel oavModel)
         {
-            DataTable mastDt = oav.AtrributeValue as DataTable;
+            DataTable mastDt = stateModel.MainView.GetPresentationBlockModel(oavModel.ObjectName).ViewBlockDataTable;
             DataRow dr = mastDt.NewRow();
             dr["_id"] = Guid.NewGuid().ToString();
             mastDt.Rows.Add(dr);

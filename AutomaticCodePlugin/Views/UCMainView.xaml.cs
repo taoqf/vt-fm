@@ -1,6 +1,7 @@
 ﻿using AutomaticCodePlugin.FSM;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,7 @@ namespace AutomaticCodePlugin.Views
                 RaisePropertyChanged(() => MainPBlock);
             }
         }
+        
         public UCMainView(Dictionary<string, object> paramDict, int showType)
         {
             InitializeComponent();
@@ -43,20 +45,7 @@ namespace AutomaticCodePlugin.Views
             FeiDaoFSM = new MainViewStateMachine(this);
             ParamDict = paramDict;
             ShowType = showType;
-            ucBtnOp.SearchBtnClick += OnSearchBtnClick;
-            ucBtnOp.AddBtnClick += OnAddBtnClick;
         }
-
-        private void OnAddBtnClick(object sender, Dictionary<string, object> paramDic)
-        {
-            FeiDaoFSM.Do("Add");
-        }
-
-        private void OnSearchBtnClick(object sender, Dictionary<string, object> paramDic)
-        {
-            FeiDaoFSM.Do("Search");
-        }
-
         private void dgridProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //FeiDaoFSM.Do("SelectRow");
@@ -64,7 +53,7 @@ namespace AutomaticCodePlugin.Views
 
         private void mainView_Loaded(object sender, RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("Load");
+            FeiDaoFSM.Do("Load",sender);
         }
     }
 }

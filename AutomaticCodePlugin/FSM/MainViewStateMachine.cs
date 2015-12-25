@@ -10,7 +10,7 @@ namespace AutomaticCodePlugin.FSM
 {
     public class MainViewStateMachine : BaseStateMachine
     {
-        public MainViewStateMachine(TemplateControl mainView) : base("MainView", Assembly.GetExecutingAssembly(),mainView)
+        public MainViewStateMachine(TemplateControl mainView) : base("MainView", Assembly.GetExecutingAssembly(), mainView)
         {
             FeiDaoFSM.Configure("None")
                 .Permit("Load", "Loaded");
@@ -24,7 +24,8 @@ namespace AutomaticCodePlugin.FSM
                 .PermitReentry("Search")
                 .Permit("Add", "Added");
             FeiDaoFSM.Configure("Added")
-                .OnEntry(() => OnAddedEntry());
+                .OnEntry(() => OnAddedEntry())
+                .Permit("Search", "Searched");
         }
         private void OnAddedEntry()
         {

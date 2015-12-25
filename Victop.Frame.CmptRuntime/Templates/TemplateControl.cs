@@ -36,7 +36,6 @@ namespace Victop.Frame.CmptRuntime
         /// 组件定义
         /// </summary>
         private CompntDefinModel DefinModel;
-
         /// <summary>
         /// 系统Id
         /// </summary>
@@ -69,6 +68,14 @@ namespace Victop.Frame.CmptRuntime
             get { return (string)GetValue(VicErrorMsgProperty); }
             set { SetValue(VicErrorMsgProperty, value); }
         }
+        /// <summary>
+        /// 父级控件
+        /// </summary>
+        public TemplateControl ParentControl
+        {
+            get { return (TemplateControl)GetValue(ParentControlProperty); }
+            set { SetValue(ParentControlProperty, value); }
+        }
         #endregion
 
         #region 依赖属性
@@ -88,6 +95,10 @@ namespace Victop.Frame.CmptRuntime
         /// Vic错误信息
         /// </summary>
         public static readonly DependencyProperty VicErrorMsgProperty = DependencyProperty.Register("VicErrorMsg", typeof(string), typeof(TemplateControl));
+        /// <summary>
+        /// 父级控件
+        /// </summary>
+        public static readonly DependencyProperty ParentControlProperty = DependencyProperty.Register("ParentControl", typeof(TemplateControl), typeof(TemplateControl));
         #endregion
         #region 公用方法
         /// <summary>
@@ -102,7 +113,6 @@ namespace Victop.Frame.CmptRuntime
                 if (DefinModel != null)
                 {
                     OrgnizeRuntime.InitCompnt(DefinModel);
-                    PresentationBlockModel blockModel = DefinModel.CompntPresentation.PresentationBlocks.FirstOrDefault(it => it.Superiors.Equals("root"));
                     foreach (var item in DefinModel.CompntPresentation.PresentationBlocks.Where(it => it.Superiors.Equals("root")))
                     {
                         bool result = CheckPresentationBlock(this, item.BlockName);
@@ -116,6 +126,7 @@ namespace Victop.Frame.CmptRuntime
                         }
                     }
                     initFlag = true;
+                    //MainPBlock = DefinModel.CompntPresentation.PresentationBlocks[0];
                     return true;
                 }
                 else

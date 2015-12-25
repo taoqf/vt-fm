@@ -15,7 +15,7 @@
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="0.5*"/>
         </ctrl:VicGridNormal.RowDefinitions>
-        <local:UCBtnOperationView Grid.Row="0" x:Name="ucBtnOp">
+        <local:UCBtnOperationView Grid.Row="0" x:Name="ucBtnOp" ParentControl="{Binding ElementName=mainView}">
         </local:UCBtnOperationView>
         <!--<ctrl:VicDockPanelNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
             <ctrl:VicButtonNormal Width="100" Height="24" Content="查询" Name="searchBtn" Margin="0,0,10,0" Click="searchBtn_Click"/>
@@ -25,7 +25,7 @@
         </ctrl:VicDockPanelNormal>-->
         <!--<ctrl:VicDataGrid Grid.Row="1" CanUserAddRows="False" Name="dgridProduct" ItemsSource="{Binding MainPBlock.ViewBlockDataTable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="dgridProduct_SelectionChanged">
         </ctrl:VicDataGrid>-->
-        <local:UCDataGridView Grid.Row="1" x:Name="ucdgrid"/>
+        <local:UCDataGridView Grid.Row="1" x:Name="ucdgrid" ParentControl="{Binding ElementName=mainView}"/>
         <ctrl:VicDockPanelNormal Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left">
             <TextBox Width="100" Height="24" Name="tbox" Text="{Binding MainPBlock.PreBlockSelectedRow[_id]}"/>
             <TextBox Width="100" Height="24" Name="tbox1" Text="{Binding MainPBlock.PreBlockSelectedRow[productid]}"/>

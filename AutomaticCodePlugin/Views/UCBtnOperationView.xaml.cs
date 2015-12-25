@@ -1,4 +1,6 @@
 ﻿using AutomaticCodePlugin.FSM;
+using System.Windows;
+using System.Windows.Controls;
 using Victop.Frame.CmptRuntime;
 
 namespace AutomaticCodePlugin.Views
@@ -8,14 +10,6 @@ namespace AutomaticCodePlugin.Views
     /// </summary>
     public partial class UCBtnOperationView : TemplateControl
     {
-        /// <summary>
-        /// 查询按钮点击事件
-        /// </summary>
-        public TemplateDelegateEvent SearchBtnClick;
-        /// <summary>
-        /// 添加按钮点击事件
-        /// </summary>
-        public TemplateDelegateEvent AddBtnClick;
         public UCBtnOperationView()
         {
             InitializeComponent();
@@ -25,17 +19,17 @@ namespace AutomaticCodePlugin.Views
 
         private void UCBtnOperationView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("Load");
+            FeiDaoFSM.Do("Load",sender);
         }
 
         private void searchBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("Search");
+            FeiDaoFSM.Do("Search",sender);
         }
 
         private void addBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("Add");
+            FeiDaoFSM.Do("Add",sender);
         }
     }
 }
