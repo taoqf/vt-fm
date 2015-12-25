@@ -8,13 +8,22 @@
              d:DesignHeight="56" d:DesignWidth="234" FontSize="28" Foreground="White">
     <UserControl.Resources>
         <Style TargetType="ctrl:VicTextBlockNormal">
+            <Setter Property="FontFamily" Value="方正姚体 "></Setter>
             <Setter Property="Background">
                 <Setter.Value>
-                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.6">
+                    <!--<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0" Opacity="0.6">
                         <GradientStop Color="#00000000" Offset="0.897"/>
                         <GradientStop Color="White" Offset="1"/>
                         <GradientStop Color="#00000000" Offset="0.136"/>
                         <GradientStop Color="#FFFBF9F9"/>
+                    </LinearGradientBrush>-->
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" Opacity="0.6" StartPoint="0.5,0">
+                        <GradientStop Color="#00000000" Offset="0.897"/>
+                        <GradientStop Color="White" Offset="1"/>
+                        <GradientStop Color="#00000000" Offset="0.136"/>
+                        <GradientStop Color="#FFFBF9F9"/>
+                        <GradientStop Color="#FF4F4C4C" Offset="0.177"/>
+                        <GradientStop Color="#FF686464" Offset="0.849"/>
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
@@ -31,7 +40,7 @@
     </UserControl.Resources>
     <ctrl:VicGridNormal HorizontalAlignment="Center">
         <ctrl:VicGridNormal.RowDefinitions>
-            <RowDefinition Height="45"/>
+            <RowDefinition Height="46"/>
             <RowDefinition Height="11"/>
         </ctrl:VicGridNormal.RowDefinitions>
         <ctrl:VicGridNormal.ColumnDefinitions>
@@ -50,19 +59,31 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </ctrl:VicGridNormal.ColumnDefinitions>
-        <ctrl:VicTextBlockNormal Text="3" Name="Day1Area" VerticalAlignment="Center" Grid.Column="0" Margin="1"/>
-        <ctrl:VicTextBlockNormal Text="3" Name="Day2Area" VerticalAlignment="Center" Grid.Column="1" Margin="1"/>
-        <ctrl:VicTextBlockNormal Text="2" Name="Day3Area" VerticalAlignment="Center" Grid.Column="2" Margin="1"/>
-        <ctrl:VicTextBlockNormal Text="5" Name="Day4Area" VerticalAlignment="Center" Grid.Column="3" Margin="1"/>
-        <ctrl:VicTextBlockNormal Text=" " Name="DaySplitHour" VerticalAlignment="Center" Grid.Column="4" Margin="1"/>
-        <ctrl:VicTextBlockNormal Text="1" Name="Hour1Area" VerticalAlignment="Center" Grid.Column="5" Margin="1"/>
-        <ctrl:VicTextBlockNormal Text="4" Name="Hour2Area" VerticalAlignment="Center" Grid.Column="6" Margin="1"/>
-        <ctrl:VicTextBlockNormal Text=" " Name="HourSplitMinute" VerticalAlignment="Center" Grid.Column="7" Margin="1"/>
-        <ctrl:VicTextBlockNormal Text="1" Name="Minute1Area" VerticalAlignment="Center" Grid.Column="8" Margin="1"/>
-        <ctrl:VicTextBlockNormal Text="0" Name="Minute2Area" VerticalAlignment="Center" Grid.Column="9" Margin="1"/>
-        <ctrl:VicTextBlockNormal Text=" " Name="MinuteSplitSecond" VerticalAlignment="Center" Grid.Column="10" Margin="1"/>
-        <ctrl:VicTextBlockNormal Text="0" Name="Second1Area" VerticalAlignment="Center" Grid.Column="11" Margin="1"/>
-        <ctrl:VicTextBlockNormal Text="0" Name="Second2Area" VerticalAlignment="Center" Grid.Column="12" Margin="1"/>
+        <ctrl:VicTextBlockNormal Text="3" Name="Day1Area" VerticalAlignment="Center" Grid.Column="0" Margin="2" FontFamily="方正姚体">
+        	<ctrl:VicTextBlockNormal.Background>
+        		<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" Opacity="0.6" StartPoint="0.5,0">
+        			<GradientStop Color="#00000000" Offset="0.897"/>
+        			<GradientStop Color="White" Offset="1"/>
+        			<GradientStop Color="#00000000" Offset="0.136"/>
+        			<GradientStop Color="#FFFBF9F9"/>
+        			<GradientStop Color="#FF4F4C4C" Offset="0.177"/>
+        			<GradientStop Color="#FF686464" Offset="0.849"/>
+        		</LinearGradientBrush>
+        	</ctrl:VicTextBlockNormal.Background>
+        </ctrl:VicTextBlockNormal>
+        <ctrl:VicTextBlockNormal Text="3" Name="Day2Area" VerticalAlignment="Center" Grid.Column="1" Margin="2">
+        </ctrl:VicTextBlockNormal>
+        <ctrl:VicTextBlockNormal Text="2" Name="Day3Area" VerticalAlignment="Center" Grid.Column="2" Margin="2"/>
+        <ctrl:VicTextBlockNormal Text="5" Name="Day4Area" VerticalAlignment="Center" Grid.Column="3" Margin="2"/>
+        <ctrl:VicTextBlockNormal Text=" " Name="DaySplitHour" VerticalAlignment="Center" Grid.Column="4" Margin="2"/>
+        <ctrl:VicTextBlockNormal Text="1" Name="Hour1Area" VerticalAlignment="Center" Grid.Column="5" Margin="2"/>
+        <ctrl:VicTextBlockNormal Text="4" Name="Hour2Area" VerticalAlignment="Center" Grid.Column="6" Margin="2"/>
+        <ctrl:VicTextBlockNormal Text=" " Name="HourSplitMinute" VerticalAlignment="Center" Grid.Column="7" Margin="2"/>
+        <ctrl:VicTextBlockNormal Text="1" Name="Minute1Area" VerticalAlignment="Center" Grid.Column="8" Margin="2"/>
+        <ctrl:VicTextBlockNormal Text="0" Name="Minute2Area" VerticalAlignment="Center" Grid.Column="9" Margin="2"/>
+        <ctrl:VicTextBlockNormal Text=" " Name="MinuteSplitSecond" VerticalAlignment="Center" Grid.Column="10" Margin="2"/>
+        <ctrl:VicTextBlockNormal Text="0" Name="Second1Area" VerticalAlignment="Center" Grid.Column="11" Margin="2"/>
+        <ctrl:VicTextBlockNormal Text="0" Name="Second2Area" VerticalAlignment="Center" Grid.Column="12" Margin="2"/>
         <!--<ctrl:VicTextBlockNormal Grid.Row="1" Grid.ColumnSpan="4" Text="天" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <ctrl:VicTextBlockNormal Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" Text="时" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <ctrl:VicTextBlockNormal Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="2" Text="分" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Top"/>
