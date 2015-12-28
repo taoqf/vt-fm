@@ -10,56 +10,23 @@ namespace AutomaticCodePlugin.FSM
 {
     public class DataGridViewStateMachine : BaseStateMachine
     {
-        public DataGridViewStateMachine(TemplateControl mainView) : base("DataGridView", Assembly.GetExecutingAssembly(),mainView)
+        public DataGridViewStateMachine(TemplateControl mainView) : base("DataGridViewRules", Assembly.GetExecutingAssembly(), mainView)
         {
             FeiDaoFSM.Configure("None")
                 .Permit("Load", "Loaded");
             FeiDaoFSM.Configure("Loaded")
-                .OnEntry(() => OnLoadedEntry())
-                .OnExit(() => OnLoadeExit())
+                .OnEntry((x) => OnFeidaoEntry(x))
+                .OnExit((x) => OnFeidaoExit(x))
                 .Permit("Search", "Searched");
             FeiDaoFSM.Configure("Searched")
-                .OnEntry(() => OnSearchedEntry())
-                .OnExit(() => OnSearchExit())
+                .OnEntry((x) => OnFeidaoEntry(x))
+                .OnExit((x) => OnFeidaoExit(x))
                 .PermitReentry("Search")
                 .Permit("Add", "Added");
             FeiDaoFSM.Configure("Added")
-                .OnEntry(() => OnAddedEntry())
-                .OnExit(() => OnAddedExit())
+                .OnEntry((x) => OnFeidaoEntry(x))
+                .OnExit((x) => OnFeidaoExit(x))
                 .Permit("Search", "Searched");
-        }
-
-        private void OnAddedExit()
-        {
-            Console.WriteLine("DataGridView:OnAddedExit");
-        }
-
-        private void OnAddedEntry()
-        {
-            Console.WriteLine("DataGridView:OnAddedEntry");
-            Fire(new OAVModel("masterPBlock", "AddData",null));
-        }
-
-        private void OnSearchExit()
-        {
-            Console.WriteLine("DataGridView:OnSearchExit");
-        }
-
-        private void OnSearchedEntry()
-        {
-            Console.WriteLine("DataGridView:OnSearchedEntry");
-            Fire(new OAVModel("masterPBlock", "GetData",null));
-        }
-
-        private void OnLoadeExit()
-        {
-            Console.WriteLine("DataGridView:OnLoadeExit");
-        }
-
-        private void OnLoadedEntry()
-        {
-            Console.WriteLine("DataGridView:OnLoadedEntry");
-            Fire();
         }
     }
 }

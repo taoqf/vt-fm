@@ -23,5 +23,17 @@ namespace Victop.Frame.CmptRuntime
         /// 主程序页
         /// </summary>
         public TemplateControl MainView { get; set; }
+        /// <summary>
+        /// 动作目的状态
+        /// </summary>
+        public string ActionDestination { get; set; }
+        /// <summary>
+        /// 动作源状态
+        /// </summary>
+        public string ActionSource { get; set; }
+        /// <summary>
+        /// 动作出发点
+        /// </summary>
+        public string ActionTrigger { get; set; }
     }
 }

@@ -61,6 +61,21 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="drools-3.0">
+      <HintPath>..\VictopLib\drools-3.0.dll</HintPath>
+    </Reference>
+    <Reference Include="drools-dep">
+      <HintPath>..\VictopLib\drools-dep.dll</HintPath>
+    </Reference>
+    <Reference Include="drools.dotnet">
+      <HintPath>..\VictopLib\drools.dotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.GNU.Classpath">
+      <HintPath>..\VictopLib\IKVM.GNU.Classpath.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime">
+      <HintPath>..\VictopLib\IKVM.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\VictopLib\Newtonsoft.Json.dll</HintPath>
@@ -111,6 +126,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Templates\BaseStateMachine.cs" />
+    <Compile Include="Templates\FeiDaoOperation.cs" />
     <Compile Include="Templates\MainRule.cs" />
     <Compile Include="Templates\StateTransitionModel.cs" />
     <Compile Include="Templates\TemplateControl.cs" />

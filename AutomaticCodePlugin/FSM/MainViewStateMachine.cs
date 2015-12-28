@@ -10,50 +10,23 @@ namespace AutomaticCodePlugin.FSM
 {
     public class MainViewStateMachine : BaseStateMachine
     {
-        public MainViewStateMachine(TemplateControl mainView) : base("MainView", Assembly.GetExecutingAssembly(), mainView)
+        public MainViewStateMachine(TemplateControl mainView) : base("MainViewRules", Assembly.GetExecutingAssembly(), mainView)
         {
             FeiDaoFSM.Configure("None")
                 .Permit("Load", "Loaded");
             FeiDaoFSM.Configure("Loaded")
-                 .OnEntry(() => OnLoadedEntry())
-                 .OnExit(() => OnLoadedExit())
+                 .OnEntry((x) => OnFeidaoEntry(x))
+                 .OnExit((x) => OnFeidaoExit(x))
                  .Permit("Search", "Searched");
             FeiDaoFSM.Configure("Searched")
-                .OnEntry(() => OnSearchedEntry())
-                .OnExit(() => OnSearchedExit())
+                .OnEntry((x) => OnFeidaoEntry(x))
+                 .OnExit((x) => OnFeidaoExit(x))
                 .PermitReentry("Search")
                 .Permit("Add", "Added");
             FeiDaoFSM.Configure("Added")
-                .OnEntry(() => OnAddedEntry())
+               .OnEntry((x) => OnFeidaoEntry(x))
+                 .OnExit((x) => OnFeidaoExit(x))
                 .Permit("Search", "Searched");
-        }
-        private void OnAddedEntry()
-        {
-            Console.WriteLine("MainView:OnAddedEntry");
-            Fire(new OAVModel("MainView", "GridControl", "ucdgrid"),
-                new OAVModel("MainView", "State", "Add"));
-        }
-
-        private void OnSearchedExit()
-        {
-            Console.WriteLine("MainView:OnSearchedExit");
-        }
-
-        private void OnSearchedEntry()
-        {
-            Console.WriteLine("MainView:OnSearchedEntry");
-            Fire(new OAVModel("MainView", "GridControl", "ucdgrid"),
-                new OAVModel("MainView", "State", "Search"));
-        }
-
-        private void OnLoadedExit()
-        {
-            Console.WriteLine("MainView:OnLoadedExit");
-        }
-
-        private void OnLoadedEntry()
-        {
-            Console.WriteLine("MainView:OnLoadedEntry");
         }
     }
 }

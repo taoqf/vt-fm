@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Stateless;
 using NRules;
 using NRules.Fluent;
@@ -9,6 +7,11 @@ using System.Reflection;
 using Victop.Server.Controls.Models;
 using Victop.Frame.PublicLib.Helpers;
 using System.Windows;
+using System.IO;
+using org.drools.dotnet;
+using org.drools.dotnet.compiler;
+using org.drools.dotnet.rule;
+using org.drools.@base;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -27,7 +30,15 @@ namespace Victop.Frame.CmptRuntime
         protected TemplateControl MainView;
         private string currentState = "None";
         private StateTransitionModel stateModel;
-        private ISession session;
+        private org.drools.FactHandle stateHandle;
+        /// <summary>
+        /// NRules ：Session
+        /// </summary>
+        private ISession nSession;
+        /// <summary>
+        /// Drools.net :Session
+        /// </summary>
+        private WorkingMemory dSession;
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -37,9 +48,11 @@ namespace Victop.Frame.CmptRuntime
         public BaseStateMachine(string groupName, Assembly pluginAssembly, TemplateControl mainView)
         {
             MainView = mainView;
-            CreateRuleRepositoryGroup(groupName, pluginAssembly);
+            //CreateRuleRepositoryGroup(groupName, pluginAssembly);
+            CreateDroolsSession(groupName, pluginAssembly);
             stateModel = new StateTransitionModel() { ActionName = "None", ActionSourceElement = mainView, MainView = mainView };
-            session.Insert(stateModel);
+            //nSession.Insert(stateModel);
+            stateHandle = dSession.assertObject(stateModel);
             FeiDaoFSM = new StateMachine<string, string>(() => currentState, s => currentState = s);
             FeiDaoFSM.OnTransitioned((x) => OnTransitioned(x));
 
@@ -47,8 +60,28 @@ namespace Victop.Frame.CmptRuntime
 
         private void OnTransitioned(StateMachine<string, string>.Transition x)
         {
+            stateModel.ActionDestination = "中文";
+            stateModel.ActionSource = x.Source;
+            stateModel.ActionTrigger = x.Trigger;
+            dSession.modifyObject(stateHandle, stateModel);
             //Console.WriteLine("{0}:OnTransitioned",MainView.Name);
             //Console.WriteLine("CurrentState:{0}", FeiDaoFSM.State);
+        }
+        /// <summary>
+        /// 状态离开
+        /// </summary>
+        /// <param name="x"></param>
+        protected void OnFeidaoExit(StateMachine<string, string>.Transition x)
+        {
+
+        }
+        /// <summary>
+        /// 状态进入
+        /// </summary>
+        /// <param name="x"></param>
+        protected void OnFeidaoEntry(StateMachine<string, string>.Transition x)
+        {
+            dSession.fireAllRules();
         }
 
         /// <summary>
@@ -62,7 +95,9 @@ namespace Victop.Frame.CmptRuntime
             {
                 stateModel.ActionName = triggerName;
                 stateModel.ActionSourceElement = triggerSource as FrameworkElement;
-                session.Update(stateModel);
+                stateModel.ActionTrigger = triggerName;
+                //nSession.Update(stateModel);
+                dSession.modifyObject(stateHandle, stateModel);
                 FeiDaoFSM.Fire(triggerName);
             }
             else
@@ -80,17 +115,17 @@ namespace Victop.Frame.CmptRuntime
                 var sets = fullRepository.GetRuleSets().Where(it => it.Name.Equals(groupName));
                 var complier = new RuleCompiler();
                 var factory = complier.Compile(sets);
-                session = factory.CreateSession();
+                nSession = factory.CreateSession();
             }
             else
             {
                 fullRepository.Load(x => x.From(pluginAssembly));
                 ISessionFactory factory = fullRepository.Compile();
-                session = factory.CreateSession();
+                nSession = factory.CreateSession();
             }
-            session.Events.FactInsertedEvent += Events_FactInsertedEvent;
-            session.Events.FactRetractedEvent += Events_FactRetractedEvent;
-            session.Events.RuleFiredEvent += Events_RuleFiredEvent;
+            nSession.Events.FactInsertedEvent += Events_FactInsertedEvent;
+            nSession.Events.FactRetractedEvent += Events_FactRetractedEvent;
+            nSession.Events.RuleFiredEvent += Events_RuleFiredEvent;
         }
         /// <summary>
         /// 启动规则引擎
@@ -99,12 +134,16 @@ namespace Victop.Frame.CmptRuntime
         {
             foreach (var item in oavs)
             {
-                session.TryInsert(item);
+                //nSession.TryInsert(item);
+                dSession.assertObject(item);
             }
-            session.Fire();
+            //nSession.Fire();
+            var filter = new RuleNameEqualsAgendaFilter("group");
+            dSession.fireAllRules(filter);
             foreach (var item in oavs)
             {
-                session.TryRetract(item);
+                //nSession.TryRetract(item);
+                dSession.retractObject(dSession.getFactHandle(item));
             }
         }
         private void Events_FactRetractedEvent(object sender, NRules.Diagnostics.WorkingMemoryEventArgs e)
@@ -129,6 +168,21 @@ namespace Victop.Frame.CmptRuntime
         private void Events_RuleFiredEvent(object sender, NRules.Diagnostics.AgendaEventArgs e)
         {
             Console.WriteLine("规则执行后:" + e.Rule.Name);
+        }
+        #endregion
+
+        #region Drools.net
+        private void CreateDroolsSession(string ruleFileName, Assembly pluginAssembly)
+        {
+            string fullName = string.Format("{0}.Rules.{1}.drl", pluginAssembly.GetName().Name, ruleFileName);
+            Stream manifestResourceStream = pluginAssembly.GetManifestResourceStream(fullName);
+            PackageBuilder packageBuilder = new PackageBuilder();
+            packageBuilder.AddPackageFromDrl(manifestResourceStream);
+            Package package = packageBuilder.GetPackage();
+            RuleBase ruleBase = RuleBaseFactory.NewRuleBase();
+            ruleBase.AddPackage(package);
+            dSession = ruleBase.NewWorkingMemory();
+            dSession.setGlobal("FeiDao", new FeiDaoOperation(MainView));
         }
         #endregion
     }

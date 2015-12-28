@@ -31,6 +31,7 @@ namespace AutomaticCodePlugin.Rules
     {
         public override void Define()
         {
+            
             StateTransitionModel stateModel = null;
             OAVModel oavModel = null;
             When().Match<StateTransitionModel>(() => stateModel, p => p.ActionName.Equals("Search"))

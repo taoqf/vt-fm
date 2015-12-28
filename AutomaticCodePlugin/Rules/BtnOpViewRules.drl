@@ -1,0 +1,16 @@
+﻿package AutomaticCodePlugin
+
+import Victop.Server.Controls;
+import Victop.Frame.CmptRuntime;
+
+global Victop.Frame.CmptRuntime.FeiDaoOperation FeiDao
+
+rule Recurse
+	salience 10
+	when
+		se : StateTransitionModel ( ActionTrigger == "Search" )
+	then
+		FeiDao.ExcutePageTrigger("Search",se:ActionSourceElement);
+		FeiDao.SysConsole(se.ActionTrigger);
+		FeiDao.SysConsole(se.ActionDestination);
+end

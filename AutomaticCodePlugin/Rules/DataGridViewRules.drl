@@ -1,0 +1,26 @@
+﻿package AutomaticCodePlugin
+
+import Victop.Server.Controls.Models;
+import Victop.Frame.CmptRuntime;
+
+global Victop.Frame.CmptRuntime.FeiDaoOperation FeiDao
+
+rule RecurseLoaded
+	salience 10
+	when
+		se : StateTransitionModel ( ActionTrigger == "Load" )
+	then
+		assert( new OAVModel("mainView", "masterPBlock",""));
+		FeiDao.SysConsole(se.ActionTrigger);
+end
+
+rule RecurseSearched
+	salience 11
+	when
+		se : StateTransitionModel ( ActionTrigger == "Search" )
+		oav : OAVModel(ObjectName=="masterPBlock")
+	then
+		FeiDao.GetPBlockData(oav.ObjectName);
+		retract(oav);
+		FeiDao.SysConsole(se.ActionTrigger);
+end
