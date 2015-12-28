@@ -11,6 +11,6 @@
         </Grid.DataContext>
         <views:UCFeidaoUserLogin x:Name="FrontGD"></views:UCFeidaoUserLogin>
         <views:UCFeidaoSystemConfig x:Name="BackGD" Visibility="Collapsed"></views:UCFeidaoSystemConfig>
- 
+       
     </Grid>
 </Window>
