@@ -61,33 +61,6 @@ namespace Victop.Frame.DataChannel.Properties {
         }
         
         /// <summary>
-        ///   查找类似 /*
-        ///	Copyright (c) 2004-2011, The Dojo Foundation All Rights Reserved.
-        ///	Available via Academic Free License &gt;= 2.1 OR the modified BSD license.
-        ///	see: http://dojotoolkit.org/license for details
-        ///*/
-        ///
-        ////*
-        ///	This is an optimized version of Dojo, built for deployment and not for
-        ///	development. To get sources and documentation, please visit:
-        ///
-        ///		http://dojotoolkit.org
-        ///*/
-        ///
-        ///(function(
-        ///	userConfig,
-        ///	defaultConfig
-        ///){
-        ///	// summary:
-        ///	//		This is the &quot;source loader&quot; and is the entry point for Dojo during deve [字符串的其余部分被截断]&quot;; 的本地化字符串。
-        /// </summary>
-        internal static string CheckDataAuthorityScript {
-            get {
-                return ResourceManager.GetString("CheckDataAuthorityScript", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找类似 var result = (function (p_data, p_path) {
         ///                        if (!p_path || p_path.length === 0) {
         ///                        return null;
@@ -104,6 +77,37 @@ namespace Victop.Frame.DataChannel.Properties {
         internal static string GetDataByPathScript {
             get {
                 return ResourceManager.GetString("GetDataByPathScript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 var result= (function(jsonData, curdList) {
+        ///	var isString = function(it) {
+        ///		// summary:
+        ///		//		Return true if it is a String
+        ///		// it: anything
+        ///		//		Item to test.
+        ///		return (typeof it == &quot;string&quot; || it instanceof String); // Boolean
+        ///	};
+        ///	if (!jsonData || !curdList) {
+        ///		return;
+        ///	}
+        ///	if (isString(jsonData)) {
+        ///		jsonData = JSON.parse(jsonData);
+        ///	}
+        ///	if (isString(curdList)) {
+        ///		curdList = JSON.parse(curdList);
+        ///	}
+        ///
+        ///	var docDataStore = jsonData.docDataStore;
+        ///	if (!docDataStore) {
+        ///		return;
+        ///	}
+        ///        /// [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string SaveOriginalDataScript {
+            get {
+                return ResourceManager.GetString("SaveOriginalDataScript", resourceCulture);
             }
         }
     }
