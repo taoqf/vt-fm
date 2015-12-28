@@ -75,6 +75,11 @@ namespace VictopPartner
                             IPlugin plugin = (IPlugin)pluginAssembly.CreateInstance(t.FullName);
                             plugin.StartWindow.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
                             plugin.StartWindow.ShowDialog();
+                            string devPluginPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["devpluginpath"]);
+                            if (Directory.Exists(devPluginPath))
+                            {
+                                DeleteFolder(devPluginPath);
+                            }
                             FrameInit.GetInstance().FrameUnload();
                             Environment.Exit(0);
                             break;
@@ -89,7 +94,28 @@ namespace VictopPartner
                 }
             }
         }
-
+        /// <summary> 
+        /// 删除文件夹及其内容 
+        /// </summary> 
+        /// <param name="path"></param> 
+        public void DeleteFolder(string path)
+        {
+            foreach (string d in Directory.GetFileSystemEntries(path))
+            {
+                if (File.Exists(d))
+                {
+                    FileInfo fi = new FileInfo(d);
+                    if (fi.Attributes.ToString().IndexOf("ReadOnly") != -1)
+                        fi.Attributes = FileAttributes.Normal;
+                    File.Delete(d);//直接删除其中的文件 
+                }
+                else
+                {
+                    DeleteFolder(d);////递归删除子文件夹 
+                }
+            }
+            Directory.Delete(path);
+        }
         /// <summary>
         /// 是否为有效的插件
         /// </summary>
