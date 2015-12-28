@@ -140,6 +140,11 @@ namespace Victop.Frame.CmptRuntime
                 refSystemId = value;
             }
         }
+        /// <summary>
+        /// SpaceId
+        /// </summary>
+        [JsonIgnore]
+        public string SpaceId { get; set; }
 
         private ViewsConditionModel condition;
         /// <summary>
@@ -173,8 +178,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 检索数据
         /// </summary>
-        /// <param name="spaceId">SpaceId</param>
-        public void SearchData(string spaceId = "")
+        public void SearchData()
         {
             string MessageType = "MongoDataChannelService.findBusiData";
             DataMessageOperation messageOp = new DataMessageOperation();
@@ -185,9 +189,9 @@ namespace Victop.Frame.CmptRuntime
                 contentDic.Add("refsystemid", RefSystemId);
             }
             contentDic.Add("modelid", ModelId);
-            if (!string.IsNullOrEmpty(spaceId))
+            if (!string.IsNullOrEmpty(SpaceId))
             {
-                contentDic.Add("spaceid", spaceId);
+                contentDic.Add("spaceid", SpaceId);
             }
             List<object> conditionList = new List<object>();
             foreach (ViewsBlockModel item in this.viewBlocks)

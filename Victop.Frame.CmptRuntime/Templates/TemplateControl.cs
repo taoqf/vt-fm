@@ -142,6 +142,24 @@ namespace Victop.Frame.CmptRuntime
             }
         }
         /// <summary>
+        /// 初始化飞道用户控件
+        /// </summary>
+        /// <param name="cmpntDefineContent">组件定义内容</param>
+        /// <param name="spaceId">SpaceId</param>
+        /// <returns></returns>
+        public bool InitVictopUserControl(string cmpntDefineContent, string spaceId)
+        {
+            bool result = InitVictopUserControl(cmpntDefineContent);
+            if (result && !string.IsNullOrEmpty(spaceId))
+            {
+                foreach (var item in DefinModel.CompntViews)
+                {
+                    item.SpaceId = spaceId;
+                }
+            }
+            return result;
+        }
+        /// <summary>
         /// 获取展示层实体
         /// </summary>
         /// <param name="blockName">展示层名称</param>
