@@ -37,7 +37,7 @@ namespace AutomaticCodePlugin.Views
                 RaisePropertyChanged(() => MainPBlock);
             }
         }
-        
+
         public UCMainView(Dictionary<string, object> paramDict, int showType)
         {
             InitializeComponent();
@@ -45,6 +45,7 @@ namespace AutomaticCodePlugin.Views
             FeiDaoFSM = new MainViewStateMachine(this);
             ParamDict = paramDict;
             ShowType = showType;
+            this.Loaded += mainView_Loaded;
         }
         private void dgridProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -53,7 +54,7 @@ namespace AutomaticCodePlugin.Views
 
         private void mainView_Loaded(object sender, RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("Load",sender);
+            FeiDaoFSM.Do("Load", sender);
         }
     }
 }

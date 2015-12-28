@@ -73,10 +73,6 @@
     <Reference Include="IKVM.Runtime">
       <HintPath>..\VictopLib\IKVM.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="NRules, Version=0.4.3.0, Culture=neutral, PublicKeyToken=8ad544355a4a2176, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\VictopLib\NRules.dll</HintPath>
-    </Reference>
     <Reference Include="Stateless, Version=2.5.21.0, Culture=neutral, PublicKeyToken=93038f0927583c9a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\VictopLib\Stateless.dll</HintPath>
@@ -121,9 +117,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Rules\BtnOpViewRules.cs" />
-    <Compile Include="Rules\DataGridViewRules.cs" />
-    <Compile Include="Rules\MainViewRules.cs" />
     <Compile Include="Views\MainViewWindow.xaml.cs">
       <DependentUpon>MainViewWindow.xaml</DependentUpon>
     </Compile>

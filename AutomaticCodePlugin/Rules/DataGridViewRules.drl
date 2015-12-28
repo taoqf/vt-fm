@@ -10,17 +10,16 @@ rule RecurseLoaded
 	when
 		se : StateTransitionModel ( ActionTrigger == "Load" )
 	then
-		assert( new OAVModel("mainView", "masterPBlock",""));
-		FeiDao.SysConsole(se.ActionTrigger);
+		FeiDao.SysConsole("DataGridViewRules:"+se.ActionTrigger);
+		FeiDao.SysConsole("DataGridViewRules:"+se.ActionDestination);
 end
 
 rule RecurseSearched
-	salience 11
+	salience 10
 	when
 		se : StateTransitionModel ( ActionTrigger == "Search" )
-		oav : OAVModel(ObjectName=="masterPBlock")
 	then
-		FeiDao.GetPBlockData(oav.ObjectName);
-		retract(oav);
-		FeiDao.SysConsole(se.ActionTrigger);
+		FeiDao.GetPBlockData("masterPBlock");
+		FeiDao.SysConsole("DataGridViewRules:"+se.ActionTrigger);
+		FeiDao.SysConsole("DataGridViewRules:"+se.ActionDestination);
 end

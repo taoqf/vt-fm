@@ -64,7 +64,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="paramInfo"></param>
         public void ExcuteComponentTrigger(string compntName, string compntTrigger, object paramInfo)
         {
-            TemplateControl tc = MainView.FindName("compntName") as TemplateControl;
+            TemplateControl tc = MainView.FindName(compntName) as TemplateControl;
             tc.FeiDaoFSM.Do(compntTrigger, paramInfo);
         }
     }

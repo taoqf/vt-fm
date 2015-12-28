@@ -11,5 +11,6 @@ rule RecurseSearch
 		se : StateTransitionModel ( ActionTrigger == "Search" )
 	then
 		FeiDao.ExcuteComponentTrigger("ucdgrid","Search",se.ActionSourceElement);
-		FeiDao.SysConsole(se.ActionTrigger);
+		FeiDao.SysConsole("MainViewRules:"+se.ActionTrigger);
+		FeiDao.SysConsole("MainViewRules:"+se.ActionDestination);
 end

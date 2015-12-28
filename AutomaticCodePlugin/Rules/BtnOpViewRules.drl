@@ -11,15 +11,16 @@ rule RecurseLoad
 		se : StateTransitionModel ( ActionTrigger == "Load" )
 	then
 		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionTrigger);
-		FeiDao.SysConsole(""BtnOpViewRules:""+se.ActionDestination);
+		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionDestination);
 end
 
 rule RecurseSearch
 	salience 10
 	when
-		se : StateTransitionModel ( ActionTrigger == "Search" )
+		se : StateTransitionModel ( ActionTrigger == "Search",ActionDestination=="中文" )
 	then
-		FeiDao.ExcutePageTrigger("Search",se:ActionSourceElement);
+		FeiDao.ExcutePageTrigger("Search",se.ActionSourceElement);
+		FeiDao.SetButtonText("saveBtn",se.ActionDestination);
 		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionTrigger);
-		FeiDao.SysConsole(""BtnOpViewRules:""+se.ActionDestination);
+		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionDestination);
 end

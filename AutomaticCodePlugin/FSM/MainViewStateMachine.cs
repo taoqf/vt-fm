@@ -15,17 +15,17 @@ namespace AutomaticCodePlugin.FSM
             FeiDaoFSM.Configure("None")
                 .Permit("Load", "Loaded");
             FeiDaoFSM.Configure("Loaded")
-                 .OnEntry((x) => OnFeidaoEntry(x))
-                 .OnExit((x) => OnFeidaoExit(x))
-                 .Permit("Search", "Searched");
+                .OnEntry((x) => OnFeidaoEntry(x))
+                .OnExit((x) => OnFeidaoExit(x))
+                .Permit("Search", "Searched");
             FeiDaoFSM.Configure("Searched")
                 .OnEntry((x) => OnFeidaoEntry(x))
-                 .OnExit((x) => OnFeidaoExit(x))
+                .OnExit((x) => OnFeidaoExit(x))
                 .PermitReentry("Search")
                 .Permit("Add", "Added");
             FeiDaoFSM.Configure("Added")
-               .OnEntry((x) => OnFeidaoEntry(x))
-                 .OnExit((x) => OnFeidaoExit(x))
+                .OnEntry((x) => OnFeidaoEntry(x))
+                .OnExit((x) => OnFeidaoExit(x))
                 .Permit("Search", "Searched");
         }
     }
