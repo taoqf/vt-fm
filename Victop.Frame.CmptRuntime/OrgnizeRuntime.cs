@@ -55,7 +55,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="runtime"></param>
         private static void PresentationBindingViewBlock(CompntDefinModel runtime)
         {
-            foreach (PresentationBlockModel item in runtime.CompntPresentation.PresentationBlocks)
+            foreach (PresentationBlockModel item in runtime.CompntPresentation.PresentationBlocks.Where(it => it.BlockType != 0))
             {
                 DefinViewsModel viewModel = runtime.CompntViews.FirstOrDefault(it => it.ViewName.Equals(item.ViewName));
                 if (viewModel != null)

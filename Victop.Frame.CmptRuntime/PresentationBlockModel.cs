@@ -240,6 +240,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         public void GetData()
         {
+            if (BlockType == 0)
+            {
+                return;
+            }
             ViewBlock.ViewModel.GetBlockData(BindingBlock);
             if (string.IsNullOrEmpty(keywords) && (superiors.Equals("root") || (ParentPreBlockModel != null && string.IsNullOrEmpty(ParentPreBlockModel.Keywords))))
             {
@@ -311,6 +315,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         public void SearchData()
         {
+            if (BlockType == 0)
+            {
+                return;
+            }
             ViewBlock.ViewModel.SearchData();
         }
         /// <summary>
@@ -319,6 +327,10 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="conditionModel">查询条件</param>
         public void SearchData(ViewsConditionModel conditionModel)
         {
+            if (BlockType == 0)
+            {
+                return;
+            }
             if (conditionModel != null && conditionModel.TableCondition != null)
             {
                 ViewBlock.ViewModel.Condition.TableCondition = conditionModel.TableCondition;
@@ -388,6 +400,10 @@ namespace Victop.Frame.CmptRuntime
         ///<param name="saveToServer">是否保存到服务端</param>
         public bool SaveData(bool saveToServer = true)
         {
+            if (BlockType == 0)
+            {
+                return true;
+            }
             if (!string.IsNullOrEmpty(Keywords) || (ParentPreBlockModel != null && !string.IsNullOrEmpty(ParentPreBlockModel.keywords)))
             {
                 foreach (DataRow item in ViewBlockDataTable.Rows)
@@ -431,6 +447,10 @@ namespace Victop.Frame.CmptRuntime
         /// <returns></returns>
         public bool ResetData(bool cascading)
         {
+            if (BlockType == 0)
+            {
+                return true;
+            }
             DataMessageOperation dataOp = new DataMessageOperation();
             return dataOp.ResetData(ViewBlock.ViewId, JsonHelper.ToJson(ViewBlock.BlockDataPath), cascading);
         }
