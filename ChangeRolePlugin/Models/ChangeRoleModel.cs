@@ -26,7 +26,7 @@ namespace ChangeRolePlugin.Models
                 if (roleNo != value)
                 {
                     roleNo = value;
-                    RaisePropertyChanged("Role_No");
+                    RaisePropertyChanged(()=> Role_No);
                 }
             }
         }
@@ -48,7 +48,7 @@ namespace ChangeRolePlugin.Models
                 if (roleName != value)
                 {
                     roleName = value;
-                    RaisePropertyChanged("Role_Name");
+                    RaisePropertyChanged(()=> Role_Name);
                 }
             }
         }

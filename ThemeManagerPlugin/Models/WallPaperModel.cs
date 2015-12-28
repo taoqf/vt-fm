@@ -20,7 +20,7 @@ namespace ThemeManagerPlugin.Models
                 if (string.IsNullOrWhiteSpace(value) == false)
                 {
                     wallPreview = value;
-                    RaisePropertyChanged("WallPreview");
+                    RaisePropertyChanged(() => WallPreview);
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace ThemeManagerPlugin.Models
                 if (string.IsNullOrWhiteSpace(value) == false)
                 {
                     wallDisplay = value;
-                    RaisePropertyChanged("WallDisplay");
+                    RaisePropertyChanged(() => WallDisplay);
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace ThemeManagerPlugin.Models
                 if (wallPaperName != value)
                 {
                     wallPaperName = value;
-                    RaisePropertyChanged("WllPaperName");
+                    RaisePropertyChanged(() => WllPaperName);
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace ThemeManagerPlugin.Models
                 if (imgtype != value)
                 {
                     imgtype = value;
-                    RaisePropertyChanged("WllPaperType");
+                    RaisePropertyChanged(() => WllPaperType);
                 }
             }
         }
@@ -84,7 +84,7 @@ namespace ThemeManagerPlugin.Models
                 if (filetype != value)
                 {
                     filetype = value;
-                    RaisePropertyChanged("FileType");
+                    RaisePropertyChanged(() => FileType);
                 }
             }
         }
@@ -100,7 +100,7 @@ namespace ThemeManagerPlugin.Models
                 if (filepath != value)
                 {
                     filepath = value;
-                    RaisePropertyChanged("FilePath");
+                    RaisePropertyChanged(() => FilePath);
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace ThemeManagerPlugin.Models
                 if (category_no != value)
                 {
                     category_no = value;
-                    RaisePropertyChanged("Category_No");
+                    RaisePropertyChanged(() => Category_No);
                 }
             }
         }

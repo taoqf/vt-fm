@@ -19,9 +19,12 @@ namespace AutomaticCodePlugin.Views
     /// </summary>
     public partial class MainViewWindow : Window
     {
-        public MainViewWindow()
+        public MainViewWindow(Dictionary<string,object> paramDict,int showType)
         {
             InitializeComponent();
+            UCMainView mainView = new UCMainView(paramDict,showType);
+            mainView.Uid = Uid;
+            this.Content = mainView;
         }
     }
 }

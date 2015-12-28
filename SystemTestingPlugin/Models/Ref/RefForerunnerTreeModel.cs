@@ -31,7 +31,7 @@ namespace SystemTestingPlugin.Models
                 if (treeId != value)
                 {
                     treeId = value;
-                    RaisePropertyChanged("TreeId");
+                    RaisePropertyChanged(()=> TreeId);
                 }
             }
         }
@@ -53,7 +53,7 @@ namespace SystemTestingPlugin.Models
                 if (treeParentId != value)
                 {
                     treeParentId = value;
-                    RaisePropertyChanged("TreeParentId");
+                    RaisePropertyChanged(()=> TreeParentId);
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace SystemTestingPlugin.Models
                 if (treeDisplay != value)
                 {
                     treeDisplay = value;
-                    RaisePropertyChanged("TreeDisplay");
+                    RaisePropertyChanged(()=> TreeDisplay);
                 }
             }
         }
@@ -97,7 +97,7 @@ namespace SystemTestingPlugin.Models
                 if (treeValue != value)
                 {
                     treeValue = value;
-                    RaisePropertyChanged("TreeValue");
+                    RaisePropertyChanged(()=> TreeValue);
                 }
             }
         }
@@ -121,7 +121,7 @@ namespace SystemTestingPlugin.Models
                 if (forerunnerTreeList != value)
                 {
                     forerunnerTreeList = value;
-                    RaisePropertyChanged("ForerunnerTreeList");
+                    RaisePropertyChanged(()=> ForerunnerTreeList);
                 }
             }
         }

@@ -9,6 +9,22 @@ namespace ThemeManagerPlugin.Models
     public class OnLineModel : PropertyModelBase
     {
         /// <summary>
+        /// 版本号
+        /// </summary>
+        private int themeVerion = 0;
+        public int ThemeVerion
+        {
+            get { return themeVerion; }
+            set
+            {
+                if (themeVerion != value)
+                {
+                    themeVerion = value;
+                    RaisePropertyChanged(() => ThemeVerion);
+                }
+            }
+        }
+        /// <summary>
         /// 皮肤编号
         /// </summary>
         private string onLineNo;
@@ -20,7 +36,7 @@ namespace ThemeManagerPlugin.Models
                 if (onLineNo != value)
                 {
                     onLineNo = value;
-                    RaisePropertyChanged("OnLineNo");
+                    RaisePropertyChanged(() => OnLineNo);
                 }
             }
         }
@@ -36,7 +52,7 @@ namespace ThemeManagerPlugin.Models
                 if (stateChange != value)
                 {
                     stateChange = value;
-                    RaisePropertyChanged("StateChange");
+                    RaisePropertyChanged(() => StateChange);
                 }
             }
         }
@@ -52,7 +68,7 @@ namespace ThemeManagerPlugin.Models
                 if (stateType != value)
                 {
                     stateType = value;
-                    RaisePropertyChanged("StateType");
+                    RaisePropertyChanged(() => StateType);
                 }
             }
         }
@@ -68,7 +84,7 @@ namespace ThemeManagerPlugin.Models
                 if (onLineName != value)
                 {
                     onLineName = value;
-                    RaisePropertyChanged("OnLineName");
+                    RaisePropertyChanged(() => OnLineName);
                 }
             }
         }
@@ -84,7 +100,7 @@ namespace ThemeManagerPlugin.Models
                 if (typeNo != value)
                 {
                     typeNo = value;
-                    RaisePropertyChanged("typeNo");
+                    RaisePropertyChanged(() => TypeNo);
                 }
             }
         }
@@ -100,12 +116,12 @@ namespace ThemeManagerPlugin.Models
                 if (string.IsNullOrWhiteSpace(value) == false)
                 {
                     onLinePreview = value;
-                    RaisePropertyChanged("OnLinePreview");
+                    RaisePropertyChanged(() => OnLinePreview);
                 }
             }
         }
-      
-       
+
+
         /// <summary>
         /// 图片类型
         /// </summary>
@@ -118,7 +134,7 @@ namespace ThemeManagerPlugin.Models
                 if (onLineImgtype != value)
                 {
                     onLineImgtype = value;
-                    RaisePropertyChanged("OnLineImgType");
+                    RaisePropertyChanged(() => OnLineImgType);
                 }
             }
         }
@@ -134,7 +150,7 @@ namespace ThemeManagerPlugin.Models
                 if (fileName != value)
                 {
                     fileName = value;
-                    RaisePropertyChanged("FileName");
+                    RaisePropertyChanged(() => FileName);
                 }
             }
         }
@@ -150,7 +166,7 @@ namespace ThemeManagerPlugin.Models
                 if (filetype != value)
                 {
                     filetype = value;
-                    RaisePropertyChanged("FileType");
+                    RaisePropertyChanged(() => FileType);
                 }
             }
         }
@@ -166,9 +182,9 @@ namespace ThemeManagerPlugin.Models
                 if (filepath != value)
                 {
                     filepath = value;
-                    RaisePropertyChanged("FilePath");
+                    RaisePropertyChanged(() => FilePath);
                 }
             }
-        } 
+        }
     }
 }

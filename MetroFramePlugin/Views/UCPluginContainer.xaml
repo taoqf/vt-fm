@@ -21,6 +21,12 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListBox>
-        <ListBox Grid.Row="1" Name="listBoxFourthMenuList" SelectedIndex="0" Style="{DynamicResource ListBoxFourthMenuListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}"/>
+        <ListBox Grid.Row="1" Margin="60,60,0,0" Name="listBoxFourthMenuList" SelectedItem="{Binding SelectedFourMenuModel,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Style="{DynamicResource ListBoxFourthMenuListStyle}" ItemsSource="{Binding SystemFourthLevelMenuList,UpdateSourceTrigger=PropertyChanged}">
+            <!--<i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding btnPluginRunClickCommand}" CommandParameter="{Binding SelectedFourMenuModel}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>-->
+        </ListBox>
     </Grid>
 </UserControl>

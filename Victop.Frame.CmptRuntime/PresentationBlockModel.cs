@@ -32,7 +32,7 @@ namespace Victop.Frame.CmptRuntime
             set
             {
                 blockName = value;
-                RaisePropertyChanged("BlockName");
+                RaisePropertyChanged(() => BlockName);
             }
         }
         /// <summary>
@@ -42,7 +42,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 区块类型
         /// </summary>
-        [JsonProperty(PropertyName ="type")]
+        [JsonProperty(PropertyName = "type")]
         public int BlockType
         {
             get { return blockType; }
@@ -184,7 +184,7 @@ namespace Victop.Frame.CmptRuntime
                 if (viewBlockDataTable != value)
                 {
                     viewBlockDataTable = value;
-                    RaisePropertyChanged("ViewBlockDataTable");
+                    RaisePropertyChanged(() => ViewBlockDataTable);
                 }
             }
         }
@@ -208,7 +208,7 @@ namespace Victop.Frame.CmptRuntime
                 if (preBlockSelectedRow != value)
                 {
                     preBlockSelectedRow = value;
-                    RaisePropertyChanged("PreBlockSelectedRow");
+                    RaisePropertyChanged(() => PreBlockSelectedRow);
                 }
             }
         }
@@ -301,6 +301,10 @@ namespace Victop.Frame.CmptRuntime
                     ViewBlockDataTable = dt;
                 }
             }
+            if (ViewBlockDataTable != null && ViewBlockDataTable.Rows.Count > 0)
+            {
+                PreBlockSelectedRow = ViewBlockDataTable.Rows[0];
+            }
         }
         /// <summary>
         /// 查询数据
@@ -309,6 +313,37 @@ namespace Victop.Frame.CmptRuntime
         {
             ViewBlock.ViewModel.SearchData();
         }
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="spaceId">SpaceId</param>
+        public void SearchData(string spaceId)
+        {
+            ViewBlock.ViewModel.SearchData(spaceId);
+        }
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="conditionModel">查询条件</param>
+        /// <param name="spaceId">SpaceId</param>
+        public void SearchData(ViewsConditionModel conditionModel, string spaceId = "")
+        {
+            if (conditionModel != null && conditionModel.TableCondition != null)
+            {
+                ViewBlock.ViewModel.Condition.TableCondition = conditionModel.TableCondition;
+            }
+            if (conditionModel != null && conditionModel.TableSort != null)
+            {
+                ViewBlock.ViewModel.Condition.TableSort = conditionModel.TableSort;
+            }
+            if (conditionModel != null)
+            {
+                ViewBlock.ViewModel.Condition.PageSize = conditionModel.PageSize;
+                ViewBlock.ViewModel.Condition.PageIndex = conditionModel.PageIndex;
+            }
+            ViewBlock.ViewModel.SearchData(spaceId);
+        }
+
         /// <summary>
         /// 获取完整数据集
         /// </summary>

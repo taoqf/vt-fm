@@ -21,7 +21,7 @@ namespace SystemTestingPlugin.Models
                 if (messageType != value)
                 {
                     messageType = value;
-                    RaisePropertyChanged("MessageType");
+                    RaisePropertyChanged(()=> MessageType);
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace SystemTestingPlugin.Models
                 if (otherConditionData != value)
                 {
                     otherConditionData = value;
-                    RaisePropertyChanged("OtherConditionData");
+                    RaisePropertyChanged(()=> OtherConditionData);
                 }
             }
         }
@@ -50,7 +50,7 @@ namespace SystemTestingPlugin.Models
                 if (otherConditionData != value)
                 {
                     otherResultData = value;
-                    RaisePropertyChanged("OtherResultData");
+                    RaisePropertyChanged(()=> OtherResultData);
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace SystemTestingPlugin.Models
             set
             {
                 vertifyMsg = value;
-                RaisePropertyChanged("VertifyMsg");
+                RaisePropertyChanged(()=> VertifyMsg);
             }
         }
     }

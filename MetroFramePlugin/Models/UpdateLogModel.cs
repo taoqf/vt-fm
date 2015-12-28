@@ -27,7 +27,7 @@ namespace MetroFramePlugin.Models
                 if (logVersion != value)
                 {
                     logVersion = value;
-                    RaisePropertyChanged("LogVersion");
+                    RaisePropertyChanged(()=> LogVersion);
                 }
             }
         }
@@ -50,7 +50,7 @@ namespace MetroFramePlugin.Models
                 if (logContent != value)
                 {
                     logContent = value;
-                    RaisePropertyChanged("LogContent");
+                    RaisePropertyChanged(()=> LogContent);
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace MetroFramePlugin.Models
                 if (logCreater != value)
                 {
                     logCreater = value;
-                    RaisePropertyChanged("LogCreater");
+                    RaisePropertyChanged(()=> LogCreater);
                 }
             }
         }
@@ -96,7 +96,7 @@ namespace MetroFramePlugin.Models
                 if (logDate != value)
                 {
                     logDate = value;
-                    RaisePropertyChanged("LogDate");
+                    RaisePropertyChanged(()=> LogDate);
                 }
             }
         }

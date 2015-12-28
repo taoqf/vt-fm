@@ -26,7 +26,7 @@ namespace SystemTestingPlugin.Models
                 if (hostUrl != value)
                 {
                     hostUrl = value;
-                    RaisePropertyChanged("HostUrl");
+                    RaisePropertyChanged(() => HostUrl);
                 }
             }
         }
@@ -48,7 +48,7 @@ namespace SystemTestingPlugin.Models
                 if (userName != value)
                 {
                     userName = value;
-                    RaisePropertyChanged("UserName");
+                    RaisePropertyChanged(() => UserName);
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace SystemTestingPlugin.Models
                 if (userPwd != value)
                 {
                     userPwd = value;
-                    RaisePropertyChanged("UserPwd");
+                    RaisePropertyChanged(() => UserPwd);
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace SystemTestingPlugin.Models
                 if (hostPort != value)
                 {
                     hostPort = value;
-                    RaisePropertyChanged("HostPort");
+                    RaisePropertyChanged(() => HostPort);
                 }
             }
         }
@@ -114,7 +114,7 @@ namespace SystemTestingPlugin.Models
                 if (remotePath != value)
                 {
                     remotePath = value;
-                    RaisePropertyChanged("RemotePath");
+                    RaisePropertyChanged(() => RemotePath);
                 }
             }
         }
@@ -136,7 +136,7 @@ namespace SystemTestingPlugin.Models
                 if (localPath != value)
                 {
                     localPath = value;
-                    RaisePropertyChanged("LocalPath");
+                    RaisePropertyChanged(() => LocalPath);
                 }
             }
         }

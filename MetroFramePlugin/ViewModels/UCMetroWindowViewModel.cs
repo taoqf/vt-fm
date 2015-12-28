@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
@@ -9,7 +8,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Victop.Frame.Units;
 using Victop.Server.Controls.Models;
-using GalaSoft.MvvmLight.Command;
 using Victop.Frame.CoreLibrary;
 using Victop.Frame.CoreLibrary.Models;
 using Victop.Frame.PublicLib.Helpers;
@@ -29,6 +27,8 @@ using Victop.Frame.DataMessageManager;
 using System.Xml;
 using System.Text.RegularExpressions;
 using Victop.Frame.PublicLib.Managers;
+using Victop.Frame.DataMessageManager.Models;
+using Victop.Server.Controls.MVVM;
 
 namespace MetroFramePlugin.ViewModels
 {
@@ -48,7 +48,7 @@ namespace MetroFramePlugin.ViewModels
 
         private MenuModel selectedSecondMenuModel;
         private MenuModel selectedThirdMenuModel;
-
+        private MenuModel selectedFourMenuModel;
         private ObservableCollection<VicTabItemNormal> tabItemList;
         private VicTabItemNormal selectedTabItem;
         private VicTabControlNormal mainTabControl;
@@ -56,6 +56,7 @@ namespace MetroFramePlugin.ViewModels
         private bool poPupState;
         private bool isFirstLoad = true;
         private bool isDebug = true;
+        private VicPasswordBoxNormal pwdLockSpace;
         /// <summary>
         /// 门户插件用户信息
         /// </summary>
@@ -76,7 +77,7 @@ namespace MetroFramePlugin.ViewModels
                 if (userInfo != value)
                 {
                     userInfo = value;
-                    RaisePropertyChanged("UserInfo");
+                    RaisePropertyChanged(()=> UserInfo);
                 }
             }
         }
@@ -94,7 +95,7 @@ namespace MetroFramePlugin.ViewModels
                 if (isDebug != value)
                 {
                     isDebug = value;
-                    RaisePropertyChanged("IsDebug");
+                    RaisePropertyChanged(()=> IsDebug);
                 }
             }
         }
@@ -128,7 +129,7 @@ namespace MetroFramePlugin.ViewModels
                 if (poPupState != value)
                 {
                     poPupState = value;
-                    RaisePropertyChanged("PoPupState");
+                    RaisePropertyChanged(()=> PoPupState);
                 }
             }
         }
@@ -149,7 +150,7 @@ namespace MetroFramePlugin.ViewModels
                 if (systemMenuListLocal != value)
                 {
                     systemMenuListLocal = value;
-                    RaisePropertyChanged("SystemMenuListLocal");
+                    RaisePropertyChanged(()=> SystemMenuListLocal);
                 }
             }
         }
@@ -168,7 +169,7 @@ namespace MetroFramePlugin.ViewModels
                 if (systemMenuListEnterprise != value)
                 {
                     systemMenuListEnterprise = value;
-                    RaisePropertyChanged("SystemMenuListEnterprise");
+                    RaisePropertyChanged(()=> SystemMenuListEnterprise);
                 }
             }
         }
@@ -187,7 +188,7 @@ namespace MetroFramePlugin.ViewModels
                 SelectedThirdMenuModel = null;
                 systemThirdLevelMenuList = value;
                 SelectedThirdMenuModel = systemThirdLevelMenuList.First();
-                RaisePropertyChanged("SystemThirdLevelMenuList");
+                RaisePropertyChanged(()=> SystemThirdLevelMenuList);
             }
         }
 
@@ -205,7 +206,7 @@ namespace MetroFramePlugin.ViewModels
                 if (systemFourthLevelMenuList != value)
                 {
                     systemFourthLevelMenuList = value;
-                    RaisePropertyChanged("SystemFourthLevelMenuList");
+                    RaisePropertyChanged(()=> SystemFourthLevelMenuList);
                 }
             }
         }
@@ -221,7 +222,7 @@ namespace MetroFramePlugin.ViewModels
                     return;
                 }
                 selectedSecondMenuModel = value;
-                RaisePropertyChanged("SelectedSecondMenuModel");
+                RaisePropertyChanged(()=> SelectedSecondMenuModel);
             }
         }
 
@@ -232,7 +233,7 @@ namespace MetroFramePlugin.ViewModels
             set
             {
                 selectedThirdMenuModel = value;
-                RaisePropertyChanged("SelectedThirdMenuModel");
+                RaisePropertyChanged(()=> SelectedThirdMenuModel);
             }
         }
 
@@ -245,7 +246,7 @@ namespace MetroFramePlugin.ViewModels
                 {
                     tabItemList = new ObservableCollection<VicTabItemNormal>();
                     VicTabItemNormal personItem = new VicTabItemNormal();
-                    personItem.Name = "homeItem";
+                    personItem.Name = "personItem";
                     personItem.AllowDelete = false;
                     personItem.Header = "个人收藏";
                     UCPersonPluginContainer personPluginContainer = new UCPersonPluginContainer();
@@ -268,7 +269,7 @@ namespace MetroFramePlugin.ViewModels
                 if (tabItemList != value)
                 {
                     tabItemList = value;
-                    RaisePropertyChanged("TabItemList");
+                    RaisePropertyChanged(()=> TabItemList);
                 }
             }
         }
@@ -282,7 +283,7 @@ namespace MetroFramePlugin.ViewModels
                 if (selectedTabItem != value)
                 {
                     selectedTabItem = value;
-                    RaisePropertyChanged("SelectedTabItem");
+                    RaisePropertyChanged(()=> SelectedTabItem);
                 }
             }
         }
@@ -302,7 +303,7 @@ namespace MetroFramePlugin.ViewModels
                 if (activePluginNum != value)
                 {
                     activePluginNum = value;
-                    RaisePropertyChanged("ActivePluginNum");
+                    RaisePropertyChanged(()=> ActivePluginNum);
                 }
             }
         }
@@ -320,7 +321,7 @@ namespace MetroFramePlugin.ViewModels
                 if (appVersionCode != value)
                 {
                     appVersionCode = value;
-                    RaisePropertyChanged("AppVersionCode");
+                    RaisePropertyChanged(()=> AppVersionCode);
                 }
             }
         }
@@ -340,10 +341,51 @@ namespace MetroFramePlugin.ViewModels
                 if (isShowMenu != value)
                 {
                     isShowMenu = value;
-                    RaisePropertyChanged("IsShowMenu");
+                    RaisePropertyChanged(()=> IsShowMenu);
                 }
             }
         }
+
+        private Visibility showWorkSpace = Visibility.Visible;
+        /// <summary>
+        /// 工作区是否可见
+        /// </summary>
+        public Visibility ShowWorkSpace
+        {
+            get
+            {
+                return showWorkSpace;
+            }
+            set
+            {
+                if (showWorkSpace != value)
+                {
+                    showWorkSpace = value;
+                    RaisePropertyChanged(()=> ShowWorkSpace);
+                }
+            }
+        }
+
+        private Visibility showLockView = Visibility.Collapsed;
+        /// <summary>
+        /// 锁屏是否可见
+        /// </summary>
+        public Visibility ShowLockView
+        {
+            get
+            {
+                return showLockView;
+            }
+            set
+            {
+                if (showLockView != value)
+                {
+                    showLockView = value;
+                    RaisePropertyChanged(()=> ShowLockView);
+                }
+            }
+        }
+
         /// <summary>
         /// 角色信息集合
         /// </summary>
@@ -360,12 +402,46 @@ namespace MetroFramePlugin.ViewModels
                 if (roleInfoList != value)
                 {
                     roleInfoList = value;
-                    RaisePropertyChanged("RoleInfoList");
+                    RaisePropertyChanged(()=> RoleInfoList);
                 }
             }
         }
-        private bool isLockMenu = false;//控制固定或浮动左侧菜单，默认固定
         private VicButtonNormal lockbtn;
+        private VicToggleSwitchNormal toggleLock;
+        private bool isLockMenu = false;//控制固定或浮动左侧菜单，默认固定
+        public bool IsLockMenu
+        {
+            get
+            {
+                return isLockMenu;
+            }
+            set
+            {
+                if (isLockMenu != value)
+                {
+                    isLockMenu = value;
+                    RaisePropertyChanged(()=> IsLockMenu);
+                }
+            }
+        }
+        public MenuModel SelectedFourMenuModel
+        {
+            get {
+                if (selectedFourMenuModel==null)
+                {
+                    selectedFourMenuModel = new MenuModel();
+                }
+                return selectedFourMenuModel;
+            }
+            set {
+                if (selectedFourMenuModel!=value)
+                {
+                    selectedFourMenuModel = value;
+                }
+                RaisePropertyChanged((() => SelectedFourMenuModel));
+            }
+        }
+
         #endregion
 
         #region 命令
@@ -380,10 +456,12 @@ namespace MetroFramePlugin.ViewModels
                 {
                     mainWindow = (Window)x;
                     mainWindow.Uid = "mainWindow";
-                    lockbtn = (VicButtonNormal)mainWindow.FindName("lock");
+                    toggleLock = (VicToggleSwitchNormal)mainWindow.FindName("toggleLock");
+                    pwdLockSpace = (VicPasswordBoxNormal)mainWindow.FindName("pwdLockSpace");
                     mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
                     mainWindow.MouseDown += mainWindow_MouseDown;
+                    //toggleLock.IsCheckedChanged += toggleLock_IsCheckedChanged;
                     Rect rect = SystemParameters.WorkArea;
                     mainWindow.MaxWidth = rect.Width;
                     mainWindow.MaxHeight = rect.Height;
@@ -401,22 +479,24 @@ namespace MetroFramePlugin.ViewModels
                     UserInfo.IsMultipleRole = RoleInfoList.Count >= 2;
                     UserInfo.ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
                     string UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
-                    //if (UserPwd.Equals("111111"))
-                    //{
-                    //    DataMessageOperation dataOp = new DataMessageOperation();
-                    //    Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    //    paramDic.Add("usercode", UserCode);
-                    //    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
-                    //    if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
-                    //    {
-                    //        Window win = pluginModel.PluginInterface.StartWindow;
-                    //        win.ShowDialog();
-                    //    }
-                    //}
                 });
             }
         }
+        /// <summary>
+        /// 倒计时
+        /// </summary>
+        public ICommand btnCountDownClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    TimeWindow win = new TimeWindow();
+                    win.ShowDialog();
 
+                });
+            }
+        }
         #region 插件按钮鼠标进入事件命令
         /// 
         /// <summary>
@@ -539,6 +619,55 @@ namespace MetroFramePlugin.ViewModels
         }
         #endregion
 
+        #region 锁定工作区命令
+        /// <summary>
+        /// 锁定工作区
+        /// </summary>
+        public ICommand btnLockSpaceClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    ShowWorkSpace = Visibility.Collapsed;
+                    ShowLockView = Visibility.Visible;
+                    IsShowMenu = Visibility.Collapsed;
+                    IsLockMenu = false;
+                });
+            }
+        }
+        #endregion
+
+        #region 解锁工作区命令
+        /// <summary>
+        /// 解锁工作区
+        /// </summary>
+        public ICommand btnUnLockSpaceClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    string pwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
+                    if (UserInfo.UnLockPwd.Equals(pwd))
+                    {
+                        ShowWorkSpace = Visibility.Visible;
+                        ShowLockView = Visibility.Collapsed;
+                        IsShowMenu = Visibility.Visible;
+                        IsLockMenu = false;
+                        UserInfo.UnLockPwd = string.Empty;
+                        userInfo.ErrorPwd = string.Empty;
+                    }
+                    else
+                    {
+                        userInfo.ErrorPwd = "请输入正确的登陆密码";
+                        //VicMessageBoxNormal.Show("请输入正确的登陆密码", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                });
+            }
+        }
+        #endregion
+
         #region 窗体最小化命令
         /// <summary>窗体最小化命令 </summary>
         public ICommand btnMiniClickCommand
@@ -567,8 +696,8 @@ namespace MetroFramePlugin.ViewModels
 
                     //切换用户时，自动隐藏菜单状态初始化
                     IsShowMenu = Visibility.Visible;
-                    isLockMenu = false;
-                    lockbtn.Content = "解锁";
+                    IsLockMenu = false;
+                    //lockbtn.Content = "解锁";
                     //
                     UserLogin();
                     DataMessageOperation messageOp = new DataMessageOperation();
@@ -576,11 +705,32 @@ namespace MetroFramePlugin.ViewModels
                     RoleInfoList = JsonHelper.ToObject<ObservableCollection<UserRoleInfoModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
                     UserInfo.IsMultipleRole = RoleInfoList.Count >= 2;
                     InitPanelArea();
-
+                    var rect = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                    UserInfo.UserRole = JsonHelper.ReadJsonString(rect["ReplyContent"].ToString(), "CurrentRole");
+                    if (UserInfo.OldUserCode == null || UserInfo.OldUserCode == "")
+                    {
+                        return;
+                    }
+                    if (!UserInfo.OldUserCode.Equals(UserInfo.UserCode))
+                    {
+                        CloseUserCtrlTabItem(messageOp);
+                        CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
+                    }
+                    if (!UserInfo.OldUserCode.Equals(UserInfo.UserCode) && !UserInfo.OldRole.Equals(UserInfo.UserRole))
+                    {
+                        CloseUserCtrlTabItem(messageOp);
+                        CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
+                    }
+                    if (UserInfo.OldUserCode.Equals(UserInfo.UserCode) && !UserInfo.OldRole.Equals(UserInfo.UserRole))
+                    {
+                        CloseUserCtrlTabItem(messageOp);
+                        CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
+                    }
                 });
             }
         }
         #endregion
+
         #region 切换角色
         public ICommand btnChangeRoleCommand
         {
@@ -589,16 +739,54 @@ namespace MetroFramePlugin.ViewModels
                 return new RelayCommand(() =>
                 {
                     DataMessageOperation dataOp = new DataMessageOperation();
-                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    //paramDic.Add("usercode", UserCode);
-                    PluginModel pluginModel = dataOp.StratPlugin("ChangeRolePlugin", paramDic, null, false);
+                    bool result = false;
+                    PluginModel pluginModel = dataOp.StartPlugin(new Victop.Frame.DataMessageManager.Models.ExcutePluginParamModel() { PluginName = "ChangeRolePlugin" });
                     if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                     {
                         Window win = pluginModel.PluginInterface.StartWindow;
-                        win.ShowDialog();
+                        result = (bool)win.ShowDialog();
                     }
+                    try
+                    {
+                        UserInfo.OldRole = UserInfo.UserRole;
+                        if (result == true)
+                        {
+                            var rect = dataOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                            UserInfo.UserRole = JsonHelper.ReadJsonString(rect["ReplyContent"].ToString(), "CurrentRole");
+                            if (!UserInfo.OldRole.Equals(UserInfo.UserRole))
+                            {
+                                CloseUserCtrlTabItem(dataOp);
+                                CreateBrowser("www.daokes.com", "飞道科技", "homeItem");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+
                     LoadStandardMenu();
+
                 });
+            }
+        }
+
+        private void CloseUserCtrlTabItem(DataMessageOperation dataOp)
+        {
+            while (TabItemList.Count > 2)
+            {
+                if (TabItemList.Last().Equals("homeItem") || TabItemList.Last().Equals("personItem"))
+                    continue;
+                UserControl tabCtrl = (UserControl)(TabItemList.Last().Content);
+                if (!string.IsNullOrEmpty(tabCtrl.Uid))
+                {
+                    string messageType = "PluginService.PluginStop";
+                    Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                    contentDic.Add("ObjectId", tabCtrl.Uid);
+                    dataOp.SendAsyncMessage(messageType, contentDic);
+                }
+                ActivePluginNum = dataOp.GetPluginInfo().Count;
+                TabItemList.Remove(TabItemList.Last());
             }
         }
         #endregion
@@ -616,7 +804,8 @@ namespace MetroFramePlugin.ViewModels
                     DataMessageOperation dataOp = new DataMessageOperation();
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
                     paramDic.Add("usercode", UserInfo.UserCode);
-                    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                    //PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                    PluginModel pluginModel = dataOp.StartPlugin(new ExcutePluginParamModel() { PluginName = "ModifyPassWordPlugin" }, paramDic);
                     if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                     {
                         Window win = pluginModel.PluginInterface.StartWindow;
@@ -691,7 +880,7 @@ namespace MetroFramePlugin.ViewModels
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         Dictionary<string, object> resultDic = dataMsgOp.SendSyncMessage("MongoDataChannelService.loginout", contentDic);
                         long replyMode = Convert.ToInt64(resultDic["ReplyMode"].ToString());
-                        if (replyMode > 0)
+                        if (replyMode == 1)
                         {
                             UserInfo.IsLogin = false;
                             UserInfo.UserName = string.Empty;
@@ -814,7 +1003,7 @@ namespace MetroFramePlugin.ViewModels
         }
         #endregion
 
-        #region 单击插件运行命令
+        #region 单击插件运行命令 
         public ICommand btnPluginRunClickCommand
         {
             get
@@ -823,9 +1012,9 @@ namespace MetroFramePlugin.ViewModels
                 {
                     if (x != null)
                     {
-                        MenuModel menuModel = (MenuModel)x;
+                        SelectedFourMenuModel = (MenuModel)x;
                         //LoadPlugin(menuModel);
-                        OpenJsonMenuPlugin(menuModel);
+                        OpenJsonMenuPlugin(SelectedFourMenuModel);
                     }
                 });
             }
@@ -873,7 +1062,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (isLockMenu == true)
+                    if (IsLockMenu == true)
                         IsShowMenu = Visibility.Visible;
                 });
             }
@@ -887,7 +1076,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    if (isLockMenu == true)
+                    if (IsLockMenu == true)
                         IsShowMenu = Visibility.Collapsed;
                 });
             }
@@ -901,17 +1090,17 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                     {
-                        VicButtonNormal lockBtn = (VicButtonNormal)x;
-                        if (lockBtn.Content.Equals("锁定"))
-                        {
-                            lockBtn.Content = "解锁";
-                            isLockMenu = false;
-                        }
-                        else
-                        {
-                            lockBtn.Content = "锁定";
-                            isLockMenu = true;
-                        }
+                        //VicButtonNormal lockBtn = (VicButtonNormal)x;
+                        //if (lockBtn.Content.Equals("锁定"))
+                        //{
+                        //    lockBtn.Content = "解锁";
+                        //    IsLockMenu = false;
+                        //}
+                        //else
+                        //{
+                        //    lockBtn.Content = "锁定";
+                        //    IsLockMenu = true;
+                        //}
 
                     });
             }
@@ -952,7 +1141,7 @@ namespace MetroFramePlugin.ViewModels
             SystemMenuListEnterprise.Clear();
             if (resourceInfo != null && resourceInfo.ResourceMnenus.Count > 0)
             {
-                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.Parent_no.Equals("0") || string.IsNullOrEmpty(it.Parent_no)))
+                foreach (MenuInfo item in resourceInfo.ResourceMnenus.Where(it => it.Parent_no.Equals("0") || string.IsNullOrEmpty(it.Parent_no)).OrderBy(it => it.Priority))
                 {
                     MenuModel menuModel = GetMenuModel(item);
                     menuModel.ParentId = string.Empty;
@@ -988,7 +1177,7 @@ namespace MetroFramePlugin.ViewModels
         /// <summary>创建完整的菜单模型 </summary>
         private MenuModel CreateMenuList(string parentMenu, List<MenuInfo> fullMenuList, MenuModel parentModel)
         {
-            foreach (MenuInfo item in fullMenuList.Where(it => it.Parent_no.Equals(parentMenu)))
+            foreach (MenuInfo item in fullMenuList.Where(it => it.Parent_no.Equals(parentMenu)).OrderBy(it => it.Priority))
             {
                 MenuModel menuModel = GetMenuModel(item);
                 menuModel.ParentId = parentMenu;
@@ -1075,7 +1264,7 @@ namespace MetroFramePlugin.ViewModels
                 paramDic.Add("configsystemid", "11");
                 paramDic.Add("formid", selectedFourthMenu.FormId);
                 paramDic.Add("authoritycode", selectedFourthMenu.AuthorityCode);
-                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.PackageUrl, paramDic, selectedFourthMenu.MenuName);
+                PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = selectedFourthMenu.PackageUrl, ShowTitle = selectedFourthMenu.MenuName },paramDic);
                 if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {
                     PluginShow(pluginModel, selectedFourthMenu.MenuName);
@@ -1088,7 +1277,7 @@ namespace MetroFramePlugin.ViewModels
             }
             else
             {
-                VicMessageBoxNormal.Show(string.Format("{0}未配置启动插件", selectedFourthMenu.MenuName));
+                //VicMessageBoxNormal.Show(string.Format("{0}未配置启动插件", selectedFourthMenu.MenuName));
             }
         }
         #endregion
@@ -1225,29 +1414,28 @@ namespace MetroFramePlugin.ViewModels
         {
             DataMessageOperation pluginOp = new DataMessageOperation();
             string loginPlugin = ConfigurationManager.AppSettings["loginWindow"];
-            PluginModel pluginModel = pluginOp.StratPlugin(loginPlugin);
+            PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = loginPlugin });
             IPlugin PluginInstance = pluginModel.PluginInterface;
             Window loginWin = PluginInstance.StartWindow;
             loginWin.Uid = pluginModel.ObjectId;
             loginWin.Owner = mainWindow;
+            UserInfo.OldUserCode = UserInfo.UserCode;
+            UserInfo.OldRole = UserInfo.UserRole;
             bool? result = loginWin.ShowDialog();
             if (result == true)
             {
                 UserInfo.IsLogin = true;
-                Dictionary<string, object> userDic = pluginOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
-                if (userDic != null)
-                {
-                    UserInfo.UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
-                    UserInfo.UserRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
-                    UserInfo.UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
-                    UserInfo.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
-                }
-                LoadStandardMenu();
-                IsShowMenu = Visibility.Visible;
-                //NotificationCenter notifyCenter = new NotificationCenter();
-                //notifyCenter.Show();
             }
-
+            Dictionary<string, object> userDic = pluginOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+            if (userDic != null)
+            {
+                UserInfo.UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
+                UserInfo.UserRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
+                UserInfo.UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
+                UserInfo.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
+            }
+            IsShowMenu = Visibility.Visible;
+            LoadStandardMenu();
         }
 
         private string DownLoadUserImg(string userCode, string fileInfo)
@@ -1291,7 +1479,7 @@ namespace MetroFramePlugin.ViewModels
         private void ChangeTheme()
         {
             DataMessageOperation pluginOp = new DataMessageOperation();
-            PluginModel pluginModel = pluginOp.StratPlugin("ThemeManagerPlugin");
+            PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = "ThemeManagerPlugin" });
             IPlugin PluginInstance = pluginModel.PluginInterface;
             Window themeWin = PluginInstance.StartWindow;
             themeWin.Uid = pluginModel.ObjectId;
@@ -1436,13 +1624,30 @@ namespace MetroFramePlugin.ViewModels
         /// </summary>
         /// <param name="url"></param>
         /// <param name="title"></param>
-        private void CreateBrowser(string url, string title)
+        private void CreateBrowser(string url, string title, string tabName = null)
         {
             WebBrowser browser = new WebBrowser();
             browser.Navigating += browser_Navigating;
             browser.Source = new Uri(string.Format("http://{0}", url));
-            TabItemList[0].Content = browser;
-            TabItemList[0].Header = title;
+            VicTabItemNormal tabItem;
+            if (string.IsNullOrEmpty(tabName))
+            {
+                tabItem = TabItemList[1];
+            }
+            else
+            {
+                tabItem = TabItemList.FirstOrDefault(it => it.Name.Equals(tabName));
+                if (tabItem != null)
+                {
+                    tabItem.Content = browser;
+                    tabItem.Header = title;
+                }
+                else
+                {
+                    TabItemList[1].Content = browser;
+                    TabItemList[1].Header = title;
+                }
+            }
         }
         void browser_Navigating(object sender, NavigatingCancelEventArgs e)
         {
@@ -1524,7 +1729,7 @@ namespace MetroFramePlugin.ViewModels
                 if (newMenuListLocal != value)
                 {
                     newMenuListLocal = value;
-                    RaisePropertyChanged("NewMenuListLocal");
+                    RaisePropertyChanged(()=> NewMenuListLocal);
                 }
             }
         }
@@ -1544,7 +1749,7 @@ namespace MetroFramePlugin.ViewModels
                 if (newMenuListEnterprise != value)
                 {
                     newMenuListEnterprise = value;
-                    RaisePropertyChanged("NewMenuListEnterprise");
+                    RaisePropertyChanged(()=> NewMenuListEnterprise);
                 }
             }
         }
@@ -1564,7 +1769,7 @@ namespace MetroFramePlugin.ViewModels
                 if (newSystemFourthLevelMenuList != value)
                 {
                     newSystemFourthLevelMenuList = value;
-                    RaisePropertyChanged("NewSystemFourthLevelMenuList");
+                    RaisePropertyChanged(()=> NewSystemFourthLevelMenuList);
                 }
             }
         }
@@ -1584,7 +1789,7 @@ namespace MetroFramePlugin.ViewModels
                 if (selectPopupMenuList != value)
                 {
                     selectPopupMenuList = value;
-                    RaisePropertyChanged("SelectPopupMenuList");
+                    RaisePropertyChanged(()=> SelectPopupMenuList);
                 }
             }
         }
@@ -1624,7 +1829,7 @@ namespace MetroFramePlugin.ViewModels
                 if (popupIsShow != value)
                 {
                     popupIsShow = value;
-                    RaisePropertyChanged("PopupIsShow");
+                    RaisePropertyChanged(()=> PopupIsShow);
                 }
             }
         }

@@ -10,7 +10,7 @@ namespace SystemTestingPlugin.Models
     /// <summary>
     /// 查询信息实体
     /// </summary>
-    public class DataSearchInfoModel:PropertyModelBase
+    public class DataSearchInfoModel : PropertyModelBase
     {
         /// <summary>
         /// 模型Id
@@ -30,7 +30,7 @@ namespace SystemTestingPlugin.Models
                 if (modelId != value)
                 {
                     modelId = value;
-                    RaisePropertyChanged("ModelId");
+                    RaisePropertyChanged(() => ModelId);
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace SystemTestingPlugin.Models
                 if (systemId != value)
                 {
                     systemId = value;
-                    RaisePropertyChanged("SystemId");
+                    RaisePropertyChanged(() => SystemId);
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace SystemTestingPlugin.Models
                 if (configsystemId != value)
                 {
                     configsystemId = value;
-                    RaisePropertyChanged("ConfigsystemId");
+                    RaisePropertyChanged(() => ConfigsystemId);
                 }
             }
         }
@@ -80,7 +80,7 @@ namespace SystemTestingPlugin.Models
                 if (refSystemId != value)
                 {
                     refSystemId = value;
-                    RaisePropertyChanged("RefSystemId");
+                    RaisePropertyChanged(() => RefSystemId);
                 }
             }
         }
@@ -94,7 +94,7 @@ namespace SystemTestingPlugin.Models
                 if (spaceId != value)
                 {
                     spaceId = value;
-                    RaisePropertyChanged("SpaceId");
+                    RaisePropertyChanged(() => SpaceId);
                 }
             }
         }
@@ -108,7 +108,7 @@ namespace SystemTestingPlugin.Models
                 if (tableName != value)
                 {
                     tableName = value;
-                    RaisePropertyChanged("TableName");
+                    RaisePropertyChanged(() => TableName);
                 }
             }
         }
@@ -120,7 +120,7 @@ namespace SystemTestingPlugin.Models
             set
             {
                 channelId = value;
-                RaisePropertyChanged("ChannelId");
+                RaisePropertyChanged(() => ChannelId);
             }
         }
         private DataTable resultDataTable;
@@ -133,7 +133,7 @@ namespace SystemTestingPlugin.Models
                 if (resultDataTable != value)
                 {
                     resultDataTable = value;
-                    RaisePropertyChanged("ResultDataTable");
+                    RaisePropertyChanged(() => ResultDataTable);
                 }
             }
         }
@@ -147,14 +147,16 @@ namespace SystemTestingPlugin.Models
                 if (jsonData != value)
                 {
                     jsonData = value;
-                    RaisePropertyChanged("JsonData");
+                    RaisePropertyChanged(() => JsonData);
                 }
-                
+
             }
         }
 
-        private string conditionStr=string.Empty;
-
+        private string conditionStr = string.Empty;
+        /// <summary>
+        /// 查询
+        /// </summary>
         public string ConditionStr
         {
             get { return conditionStr; }
@@ -163,7 +165,47 @@ namespace SystemTestingPlugin.Models
                 if (conditionStr != value)
                 {
                     conditionStr = value;
-                    RaisePropertyChanged("ConditionStr");
+                    RaisePropertyChanged(() => ConditionStr);
+                }
+            }
+        }
+
+        private string sortStr = string.Empty;
+        /// <summary>
+        /// 排序
+        /// </summary>
+        public string SortStr
+        {
+            get
+            {
+                return sortStr;
+            }
+            set
+            {
+                if (sortStr != value)
+                {
+                    sortStr = value;
+                    RaisePropertyChanged(() => SortStr);
+                }
+            }
+        }
+
+        private string pagingStr = string.Empty;
+        /// <summary>
+        /// 分页
+        /// </summary>
+        public string PagingStr
+        {
+            get
+            {
+                return pagingStr;
+            }
+            set
+            {
+                if (pagingStr != value)
+                {
+                    pagingStr = value;
+                    RaisePropertyChanged(() => PagingStr);
                 }
             }
         }
@@ -180,7 +222,7 @@ namespace SystemTestingPlugin.Models
             set
             {
                 vertifyMsg = value;
-                RaisePropertyChanged("VertifyMsg");
+                RaisePropertyChanged(() => VertifyMsg);
             }
         }
         /// <summary>
@@ -201,7 +243,7 @@ namespace SystemTestingPlugin.Models
                 if (dataPath != value)
                 {
                     dataPath = value;
-                    RaisePropertyChanged("DataPath");
+                    RaisePropertyChanged(() => DataPath);
                 }
             }
         }
@@ -213,7 +255,7 @@ namespace SystemTestingPlugin.Models
             set
             {
                 emptyFlag = value;
-                RaisePropertyChanged("EmptyFlag");
+                RaisePropertyChanged(() => EmptyFlag);
             }
         }
         private object gridSelectedValue;
@@ -224,7 +266,7 @@ namespace SystemTestingPlugin.Models
             set
             {
                 gridSelectedValue = value;
-                RaisePropertyChanged("GridSelectedValue");
+                RaisePropertyChanged(() => GridSelectedValue);
             }
         }
         /// <summary>
@@ -245,7 +287,7 @@ namespace SystemTestingPlugin.Models
             set
             {
                 refDataTable = value;
-                RaisePropertyChanged("RefDataTable");
+                RaisePropertyChanged(() => RefDataTable);
             }
         }
         #region 窄表相关
@@ -267,7 +309,7 @@ namespace SystemTestingPlugin.Models
                 if (narrowRowValue != value)
                 {
                     narrowRowValue = value;
-                    RaisePropertyChanged("NarrowRowValue");
+                    RaisePropertyChanged(() => NarrowRowValue);
                 }
             }
         }
@@ -289,7 +331,7 @@ namespace SystemTestingPlugin.Models
                 if (narrowRefField != value)
                 {
                     narrowRefField = value;
-                    RaisePropertyChanged("NarrowRefField");
+                    RaisePropertyChanged(() => NarrowRefField);
                 }
             }
         }
@@ -301,7 +343,7 @@ namespace SystemTestingPlugin.Models
             set
             {
                 narrowGridSelectedValue = value;
-                RaisePropertyChanged("NarrowGridSelectedValue");
+                RaisePropertyChanged(() => NarrowGridSelectedValue);
             }
         }
         #endregion

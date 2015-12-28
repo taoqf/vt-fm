@@ -1,6 +1,7 @@
 ﻿using AutomaticCodePlugin.FSM;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Victop.Frame.CmptRuntime;
+using Victop.Server.Controls;
 
 namespace AutomaticCodePlugin.Views
 {
@@ -22,9 +24,36 @@ namespace AutomaticCodePlugin.Views
     /// </summary>
     public partial class UCMainView : TemplateControl
     {
-        public UCMainView()
+        PresentationBlockModel mainPBlock;
+        public PresentationBlockModel MainPBlock
+        {
+            get
+            {
+                return mainPBlock;
+            }
+            set
+            {
+                mainPBlock = value;
+                RaisePropertyChanged(() => MainPBlock);
+            }
+        }
+        
+        public UCMainView(Dictionary<string, object> paramDict, int showType)
         {
             InitializeComponent();
+            this.DataContext = this;
+            FeiDaoFSM = new MainViewStateMachine(this);
+            ParamDict = paramDict;
+            ShowType = showType;
+        }
+        private void dgridProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //FeiDaoFSM.Do("SelectRow");
+        }
+
+        private void mainView_Loaded(object sender, RoutedEventArgs e)
+        {
+            FeiDaoFSM.Do("Load",sender);
         }
     }
 }

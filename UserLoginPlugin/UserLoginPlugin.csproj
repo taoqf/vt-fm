@@ -68,16 +68,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GalaSoft.MvvmLight.Extras.WPF4, Version=4.2.30.23173, Culture=neutral, PublicKeyToken=1673db7d5906b0ad, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\VictopLib\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.WPF4, Version=4.2.30.23173, Culture=neutral, PublicKeyToken=63eb5c012e0b3c1c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\VictopLib\GalaSoft.MvvmLight.WPF4.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -104,8 +94,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convert\CheckboxBoolConverter.cs" />
-    <Compile Include="Convert\ImgeNameToBackgroundConverter.cs" />
+    <Compile Include="Converters\CheckboxBoolConverter.cs" />
+    <Compile Include="Converters\ImgeNameToBackgroundConverter.cs" />
     <Compile Include="Models\LoginUserInfoModel.cs" />
     <Compile Include="Models\SystemConfigModel.cs" />
     <Compile Include="Models\UserRoleInfoModel.cs" />

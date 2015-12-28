@@ -83,7 +83,7 @@
         <vm:UpdateLogWindowViewModel/>
     </ctrl:VicWindowNormal.DataContext>
     <ctrl:VicGridNormal>
-        <ListBox Style="{DynamicResource ListStyle}" ItemsSource="{Binding LogInfoList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ListBox>
+        <ListBox Style="{DynamicResource ListStyle}" ScrollViewer.CanContentScroll="False" ItemsSource="{Binding LogInfoList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ListBox>
         <!--<ctrl:VicGridNormal.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>

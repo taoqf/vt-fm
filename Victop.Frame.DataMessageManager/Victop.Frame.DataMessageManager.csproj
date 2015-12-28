@@ -80,6 +80,7 @@
     <Compile Include="DataMessageSender.cs" />
     <Compile Include="Enums\LockStatusEnum.cs" />
     <Compile Include="Models\LockInfoModel.cs" />
+    <Compile Include="Models\ExcutePluginParamModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

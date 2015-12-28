@@ -19,7 +19,7 @@ namespace ModifyPassWordPlugin.Views
     /// <summary>
     /// ModifyPassWordWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class ModifyPassWordWindow : VicMetroWindow
+    public partial class ModifyPassWordWindow : VicWindowNormal
     {
         public ModifyPassWordWindow()
         {

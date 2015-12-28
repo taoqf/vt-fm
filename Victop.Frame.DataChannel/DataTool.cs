@@ -400,12 +400,13 @@ namespace Victop.Frame.DataChannel
             return true;
         }
 
-        private static void UpdateCurdList(string viewId, List<object> dataPath, Dictionary<string, object> saveData, Dictionary<string, object> originalData, OpreateStateEnum rowState)
+        private static void UpdateCurdList(string viewId, List<object> dataPath, Dictionary<string, object> saveData, Dictionary<string, object> originalData, OpreateStateEnum rowState, int bakFlag = 0)
         {
             Dictionary<string, object> curdDic = new Dictionary<string, object>();
             curdDic.Add("flag", rowState);
             curdDic.Add("path", dataPath);
             curdDic.Add("rowdata", saveData);
+            curdDic.Add("bakflag", bakFlag);
             DataOperation dataOp = new DataOperation();
             switch (rowState)
             {
@@ -519,22 +520,30 @@ namespace Victop.Frame.DataChannel
             }
         }
 
-        public static bool SaveCurdDataByPath(string viewId, List<SaveDataModel> saveDataList)
+        public static bool SaveCurdDataByPath(string viewId, List<SaveDataModel> saveDataList, int bakFlag = 0)
         {
             DataOperation dataOp = new DataOperation();
             string jsonData = dataOp.GetJSONData(viewId);
-            using (JavascriptContext context = new JavascriptContext())
+            try
             {
-                string paramWpf = string.Format("var data={0};var curdList={1};", jsonData, JsonHelper.ToJson(saveDataList));
-                string script = paramWpf + Properties.Resources.SaveOriginalDataScript;
-                context.Run(script);
-                jsonData = context.GetParameter("result") as string;
+                using (JavascriptContext context = new JavascriptContext())
+                {
+                    string paramWpf = string.Format("var data={0};var curdList={1};", jsonData, JsonHelper.ToJson(saveDataList));
+                    string script = paramWpf + Properties.Resources.SaveOriginalDataScript;
+                    context.Run(script);
+                    jsonData = context.GetParameter("result") as string;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.ErrorFormat("更新数据异常:{0}", ex.Message ?? ex.InnerException.Message);
+                return false;
             }
             if (dataOp.SaveJSONData(viewId, jsonData))
             {
                 foreach (SaveDataModel item in saveDataList)
                 {
-                    UpdateCurdList(viewId, item.DataPath, item.SaveDataDic, item.OriginalDataDic, item.OpStatus);
+                    UpdateCurdList(viewId, item.DataPath, item.SaveDataDic, item.OriginalDataDic, item.OpStatus,bakFlag);
                 }
                 return true;
             }

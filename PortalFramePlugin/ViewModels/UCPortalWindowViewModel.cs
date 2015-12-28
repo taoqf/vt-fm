@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using Victop.Server.Controls.Models;
-using GalaSoft.MvvmLight.Command;
 using Victop.Frame.CoreLibrary;
 using Victop.Frame.CoreLibrary.Models;
 using Victop.Frame.PublicLib.Helpers;
@@ -23,7 +22,8 @@ using Victop.Frame.DataMessageManager;
 using System.Xml;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
-
+using Victop.Frame.DataMessageManager.Models;
+using Victop.Server.Controls.MVVM;
 
 namespace PortalFramePlugin.ViewModels
 {
@@ -857,7 +857,7 @@ namespace PortalFramePlugin.ViewModels
                 paramDic.Add("configsystemid", "11");
                 paramDic.Add("formid", selectedFourthMenu.FormId);
                 paramDic.Add("authoritycode", selectedFourthMenu.AuthorityCode);
-                PluginModel pluginModel = pluginOp.StratPlugin(selectedFourthMenu.PackageUrl, paramDic, selectedFourthMenu.MenuName);
+                PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = selectedFourthMenu.PackageUrl, ShowTitle = selectedFourthMenu.MenuName }, paramDic);
                 if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {
                     PluginShow(pluginModel, selectedFourthMenu.MenuName);
@@ -975,7 +975,7 @@ namespace PortalFramePlugin.ViewModels
         {
             DataMessageOperation pluginOp = new DataMessageOperation();
             string loginPlugin = ConfigurationManager.AppSettings["loginWindow"];
-            PluginModel pluginModel = pluginOp.StratPlugin(loginPlugin);
+            PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = loginPlugin });
             IPlugin PluginInstance = pluginModel.PluginInterface;
             Window loginWin = PluginInstance.StartWindow;
             loginWin.Uid = pluginModel.ObjectId;
@@ -1040,7 +1040,7 @@ namespace PortalFramePlugin.ViewModels
         private void ChangeTheme()
         {
             DataMessageOperation pluginOp = new DataMessageOperation();
-            PluginModel pluginModel = pluginOp.StratPlugin("ThemeManagerPlugin");
+            PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = "ThemeManagerPlugin" });
             IPlugin PluginInstance = pluginModel.PluginInterface;
             Window themeWin = PluginInstance.StartWindow;
             themeWin.Uid = pluginModel.ObjectId;

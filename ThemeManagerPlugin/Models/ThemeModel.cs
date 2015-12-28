@@ -1,13 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Media;
+using Victop.Server.Controls.Models;
 
 namespace ThemeManagerPlugin.Models
 {
-    public class ThemeModel : IComparable<ThemeModel>
+    public class ThemeModel : PropertyModelBase
     {
+        /// <summary>
+        /// 版本号
+        /// </summary>
+        private int themeVerion = 0;
+        public int ThemeVerion
+        {
+            get { return themeVerion; }
+            set
+            {
+                if (themeVerion != value)
+                {
+                    themeVerion = value;
+                    RaisePropertyChanged(()=> ThemeVerion);
+                }
+            }
+        }
         private int skinOrder = 0;
 
         /// <summary>
@@ -19,6 +37,39 @@ namespace ThemeManagerPlugin.Models
             set { skinOrder = value; }
         }
 
+        /// <summary>
+        /// 状态改变
+        /// </summary>
+        private bool stateType;
+        public bool StateType
+        {
+            get { return stateType; }
+            set
+            {
+                if (stateType != value)
+                {
+                    stateType = value;
+                    RaisePropertyChanged(()=> StateType);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 状态改变
+        /// </summary>
+        private bool stateChange;
+        public bool StateChange
+        {
+            get { return stateChange; }
+            set
+            {
+                if (stateChange != value)
+                {
+                    stateChange = value;
+                    //RaisePropertyChanged("StateChange");
+                }
+            }
+        }
         private string skinPath;
 
         /// <summary>
@@ -80,7 +131,8 @@ namespace ThemeManagerPlugin.Models
         }
         public string SkinDllName
         {
-            get; set;
+            get;
+            set;
         }
 
         public int CompareTo(ThemeModel other)

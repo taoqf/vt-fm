@@ -21,7 +21,7 @@ namespace SystemTestingPlugin.Models
                 if (systemId != value)
                 {
                     systemId = value;
-                    RaisePropertyChanged("SystemId");
+                    RaisePropertyChanged(()=> SystemId);
                 }
             }
         }
@@ -35,7 +35,7 @@ namespace SystemTestingPlugin.Models
                 if (configsystemId != value)
                 {
                     configsystemId = value;
-                    RaisePropertyChanged("ConfigsystemId");
+                    RaisePropertyChanged(()=> ConfigsystemId);
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace SystemTestingPlugin.Models
                 if (clientType != value)
                 {
                     clientType = value;
-                    RaisePropertyChanged("ClientType");
+                    RaisePropertyChanged(()=> ClientType);
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace SystemTestingPlugin.Models
                 if (userCode != value)
                 {
                     userCode = value;
-                    RaisePropertyChanged("UserCode");
+                    RaisePropertyChanged(()=> UserCode);
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace SystemTestingPlugin.Models
                 if (resultData != value)
                 {
                     resultData = value;
-                    RaisePropertyChanged("ResultData");
+                    RaisePropertyChanged(()=> ResultData);
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace SystemTestingPlugin.Models
             set
             {
                 vertifyMsg = value;
-                RaisePropertyChanged("VertifyMsg");
+                RaisePropertyChanged(()=> VertifyMsg);
             }
         }
     }

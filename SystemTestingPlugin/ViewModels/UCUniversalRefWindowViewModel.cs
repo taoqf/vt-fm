@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using Victop.Server.Controls.Models;
-using GalaSoft.MvvmLight.Command;
 using SystemTestingPlugin.Models;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -15,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Victop.Wpf.Controls;
 using Victop.Frame.Units;
+using Victop.Server.Controls.MVVM;
 
 namespace SystemTestingPlugin.ViewModels
 {
@@ -82,7 +80,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (treeVisibility != value)
                 {
                     treeVisibility = value;
-                    RaisePropertyChanged("TreeVisibility");
+                    RaisePropertyChanged(()=> TreeVisibility);
                 }
             }
         }
@@ -100,7 +98,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (gridDataTable != value)
                 {
                     gridDataTable = value;
-                    RaisePropertyChanged("GridDataTable");
+                    RaisePropertyChanged(()=> GridDataTable);
                 }
             }
         }
@@ -118,7 +116,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (gridSelectionMode != value)
                 {
                     gridSelectionMode = value;
-                    RaisePropertyChanged("GridSelectionMode");
+                    RaisePropertyChanged(()=> GridSelectionMode);
                 }
             }
         }
@@ -136,7 +134,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (foreTreeSelectedNode != value)
                 {
                     foreTreeSelectedNode = value;
-                    RaisePropertyChanged("ForeTreeSelectedNode");
+                    RaisePropertyChanged(()=> ForeTreeSelectedNode);
                 }
             }
         }
@@ -156,7 +154,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (forerunnerTreeList != value)
                 {
                     forerunnerTreeList = value;
-                    RaisePropertyChanged("ForerunnerTreeList");
+                    RaisePropertyChanged(()=> ForerunnerTreeList);
                 }
             }
         }
@@ -174,7 +172,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (searchFieldCaption != value)
                 {
                     searchFieldCaption = value;
-                    RaisePropertyChanged("SearchFieldCaption");
+                    RaisePropertyChanged(()=> SearchFieldCaption);
                 }
             }
         }
@@ -193,7 +191,7 @@ namespace SystemTestingPlugin.ViewModels
                 if (conditionValue != value)
                 {
                     conditionValue = value;
-                    RaisePropertyChanged("ConditionValue");
+                    RaisePropertyChanged(()=> ConditionValue);
                 }
             }
         }

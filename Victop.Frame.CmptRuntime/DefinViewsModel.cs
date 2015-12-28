@@ -89,7 +89,7 @@ namespace Victop.Frame.CmptRuntime
                 if (viewBlocks != value)
                 {
                     viewBlocks = value;
-                    RaisePropertyChanged("ViewBlocks");
+                    RaisePropertyChanged(() => ViewBlocks);
                 }
             }
         }
@@ -140,6 +140,26 @@ namespace Victop.Frame.CmptRuntime
                 refSystemId = value;
             }
         }
+
+        private ViewsConditionModel condition;
+        /// <summary>
+        /// View层的条件
+        /// </summary>
+        [JsonProperty(PropertyName = "conditions")]
+        public ViewsConditionModel Condition
+        {
+            get
+            {
+                if (condition == null)
+                    condition = new ViewsConditionModel();
+                return condition;
+            }
+            set
+            {
+                condition = value;
+            }
+        }
+
         /// <summary>
         /// 执行渲染
         /// </summary>
@@ -153,7 +173,8 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 检索数据
         /// </summary>
-        public void SearchData()
+        /// <param name="spaceId">SpaceId</param>
+        public void SearchData(string spaceId = "")
         {
             string MessageType = "MongoDataChannelService.findBusiData";
             DataMessageOperation messageOp = new DataMessageOperation();
@@ -164,6 +185,10 @@ namespace Victop.Frame.CmptRuntime
                 contentDic.Add("refsystemid", RefSystemId);
             }
             contentDic.Add("modelid", ModelId);
+            if (!string.IsNullOrEmpty(spaceId))
+            {
+                contentDic.Add("spaceid", spaceId);
+            }
             List<object> conditionList = new List<object>();
             foreach (ViewsBlockModel item in this.viewBlocks)
             {
@@ -183,6 +208,16 @@ namespace Victop.Frame.CmptRuntime
             {
                 contentDic.Add("conditions", conditionList);
             }
+            #region 支持模型2.1
+            Dictionary<string, object> conDic = new Dictionary<string, object>();
+            conDic.Add("param", Condition.TableCondition);
+            conDic.Add("sort", Condition.TableSort);
+            Dictionary<string, object> newPageDic = new Dictionary<string, object>();
+            newPageDic.Add("size", Condition.PageSize);
+            newPageDic.Add("index", Condition.PageIndex);
+            conDic.Add("paging", newPageDic);
+            contentDic.Add("condition", conDic);
+            #endregion
             Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {

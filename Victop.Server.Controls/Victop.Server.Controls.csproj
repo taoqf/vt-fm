@@ -63,12 +63,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GalaSoft.MvvmLight.Extras.WPF4">
-      <HintPath>..\VictopLib\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.WPF4">
-      <HintPath>..\VictopLib\GalaSoft.MvvmLight.WPF4.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\VictopLib\Newtonsoft.Json.dll</HintPath>
@@ -94,8 +88,31 @@
     <Compile Include="IPlugin.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\OAVModel.cs" />
     <Compile Include="Models\PluginModel.cs" />
     <Compile Include="Models\PropertyModelBase.cs" />
+    <Compile Include="MVVM\Helpers\DesignerPlatformLibrary.cs" />
+    <Compile Include="MVVM\Helpers\Empty.cs" />
+    <Compile Include="MVVM\Helpers\FeatureDetection.cs" />
+    <Compile Include="MVVM\Helpers\IExecuteWithObject.cs" />
+    <Compile Include="MVVM\Helpers\IExecuteWithObjectAndResult.cs" />
+    <Compile Include="MVVM\Helpers\WeakAction.cs" />
+    <Compile Include="MVVM\Helpers\WeakActionGeneric.cs" />
+    <Compile Include="MVVM\Helpers\WeakFunc.cs" />
+    <Compile Include="MVVM\Helpers\WeakFuncGeneric.cs" />
+    <Compile Include="MVVM\Messaging\GenericMessage.cs" />
+    <Compile Include="MVVM\Messaging\IMessenger.cs" />
+    <Compile Include="MVVM\Messaging\MessageBase.cs" />
+    <Compile Include="MVVM\Messaging\Messenger.cs" />
+    <Compile Include="MVVM\Messaging\NotificationMessage.cs" />
+    <Compile Include="MVVM\Messaging\NotificationMessageAction.cs" />
+    <Compile Include="MVVM\Messaging\NotificationMessageActionGeneric.cs" />
+    <Compile Include="MVVM\Messaging\NotificationMessageGeneric.cs" />
+    <Compile Include="MVVM\Messaging\NotificationMessageWithCallback.cs" />
+    <Compile Include="MVVM\Messaging\PropertyChangedMessage.cs" />
+    <Compile Include="MVVM\Messaging\PropertyChangedMessageBase.cs" />
+    <Compile Include="MVVM\Messenger.cs" />
+    <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WeChat\WeChatAPIReturnModel.cs" />
     <Compile Include="WeChat\LoginInfo.cs" />

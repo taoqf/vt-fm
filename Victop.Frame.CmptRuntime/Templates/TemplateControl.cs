@@ -10,6 +10,8 @@ using System.Windows.Media;
 using Victop.Wpf.Controls;
 using Victop.Frame.CmptRuntime;
 using Victop.Frame.PublicLib.Helpers;
+using System.Linq.Expressions;
+using Victop.Server.Controls;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -34,7 +36,6 @@ namespace Victop.Frame.CmptRuntime
         /// 组件定义
         /// </summary>
         private CompntDefinModel DefinModel;
-
         /// <summary>
         /// 系统Id
         /// </summary>
@@ -67,6 +68,14 @@ namespace Victop.Frame.CmptRuntime
             get { return (string)GetValue(VicErrorMsgProperty); }
             set { SetValue(VicErrorMsgProperty, value); }
         }
+        /// <summary>
+        /// 父级控件
+        /// </summary>
+        public TemplateControl ParentControl
+        {
+            get { return (TemplateControl)GetValue(ParentControlProperty); }
+            set { SetValue(ParentControlProperty, value); }
+        }
         #endregion
 
         #region 依赖属性
@@ -86,6 +95,10 @@ namespace Victop.Frame.CmptRuntime
         /// Vic错误信息
         /// </summary>
         public static readonly DependencyProperty VicErrorMsgProperty = DependencyProperty.Register("VicErrorMsg", typeof(string), typeof(TemplateControl));
+        /// <summary>
+        /// 父级控件
+        /// </summary>
+        public static readonly DependencyProperty ParentControlProperty = DependencyProperty.Register("ParentControl", typeof(TemplateControl), typeof(TemplateControl));
         #endregion
         #region 公用方法
         /// <summary>
@@ -100,7 +113,6 @@ namespace Victop.Frame.CmptRuntime
                 if (DefinModel != null)
                 {
                     OrgnizeRuntime.InitCompnt(DefinModel);
-                    PresentationBlockModel blockModel = DefinModel.CompntPresentation.PresentationBlocks.FirstOrDefault(it => it.Superiors.Equals("root"));
                     foreach (var item in DefinModel.CompntPresentation.PresentationBlocks.Where(it => it.Superiors.Equals("root")))
                     {
                         bool result = CheckPresentationBlock(this, item.BlockName);
@@ -114,6 +126,7 @@ namespace Victop.Frame.CmptRuntime
                         }
                     }
                     initFlag = true;
+                    //MainPBlock = DefinModel.CompntPresentation.PresentationBlocks[0];
                     return true;
                 }
                 else
@@ -177,23 +190,47 @@ namespace Victop.Frame.CmptRuntime
             return result;
         }
         #endregion
+        /// <summary>
+        /// 飞道状态机
+        /// </summary>
+        public BaseStateMachine FeiDaoFSM;
+        /// <summary>
+        /// 参数键值对
+        /// </summary>
+        public Dictionary<string, object> ParamDict { get; set; }
+        /// <summary>
+        /// 展示方式
+        /// </summary>
+        public int ShowType { get; set; }
+        /// <summary>
+        /// 模板委托事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="paramDic">事件参数</param>
+        public delegate void TemplateDelegateEvent(object sender, Dictionary<string, object> paramDic);
+        /// <summary>
+        /// 执行通用方法
+        /// </summary>
+        /// <param name="paramDic">通用参数</param>
+        public virtual void Excute(Dictionary<string, object> paramDic)
+        {
 
+        }
+        /// <summary>
+        /// 属性改变
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
         /// <summary>
-        /// 属性改变通知
+        /// 属性值变化时发生
         /// </summary>
-        /// <param name="propertyName"></param>
-        public void RaisePropertyChanged(string propertyName)
+        /// <param name="propertyExpression">属性表达式</param>
+        public void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
+            var propertyName = (propertyExpression.Body as MemberExpression).Member.Name;
             if (this.PropertyChanged != null)
             {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
-        }
-
-        public static Dictionary<string, object> ParamDict
-        {
-            get; set;
         }
     }
 }

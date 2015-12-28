@@ -23,7 +23,7 @@ namespace UserLoginPlugin.Models
                 if (appName!=value)
                 {
                     appName = value;
-                    RaisePropertyChanged("AppName");
+                    RaisePropertyChanged(()=> AppName);
                 }
             }
         }
@@ -41,7 +41,7 @@ namespace UserLoginPlugin.Models
                 if (mode != value)
                 {
                     mode = value;
-                    RaisePropertyChanged("Mode");
+                    RaisePropertyChanged(()=> Mode);
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace UserLoginPlugin.Models
                 if (comLink != value)
                 {
                     comLink = value;
-                    RaisePropertyChanged("ComLink");
+                    RaisePropertyChanged(()=> ComLink);
                 }
             }
         }
@@ -77,7 +77,7 @@ namespace UserLoginPlugin.Models
                 if (autoSearch != value)
                 {
                     autoSearch = value;
-                    RaisePropertyChanged("AutoSearch");
+                    RaisePropertyChanged(()=> AutoSearch);
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace UserLoginPlugin.Models
                 if (startPoint != value)
                 {
                     startPoint = value;
-                    RaisePropertyChanged("StartPoint");
+                    RaisePropertyChanged(()=> StartPoint);
                 }
             }
         }
@@ -113,7 +113,7 @@ namespace UserLoginPlugin.Models
                 if (endPoint != value)
                 {
                     endPoint = value;
-                    RaisePropertyChanged("EndPoint");
+                    RaisePropertyChanged(()=> EndPoint);
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace UserLoginPlugin.Models
                 if (broadCastTime != value)
                 {
                     broadCastTime = value;
-                    RaisePropertyChanged("BroadCastTime");
+                    RaisePropertyChanged(()=> BroadCastTime);
                 }
             }
         }
@@ -152,7 +152,7 @@ namespace UserLoginPlugin.Models
                 if (debug != value)
                 {
                     debug = value;
-                    RaisePropertyChanged("Debug");
+                    RaisePropertyChanged(()=> Debug);
                 }
             }
         }
@@ -170,7 +170,7 @@ namespace UserLoginPlugin.Models
                 if (clean != value)
                 {
                     clean = value;
-                    RaisePropertyChanged("Clean");
+                    RaisePropertyChanged(()=> Clean);
                 }
             }
         }
@@ -188,7 +188,7 @@ namespace UserLoginPlugin.Models
                 if (unit != value)
                 {
                     unit = value;
-                    RaisePropertyChanged("Unit");
+                    RaisePropertyChanged(()=> Unit);
                 }
             }
         }
@@ -206,7 +206,7 @@ namespace UserLoginPlugin.Models
                 if (num != value)
                 {
                     num = value;
-                    RaisePropertyChanged("Num");
+                    RaisePropertyChanged(()=> Num);
                 }
             }
         }
@@ -226,7 +226,7 @@ namespace UserLoginPlugin.Models
                 if (cloudServerIP != value)
                 {
                     cloudServerIP = value;
-                    RaisePropertyChanged("CloudServerIP");
+                    RaisePropertyChanged(()=> CloudServerIP);
                 }
             }
         }
@@ -244,7 +244,7 @@ namespace UserLoginPlugin.Models
                 if (cloudServerPort != value)
                 {
                     cloudServerPort = value;
-                    RaisePropertyChanged("CloudServerPort");
+                    RaisePropertyChanged(()=> CloudServerPort);
                 }
             }
         }
@@ -262,7 +262,7 @@ namespace UserLoginPlugin.Models
                 if (cloudRouterIP != value)
                 {
                     cloudRouterIP = value;
-                    RaisePropertyChanged("CloudRouterIP");
+                    RaisePropertyChanged(()=> CloudRouterIP);
                 }
             }
         }
@@ -280,7 +280,7 @@ namespace UserLoginPlugin.Models
                 if (cloudRouterPort != value)
                 {
                     cloudRouterPort = value;
-                    RaisePropertyChanged("CloudRouterPort");
+                    RaisePropertyChanged(()=> CloudRouterPort);
                 }
             }
         }
@@ -300,7 +300,7 @@ namespace UserLoginPlugin.Models
                 if (cloudHostIP != value)
                 {
                     cloudHostIP = value;
-                    RaisePropertyChanged("CloudHostIP");
+                    RaisePropertyChanged(()=> CloudHostIP);
                 }
             }
         }
@@ -318,7 +318,7 @@ namespace UserLoginPlugin.Models
                 if (cloudHostPort != value)
                 {
                     cloudHostPort = value;
-                    RaisePropertyChanged("CloudHostPort");
+                    RaisePropertyChanged(()=> CloudHostPort);
                 }
             }
         }
@@ -338,7 +338,7 @@ namespace UserLoginPlugin.Models
                 if (enterpriseServerIP != value)
                 {
                     enterpriseServerIP = value;
-                    RaisePropertyChanged("EnterpriseServerIP");
+                    RaisePropertyChanged(()=> EnterpriseServerIP);
                 }
             }
         }
@@ -356,7 +356,7 @@ namespace UserLoginPlugin.Models
                 if (enterpriseServerPort != value)
                 {
                     enterpriseServerPort = value;
-                    RaisePropertyChanged("EnterpriseServerPort");
+                    RaisePropertyChanged(()=> EnterpriseServerPort);
                 }
             }
         }
@@ -374,7 +374,7 @@ namespace UserLoginPlugin.Models
                 if (enterpriseRouterIP != value)
                 {
                     enterpriseRouterIP = value;
-                    RaisePropertyChanged("EnterpriseRouterIP");
+                    RaisePropertyChanged(()=> EnterpriseRouterIP);
                 }
             }
         }
@@ -392,7 +392,7 @@ namespace UserLoginPlugin.Models
                 if (enterpriseRouterPort != value)
                 {
                     enterpriseRouterPort = value;
-                    RaisePropertyChanged("EnterpriseRouterPort");
+                    RaisePropertyChanged(()=> EnterpriseRouterPort);
                 }
             }
         }
@@ -410,7 +410,7 @@ namespace UserLoginPlugin.Models
                 if (enterpriseLan != value)
                 {
                     enterpriseLan = value;
-                    RaisePropertyChanged("EnterpriseLan");
+                    RaisePropertyChanged(()=> EnterpriseLan);
                 }
             }
         }
@@ -429,7 +429,7 @@ namespace UserLoginPlugin.Models
                 if (enterpriseIsNeedRouter != value)
                 {
                     enterpriseIsNeedRouter = value;
-                    RaisePropertyChanged("EnterpriseIsNeedRouter");
+                    RaisePropertyChanged(()=> EnterpriseIsNeedRouter);
                 }
             }
         }
@@ -449,7 +449,7 @@ namespace UserLoginPlugin.Models
                 if (p2pServerIP != value)
                 {
                     p2pServerIP = value;
-                    RaisePropertyChanged("P2PServerIP");
+                    RaisePropertyChanged(()=> P2PServerIP);
                 }
             }
         }
@@ -467,7 +467,7 @@ namespace UserLoginPlugin.Models
                 if (p2pServerPort != value)
                 {
                     p2pServerPort = value;
-                    RaisePropertyChanged("P2PServerPort");
+                    RaisePropertyChanged(()=> P2PServerPort);
                 }
             }
         }
@@ -487,7 +487,7 @@ namespace UserLoginPlugin.Models
                 if (userName != value)
                 {
                     userName = value;
-                    RaisePropertyChanged("UserName");
+                    RaisePropertyChanged(()=> UserName);
                 }
             }
         }
@@ -505,7 +505,7 @@ namespace UserLoginPlugin.Models
                 if (passWord != value)
                 {
                     passWord = value;
-                    RaisePropertyChanged("PassWord");
+                    RaisePropertyChanged(()=> PassWord);
                 }
             }
         }
@@ -523,7 +523,7 @@ namespace UserLoginPlugin.Models
                 if (clientId != value)
                 {
                     clientId = value;
-                    RaisePropertyChanged("ClientId");
+                    RaisePropertyChanged(()=> ClientId);
                 }
             }
         }
@@ -551,7 +551,7 @@ namespace UserLoginPlugin.Models
                 if (productId != value)
                 {
                     productId = value;
-                    RaisePropertyChanged("ProductId");
+                    RaisePropertyChanged(()=> ProductId);
                 }
             }
         }

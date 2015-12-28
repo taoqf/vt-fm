@@ -29,7 +29,7 @@ namespace MetroFramePlugin.Models
                 if (userName != value)
                 {
                     userName = value;
-                    RaisePropertyChanged("UserName");
+                    RaisePropertyChanged(() => UserName);
                 }
             }
         }
@@ -37,6 +37,7 @@ namespace MetroFramePlugin.Models
         /// 用户角色
         /// </summary>
         private string userRole;
+        public string OldRole { get; set; }
         /// <summary>
         /// 用户角色
         /// </summary>
@@ -51,7 +52,7 @@ namespace MetroFramePlugin.Models
                 if (userRole != value)
                 {
                     userRole = value;
-                    RaisePropertyChanged("UserRole");
+                    RaisePropertyChanged(() => UserRole);
                 }
             }
         }
@@ -70,7 +71,7 @@ namespace MetroFramePlugin.Models
                 if (userImg != value)
                 {
                     userImg = value;
-                    RaisePropertyChanged("UserImg");
+                    RaisePropertyChanged(() => UserImg);
                 }
             }
         }
@@ -89,7 +90,7 @@ namespace MetroFramePlugin.Models
                 if (clientId != value)
                 {
                     clientId = value;
-                    RaisePropertyChanged("ClientId");
+                    RaisePropertyChanged(() => ClientId);
                 }
             }
         }
@@ -97,6 +98,9 @@ namespace MetroFramePlugin.Models
         /// 用户账号
         /// </summary>
         private string userCode;
+
+        public string OldUserCode { get; set; }
+
         /// <summary>
         /// 用户账号
         /// </summary>
@@ -111,7 +115,7 @@ namespace MetroFramePlugin.Models
                 if (userCode != value)
                 {
                     userCode = value;
-                    RaisePropertyChanged("UserCode");
+                    RaisePropertyChanged(() => UserCode);
                 }
             }
         }
@@ -134,7 +138,7 @@ namespace MetroFramePlugin.Models
                 if (isLogin != value)
                 {
                     isLogin = value;
-                    RaisePropertyChanged("IsLogin");
+                    RaisePropertyChanged(() => IsLogin);
                 }
             }
         }
@@ -157,7 +161,47 @@ namespace MetroFramePlugin.Models
                 if (isMultipleRole != value)
                 {
                     isMultipleRole = value;
-                    RaisePropertyChanged("IsMultipleRole");
+                    RaisePropertyChanged(() => IsMultipleRole);
+                }
+            }
+        }
+        private string unLockPwd = string.Empty;
+        /// <summary>
+        /// 解锁密码
+        /// </summary>
+
+        public string UnLockPwd
+        {
+            get
+            {
+                return unLockPwd;
+            }
+            set
+            {
+                if (unLockPwd != value)
+                {
+                    unLockPwd = value;
+                    RaisePropertyChanged(() => UnLockPwd);
+                }
+            }
+        }
+        /// <summary>
+        /// 锁定区输入密码错误提示
+        /// </summary>
+        private string errorPwd;
+        public string ErrorPwd
+        {
+            get
+            {
+                return errorPwd;
+            }
+
+            set
+            {
+                if (errorPwd != value)
+                {
+                    errorPwd = value;
+                    RaisePropertyChanged(() => ErrorPwd);
                 }
             }
         }

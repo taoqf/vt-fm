@@ -4,7 +4,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:convert="clr-namespace:UserLoginPlugin.Convert"
+             xmlns:convert="clr-namespace:UserLoginPlugin.Converters"
              xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
              xmlns:my="clr-namespace:UserLoginPlugin.Views"
              mc:Ignorable="d" 
@@ -89,9 +89,9 @@
                     <ColumnDefinition Width="202"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Row="0" Grid.Column="0" Width="192" Height="28"   HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding LoginInfoModel.UserName}"  VerticalContentAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="0" Width="192" Height="28"   HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="{Binding LoginInfoModel.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalContentAlignment="Center"/>
 
-                <Label Grid.Row="0" Grid.Column="1" FontFamily="SimSun" Content="注册账号"  HorizontalAlignment="Left" VerticalContentAlignment="Bottom"/>
+                <Label Grid.Row="0" Visibility="Collapsed" Grid.Column="1" FontFamily="SimSun" Content="注册账号"  HorizontalAlignment="Left" VerticalContentAlignment="Bottom"/>
                 <!--没键盘-->
                 <!--<PasswordBox Grid.Row="1" Name="pwBox" Grid.Column="0"  Width="192" Height="28" HorizontalAlignment="Left"  
                             helpers:PasswordBoxBindingHelper.Attach="True" helpers:PasswordBoxBindingHelper.Password=
@@ -103,7 +103,7 @@
                             PasswordText="{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
                 </controls:VicPasswordBoxKeyNormal>
-                    <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Content="找回密码"  VerticalAlignment="Bottom"/>
+                    <Label Grid.Row="1" Grid.Column="1" FontFamily="SimSun" Visibility="Collapsed" Content="找回密码"  VerticalAlignment="Bottom"/>
                     <controls:VicComboBoxNormal Width="192" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="0" Height="28" Name="CloudSOAComboBox"  
                         ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
                         SelectedValue="{Binding SelectedGallery,UpdateSourceTrigger=PropertyChanged}">
@@ -124,7 +124,7 @@
         </Grid>
             <!--<controls:VicPopup Grid.Row="2" AllowsTransparency="True" Name="popPluginList"  StaysOpen="True" HorizontalOffset="90"   VerticalOffset="90" VerticalAlignment="Center"  PlacementTarget="{Binding ElementName=ucUserLongin}" Placement="Center"  PopupAnimation="Fade"  IsOpen="{Binding ShowRoleList,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">-->
 
-            <Grid Visibility="{Binding VisRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Width="450" Height="300" Background="{DynamicResource MainBackgroundImage}">
+            <Grid Visibility="{Binding VisRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Width="450" Height="300" Background="{DynamicResource WindowBackground}">
                     <!--<Grid.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform CenterX="100" CenterY="50"></ScaleTransform>

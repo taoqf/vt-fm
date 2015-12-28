@@ -1,27 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using UserLoginPlugin.Models;
 using UserLoginPlugin.Views;
 using System.Windows.Input;
-using System.IO;
 using System.Collections.ObjectModel;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using Victop.Server.Controls.Models;
 using Victop.Frame.PublicLib.Managers;
 using Victop.Frame.PublicLib.Helpers;
 using System.Threading;
-using System.Data;
 using Victop.Wpf.Controls;
 using Victop.Frame.DataMessageManager;
-using System.Windows.Threading;
-using System.Diagnostics;
 using System.Configuration;
+using Victop.Frame.DataMessageManager.Models;
+using Victop.Server.Controls.MVVM;
 
 namespace UserLoginPlugin.ViewModels
 {
@@ -60,7 +54,7 @@ namespace UserLoginPlugin.ViewModels
                 if (_ErrMsg != value)
                 {
                     _ErrMsg = value;
-                    RaisePropertyChanged("ErrMsg");
+                    RaisePropertyChanged(() => ErrMsg);
                 }
             }
         }
@@ -73,7 +67,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     visMini = value;
                 }
-                RaisePropertyChanged("VisMini");
+                RaisePropertyChanged(() => VisMini);
             }
         }
         public bool VisClose
@@ -85,7 +79,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     visClose = value;
                 }
-                RaisePropertyChanged("VisClose");
+                RaisePropertyChanged(() => VisClose);
             }
         }
         public bool VisSystemSet
@@ -97,7 +91,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     visSystemSet = value;
                 }
-                RaisePropertyChanged("VisSystemSet");
+                RaisePropertyChanged(() => VisSystemSet);
             }
         }
         public Visibility VisLogin
@@ -109,7 +103,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     visLogin = value;
                 }
-                RaisePropertyChanged("VisLogin");
+                RaisePropertyChanged(() => VisLogin);
             }
         }
         public Visibility VisRole
@@ -121,7 +115,7 @@ namespace UserLoginPlugin.ViewModels
                 {
                     visRole = value;
                 }
-                RaisePropertyChanged("VisRole");
+                RaisePropertyChanged(() => VisRole);
             }
         }
         private LoginUserInfoModel _LoginInfoModel;
@@ -139,7 +133,7 @@ namespace UserLoginPlugin.ViewModels
                 if (_LoginInfoModel != value)
                 {
                     _LoginInfoModel = value;
-                    RaisePropertyChanged("LoginInfoModel");
+                    RaisePropertyChanged(() => LoginInfoModel);
                 }
             }
         }
@@ -159,7 +153,7 @@ namespace UserLoginPlugin.ViewModels
                 if (galleryList != value)
                 {
                     galleryList = value;
-                    RaisePropertyChanged("GalleryList");
+                    RaisePropertyChanged(() => GalleryList);
                 }
             }
         }
@@ -172,7 +166,7 @@ namespace UserLoginPlugin.ViewModels
             set
             {
                 selectedGallery = value;
-                RaisePropertyChanged("SelectedGallery");
+                RaisePropertyChanged(() => SelectedGallery);
             }
         }
         /// <summary>
@@ -191,7 +185,7 @@ namespace UserLoginPlugin.ViewModels
                 if (roleInfoList != value)
                 {
                     roleInfoList = value;
-                    RaisePropertyChanged("RoleInfoList");
+                    RaisePropertyChanged(() => RoleInfoList);
                 }
             }
         }
@@ -209,7 +203,7 @@ namespace UserLoginPlugin.ViewModels
                 if (selectedRoleInfo != value)
                 {
                     selectedRoleInfo = value;
-                    RaisePropertyChanged("SelectedRoleInfo");
+                    RaisePropertyChanged(() => SelectedRoleInfo);
                 }
             }
         }
@@ -224,7 +218,7 @@ namespace UserLoginPlugin.ViewModels
                 if (isRingShow != value)
                 {
                     isRingShow = value;
-                    RaisePropertyChanged("IsRingShow");
+                    RaisePropertyChanged(() => IsRingShow);
                 }
             }
         }
@@ -242,7 +236,7 @@ namespace UserLoginPlugin.ViewModels
                 if (mainViewEnable != value)
                 {
                     mainViewEnable = value;
-                    RaisePropertyChanged("MainViewEnable");
+                    RaisePropertyChanged(() => MainViewEnable);
                 }
             }
         }
@@ -254,7 +248,7 @@ namespace UserLoginPlugin.ViewModels
                 if (showRoleList != value)
                 {
                     showRoleList = value;
-                    RaisePropertyChanged("ShowRoleList");
+                    RaisePropertyChanged(() => ShowRoleList);
                 }
             }
         }
@@ -360,7 +354,7 @@ namespace UserLoginPlugin.ViewModels
                     DataMessageOperation dataOp = new DataMessageOperation();
                     Dictionary<string, object> paramDic = new Dictionary<string, object>();
                     paramDic.Add("userCode", LoginInfoModel.UserName);
-                    PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                    PluginModel pluginModel = dataOp.StartPlugin(new ExcutePluginParamModel() { PluginName = "ModifyPassWordPlugin", VisiblePlugin = false }, paramDic);
                     if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                     {
                         Window win = pluginModel.PluginInterface.StartWindow;
@@ -386,7 +380,7 @@ namespace UserLoginPlugin.ViewModels
                                 DataMessageOperation dataOp = new DataMessageOperation();
                                 Dictionary<string, object> paramDic = new Dictionary<string, object>();
                                 paramDic.Add("usercode", LoginInfoModel.UserName);
-                                PluginModel pluginModel = dataOp.StratPlugin("ModifyPassWordPlugin", paramDic, null, false);
+                                PluginModel pluginModel = dataOp.StartPlugin(new ExcutePluginParamModel() { PluginName = "ModifyPassWordPlugin", VisiblePlugin = false }, paramDic);
                                 if (pluginModel.ErrorMsg == null || pluginModel.ErrorMsg == "")
                                 {
                                     Window win = pluginModel.PluginInterface.StartWindow;
@@ -460,12 +454,7 @@ namespace UserLoginPlugin.ViewModels
                         setUserContentDic.Add("ClientId", LoginInfoModel.ClientId);
                         setUserContentDic.Add("UserRole", SelectedRoleInfo.Role_No);
                         dataOp.SendSyncMessage(messageType, setUserContentDic);
-                        newWindow = LoginWindow as UserLoginWindow;
-                        if (newWindow != null)
-                        {
-                            newWindow.FrontGD.tm.Tick += tm_Tick;
-                            newWindow.FrontGD.tm.Start();
-                        }
+                        LoginWindow.DialogResult = true;
                         ShowRoleList = false;
                         visRole = Visibility.Collapsed;
                         MainViewEnable = true;
@@ -500,16 +489,6 @@ namespace UserLoginPlugin.ViewModels
             menuDic.Add("client_type", "3");
             Dictionary<string, object> resultDic = dataOp.SendSyncMessage(messageType, menuDic);
             return resultDic;
-        }
-        private void tm_Tick(object sender, EventArgs e)
-        {
-            if (newWindow != null)
-            {
-                newWindow.FrontGD.tm.Stop();
-            }
-            ShowRoleList = false;
-            visRole = Visibility.Collapsed;
-            LoginWindow.DialogResult = true;
         }
         private void UserLoginInit()
         {
@@ -567,7 +546,7 @@ namespace UserLoginPlugin.ViewModels
             Dictionary<string, object> returnDic = JsonHelper.ToObject<Dictionary<string, object>>(returnMsg.ToString());
             if (returnDic != null)
             {
-                if (!returnDic["ReplyMode"].ToString().Equals("0"))
+                if (returnDic["ReplyMode"].ToString().Equals("1"))
                 {
                     IsRingShow = false;
                     SaveLoginUserInfo();
@@ -650,11 +629,13 @@ namespace UserLoginPlugin.ViewModels
         {
             try
             {
+                DataMessageOperation messageOp = new DataMessageOperation();
+                Dictionary<string, object> loginDic = new Dictionary<string, object>();
+                var dic = messageOp.SendSyncMessage("MongoDataChannelService.loginout", loginDic);
                 Dictionary<string, object> contentDic = new Dictionary<string, object>();
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
                 string MessageType = "LoginService.userLogin";
-                DataMessageOperation messageOp = new DataMessageOperation();
                 //Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                 messageOp.SendAsyncMessage(MessageType, contentDic, new WaitCallback(AfterLogin));
             }

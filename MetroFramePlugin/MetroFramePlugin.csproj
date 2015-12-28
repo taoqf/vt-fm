@@ -63,12 +63,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GalaSoft.MvvmLight.Extras.WPF4">
-      <HintPath>..\Bin\GalaSoft.MvvmLight.Extras.WPF4.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.WPF4">
-      <HintPath>..\Bin\GalaSoft.MvvmLight.WPF4.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Bin\Newtonsoft.Json.dll</HintPath>
@@ -137,6 +131,9 @@
     <Compile Include="Views\ShowCalendarWindow.xaml.cs">
       <DependentUpon>ShowCalendarWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TimeWindow.xaml.cs">
+      <DependentUpon>TimeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UCPersonPluginContainer.xaml.cs">
       <DependentUpon>UCPersonPluginContainer.xaml</DependentUpon>
     </Compile>
@@ -148,6 +145,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Victop.Frame.CmptRuntime\Victop.Frame.CmptRuntime.csproj">
+      <Project>{4fd0d337-25d5-4e44-890c-afa599599999}</Project>
+      <Name>Victop.Frame.CmptRuntime</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Victop.Frame.CoreLibrary\Victop.Frame.CoreLibrary.csproj">
       <Project>{9bf73423-7f54-4de6-bfbb-e179ba454f0e}</Project>
       <Name>Victop.Frame.CoreLibrary</Name>
@@ -187,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShowCalendarWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TimeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

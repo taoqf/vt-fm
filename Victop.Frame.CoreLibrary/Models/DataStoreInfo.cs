@@ -43,5 +43,20 @@ namespace Victop.Frame.CoreLibrary.Models
             }
             set { refDataInfo = value; }
         }
+        private int bakFlag = 0;
+        /// <summary>
+        /// 备份表标识
+        /// </summary>
+        public int BakFlag
+        {
+            get
+            {
+                return bakFlag;
+            }
+            set
+            {
+                bakFlag = value;
+            }
+        }
     }
 }

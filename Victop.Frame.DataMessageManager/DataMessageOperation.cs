@@ -180,7 +180,7 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="refsystemId">引用系统Id</param>
         /// <param name="isSelectAll">是否查询所有</param>
         /// <returns>引用消息</returns>
-        public string GetRefData(string viewId, string dataPath, string fieldName, string rowValue, out DataSet RefDataSet, List<Dictionary<string, object>> defaultCondition = null, string systemId = null, string configsystemId = null, bool foreRunnerFlag = true, string refsystemId = null,bool isSelectAll=false)
+        public string GetRefData(string viewId, string dataPath, string fieldName, string rowValue, out DataSet RefDataSet, List<Dictionary<string, object>> defaultCondition = null, string systemId = null, string configsystemId = null, bool foreRunnerFlag = true, string refsystemId = null, bool isSelectAll = false)
         {
             RefDataSet = new DataSet();
             bool wideRefFlag = true;
@@ -676,18 +676,50 @@ namespace Victop.Frame.DataMessageManager
         /// <param name="paramDic">参数键值对</param>
         /// <param name="showTitle">展示名称</param>
         /// <param name="visiblePlugin">是否在活动列表中展示</param>
+        /// <param name="isLoading">是否强制加载</param>
         /// <returns></returns>
-        public PluginModel StratPlugin(string pluginName, Dictionary<string, object> paramDic = null, string showTitle = null, bool visiblePlugin = true)
+        [Obsolete("此方法已弃用,建议使用两个参数的StartPlugin方法")]
+        public PluginModel StratPlugin(string pluginName, Dictionary<string, object> paramDic = null, string showTitle = null, bool visiblePlugin = true, bool isLoading = false)
+        {
+            ExcutePluginParamModel pluginParam = new ExcutePluginParamModel()
+            {
+                PluginName = pluginName,
+                IsLoading = isLoading,
+                PluginPath = string.Empty,
+                ShowTitle = showTitle,
+                VisiblePlugin = visiblePlugin
+            };
+            return StartPlugin(pluginParam, paramDic);
+        }
+        /// <summary>
+        /// 启动插件
+        /// </summary>
+        /// <param name="pluginName">插件信息</param>
+        /// <param name="userParamDic">用户参数键值</param>
+        /// <returns></returns>
+        public PluginModel StartPlugin(string pluginName, Dictionary<string, object> userParamDic = null)
+        {
+            ExcutePluginParamModel pluginParam = new ExcutePluginParamModel() { PluginName = pluginName };
+            return StartPlugin(pluginParam, userParamDic);
+        }
+        /// <summary>
+        /// 启动插件
+        /// </summary>
+        /// <param name="pluginInfo">插件信息</param>
+        /// <param name="userParamDic">用户参数键值</param>
+        /// <returns></returns>
+        public PluginModel StartPlugin(ExcutePluginParamModel pluginInfo, Dictionary<string, object> userParamDic = null)
         {
             PluginModel pluginModel = new PluginModel();
             DataMessageSender sender = new DataMessageSender();
             string messageType = "PluginService.PluginRun";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("PluginName", pluginName);
-            contentDic.Add("ShowTitle", showTitle);
-            contentDic.Add("VisiblePlugin", visiblePlugin);
-            contentDic.Add("PluginPath", "");
-            contentDic.Add("PluginParam", JsonHelper.ToJson(paramDic));
+            contentDic.Add("PluginName", pluginInfo.PluginName);
+            contentDic.Add("ShowTitle", pluginInfo.ShowTitle);
+            contentDic.Add("VisiblePlugin", pluginInfo.VisiblePlugin);
+            contentDic.Add("IsLoading", pluginInfo.IsLoading);
+            contentDic.Add("PluginPath", pluginInfo.PluginPath);
+            contentDic.Add("PluginParam", JsonHelper.ToJson(userParamDic));
             Dictionary<string, object> resultDic = sender.SendMessage(messageType, contentDic);
             if (!resultDic["ReplyMode"].ToString().Equals("0"))
             {

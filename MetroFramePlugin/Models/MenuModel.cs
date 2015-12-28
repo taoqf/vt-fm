@@ -50,7 +50,7 @@ namespace MetroFramePlugin.Models
                 if (packageUrl != value)
                 {
                     packageUrl = value;
-                    RaisePropertyChanged("PackageUrl");
+                    RaisePropertyChanged(() => PackageUrl);
                 }
             }
         }
@@ -71,7 +71,7 @@ namespace MetroFramePlugin.Models
                 if (systemId != value)
                 {
                     systemId = value;
-                    RaisePropertyChanged("SystemId");
+                    RaisePropertyChanged(() => SystemId);
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace MetroFramePlugin.Models
                 if (formId != value)
                 {
                     formId = value;
-                    RaisePropertyChanged("FormId");
+                    RaisePropertyChanged(() => FormId);
                 }
             }
         }
@@ -114,7 +114,7 @@ namespace MetroFramePlugin.Models
                 if (menuNo != value)
                 {
                     menuNo = value;
-                    RaisePropertyChanged("MenuNo");
+                    RaisePropertyChanged(() => MenuNo);
                 }
             }
         }
@@ -136,16 +136,16 @@ namespace MetroFramePlugin.Models
                 if (menuName != value)
                 {
                     menuName = value;
-                    RaisePropertyChanged("MenuName");
+                    RaisePropertyChanged(() => MenuName);
                 }
             }
         }
         /// <summary>
         /// 插件标识
         /// </summary>
-         [JsonProperty(PropertyName = "Uid")]
+        [JsonProperty(PropertyName = "Uid")]
         private string uid;
-         [JsonIgnore]
+        [JsonIgnore]
         public string Uid
         {
             get
@@ -157,7 +157,7 @@ namespace MetroFramePlugin.Models
                 if (uid != value)
                 {
                     uid = value;
-                    RaisePropertyChanged("Uid");
+                    RaisePropertyChanged(() => Uid);
                 }
             }
         }
@@ -180,7 +180,7 @@ namespace MetroFramePlugin.Models
                 if (systemMenuList != value)
                 {
                     systemMenuList = value;
-                    RaisePropertyChanged("SystemMenuList");
+                    RaisePropertyChanged(() => SystemMenuList);
                 }
             }
         }
@@ -203,7 +203,7 @@ namespace MetroFramePlugin.Models
                 if (showType != value)
                 {
                     showType = value;
-                    RaisePropertyChanged("ShowType");
+                    RaisePropertyChanged(() => ShowType);
                 }
             }
         }
@@ -221,7 +221,7 @@ namespace MetroFramePlugin.Models
                 if (string.IsNullOrWhiteSpace(value) == false)
                 {
                     icon = value;
-                    RaisePropertyChanged("Icon");
+                    RaisePropertyChanged(() => Icon);
                 }
             }
         }
@@ -244,7 +244,7 @@ namespace MetroFramePlugin.Models
                 if (string.IsNullOrWhiteSpace(value) == false)
                 {
                     pluginBG = value;
-                    RaisePropertyChanged("PluginBG");
+                    RaisePropertyChanged(() => PluginBG);
                 }
             }
         }
@@ -266,7 +266,7 @@ namespace MetroFramePlugin.Models
                 if (description != value)
                 {
                     description = value;
-                    RaisePropertyChanged("Description");
+                    RaisePropertyChanged(() => Description);
                 }
             }
         }
@@ -287,7 +287,7 @@ namespace MetroFramePlugin.Models
                 if (authorityCode != value)
                 {
                     authorityCode = value;
-                    RaisePropertyChanged("AuthorityCode");
+                    RaisePropertyChanged(() => AuthorityCode);
                 }
             }
         }
@@ -308,7 +308,7 @@ namespace MetroFramePlugin.Models
                 if (priority != value)
                 {
                     priority = value;
-                    RaisePropertyChanged("Priority");
+                    RaisePropertyChanged(() => Priority);
                 }
             }
         }
@@ -329,7 +329,7 @@ namespace MetroFramePlugin.Models
                 if (isSingle != value)
                 {
                     isSingle = value;
-                    RaisePropertyChanged("IsSingle");
+                    RaisePropertyChanged(() => IsSingle);
                 }
             }
         }
@@ -350,7 +350,7 @@ namespace MetroFramePlugin.Models
                 if (isOffline != value)
                 {
                     isOffline = value;
-                    RaisePropertyChanged("IsOffline");
+                    RaisePropertyChanged(() => IsOffline);
                 }
             }
         }
@@ -371,7 +371,7 @@ namespace MetroFramePlugin.Models
                 if (isGuest != value)
                 {
                     isGuest = value;
-                    RaisePropertyChanged("IsGuest");
+                    RaisePropertyChanged(() => IsGuest);
                 }
             }
         }
@@ -392,7 +392,7 @@ namespace MetroFramePlugin.Models
                 if (roleAuthList != value)
                 {
                     roleAuthList = value;
-                    RaisePropertyChanged("RoleAuthList");
+                    RaisePropertyChanged(() => RoleAuthList);
                 }
             }
         }

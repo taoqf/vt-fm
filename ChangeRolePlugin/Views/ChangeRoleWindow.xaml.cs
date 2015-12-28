@@ -29,7 +29,9 @@ namespace ChangeRolePlugin.Views
 
         public static Dictionary<string, object> ParamDict
         {
-            get { return ChangeRoleWindow.paramDict; }
+            get {
+                return ChangeRoleWindow.paramDict;
+            }
             set { ChangeRoleWindow.paramDict = value; }
         }
         private static int _showType;

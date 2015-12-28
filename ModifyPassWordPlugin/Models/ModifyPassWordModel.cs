@@ -22,7 +22,7 @@ namespace ModifyPassWordPlugin.Models
                 if (oldUserPwd != value)
                 {
                     oldUserPwd = value;
-                    RaisePropertyChanged("OldUserPwd");
+                    RaisePropertyChanged(()=> OldUserPwd);
                 }
             }
         }
@@ -38,7 +38,7 @@ namespace ModifyPassWordPlugin.Models
                 if (newUserPwd != value)
                 {
                     newUserPwd = value;
-                    RaisePropertyChanged("NewUserPwd");
+                    RaisePropertyChanged(()=> NewUserPwd);
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace ModifyPassWordPlugin.Models
                 if (oldUserPrompt != value)
                 {
                     oldUserPrompt = value;
-                    RaisePropertyChanged("OldUserPrompt");
+                    RaisePropertyChanged(()=> OldUserPrompt);
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace ModifyPassWordPlugin.Models
                 if (newUserPrompt != value)
                 {
                     newUserPrompt = value;
-                    RaisePropertyChanged("NewUserPrompt");
+                    RaisePropertyChanged(()=> NewUserPrompt);
                 }
             }
         }
@@ -77,7 +77,7 @@ namespace ModifyPassWordPlugin.Models
                 if (affirmUserPrompt != value)
                 {
                     affirmUserPrompt = value;
-                    RaisePropertyChanged("AffirmUserPrompt");
+                    RaisePropertyChanged(()=> AffirmUserPrompt);
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace ModifyPassWordPlugin.Models
                 if (affirmUserPwd != value)
                 {
                     affirmUserPwd = value;
-                    RaisePropertyChanged("AffirmUserPwd");
+                    RaisePropertyChanged(()=> AffirmUserPwd);
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace ModifyPassWordPlugin.Models
             set { if(affirmIsEnabled!=value)
             {
                 affirmIsEnabled = value;
-                RaisePropertyChanged("AffirmIsEnabled");
+                RaisePropertyChanged(()=> AffirmIsEnabled);
             }}
         }
         private string systemid;
@@ -116,7 +116,7 @@ namespace ModifyPassWordPlugin.Models
                 if (systemid != value)
                 {
                     systemid = value;
-                    RaisePropertyChanged("SystemId");
+                    RaisePropertyChanged(()=> SystemId);
                 }
             }
         }
@@ -130,7 +130,7 @@ namespace ModifyPassWordPlugin.Models
                 if (spaceid != value)
                 {
                     spaceid = value;
-                    RaisePropertyChanged("SpaceId");
+                    RaisePropertyChanged(()=> SpaceId);
                 }
             }
         }
@@ -144,7 +144,7 @@ namespace ModifyPassWordPlugin.Models
                 if (userCode != value)
                 {
                     userCode = value;
-                    RaisePropertyChanged("UserCode");
+                    RaisePropertyChanged(()=> UserCode);
                 }
             }
         }
@@ -158,7 +158,7 @@ namespace ModifyPassWordPlugin.Models
                 if (edit_Type != value)
                 {
                     edit_Type = value;
-                    RaisePropertyChanged("Edit_Type");
+                    RaisePropertyChanged(()=> Edit_Type);
                 }
             }
         }

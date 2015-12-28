@@ -20,7 +20,7 @@ namespace ThemeManagerPlugin.Models
                 if (category_no != value)
                 {
                     category_no = value;
-                    RaisePropertyChanged("Category_No");
+                    RaisePropertyChanged(()=> Category_No);
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace ThemeManagerPlugin.Models
                 if (category_name != value)
                 {
                     category_name = value;
-                    RaisePropertyChanged("Category_Name");
+                    RaisePropertyChanged(()=> Category_Name);
                 }
             }
         }
