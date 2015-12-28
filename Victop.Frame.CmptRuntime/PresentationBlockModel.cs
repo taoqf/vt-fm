@@ -316,17 +316,8 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 查询数据
         /// </summary>
-        /// <param name="spaceId">SpaceId</param>
-        public void SearchData(string spaceId)
-        {
-            ViewBlock.ViewModel.SearchData(spaceId);
-        }
-        /// <summary>
-        /// 查询数据
-        /// </summary>
         /// <param name="conditionModel">查询条件</param>
-        /// <param name="spaceId">SpaceId</param>
-        public void SearchData(ViewsConditionModel conditionModel, string spaceId = "")
+        public void SearchData(ViewsConditionModel conditionModel)
         {
             if (conditionModel != null && conditionModel.TableCondition != null)
             {
@@ -341,7 +332,7 @@ namespace Victop.Frame.CmptRuntime
                 ViewBlock.ViewModel.Condition.PageSize = conditionModel.PageSize;
                 ViewBlock.ViewModel.Condition.PageIndex = conditionModel.PageIndex;
             }
-            ViewBlock.ViewModel.SearchData(spaceId);
+            ViewBlock.ViewModel.SearchData();
         }
 
         /// <summary>
