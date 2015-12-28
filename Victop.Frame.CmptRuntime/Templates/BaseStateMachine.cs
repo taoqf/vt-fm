@@ -50,7 +50,7 @@ namespace Victop.Frame.CmptRuntime
 
         private void OnTransitioned(StateMachine<string, string>.Transition x)
         {
-            stateModel.ActionDestination = "中文";
+            stateModel.ActionDestination = x.Destination;
             stateModel.ActionSource = x.Source;
             stateModel.ActionTrigger = x.Trigger;
             dSession.modifyObject(stateHandle, stateModel);
@@ -63,7 +63,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="x"></param>
         protected void OnFeidaoExit(StateMachine<string, string>.Transition x)
         {
-
+            
         }
         /// <summary>
         /// 状态进入

@@ -17,7 +17,7 @@ end
 rule RecurseSearch
 	salience 10
 	when
-		se : StateTransitionModel ( ActionTrigger == "Search",ActionDestination=="中文" )
+		se : StateTransitionModel ( ActionTrigger == "Search")
 	then
 		FeiDao.ExcutePageTrigger("Search",se.ActionSourceElement);
 		FeiDao.SetButtonText("saveBtn",se.ActionDestination);
