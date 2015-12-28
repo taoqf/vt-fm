@@ -105,13 +105,21 @@ namespace Victop.Frame.CmptRuntime
         /// 初始化飞道用户控件
         /// </summary>
         /// <param name="cmpntDefineContent">组件定义内容</param>
-        public bool InitVictopUserControl(string cmpntDefineContent)
+        /// <param name="spaceId">SpaceId</param>
+        public bool InitVictopUserControl(string cmpntDefineContent, string spaceId = "")
         {
             try
             {
                 DefinModel = JsonHelper.ToObject<CompntDefinModel>(cmpntDefineContent);
                 if (DefinModel != null)
                 {
+                    if (!string.IsNullOrEmpty(spaceId))
+                    {
+                        foreach (var item in DefinModel.CompntViews)
+                        {
+                            item.SpaceId = spaceId;
+                        }
+                    }
                     OrgnizeRuntime.InitCompnt(DefinModel);
                     foreach (var item in DefinModel.CompntPresentation.PresentationBlocks.Where(it => it.Superiors.Equals("root")))
                     {
@@ -140,24 +148,6 @@ namespace Victop.Frame.CmptRuntime
                 VicErrorMsg = ex.Message;
                 return false;
             }
-        }
-        /// <summary>
-        /// 初始化飞道用户控件
-        /// </summary>
-        /// <param name="cmpntDefineContent">组件定义内容</param>
-        /// <param name="spaceId">SpaceId</param>
-        /// <returns></returns>
-        public bool InitVictopUserControl(string cmpntDefineContent, string spaceId)
-        {
-            bool result = InitVictopUserControl(cmpntDefineContent);
-            if (result && !string.IsNullOrEmpty(spaceId))
-            {
-                foreach (var item in DefinModel.CompntViews)
-                {
-                    item.SpaceId = spaceId;
-                }
-            }
-            return result;
         }
         /// <summary>
         /// 获取展示层实体
