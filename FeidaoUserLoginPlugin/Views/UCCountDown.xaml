@@ -52,8 +52,8 @@
         		<!--<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
         		<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>-->
                 <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.5"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0.5"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="Storyboard2">
@@ -84,18 +84,18 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </ctrl:VicGridNormal.ColumnDefinitions>
-        <ctrl:VicTextBlockNormal Text="3" Name="Day1Area"  VerticalAlignment="Center" Width="18" Grid.Column="0" Margin="-1,-5,0,2" FontFamily="方正姚体">
+        <ctrl:VicTextBlockNormal Text="{Binding KbDay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Name="Day1Area"  VerticalAlignment="Center" Width="18" Grid.Column="0" Margin="-1,-5,0,2" FontFamily="方正姚体">
         </ctrl:VicTextBlockNormal>
-        <ctrl:VicTextBlockNormal Text="3" Name="Day2Area" HorizontalAlignment="Center" Width="18" VerticalAlignment="Center" Grid.Column="1" Margin="2,-5,0,2">
+        <ctrl:VicTextBlockNormal Text="{Binding HundredDay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Name="Day2Area" HorizontalAlignment="Center" Width="18" VerticalAlignment="Center" Grid.Column="1" Margin="2,-5,0,2">
         </ctrl:VicTextBlockNormal>
-        <ctrl:VicTextBlockNormal Text="2"  Name="Day3Area" VerticalAlignment="Center" Grid.Column="2" Margin="2,-5,0,2"/>
-        <ctrl:VicTextBlockNormal Text="5"  Name="Day4Area" VerticalAlignment="Center" Grid.Column="3" Margin="2,-5,0,2"/>
+        <ctrl:VicTextBlockNormal Text="{Binding TenDay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Name="Day3Area" VerticalAlignment="Center" Grid.Column="2" Margin="2,-5,0,2"/>
+        <ctrl:VicTextBlockNormal Text="{Binding NumDay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Name="Day4Area" VerticalAlignment="Center" Grid.Column="3" Margin="2,-5,0,2"/>
         <!--<ctrl:VicTextBlockNormal Text=" "  Name="DaySplitHour" VerticalAlignment="Center" Grid.Column="4" Margin="5,-5,0,2"/>-->
-        <ctrl:VicTextBlockNormal Text="1"  Name="Hour1Area" VerticalAlignment="Center" Grid.Column="5" Margin="2,-5,0,2"/>
-        <ctrl:VicTextBlockNormal Text="4"  Name="Hour2Area" VerticalAlignment="Center" Grid.Column="6" Margin="2,-5,0,2"/>
+        <ctrl:VicTextBlockNormal Text="{Binding HourEx,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Name="Hour1Area" VerticalAlignment="Center" Grid.Column="5" Margin="2,-5,0,2"/>
+        <ctrl:VicTextBlockNormal  Text="{Binding Hour,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Name="Hour2Area" VerticalAlignment="Center" Grid.Column="6" Margin="2,-5,0,2"/>
        <!-- <ctrl:VicTextBlockNormal Text=" "  Name="HourSplitMinute" VerticalAlignment="Center" Grid.Column="7" Margin="2,-5,0,2"/>-->
-        <ctrl:VicTextBlockNormal Text="1"  Name="Minute1Area" VerticalAlignment="Center" Grid.Column="8" Margin="2,-5,0,2"/>
-        <ctrl:VicTextBlockNormal Text="0"  Name="Minute2Area" VerticalAlignment="Center" Grid.Column="9" Margin="2,-5,0,2"/>
+        <ctrl:VicTextBlockNormal Text="{Binding MinuteEx,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   Name="Minute1Area" VerticalAlignment="Center" Grid.Column="8" Margin="2,-5,0,2"/>
+        <ctrl:VicTextBlockNormal Text="{Binding Minute,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   Name="Minute2Area" VerticalAlignment="Center" Grid.Column="9" Margin="2,-5,0,2"/>
         <!--<ctrl:VicTextBlockNormal Text=" "  Name="MinuteSplitSecond" VerticalAlignment="Center" Grid.Column="10" Margin="2,-5,0,2"/>-->
         <ctrl:VicTextBlockNormal Text="{Binding SencondEx,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Name="Second1Area" VerticalAlignment="Center" Grid.Column="11" Margin="2,-5,0,2">
         </ctrl:VicTextBlockNormal>
