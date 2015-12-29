@@ -9,8 +9,8 @@
 					"icon": "\ue614",
 					"children": [
 						{
-							"menu_name": "插件控制点",
-							"package_url": "PluginControlPointPlugin",
+							"menu_name": "自动化代码插件",
+							"package_url": "AutomaticCodePlugin",
 							"systemid": 18,
 							"formid": "P001",
 							"authoritycode": 0,

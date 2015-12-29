@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Stateless;
-using NRules;
-using NRules.Fluent;
 using System.Reflection;
-using Victop.Server.Controls.Models;
 using Victop.Frame.PublicLib.Helpers;
 using System.Windows;
+using System.IO;
+using org.drools.dotnet;
+using org.drools.dotnet.compiler;
+using org.drools.dotnet.rule;
+using org.drools.@base;
+using System.Collections.Generic;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -25,9 +25,14 @@ namespace Victop.Frame.CmptRuntime
         /// 界面实例
         /// </summary>
         protected TemplateControl MainView;
-        private string currentState = "None";
+        private string currentState = "none";
         private StateTransitionModel stateModel;
-        private ISession session;
+        private org.drools.FactHandle stateHandle;
+        private StateDefineModel stateDefModel;
+        /// <summary>
+        /// Drools.net :Session
+        /// </summary>
+        private WorkingMemory dSession;
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -37,18 +42,102 @@ namespace Victop.Frame.CmptRuntime
         public BaseStateMachine(string groupName, Assembly pluginAssembly, TemplateControl mainView)
         {
             MainView = mainView;
-            CreateRuleRepositoryGroup(groupName, pluginAssembly);
-            stateModel = new StateTransitionModel() { ActionName = "None", ActionSourceElement = mainView, MainView = mainView };
-            session.Insert(stateModel);
+            CreateDroolsSession(groupName, pluginAssembly);
+            CreateStateDefin(groupName, pluginAssembly);
+            stateModel = new StateTransitionModel() { ActionName = "none", ActionSourceElement = mainView, MainView = mainView };
+            stateHandle = dSession.assertObject(stateModel);
             FeiDaoFSM = new StateMachine<string, string>(() => currentState, s => currentState = s);
+            InitStateConfig();
             FeiDaoFSM.OnTransitioned((x) => OnTransitioned(x));
+        }
 
+        private void InitStateConfig()
+        {
+            foreach (var item in stateDefModel.DefTransitions)
+            {
+                if (item.InfoFrom.Equals(item.InfoTo))
+                {
+                    FeiDaoFSM.Configure(item.InfoFrom)
+                        .PermitReentry(item.InfoName);
+                }
+                else
+                {
+                    FeiDaoFSM.Configure(item.InfoFrom)
+                        .Permit(item.InfoName, item.InfoTo);
+                }
+                FeiDaoFSM.Configure(item.InfoFrom)
+                    .OnEntry((x) => OnFeiDaoEntry(x))
+                    .OnExit((x) => OnFeiDaoExit(x));
+            }
         }
 
         private void OnTransitioned(StateMachine<string, string>.Transition x)
         {
-            //Console.WriteLine("{0}:OnTransitioned",MainView.Name);
-            //Console.WriteLine("CurrentState:{0}", FeiDaoFSM.State);
+            stateModel.ActionDestination = x.Destination;
+            stateModel.ActionSource = x.Source;
+            stateModel.ActionTrigger = x.Trigger;
+            dSession.modifyObject(stateHandle, stateModel);
+            Console.WriteLine("{0}:OnTransitioned", MainView.Name);
+            Console.WriteLine(" OnTransitioned：Destination:{0},Source:{1},Trigger:{2}", x.Destination, x.Source, x.Trigger);
+            if (stateDefModel.DefEvents[x.Trigger] != null && stateDefModel.DefEvents[x.Trigger].Count > 0)
+            {
+                ExecuteRule(stateDefModel.DefEvents[x.Trigger]);
+            }
+        }
+        private bool OnFeiDaoGuard(string triggerName)
+        {
+            StateTransitionInfoModel InfoModel = stateDefModel.DefTransitions.Find(it => it.InfoName.Equals(triggerName) && it.InfoFrom.Equals(currentState));
+            if (InfoModel != null)
+            {
+                if (stateDefModel.DefStates[InfoModel.InfoTo].StateGuard != null && stateDefModel.DefStates[InfoModel.InfoTo].StateGuard.Count > 0)
+                {
+                    ExecuteRule(stateDefModel.DefStates[InfoModel.InfoTo].StateGuard);
+                    return stateModel.ActionGuard;
+                }
+                return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// 状态离开
+        /// </summary>
+        /// <param name="x"></param>
+        protected void OnFeiDaoExit(StateMachine<string, string>.Transition x)
+        {
+            Console.WriteLine("OnFeiDaoExit： Destination:{0},Source:{1},Trigger:{2}", x.Destination, x.Source, x.Trigger);
+            if (stateDefModel.DefStates[x.Source].StateExit != null && stateDefModel.DefStates[x.Source].StateExit.Count > 0)
+            {
+                ExecuteRule(stateDefModel.DefStates[x.Source].StateExit);
+            }
+        }
+        /// <summary>
+        /// 状态进入
+        /// </summary>
+        /// <param name="x"></param>
+        protected void OnFeiDaoEntry(StateMachine<string, string>.Transition x)
+        {
+            Console.WriteLine("OnFeiDaoEntry： Destination:{0},Source:{1},Trigger:{2}", x.Destination, x.Source, x.Trigger);
+            if (stateDefModel.DefStates[x.Destination].StateEntry != null && stateDefModel.DefStates[x.Destination].StateEntry.Count > 0)
+            {
+                ExecuteRule(stateDefModel.DefStates[x.Destination].StateEntry);
+            }
+            if (stateDefModel.DefStates[x.Destination].StateDo != null && stateDefModel.DefStates[x.Destination].StateDo.Count > 0)
+            {
+                ExecuteRule(stateDefModel.DefStates[x.Destination].StateDo);
+            }
+            if (stateDefModel.DefStates[x.Destination].StateDone != null && stateDefModel.DefStates[x.Destination].StateDone.Count > 0)
+            {
+                ExecuteRule(stateDefModel.DefStates[x.Destination].StateDone);
+            }
+        }
+
+        private void ExecuteRule(List<string> ListStr)
+        {
+            foreach (var item in ListStr)
+            {
+                dSession.setFocus(item);
+                dSession.fireAllRules(new RuleNameEqualsAgendaFilter(item));
+            }
         }
 
         /// <summary>
@@ -58,11 +147,12 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="triggerSource">动作触发源</param>
         public void Do(string triggerName, object triggerSource)
         {
-            if (FeiDaoFSM.CanFire(triggerName))
+            if (OnFeiDaoGuard(triggerName) && FeiDaoFSM.CanFire(triggerName))
             {
                 stateModel.ActionName = triggerName;
                 stateModel.ActionSourceElement = triggerSource as FrameworkElement;
-                session.Update(stateModel);
+                stateModel.ActionTrigger = triggerName;
+                dSession.modifyObject(stateHandle, stateModel);
                 FeiDaoFSM.Fire(triggerName);
             }
             else
@@ -70,65 +160,31 @@ namespace Victop.Frame.CmptRuntime
                 LoggerHelper.DebugFormat("currentState:{0} can not  trigger:{1}", currentState, triggerName);
             }
         }
-        #region NRules
-        private void CreateRuleRepositoryGroup(string groupName, Assembly pluginAssembly)
+        #region 状态定义文件管理
+        private void CreateStateDefin(string defFileName, Assembly pluginAssembly)
         {
-            RuleRepository fullRepository = new RuleRepository();
-            if (!string.IsNullOrEmpty(groupName))
+            string fullName = string.Format("{0}.FSM.{1}.json", pluginAssembly.GetName().Name, defFileName);
+            Stream manifestResourceStream = pluginAssembly.GetManifestResourceStream(fullName);
+            if (manifestResourceStream != null)
             {
-                fullRepository.Load(x => x.From(pluginAssembly).Where(it => it.IsTagged(groupName) || it.IsTagged("feidao")).To(groupName));
-                var sets = fullRepository.GetRuleSets().Where(it => it.Name.Equals(groupName));
-                var complier = new RuleCompiler();
-                var factory = complier.Compile(sets);
-                session = factory.CreateSession();
-            }
-            else
-            {
-                fullRepository.Load(x => x.From(pluginAssembly));
-                ISessionFactory factory = fullRepository.Compile();
-                session = factory.CreateSession();
-            }
-            session.Events.FactInsertedEvent += Events_FactInsertedEvent;
-            session.Events.FactRetractedEvent += Events_FactRetractedEvent;
-            session.Events.RuleFiredEvent += Events_RuleFiredEvent;
-        }
-        /// <summary>
-        /// 启动规则引擎
-        /// </summary>
-        public void Fire(params OAVModel[] oavs)
-        {
-            foreach (var item in oavs)
-            {
-                session.TryInsert(item);
-            }
-            session.Fire();
-            foreach (var item in oavs)
-            {
-                session.TryRetract(item);
+                StreamReader reader = new StreamReader(manifestResourceStream);
+                string temp = reader.ReadToEnd();
+                stateDefModel = JsonHelper.ToObject<StateDefineModel>(temp);
             }
         }
-        private void Events_FactRetractedEvent(object sender, NRules.Diagnostics.WorkingMemoryEventArgs e)
+        #endregion
+        #region Drools.net
+        private void CreateDroolsSession(string ruleFileName, Assembly pluginAssembly)
         {
-            Console.WriteLine("移除事实:" + e.Fact.Type.FullName);
-            if (e.Fact.Type.Name.Equals("OAVModel"))
-            {
-                OAVModel oav = e.Fact.Value as OAVModel;
-                Console.WriteLine("ObjectName:{0},AtrributeName:{1}", oav.ObjectName, oav.AtrributeName);
-            }
-        }
-
-        private void Events_FactInsertedEvent(object sender, NRules.Diagnostics.WorkingMemoryEventArgs e)
-        {
-            Console.WriteLine("插入事实:" + e.Fact.Type.FullName);
-            if (e.Fact.Type.Name.Equals("OAVModel"))
-            {
-                OAVModel oav = e.Fact.Value as OAVModel;
-                Console.WriteLine("ObjectName:{0},AtrributeName:{1}", oav.ObjectName, oav.AtrributeName);
-            }
-        }
-        private void Events_RuleFiredEvent(object sender, NRules.Diagnostics.AgendaEventArgs e)
-        {
-            Console.WriteLine("规则执行后:" + e.Rule.Name);
+            string fullName = string.Format("{0}.Rules.{1}.drl", pluginAssembly.GetName().Name, ruleFileName);
+            Stream manifestResourceStream = pluginAssembly.GetManifestResourceStream(fullName);
+            PackageBuilder packageBuilder = new PackageBuilder();
+            packageBuilder.AddPackageFromDrl(manifestResourceStream);
+            Package package = packageBuilder.GetPackage();
+            RuleBase ruleBase = RuleBaseFactory.NewRuleBase();
+            ruleBase.AddPackage(package);
+            dSession = ruleBase.NewWorkingMemory();
+            dSession.setGlobal("FeiDao", new FeiDaoOperation(MainView));
         }
         #endregion
     }

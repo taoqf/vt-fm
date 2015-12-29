@@ -1,4 +1,5 @@
-﻿using AutomaticCodePlugin.FSM;
+﻿using System.ComponentModel;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using Victop.Frame.CmptRuntime;
@@ -13,23 +14,26 @@ namespace AutomaticCodePlugin.Views
         public UCBtnOperationView()
         {
             InitializeComponent();
-            FeiDaoFSM = new BtnOpViewStateMachine(this);
+            FeiDaoFSM = new BaseStateMachine("BtnOpViewRules", Assembly.GetExecutingAssembly(), this);
             this.Loaded += UCBtnOperationView_Loaded;
         }
 
         private void UCBtnOperationView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("Load",sender);
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                FeiDaoFSM.Do("Load", sender);
+            }
         }
 
         private void searchBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("Search",sender);
+            FeiDaoFSM.Do("Search", sender);
         }
 
         private void addBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("Add",sender);
+            FeiDaoFSM.Do("Add", sender);
         }
     }
 }

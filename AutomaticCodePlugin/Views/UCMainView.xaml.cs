@@ -1,21 +1,8 @@
-﻿using AutomaticCodePlugin.FSM;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Victop.Frame.CmptRuntime;
-using Victop.Server.Controls;
 
 namespace AutomaticCodePlugin.Views
 {
@@ -37,14 +24,15 @@ namespace AutomaticCodePlugin.Views
                 RaisePropertyChanged(() => MainPBlock);
             }
         }
-        
+
         public UCMainView(Dictionary<string, object> paramDict, int showType)
         {
             InitializeComponent();
             this.DataContext = this;
-            FeiDaoFSM = new MainViewStateMachine(this);
+            //FeiDaoFSM = new BaseStateMachine("MainViewRules", Assembly.GetExecutingAssembly(), this);
             ParamDict = paramDict;
             ShowType = showType;
+            this.Loaded += mainView_Loaded;
         }
         private void dgridProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -53,7 +41,7 @@ namespace AutomaticCodePlugin.Views
 
         private void mainView_Loaded(object sender, RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("Load",sender);
+            //FeiDaoFSM.Do("Load", sender);
         }
     }
 }

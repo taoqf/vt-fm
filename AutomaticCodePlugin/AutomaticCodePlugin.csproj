@@ -58,9 +58,20 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NRules, Version=0.4.3.0, Culture=neutral, PublicKeyToken=8ad544355a4a2176, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\VictopLib\NRules.dll</HintPath>
+    <Reference Include="drools-3.0">
+      <HintPath>..\VictopLib\drools-3.0.dll</HintPath>
+    </Reference>
+    <Reference Include="drools-dep">
+      <HintPath>..\VictopLib\drools-dep.dll</HintPath>
+    </Reference>
+    <Reference Include="drools.dotnet">
+      <HintPath>..\VictopLib\drools.dotnet.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.GNU.Classpath">
+      <HintPath>..\VictopLib\IKVM.GNU.Classpath.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime">
+      <HintPath>..\VictopLib\IKVM.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Stateless, Version=2.5.21.0, Culture=neutral, PublicKeyToken=93038f0927583c9a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -89,9 +100,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FSM\BtnOpViewStateMachine.cs" />
-    <Compile Include="FSM\DataGridViewStateMachine.cs" />
-    <Compile Include="FSM\MainViewStateMachine.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -106,9 +114,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Rules\BtnOpViewRules.cs" />
-    <Compile Include="Rules\DataGridViewRules.cs" />
-    <Compile Include="Rules\MainViewRules.cs" />
     <Compile Include="Views\MainViewWindow.xaml.cs">
       <DependentUpon>MainViewWindow.xaml</DependentUpon>
     </Compile>
@@ -125,11 +130,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="FSM\BtnOpViewRules.json" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <EmbeddedResource Include="Rules\BtnOpViewRules.drl" />
+    <EmbeddedResource Include="Rules\DataGridViewRules.drl" />
+    <EmbeddedResource Include="Rules\MainViewRules.drl" />
+    <None Include="PVD\BtnOpView.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Victop.Frame.AtomicOperation\Victop.Frame.AtomicOperation.csproj">
@@ -171,10 +181,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

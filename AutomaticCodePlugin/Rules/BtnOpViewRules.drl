@@ -1,0 +1,26 @@
+﻿package AutomaticCodePlugin
+
+import Victop.Server.Controls;
+import Victop.Frame.CmptRuntime;
+
+global Victop.Frame.CmptRuntime.FeiDaoOperation FeiDao
+
+rule RecurseLoad
+	salience 10
+	when
+		se : StateTransitionModel ( ActionTrigger == "Load" )
+	then
+		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionTrigger);
+		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionDestination);
+end
+
+rule RecurseSearch
+	salience 10
+	when
+		se : StateTransitionModel ( ActionTrigger == "Search")
+	then
+		FeiDao.ExcutePageTrigger("Search",se.ActionSourceElement);
+		FeiDao.SetButtonText("saveBtn",se.ActionDestination);
+		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionTrigger);
+		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionDestination);
+end

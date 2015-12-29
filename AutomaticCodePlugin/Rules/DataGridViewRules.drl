@@ -1,0 +1,25 @@
+﻿package AutomaticCodePlugin
+
+import Victop.Server.Controls.Models;
+import Victop.Frame.CmptRuntime;
+
+global Victop.Frame.CmptRuntime.FeiDaoOperation FeiDao
+
+rule RecurseLoaded
+	salience 10
+	when
+		se : StateTransitionModel ( ActionTrigger == "Load" )
+	then
+		FeiDao.SysConsole("DataGridViewRules:"+se.ActionTrigger);
+		FeiDao.SysConsole("DataGridViewRules:"+se.ActionDestination);
+end
+
+rule RecurseSearched
+	salience 10
+	when
+		se : StateTransitionModel ( ActionTrigger == "Search" )
+	then
+		FeiDao.GetPBlockData("masterPBlock");
+		FeiDao.SysConsole("DataGridViewRules:"+se.ActionTrigger);
+		FeiDao.SysConsole("DataGridViewRules:"+se.ActionDestination);
+end
