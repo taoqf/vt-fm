@@ -78,8 +78,7 @@ namespace Victop.Frame.CmptRuntime
             stateModel.ActionSource = x.Source;
             stateModel.ActionTrigger = x.Trigger;
             dSession.modifyObject(stateHandle, stateModel);
-            Console.WriteLine("{0}:OnTransitioned", MainView.Name);
-            Console.WriteLine(" OnTransitioned：Destination:{0},Source:{1},Trigger:{2}", x.Destination, x.Source, x.Trigger);
+            Console.WriteLine("{0} OnTransitioned：Destination:{1},Source:{2},Trigger:{3}", MainView.GetType().FullName, x.Destination, x.Source, x.Trigger);
             if (stateDefModel.DefEvents[x.Trigger] != null && stateDefModel.DefEvents[x.Trigger].Count > 0)
             {
                 ExecuteRule(stateDefModel.DefEvents[x.Trigger]);
@@ -105,7 +104,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="x"></param>
         protected void OnFeiDaoExit(StateMachine<string, string>.Transition x)
         {
-            Console.WriteLine("OnFeiDaoExit： Destination:{0},Source:{1},Trigger:{2}", x.Destination, x.Source, x.Trigger);
+            Console.WriteLine("{0} OnFeiDaoExit：Destination:{1},Source:{2},Trigger:{3}", MainView.GetType().FullName, x.Destination, x.Source, x.Trigger);
             if (stateDefModel.DefStates[x.Source].StateExit != null && stateDefModel.DefStates[x.Source].StateExit.Count > 0)
             {
                 ExecuteRule(stateDefModel.DefStates[x.Source].StateExit);
@@ -117,7 +116,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="x"></param>
         protected void OnFeiDaoEntry(StateMachine<string, string>.Transition x)
         {
-            Console.WriteLine("OnFeiDaoEntry： Destination:{0},Source:{1},Trigger:{2}", x.Destination, x.Source, x.Trigger);
+            Console.WriteLine("{0} OnFeiDaoEntry：Destination:{1},Source:{2},Trigger:{3}", MainView.GetType().FullName, x.Destination, x.Source, x.Trigger);
             if (stateDefModel.DefStates[x.Destination].StateEntry != null && stateDefModel.DefStates[x.Destination].StateEntry.Count > 0)
             {
                 ExecuteRule(stateDefModel.DefStates[x.Destination].StateEntry);
@@ -190,7 +189,7 @@ namespace Victop.Frame.CmptRuntime
             }
             else
             {
-                LoggerHelper.DebugFormat("currentState:{0} can not  trigger:{1}", currentState, triggerName);
+                LoggerHelper.DebugFormat("{0} currentState:{1} can not  trigger:{2}", MainView.GetType().FullName, currentState, triggerName);
             }
         }
         #region 状态定义文件管理
