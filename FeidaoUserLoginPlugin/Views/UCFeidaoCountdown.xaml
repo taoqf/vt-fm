@@ -26,7 +26,7 @@
                             <DiffuseMaterial Viewport2DVisual3D.IsVisualHostMaterial="True"/>
                         </Viewport2DVisual3D.Material>
                         <Viewport2DVisual3D.Visual>
-                            <views:UCCountDown Width="234" Height="130"/>
+                            <views:UCCurrentTime Width="234" Height="130"/> 
                         </Viewport2DVisual3D.Visual>
                     </Viewport2DVisual3D>
                     <Viewport2DVisual3D>
@@ -37,7 +37,7 @@
                             <DiffuseMaterial Viewport2DVisual3D.IsVisualHostMaterial="True"/>
                         </Viewport2DVisual3D.Material>
                         <Viewport2DVisual3D.Visual>
-                            <views:UCCurrentTime Width="234" Height="130"/>
+                            <views:UCCountDown Width="234" Height="130"/>
                         </Viewport2DVisual3D.Visual>
                     </Viewport2DVisual3D>
                     <!-- 三维变换 -->

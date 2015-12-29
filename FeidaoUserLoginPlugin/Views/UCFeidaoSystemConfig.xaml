@@ -31,7 +31,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
         </Grid.RowDefinitions>
         <controls:VicTabControlNormal Style="{DynamicResource ThemeTabControlStyle}" HorizontalAlignment="Center" Grid.Row="1">
             <controls:VicTabItemNormal Header="系统和日志" Height="30" Style="{DynamicResource ThemeTabItemStyle}" AllowDelete="False" >
@@ -156,7 +156,7 @@
                 </controls:VicGridNormal>
             </controls:VicTabItemNormal>
         </controls:VicTabControlNormal>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top">
             <controls:VicButtonNormal Style="{DynamicResource LoginButtonStyle}" Content="确定"  Command="{Binding btnConfirmClickCommand}" />
             <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消"  Command="{Binding btnSystemCancelClickCommand}"/>
            
