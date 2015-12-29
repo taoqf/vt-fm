@@ -87,11 +87,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompntDefinModel.cs" />
-    <Compile Include="DefinPresentationModel.cs" />
-    <Compile Include="DefinViewsModel.cs" />
+    <Compile Include="PVDModel\CompntDefinModel.cs" />
+    <Compile Include="PVDModel\DefinPresentationModel.cs" />
+    <Compile Include="PVDModel\DefinViewsModel.cs" />
     <Compile Include="OrgnizeRuntime.cs" />
-    <Compile Include="PresentationBlockModel.cs" />
+    <Compile Include="PVDModel\PresentationBlockModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -105,13 +105,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="StateJson\StateDefineModel.cs" />
     <Compile Include="Templates\BaseStateMachine.cs" />
     <Compile Include="Templates\MainRule.cs" />
     <Compile Include="Templates\StateTransitionModel.cs" />
     <Compile Include="Templates\TemplateControl.cs" />
-    <Compile Include="ViewsConditionModel.cs" />
-    <Compile Include="ViewsBlockConditionModel.cs" />
-    <Compile Include="ViewsBlockModel.cs" />
+    <Compile Include="PVDModel\ViewsConditionModel.cs" />
+    <Compile Include="PVDModel\ViewsBlockConditionModel.cs" />
+    <Compile Include="PVDModel\ViewsBlockModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
