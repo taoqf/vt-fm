@@ -35,12 +35,12 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <ctrl:VicGridNormal>
+    <ctrl:VicGridNormal Height="135">
         <Grid.RowDefinitions>
             <RowDefinition Height="68"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <ctrl:VicGridNormal Grid.Row="0"  Width="234"  Height="68" Background="{DynamicResource loginlogo}"></ctrl:VicGridNormal>
+        <ctrl:VicGridNormal Grid.Row="0"  Width="234"  Height="68" Background="{DynamicResource loginlogoCurrent}"></ctrl:VicGridNormal>
         <ctrl:VicGridNormal Width="234" Grid.Row="1"  Height="56" VerticalAlignment="Top" Background="{DynamicResource loginlogotime}">
             <ctrl:VicGridNormal HorizontalAlignment="Center" >
                 <ctrl:VicGridNormal.RowDefinitions>

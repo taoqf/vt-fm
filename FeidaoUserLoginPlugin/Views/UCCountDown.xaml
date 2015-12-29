@@ -72,7 +72,7 @@
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </UserControl.Resources>
-    <ctrl:VicGridNormal>
+    <ctrl:VicGridNormal Height="135">
         <Grid.RowDefinitions>
             <RowDefinition Height="68"/>
             <RowDefinition Height="60"/>
