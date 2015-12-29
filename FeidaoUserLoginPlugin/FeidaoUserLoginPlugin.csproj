@@ -84,6 +84,9 @@
     <Compile Include="Views\UCCountDown.xaml.cs">
       <DependentUpon>UCCountDown.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UCCurrentTime.xaml.cs">
+      <DependentUpon>UCCurrentTime.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UCFeidaoSystemConfig.xaml.cs">
       <DependentUpon>UCFeidaoSystemConfig.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UCCountDown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UCCurrentTime.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
