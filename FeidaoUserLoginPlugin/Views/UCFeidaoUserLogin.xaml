@@ -32,7 +32,7 @@
             </Grid.RowDefinitions>
             <!--<controls:VicGridNormal Grid.Row="1"  Width="234"  Height="68" Background="{DynamicResource loginlogo}"></controls:VicGridNormal>-->
             <controls:VicGridNormal Grid.Row="1" Grid.RowSpan="2" >
-                <views:UCCountDown></views:UCCountDown>
+                <views:UCFeidaoCountdown></views:UCFeidaoCountdown>
             </controls:VicGridNormal>
             <Border Grid.Row="4" HorizontalAlignment="Center"  Width="300" BorderBrush="{DynamicResource loginBorder}" BorderThickness="1" ></Border>
         </controls:VicGridNormal>

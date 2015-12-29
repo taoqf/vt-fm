@@ -48,33 +48,33 @@
                         <RowDefinition Height="46"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.6*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1.2*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                        <ColumnDefinition Width="0.4*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.4*"/>
+                        <ColumnDefinition Width="0.4*"/>
+                        <ColumnDefinition Width="0.4*"/>
                     </Grid.ColumnDefinitions>
-                    <controls:VicTextBlockNormal Margin="0,20,0,0" Text="系统设置" Style="{DynamicResource logoTextBlockStyle}" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Height="28"></controls:VicTextBlockNormal>
+                    <controls:VicTextBlockNormal Margin="50,20,0,0" Text="系统设置" Style="{DynamicResource logoTextBlockStyle}" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0"  Height="28"></controls:VicTextBlockNormal>
                     <controls:VicTextBlockNormal Text="应用程序名称" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="1" Grid.Column="0"  Height="28"></controls:VicTextBlockNormal>
-                    <controls:VicTextBoxNormal Grid.Row="1" Width="185" Margin="5,5" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="5" VicText="{Binding SysConfigModel.AppName}"/>
+                    <controls:VicTextBoxNormal Grid.Row="1" Width="195" Margin="5,5" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="5" VicText="{Binding SysConfigModel.AppName}"/>
                     <controls:VicTextBlockNormal Text="连接器状态" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="2" Grid.Column="0"  Height="28"></controls:VicTextBlockNormal>
-                    <controls:VicCheckBoxNormal Grid.Row="2" VerticalAlignment="Top"  Grid.Column="1"  Margin="5,10,0,0" HorizontalAlignment="Left" IsChecked="{Binding SysConfigModel.ComLink,Converter={StaticResource CheckboxBoolConverter}}"/>
+                    <controls:VicCheckBoxNormal Grid.Row="2"  VerticalAlignment="Top"  Grid.Column="1"  Margin="5,10,0,0" HorizontalAlignment="Left" IsChecked="{Binding SysConfigModel.ComLink,Converter={StaticResource CheckboxBoolConverter}}"/>
                     <controls:VicTextBlockNormal Text="自动检索" Style="{DynamicResource logoTextBlockStyle}" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2"  Height="28"></controls:VicTextBlockNormal>
                     <controls:VicCheckBoxNormal Grid.Row="2" Grid.Column="3" VerticalAlignment="Top" Margin="5,10,0,0" IsChecked="{Binding SysConfigModel.AutoSearch,Converter={StaticResource CheckboxBoolConverter}}"/>
                     <controls:VicTextBlockNormal Text="模式" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="2" Grid.Column="4"  Height="28"></controls:VicTextBlockNormal>
                     <controls:VicCheckBoxNormal Grid.Column="5" Grid.Row="2" VerticalAlignment="Top" Margin="5,10,0,0" IsChecked="{Binding SysConfigModel.Mode,Converter={StaticResource CheckboxBoolConverter}}"/>
                     <controls:VicTextBlockNormal Text="广播次数" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="3" Grid.Column="0"  Height="28"></controls:VicTextBlockNormal>
-                    <controls:VicNumericUpDown Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Width="185" Margin="5,5" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding SysConfigModel.BroadCastTime}"/>
+                    <controls:VicNumericUpDown Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Width="195" Margin="5,5" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding SysConfigModel.BroadCastTime}"/>
                     <controls:VicTextBlockNormal Text="起始端口" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="4" Grid.Column="0"  Height="28"></controls:VicTextBlockNormal>
-                    <controls:VicNumericUpDown Grid.Row="4" Grid.Column="1" Width="60" Margin="5,5,0,5" HorizontalAlignment="Left"  Grid.ColumnSpan="2" Value="{Binding SysConfigModel.StartPoint}"/>
-                    <controls:VicTextBlockNormal Text="结束端口" Style="{DynamicResource logoTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Height="28"></controls:VicTextBlockNormal>
-                    <controls:VicNumericUpDown Grid.Row="4" Grid.Column="5" Width="60" Grid.ColumnSpan="2" Margin="0,5" HorizontalAlignment="Right" Value="{Binding SysConfigModel.EndPoint}"/>
-                    <controls:VicTextBlockNormal Text="日志配置" Style="{DynamicResource logoTextBlockStyle}" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" Height="28"></controls:VicTextBlockNormal>
+                    <controls:VicTextBoxNormal Grid.Row="4" Grid.Column="1" Width="60" Margin="5,0,0,5" HorizontalAlignment="Left"  Grid.ColumnSpan="2" VicText="{Binding SysConfigModel.StartPoint}"/>
+                    <controls:VicTextBlockNormal Text="结束端口" Style="{DynamicResource logoTextBlockStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="4" Grid.Column="3" Height="28"></controls:VicTextBlockNormal>
+                    <controls:VicTextBoxNormal Grid.Row="4" HorizontalAlignment="Left" Grid.Column="4" Width="60" Margin="5,0,0,10" Grid.ColumnSpan="2" VicText="{Binding SysConfigModel.EndPoint}"/>
+                    <controls:VicTextBlockNormal Text="日志配置"  Margin="50,0,0,0" Style="{DynamicResource logoTextBlockStyle}" HorizontalAlignment="Left" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" Height="28"></controls:VicTextBlockNormal>
                     <controls:VicTextBlockNormal Text="清理单位" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="6" Grid.Column="0"  Height="28"></controls:VicTextBlockNormal>
-                    <controls:VicComboBoxNormal Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="5" Width="185" Margin="5,5" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding CleanUnitList}" SelectedItem="{Binding SysConfigModel.Unit}"/>
+                    <controls:VicComboBoxNormal Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="5" Width="195" Margin="5,5" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding CleanUnitList}" SelectedItem="{Binding SysConfigModel.Unit}"/>
                     <controls:VicTextBlockNormal Text="文件个数" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="7" Grid.Column="0"  Height="28"></controls:VicTextBlockNormal>
-                    <controls:VicNumericUpDown Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="5" Width="185" Margin="5,5" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding SysConfigModel.Num}"/>
+                    <controls:VicNumericUpDown Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="5" Width="195" Margin="5,5" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding SysConfigModel.Num}"/>
                     <controls:VicTextBlockNormal Text="是否调试模式" HorizontalAlignment="Right"  Style="{DynamicResource logoTextBlockStyle}" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2"  Height="28"></controls:VicTextBlockNormal>
                     <controls:VicCheckBoxNormal Grid.Column="3" Grid.Row="8" VerticalAlignment="Top" Margin="5,10,0,0" IsChecked="{Binding SysConfigModel.Debug,Converter={StaticResource CheckboxBoolConverter}}"/>
                     <controls:VicTextBlockNormal Text="是否清理" HorizontalAlignment="Right"  Style="{DynamicResource logoTextBlockStyle}" Grid.Row="8" Grid.Column="4"   Height="28"></controls:VicTextBlockNormal>
@@ -102,7 +102,7 @@
                         <ColumnDefinition Width="0.6*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <controls:VicTextBlockNormal Margin="0,20,0,0" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"  Text="云服务通信(*重启后生效)"/>
+                    <controls:VicTextBlockNormal Margin="0,20,0,0" Style="{DynamicResource logoTextBlockStyle}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"  Text="云服务通信(*重启后生效)"/>
                     <controls:VicTextBlockNormal  Style="{DynamicResource logoTextBlockStyle}" Grid.Row="1" Grid.Column="0"  Text="服务器地址"/>
                     <controls:VicTextBoxNormal Width="150" Margin="5,0" Grid.Row="1" Grid.Column="1" VicText="{Binding SysConfigModel.CloudServerIP}"/>
                     <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="1" Grid.Column="2" Margin="10,0,0,0" Text="端口"/>
@@ -115,7 +115,7 @@
                     <controls:VicTextBoxNormal Width="150" Margin="5,0" Grid.Row="3" Grid.Column="1" VicText="{Binding SysConfigModel.CloudHostIP}"/>
                     <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="3" Grid.Column="2" Margin="10,0,0,0" Text="端口"/>
                     <controls:VicNumericUpDown  Grid.Row="3" Grid.Column="3" Value="{Binding SysConfigModel.CloudHostPort}"/>
-                    <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"  Text="企业SOA和P2P(*重启后生效)"/>
+                    <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4"  Text="企业SOA和P2P(*重启后生效)"/>
                     <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}"  Grid.Row="5" Grid.Column="0" Text="服务器地址"/>
                     <controls:VicTextBoxNormal Width="150" Margin="5,0" Grid.Row="5" Grid.Column="1" VicText="{Binding SysConfigModel.EnterpriseServerIP}"/>
                     <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="5" Grid.Column="2" Margin="10,0,0,0" Text="端口"/>
