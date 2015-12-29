@@ -105,7 +105,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="StateJson\StateExucteModel.cs" />
     <Compile Include="StateJson\StateDefineModel.cs" />
+    <Compile Include="StateJson\StateTransitionInfoModel.cs" />
     <Compile Include="Templates\BaseStateMachine.cs" />
     <Compile Include="Templates\MainRule.cs" />
     <Compile Include="Templates\StateTransitionModel.cs" />

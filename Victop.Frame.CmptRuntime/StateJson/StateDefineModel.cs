@@ -11,15 +11,17 @@ namespace Victop.Frame.CmptRuntime
     /// </summary>
     public class StateDefineModel
     {
-        private object defEvents;
+        private Dictionary<string, List<string>> defEvents;
         /// <summary>
         /// 事件
         /// </summary>
         [JsonProperty(PropertyName = "events")]
-        public object DefEvents
+        public Dictionary<string, List<string>> DefEvents
         {
             get
             {
+                if (defEvents == null)
+                    defEvents = new Dictionary<string, List<string>>();
                 return defEvents;
             }
             set
@@ -28,15 +30,17 @@ namespace Victop.Frame.CmptRuntime
             }
         }
 
-        private object defStates;
+        private Dictionary<string, StateExucteModel> defStates;
         /// <summary>
         /// 状态
         /// </summary>
         [JsonProperty(PropertyName = "states")]
-        public object DefStates
+        public Dictionary<string, StateExucteModel> DefStates
         {
             get
             {
+                if (defStates == null)
+                    defStates = new Dictionary<string, StateExucteModel>();
                 return defStates;
             }
             set
@@ -44,15 +48,17 @@ namespace Victop.Frame.CmptRuntime
                 defStates = value;
             }
         }
-        private object defTransitions;
+        private List<StateTransitionInfoModel> defTransitions;
         /// <summary>
         /// 转移
         /// </summary>
         [JsonProperty(PropertyName = "transitions")]
-        public object DefTransitions
+        public List<StateTransitionInfoModel> DefTransitions
         {
             get
             {
+                if (defTransitions == null)
+                    defTransitions = new List<StateTransitionInfoModel>();
                 return defTransitions;
             }
             set
