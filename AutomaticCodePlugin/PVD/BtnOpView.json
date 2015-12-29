@@ -1,0 +1,41 @@
+{
+	"views": [
+		{
+			"viewname": "productView",
+			"modelid": "feidao-model-pub_product-0001",
+			"loaddata": 1,
+			"editable": false,
+			"blocks": [
+				{
+					"blockname": "masterBlock",
+					"datasettype": "table",
+					"superiors": "root",
+					"tablename": "pub_product",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 10,
+						"pageindex": 1
+					}
+				}
+			],
+			"systemid": "18",
+			"refsystemid": "18"
+		}
+	],
+	"presentation": {
+		"blocks": [
+			{
+				"name": "masterPBlock",
+				"type": 1,
+				"superiors": "root",
+				"keyword": "",
+				"method": "loop",
+				"view": "productView",
+				"autorender": 1,
+				"rendertype": 1,
+				"binding": "masterBlock"
+			}
+		]
+	}
+}

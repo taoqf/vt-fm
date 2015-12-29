@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using Victop.Frame.CmptRuntime;
-using AutomaticCodePlugin.FSM;
+using System.Reflection;
+using System.IO;
 
 namespace AutomaticCodePlugin.Views
 {
@@ -24,7 +13,7 @@ namespace AutomaticCodePlugin.Views
         public UCDataGridView()
         {
             InitializeComponent();
-            FeiDaoFSM = new DataGridViewStateMachine(this);
+            FeiDaoFSM = new BaseStateMachine("DataGridViewRules", Assembly.GetExecutingAssembly(), this);
             DataContext = this;
             this.Loaded += UCDataGridView_Loaded;
         }
@@ -43,7 +32,11 @@ namespace AutomaticCodePlugin.Views
         }
         private void UCDataGridView_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InitVictopUserControl(Properties.Resources.masterPVDString))
+
+            Stream pvdStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UCDataGridView");
+            StreamReader sr = new StreamReader(pvdStream);
+            string pvdStr = sr.ReadToEnd();
+            if (InitVictopUserControl(pvdStr))
             {
                 MainPBlock = GetPresentationBlockModel("masterPBlock");
             }

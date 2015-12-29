@@ -100,9 +100,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FSM\BtnOpViewStateMachine.cs" />
-    <Compile Include="FSM\DataGridViewStateMachine.cs" />
-    <Compile Include="FSM\MainViewStateMachine.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -133,6 +130,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="FSM\BtnOpViewRules.json" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -141,6 +139,7 @@
     <EmbeddedResource Include="Rules\BtnOpViewRules.drl" />
     <EmbeddedResource Include="Rules\DataGridViewRules.drl" />
     <EmbeddedResource Include="Rules\MainViewRules.drl" />
+    <None Include="PVD\BtnOpView.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Victop.Frame.AtomicOperation\Victop.Frame.AtomicOperation.csproj">
@@ -182,10 +181,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PVD\" />
-    <Folder Include="StateJson\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

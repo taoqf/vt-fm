@@ -7,6 +7,8 @@ using System.IO;
 using org.drools.dotnet;
 using org.drools.dotnet.compiler;
 using org.drools.dotnet.rule;
+using org.drools.@base;
+using System.Collections.Generic;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -23,9 +25,10 @@ namespace Victop.Frame.CmptRuntime
         /// 界面实例
         /// </summary>
         protected TemplateControl MainView;
-        private string currentState = "None";
+        private string currentState = "none";
         private StateTransitionModel stateModel;
         private org.drools.FactHandle stateHandle;
+        private StateDefineModel stateDefModel;
         /// <summary>
         /// Drools.net :Session
         /// </summary>
@@ -40,12 +43,32 @@ namespace Victop.Frame.CmptRuntime
         {
             MainView = mainView;
             CreateDroolsSession(groupName, pluginAssembly);
-            stateModel = new StateTransitionModel() { ActionName = "None", ActionSourceElement = mainView, MainView = mainView };
-            //nSession.Insert(stateModel);
+            CreateStateDefin(groupName, pluginAssembly);
+            stateModel = new StateTransitionModel() { ActionName = "none", ActionSourceElement = mainView, MainView = mainView };
             stateHandle = dSession.assertObject(stateModel);
             FeiDaoFSM = new StateMachine<string, string>(() => currentState, s => currentState = s);
+            InitStateConfig();
             FeiDaoFSM.OnTransitioned((x) => OnTransitioned(x));
+        }
 
+        private void InitStateConfig()
+        {
+            foreach (var item in stateDefModel.DefTransitions)
+            {
+                if (item.InfoFrom.Equals(item.InfoTo))
+                {
+                    FeiDaoFSM.Configure(item.InfoFrom)
+                        .PermitReentry(item.InfoName);
+                }
+                else
+                {
+                    FeiDaoFSM.Configure(item.InfoFrom)
+                        .Permit(item.InfoName, item.InfoTo);
+                }
+                FeiDaoFSM.Configure(item.InfoFrom)
+                    .OnEntry((x) => OnFeiDaoEntry(x))
+                    .OnExit((x) => OnFeiDaoExit(x));
+            }
         }
 
         private void OnTransitioned(StateMachine<string, string>.Transition x)
@@ -54,24 +77,67 @@ namespace Victop.Frame.CmptRuntime
             stateModel.ActionSource = x.Source;
             stateModel.ActionTrigger = x.Trigger;
             dSession.modifyObject(stateHandle, stateModel);
-            Console.WriteLine("{0}:OnTransitioned",MainView.Name);
-            Console.WriteLine("CurrentState:{0}", FeiDaoFSM.State);
+            Console.WriteLine("{0}:OnTransitioned", MainView.Name);
+            Console.WriteLine(" OnTransitioned：Destination:{0},Source:{1},Trigger:{2}", x.Destination, x.Source, x.Trigger);
+            if (stateDefModel.DefEvents[x.Trigger] != null && stateDefModel.DefEvents[x.Trigger].Count > 0)
+            {
+                ExecuteRule(stateDefModel.DefEvents[x.Trigger]);
+            }
+        }
+        private bool OnFeiDaoGuard(string triggerName)
+        {
+            StateTransitionInfoModel InfoModel = stateDefModel.DefTransitions.Find(it => it.InfoName.Equals(triggerName) && it.InfoFrom.Equals(currentState));
+            if (InfoModel != null)
+            {
+                if (stateDefModel.DefStates[InfoModel.InfoTo].StateGuard != null && stateDefModel.DefStates[InfoModel.InfoTo].StateGuard.Count > 0)
+                {
+                    ExecuteRule(stateDefModel.DefStates[InfoModel.InfoTo].StateGuard);
+                    return stateModel.ActionGuard;
+                }
+                return true;
+            }
+            return false;
         }
         /// <summary>
         /// 状态离开
         /// </summary>
         /// <param name="x"></param>
-        protected void OnFeidaoExit(StateMachine<string, string>.Transition x)
+        protected void OnFeiDaoExit(StateMachine<string, string>.Transition x)
         {
-            
+            Console.WriteLine("OnFeiDaoExit： Destination:{0},Source:{1},Trigger:{2}", x.Destination, x.Source, x.Trigger);
+            if (stateDefModel.DefStates[x.Source].StateExit != null && stateDefModel.DefStates[x.Source].StateExit.Count > 0)
+            {
+                ExecuteRule(stateDefModel.DefStates[x.Source].StateExit);
+            }
         }
         /// <summary>
         /// 状态进入
         /// </summary>
         /// <param name="x"></param>
-        protected void OnFeidaoEntry(StateMachine<string, string>.Transition x)
+        protected void OnFeiDaoEntry(StateMachine<string, string>.Transition x)
         {
-            dSession.fireAllRules();
+            Console.WriteLine("OnFeiDaoEntry： Destination:{0},Source:{1},Trigger:{2}", x.Destination, x.Source, x.Trigger);
+            if (stateDefModel.DefStates[x.Destination].StateEntry != null && stateDefModel.DefStates[x.Destination].StateEntry.Count > 0)
+            {
+                ExecuteRule(stateDefModel.DefStates[x.Destination].StateEntry);
+            }
+            if (stateDefModel.DefStates[x.Destination].StateDo != null && stateDefModel.DefStates[x.Destination].StateDo.Count > 0)
+            {
+                ExecuteRule(stateDefModel.DefStates[x.Destination].StateDo);
+            }
+            if (stateDefModel.DefStates[x.Destination].StateDone != null && stateDefModel.DefStates[x.Destination].StateDone.Count > 0)
+            {
+                ExecuteRule(stateDefModel.DefStates[x.Destination].StateDone);
+            }
+        }
+
+        private void ExecuteRule(List<string> ListStr)
+        {
+            foreach (var item in ListStr)
+            {
+                dSession.setFocus(item);
+                dSession.fireAllRules(new RuleNameEqualsAgendaFilter(item));
+            }
         }
 
         /// <summary>
@@ -81,12 +147,11 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="triggerSource">动作触发源</param>
         public void Do(string triggerName, object triggerSource)
         {
-            if (FeiDaoFSM.CanFire(triggerName))
+            if (OnFeiDaoGuard(triggerName) && FeiDaoFSM.CanFire(triggerName))
             {
                 stateModel.ActionName = triggerName;
                 stateModel.ActionSourceElement = triggerSource as FrameworkElement;
                 stateModel.ActionTrigger = triggerName;
-                //nSession.Update(stateModel);
                 dSession.modifyObject(stateHandle, stateModel);
                 FeiDaoFSM.Fire(triggerName);
             }
@@ -95,6 +160,19 @@ namespace Victop.Frame.CmptRuntime
                 LoggerHelper.DebugFormat("currentState:{0} can not  trigger:{1}", currentState, triggerName);
             }
         }
+        #region 状态定义文件管理
+        private void CreateStateDefin(string defFileName, Assembly pluginAssembly)
+        {
+            string fullName = string.Format("{0}.FSM.{1}.json", pluginAssembly.GetName().Name, defFileName);
+            Stream manifestResourceStream = pluginAssembly.GetManifestResourceStream(fullName);
+            if (manifestResourceStream != null)
+            {
+                StreamReader reader = new StreamReader(manifestResourceStream);
+                string temp = reader.ReadToEnd();
+                stateDefModel = JsonHelper.ToObject<StateDefineModel>(temp);
+            }
+        }
+        #endregion
         #region Drools.net
         private void CreateDroolsSession(string ruleFileName, Assembly pluginAssembly)
         {
