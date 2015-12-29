@@ -9,6 +9,7 @@ using org.drools.dotnet.compiler;
 using org.drools.dotnet.rule;
 using org.drools.@base;
 using System.Collections.Generic;
+using Victop.Server.Controls.Models;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -137,8 +138,39 @@ namespace Victop.Frame.CmptRuntime
             {
                 dSession.setFocus(item);
                 dSession.fireAllRules();
-                //dSession.getAgenda().getAgendaGroup(item)
             }
+        }
+        /// <summary>
+        /// 设置分组信息
+        /// </summary>
+        /// <param name="groupName"></param>
+        public void SetFocus(string groupName)
+        {
+            dSession.setFocus(groupName);
+        }
+        /// <summary>
+        /// 插入事实
+        /// </summary>
+        /// <param name="oav"></param>
+        public void InsertFact(OAVModel oav)
+        {
+            dSession.assertObject(oav);
+        }
+        /// <summary>
+        /// 修改事实
+        /// </summary>
+        /// <param name="oav"></param>
+        public void UpdateFact(OAVModel oav)
+        {
+            dSession.modifyObject(dSession.getFactHandle(oav), oav);
+        }
+        /// <summary>
+        /// 移除事实
+        /// </summary>
+        /// <param name="oav"></param>
+        public void RemoveFact(OAVModel oav)
+        {
+            dSession.retractObject(dSession.getFactHandle(oav));
         }
 
         /// <summary>

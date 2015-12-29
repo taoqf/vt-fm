@@ -13,6 +13,7 @@ rule RecurseLoaded
 	then
 		FeiDao.SysConsole("DataGridViewRules:"+se.ActionTrigger);
 		FeiDao.SysConsole("DataGridViewRules:"+se.ActionDestination);
+		FeiDao.SetFocus("search");
 end
 
 rule RecurseSearched

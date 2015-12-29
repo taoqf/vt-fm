@@ -73,7 +73,7 @@ namespace VictopPartner
                         if (IsValidPlugin(t))
                         {
                             IPlugin plugin = (IPlugin)pluginAssembly.CreateInstance(t.FullName);
-                            plugin.StartWindow.WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+                            plugin.StartWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
                             plugin.StartWindow.ShowDialog();
                             string devPluginPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigurationManager.AppSettings["devpluginpath"]);
                             if (Directory.Exists(devPluginPath))
@@ -85,9 +85,14 @@ namespace VictopPartner
                                 FileInfo fi = new FileInfo(item);
                                 if (fi.Name.StartsWith("CompiledRules"))
                                 {
-                                    if (fi.Attributes.ToString().IndexOf("ReadOnly") != -1)
-                                        fi.Attributes = FileAttributes.Normal;
-                                    fi.Delete();
+                                    try
+                                    {
+                                        fi.Delete();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        continue;
+                                    }
                                 }
                             }
                             FrameInit.GetInstance().FrameUnload();
