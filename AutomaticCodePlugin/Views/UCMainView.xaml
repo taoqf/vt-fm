@@ -17,14 +17,7 @@
         </ctrl:VicGridNormal.RowDefinitions>
         <local:UCBtnOperationView Grid.Row="0" x:Name="ucBtnOp" ParentControl="{Binding ElementName=mainView}">
         </local:UCBtnOperationView>
-        <!--<ctrl:VicDockPanelNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <ctrl:VicButtonNormal Width="100" Height="24" Content="查询" Name="searchBtn" Margin="0,0,10,0" Click="searchBtn_Click"/>
-            <ctrl:VicButtonNormal Width="100" Height="24" Content="添加" Name="addBtn" Margin="0,0,10,0"  Click="addBtn_Click"/>
-            <ctrl:VicButtonNormal Width="100" Height="24" Content="删除" Name="delBtn" Margin="0,0,10,0"/>
-            <ctrl:VicButtonNormal Width="100" Height="24" Content="保存" Name="saveBtn" Margin="0,0,10,0"/>
-        </ctrl:VicDockPanelNormal>-->
-        <!--<ctrl:VicDataGrid Grid.Row="1" CanUserAddRows="False" Name="dgridProduct" ItemsSource="{Binding MainPBlock.ViewBlockDataTable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="dgridProduct_SelectionChanged">
-        </ctrl:VicDataGrid>-->
+        
         <local:UCDataGridView Grid.Row="1" x:Name="ucdgrid" ParentControl="{Binding ElementName=mainView}"/>
         <ctrl:VicDockPanelNormal Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left">
             <TextBox Width="100" Height="24" Name="tbox" Text="{Binding MainPBlock.PreBlockSelectedRow[_id]}"/>

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using Victop.Frame.CmptRuntime;
@@ -19,7 +20,10 @@ namespace AutomaticCodePlugin.Views
 
         private void UCBtnOperationView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("Load", sender);
+            if (!DesignerProperties.GetIsInDesignMode(this))
+            {
+                FeiDaoFSM.Do("Load", sender);
+            }
         }
 
         private void searchBtn_Click(object sender, System.Windows.RoutedEventArgs e)

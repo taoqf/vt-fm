@@ -13,7 +13,7 @@ namespace AutomaticCodePlugin.Views
         public UCDataGridView()
         {
             InitializeComponent();
-            FeiDaoFSM = new BaseStateMachine("DataGridViewRules", Assembly.GetExecutingAssembly(), this);
+            //FeiDaoFSM = new BaseStateMachine("DataGridViewRules", Assembly.GetExecutingAssembly(), this);
             DataContext = this;
             this.Loaded += UCDataGridView_Loaded;
         }
@@ -33,14 +33,14 @@ namespace AutomaticCodePlugin.Views
         private void UCDataGridView_Loaded(object sender, RoutedEventArgs e)
         {
 
-            Stream pvdStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UCDataGridView");
-            StreamReader sr = new StreamReader(pvdStream);
-            string pvdStr = sr.ReadToEnd();
-            if (InitVictopUserControl(pvdStr))
-            {
-                MainPBlock = GetPresentationBlockModel("masterPBlock");
-            }
-            FeiDaoFSM.Do("Load", sender);
+            //Stream pvdStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UCDataGridView");
+            //StreamReader sr = new StreamReader(pvdStream);
+            //string pvdStr = sr.ReadToEnd();
+            //if (InitVictopUserControl(pvdStr))
+            //{
+            //    MainPBlock = GetPresentationBlockModel("masterPBlock");
+            //}
+            //FeiDaoFSM.Do("Load", sender);
         }
     }
 }
