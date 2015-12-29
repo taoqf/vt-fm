@@ -11,20 +11,6 @@ namespace AutomaticCodePlugin.Views
     /// </summary>
     public partial class UCMainView : TemplateControl
     {
-        PresentationBlockModel mainPBlock;
-        public PresentationBlockModel MainPBlock
-        {
-            get
-            {
-                return mainPBlock;
-            }
-            set
-            {
-                mainPBlock = value;
-                RaisePropertyChanged(() => MainPBlock);
-            }
-        }
-
         public UCMainView(Dictionary<string, object> paramDict, int showType)
         {
             InitializeComponent();

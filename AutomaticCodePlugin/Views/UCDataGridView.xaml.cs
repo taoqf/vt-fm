@@ -11,13 +11,6 @@ namespace AutomaticCodePlugin.Views
     /// </summary>
     public partial class UCDataGridView : TemplateControl
     {
-        public UCDataGridView()
-        {
-            InitializeComponent();
-            FeiDaoFSM = new BaseStateMachine("DataGridView", Assembly.GetExecutingAssembly(), this);
-            DataContext = this;
-            this.Loaded += UCDataGridView_Loaded;
-        }
         PresentationBlockModel mainPBlock;
         public PresentationBlockModel MainPBlock
         {
@@ -30,6 +23,13 @@ namespace AutomaticCodePlugin.Views
                 mainPBlock = value;
                 RaisePropertyChanged(() => MainPBlock);
             }
+        }
+        public UCDataGridView()
+        {
+            InitializeComponent();
+            FeiDaoFSM = new BaseStateMachine("DataGridView", Assembly.GetExecutingAssembly(), this);
+            DataContext = this;
+            this.Loaded += UCDataGridView_Loaded;
         }
         private void UCDataGridView_Loaded(object sender, RoutedEventArgs e)
         {
