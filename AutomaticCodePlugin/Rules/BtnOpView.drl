@@ -6,20 +6,22 @@ import Victop.Frame.CmptRuntime;
 global Victop.Frame.CmptRuntime.FeiDaoOperation FeiDao
 
 rule RecurseLoad
+	agenda-group "load"
 	salience 10
 	when
-		se : StateTransitionModel ( ActionTrigger == "Load" )
+		se : StateTransitionModel ()
 	then
 		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionTrigger);
 		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionDestination);
 end
 
 rule RecurseSearch
+	agenda-group "search"
 	salience 10
 	when
-		se : StateTransitionModel ( ActionTrigger == "Search")
+		se : StateTransitionModel ()
 	then
-		FeiDao.ExcutePageTrigger("Search",se.ActionSourceElement);
+		FeiDao.ExcutePageTrigger("search",se.ActionSourceElement);
 		FeiDao.SetButtonText("saveBtn",se.ActionDestination);
 		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionTrigger);
 		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionDestination);

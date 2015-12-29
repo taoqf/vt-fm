@@ -2,6 +2,7 @@
 using Victop.Frame.CmptRuntime;
 using System.Reflection;
 using System.IO;
+using Victop.Frame.PublicLib.Helpers;
 
 namespace AutomaticCodePlugin.Views
 {
@@ -13,7 +14,7 @@ namespace AutomaticCodePlugin.Views
         public UCDataGridView()
         {
             InitializeComponent();
-            //FeiDaoFSM = new BaseStateMachine("DataGridViewRules", Assembly.GetExecutingAssembly(), this);
+            FeiDaoFSM = new BaseStateMachine("DataGridView", Assembly.GetExecutingAssembly(), this);
             DataContext = this;
             this.Loaded += UCDataGridView_Loaded;
         }
@@ -32,15 +33,14 @@ namespace AutomaticCodePlugin.Views
         }
         private void UCDataGridView_Loaded(object sender, RoutedEventArgs e)
         {
-
-            //Stream pvdStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("UCDataGridView");
-            //StreamReader sr = new StreamReader(pvdStream);
-            //string pvdStr = sr.ReadToEnd();
-            //if (InitVictopUserControl(pvdStr))
-            //{
-            //    MainPBlock = GetPresentationBlockModel("masterPBlock");
-            //}
-            //FeiDaoFSM.Do("Load", sender);
+            string pvdPath = string.Format("{0}.PVD.{1}.json", Assembly.GetExecutingAssembly().GetName().Name, "DataGridView");
+            Stream pvdStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(pvdPath);
+            string pvdStr = FileHelper.ReadText(pvdStream);
+            if (InitVictopUserControl(pvdStr))
+            {
+                MainPBlock = GetPresentationBlockModel("masterPBlock");
+            }
+            FeiDaoFSM.Do("beforeinit", sender);
         }
     }
 }

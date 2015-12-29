@@ -6,18 +6,20 @@ import Victop.Frame.CmptRuntime;
 global Victop.Frame.CmptRuntime.FeiDaoOperation FeiDao
 
 rule RecurseLoaded
+	agenda-group "load"
 	salience 10
 	when
-		se : StateTransitionModel ( ActionTrigger == "Load" )
+		se : StateTransitionModel ()
 	then
 		FeiDao.SysConsole("DataGridViewRules:"+se.ActionTrigger);
 		FeiDao.SysConsole("DataGridViewRules:"+se.ActionDestination);
 end
 
 rule RecurseSearched
+	agenda-group "search"
 	salience 10
 	when
-		se : StateTransitionModel ( ActionTrigger == "Search" )
+		se : StateTransitionModel ()
 	then
 		FeiDao.GetPBlockData("masterPBlock");
 		FeiDao.SysConsole("DataGridViewRules:"+se.ActionTrigger);

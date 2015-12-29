@@ -85,6 +85,8 @@ namespace VictopPartner
                                 FileInfo fi = new FileInfo(item);
                                 if (fi.Name.StartsWith("CompiledRules"))
                                 {
+                                    if (fi.Attributes.ToString().IndexOf("ReadOnly") != -1)
+                                        fi.Attributes = FileAttributes.Normal;
                                     fi.Delete();
                                 }
                             }
@@ -96,7 +98,6 @@ namespace VictopPartner
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
                     FrameInit.GetInstance().FrameUnload();
                     Environment.Exit(0);
                 }

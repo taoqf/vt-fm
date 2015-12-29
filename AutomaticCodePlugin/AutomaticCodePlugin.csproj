@@ -130,16 +130,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="FSM\BtnOpViewRules.json" />
+    <EmbeddedResource Include="FSM\BtnOpView.json" />
+    <EmbeddedResource Include="FSM\MainView.json" />
+    <EmbeddedResource Include="FSM\DataGridView.json" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <EmbeddedResource Include="Rules\BtnOpViewRules.drl" />
-    <EmbeddedResource Include="Rules\DataGridViewRules.drl" />
-    <EmbeddedResource Include="Rules\MainViewRules.drl" />
-    <None Include="PVD\BtnOpView.json" />
+    <EmbeddedResource Include="Rules\BtnOpView.drl" />
+    <EmbeddedResource Include="Rules\DataGridView.drl" />
+    <EmbeddedResource Include="Rules\MainView.drl" />
+    <EmbeddedResource Include="PVD\DataGridView.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Victop.Frame.AtomicOperation\Victop.Frame.AtomicOperation.csproj">

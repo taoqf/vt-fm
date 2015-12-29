@@ -136,7 +136,8 @@ namespace Victop.Frame.CmptRuntime
             foreach (var item in ListStr)
             {
                 dSession.setFocus(item);
-                dSession.fireAllRules(new RuleNameEqualsAgendaFilter(item));
+                dSession.fireAllRules();
+                //dSession.getAgenda().getAgendaGroup(item)
             }
         }
 
