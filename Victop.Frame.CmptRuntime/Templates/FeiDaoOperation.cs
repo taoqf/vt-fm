@@ -67,5 +67,13 @@ namespace Victop.Frame.CmptRuntime
             TemplateControl tc = MainView.FindName(compntName) as TemplateControl;
             tc.FeiDaoFSM.Do(compntTrigger, paramInfo);
         }
+        /// <summary>
+        /// 设置分组
+        /// </summary>
+        /// <param name="groupName">分组信息</param>
+        public void SetFocus(string groupName)
+        {
+            MainView.FeiDaoFSM.SetFocus(groupName);
+        }
     }
 }

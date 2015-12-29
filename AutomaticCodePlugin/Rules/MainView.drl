@@ -6,11 +6,12 @@ import Victop.Frame.CmptRuntime;
 global Victop.Frame.CmptRuntime.FeiDaoOperation FeiDao
 
 rule RecurseSearch
+	agenda-group "search"
 	salience 10
 	when
-		se : StateTransitionModel ( ActionTrigger == "Search" )
+		se : StateTransitionModel ()
 	then
-		FeiDao.ExcuteComponentTrigger("ucdgrid","Search",se.ActionSourceElement);
+		FeiDao.ExcuteComponentTrigger("ucdgrid","search",se.ActionSourceElement);
 		FeiDao.SysConsole("MainViewRules:"+se.ActionTrigger);
 		FeiDao.SysConsole("MainViewRules:"+se.ActionDestination);
 end
