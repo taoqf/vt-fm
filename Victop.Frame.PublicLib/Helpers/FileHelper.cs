@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Victop.Frame.PublicLib.Helpers
 {
+    /// <summary>
+    /// 文件辅助类
+    /// </summary>
     public class FileHelper
     {
         /// <summary>
@@ -78,6 +81,20 @@ namespace Victop.Frame.PublicLib.Helpers
             {
                 return "";
             }
+        }
+        /// <summary>
+        /// 读取内容
+        /// </summary>
+        /// <param name="stream">流信息</param>
+        /// <returns></returns>
+        public static string ReadText(Stream stream)
+        {
+            if (stream == null)
+            {
+                return string.Empty;
+            }
+            StreamReader sr = new StreamReader(stream);
+            return sr.ReadToEnd();
         }
     }
 }
