@@ -48,12 +48,10 @@
             </Setter>
         </Style>
         <Storyboard x:Key="Storyboard1">
-        	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Second2Area">
-        		<!--<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-        		<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>-->
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Second2Area">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0.5"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0.5"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
         <Storyboard x:Key="Storyboard2">
@@ -62,44 +60,78 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="Storyboard3">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Minute2Area">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="Storyboard4">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Minute1Area">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="Storyboard5">
+            <DoubleAnimationUsingKeyFrames RepeatBehavior="1"  Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Hour2Area">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="Storyboard6">
+            <DoubleAnimationUsingKeyFrames RepeatBehavior="1"  Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Hour1Area">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </UserControl.Resources>
-    <ctrl:VicGridNormal HorizontalAlignment="Center">
-        <ctrl:VicGridNormal.RowDefinitions>
-            <RowDefinition Height="46"/>
-            <RowDefinition Height="11"/>
-        </ctrl:VicGridNormal.RowDefinitions>
-        <ctrl:VicGridNormal.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="13"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="13"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="13"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-        </ctrl:VicGridNormal.ColumnDefinitions>
-        <ctrl:VicTextBlockNormal Text="3" Name="Day1Area"  VerticalAlignment="Center" Width="18" Grid.Column="0" Margin="-1,-5,0,2" FontFamily="方正姚体">
-        </ctrl:VicTextBlockNormal>
-        <ctrl:VicTextBlockNormal Text="3" Name="Day2Area" HorizontalAlignment="Center" Width="18" VerticalAlignment="Center" Grid.Column="1" Margin="2,-5,0,2">
-        </ctrl:VicTextBlockNormal>
-        <ctrl:VicTextBlockNormal Text="2"  Name="Day3Area" VerticalAlignment="Center" Grid.Column="2" Margin="2,-5,0,2"/>
-        <ctrl:VicTextBlockNormal Text="5"  Name="Day4Area" VerticalAlignment="Center" Grid.Column="3" Margin="2,-5,0,2"/>
-        <!--<ctrl:VicTextBlockNormal Text=" "  Name="DaySplitHour" VerticalAlignment="Center" Grid.Column="4" Margin="5,-5,0,2"/>-->
-        <ctrl:VicTextBlockNormal Text="1"  Name="Hour1Area" VerticalAlignment="Center" Grid.Column="5" Margin="2,-5,0,2"/>
-        <ctrl:VicTextBlockNormal Text="4"  Name="Hour2Area" VerticalAlignment="Center" Grid.Column="6" Margin="2,-5,0,2"/>
-       <!-- <ctrl:VicTextBlockNormal Text=" "  Name="HourSplitMinute" VerticalAlignment="Center" Grid.Column="7" Margin="2,-5,0,2"/>-->
-        <ctrl:VicTextBlockNormal Text="1"  Name="Minute1Area" VerticalAlignment="Center" Grid.Column="8" Margin="2,-5,0,2"/>
-        <ctrl:VicTextBlockNormal Text="0"  Name="Minute2Area" VerticalAlignment="Center" Grid.Column="9" Margin="2,-5,0,2"/>
-        <!--<ctrl:VicTextBlockNormal Text=" "  Name="MinuteSplitSecond" VerticalAlignment="Center" Grid.Column="10" Margin="2,-5,0,2"/>-->
-        <ctrl:VicTextBlockNormal Text="{Binding SencondEx,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Name="Second1Area" VerticalAlignment="Center" Grid.Column="11" Margin="2,-5,0,2">
-        </ctrl:VicTextBlockNormal>
-        <ctrl:VicTextBlockNormal Text="{Binding Sencond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Name="Second2Area" VerticalAlignment="Center" Grid.Column="12" Margin="2,-5,0,2" RenderTransformOrigin="0.5,0.5">
-        </ctrl:VicTextBlockNormal>
+    <ctrl:VicGridNormal>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="68"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <ctrl:VicGridNormal Grid.Row="0"  Width="234"  Height="68" Background="{DynamicResource loginlogo}"></ctrl:VicGridNormal>
+        <ctrl:VicGridNormal Width="234" Grid.Row="1"  Height="56" VerticalAlignment="Top" Background="{DynamicResource loginlogotime}">
+            <ctrl:VicGridNormal HorizontalAlignment="Center" >
+                <ctrl:VicGridNormal.RowDefinitions>
+                    <RowDefinition Height="46"/>
+                    <RowDefinition Height="11"/>
+                </ctrl:VicGridNormal.RowDefinitions>
+                <ctrl:VicGridNormal.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="13"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="13"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="13"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </ctrl:VicGridNormal.ColumnDefinitions>
+                <ctrl:VicTextBlockNormal Text="{Binding KbDay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Name="Day1Area"  VerticalAlignment="Center" Width="18" Grid.Column="0" Margin="-1,-5,0,2" FontFamily="方正姚体">
+                </ctrl:VicTextBlockNormal>
+                <ctrl:VicTextBlockNormal Text="{Binding HundredDay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Name="Day2Area" HorizontalAlignment="Center" Width="18" VerticalAlignment="Center" Grid.Column="1" Margin="2,-5,0,2">
+                </ctrl:VicTextBlockNormal>
+                <ctrl:VicTextBlockNormal Text="{Binding TenDay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Name="Day3Area" VerticalAlignment="Center" Grid.Column="2" Margin="2,-5,0,2"/>
+                <ctrl:VicTextBlockNormal Text="{Binding NumDay,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Name="Day4Area" VerticalAlignment="Center" Grid.Column="3" Margin="2,-5,0,2"/>
+                <!--<ctrl:VicTextBlockNormal Text=" "  Name="DaySplitHour" VerticalAlignment="Center" Grid.Column="4" Margin="5,-5,0,2"/>-->
+                <ctrl:VicTextBlockNormal Text="{Binding HourEx,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Name="Hour1Area" VerticalAlignment="Center" Grid.Column="5" Margin="2,-5,0,2"/>
+                <ctrl:VicTextBlockNormal  Text="{Binding Hour,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Name="Hour2Area" VerticalAlignment="Center" Grid.Column="6" Margin="2,-5,0,2"/>
+                <!-- <ctrl:VicTextBlockNormal Text=" "  Name="HourSplitMinute" VerticalAlignment="Center" Grid.Column="7" Margin="2,-5,0,2"/>-->
+                <ctrl:VicTextBlockNormal Text="{Binding MinuteEx,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   Name="Minute1Area" VerticalAlignment="Center" Grid.Column="8" Margin="2,-5,0,2"/>
+                <ctrl:VicTextBlockNormal Text="{Binding Minute,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"   Name="Minute2Area" VerticalAlignment="Center" Grid.Column="9" Margin="2,-5,0,2"/>
+                <!--<ctrl:VicTextBlockNormal Text=" "  Name="MinuteSplitSecond" VerticalAlignment="Center" Grid.Column="10" Margin="2,-5,0,2"/>-->
+                <ctrl:VicTextBlockNormal Text="{Binding SencondEx,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Name="Second1Area" VerticalAlignment="Center" Grid.Column="11" Margin="2,-5,0,2">
+                </ctrl:VicTextBlockNormal>
+                <ctrl:VicTextBlockNormal Text="{Binding Sencond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Name="Second2Area" VerticalAlignment="Center" Grid.Column="12" Margin="2,-5,0,2" RenderTransformOrigin="0.5,0.5">
+                </ctrl:VicTextBlockNormal>
+            </ctrl:VicGridNormal>
+        </ctrl:VicGridNormal>
     </ctrl:VicGridNormal>
+ 
 </tc:TemplateControl>

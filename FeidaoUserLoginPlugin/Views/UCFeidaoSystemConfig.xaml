@@ -13,7 +13,7 @@
         <convert:CheckboxBoolConverter x:Key="CheckboxBoolConverter"/>
         <Style x:Key="logoTextBlockStyle" TargetType="{x:Type controls:VicTextBlockNormal}">
             <Setter Property="FontFamily" Value="Microsoft YaHei"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="FontSize" Value="12"></Setter>
             <Setter Property="Foreground" Value="#454545"></Setter>
             <Setter Property="HorizontalAlignment" Value="Right"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
