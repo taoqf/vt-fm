@@ -25,6 +25,10 @@ namespace FeidaoUserLoginPlugin.Views
         #region 字段
         Storyboard stdStart;
         Storyboard stdStart2;
+        Storyboard stdStart3;
+        Storyboard stdStart4;
+        Storyboard stdStart5;
+        Storyboard stdStart6;
     
         private string sencond="0";
         private string sencondex="0";
@@ -108,6 +112,8 @@ namespace FeidaoUserLoginPlugin.Views
                 if (hour != value)
                 {
                     hour = value;
+                    //stdStart6 = (Storyboard)this.Resources["Storyboard6"];
+                    //stdStart6.Begin();
                     RaisePropertyChanged(() => HourEx);
                 }
             }
@@ -122,6 +128,8 @@ namespace FeidaoUserLoginPlugin.Views
             {
                 if (hour != value)
                 {
+                    //stdStart5 = (Storyboard)this.Resources["Storyboard5"];
+                    //stdStart5.Begin();
                     hour = value;
                     RaisePropertyChanged(() => Hour);
                 }
@@ -137,6 +145,8 @@ namespace FeidaoUserLoginPlugin.Views
             {
                 if (minuteEx != value)
                 {
+                    stdStart4 = (Storyboard)this.Resources["Storyboard4"];
+                    stdStart4.Begin();
                     minuteEx = value;
                     RaisePropertyChanged(() => MinuteEx);
                 }
@@ -150,6 +160,8 @@ namespace FeidaoUserLoginPlugin.Views
             set {
                 if (minute!=value)
                 {
+                    stdStart3 = (Storyboard)this.Resources["Storyboard3"];
+                    stdStart3.Begin();
                     minute = value;
                     RaisePropertyChanged(() => Minute);
                 }

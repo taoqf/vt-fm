@@ -30,8 +30,8 @@
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="1"/>
             </Grid.RowDefinitions>
-            <controls:VicGridNormal Grid.Row="1"  Width="234"  Height="68" Background="{DynamicResource loginlogo}"></controls:VicGridNormal>
-            <controls:VicGridNormal Grid.Row="2" Width="234"  Height="56" VerticalAlignment="Top" Background="{DynamicResource loginlogotime}">
+            <!--<controls:VicGridNormal Grid.Row="1"  Width="234"  Height="68" Background="{DynamicResource loginlogo}"></controls:VicGridNormal>-->
+            <controls:VicGridNormal Grid.Row="1" Grid.RowSpan="2" >
                 <views:UCCountDown></views:UCCountDown>
             </controls:VicGridNormal>
             <Border Grid.Row="4" HorizontalAlignment="Center"  Width="300" BorderBrush="{DynamicResource loginBorder}" BorderThickness="1" ></Border>
