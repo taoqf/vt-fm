@@ -80,21 +80,6 @@ namespace VictopPartner
                             {
                                 DeleteFolder(devPluginPath);
                             }
-                            foreach (var item in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory))
-                            {
-                                FileInfo fi = new FileInfo(item);
-                                if (fi.Name.StartsWith("CompiledRules"))
-                                {
-                                    try
-                                    {
-                                        fi.Delete();
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        continue;
-                                    }
-                                }
-                            }
                             FrameInit.GetInstance().FrameUnload();
                             Environment.Exit(0);
                             break;
