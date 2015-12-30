@@ -71,7 +71,7 @@
                             PasswordText="{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
                 </controls:VicPasswordBoxKeyNormal>
-                <controls:VicComboBoxNormal Width="192" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="2" Height="30" Name="CloudSOAComboBox"  
+                <controls:VicComboBoxNormal Width="192" Style="{DynamicResource logoComboBox}" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="2" Height="30" Name="CloudSOAComboBox"  
                         ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
                         SelectedValue="{Binding SelectedGallery,UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Triggers>
@@ -81,8 +81,8 @@
                     </i:Interaction.Triggers>
                 </controls:VicComboBoxNormal>
                 <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center"  VerticalAlignment="Center">
-                    <controls:VicButtonNormal  x:Name="btnLogin" Margin="-10,0,0,0" IsDefault="True" Style="{DynamicResource LoginButtonStyle}" Content="登录" Command="{Binding btnLoginClickCommand}"  TabIndex="5" />
-                    <controls:VicButtonNormal Margin="20,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消" IsCancel="True"  Command="{Binding btnCancelClickCommand}"/>
+                    <controls:VicButtonNormal  x:Name="btnLogin" Margin="-2,0,0,0" IsDefault="True" Style="{DynamicResource LoginButtonStyle}" Content="登录" Command="{Binding btnLoginClickCommand}"  TabIndex="5" />
+                    <controls:VicButtonNormal Margin="32,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消" IsCancel="True"  Command="{Binding btnCancelClickCommand}"/>
                 </StackPanel>
             </controls:VicGridNormal>
             <StackPanel Orientation="Horizontal" Margin="70,0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" >
@@ -92,7 +92,7 @@
         <controls:VicGridNormal Grid.Row="1" Height="400" Width="352" Visibility="{Binding VisRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <controls:VicGridNormal.RowDefinitions>
                     <RowDefinition Height="280"/>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="70"/>
                 </controls:VicGridNormal.RowDefinitions>
                 <controls:VicListBoxNormal Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource RoleListBoxStyle}" Name="lboxRole" ItemsSource="{Binding RoleInfoList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Role_Name" SelectedValuePath="Role_No" SelectedItem="{Binding SelectedRoleInfo,UpdateSourceTrigger=PropertyChanged}"/>
                 <controls:VicDockPanelNormal Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">
