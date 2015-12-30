@@ -14,13 +14,13 @@
         </Grid.RowDefinitions>
         <Viewport3D Grid.Row="0" Margin="3">
             <Viewport3D.Camera>
-                <PerspectiveCamera Position="0 0 1000" LookDirection="0 0 -1" NearPlaneDistance="100"/>
+                <PerspectiveCamera Position="0 0 1000" LookDirection="0 0 -1" NearPlaneDistance="100" />
             </Viewport3D.Camera>
             <Viewport3D.Children>
                 <ContainerUIElement3D>
                     <Viewport2DVisual3D>
                         <Viewport2DVisual3D.Geometry>
-                            <MeshGeometry3D Positions="-200 150 0  -200 -150 0  200 -150 0  200 150 0" TriangleIndices="0 1 2  0 2 3" TextureCoordinates="0 0  0 1  1 1  1 0"/>
+                            <MeshGeometry3D Positions="-300 150 0  -300 -150 0  300 -150 0  300 150 0" TriangleIndices="0 1 2  0 2 3" TextureCoordinates="0 0  0 1  1 1  1 0"/>
                         </Viewport2DVisual3D.Geometry>
                         <Viewport2DVisual3D.Material>
                             <DiffuseMaterial Viewport2DVisual3D.IsVisualHostMaterial="True"/>
@@ -31,7 +31,7 @@
                     </Viewport2DVisual3D>
                     <Viewport2DVisual3D>
                         <Viewport2DVisual3D.Geometry>
-                            <MeshGeometry3D Positions="200 150 0  200 -150 0  -200 -150 0  -200 150 0" TriangleIndices="0 1 2  0 2 3" TextureCoordinates="0 0  0 1  1 1  1 0"/>
+                            <MeshGeometry3D Positions="300 150 0  300 -150 0  -300 -150 0  -300 150 0" TriangleIndices="0 1 2  0 2 3" TextureCoordinates="0 0  0 1  1 1  1 0"/>
                         </Viewport2DVisual3D.Geometry>
                         <Viewport2DVisual3D.Material>
                             <DiffuseMaterial Viewport2DVisual3D.IsVisualHostMaterial="True"/>
