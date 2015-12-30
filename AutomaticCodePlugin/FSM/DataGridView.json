@@ -43,8 +43,13 @@
 		{
 			"name": "beforeinit",
 			"from": "none",
-			"to": "init"
-		}, {
+			"to": "none"
+		},
+    {
+      "name": "afterinit",
+      "from": "none",
+      "to": "init"
+    }, {
 			"name": "search",
 			"from": "init",
 			"to": "searched"

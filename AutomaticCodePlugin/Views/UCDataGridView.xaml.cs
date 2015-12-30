@@ -40,7 +40,7 @@ namespace AutomaticCodePlugin.Views
             {
                 MainPBlock = GetPresentationBlockModel("masterPBlock");
             }
-            FeiDaoFSM.Do("beforeinit", sender);
+            FeiDaoFSM.Do("afterinit", sender);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace AutomaticCodePlugin.Views
         {
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                FeiDaoFSM.Do("beforeinit", sender);
+                FeiDaoFSM.Do("afterinit", sender);
             }
         }
 

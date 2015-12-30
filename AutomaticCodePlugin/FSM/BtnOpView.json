@@ -39,27 +39,36 @@
 			"done": []
 		}
 	},
-	"transitions": [
-		{
+  "transitions": [
+    {
 			"name": "beforeinit",
 			"from": "none",
-			"to": "init"
-		}, {
-			"name": "search",
-			"from": "init",
-			"to": "searched"
-		}, {
-			"name": "search",
-			"from": "searched",
-			"to": "searched"
-		}, {
-			"name": "add",
-			"from": "searched",
-			"to": "added"
-		}, {
-			"name": "search",
-			"from": "added",
-			"to": "searched"
-		}
-	]
+			"to": "none"
+		},
+    {
+      "name": "afterinit",
+      "from": "none",
+      "to": "init"
+    },
+    {
+      "name": "search",
+      "from": "init",
+      "to": "searched"
+    },
+    {
+      "name": "search",
+      "from": "searched",
+      "to": "searched"
+    },
+    {
+      "name": "add",
+      "from": "searched",
+      "to": "added"
+    },
+    {
+      "name": "search",
+      "from": "added",
+      "to": "searched"
+    }
+  ]
 }
