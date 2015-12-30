@@ -50,6 +50,7 @@ namespace Victop.Frame.CmptRuntime
             FeiDaoFSM = new StateMachine<string, string>(() => currentState, s => currentState = s);
             InitStateConfig();
             FeiDaoFSM.OnTransitioned((x) => OnTransitioned(x));
+            Do("beforeinit", MainView);
         }
 
         private void InitStateConfig()

@@ -27,7 +27,7 @@ namespace AutomaticCodePlugin.Views
 
         private void mainView_Loaded(object sender, RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("beforeinit", sender);
+            FeiDaoFSM.Do("afterinit", sender);
         }
     }
 }
