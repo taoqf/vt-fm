@@ -79,21 +79,22 @@
                 <ControlTemplate TargetType="{x:Type ListBox}">
                     <Border Background="Transparent" BorderBrush="Transparent"  BorderThickness="0">
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                            <WrapPanel IsItemsHost="True" />
+                            <WrapPanel IsItemsHost="True" Width="386" HorizontalAlignment="Center" />
                         </ScrollViewer>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="ItemContainerStyle">
-            
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Foreground" Value="{DynamicResource SkinColor}"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                    <Setter Property="Margin" Value="46,10,-5,10"></Setter>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                    <Border BorderThickness="1" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="100" CornerRadius="8">
+                                    <Border BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="100" CornerRadius="8">
                                         <Border.BorderBrush>
                                             <LinearGradientBrush SpreadMethod="Repeat" StartPoint="0,5" EndPoint="5,0" MappingMode="Absolute">
                                                 <LinearGradientBrush.GradientStops>

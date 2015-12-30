@@ -605,7 +605,7 @@ namespace FeidaoUserLoginPlugin.ViewModels
                             VisClose = false;
                             if (this.LoginWindow != null)
                             {
-                                Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.Height = 593; this.LoginWindow.Width = 352; });
+                                Application.Current.Dispatcher.Invoke((Action)delegate { this.LoginWindow.Height = 626; this.LoginWindow.Width = 386; });
                             }
                         }
                     }

@@ -9,7 +9,7 @@
              xmlns:views="clr-namespace:FeidaoUserLoginPlugin.Views"
              xmlns:convert="clr-namespace:FeidaoUserLoginPlugin.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Name="ucUserLongin">
+             d:DesignHeight="626" d:DesignWidth="386" Name="ucUserLongin">
     <UserControl.Resources>
         <convert:ImgeNameToBackgroundConverter x:Key="imgeNameToBackgroundConverter"/>
     </UserControl.Resources>
@@ -89,10 +89,10 @@
                 <controls:VicButtonNormal IsEnabled="{Binding VisSystemSet, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  Name="btnSystemSet" HorizontalAlignment="Right" Style="{DynamicResource btnLoginSetStyle}"  Command="{Binding btnSystemSetClickCommand}"/>
             </StackPanel>
         </controls:VicGridNormal>
-        <controls:VicGridNormal Grid.Row="1" Height="400" Width="352" Visibility="{Binding VisRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <controls:VicGridNormal Grid.Row="1" Height="432"  Visibility="{Binding VisRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <controls:VicGridNormal.RowDefinitions>
-                    <RowDefinition Height="280"/>
-                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="350"/>
+                    <RowDefinition Height="60"/>
                 </controls:VicGridNormal.RowDefinitions>
                 <controls:VicListBoxNormal Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource RoleListBoxStyle}" Name="lboxRole" ItemsSource="{Binding RoleInfoList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Role_Name" SelectedValuePath="Role_No" SelectedItem="{Binding SelectedRoleInfo,UpdateSourceTrigger=PropertyChanged}"/>
                 <controls:VicDockPanelNormal Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center">

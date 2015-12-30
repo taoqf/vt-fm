@@ -196,7 +196,7 @@ namespace FeidaoUserLoginPlugin.Views
         }
         private void getCurrentTime()
         {
-            string ts = DateTime.Now.ToString();
+            string ts = DateTime.Now.ToString("yyyy-MM-dd HH");
             YearArea = ts.Substring(0, 1);
             Year2Area = ts.Substring(1, 1);
             Year3Area = ts.Substring(2, 1);

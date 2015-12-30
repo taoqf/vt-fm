@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
         xmlns:views="clr-namespace:ChangeRolePlugin.Views"
-        Title="" Width="352" Height="593" Style="{DynamicResource feidaologinWindowStyle}"  WindowStartupLocation="CenterScreen">
+        Title="" Height="626" Width="386" Style="{DynamicResource feidaologinWindowStyle}"  WindowStartupLocation="CenterScreen">
     <Grid>
         <views:UCChangeRole></views:UCChangeRole>
     </Grid>
