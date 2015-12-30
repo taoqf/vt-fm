@@ -20,7 +20,7 @@
                 <ContainerUIElement3D>
                     <Viewport2DVisual3D>
                         <Viewport2DVisual3D.Geometry>
-                            <MeshGeometry3D Positions="-300 150 0  -300 -150 0  300 -150 0  300 150 0" TriangleIndices="0 1 2  0 2 3" TextureCoordinates="0 0  0 1  1 1  1 0"/>
+                            <MeshGeometry3D Positions="-249 125 0  -249 -125 0  249 -125 0  249 125 0" TriangleIndices="0 1 2  0 2 3" TextureCoordinates="0 0  0 1  1 1  1 0"/>
                         </Viewport2DVisual3D.Geometry>
                         <Viewport2DVisual3D.Material>
                             <DiffuseMaterial Viewport2DVisual3D.IsVisualHostMaterial="True"/>
@@ -31,7 +31,7 @@
                     </Viewport2DVisual3D>
                     <Viewport2DVisual3D>
                         <Viewport2DVisual3D.Geometry>
-                            <MeshGeometry3D Positions="300 150 0  300 -150 0  -300 -150 0  -300 150 0" TriangleIndices="0 1 2  0 2 3" TextureCoordinates="0 0  0 1  1 1  1 0"/>
+                            <MeshGeometry3D Positions="249 125 0  249 -125 0  -249 -125 0  -249 125 0" TriangleIndices="0 1 2  0 2 3" TextureCoordinates="0 0  0 1  1 1  1 0"/>
                         </Viewport2DVisual3D.Geometry>
                         <Viewport2DVisual3D.Material>
                             <DiffuseMaterial Viewport2DVisual3D.IsVisualHostMaterial="True"/>
