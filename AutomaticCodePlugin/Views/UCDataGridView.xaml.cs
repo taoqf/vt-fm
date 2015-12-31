@@ -33,14 +33,11 @@ namespace AutomaticCodePlugin.Views
         }
         private void UCDataGridView_Loaded(object sender, RoutedEventArgs e)
         {
-            string pvdPath = string.Format("{0}.PVD.{1}.json", Assembly.GetExecutingAssembly().GetName().Name, "DataGridView");
-            Stream pvdStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(pvdPath);
-            string pvdStr = FileHelper.ReadText(pvdStream);
-            if (InitVictopUserControl(pvdStr))
+           if(InitFlag)
             {
                 MainPBlock = GetPresentationBlockModel("masterPBlock");
+                FeiDaoFSM.Do("afterinit", sender);
             }
-            FeiDaoFSM.Do("afterinit", sender);
         }
     }
 }

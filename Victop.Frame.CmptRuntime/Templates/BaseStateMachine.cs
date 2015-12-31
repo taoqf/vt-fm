@@ -43,6 +43,13 @@ namespace Victop.Frame.CmptRuntime
         public BaseStateMachine(string groupName, Assembly pluginAssembly, TemplateControl mainView)
         {
             MainView = mainView;
+            string pvdPath = string.Format("{0}.PVD.{1}.json", pluginAssembly.GetName().Name, groupName);
+            Stream pvdStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(pvdPath);
+            if (pvdStream != null)
+            {
+                string pvdStr = FileHelper.ReadText(pvdStream);
+                MainView.InitVictopUserControl(pvdStr);
+            }
             CreateDroolsSession(groupName, pluginAssembly);
             CreateStateDefin(groupName, pluginAssembly);
             stateModel = new StateTransitionModel() { ActionName = "none", ActionSourceElement = mainView, MainView = mainView };

@@ -121,33 +121,20 @@ namespace Victop.Frame.CmptRuntime
                         }
                     }
                     OrgnizeRuntime.InitCompnt(DefinModel);
-                    foreach (var item in DefinModel.CompntPresentation.PresentationBlocks.Where(it => it.Superiors.Equals("root")))
-                    {
-                        bool result = CheckPresentationBlock(this, item.BlockName);
-                        if (!result)
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    }
                     initFlag = true;
-                    //MainPBlock = DefinModel.CompntPresentation.PresentationBlocks[0];
-                    return true;
                 }
                 else
                 {
                     VicErrorMsg = "组件定义内容异常";
-                    return false;
+                    initFlag = false;
                 }
             }
             catch (Exception ex)
             {
                 VicErrorMsg = ex.Message;
-                return false;
+                initFlag = false;
             }
+            return initFlag;
         }
         /// <summary>
         /// 获取展示层实体
@@ -165,37 +152,6 @@ namespace Victop.Frame.CmptRuntime
             {
                 return null;
             }
-        }
-        #endregion
-        #region 私有方法
-        /// <summary>
-        /// 检查展示层Block
-        /// </summary>
-        /// <param name="obj">界面元素</param>
-        /// <param name="ctrlName">元素名称</param>
-        /// <returns></returns>
-        private bool CheckPresentationBlock(DependencyObject obj, string ctrlName)
-        {
-            bool result = false;
-            VicGridNormal pBlockGrid = XamlTreeHelper.GetChildObjectByName<VicGridNormal>(obj, ctrlName);
-            if (pBlockGrid == null)
-            {
-                VicErrorMsg = string.Format("未查询到名称为{0}的界面元素", ctrlName);
-                return result;
-            }
-            else
-            {
-                PresentationBlockModel blockModel = DefinModel.CompntPresentation.PresentationBlocks.FirstOrDefault(it => it.Superiors.Equals(ctrlName));
-                if (blockModel != null)
-                {
-                    result = CheckPresentationBlock(pBlockGrid, blockModel.BlockName);
-                }
-                else
-                {
-                    result = true;
-                }
-            }
-            return result;
         }
         #endregion
         /// <summary>
