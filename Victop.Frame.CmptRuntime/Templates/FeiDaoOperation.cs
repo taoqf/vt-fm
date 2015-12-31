@@ -25,15 +25,23 @@ namespace Victop.Frame.CmptRuntime
         {
             if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField))
             {
-                Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                paramDic.Add(paramField, paramValue);
                 if (conditionModelDic.ContainsKey(pBlockName))
                 {
-                    conditionModelDic[pBlockName].TableCondition = paramDic;
+                    Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
+                    if (paramDic.ContainsKey(paramField))
+                    {
+                        paramDic[paramField] = paramValue;
+                    }
+                    else
+                    {
+                        paramDic.Add(paramField, paramValue);
+                    }
                 }
                 else
                 {
                     ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    paramDic.Add(paramField, paramValue);
                     viewConModel.TableCondition = paramDic;
                     conditionModelDic.Add(pBlockName, viewConModel);
                 }
@@ -49,16 +57,24 @@ namespace Victop.Frame.CmptRuntime
         {
             if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField))
             {
-                Dictionary<string, object> sortDic = new Dictionary<string, object>();
-                sortDic.Add(paramField, sort);
                 if (conditionModelDic.ContainsKey(pBlockName))
                 {
-                    conditionModelDic[pBlockName].TableSort = sortDic;
+                    Dictionary<string, object> sortDic = conditionModelDic[pBlockName].TableSort;
+                    if (sortDic.ContainsKey(paramField))
+                    {
+                        sortDic[paramField] = sort;
+                    }
+                    else
+                    {
+                        sortDic.Add(paramField, sort);
+                    }
                 }
                 else
                 {
                     ViewsConditionModel viewConModel = new ViewsConditionModel();
-                    viewConModel.TableCondition = sortDic;
+                    Dictionary<string, object> sortDic = new Dictionary<string, object>();
+                    sortDic.Add(paramField, sort);
+                    viewConModel.TableSort = sortDic;
                     conditionModelDic.Add(pBlockName, viewConModel);
                 }
             }
