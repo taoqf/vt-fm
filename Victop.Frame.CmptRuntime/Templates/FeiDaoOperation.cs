@@ -69,7 +69,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pBlockName">区块名称</param>
         /// <param name="index">页码</param>
         /// <param name="size">条数</param>
-        public void SetConditionSort(string pBlockName, int index, int size)
+        public void SetConditionPaging(string pBlockName, int index, int size)
         {
             if (!string.IsNullOrEmpty(pBlockName))
             {
