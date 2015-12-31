@@ -44,7 +44,7 @@ namespace Victop.Frame.CmptRuntime
         {
             MainView = mainView;
             string pvdPath = string.Format("{0}.PVD.{1}.json", pluginAssembly.GetName().Name, groupName);
-            Stream pvdStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(pvdPath);
+            Stream pvdStream = pluginAssembly.GetManifestResourceStream(pvdPath);
             if (pvdStream != null)
             {
                 string pvdStr = FileHelper.ReadText(pvdStream);
