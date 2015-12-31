@@ -11,6 +11,103 @@ namespace Victop.Frame.CmptRuntime
     /// </summary>
     public class FeiDaoOperation
     {
+        /// <summary>
+        /// 存储查询条件
+        /// </summary>
+        private Dictionary<string, ViewsConditionModel> conditionModelDic = new Dictionary<string, ViewsConditionModel>();
+        /// <summary>
+        /// 设置区块查询条件
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="paramValue">参数值</param>
+        public void SetConditionSearch(string pBlockName, string paramField, object paramValue)
+        {
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField))
+            {
+                Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                paramDic.Add(paramField, paramValue);
+                if (conditionModelDic.ContainsKey(pBlockName))
+                {
+                    conditionModelDic[pBlockName].TableCondition = paramDic;
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    viewConModel.TableCondition = paramDic;
+                    conditionModelDic.Add(pBlockName, viewConModel);
+                }
+            }
+        }
+        /// <summary>
+        /// 设置区块排序
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="sort">排序方式1正序-1倒序</param>
+        public void SetConditionSort(string pBlockName, string paramField, int sort)
+        {
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField))
+            {
+                Dictionary<string, object> sortDic = new Dictionary<string, object>();
+                sortDic.Add(paramField, sort);
+                if (conditionModelDic.ContainsKey(pBlockName))
+                {
+                    conditionModelDic[pBlockName].TableSort = sortDic;
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    viewConModel.TableCondition = sortDic;
+                    conditionModelDic.Add(pBlockName, viewConModel);
+                }
+            }
+        }
+        /// <summary>
+        /// 设置区块分页
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="index">页码</param>
+        /// <param name="size">条数</param>
+        public void SetConditionSort(string pBlockName, int index, int size)
+        {
+            if (!string.IsNullOrEmpty(pBlockName))
+            {
+                if (conditionModelDic.ContainsKey(pBlockName))
+                {
+                    conditionModelDic[pBlockName].PageIndex = index;
+                    conditionModelDic[pBlockName].PageSize = size;
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    viewConModel.PageIndex = index;
+                    viewConModel.PageSize = size;
+                    conditionModelDic.Add(pBlockName, viewConModel);
+                }
+            }
+        }
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        public void SearchData(string pBlockName)
+        {
+            if (!string.IsNullOrEmpty(pBlockName))
+            {
+                PresentationBlockModel pBlockModel = MainView.GetPresentationBlockModel(pBlockName);
+                if (conditionModelDic.ContainsKey(pBlockName))
+                {
+                    pBlockModel.SearchData(conditionModelDic[pBlockName]);
+                    conditionModelDic.Remove(pBlockName);
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    pBlockModel.SearchData(viewConModel);
+                }
+            }
+        }
         private TemplateControl MainView;
         /// <summary>
         /// 构造函数，页面/组件实体
