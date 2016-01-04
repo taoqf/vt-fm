@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
@@ -275,6 +276,18 @@ namespace Victop.Frame.CmptRuntime
             pBlock.GetData();
         }
         /// <summary>
+        /// 设置block选中行数据
+        /// </summary>
+        /// <param name="blockName"></param>
+        public void SetPBlockCurrentRow(string blockName)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
+            {
+                pBlock.SetCurrentRow(pBlock.ViewBlockDataTable.Rows[0]);
+            }
+        }
+        /// <summary>
         /// 执行页面动作
         /// </summary>
         /// <param name="pageTrigger"></param>
@@ -351,20 +364,43 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oavPage">页面接收参数</param>
         public void ParamsInterCompntAdd(OAVModel oavCom, OAVModel oavPage)
         {
-            Dictionary<string, object> dic = oavPage.AtrributeValue as Dictionary<string, object>;
-            if (dic == null)
+            FrameworkElement fElement=oavPage.AtrributeValue as FrameworkElement;
+            if(fElement==null)
             {
-                dic = new Dictionary<string, object>();
+                fElement=new FrameworkElement();
             }
-            if (!dic.ContainsKey(oavCom.AtrributeName))
+            Dictionary<string, object> dicParams = fElement.Tag as Dictionary<string, object>;
+            if (dicParams == null)
             {
-                dic.Add(oavCom.AtrributeName, oavCom.AtrributeValue);
+                dicParams = new Dictionary<string, object>();
+            }
+            if (!dicParams.ContainsKey(oavCom.AtrributeName))
+            {
+                dicParams.Add(oavCom.AtrributeName, oavCom.AtrributeValue);
             }
             else
             {
-                dic[oavCom.AtrributeName] = oavCom.AtrributeValue;
+                dicParams[oavCom.AtrributeName] = oavCom.AtrributeValue;
             }
-            oavPage.AtrributeValue = dic;
+            fElement.Tag=dicParams;
+            oavPage.AtrributeValue = fElement;
+        }
+        /// <summary>
+        /// 组件取参数
+        /// </summary>
+        /// <param name="se">状态信息</param>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsInterCompntParse(StateTransitionModel se, string paramName, OAVModel oav)
+        {
+            if (se.ActionSourceElement != null)
+            {
+                Dictionary<string, object> dicParams = se.ActionSourceElement.Tag as Dictionary<string, object>;
+                if (dicParams != null && dicParams.ContainsKey(paramName))
+                {
+                    oav.AtrributeValue = dicParams[paramName];
+                }
+            }
         }
         /// <summary>
         /// 日志输出
