@@ -335,7 +335,7 @@ namespace Victop.Frame.CmptRuntime
             {
                 ViewBlock.ViewModel.Condition.TableCondition = conditionModel.TableCondition;
             }
-            if (conditionModel != null && conditionModel.TableSort != null)
+            if (conditionModel != null && conditionModel.TableSort != null && conditionModel.TableSort.Keys.Count > 0)
             {
                 ViewBlock.ViewModel.Condition.TableSort = conditionModel.TableSort;
             }

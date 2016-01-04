@@ -125,8 +125,7 @@ namespace Victop.Frame.CmptRuntime
                 }
                 else
                 {
-                    ViewsConditionModel viewConModel = new ViewsConditionModel();
-                    pBlockModel.SearchData(viewConModel);
+                    pBlockModel.SearchData();
                 }
             }
         }
