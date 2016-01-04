@@ -229,14 +229,17 @@ namespace Victop.Frame.CmptRuntime
             if (!string.IsNullOrEmpty(pBlockName))
             {
                 PresentationBlockModel pBlockModel = MainView.GetPresentationBlockModel(pBlockName);
-                if (conditionModelDic.ContainsKey(pBlockName))
+                if (pBlockModel != null)
                 {
-                    pBlockModel.SearchData(conditionModelDic[pBlockName]);
-                    conditionModelDic.Remove(pBlockName);
-                }
-                else
-                {
-                    pBlockModel.SearchData();
+                    if (conditionModelDic.ContainsKey(pBlockName))
+                    {
+                        pBlockModel.SearchData(conditionModelDic[pBlockName]);
+                        conditionModelDic.Remove(pBlockName);
+                    }
+                    else
+                    {
+                        pBlockModel.SearchData();
+                    }
                 }
             }
         }
