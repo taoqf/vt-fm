@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Victop.Frame.CmptRuntime;
 
 namespace FeidaoUserLoginPlugin.Views
@@ -23,28 +24,54 @@ namespace FeidaoUserLoginPlugin.Views
     /// </summary>
     public partial class UCFeidaoCountdown : TemplateControl
     {
+        DoubleAnimation da = new DoubleAnimation();
+        bool b = false;
+        bool dacomplated = true;
+        DispatcherTimer timer = new DispatcherTimer();
         public UCFeidaoCountdown()
         {
             InitializeComponent();
-            
+            da.Duration = new Duration(TimeSpan.FromSeconds(1));
+            da.Completed += da_Completed;
+            timer.Interval = TimeSpan.FromSeconds(3);
+            timer.Tick += timer_Tick;
+            timer.Start();
+
         }
-        DoubleAnimation da = new DoubleAnimation();
-        bool b = false;
+
+        void da_Completed(object sender, EventArgs e)
+        {
+            dacomplated = true;
+            timer.IsEnabled = true;
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            BeginAnimation();
+        }
+
         private void TemplateControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            da.Duration = new Duration(TimeSpan.FromSeconds(1));
-            //da.To = 0d;
-            if(b==false)
+            timer.IsEnabled = false;
+            BeginAnimation();
+        }
+        private void BeginAnimation()
+        {
+            if (dacomplated)
             {
-                da.To = 180d;
-                b = true;
+                if (b == false)
+                {
+                    da.To = 180d;
+                    b = true;
+                }
+                else if (b == true)
+                {
+                    da.To = 0d;
+                    b = false;
+                }
+                this.axr.BeginAnimation(AxisAngleRotation3D.AngleProperty, da);
+                dacomplated = false;
             }
-            else if(b==true)
-            {
-                da.To = 0d;
-                b = false;
-            }
-            this.axr.BeginAnimation(AxisAngleRotation3D.AngleProperty, da);
         }
     }
 }
