@@ -238,7 +238,6 @@ namespace Victop.Frame.CmptRuntime
                     {
                         pBlockModel.SearchData();
                     }
-                    pBlockModel.GetData();
                 }
             }
         }
