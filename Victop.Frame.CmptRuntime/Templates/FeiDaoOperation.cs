@@ -237,6 +237,28 @@ namespace Victop.Frame.CmptRuntime
             }
         }
         /// <summary>
+        /// 组件参数封装
+        /// </summary>
+        /// <param name="oavCom">组件参数</param>
+        /// <param name="oavPage">页面接收参数</param>
+        public void ParamsInterCompntAdd(OAVModel oavCom, OAVModel oavPage)
+        {
+            Dictionary<string, object> dic = oavPage.AtrributeValue as Dictionary<string, object>;
+            if (dic == null)
+            {
+                dic = new Dictionary<string, object>();
+            }
+            if (!dic.ContainsKey(oavCom.AtrributeName))
+            {
+                dic.Add(oavCom.AtrributeName, oavCom.AtrributeValue);
+            }
+            else
+            {
+                dic[oavCom.AtrributeName] = oavCom.AtrributeValue;
+            }
+            oavPage.AtrributeValue = dic;
+        }
+        /// <summary>
         /// 日志输出
         /// </summary>
         /// <param name="content">输出内容</param>
