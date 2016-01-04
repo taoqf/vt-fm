@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
+using Victop.Wpf.Controls;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -259,6 +261,20 @@ namespace Victop.Frame.CmptRuntime
             btn.Content = btnContent;
         }
         /// <summary>
+        /// 设置选中数据通过datagrid
+        /// </summary>
+        /// <param name="blockName"></param>
+        /// <param name="dgrid"></param>
+        public void SetPBlockCurrentRowByDataGrid(string blockName, object dgrid)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            VicDataGrid datagrid = dgrid as VicDataGrid;
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && datagrid!=null&&datagrid.SelectedItem!=null)
+            {
+                pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
+            }
+        }
+        /// <summary>
         /// 系统输出
         /// </summary>
         /// <param name="consoleText"></param>
@@ -284,7 +300,7 @@ namespace Victop.Frame.CmptRuntime
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
             if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
             {
-                pBlock.SetCurrentRow(pBlock.ViewBlockDataTable.Rows[0]);
+               pBlock.PreBlockSelectedRow =pBlock.ViewBlockDataTable.Rows[0];
             }
         }
         /// <summary>
