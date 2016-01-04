@@ -13,11 +13,7 @@
         <GradientStop Color="White" Offset="0.1"  />
     </LinearGradientBrush>
   
-    <LinearGradientBrush x:Key="ellipseCore" Opacity="0.5" EndPoint="0.5,1" StartPoint="0.5,0">
-        <GradientStop Color="#B8EA09" Offset="1" />
-        <GradientStop Color="#E8381B" Offset="0" />
-        <GradientStop Color="#0FDEF1" Offset="1" />
-    </LinearGradientBrush>
+    
     
     <Storyboard x:Key="Storyboard2">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ellipseOuter">
@@ -51,7 +47,7 @@
                         <Ellipse.Fill>
                             <VisualBrush >
                                 <VisualBrush.Visual>
-                                        <Ellipse Stroke="{StaticResource ellipseCore}" x:Name="ellipseCore" HorizontalAlignment="Left" Height="61" Margin="323,121,0,0" StrokeThickness="5" VerticalAlignment="Top" Width="61" RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse Stroke="{DynamicResource ellipseCore}" x:Name="ellipseCore" HorizontalAlignment="Left" Height="61" Margin="323,121,0,0" StrokeThickness="5" VerticalAlignment="Top" Width="61" RenderTransformOrigin="0.5,0.5">
                                             <Ellipse.RenderTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform/>

@@ -25,7 +25,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Border>
-        <ScrollViewer x:Name="scrollViewer" Width="72" VerticalScrollBarVisibility="Visible" Visibility="{Binding IsShowMenu}"  Style="{DynamicResource MenuScrollViewer}">
+        <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Visible" Width="72"  Visibility="{Binding IsShowMenu}"  Style="{DynamicResource MenuScrollViewer}">
             
             <Grid Style="{DynamicResource LeftGrid}">
                 <i:Interaction.Triggers>
@@ -88,7 +88,7 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </controls:VicButtonNormal>
-                    <controls:VicButtonNormal Name="btnChangeSkin" Visibility="Collapsed" Style="{DynamicResource btnChangeSkinStyle}"  ToolTip="皮肤管理" Command="{Binding btnChangeSkinClickCommand}">
+                    <controls:VicButtonNormal Name="btnChangeSkin" Visibility="Visible" Style="{DynamicResource btnChangeSkinStyle}"  ToolTip="皮肤管理" Command="{Binding btnChangeSkinClickCommand}">
                     </controls:VicButtonNormal>
                     <controls:VicButtonNormal Name="btnSet" Style="{DynamicResource btnSetStyle}" ToolTip="锁定工作区" Command="{Binding btnLockSpaceClickCommand}">
                     </controls:VicButtonNormal>
