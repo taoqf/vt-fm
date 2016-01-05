@@ -62,21 +62,24 @@ namespace Victop.Frame.CmptRuntime
 
         private void InitStateConfig()
         {
-            foreach (var item in stateDefModel.DefTransitions)
+            if (stateDefModel != null)
             {
-                if (item.InfoFrom.Equals(item.InfoTo))
+                foreach (var item in stateDefModel.DefTransitions)
                 {
+                    if (item.InfoFrom.Equals(item.InfoTo))
+                    {
+                        FeiDaoFSM.Configure(item.InfoFrom)
+                            .PermitReentry(item.InfoName);
+                    }
+                    else
+                    {
+                        FeiDaoFSM.Configure(item.InfoFrom)
+                            .Permit(item.InfoName, item.InfoTo);
+                    }
                     FeiDaoFSM.Configure(item.InfoFrom)
-                        .PermitReentry(item.InfoName);
+                        .OnEntry((x) => OnFeiDaoEntry(x))
+                        .OnExit((x) => OnFeiDaoExit(x));
                 }
-                else
-                {
-                    FeiDaoFSM.Configure(item.InfoFrom)
-                        .Permit(item.InfoName, item.InfoTo);
-                }
-                FeiDaoFSM.Configure(item.InfoFrom)
-                    .OnEntry((x) => OnFeiDaoEntry(x))
-                    .OnExit((x) => OnFeiDaoExit(x));
             }
         }
 
@@ -187,7 +190,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="triggerSource">动作触发源</param>
         public void Do(string triggerName, object triggerSource)
         {
-            if (OnFeiDaoGuard(triggerName) && FeiDaoFSM.CanFire(triggerName))
+            if (FeiDaoFSM.CanFire(triggerName) && OnFeiDaoGuard(triggerName))
             {
                 stateModel.ActionName = triggerName;
                 stateModel.ActionSourceElement = triggerSource as FrameworkElement;
