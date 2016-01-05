@@ -37,6 +37,11 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         private CompntDefinModel DefinModel;
         /// <summary>
+        /// SpaceId
+        /// </summary>
+        public string SpaceId { get; set; }
+
+        /// <summary>
         /// 系统Id
         /// </summary>
         public string SystemId
@@ -112,6 +117,13 @@ namespace Victop.Frame.CmptRuntime
                 DefinModel = JsonHelper.ToObject<CompntDefinModel>(cmpntDefineContent);
                 if (DefinModel != null)
                 {
+                    if (!string.IsNullOrEmpty(SpaceId))
+                    {
+                        foreach (var item in DefinModel.CompntViews)
+                        {
+                            item.SpaceId = SpaceId;
+                        }
+                    }
                     OrgnizeRuntime.InitCompnt(DefinModel);
                     initFlag = true;
                 }
@@ -145,21 +157,6 @@ namespace Victop.Frame.CmptRuntime
                 return null;
             }
         }
-        /// <summary>
-        /// 设置SpaceId
-        /// </summary>
-        /// <param name="spaceId">SpaceId</param>
-        public void SetSpaceId(string spaceId)
-        {
-            if (DefinModel != null && !string.IsNullOrEmpty(spaceId))
-            {
-                foreach (var item in DefinModel.CompntViews)
-                {
-                    item.SpaceId = spaceId;
-                }
-            }
-        }
-
         #endregion
         /// <summary>
         /// 飞道状态机

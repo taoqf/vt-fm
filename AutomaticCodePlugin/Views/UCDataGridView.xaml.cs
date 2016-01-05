@@ -27,10 +27,10 @@ namespace AutomaticCodePlugin.Views
         public UCDataGridView()
         {
             InitializeComponent();
-            FeiDaoFSM = new BaseStateMachine("DataGridView", Assembly.GetExecutingAssembly(), this);
 #if DEBUG
-            SetSpaceId("feidao");
+            SpaceId = "feidao";
 #endif
+            FeiDaoFSM = new BaseStateMachine("DataGridView", Assembly.GetExecutingAssembly(), this);
             DataContext = this;
             this.Loaded += UCDataGridView_Loaded;
         }
