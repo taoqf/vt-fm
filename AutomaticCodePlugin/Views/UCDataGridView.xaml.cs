@@ -28,12 +28,15 @@ namespace AutomaticCodePlugin.Views
         {
             InitializeComponent();
             FeiDaoFSM = new BaseStateMachine("DataGridView", Assembly.GetExecutingAssembly(), this);
+#if DEBUG
+            SetSpaceId("feidao");
+#endif
             DataContext = this;
             this.Loaded += UCDataGridView_Loaded;
         }
         private void UCDataGridView_Loaded(object sender, RoutedEventArgs e)
         {
-           if(InitFlag)
+            if (InitFlag)
             {
                 MainPBlock = GetPresentationBlockModel("masterPBlock");
                 FeiDaoFSM.Do("afterinit", sender);

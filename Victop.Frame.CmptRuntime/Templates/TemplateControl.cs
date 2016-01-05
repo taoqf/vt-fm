@@ -105,21 +105,13 @@ namespace Victop.Frame.CmptRuntime
         /// 初始化飞道用户控件
         /// </summary>
         /// <param name="cmpntDefineContent">组件定义内容</param>
-        /// <param name="spaceId">SpaceId</param>
-        public bool InitVictopUserControl(string cmpntDefineContent, string spaceId = "")
+        public bool InitVictopUserControl(string cmpntDefineContent)
         {
             try
             {
                 DefinModel = JsonHelper.ToObject<CompntDefinModel>(cmpntDefineContent);
                 if (DefinModel != null)
                 {
-                    if (!string.IsNullOrEmpty(spaceId))
-                    {
-                        foreach (var item in DefinModel.CompntViews)
-                        {
-                            item.SpaceId = spaceId;
-                        }
-                    }
                     OrgnizeRuntime.InitCompnt(DefinModel);
                     initFlag = true;
                 }
@@ -153,6 +145,21 @@ namespace Victop.Frame.CmptRuntime
                 return null;
             }
         }
+        /// <summary>
+        /// 设置SpaceId
+        /// </summary>
+        /// <param name="spaceId">SpaceId</param>
+        public void SetSpaceId(string spaceId)
+        {
+            if (DefinModel != null && !string.IsNullOrEmpty(spaceId))
+            {
+                foreach (var item in DefinModel.CompntViews)
+                {
+                    item.SpaceId = spaceId;
+                }
+            }
+        }
+
         #endregion
         /// <summary>
         /// 飞道状态机
