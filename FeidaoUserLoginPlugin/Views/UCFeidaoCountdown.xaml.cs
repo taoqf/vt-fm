@@ -33,7 +33,7 @@ namespace FeidaoUserLoginPlugin.Views
             InitializeComponent();
             da.Duration = new Duration(TimeSpan.FromSeconds(1));
             da.Completed += da_Completed;
-            timer.Interval = TimeSpan.FromSeconds(3);
+            timer.Interval = TimeSpan.FromSeconds(5);
             timer.Tick += timer_Tick;
             timer.Start();
 
