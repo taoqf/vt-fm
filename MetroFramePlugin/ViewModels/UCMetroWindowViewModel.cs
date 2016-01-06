@@ -469,9 +469,9 @@ namespace MetroFramePlugin.ViewModels
                     ChangeFrameWorkTheme();
                     AppVersionCode = GetAppVersion();
                     LoadJsonMenuListLocal();
-                    OverlayWindow overlayWin = new OverlayWindow();
-                    OverlayWindow.VicTabCtrl = mainTabControl;
-                    overlayWin.Show();
+                    //OverlayWindow overlayWin = new OverlayWindow();
+                    //OverlayWindow.VicTabCtrl = mainTabControl;
+                    //overlayWin.Show();
                     UserLogin();
                     DataMessageOperation messageOp = new DataMessageOperation();
                     Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());

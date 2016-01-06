@@ -69,6 +69,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victop.Frame.AtomicOperatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeidaoUserLoginPlugin", "FeidaoUserLoginPlugin\FeidaoUserLoginPlugin.csproj", "{7AD2B683-504B-48C1-A06C-98DCE0485C6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VictopUploadHelper", "VictopUploadHelper\VictopUploadHelper.csproj", "{855AE60E-11E8-4031-BB95-0BD9EBB480E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -480,6 +482,22 @@ Global
 		{7AD2B683-504B-48C1-A06C-98DCE0485C6F}.Release|x64.ActiveCfg = Release|Any CPU
 		{7AD2B683-504B-48C1-A06C-98DCE0485C6F}.Release|x86.ActiveCfg = Release|x86
 		{7AD2B683-504B-48C1-A06C-98DCE0485C6F}.Release|x86.Build.0 = Release|x86
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Debug|x64.Build.0 = Debug|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Debug|x86.ActiveCfg = Debug|x86
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Debug|x86.Build.0 = Debug|x86
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Release|x64.ActiveCfg = Release|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Release|x64.Build.0 = Release|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Release|x86.ActiveCfg = Release|Any CPU
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -513,5 +531,6 @@ Global
 		{D3E841FD-F841-4D6D-B29C-B683B3F9B0A0} = {16B6FEB5-77C9-4BAD-93AD-4CD04B6C17F7}
 		{111CE838-049A-49AE-AAD6-FF93D6F0CABF} = {E08B6C01-721F-47CC-A936-30E2972C7895}
 		{7AD2B683-504B-48C1-A06C-98DCE0485C6F} = {9F897C3B-E34A-43F9-972E-1DE4BBE833AA}
+		{855AE60E-11E8-4031-BB95-0BD9EBB480E8} = {961360E6-BCB7-44D6-89DC-92250E45FD46}
 	EndGlobalSection
 EndGlobal
