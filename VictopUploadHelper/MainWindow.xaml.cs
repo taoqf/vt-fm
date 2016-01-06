@@ -103,8 +103,7 @@ namespace VictopUploadHelper
         {
             if (MessageBoxResult.OK == VicMessageBoxNormal.Show("是否取消上传", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Information))
             {
-                client.CancelAsync();
-                client.Dispose();
+                //client.CancelAsync();
                 Dictionary<string, object> resultDic = new Dictionary<string, object>();
                 resultDic.Add("code", "-1");
                 resultDic.Add("message", "已取消上传");
