@@ -6,35 +6,108 @@
         xmlns:ctrl="http://schemas.ifeidao.com/wpfcontrol"
         xmlns:local="clr-namespace:VictopUploadHelper"
         mc:Ignorable="d"
-        Title="飞道上传助手" Height="350" Width="525" WindowStartupLocation="CenterScreen" WindowStyle="None" Topmost="True" ResizeMode="NoResize" ShowInTaskbar="False" Background="SkyBlue">
+        Title="飞道上传助手"  Height="350" Width="525" WindowStartupLocation="CenterScreen" WindowStyle="None"  Topmost="True" ResizeMode="NoResize" ShowInTaskbar="False" >
+    <Window.Resources>
+        <ImageBrush x:Key="WindowBg" ImageSource="backgroun.png" Stretch="UniformToFill"></ImageBrush>
+        <ImageBrush x:Key="borderIco" ImageSource="victop.ico" Stretch="UniformToFill"></ImageBrush>
+        <Style TargetType="{x:Type ctrl:VicTextBlockNormal}">
+            <Setter Property="FontFamily" Value="微软雅黑"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <Style x:Key="ProgressBarStyle" TargetType="{x:Type ProgressBar}">
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ProgressBar}">
+                        <Grid MinHeight="8" MinWidth="200" >
+                            <Border Name="PART_Track" CornerRadius="3" BorderBrush="#39A8EA"  
+                           BorderThickness="1" Background="White" />
+                            <Border x:Name="PART_Indicator" Height="8"  CornerRadius="5" BorderBrush="#39A8EA" BorderThickness="1"   
+                         HorizontalAlignment="Left" >
+                                <Grid>
+                                    <Grid x:Name="Foreground">
+                                        <Grid.Background>
+                                            <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                                                <GradientStop Color="#39A8EA" Offset="0.5"/>
+                                                <GradientStop Color="#39A8EA" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Grid.Background>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type ctrl:VicButtonNormal}" >
+            <Setter Property="Width" Value="75"></Setter>
+            <Setter Property="Height" Value="25"></Setter>
+            <Setter Property="Foreground" Value="#39A8EA"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="PART_Border"
+BorderBrush="#39A8EA" BorderThickness="1" Padding="2">
+                            <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding Content}">
+                            </ContentPresenter>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="#39A8EA"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True" />
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Border BorderBrush="#60ADDA" BorderThickness="1">
     <ctrl:VicGridNormal>
         <ctrl:VicGridNormal.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
-        </ctrl:VicGridNormal.RowDefinitions>
-        <ctrl:VicDockPanelNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <ctrl:VicTextBlockNormal Text="飞道上传助手" Margin="20,0,0,0"/>
-        </ctrl:VicDockPanelNormal>
-        <ctrl:VicDockPanelNormal Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <ctrl:VicTextBlockNormal>上传文件路径:</ctrl:VicTextBlockNormal>
-            <ctrl:VicTextBlockNormal Text="F:\a.zip" VerticalAlignment="Center" Name="tboxFileName"/>
-        </ctrl:VicDockPanelNormal>
-        <ctrl:VicProgressBarNormal Grid.Row="2" Height="20" Name="vicpBar" Value="0"/>
-        <ctrl:VicDockPanelNormal Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <ctrl:VicTextBlockNormal>文件总大小:</ctrl:VicTextBlockNormal>
-            <ctrl:VicTextBlockNormal Name="tBoxTotalSize" VerticalAlignment="Center"/>
-        </ctrl:VicDockPanelNormal>
-        <ctrl:VicDockPanelNormal Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <ctrl:VicTextBlockNormal>已上传内容大小:</ctrl:VicTextBlockNormal>
-            <ctrl:VicTextBlockNormal Name="tBoxSendSize" VerticalAlignment="Center"/>
-        </ctrl:VicDockPanelNormal>
-        <ctrl:VicDockPanelNormal Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ctrl:VicButtonNormal Width="75" Height="24" Content="取消" Name="btnCannel" Click="btnCannel_Click"/>
-        </ctrl:VicDockPanelNormal>
-    </ctrl:VicGridNormal>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="260"/>
+           <RowDefinition Height="35"/>
+            </ctrl:VicGridNormal.RowDefinitions>
+        <Grid Background="#67B9DC"  Width="525" Height="50" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal">
+                    <Border Width="40" Height="40" CornerRadius="25" Background="{DynamicResource borderIco}"></Border>
+                    <ctrl:VicTextBlockNormal Text="飞道上传助手" Height="25" Foreground="White" FontWeight="Bold" FontSize="16" FontFamily=" Microsoft YaHei" Margin="5,0,0,0"/>
+                </StackPanel>
+        </Grid>
+            <Grid Grid.Row="1" Height="260" Background="#ECF9FE" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <ctrl:VicDockPanelNormal Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <ctrl:VicTextBlockNormal>上传文件路径:</ctrl:VicTextBlockNormal>
+                    <ctrl:VicTextBlockNormal VerticalAlignment="Center" Name="tboxFileName"/>
+                </ctrl:VicDockPanelNormal>
+                <ProgressBar Grid.Row="1" Height="8" Style="{DynamicResource ProgressBarStyle}" Name="vicpBar" Value="0"/>
+                <Grid  Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="42">
+                    <Label Name="lblProgressBar" Height="25"  Width="42"  VerticalAlignment="Center"></Label>
+                </Grid>
+                <ctrl:VicDockPanelNormal Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <ctrl:VicTextBlockNormal>文件总大小:</ctrl:VicTextBlockNormal>
+                    <ctrl:VicTextBlockNormal Name="tBoxTotalSize" VerticalAlignment="Center"/>
+                </ctrl:VicDockPanelNormal>
+                <ctrl:VicDockPanelNormal Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <ctrl:VicTextBlockNormal>已上传内容大小:</ctrl:VicTextBlockNormal>
+                    <ctrl:VicTextBlockNormal Name="tBoxSendSize" VerticalAlignment="Center"/>
+                </ctrl:VicDockPanelNormal>
+               
+        </Grid>
+            <Grid Grid.Row="2" Background="#ECF9FE">
+                <ctrl:VicDockPanelNormal VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <ctrl:VicButtonNormal Width="75" Height="24" Content="取消" Name="btnCannel" Click="btnCannel_Click"/>
+                </ctrl:VicDockPanelNormal>
+            </Grid>
+        </ctrl:VicGridNormal>
+    </Border>
 </Window>

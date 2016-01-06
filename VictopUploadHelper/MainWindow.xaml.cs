@@ -42,6 +42,7 @@ namespace VictopUploadHelper
         private void Client_UploadProgressChanged(object sender, UploadProgressChangedEventArgs e)
         {
             vicpBar.Value = e.ProgressPercentage * 2;
+            lblProgressBar.Content = vicpBar.Value+"%";
             tBoxSendSize.Text = ConvertSize(e.BytesSent);
             tBoxTotalSize.Text = ConvertSize(e.TotalBytesToSend);
 
