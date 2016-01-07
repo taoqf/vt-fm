@@ -185,6 +185,15 @@ namespace Victop.Frame.CmptRuntime
 
         }
         /// <summary>
+        /// 获取组件实例，用于独立窗体展示组件
+        /// </summary>
+        /// <param name="componetName">组件名称</param>
+        /// <returns></returns>
+        public virtual TemplateControl GetComponentInstanceByName(string componetName)
+        {
+            return this;
+        }
+        /// <summary>
         /// 属性改变
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
