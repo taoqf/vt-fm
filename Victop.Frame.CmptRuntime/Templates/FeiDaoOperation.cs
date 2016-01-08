@@ -23,7 +23,15 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 自定义服务
         /// </summary>
-        private CustomServiceAtOperation customService;
+        private CustomServiceAtOperation customServiceOperation;
+        /// <summary>
+        /// 数据操作
+        /// </summary>
+        private DataAtOperation dataOperation;
+        /// <summary>
+        /// 系统原子操作
+        /// </summary>
+        private SystemAtOperation systemOperation;
         #endregion
         /// <summary>
         /// 构造函数，页面/组件实体
@@ -32,7 +40,9 @@ namespace Victop.Frame.CmptRuntime
         public FeiDaoOperation(TemplateControl mainView)
         {
             MainView = mainView;
-            customService = new CustomServiceAtOperation(MainView.FeiDaoFSM);
+            customServiceOperation = new CustomServiceAtOperation(MainView);
+            dataOperation = new DataAtOperation(MainView);
+            systemOperation = new SystemAtOperation(MainView);
         }
         #region 自定义服务操作
         /// <summary>
@@ -43,7 +53,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="paramValue">参数值</param>
         public void ServiceParamSet(string serviceName, string paramName, object paramValue)
         {
-            customService.ServiceParamSet(serviceName, paramName, paramValue);
+            customServiceOperation.ServiceParamSet(serviceName, paramName, paramValue);
         }
         /// <summary>
         /// 发送服务消息
@@ -51,14 +61,10 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="serviceName">服务名称</param>
         public void SendServiceMessage(string serviceName)
         {
-            customService.SendServiceMessage(serviceName);
+            customServiceOperation.SendServiceMessage(serviceName);
         }
         #endregion
         #region 查询条件操作
-        /// <summary>
-        /// 存储查询条件
-        /// </summary>
-        private Dictionary<string, ViewsConditionModel> conditionModelDic = new Dictionary<string, ViewsConditionModel>();
         /// <summary>
         /// 设置区块查询条件日期区间
         /// </summary>
@@ -68,34 +74,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="endDate">结束日期</param>
         public void SetConditionSearchDate(string pBlockName, string paramField, string startDate, string endDate)
         {
-            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && !string.IsNullOrEmpty(startDate) && !string.IsNullOrEmpty(endDate))
-            {
-                DateTime start = Convert.ToDateTime(Convert.ToDateTime(startDate).ToString("yyyy-MM-dd HH:mm:ss"));
-                DateTime end = Convert.ToDateTime(Convert.ToDateTime(endDate).ToString("yyyy-MM-dd HH:mm:ss"));
-                Dictionary<string, object> dataDic = new Dictionary<string, object>();
-                dataDic.Add("$gte", (long)(start - (new DateTime(1970, 1, 1))).TotalMilliseconds);
-                dataDic.Add("$lte", (long)(end - (new DateTime(1970, 1, 1))).TotalMilliseconds);
-                if (conditionModelDic.ContainsKey(pBlockName))
-                {
-                    Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
-                    if (paramDic.ContainsKey(paramField))
-                    {
-                        paramDic[paramField] = dataDic;
-                    }
-                    else
-                    {
-                        paramDic.Add(paramField, dataDic);
-                    }
-                }
-                else
-                {
-                    ViewsConditionModel viewConModel = new ViewsConditionModel();
-                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    paramDic.Add(paramField, dataDic);
-                    viewConModel.TableCondition = paramDic;
-                    conditionModelDic.Add(pBlockName, viewConModel);
-                }
-            }
+            dataOperation.SetConditionSearchDate(pBlockName, paramField, startDate, endDate);
         }
         /// <summary>
         /// 设置区块查询条件模糊匹配
@@ -105,29 +84,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="paramValue">参数值</param>
         public void SetConditionSearchLike(string pBlockName, string paramField, object paramValue)
         {
-            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField))
-            {
-                if (conditionModelDic.ContainsKey(pBlockName))
-                {
-                    Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
-                    if (paramDic.ContainsKey(paramField))
-                    {
-                        paramDic[paramField] = RegexHelper.Contains(Convert.ToString(paramValue));
-                    }
-                    else
-                    {
-                        paramDic.Add(paramField, RegexHelper.Contains(Convert.ToString(paramValue)));
-                    }
-                }
-                else
-                {
-                    ViewsConditionModel viewConModel = new ViewsConditionModel();
-                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    paramDic.Add(paramField, RegexHelper.Contains(Convert.ToString(paramValue)));
-                    viewConModel.TableCondition = paramDic;
-                    conditionModelDic.Add(pBlockName, viewConModel);
-                }
-            }
+            dataOperation.SetConditionSearchLike(pBlockName, paramField, paramValue);
         }
         /// <summary>
         /// 设置区块查询条件子查询
@@ -137,35 +94,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">事实</param>
         public void SetConditionSearchIn(string pBlockName, string paramField, OAVModel oav)
         {
-            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && oav != null)
-            {
-                List<object> list = oav.AtrributeValue as List<object>;
-                if (list != null)
-                {
-                    Dictionary<string, object> inDic = new Dictionary<string, object>();
-                    inDic.Add("$in", list);
-                    if (conditionModelDic.ContainsKey(pBlockName))
-                    {
-                        Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
-                        if (paramDic.ContainsKey(paramField))
-                        {
-                            paramDic[paramField] = inDic;
-                        }
-                        else
-                        {
-                            paramDic.Add(paramField, inDic);
-                        }
-                    }
-                    else
-                    {
-                        ViewsConditionModel viewConModel = new ViewsConditionModel();
-                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                        paramDic.Add(paramField, inDic);
-                        viewConModel.TableCondition = paramDic;
-                        conditionModelDic.Add(pBlockName, viewConModel);
-                    }
-                }
-            }
+            dataOperation.SetConditionSearchIn(pBlockName, paramField, oav);
         }
         /// <summary>
         /// 设置区块查询条件
@@ -175,29 +104,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="paramValue">参数值</param>
         public void SetConditionSearch(string pBlockName, string paramField, object paramValue)
         {
-            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField))
-            {
-                if (conditionModelDic.ContainsKey(pBlockName))
-                {
-                    Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
-                    if (paramDic.ContainsKey(paramField))
-                    {
-                        paramDic[paramField] = paramValue;
-                    }
-                    else
-                    {
-                        paramDic.Add(paramField, paramValue);
-                    }
-                }
-                else
-                {
-                    ViewsConditionModel viewConModel = new ViewsConditionModel();
-                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                    paramDic.Add(paramField, paramValue);
-                    viewConModel.TableCondition = paramDic;
-                    conditionModelDic.Add(pBlockName, viewConModel);
-                }
-            }
+            dataOperation.SetConditionSearch(pBlockName, paramField, paramValue);
         }
 
         /// <summary>
@@ -208,29 +115,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="sort">排序方式1正序-1倒序</param>
         public void SetConditionSort(string pBlockName, string paramField, int sort)
         {
-            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField))
-            {
-                if (conditionModelDic.ContainsKey(pBlockName))
-                {
-                    Dictionary<string, object> sortDic = conditionModelDic[pBlockName].TableSort;
-                    if (sortDic.ContainsKey(paramField))
-                    {
-                        sortDic[paramField] = sort;
-                    }
-                    else
-                    {
-                        sortDic.Add(paramField, sort);
-                    }
-                }
-                else
-                {
-                    ViewsConditionModel viewConModel = new ViewsConditionModel();
-                    Dictionary<string, object> sortDic = new Dictionary<string, object>();
-                    sortDic.Add(paramField, sort);
-                    viewConModel.TableSort = sortDic;
-                    conditionModelDic.Add(pBlockName, viewConModel);
-                }
-            }
+            dataOperation.SetConditionSort(pBlockName, paramField, sort);
         }
         /// <summary>
         /// 设置区块分页
@@ -240,21 +125,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="size">条数</param>
         public void SetConditionPaging(string pBlockName, int index, int size)
         {
-            if (!string.IsNullOrEmpty(pBlockName))
-            {
-                if (conditionModelDic.ContainsKey(pBlockName))
-                {
-                    conditionModelDic[pBlockName].PageIndex = index;
-                    conditionModelDic[pBlockName].PageSize = size;
-                }
-                else
-                {
-                    ViewsConditionModel viewConModel = new ViewsConditionModel();
-                    viewConModel.PageIndex = index;
-                    viewConModel.PageSize = size;
-                    conditionModelDic.Add(pBlockName, viewConModel);
-                }
-            }
+            dataOperation.SetConditionPaging(pBlockName, index, size);
         }
         #endregion
 
@@ -264,22 +135,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pBlockName">区块名称</param>
         public void SearchData(string pBlockName)
         {
-            if (!string.IsNullOrEmpty(pBlockName))
-            {
-                PresentationBlockModel pBlockModel = MainView.GetPresentationBlockModel(pBlockName);
-                if (pBlockModel != null)
-                {
-                    if (conditionModelDic.ContainsKey(pBlockName))
-                    {
-                        pBlockModel.SearchData(conditionModelDic[pBlockName]);
-                        conditionModelDic.Remove(pBlockName);
-                    }
-                    else
-                    {
-                        pBlockModel.SearchData();
-                    }
-                }
-            }
+            dataOperation.SearchData(pBlockName);
         }
         /// <summary>
         /// 设置按钮文本
@@ -311,7 +167,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="consoleText"></param>
         public void SysConsole(string consoleText)
         {
-            Console.WriteLine(consoleText);
+            systemOperation.SysConsole(consoleText);
         }
         /// <summary>
         /// 获取BlockData的数据
@@ -328,8 +184,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="blockName"></param>
         public void SavePBlockData(string blockName)
         {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
-            pBlock.SaveData(true);
+            dataOperation.SavePBlockData(blockName);
         }
         /// <summary>
         /// 设置block选中行数据
@@ -338,12 +193,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav"></param>
         public void SetPBlockCurrentRow(string blockName, OAVModel oav)
         {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
-            {
-                pBlock.PreBlockSelectedRow = pBlock.ViewBlockDataTable.Rows[0];
-                oav.AtrributeValue = pBlock.PreBlockSelectedRow;
-            }
+            dataOperation.SetPBlockCurrentRow(blockName, oav);
         }
         /// <summary>
         /// 执行页面动作
@@ -371,7 +221,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="groupName">分组信息</param>
         public void SetFocus(string groupName)
         {
-            MainView.FeiDaoFSM.SetFocus(groupName);
+            systemOperation.SetFocus(groupName);
         }
         /// <summary>
         /// 插入事实
@@ -379,7 +229,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav"></param>
         public void InsertFact(OAVModel oav)
         {
-            MainView.FeiDaoFSM.InsertFact(oav);
+            systemOperation.InsertFact(oav);
         }
         /// <summary>
         /// 移除事实
@@ -387,7 +237,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav"></param>
         public void RemoveFact(OAVModel oav)
         {
-            MainView.FeiDaoFSM.RemoveFact(oav);
+            systemOperation.RemoveFact(oav);
         }
         /// <summary>
         /// 获取页面参数值
@@ -551,7 +401,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="content">输出内容</param>
         public void SysFeiDaoLog(string content)
         {
-            LoggerHelper.Info(content);
+            systemOperation.SysFeiDaoLog(content);
         }
         /// <summary>
         /// 值是否为null
@@ -694,13 +544,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oavmsg"></param>
         public void SetActionGuard(StateTransitionModel se, OAVModel oav, OAVModel oavmsg)
         {
-            if (oav.AtrributeValue != null && (bool)oav.AtrributeValue)
-                se.ActionGuard = true;
-            else
-            {
-                VicMessageBoxNormal.Show(oavmsg.AtrributeValue.ToString());
-                se.ActionGuard = false;
-            }
+            systemOperation.SetActionGuard(se, oav, oavmsg);
         }
 
         #endregion

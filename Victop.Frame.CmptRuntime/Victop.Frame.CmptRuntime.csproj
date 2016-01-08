@@ -104,6 +104,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AtomicOperation\CustomServiceAtOperation.cs" />
+    <Compile Include="AtomicOperation\DataAtOperation.cs" />
+    <Compile Include="AtomicOperation\SystemAtOperation.cs" />
+    <Compile Include="AtomicOperation\UIElementAtOperation.cs" />
     <Compile Include="PVDModel\CompntDefinModel.cs" />
     <Compile Include="PVDModel\DefinPresentationModel.cs" />
     <Compile Include="PVDModel\DefinViewsModel.cs" />

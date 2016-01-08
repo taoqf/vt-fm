@@ -23,14 +23,14 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <summary>
         /// 状态机
         /// </summary>
-        BaseStateMachine FeiDaoFSM = null;
+        TemplateControl MainView;
         /// <summary>
         /// 自定义服务原子操作
         /// </summary>
-        /// <param name="fsm">状态机</param>
-        public CustomServiceAtOperation(BaseStateMachine fsm)
+        /// <param name="mainView">实例</param>
+        public CustomServiceAtOperation(TemplateControl mainView)
         {
-            FeiDaoFSM = fsm;
+            MainView = mainView;
         }
         /// <summary>
         /// 服务参数设置
@@ -74,9 +74,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     OAVModel oavCode = new OAVModel(serviceName, "code", resultDic["ReplyMode"]);
                     OAVModel oavMessage = new OAVModel(serviceName, "message", resultDic["ReplyAlertMessage"]);
                     OAVModel oavContent = new OAVModel(serviceName, "content", resultDic["ReplyContent"]);
-                    FeiDaoFSM.InsertFact(oavCode);
-                    FeiDaoFSM.InsertFact(oavMessage);
-                    FeiDaoFSM.InsertFact(oavContent);
+                    MainView.FeiDaoFSM.InsertFact(oavCode);
+                    MainView.FeiDaoFSM.InsertFact(oavMessage);
+                    MainView.FeiDaoFSM.InsertFact(oavContent);
                 }
                 serviceParamList.Remove(serviceName);
             }

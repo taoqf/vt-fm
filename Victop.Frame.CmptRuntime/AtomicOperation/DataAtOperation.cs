@@ -1,0 +1,285 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Victop.Frame.PublicLib.Helpers;
+using Victop.Server.Controls.Models;
+
+namespace Victop.Frame.CmptRuntime.AtomicOperation
+{
+    /// <summary>
+    /// 数据原子操作
+    /// </summary>
+    public class DataAtOperation
+    {
+        #region 私有定义
+        private TemplateControl MainView;
+        /// <summary>
+        /// 存储查询条件
+        /// </summary>
+        private Dictionary<string, ViewsConditionModel> conditionModelDic = new Dictionary<string, ViewsConditionModel>();
+        #endregion
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="mainView"></param>
+        public DataAtOperation(TemplateControl mainView)
+        {
+            MainView = mainView;
+        }
+        #region 查询条件操作
+        /// <summary>
+        /// 设置区块查询条件日期区间
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="startDate">开始日期</param>
+        /// <param name="endDate">结束日期</param>
+        public void SetConditionSearchDate(string pBlockName, string paramField, string startDate, string endDate)
+        {
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && !string.IsNullOrEmpty(startDate) && !string.IsNullOrEmpty(endDate))
+            {
+                DateTime start = Convert.ToDateTime(Convert.ToDateTime(startDate).ToString("yyyy-MM-dd HH:mm:ss"));
+                DateTime end = Convert.ToDateTime(Convert.ToDateTime(endDate).ToString("yyyy-MM-dd HH:mm:ss"));
+                Dictionary<string, object> dataDic = new Dictionary<string, object>();
+                dataDic.Add("$gte", (long)(start - (new DateTime(1970, 1, 1))).TotalMilliseconds);
+                dataDic.Add("$lte", (long)(end - (new DateTime(1970, 1, 1))).TotalMilliseconds);
+                if (conditionModelDic.ContainsKey(pBlockName))
+                {
+                    Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
+                    if (paramDic.ContainsKey(paramField))
+                    {
+                        paramDic[paramField] = dataDic;
+                    }
+                    else
+                    {
+                        paramDic.Add(paramField, dataDic);
+                    }
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    paramDic.Add(paramField, dataDic);
+                    viewConModel.TableCondition = paramDic;
+                    conditionModelDic.Add(pBlockName, viewConModel);
+                }
+            }
+        }
+        /// <summary>
+        /// 设置区块查询条件模糊匹配
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="paramValue">参数值</param>
+        public void SetConditionSearchLike(string pBlockName, string paramField, object paramValue)
+        {
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField))
+            {
+                if (conditionModelDic.ContainsKey(pBlockName))
+                {
+                    Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
+                    if (paramDic.ContainsKey(paramField))
+                    {
+                        paramDic[paramField] = RegexHelper.Contains(Convert.ToString(paramValue));
+                    }
+                    else
+                    {
+                        paramDic.Add(paramField, RegexHelper.Contains(Convert.ToString(paramValue)));
+                    }
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    paramDic.Add(paramField, RegexHelper.Contains(Convert.ToString(paramValue)));
+                    viewConModel.TableCondition = paramDic;
+                    conditionModelDic.Add(pBlockName, viewConModel);
+                }
+            }
+        }
+        /// <summary>
+        /// 设置区块查询条件子查询
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="oav">事实</param>
+        public void SetConditionSearchIn(string pBlockName, string paramField, OAVModel oav)
+        {
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && oav != null)
+            {
+                List<object> list = oav.AtrributeValue as List<object>;
+                if (list != null)
+                {
+                    Dictionary<string, object> inDic = new Dictionary<string, object>();
+                    inDic.Add("$in", list);
+                    if (conditionModelDic.ContainsKey(pBlockName))
+                    {
+                        Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
+                        if (paramDic.ContainsKey(paramField))
+                        {
+                            paramDic[paramField] = inDic;
+                        }
+                        else
+                        {
+                            paramDic.Add(paramField, inDic);
+                        }
+                    }
+                    else
+                    {
+                        ViewsConditionModel viewConModel = new ViewsConditionModel();
+                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                        paramDic.Add(paramField, inDic);
+                        viewConModel.TableCondition = paramDic;
+                        conditionModelDic.Add(pBlockName, viewConModel);
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 设置区块查询条件
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="paramValue">参数值</param>
+        public void SetConditionSearch(string pBlockName, string paramField, object paramValue)
+        {
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField))
+            {
+                if (conditionModelDic.ContainsKey(pBlockName))
+                {
+                    Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
+                    if (paramDic.ContainsKey(paramField))
+                    {
+                        paramDic[paramField] = paramValue;
+                    }
+                    else
+                    {
+                        paramDic.Add(paramField, paramValue);
+                    }
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    paramDic.Add(paramField, paramValue);
+                    viewConModel.TableCondition = paramDic;
+                    conditionModelDic.Add(pBlockName, viewConModel);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 设置区块排序
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="sort">排序方式1正序-1倒序</param>
+        public void SetConditionSort(string pBlockName, string paramField, int sort)
+        {
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField))
+            {
+                if (conditionModelDic.ContainsKey(pBlockName))
+                {
+                    Dictionary<string, object> sortDic = conditionModelDic[pBlockName].TableSort;
+                    if (sortDic.ContainsKey(paramField))
+                    {
+                        sortDic[paramField] = sort;
+                    }
+                    else
+                    {
+                        sortDic.Add(paramField, sort);
+                    }
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    Dictionary<string, object> sortDic = new Dictionary<string, object>();
+                    sortDic.Add(paramField, sort);
+                    viewConModel.TableSort = sortDic;
+                    conditionModelDic.Add(pBlockName, viewConModel);
+                }
+            }
+        }
+        /// <summary>
+        /// 设置区块分页
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="index">页码</param>
+        /// <param name="size">条数</param>
+        public void SetConditionPaging(string pBlockName, int index, int size)
+        {
+            if (!string.IsNullOrEmpty(pBlockName))
+            {
+                if (conditionModelDic.ContainsKey(pBlockName))
+                {
+                    conditionModelDic[pBlockName].PageIndex = index;
+                    conditionModelDic[pBlockName].PageSize = size;
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    viewConModel.PageIndex = index;
+                    viewConModel.PageSize = size;
+                    conditionModelDic.Add(pBlockName, viewConModel);
+                }
+            }
+        }
+        #endregion
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        public void SearchData(string pBlockName)
+        {
+            if (!string.IsNullOrEmpty(pBlockName))
+            {
+                PresentationBlockModel pBlockModel = MainView.GetPresentationBlockModel(pBlockName);
+                if (pBlockModel != null)
+                {
+                    if (conditionModelDic.ContainsKey(pBlockName))
+                    {
+                        pBlockModel.SearchData(conditionModelDic[pBlockName]);
+                        conditionModelDic.Remove(pBlockName);
+                    }
+                    else
+                    {
+                        pBlockModel.SearchData();
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 获取BlockData的数据
+        /// </summary>
+        /// <param name="blockName"></param>
+        public void GetPBlockData(string blockName)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            pBlock.GetData();
+        }
+        /// <summary>
+        /// 提交BlockData的数据
+        /// </summary>
+        /// <param name="blockName"></param>
+        public void SavePBlockData(string blockName)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            pBlock.SaveData(true);
+        }
+        /// <summary>
+        /// 设置block选中行数据
+        /// </summary>
+        /// <param name="blockName"></param>
+        /// <param name="oav"></param>
+        public void SetPBlockCurrentRow(string blockName, OAVModel oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
+            {
+                pBlock.PreBlockSelectedRow = pBlock.ViewBlockDataTable.Rows[0];
+                oav.AtrributeValue = pBlock.PreBlockSelectedRow;
+            }
+        }
+    }
+}
