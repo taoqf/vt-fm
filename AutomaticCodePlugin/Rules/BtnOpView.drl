@@ -1,6 +1,7 @@
 ﻿package AutomaticCodePlugin
 
 import Victop.Server.Controls;
+import Victop.Server.Controls.Models;
 import Victop.Frame.CmptRuntime;
 
 global Victop.Frame.CmptRuntime.FeiDaoOperation FeiDao
@@ -13,6 +14,7 @@ rule RecurseLoad
 	then
 		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionTrigger);
 		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionDestination);
+		FeiDao.InsertFact(new OAVModel("a","a",true));
 end
 
 rule RecurseSearch
@@ -20,7 +22,9 @@ rule RecurseSearch
 	salience 10
 	when
 		se : StateTransitionModel ()
+		o1:  OAVModel(ObjectName=="a",AtrributeName=="a",AtrributeValueString=="true")
 	then
+		
 		FeiDao.ExcutePageTrigger("search",se.ActionSourceElement);
 		FeiDao.SetButtonText("saveBtn",se.ActionDestination);
 		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionTrigger);

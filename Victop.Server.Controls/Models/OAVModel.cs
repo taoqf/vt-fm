@@ -58,5 +58,29 @@ namespace Victop.Server.Controls.Models
         /// 属性值
         /// </summary>
         public object AtrributeValue { get; set; }
+        /// <summary>
+        /// 属性值字符串
+        /// </summary>
+        public string AtrributeValueString
+        {
+            get
+            {
+                if (AtrributeValue != null)
+                {
+                    if (AtrributeValue.GetType().Name.Equals("Boolean"))
+                    {
+                        return AtrributeValue.ToString().ToLower();
+                    }
+                    else
+                    {
+                        return AtrributeValue.ToString();
+                    }
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
     }
 }
