@@ -9,6 +9,7 @@ using System.Windows.Media;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
+using Victop.Frame.CmptRuntime.AtomicOperation;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -17,6 +18,42 @@ namespace Victop.Frame.CmptRuntime
     /// </summary>
     public class FeiDaoOperation
     {
+        private TemplateControl MainView;
+        #region 分类原子操作实例
+        /// <summary>
+        /// 自定义服务
+        /// </summary>
+        private CustomServiceAtOperation customService;
+        #endregion
+        /// <summary>
+        /// 构造函数，页面/组件实体
+        /// </summary>
+        /// <param name="mainView"></param>
+        public FeiDaoOperation(TemplateControl mainView)
+        {
+            MainView = mainView;
+            customService = new CustomServiceAtOperation(MainView.FeiDaoFSM);
+        }
+        #region 自定义服务操作
+        /// <summary>
+        /// 服务参数设置
+        /// </summary>
+        /// <param name="serviceName">服务名称</param>
+        /// <param name="paramName">参数名称</param>
+        /// <param name="paramValue">参数值</param>
+        public void ServiceParamSet(string serviceName, string paramName, object paramValue)
+        {
+            customService.ServiceParamSet(serviceName, paramName, paramValue);
+        }
+        /// <summary>
+        /// 发送服务消息
+        /// </summary>
+        /// <param name="serviceName">服务名称</param>
+        public void SendServiceMessage(string serviceName)
+        {
+            customService.SendServiceMessage(serviceName);
+        }
+        #endregion
         #region 查询条件操作
         /// <summary>
         /// 存储查询条件
@@ -244,16 +281,6 @@ namespace Victop.Frame.CmptRuntime
                 }
             }
         }
-
-        private TemplateControl MainView;
-        /// <summary>
-        /// 构造函数，页面/组件实体
-        /// </summary>
-        /// <param name="mainView"></param>
-        public FeiDaoOperation(TemplateControl mainView)
-        {
-            MainView = mainView;
-        }
         /// <summary>
         /// 设置按钮文本
         /// </summary>
@@ -309,7 +336,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="blockName"></param>
         /// <param name="oav"></param>
-        public void SetPBlockCurrentRow(string blockName,OAVModel oav)
+        public void SetPBlockCurrentRow(string blockName, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
             if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
@@ -631,7 +658,7 @@ namespace Victop.Frame.CmptRuntime
             VicTextBox txtBox = MainView.FindName(txtName) as VicTextBox;
             if (txtBox != null)
             {
-                txtBox.VicText = oav.AtrributeValue==null?"":oav.AtrributeValue.ToString();
+                txtBox.VicText = oav.AtrributeValue == null ? "" : oav.AtrributeValue.ToString();
             }
         }
         #endregion
@@ -665,7 +692,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="se"></param>
         /// <param name="oav"></param>
         /// <param name="oavmsg"></param>
-        public void SetActionGuard(StateTransitionModel se, OAVModel oav,OAVModel oavmsg)
+        public void SetActionGuard(StateTransitionModel se, OAVModel oav, OAVModel oavmsg)
         {
             if (oav.AtrributeValue != null && (bool)oav.AtrributeValue)
                 se.ActionGuard = true;

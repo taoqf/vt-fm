@@ -18,7 +18,7 @@ using Victop.Server.Controls.Models;
 namespace Victop.Frame.DataMessageManager
 {
     /// <summary>
-    /// 数据引用操作
+    /// 数据消息管理
     /// </summary>
     public class DataMessageOperation
     {
