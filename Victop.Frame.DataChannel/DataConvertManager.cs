@@ -379,7 +379,7 @@ namespace Victop.Frame.DataChannel
         private DataTable GetDataTableStructByModel(MongoModelInfoModel modelDefInfo, MongoSimpleRefInfoModel simpleRefInfo, string tableName, string viewId, string dataPath)
         {
             DataTable newDt = new DataTable("dataArray");
-            if (modelDefInfo.ModelVersion != null && modelDefInfo.ModelVersion.Equals("2.0"))
+            if (modelDefInfo.ModelVersion != null && modelDefInfo.ModelVersion.StartsWith("2."))
             {
                 BuildColumnsOfDataTableV2(modelDefInfo, simpleRefInfo, tableName, dataPath, newDt);
             }
