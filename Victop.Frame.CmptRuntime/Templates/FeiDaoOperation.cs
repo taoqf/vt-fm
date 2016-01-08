@@ -191,9 +191,9 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="blockName"></param>
         /// <param name="oav"></param>
-        public void SetPBlockCurrentRow(string blockName, OAVModel oav)
+        public void SetPBlockCurrentRow(string blockName)
         {
-            dataOperation.SetPBlockCurrentRow(blockName, oav);
+            dataOperation.SetPBlockCurrentRow(blockName);
         }
         /// <summary>
         /// 执行页面动作
@@ -271,12 +271,14 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">P名</param>
         /// <param name="paramName">列名</param>
         /// <param name="oav">oav载体</param>
-        public void ParamsCurrentRowSet(OAVModel oavSelectedRow, string paramName, OAVModel oav)
+        public void ParamsCurrentRowSet(string pblockName, string paramName, OAVModel oav)
         {
-            DataRow drSelected = oavSelectedRow.AtrributeValue as DataRow;
-            if (drSelected != null && drSelected.Table.Columns.Contains(paramName))
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
             {
-                drSelected[paramName] = oav.AtrributeValue;
+                DataRow[] drSelected = pBlock.ViewBlockDataTable.Select("_id='" + pBlock.PreBlockSelectedRow["_id"].ToString() + "'");
+                if (drSelected.Length > 0)
+                    drSelected[0][paramName] = oav.AtrributeValue;
             }
         }
         /// <summary>

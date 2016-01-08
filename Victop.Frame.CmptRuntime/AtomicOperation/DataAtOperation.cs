@@ -272,13 +272,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="blockName"></param>
         /// <param name="oav"></param>
-        public void SetPBlockCurrentRow(string blockName, OAVModel oav)
+        public void SetPBlockCurrentRow(string blockName)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
             if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
             {
                 pBlock.PreBlockSelectedRow = pBlock.ViewBlockDataTable.Rows[0];
-                oav.AtrributeValue = pBlock.PreBlockSelectedRow;
             }
         }
     }
