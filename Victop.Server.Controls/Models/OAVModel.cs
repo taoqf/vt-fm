@@ -82,5 +82,20 @@ namespace Victop.Server.Controls.Models
                 }
             }
         }
+        /// <summary>
+        /// 属性值整型
+        /// </summary>
+        public int AtrributeValueInt
+        {
+            get
+            {
+                int i = 0;
+                if (AtrributeValue != null)
+                {
+                    int.TryParse(AtrributeValue.ToString(), out i);
+                }
+                return i;
+            }
+        }
     }
 }

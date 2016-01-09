@@ -10,6 +10,7 @@ using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 using Victop.Frame.CmptRuntime.AtomicOperation;
+using Victop.Frame.Units;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -544,6 +545,40 @@ namespace Victop.Frame.CmptRuntime
             {
                 oav.AtrributeValue = false;
                 oavmsg.AtrributeValue = "当前选择项为空";
+            }
+        }
+        #endregion
+
+        #region UnitPageRule原子操作
+        /// <summary>
+        /// UnitPageRule分页加载
+        /// </summary>
+        /// <param name="unitPageName"></param>
+        /// <param name="pblockName"></param>
+        /// <param name="currentPage"></param>
+        /// <param name="PageSize"></param>
+        public void UnitPageRuleLoad(string unitPageName, string pblockName,int currentPage = 1, int PageSize=20)
+        {
+            UnitPageRule unitPage = MainView.FindName(unitPageName) as UnitPageRule;
+            if (unitPage == null)
+                return;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            DataSet ds = pBlock.ViewBlockDataTable.DataSet;
+            if (ds != null)
+            {
+                unitPage.CurrentPage = currentPage;
+                unitPage.PageSize = 20;
+                unitPage.TotalNum = int.Parse(ds.Tables["summary"].Rows[0]["totalRow"].ToString());
+                unitPage.TotalPage = int.Parse(ds.Tables["summary"].Rows[0]["totalPage"].ToString());
+                unitPage.InitButtonState();
+            }
+            else
+            {
+                unitPage.CurrentPage = 1;
+                unitPage.PageSize = 20;
+                unitPage.TotalNum = 0;
+                unitPage.TotalPage = 0;
+                unitPage.InitButtonState();
             }
         }
         #endregion
