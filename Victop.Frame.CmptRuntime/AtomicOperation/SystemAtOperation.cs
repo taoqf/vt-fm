@@ -47,6 +47,14 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             MainView.FeiDaoFSM.RemoveFact(oav);
         }
         /// <summary>
+        /// 修改事实
+        /// </summary>
+        /// <param name="oav"></param>
+        public void UpdateFact(OAVModel oav)
+        {
+            MainView.FeiDaoFSM.UpdateFact(oav);
+        }
+        /// <summary>
         /// 系统输出
         /// </summary>
         /// <param name="consoleText"></param>

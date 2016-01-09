@@ -240,6 +240,15 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.RemoveFact(oav);
         }
         /// <summary>
+        /// 修改事实
+        /// </summary>
+        /// <param name="oav"></param>
+        public void UpdateFact(OAVModel oav)
+        {
+            if (oav.AtrributeValue!=null)
+            systemOperation.UpdateFact(oav);
+        }
+        /// <summary>
         /// 获取页面参数值
         /// </summary>
         /// <param name="paramName">参数名</param>
@@ -387,15 +396,17 @@ namespace Victop.Frame.CmptRuntime
         {
             Window win = XamlTreeHelper.GetParentObject<Window>(MainView);
             if (win != null)
+            {
                 win.Close();
+            }
         }
         /// <summary>
         /// 弹出提示信息
         /// </summary>
         /// <param name="messageInfo"></param>
-        public void ShowMessage(string messageInfo)
+        public void ShowMessage(object messageInfo)
         {
-            VicMessageBoxNormal.Show(messageInfo);
+            VicMessageBoxNormal.Show(messageInfo==null?"空值":messageInfo.ToString());
         }
         /// <summary>
         /// 日志输出
@@ -406,13 +417,13 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.SysFeiDaoLog(content);
         }
         /// <summary>
-        /// 值是否为null
+        /// 赋值
         /// </summary>
         /// <param name="paramValue"></param>
-        /// <returns></returns>
-        public bool IsNUll(object paramValue)
+        /// <param name="oav"></param>
+        public void SetParamValue(object paramValue,OAVModel oav)
         {
-            return paramValue == null ? true : false;
+            oav.AtrributeValue = paramValue;
         }
 
         #region VicTreeView原子操作
