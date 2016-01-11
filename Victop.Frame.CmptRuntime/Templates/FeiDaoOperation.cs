@@ -263,6 +263,20 @@ namespace Victop.Frame.CmptRuntime
             }
         }
         /// <summary>
+        /// 获取参数根据dictionary
+        /// </summary>
+        /// <param name="paramDic">dic</param>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">oav载体</param>
+        public void ParamsGetByDictionary(object paramDic, string paramName, OAVModel oav)
+        {
+            Dictionary<string, object> dic = paramDic as Dictionary<string, object>;
+            if (dic != null && dic.ContainsKey(paramName))
+            {
+                oav.AtrributeValue = dic[paramName];
+            }
+        }
+        /// <summary>
         /// 获取选中行的列值
         /// </summary>
         /// <param name="pblockName">P名</param>
