@@ -57,30 +57,9 @@ namespace Victop.Server.Controls.Models
         /// <summary>
         /// 属性值
         /// </summary>
-        public object AtrributeValue { get; set; }
-        /// <summary>
-        /// 属性值字符串
-        /// </summary>
-        public string AtrributeValueString
+        public object AtrributeValue
         {
-            get
-            {
-                if (AtrributeValue != null)
-                {
-                    if (AtrributeValue.GetType().Name.Equals("Boolean"))
-                    {
-                        return AtrributeValue.ToString().ToLower();
-                    }
-                    else
-                    {
-                        return AtrributeValue.ToString();
-                    }
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
+            get; set;
         }
         /// <summary>
         /// 属性值整型
@@ -95,6 +74,51 @@ namespace Victop.Server.Controls.Models
                     int.TryParse(AtrributeValue.ToString(), out i);
                 }
                 return i;
+            }
+        }
+        /// <summary>
+        /// 属性值长整型
+        /// </summary>
+        public long AtrributeValueLong
+        {
+            get
+            {
+                long value = 0;
+                if (AtrributeValue != null)
+                {
+                    long.TryParse(AtrributeValue.ToString(), out value);
+                }
+                return value;
+            }
+        }
+        /// <summary>
+        /// 属性值浮点型
+        /// </summary>
+        public decimal AtrributeValueDecimal
+        {
+            get
+            {
+                decimal value = 0;
+                if (AtrributeValue != null)
+                {
+                    decimal.TryParse(AtrributeValue.ToString(), out value);
+                }
+                return value;
+            }
+        }
+        /// <summary>
+        /// 属性值布尔型
+        /// </summary>
+        public bool AtrributeValueBoolean
+        {
+            get
+            {
+                bool value = false;
+                if (AtrributeValue != null)
+                {
+                    bool.TryParse(AtrributeValue.ToString(), out value);
+                }
+                return value;
             }
         }
     }

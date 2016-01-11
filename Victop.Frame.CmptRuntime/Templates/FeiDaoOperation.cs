@@ -245,8 +245,8 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav"></param>
         public void UpdateFact(OAVModel oav)
         {
-            if (oav.AtrributeValue!=null)
-            systemOperation.UpdateFact(oav);
+            if (oav.AtrributeValue != null)
+                systemOperation.UpdateFact(oav);
         }
         /// <summary>
         /// 获取页面参数值
@@ -406,7 +406,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="messageInfo"></param>
         public void ShowMessage(object messageInfo)
         {
-            VicMessageBoxNormal.Show(messageInfo==null?"空值":messageInfo.ToString());
+            VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString());
         }
         /// <summary>
         /// 日志输出
@@ -421,7 +421,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="paramValue"></param>
         /// <param name="oav"></param>
-        public void SetParamValue(object paramValue,OAVModel oav)
+        public void SetParamValue(object paramValue, OAVModel oav)
         {
             oav.AtrributeValue = paramValue;
         }
@@ -588,5 +588,6 @@ namespace Victop.Frame.CmptRuntime
         }
 
         #endregion
+        
     }
 }
