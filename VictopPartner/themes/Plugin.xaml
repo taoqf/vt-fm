@@ -147,34 +147,46 @@
         </Setter>
     </Style>
     <!--凭证定义MenuItem引用图标样式-->
+
     <Style x:Key="FontAweSome" TargetType="{x:Type MenuItem}">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont" />
         <Setter Property="MenuItem.MinWidth" Value="80"/>
         <Setter Property="MenuItem.MinHeight" Value="28"/>
         <Setter Property="MenuItem.FontSize" Value="16"/>
-        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-        <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Template"  Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="Padding" Value="7,5,8,3"/>
+                <Setter Property="Background" Value="#2A2A2A"/>
+                <Setter Property="BorderBrush" Value="#2A2A2A"/>
                 <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
             </Trigger>
             <Trigger Property="Role" Value="TopLevelItem">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="Padding" Value="7,2,8,3"/>
+                <Setter Property="Background" Value="#2A2A2A"/>
+                <Setter Property="BorderBrush" Value="#2A2A2A"/>
                 <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-                <Setter Property="Padding" Value="15,6"/>
+            
             </Trigger>
             <Trigger Property="Role" Value="SubmenuHeader">
+                <Setter Property="Padding" Value="2,3,2,3"/>
                 <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
             </Trigger>
+            <Trigger Property="Role" Value="SubmenuItem">
+                <Setter Property="Padding" Value="2,3,2,3"/>
+            </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="White"></Setter>
-                <Setter Property="BorderBrush" Value="#EEE1E1"></Setter>
+                <Setter Property="Background" Value="{DynamicResource BtnPressedBackground}"></Setter>
+                <Setter Property="BorderBrush" Value="{DynamicResource BtnPressedBackground}"></Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background"  Value="{DynamicResource BtnPressedBackground}"></Setter>
+                <Setter Property="BorderBrush" Value="{DynamicResource BtnPressedBackground}"></Setter>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -315,40 +327,16 @@
         <Setter Property="MinHeight" Value="30"></Setter>
         <Setter Property="MinWidth" Value="30"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="White"/>
         <!--修改模板属性-->
         <Setter Property="Template">
             <Setter.Value>
                 <!--控件模板-->
                 <ControlTemplate TargetType="Button">
                     <!--背景色-->
-                    <Border x:Name="back" Opacity="0.8" CornerRadius="3">
-                        <Border.BitmapEffect>
-                            <OuterGlowBitmapEffect Opacity="0.7" GlowSize="0" GlowColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Button.Background).(SolidColorBrush.Color)}" />
-                        </Border.BitmapEffect>
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1.5">
-                                <GradientBrush.GradientStops>
-                                    <GradientStopCollection>
-                                        <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Button.Background).(SolidColorBrush.Color)}" Offset="0"/>
-                                        <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Button.Background).(SolidColorBrush.Color)}" Offset="0.4"/>
-                                        <GradientStop Color="#FFF" Offset="1"/>
-                                    </GradientStopCollection>
-                                </GradientBrush.GradientStops>
-                            </LinearGradientBrush>
-                        </Border.Background>
+                    <Border x:Name="back" Background="{DynamicResource BtnNormalBackground}" CornerRadius="5">
                         <!--前景色及边框-->
                         <Border x:Name="fore" BorderThickness="1" CornerRadius="3" BorderBrush="#5555">
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientBrush.GradientStops>
-                                        <GradientStopCollection>
-                                            <GradientStop Color="#6FFF" Offset="0.5"/>
-                                            <GradientStop Color="#1111" Offset="0.51"/>
-                                        </GradientStopCollection>
-                                    </GradientBrush.GradientStops>
-                                </LinearGradientBrush>
-                            </Border.Background>
                             <!--按钮内容-->
                             <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding  Content}">
                                 <ContentPresenter.BitmapEffect>
@@ -360,15 +348,53 @@
                     <!--触发器-->
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="White"></Setter>
-                            <Setter Property="BorderBrush" Value="#EEE1E1"></Setter>
+                            <Setter Property="Background" TargetName="back" Value="{DynamicResource BtnPressedBackground}"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="back" Value="{DynamicResource BtnPressedBackground}"></Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+    <Style x:Key="BillDetailRightAngleBtn" TargetType="Button">
+        <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
+        <Setter Property="MinHeight" Value="30"></Setter>
+        <Setter Property="MinWidth" Value="30"></Setter>
+        <Setter Property="FontSize" Value="20"></Setter>
+        <Setter Property="Foreground" Value="White"/>
+        <!--修改模板属性-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <!--控件模板-->
+                <ControlTemplate TargetType="Button">
+                    <!--背景色-->
+                    <Border x:Name="back" Background="{DynamicResource BtnNormalBackground}">
+                        <!--前景色及边框-->
+                        <Border x:Name="fore" BorderThickness="1" CornerRadius="3" BorderBrush="#5555">
+                            <!--按钮内容-->
+                            <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding  Content}">
+                                <ContentPresenter.BitmapEffect>
+                                    <DropShadowBitmapEffect Color="#000" Direction="-90" ShadowDepth="2" Softness="0.1" Opacity="0.3" />
+                                </ContentPresenter.BitmapEffect>
+                            </ContentPresenter>
+                        </Border>
+                    </Border>
+                    <!--触发器-->
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="back" Value="{DynamicResource BtnPressedBackground}"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="back" Value="{DynamicResource BtnPressedBackground}"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--以下暂时没找到用的地方-->
     <!--左TabControl样式开始-->
     <Style x:Key="left_TabItemCloseStyle" TargetType="{x:Type controls:VicButtonNormal}">
