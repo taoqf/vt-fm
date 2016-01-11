@@ -19,6 +19,7 @@ namespace Victop.Frame.CmptRuntime
     public class FeiDaoOperation
     {
         private TemplateControl MainView;
+
         #region 分类原子操作实例
         /// <summary>
         /// 自定义服务
@@ -64,6 +65,7 @@ namespace Victop.Frame.CmptRuntime
             customServiceOperation.SendServiceMessage(serviceName);
         }
         #endregion
+
         #region 查询条件操作
         /// <summary>
         /// 设置区块查询条件日期区间
@@ -425,6 +427,67 @@ namespace Victop.Frame.CmptRuntime
         {
             oav.AtrributeValue = paramValue;
         }
+
+        #region 类型转换
+        /// <summary>
+        /// 转换字符串类型
+        /// </summary>
+        /// <param name="paramValue"></param>
+        /// <returns></returns>
+        public string ConvertToString(object paramValue)
+        {
+            return paramValue == null ? "" : paramValue.ToString();
+        }
+        /// <summary>
+        /// 转换整型
+        /// </summary>
+        /// <param name="paramValue"></param>
+        /// <returns></returns>
+        public int ConvertToInt(object paramValue)
+        {
+            int i = 0;
+            if (paramValue != null)
+                int.TryParse(paramValue.ToString(), out i);
+            return i;
+        }
+        /// <summary>
+        /// 转换长整形
+        /// </summary>
+        /// <param name="paramValue"></param>
+        /// <returns></returns>
+        public long ConvertToLong(object paramValue)
+        {
+            long i = 0;
+            if (paramValue != null)
+                long.TryParse(paramValue.ToString(), out i);
+            return i;
+        }
+        /// <summary>
+        /// 转换浮点型
+        /// </summary>
+        /// <param name="paramValue"></param>
+        /// <returns></returns>
+        public decimal ConvertToDecimal(object paramValue)
+        {
+            decimal i = 0;
+            if (paramValue != null)
+                decimal.TryParse(paramValue.ToString(), out i);
+            return i;
+        }
+        /// <summary>
+        /// 转换bool型
+        /// </summary>
+        /// <param name="paramValue"></param>
+        /// <returns></returns>
+        public bool ConvertToBool(object paramValue)
+        {
+            bool i = false;
+            if (paramValue != null)
+                bool.TryParse(paramValue.ToString(), out i);
+            return i;
+        } 
+        #endregion
+        
 
         #region VicTreeView原子操作
         /// <summary>
