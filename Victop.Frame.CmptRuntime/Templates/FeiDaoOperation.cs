@@ -556,30 +556,23 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="unitPageName"></param>
         /// <param name="pblockName"></param>
         /// <param name="currentPage"></param>
-        /// <param name="PageSize"></param>
-        public void UnitPageRuleLoad(string unitPageName, string pblockName,int currentPage = 1, int PageSize=20)
+        /// <param name="pageSize"></param>
+        public void UnitPageRuleLoad(string unitPageName, string pblockName, int currentPage = 1, int pageSize = 20)
         {
-            UnitPageRule unitPage = MainView.FindName(unitPageName) as UnitPageRule;
+            TemplateControl unitPage = MainView.FindName(unitPageName) as TemplateControl;
             if (unitPage == null)
                 return;
+            Dictionary<string, object> dicParam = new Dictionary<string, object>();
+            dicParam.Add("CurrentPage", currentPage);
+            dicParam.Add("PageSize", pageSize);
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             DataSet ds = pBlock.ViewBlockDataTable.DataSet;
             if (ds != null)
             {
-                unitPage.CurrentPage = currentPage;
-                unitPage.PageSize = 20;
-                unitPage.TotalNum = int.Parse(ds.Tables["summary"].Rows[0]["totalRow"].ToString());
-                unitPage.TotalPage = int.Parse(ds.Tables["summary"].Rows[0]["totalPage"].ToString());
-                unitPage.InitButtonState();
+                dicParam.Add("TotalNum", int.Parse(ds.Tables["summary"].Rows[0]["totalRow"].ToString()));
+                dicParam.Add("TotalPage", int.Parse(ds.Tables["summary"].Rows[0]["totalPage"].ToString()));
             }
-            else
-            {
-                unitPage.CurrentPage = 1;
-                unitPage.PageSize = 20;
-                unitPage.TotalNum = 0;
-                unitPage.TotalPage = 0;
-                unitPage.InitButtonState();
-            }
+            unitPage.Excute(dicParam);
         }
         #endregion
 
