@@ -167,7 +167,7 @@
                 <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
             </Trigger>
             <Trigger Property="Role" Value="TopLevelItem">
-                <Setter Property="Padding" Value="7,2,8,3"/>
+                <Setter Property="Padding" Value="7,4,8,3"/>
                 <Setter Property="Background" Value="#2A2A2A"/>
                 <Setter Property="BorderBrush" Value="#2A2A2A"/>
                 <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
