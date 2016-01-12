@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using Victop.Frame.PublicLib.Helpers;
@@ -18,6 +19,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 存储查询条件
         /// </summary>
         private Dictionary<string, ViewsConditionModel> conditionModelDic = new Dictionary<string, ViewsConditionModel>();
+        /// <summary>
+        /// 新增行参数
+        /// </summary>
+        private Dictionary<string, Dictionary<string, object>> rowAddParamDic = new Dictionary<string, Dictionary<string, object>>();
         #endregion
         /// <summary>
         /// 构造函数
@@ -271,7 +276,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 设置block选中行数据
         /// </summary>
         /// <param name="blockName"></param>
-        /// <param name="oav"></param>
         public void SetPBlockCurrentRow(string blockName)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
@@ -280,5 +284,54 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 pBlock.PreBlockSelectedRow = pBlock.ViewBlockDataTable.Rows[0];
             }
         }
+        /// <summary>
+        /// 新增行
+        /// </summary>
+        /// <param name="blockName"></param>
+        public void PBlockAddRow(string blockName)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            if (pBlock != null&&pBlock.ViewBlockDataTable!=null)
+            {
+                DataRow dr = pBlock.ViewBlockDataTable.NewRow();
+                dr["_id"] = Guid.NewGuid().ToString();
+                if (rowAddParamDic.ContainsKey(blockName))
+                {
+                    Dictionary<string, object> dicParam = rowAddParamDic[blockName];
+                    foreach (string key in dicParam.Keys)
+                    {
+                        if (dr.Table.Columns.Contains(key))
+                        {
+                            dr[key] = dicParam[key];
+                        }
+                    }
+                    rowAddParamDic.Remove(blockName);
+                }
+
+                pBlock.ViewBlockDataTable.Rows.Add(dr);
+            }
+        }
+        /// <summary>
+        /// 新增行参数
+        /// </summary>
+        /// <param name="blockName"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="paramValue"></param>
+        public void PBlockAddRowParam(string blockName, string fieldName, object paramValue)
+        {
+            if(!rowAddParamDic.ContainsKey(blockName))
+                rowAddParamDic.Add(blockName,new Dictionary<string,object>());
+
+            Dictionary<string, object> dicParam = rowAddParamDic[blockName];
+            if (dicParam.ContainsKey(fieldName))
+            {
+                dicParam[fieldName] = paramValue;
+            }
+            else
+            {
+                dicParam.Add(fieldName, paramValue);
+            }
+        }
+
     }
 }

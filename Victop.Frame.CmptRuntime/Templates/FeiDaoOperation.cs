@@ -10,6 +10,7 @@ using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 using Victop.Frame.CmptRuntime.AtomicOperation;
+using System.Windows.Data;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -192,10 +193,27 @@ namespace Victop.Frame.CmptRuntime
         /// 设置block选中行数据
         /// </summary>
         /// <param name="blockName"></param>
-        /// <param name="oav"></param>
         public void SetPBlockCurrentRow(string blockName)
         {
             dataOperation.SetPBlockCurrentRow(blockName);
+        }
+        /// <summary>
+        /// 新增行
+        /// </summary>
+        /// <param name="blockName"></param>
+        public void PBlockAddRow(string blockName)
+        {
+            dataOperation.PBlockAddRow(blockName);
+        }
+        /// <summary>
+        /// 新增行参数
+        /// </summary>
+        /// <param name="blockName"></param>
+        /// <param name="fieldName"></param>
+        /// <param name="paramValue"></param>
+        public void PBlockAddRowParam(string blockName, string fieldName, object paramValue)
+        {
+            dataOperation.PBlockAddRowParam(blockName,fieldName,paramValue);
         }
         /// <summary>
         /// 执行页面动作
@@ -303,7 +321,10 @@ namespace Victop.Frame.CmptRuntime
             {
                 DataRow[] drSelected = pBlock.ViewBlockDataTable.Select("_id='" + pBlock.PreBlockSelectedRow["_id"].ToString() + "'");
                 if (drSelected.Length > 0)
+                {
                     drSelected[0][paramName] = oav.AtrributeValue;
+                    pBlock.PreBlockSelectedRow = drSelected[0];
+                }
             }
         }
         /// <summary>
@@ -621,6 +642,78 @@ namespace Victop.Frame.CmptRuntime
             {
                 oav.AtrributeValue = false;
                 oavmsg.AtrributeValue = "当前选择项为空";
+            }
+        }
+        /// <summary>
+        /// 更新列
+        /// </summary>
+        /// <param name="dgridName"></param>
+        public void VicDataGridUpdateColumn(string dgridName)
+        {
+            VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
+            if (dgrid != null)
+            {
+                DataTable dataSource=dgrid.ItemsSource as DataTable;
+                if (dataSource == null)
+                    return;
+                for (int i = 0; i < dgrid.Columns.Count; i++)
+                {
+                    DataGridColumn column = dgrid.Columns[i];
+                    if (column is VicDataGridComboBoxColumn)
+                    {
+                        VicDataGridComboBoxColumn comboxColOlder = column as VicDataGridComboBoxColumn;
+                        Binding binding = comboxColOlder.SelectedValueBinding as Binding;
+                        string field = binding != null ? binding.Path.Path : "";
+                        if (string.IsNullOrEmpty(field))
+                            continue;
+
+                        VicDataGridComboBoxColumn comboxCol = new VicDataGridComboBoxColumn();
+                        if (dataSource.Columns[field].ExtendedProperties.ContainsKey("ComboBox"))
+                        {
+                            comboxCol.ItemsSource = (dataSource.Columns[field].ExtendedProperties["ComboBox"] as DataTable).DefaultView;
+                        }
+                        comboxCol.SelectedValuePath = "val";
+                        comboxCol.DisplayMemberPath = "txt";
+                        comboxCol.SelectedValueBinding = new Binding(field) { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+
+                        comboxCol.Header = comboxColOlder.Header;
+
+                        comboxCol.Visibility = comboxColOlder.Visibility;
+                        comboxCol.IsReadOnly = comboxColOlder.IsReadOnly;
+                        comboxCol.Width = comboxColOlder.Width;
+                        //comboxCol.ComboBoxClosed += comboxCol_ComboBoxClosed;
+                        dgrid.Columns.Insert(i, comboxCol);
+                        dgrid.Columns.Remove(column);
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 删除选中行
+        /// </summary>
+        /// <param name="dgridName"></param>
+        public void VicDataGridSelectRowDelete(string dgridName)
+        {
+            VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
+            if (dgrid != null && dgrid.SelectedItem != null)
+            {
+                DataTable dt = dgrid.ItemsSource as DataTable;
+                if (dt != null)
+                {
+                    DataRow dr = ((DataRowView)dgrid.SelectedItem).Row;
+                    if (dr.RowState == DataRowState.Added)
+                    {
+                        dt.Rows.Remove(dr);
+                    }
+                    else
+                    {
+                        dr.Delete();
+                    }
+                }
+            }
+            else
+            {
+                VicMessageBoxNormal.Show("请选择选中行！");
             }
         }
         #endregion
