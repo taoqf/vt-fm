@@ -236,6 +236,22 @@ namespace Victop.Frame.CmptRuntime
             }
         }
         /// <summary>
+        /// 获取JsonData数据
+        /// </summary>
+        /// <param name="currentBlock">是否取当前Block的Json数据</param>
+        /// <returns></returns>
+        public string GetJsonData(bool currentBlock = false)
+        {
+            if (currentBlock)
+            {
+                return ViewBlock.ViewModel.GetJsonData(JsonHelper.ToJson(ViewBlock.BlockDataPath));
+            }
+            else
+            {
+                return ViewBlock.ViewModel.GetJsonData(string.Empty);
+            }
+        }
+        /// <summary>
         /// 获取数据
         /// </summary>
         public void GetData()

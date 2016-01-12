@@ -229,7 +229,23 @@ namespace Victop.Frame.CmptRuntime
                 GetBlockData(ViewBlocks.FirstOrDefault(it => it.Superiors.Equals("root")).BlockName);
             }
         }
-
+        /// <summary>
+        /// 获取JSON数据
+        /// </summary>
+        /// <param name="dataPath">路径信息</param>
+        /// <returns></returns>
+        public string GetJsonData(string dataPath)
+        {
+            DataMessageOperation dataOp = new DataMessageOperation();
+            if (string.IsNullOrEmpty(dataPath))
+            {
+                return dataOp.GetJSONData(ViewId);
+            }
+            else
+            {
+                return dataOp.GetJSONData(ViewId, dataPath);
+            }
+        }
         /// <summary>
         /// 获取Block数据
         /// </summary>
