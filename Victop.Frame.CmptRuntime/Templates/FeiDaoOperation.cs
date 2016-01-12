@@ -462,7 +462,27 @@ namespace Victop.Frame.CmptRuntime
         {
             oav.AtrributeValue = paramValue;
         }
-
+        /// <summary>
+        /// 设置页面显示元素
+        /// </summary>
+        /// <param name="paramValue"></param>
+        /// <param name="compontTriger"></param>
+        /// <param name="visibility">是否显示</param>
+        public void SetCompontVisility(string paramValue, object compontTriger, bool visibility)
+        {
+            TemplateControl tc = MainView.FindName(paramValue) as TemplateControl;
+            if (tc != null)
+            {
+                if (visibility)
+                {
+                    tc.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    tc.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
         #region 类型转换
         /// <summary>
         /// 转换字符串类型
