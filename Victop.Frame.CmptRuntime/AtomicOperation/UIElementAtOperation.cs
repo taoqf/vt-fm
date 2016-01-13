@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 
@@ -41,6 +42,26 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             Button btn = MainView.FindName(btnName) as Button;
             if (btn != null)
                 btn.Content = btnContent;
+        }
+        /// <summary>
+        /// 设置按钮是否被选择
+        /// </summary>
+        /// <param name="paramValue">按钮的名称(Name)</param>
+        /// <param name="isSelect">是否被选择</param>
+        public void SetButtonSelect(string paramValue, bool isSelect)
+        {
+            VicButtonNormal tcButton = MainView.FindName(paramValue) as VicButtonNormal;
+            if (tcButton != null)
+            {
+                if (isSelect)
+                {
+                    tcButton.Background = Brushes.DarkCyan;
+                }
+                else
+                {
+                    tcButton.Background = Brushes.Transparent;
+                }
+            }
         }
         #region VicTreeView原子操作
         /// <summary>

@@ -462,6 +462,15 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.SetButtonText(btnName, btnContent);
         }
+        /// <summary>
+        /// 设置按钮是否被选择
+        /// </summary>
+        /// <param name="paramValue">按钮的名称(Name)</param>
+        /// <param name="isSelect">是否被选择</param>
+        public void SetButtonSelect(string paramValue, bool isSelect)
+        {
+            uIElementOperation.SetButtonSelect(paramValue, isSelect);
+        }
         #region VicTreeView原子操作
         /// <summary>
         /// 得到tree选中的值
