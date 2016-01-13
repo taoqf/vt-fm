@@ -391,6 +391,65 @@ namespace Victop.Frame.CmptRuntime
         {
           systemOperation.SetCompontVisility( paramValue, visibility);
         }
+        /// <summary>
+        /// 设置警戒条件
+        /// </summary>
+        /// <param name="se">状体转移实体</param>
+        /// <param name="oav">oav警戒值</param>
+        /// <param name="oavmsg">oav消息内容</param>
+        public void SetActionGuard(StateTransitionModel se, OAVModel oav, OAVModel oavmsg)
+        {
+            systemOperation.SetActionGuard(se, oav, oavmsg);
+        }
+
+        #region 类型转换
+        /// <summary>
+        /// 转换字符串类型
+        /// </summary>
+        /// <param name="paramValue">参数值</param>
+        /// <returns></returns>
+        public string ConvertToString(object paramValue)
+        {
+            return systemOperation.ConvertToString(paramValue);
+        }
+        /// <summary>
+        /// 转换整型
+        /// </summary>
+        /// <param name="paramValue">参数值</param>
+        /// <returns></returns>
+        public int ConvertToInt(object paramValue)
+        {
+            return systemOperation.ConvertToInt(paramValue);
+        }
+        /// <summary>
+        /// 转换长整形
+        /// </summary>
+        /// <param name="paramValue">参数值</param>
+        /// <returns></returns>
+        public long ConvertToLong(object paramValue)
+        {
+            return systemOperation.ConvertToLong(paramValue);
+        }
+        /// <summary>
+        /// 转换浮点型
+        /// </summary>
+        /// <param name="paramValue">参数值</param>
+        /// <returns></returns>
+        public decimal ConvertToDecimal(object paramValue)
+        {
+            return systemOperation.ConvertToDecimal(paramValue);
+        }
+        /// <summary>
+        /// 转换bool型
+        /// </summary>
+        /// <param name="paramValue">参数值</param>
+        /// <returns></returns>
+        public bool ConvertToBool(object paramValue)
+        {
+            return systemOperation.ConvertToBool(paramValue);
+        }
+        #endregion
+
         #endregion
 
         #region UI操作
@@ -403,86 +462,16 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.SetButtonText(btnName, btnContent);
         }
-        #endregion
-      
-        #region 类型转换
-        /// <summary>
-        /// 转换字符串类型
-        /// </summary>
-        /// <param name="paramValue"></param>
-        /// <returns></returns>
-        public string ConvertToString(object paramValue)
-        {
-            return paramValue == null ? "" : paramValue.ToString();
-        }
-        /// <summary>
-        /// 转换整型
-        /// </summary>
-        /// <param name="paramValue"></param>
-        /// <returns></returns>
-        public int ConvertToInt(object paramValue)
-        {
-            int i = 0;
-            if (paramValue != null)
-                int.TryParse(paramValue.ToString(), out i);
-            return i;
-        }
-        /// <summary>
-        /// 转换长整形
-        /// </summary>
-        /// <param name="paramValue"></param>
-        /// <returns></returns>
-        public long ConvertToLong(object paramValue)
-        {
-            long i = 0;
-            if (paramValue != null)
-                long.TryParse(paramValue.ToString(), out i);
-            return i;
-        }
-        /// <summary>
-        /// 转换浮点型
-        /// </summary>
-        /// <param name="paramValue"></param>
-        /// <returns></returns>
-        public decimal ConvertToDecimal(object paramValue)
-        {
-            decimal i = 0;
-            if (paramValue != null)
-                decimal.TryParse(paramValue.ToString(), out i);
-            return i;
-        }
-        /// <summary>
-        /// 转换bool型
-        /// </summary>
-        /// <param name="paramValue"></param>
-        /// <returns></returns>
-        public bool ConvertToBool(object paramValue)
-        {
-            bool i = false;
-            if (paramValue != null)
-                bool.TryParse(paramValue.ToString(), out i);
-            return i;
-        } 
-        #endregion
-        
         #region VicTreeView原子操作
         /// <summary>
         /// 得到tree选中的值
         /// </summary>
         /// <param name="treeName">控件名</param>
         /// <param name="paramName">字段名</param>
-        /// <param name="oav"></param>
+        /// <param name="oav">接收oav</param>
         public void VicTreeViewGetParam(string treeName, string paramName, OAVModel oav)
         {
-            VicTreeView treeView = MainView.FindName(treeName) as VicTreeView;
-            if (treeView != null && treeView.SelectedItem != null)
-            {
-                DataRow drSelect = ((DataRowView)treeView.SelectedItem).Row;
-                if (drSelect.Table.Columns.Contains(paramName))
-                {
-                    oav.AtrributeValue = drSelect[paramName];
-                }
-            }
+            uIElementOperation.VicTreeViewGetParam(treeName, paramName, oav);
         }
         #endregion
 
@@ -492,18 +481,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="listName">控件名</param>
         /// <param name="paramName">字段名</param>
-        /// <param name="oav"></param>
+        /// <param name="oav">接收oav</param>
         public void VicListViewGetParam(string listName, string paramName, OAVModel oav)
         {
-            VicListViewNormal listView = MainView.FindName(listName) as VicListViewNormal;
-            if (listView != null && listView.SelectedItem != null)
-            {
-                DataRow drSelect = ((DataRowView)listView.SelectedItem).Row;
-                if (drSelect.Table.Columns.Contains(paramName))
-                {
-                    oav.AtrributeValue = drSelect[paramName];
-                }
-            }
+            uIElementOperation.VicListViewGetParam(listName, paramName, oav);
         }
         #endregion
 
@@ -512,27 +493,19 @@ namespace Victop.Frame.CmptRuntime
         /// 得到VicTextBoxNormal VicText值
         /// </summary>
         /// <param name="txtName">控件名</param>
-        /// <param name="oav"></param>
+        /// <param name="oav">接收oav</param>
         public void VicTextBoxNormalGetParamByVicText(string txtName, OAVModel oav)
         {
-            VicTextBoxNormal txtBox = MainView.FindName(txtName) as VicTextBoxNormal;
-            if (txtBox != null)
-            {
-                oav.AtrributeValue = txtBox.VicText;
-            }
+            uIElementOperation.VicTextBoxNormalGetParamByVicText(txtName, oav);
         }
         /// <summary>
         /// VicTextBoxNormal赋值VicText
         /// </summary>
-        /// <param name="txtName"></param>
-        /// <param name="oav"></param>
+        /// <param name="txtName">控件名</param>
+        /// <param name="oav">接收oav</param>
         public void VicTextBoxNormalSetVicText(string txtName, OAVModel oav)
         {
-            VicTextBoxNormal txtBox = MainView.FindName(txtName) as VicTextBoxNormal;
-            if (txtBox != null)
-            {
-                txtBox.VicText = oav.AtrributeValue == null ? "" : oav.AtrributeValue.ToString();
-            }
+            uIElementOperation.VicTextBoxNormalSetVicText(txtName, oav);
         }
         #endregion
 
@@ -541,27 +514,19 @@ namespace Victop.Frame.CmptRuntime
         /// 得到VicTextBox VicText值
         /// </summary>
         /// <param name="txtName">控件名</param>
-        /// <param name="oav"></param>
+        /// <param name="oav">接收oav</param>
         public void VicTextBoxGetParamByVicText(string txtName, OAVModel oav)
         {
-            VicTextBox txtBox = MainView.FindName(txtName) as VicTextBox;
-            if (txtBox != null)
-            {
-                oav.AtrributeValue = txtBox.VicText;
-            }
+            uIElementOperation.VicTextBoxGetParamByVicText(txtName, oav);
         }
         /// <summary>
         /// VicTextBox赋值VicText
         /// </summary>
-        /// <param name="txtName"></param>
-        /// <param name="oav"></param>
+        /// <param name="txtName">控件名</param>
+        /// <param name="oav">接收oav</param>
         public void VicTextBoxSetVicText(string txtName, OAVModel oav)
         {
-            VicTextBox txtBox = MainView.FindName(txtName) as VicTextBox;
-            if (txtBox != null)
-            {
-                txtBox.VicText = oav.AtrributeValue == null ? "" : oav.AtrributeValue.ToString();
-            }
+            uIElementOperation.VicTextBoxSetVicText(txtName, oav);
         }
         #endregion
 
@@ -569,93 +534,28 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 是否有选中项
         /// </summary>
-        /// <param name="dgridName"></param>
-        /// <param name="oav"></param>
-        /// <param name="oavmsg">消息</param>
+        /// <param name="dgridName">控件名</param>
+        /// <param name="oav">接收oav</param>
+        /// <param name="oavmsg">消息oav</param>
         public void VicDataGridIsSelectItem(string dgridName, OAVModel oav, OAVModel oavmsg)
         {
-            VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
-            if (dgrid != null && dgrid.SelectedItem != null)
-            {
-                oav.AtrributeValue = true;
-            }
-            else
-            {
-                oav.AtrributeValue = false;
-                oavmsg.AtrributeValue = "当前选择项为空";
-            }
+            uIElementOperation.VicDataGridIsSelectItem(dgridName, oav, oavmsg);
         }
         /// <summary>
         /// 更新列
         /// </summary>
-        /// <param name="dgridName"></param>
+        /// <param name="dgridName">控件名</param>
         public void VicDataGridUpdateColumn(string dgridName)
         {
-            VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
-            if (dgrid != null)
-            {
-                DataTable dataSource=dgrid.ItemsSource as DataTable;
-                if (dataSource == null)
-                    return;
-                for (int i = 0; i < dgrid.Columns.Count; i++)
-                {
-                    DataGridColumn column = dgrid.Columns[i];
-                    if (column is VicDataGridComboBoxColumn)
-                    {
-                        VicDataGridComboBoxColumn comboxColOlder = column as VicDataGridComboBoxColumn;
-                        Binding binding = comboxColOlder.SelectedValueBinding as Binding;
-                        string field = binding != null ? binding.Path.Path : "";
-                        if (string.IsNullOrEmpty(field))
-                            continue;
-
-                        VicDataGridComboBoxColumn comboxCol = new VicDataGridComboBoxColumn();
-                        if (dataSource.Columns[field].ExtendedProperties.ContainsKey("ComboBox"))
-                        {
-                            comboxCol.ItemsSource = (dataSource.Columns[field].ExtendedProperties["ComboBox"] as DataTable).DefaultView;
-                        }
-                        comboxCol.SelectedValuePath = "val";
-                        comboxCol.DisplayMemberPath = "txt";
-                        comboxCol.SelectedValueBinding = new Binding(field) { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
-
-                        comboxCol.Header = comboxColOlder.Header;
-
-                        comboxCol.Visibility = comboxColOlder.Visibility;
-                        comboxCol.IsReadOnly = comboxColOlder.IsReadOnly;
-                        comboxCol.Width = comboxColOlder.Width;
-                        //comboxCol.ComboBoxClosed += comboxCol_ComboBoxClosed;
-                        dgrid.Columns.Insert(i, comboxCol);
-                        dgrid.Columns.Remove(column);
-                    }
-                }
-            }
+            uIElementOperation.VicDataGridUpdateColumn(dgridName);
         }
         /// <summary>
         /// 删除选中行
         /// </summary>
-        /// <param name="dgridName"></param>
+        /// <param name="dgridName">控件名</param>
         public void VicDataGridSelectRowDelete(string dgridName)
         {
-            VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
-            if (dgrid != null && dgrid.SelectedItem != null)
-            {
-                DataTable dt = dgrid.ItemsSource as DataTable;
-                if (dt != null)
-                {
-                    DataRow dr = ((DataRowView)dgrid.SelectedItem).Row;
-                    if (dr.RowState == DataRowState.Added)
-                    {
-                        dt.Rows.Remove(dr);
-                    }
-                    else
-                    {
-                        dr.Delete();
-                    }
-                }
-            }
-            else
-            {
-                VicMessageBoxNormal.Show("请选择选中行！");
-            }
+            uIElementOperation.VicDataGridSelectRowDelete(dgridName);
         }
         #endregion
 
@@ -663,42 +563,22 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// UnitPageRule分页加载
         /// </summary>
-        /// <param name="unitPageName"></param>
-        /// <param name="pblockName"></param>
-        /// <param name="currentPage"></param>
-        /// <param name="pageSize"></param>
+        /// <param name="unitPageName">分页控件名</param>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="currentPage">当前页号</param>
+        /// <param name="pageSize">数据条数</param>
         public void UnitPageRuleLoad(string unitPageName, string pblockName, int currentPage = 1, int pageSize = 20)
         {
-            TemplateControl unitPage = MainView.FindName(unitPageName) as TemplateControl;
-            if (unitPage == null)
-                return;
-            Dictionary<string, object> dicParam = new Dictionary<string, object>();
-            dicParam.Add("CurrentPage", currentPage);
-            dicParam.Add("PageSize", pageSize);
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            DataSet ds = pBlock.ViewBlockDataTable.DataSet;
-            if (ds != null)
-            {
-                dicParam.Add("TotalNum", int.Parse(ds.Tables["summary"].Rows[0]["totalRow"].ToString()));
-                dicParam.Add("TotalPage", int.Parse(ds.Tables["summary"].Rows[0]["totalPage"].ToString()));
-            }
-            unitPage.Excute(dicParam);
+            uIElementOperation.UnitPageRuleLoad(unitPageName, pblockName, currentPage = 1, pageSize = 20);
         }
         #endregion
 
-        #region 状态实体操作
-        /// <summary>
-        /// 设置警戒条件
-        /// </summary>
-        /// <param name="se"></param>
-        /// <param name="oav"></param>
-        /// <param name="oavmsg"></param>
-        public void SetActionGuard(StateTransitionModel se, OAVModel oav, OAVModel oavmsg)
-        {
-            systemOperation.SetActionGuard(se, oav, oavmsg);
-        }
-
         #endregion
+     
+        
+   
+
+
         
     }
 }
