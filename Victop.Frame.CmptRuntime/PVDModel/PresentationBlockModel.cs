@@ -205,11 +205,8 @@ namespace Victop.Frame.CmptRuntime
             }
             set
             {
-                if (preBlockSelectedRow != value)
-                {
-                    preBlockSelectedRow = value;
-                    RaisePropertyChanged(() => PreBlockSelectedRow);
-                }
+                preBlockSelectedRow = value;
+                RaisePropertyChanged(() => PreBlockSelectedRow);
             }
         }
         /// <summary>
