@@ -244,6 +244,15 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.UpdateFact(oav);
         }
         /// <summary>
+        /// 转移触发事件
+        /// </summary>
+        /// <param name="triggerName">触发事件名</param>
+        /// <param name="triggerSource">触发源</param>
+        public void TranslationState(string triggerName, object triggerSource)
+        {
+            systemOperation.TranslationState(triggerName, triggerSource);
+        }
+        /// <summary>
         /// 执行页面动作
         /// </summary>
         /// <param name="pageTrigger">动作名称</param>

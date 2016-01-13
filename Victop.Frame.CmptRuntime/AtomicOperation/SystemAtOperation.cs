@@ -31,6 +31,16 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             MainView.FeiDaoFSM.SetFocus(groupName);
         }
         /// <summary>
+        /// 转移触发事件
+        /// </summary>
+        /// <param name="triggerName">触发事件名</param>
+        /// <param name="triggerSource">触发源</param>
+        public void TranslationState(string triggerName,object triggerSource)
+        {
+            MainView.FeiDaoFSM.Do(triggerName, triggerSource);
+        }
+
+        /// <summary>
         /// 插入事实
         /// </summary>
         /// <param name="oav">oav事实</param>
