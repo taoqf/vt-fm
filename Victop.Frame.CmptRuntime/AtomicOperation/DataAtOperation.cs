@@ -348,6 +348,39 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
             }
         }
+        /// <summary>
+        /// 获取选中行的列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
+            {
+                oav.AtrributeValue = pBlock.PreBlockSelectedRow[paramName];
+            }
+        }
+        /// <summary>
+        /// 赋值选中行的列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowSet(string pblockName, string paramName, OAVModel oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
+            {
+                DataRow[] drSelected = pBlock.ViewBlockDataTable.Select("_id='" + pBlock.PreBlockSelectedRow["_id"].ToString() + "'");
+                if (drSelected.Length > 0)
+                {
+                    drSelected[0][paramName] = oav.AtrributeValue;
+                    pBlock.PreBlockSelectedRow = drSelected[0];
+                }
+            }
+        }
 
     }
 }

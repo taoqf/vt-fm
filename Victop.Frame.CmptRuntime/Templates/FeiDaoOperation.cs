@@ -43,7 +43,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 构造函数，页面/组件实体
         /// </summary>
-        /// <param name="mainView"></param>
+        /// <param name="mainView">页面/组件实体</param>
         public FeiDaoOperation(TemplateControl mainView)
         {
             MainView = mainView;
@@ -200,6 +200,26 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.PBlockAddRowParam(pBlockName, fieldName, paramValue);
         }
+        /// <summary>
+        /// 获取选中行的列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
+        {
+           dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
+        }
+        /// <summary>
+        /// 赋值选中行的列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowSet(string pblockName, string paramName, OAVModel oav)
+        {
+           dataOperation.ParamsCurrentRowSet(pblockName, paramName, oav);
+        }
         #endregion
 
         #region 系统操作
@@ -290,6 +310,87 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ParamsGetByDictionary(oavDic, paramName, oav);
         }
+        
+        /// <summary>
+        /// 组件参数封装
+        /// </summary>
+        /// <param name="oavCom">组件参数</param>
+        /// <param name="oavPage">页面接收参数</param>
+        public void ParamsInterCompntAdd(OAVModel oavCom, OAVModel oavPage)
+        {
+            systemOperation.ParamsInterCompntAdd(oavCom, oavPage);
+        }
+        /// <summary>
+        /// 组件取参数
+        /// </summary>
+        /// <param name="se">状态信息</param>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsInterCompntParse(StateTransitionModel se, string paramName, OAVModel oav)
+        {
+           systemOperation.ParamsInterCompntParse( se, paramName, oav);
+        }
+        /// <summary>
+        /// 弹框展示组件操作
+        /// </summary>
+        /// <param name="compntName">组件名</param>
+        /// <param name="height">高度</param>
+        /// <param name="width">宽度</param>
+        public void UCCompntShowDialog(string compntName, int height = 600, int width = 600)
+        {
+            systemOperation.UCCompntShowDialog( compntName, height = 600, width = 600);
+        }
+        /// <summary>
+        /// 弹框展示组件操作
+        /// </summary>
+        /// <param name="compntName">组件名</param>
+        /// <param name="height">高度</param>
+        /// <param name="width">宽度</param>
+        public void UCCompntShow(string compntName, int height = 600, int width = 600)
+        {
+            systemOperation.UCCompntShow(compntName, height = 600, width = 600);
+        }
+        /// <summary>
+        /// 弹框关闭操作
+        /// </summary>
+        public void UCCompntClose()
+        {
+            systemOperation.UCCompntClose();
+        }
+        /// <summary>
+        /// 弹出提示信息
+        /// </summary>
+        /// <param name="messageInfo">消息内容</param>
+        public void ShowMessage(object messageInfo)
+        {
+            systemOperation.ShowMessage(messageInfo);
+        }
+        /// <summary>
+        /// 日志输出
+        /// </summary>
+        /// <param name="content">输出内容</param>
+        public void SysFeiDaoLog(string content)
+        {
+            systemOperation.SysFeiDaoLog(content);
+        }
+        /// <summary>
+        /// 赋值
+        /// </summary>
+        /// <param name="paramValue">参数值</param>
+        /// <param name="oav">接收oav</param>
+        public void SetParamValue(object paramValue, OAVModel oav)
+        {
+            systemOperation.SetParamValue(paramValue, oav);
+        }
+        /// <summary>
+        /// 设置页面显示元素
+        /// </summary>
+        /// <param name="paramValue">元素名称</param>
+        /// <param name="visibility">是否显示</param>
+        public void SetCompontVisility(string paramValue, bool visibility)
+        {
+          systemOperation.SetCompontVisility( paramValue, visibility);
+        }
         #endregion
 
         #region UI操作
@@ -303,199 +404,7 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.SetButtonText(btnName, btnContent);
         }
         #endregion
-
-       
-
-        
-        /// <summary>
-        /// 获取选中行的列值
-        /// </summary>
-        /// <param name="pblockName">区块名称</param>
-        /// <param name="paramName">字段名</param>
-        /// <param name="oav">接收oav</param>
-        public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
-        {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
-            {
-                oav.AtrributeValue = pBlock.PreBlockSelectedRow[paramName];
-            }
-        }
-        /// <summary>
-        /// 赋值选中行的列值
-        /// </summary>
-        /// <param name="pblockName">区块名称</param>
-        /// <param name="paramName">字段名</param>
-        /// <param name="oav">接收oav</param>
-        public void ParamsCurrentRowSet(string pblockName, string paramName, OAVModel oav)
-        {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
-            {
-                DataRow[] drSelected = pBlock.ViewBlockDataTable.Select("_id='" + pBlock.PreBlockSelectedRow["_id"].ToString() + "'");
-                if (drSelected.Length > 0)
-                {
-                    drSelected[0][paramName] = oav.AtrributeValue;
-                    pBlock.PreBlockSelectedRow = drSelected[0];
-                }
-            }
-        }
-        /// <summary>
-        /// 组件参数封装
-        /// </summary>
-        /// <param name="oavCom">组件参数</param>
-        /// <param name="oavPage">页面接收参数</param>
-        public void ParamsInterCompntAdd(OAVModel oavCom, OAVModel oavPage)
-        {
-            FrameworkElement fElement = oavPage.AtrributeValue as FrameworkElement;
-            if (fElement == null)
-            {
-                fElement = new FrameworkElement();
-            }
-            Dictionary<string, object> dicParams = fElement.Tag as Dictionary<string, object>;
-            if (dicParams == null)
-            {
-                dicParams = new Dictionary<string, object>();
-            }
-            if (!dicParams.ContainsKey(oavCom.AtrributeName))
-            {
-                dicParams.Add(oavCom.AtrributeName, oavCom.AtrributeValue);
-            }
-            else
-            {
-                dicParams[oavCom.AtrributeName] = oavCom.AtrributeValue;
-            }
-            fElement.Tag = dicParams;
-            oavPage.AtrributeValue = fElement;
-        }
-        /// <summary>
-        /// 组件取参数
-        /// </summary>
-        /// <param name="se">状态信息</param>
-        /// <param name="paramName">参数名</param>
-        /// <param name="oav">接收oav</param>
-        public void ParamsInterCompntParse(StateTransitionModel se, string paramName, OAVModel oav)
-        {
-            if (se.ActionSourceElement != null)
-            {
-                Dictionary<string, object> dicParams = se.ActionSourceElement.Tag as Dictionary<string, object>;
-                if (dicParams != null && dicParams.ContainsKey(paramName))
-                {
-                    oav.AtrributeValue = dicParams[paramName];
-                }
-            }
-        }
-        /// <summary>
-        /// 弹框展示组件操作
-        /// </summary>
-        /// <param name="compntName">组件名</param>
-        /// <param name="height">高度</param>
-        /// <param name="width">宽度</param>
-        public void UCCompntShowDialog(string compntName, int height = 600, int width = 600)
-        {
-            TemplateControl ucCom = MainView.ParentControl.GetComponentInstanceByName(compntName);
-            if (ucCom == null)
-            {
-                Console.WriteLine("原子操作：UCCompntShowDialog未找到组件" + compntName);
-                LoggerHelper.Info("原子操作：UCCompntShowDialog未找到组件" + compntName);
-                return;
-            }
-            ucCom.ParentControl = MainView.ParentControl;
-
-            VicWindowNormal win = new VicWindowNormal();
-            win.Owner = XamlTreeHelper.GetParentObject<Window>(MainView);
-            win.ShowInTaskbar = false;
-            win.SetResourceReference(VicWindowNormal.StyleProperty, "WindowMessageSkin");
-            win.Height = height;
-            win.Width = width;
-            win.Title = ucCom.Tag.ToString();
-            win.Content = ucCom;
-            win.ShowDialog();
-        }
-        /// <summary>
-        /// 弹框展示组件操作
-        /// </summary>
-        /// <param name="compntName">组件名</param>
-        /// <param name="height">高度</param>
-        /// <param name="width">宽度</param>
-        public void UCCompntShow(string compntName, int height = 600, int width = 600)
-        {
-            TemplateControl ucCom = MainView.ParentControl.GetComponentInstanceByName(compntName);
-            if (ucCom == null)
-            {
-                Console.WriteLine("原子操作：UCCompntShowDialog未找到组件" + compntName);
-                LoggerHelper.Info("原子操作：UCCompntShowDialog未找到组件" + compntName);
-                return;
-            }
-            ucCom.ParentControl = MainView.ParentControl;
-
-            VicWindowNormal win = new VicWindowNormal();
-            win.Owner = XamlTreeHelper.GetParentObject<Window>(MainView);
-            win.ShowInTaskbar = false;
-            win.SetResourceReference(VicWindowNormal.StyleProperty, "WindowMessageSkin");
-            win.Height = height;
-            win.Width = width;
-            win.Title = ucCom.Tag.ToString();
-            win.Content = ucCom;
-            win.Show();
-        }
-        /// <summary>
-        /// 弹框关闭操作
-        /// </summary>
-        public void UCCompntClose()
-        {
-            Window win = XamlTreeHelper.GetParentObject<Window>(MainView);
-            if (win != null)
-            {
-                win.Close();
-            }
-        }
-        /// <summary>
-        /// 弹出提示信息
-        /// </summary>
-        /// <param name="messageInfo"></param>
-        public void ShowMessage(object messageInfo)
-        {
-            VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString());
-        }
-        /// <summary>
-        /// 日志输出
-        /// </summary>
-        /// <param name="content">输出内容</param>
-        public void SysFeiDaoLog(string content)
-        {
-            systemOperation.SysFeiDaoLog(content);
-        }
-        /// <summary>
-        /// 赋值
-        /// </summary>
-        /// <param name="paramValue"></param>
-        /// <param name="oav"></param>
-        public void SetParamValue(object paramValue, OAVModel oav)
-        {
-            oav.AtrributeValue = paramValue;
-        }
-        /// <summary>
-        /// 设置页面显示元素
-        /// </summary>
-        /// <param name="paramValue"></param>
-        /// <param name="compontTriger"></param>
-        /// <param name="visibility">是否显示</param>
-        public void SetCompontVisility(string paramValue, object compontTriger, bool visibility)
-        {
-            TemplateControl tc = MainView.FindName(paramValue) as TemplateControl;
-            if (tc != null)
-            {
-                if (visibility)
-                {
-                    tc.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    tc.Visibility = Visibility.Collapsed;
-                }
-            }
-        }
+      
         #region 类型转换
         /// <summary>
         /// 转换字符串类型
@@ -556,7 +465,6 @@ namespace Victop.Frame.CmptRuntime
         } 
         #endregion
         
-
         #region VicTreeView原子操作
         /// <summary>
         /// 得到tree选中的值

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
@@ -143,6 +144,153 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (dic != null && dic.ContainsKey(paramName))
             {
                 oav.AtrributeValue = dic[paramName];
+            }
+        }
+        /// <summary>
+        /// 组件参数封装
+        /// </summary>
+        /// <param name="oavCom">组件参数</param>
+        /// <param name="oavPage">页面接收参数</param>
+        public void ParamsInterCompntAdd(OAVModel oavCom, OAVModel oavPage)
+        {
+            FrameworkElement fElement = oavPage.AtrributeValue as FrameworkElement;
+            if (fElement == null)
+            {
+                fElement = new FrameworkElement();
+            }
+            Dictionary<string, object> dicParams = fElement.Tag as Dictionary<string, object>;
+            if (dicParams == null)
+            {
+                dicParams = new Dictionary<string, object>();
+            }
+            if (!dicParams.ContainsKey(oavCom.AtrributeName))
+            {
+                dicParams.Add(oavCom.AtrributeName, oavCom.AtrributeValue);
+            }
+            else
+            {
+                dicParams[oavCom.AtrributeName] = oavCom.AtrributeValue;
+            }
+            fElement.Tag = dicParams;
+            oavPage.AtrributeValue = fElement;
+        }
+        /// <summary>
+        /// 组件取参数
+        /// </summary>
+        /// <param name="se">状态信息</param>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsInterCompntParse(StateTransitionModel se, string paramName, OAVModel oav)
+        {
+            if (se.ActionSourceElement != null)
+            {
+                Dictionary<string, object> dicParams = se.ActionSourceElement.Tag as Dictionary<string, object>;
+                if (dicParams != null && dicParams.ContainsKey(paramName))
+                {
+                    oav.AtrributeValue = dicParams[paramName];
+                }
+            }
+        }
+        /// <summary>
+        /// 弹框展示组件操作
+        /// </summary>
+        /// <param name="compntName">组件名</param>
+        /// <param name="height">高度</param>
+        /// <param name="width">宽度</param>
+        public void UCCompntShowDialog(string compntName, int height = 600, int width = 600)
+        {
+            TemplateControl ucCom = MainView.ParentControl.GetComponentInstanceByName(compntName);
+            if (ucCom == null)
+            {
+                Console.WriteLine("原子操作：UCCompntShowDialog未找到组件" + compntName);
+                LoggerHelper.Info("原子操作：UCCompntShowDialog未找到组件" + compntName);
+                return;
+            }
+            ucCom.ParentControl = MainView.ParentControl;
+
+            VicWindowNormal win = new VicWindowNormal();
+            win.Owner = XamlTreeHelper.GetParentObject<Window>(MainView);
+            win.ShowInTaskbar = false;
+            win.SetResourceReference(VicWindowNormal.StyleProperty, "WindowMessageSkin");
+            win.Height = height;
+            win.Width = width;
+            win.Title = ucCom.Tag.ToString();
+            win.Content = ucCom;
+            win.ShowDialog();
+        }
+        /// <summary>
+        /// 弹框展示组件操作
+        /// </summary>
+        /// <param name="compntName">组件名</param>
+        /// <param name="height">高度</param>
+        /// <param name="width">宽度</param>
+        public void UCCompntShow(string compntName, int height = 600, int width = 600)
+        {
+            TemplateControl ucCom = MainView.ParentControl.GetComponentInstanceByName(compntName);
+            if (ucCom == null)
+            {
+                Console.WriteLine("原子操作：UCCompntShowDialog未找到组件" + compntName);
+                LoggerHelper.Info("原子操作：UCCompntShowDialog未找到组件" + compntName);
+                return;
+            }
+            ucCom.ParentControl = MainView.ParentControl;
+
+            VicWindowNormal win = new VicWindowNormal();
+            win.Owner = XamlTreeHelper.GetParentObject<Window>(MainView);
+            win.ShowInTaskbar = false;
+            win.SetResourceReference(VicWindowNormal.StyleProperty, "WindowMessageSkin");
+            win.Height = height;
+            win.Width = width;
+            win.Title = ucCom.Tag.ToString();
+            win.Content = ucCom;
+            win.Show();
+        }
+        /// <summary>
+        /// 弹框关闭操作
+        /// </summary>
+        public void UCCompntClose()
+        {
+            Window win = XamlTreeHelper.GetParentObject<Window>(MainView);
+            if (win != null)
+            {
+                win.Close();
+            }
+        }
+        /// <summary>
+        /// 弹出提示信息
+        /// </summary>
+        /// <param name="messageInfo">消息内容</param>
+        public void ShowMessage(object messageInfo)
+        {
+            VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString());
+        }
+        /// <summary>
+        /// 赋值
+        /// </summary>
+        /// <param name="paramValue">参数值</param>
+        /// <param name="oav">接收oav</param>
+        public void SetParamValue(object paramValue, OAVModel oav)
+        {
+            oav.AtrributeValue = paramValue;
+        }
+        /// <summary>
+        /// 设置页面显示元素
+        /// </summary>
+        /// <param name="paramValue">元素名称</param>
+        /// <param name="visibility">是否显示</param>
+        public void SetCompontVisility(string paramValue, bool visibility)
+        {
+            TemplateControl tc = MainView.FindName(paramValue) as TemplateControl;
+            if (tc != null)
+            {
+                if (visibility)
+                {
+                    tc.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    tc.Visibility = Visibility.Collapsed;
+                }
             }
         }
     }
