@@ -34,7 +34,12 @@ namespace Victop.Frame.CmptRuntime
         /// 系统原子操作
         /// </summary>
         private SystemAtOperation systemOperation;
+        /// <summary>
+        /// UI元素原子操作
+        /// </summary>
+        private UIElementAtOperation uIElementOperation;
         #endregion
+
         /// <summary>
         /// 构造函数，页面/组件实体
         /// </summary>
@@ -45,7 +50,9 @@ namespace Victop.Frame.CmptRuntime
             customServiceOperation = new CustomServiceAtOperation(MainView);
             dataOperation = new DataAtOperation(MainView);
             systemOperation = new SystemAtOperation(MainView);
+            uIElementOperation = new UIElementAtOperation(MainView);
         }
+
         #region 自定义服务操作
         /// <summary>
         /// 服务参数设置
@@ -66,6 +73,8 @@ namespace Victop.Frame.CmptRuntime
             customServiceOperation.SendServiceMessage(serviceName);
         }
         #endregion
+
+        #region 数据操作
 
         #region 查询条件操作
         /// <summary>
@@ -141,99 +150,66 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SearchData(pBlockName);
         }
         /// <summary>
-        /// 设置按钮文本
-        /// </summary>
-        /// <param name="btnName"></param>
-        /// <param name="btnContent"></param>
-        public void SetButtonText(string btnName, string btnContent)
-        {
-            Button btn = MainView.FindName(btnName) as Button;
-            btn.Content = btnContent;
-        }
-        /// <summary>
-        /// 设置选中数据通过datagrid
-        /// </summary>
-        /// <param name="blockName"></param>
-        /// <param name="dgrid"></param>
-        public void SetPBlockCurrentRowByDataGrid(string blockName, object dgrid)
-        {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
-            VicDataGrid datagrid = dgrid as VicDataGrid;
-            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && datagrid != null && datagrid.SelectedItem != null)
-            {
-                pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
-            }
-        }
-        /// <summary>
-        /// 系统输出
-        /// </summary>
-        /// <param name="consoleText"></param>
-        public void SysConsole(string consoleText)
-        {
-            systemOperation.SysConsole(consoleText);
-        }
-        /// <summary>
         /// 获取BlockData的数据
         /// </summary>
-        /// <param name="blockName"></param>
-        public void GetPBlockData(string blockName)
+        /// <param name="pBlockName">区块名称</param>
+        public void GetPBlockData(string pBlockName)
         {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
-            pBlock.GetData();
+            dataOperation.GetPBlockData(pBlockName);
+        }
+        /// <summary>
+        /// 设置选中数据通过dataGrid控件
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="dgrid">dataGird控件</param>
+        public void SetPBlockCurrentRowByDataGrid(string pBlockName, FrameworkElement dgrid)
+        {
+            dataOperation.SetPBlockCurrentRowByDataGrid(pBlockName, dgrid);
         }
         /// <summary>
         /// 提交BlockData的数据
         /// </summary>
-        /// <param name="blockName"></param>
-        public void SavePBlockData(string blockName)
+        /// <param name="pBlockName">区块名称</param>
+        public void SavePBlockData(string pBlockName)
         {
-            dataOperation.SavePBlockData(blockName);
+            dataOperation.SavePBlockData(pBlockName);
         }
         /// <summary>
         /// 设置block选中行数据
         /// </summary>
-        /// <param name="blockName"></param>
-        public void SetPBlockCurrentRow(string blockName)
+        /// <param name="pBlockName">区块名称</param>
+        public void SetPBlockCurrentRow(string pBlockName)
         {
-            dataOperation.SetPBlockCurrentRow(blockName);
+            dataOperation.SetPBlockCurrentRow(pBlockName);
         }
         /// <summary>
         /// 新增行
         /// </summary>
-        /// <param name="blockName"></param>
-        public void PBlockAddRow(string blockName)
+        /// <param name="pBlockName">区块名称</param>
+        public void PBlockAddRow(string pBlockName)
         {
-            dataOperation.PBlockAddRow(blockName);
+            dataOperation.PBlockAddRow(pBlockName);
         }
         /// <summary>
         /// 新增行参数
         /// </summary>
-        /// <param name="blockName"></param>
-        /// <param name="fieldName"></param>
-        /// <param name="paramValue"></param>
-        public void PBlockAddRowParam(string blockName, string fieldName, object paramValue)
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="paramValue">字段值</param>
+        public void PBlockAddRowParam(string pBlockName, string fieldName, object paramValue)
         {
-            dataOperation.PBlockAddRowParam(blockName,fieldName,paramValue);
+            dataOperation.PBlockAddRowParam(pBlockName, fieldName, paramValue);
         }
+        #endregion
+
+        #region 系统操作
         /// <summary>
-        /// 执行页面动作
+        /// 系统输出
         /// </summary>
-        /// <param name="pageTrigger"></param>
-        /// <param name="paramInfo"></param>
-        public void ExcutePageTrigger(string pageTrigger, object paramInfo)
+        /// <param name="consoleText">文本值</param>
+        public void SysConsole(string consoleText)
         {
-            MainView.ParentControl.FeiDaoFSM.Do(pageTrigger, paramInfo);
-        }
-        /// <summary>
-        /// 执行组件动作
-        /// </summary>
-        /// <param name="compntName"></param>
-        /// <param name="compntTrigger"></param>
-        /// <param name="paramInfo"></param>
-        public void ExcuteComponentTrigger(string compntName, string compntTrigger, object paramInfo)
-        {
-            TemplateControl tc = MainView.FindName(compntName) as TemplateControl;
-            tc.FeiDaoFSM.Do(compntTrigger, paramInfo);
+            systemOperation.SysConsole(consoleText);
         }
         /// <summary>
         /// 设置分组
@@ -265,41 +241,69 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav"></param>
         public void UpdateFact(OAVModel oav)
         {
-            if (oav.AtrributeValue != null)
-                systemOperation.UpdateFact(oav);
+            systemOperation.UpdateFact(oav);
+        }
+        /// <summary>
+        /// 执行页面动作
+        /// </summary>
+        /// <param name="pageTrigger">动作名称</param>
+        /// <param name="paramInfo">事件触发元素</param>
+        public void ExcutePageTrigger(string pageTrigger, object paramInfo)
+        {
+            systemOperation.ExcutePageTrigger(pageTrigger, paramInfo);
+        }
+        /// <summary>
+        /// 执行组件动作
+        /// </summary>
+        /// <param name="compntName">组件名</param>
+        /// <param name="compntTrigger">动作名称</param>
+        /// <param name="paramInfo">事件触发元素</param>
+        public void ExcuteComponentTrigger(string compntName, string compntTrigger, object paramInfo)
+        {
+            systemOperation.ExcuteComponentTrigger(compntName,compntTrigger, paramInfo);
         }
         /// <summary>
         /// 获取页面参数值
         /// </summary>
         /// <param name="paramName">参数名</param>
-        /// <param name="oav">oav载体</param>
+        /// <param name="oav">接收oav</param>
         public void ParamsPageGet(string paramName, OAVModel oav)
         {
-            if (MainView.ParentControl.ParamDict.ContainsKey(paramName))
-            {
-                oav.AtrributeValue = MainView.ParentControl.ParamDict[paramName];
-            }
+            systemOperation.ParamsPageGet(paramName, oav);
         }
         /// <summary>
-        /// 获取参数根据dictionary
+        /// 获取Dictionary中参数值
         /// </summary>
-        /// <param name="paramDic">dic</param>
+        /// <param name="oavDic">存储dic类型的oav</param>
         /// <param name="paramName">参数名</param>
-        /// <param name="oav">oav载体</param>
-        public void ParamsGetByDictionary(object paramDic, string paramName, OAVModel oav)
+        /// <param name="oav">接收oav</param>
+        public void ParamsGetByDictionary(OAVModel oavDic, string paramName, OAVModel oav)
         {
-            Dictionary<string, object> dic = paramDic as Dictionary<string, object>;
-            if (dic != null && dic.ContainsKey(paramName))
-            {
-                oav.AtrributeValue = dic[paramName];
-            }
+            systemOperation.ParamsGetByDictionary(oavDic, paramName, oav);
         }
+        #endregion
+
+        #region UI操作
+        /// <summary>
+        /// 设置按钮文本
+        /// </summary>
+        /// <param name="btnName">按钮名称</param>
+        /// <param name="btnContent">按钮内容</param>
+        public void SetButtonText(string btnName, string btnContent)
+        {
+            uIElementOperation.SetButtonText(btnName, btnContent);
+        }
+        #endregion
+
+       
+
+        
         /// <summary>
         /// 获取选中行的列值
         /// </summary>
-        /// <param name="pblockName">P名</param>
-        /// <param name="paramName">列名</param>
-        /// <param name="oav">oav载体</param>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
         public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
@@ -311,9 +315,9 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 赋值选中行的列值
         /// </summary>
-        /// <param name="pblockName">P名</param>
-        /// <param name="paramName">列名</param>
-        /// <param name="oav">oav载体</param>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
         public void ParamsCurrentRowSet(string pblockName, string paramName, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);

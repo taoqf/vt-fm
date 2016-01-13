@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
+using Victop.Wpf.Controls;
 
 namespace Victop.Frame.CmptRuntime.AtomicOperation
 {
@@ -232,7 +234,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         }
         #endregion
         /// <summary>
-        /// 查询
+        /// 区块查询
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         public void SearchData(string pBlockName)
@@ -257,28 +259,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <summary>
         /// 获取BlockData的数据
         /// </summary>
-        /// <param name="blockName"></param>
-        public void GetPBlockData(string blockName)
+        /// <param name="pBlockName">区块名称</param>
+        public void GetPBlockData(string pBlockName)
         {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             pBlock.GetData();
         }
         /// <summary>
         /// 提交BlockData的数据
         /// </summary>
-        /// <param name="blockName"></param>
-        public void SavePBlockData(string blockName)
+        /// <param name="pBlockName">区块名称</param>
+        public void SavePBlockData(string pBlockName)
         {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             pBlock.SaveData(true);
         }
         /// <summary>
         /// 设置block选中行数据
         /// </summary>
-        /// <param name="blockName"></param>
-        public void SetPBlockCurrentRow(string blockName)
+        /// <param name="pBlockName">区块名称</param>
+        public void SetPBlockCurrentRow(string pBlockName)
         {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
             {
                 pBlock.PreBlockSelectedRow = pBlock.ViewBlockDataTable.Rows[0];
@@ -287,17 +289,17 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <summary>
         /// 新增行
         /// </summary>
-        /// <param name="blockName"></param>
-        public void PBlockAddRow(string blockName)
+        /// <param name="pBlockName">区块名称</param>
+        public void PBlockAddRow(string pBlockName)
         {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             if (pBlock != null&&pBlock.ViewBlockDataTable!=null)
             {
                 DataRow dr = pBlock.ViewBlockDataTable.NewRow();
                 dr["_id"] = Guid.NewGuid().ToString();
-                if (rowAddParamDic.ContainsKey(blockName))
+                if (rowAddParamDic.ContainsKey(pBlockName))
                 {
-                    Dictionary<string, object> dicParam = rowAddParamDic[blockName];
+                    Dictionary<string, object> dicParam = rowAddParamDic[pBlockName];
                     foreach (string key in dicParam.Keys)
                     {
                         if (dr.Table.Columns.Contains(key))
@@ -305,7 +307,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                             dr[key] = dicParam[key];
                         }
                     }
-                    rowAddParamDic.Remove(blockName);
+                    rowAddParamDic.Remove(pBlockName);
                 }
 
                 pBlock.ViewBlockDataTable.Rows.Add(dr);
@@ -314,15 +316,15 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <summary>
         /// 新增行参数
         /// </summary>
-        /// <param name="blockName"></param>
-        /// <param name="fieldName"></param>
-        /// <param name="paramValue"></param>
-        public void PBlockAddRowParam(string blockName, string fieldName, object paramValue)
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="fieldName">字段名</param>
+        /// <param name="paramValue">字段值</param>
+        public void PBlockAddRowParam(string pBlockName, string fieldName, object paramValue)
         {
-            if(!rowAddParamDic.ContainsKey(blockName))
-                rowAddParamDic.Add(blockName,new Dictionary<string,object>());
+            if (!rowAddParamDic.ContainsKey(pBlockName))
+                rowAddParamDic.Add(pBlockName, new Dictionary<string, object>());
 
-            Dictionary<string, object> dicParam = rowAddParamDic[blockName];
+            Dictionary<string, object> dicParam = rowAddParamDic[pBlockName];
             if (dicParam.ContainsKey(fieldName))
             {
                 dicParam[fieldName] = paramValue;
@@ -330,6 +332,20 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             else
             {
                 dicParam.Add(fieldName, paramValue);
+            }
+        }
+        /// <summary>
+        /// 设置选中数据通过dataGrid控件
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="dgrid">dataGird控件</param>
+        public void SetPBlockCurrentRowByDataGrid(string pBlockName, FrameworkElement dgrid)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            VicDataGrid datagrid = dgrid as VicDataGrid;
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && datagrid != null && datagrid.SelectedItem != null)
+            {
+                pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
             }
         }
 
