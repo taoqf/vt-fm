@@ -265,6 +265,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString());
         }
         /// <summary>
+        /// 弹出提示询问
+        /// </summary>
+        /// <param name="messageInfo">提示信息</param>
+        /// <param name="caption">标题</param>
+        /// <param name="oav">接收oav</param>
+        public void ShowMessageResult(object messageInfo, object caption, OAVModel oav)
+        {
+            MessageBoxResult msgboxresult = VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption == null ? "空值" : messageInfo.ToString(), MessageBoxButton.YesNo, MessageBoxImage.Information);
+            if (MessageBoxResult.Yes == msgboxresult)
+            {
+                oav.AtrributeValue = "1";
+            }
+            else if (MessageBoxResult.No == msgboxresult)
+            {
+                oav.AtrributeValue = "0";
+            }
+            else
+            {
+                oav.AtrributeValue = "";
+            }
+        }
+        /// <summary>
         /// 赋值
         /// </summary>
         /// <param name="paramValue">参数值</param>

@@ -366,6 +366,16 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.ShowMessage(messageInfo);
         }
         /// <summary>
+        /// 弹出提示询问
+        /// </summary>
+        /// <param name="messageInfo">提示信息</param>
+        /// <param name="caption">标题</param>
+        /// <param name="oav">接收oav</param>
+        public void ShowMessageResult(object messageInfo, object caption, OAVModel oav)
+        {
+            systemOperation.ShowMessageResult(messageInfo, caption, oav);
+        }
+        /// <summary>
         /// 日志输出
         /// </summary>
         /// <param name="content">输出内容</param>
