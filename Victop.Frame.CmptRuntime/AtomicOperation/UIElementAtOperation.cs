@@ -227,34 +227,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
-        /// <summary>
-        /// 删除选中行
-        /// </summary>
-        /// <param name="dgridName">控件名</param>
-        public void VicDataGridSelectRowDelete(string dgridName)
-        {
-            VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
-            if (dgrid != null && dgrid.SelectedItem != null)
-            {
-                DataTable dt = dgrid.ItemsSource as DataTable;
-                if (dt != null)
-                {
-                    DataRow dr = ((DataRowView)dgrid.SelectedItem).Row;
-                    if (dr.RowState == DataRowState.Added)
-                    {
-                        dt.Rows.Remove(dr);
-                    }
-                    else
-                    {
-                        dr.Delete();
-                    }
-                }
-            }
-            else
-            {
-                VicMessageBoxNormal.Show("请选择选中行！");
-            }
-        }
         #endregion
 
         #region UnitPageRule原子操作

@@ -220,6 +220,14 @@ namespace Victop.Frame.CmptRuntime
         {
            dataOperation.ParamsCurrentRowSet(pblockName, paramName, oav);
         }
+        /// <summary>
+        /// 删除选中行
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        public void VicDataGridSelectRowDelete( string pblockName)
+        {
+            dataOperation.VicDataGridSelectRowDelete( pblockName);
+        }
         #endregion
 
         #region 系统操作
@@ -568,14 +576,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicDataGridUpdateColumn(dgridName);
         }
-        /// <summary>
-        /// 删除选中行
-        /// </summary>
-        /// <param name="dgridName">控件名</param>
-        public void VicDataGridSelectRowDelete(string dgridName)
-        {
-            uIElementOperation.VicDataGridSelectRowDelete(dgridName);
-        }
+
         #endregion
 
         #region UnitPageRule原子操作

@@ -343,9 +343,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             VicDataGrid datagrid = dgrid as VicDataGrid;
-            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && datagrid != null && datagrid.SelectedItem != null)
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && datagrid != null)
             {
-                pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
+                    pBlock.PreBlockSelectedRow = datagrid.SelectedItem != null?((DataRowView)datagrid.SelectedItem).Row:null;
             }
         }
         /// <summary>
@@ -379,6 +379,33 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     drSelected[0][paramName] = oav.AtrributeValue;
                     pBlock.PreBlockSelectedRow = drSelected[0];
                 }
+            }
+        }
+        /// <summary>
+        /// 删除选中行
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        public void VicDataGridSelectRowDelete( string pblockName)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.PreBlockSelectedRow!=null)
+            {
+                DataRow[] drTem = pBlock.ViewBlockDataTable.Select("_id='" + pBlock.PreBlockSelectedRow["_id"].ToString() + "'");
+                if (drTem.Length > 0)
+                {
+                    if (drTem[0].RowState == DataRowState.Added)
+                    {
+                        pBlock.ViewBlockDataTable.Rows.Remove(drTem[0]);
+                    }
+                    else
+                    {
+                        drTem[0].Delete();
+                    }
+                }
+            }
+            else
+            {
+                VicMessageBoxNormal.Show("请选择选中行！");
             }
         }
 
