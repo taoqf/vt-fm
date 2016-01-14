@@ -496,6 +496,15 @@ namespace FeidaoUserLoginPlugin.ViewModels
             string versionString = ConfigManager.GetAttributeOfNodeByName("System", "Mode");
             LoginInfoModel.UserName = ConfigManager.GetAttributeOfNodeByName("UserInfo", "User");
             LoginInfoModel.UserPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
+            //string encPwd = ConfigManager.GetAttributeOfNodeByName("UserInfo", "Pwd");
+            //if (!string.IsNullOrEmpty(encPwd))
+            //{
+            //    LoginInfoModel.UserPwd = EncryptionHelper.DESDecrypt(encPwd);
+            //}
+            //else
+            //{
+            //    LoginInfoModel.UserPwd = encPwd;
+            //}
             LoginInfoModel.ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
             switch (versionString)
             {
@@ -636,6 +645,7 @@ namespace FeidaoUserLoginPlugin.ViewModels
                 Dictionary<string, object> contentDic = new Dictionary<string, object>();
                 contentDic.Add("usercode", LoginInfoModel.UserName);
                 contentDic.Add("userpw", LoginInfoModel.UserPwd);
+                //contentDic.Add("userpw", EncryptionHelper.DESEncrypt(LoginInfoModel.UserPwd));
                 string MessageType = "LoginService.userLogin";
                 //Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                 messageOp.SendAsyncMessage(MessageType, contentDic, new WaitCallback(AfterLogin));
@@ -673,6 +683,7 @@ namespace FeidaoUserLoginPlugin.ViewModels
             Dictionary<string, string> userDic = new Dictionary<string, string>();
             userDic.Add("User", LoginInfoModel.UserName);
             userDic.Add("Pwd", LoginInfoModel.UserPwd);
+            //userDic.Add("Pwd", EncryptionHelper.DESEncrypt(LoginInfoModel.UserPwd));
             ConfigManager.SaveAttributeOfNodeByName("UserInfo", userDic);
             LoginInfoModel.ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
         }

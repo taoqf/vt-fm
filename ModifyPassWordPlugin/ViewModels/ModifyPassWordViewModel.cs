@@ -201,7 +201,7 @@ namespace ModifyPassWordPlugin.ViewModels
             }
             if (!pwdModel.NewUserPwd.Equals(pwdModel.AffirmUserPwd))
             {
-                PwdModel.AffirmUserPrompt = "两次输入密码不一致，清重新输入";
+                PwdModel.AffirmUserPrompt = "两次输入密码不一致，请重新输入";
                 txtAffirm.Foreground = Brushes.Red;
                 PwdModel.NewUserPwd = string.Empty;
                 PwdModel.AffirmUserPwd = string.Empty;

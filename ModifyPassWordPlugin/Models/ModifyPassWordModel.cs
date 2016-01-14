@@ -68,7 +68,7 @@ namespace ModifyPassWordPlugin.Models
                 }
             }
         }
-        private string affirmUserPrompt = "清再次填写密码";
+        private string affirmUserPrompt = "请再次填写密码";
         public string AffirmUserPrompt
         {
             get { return affirmUserPrompt; }
