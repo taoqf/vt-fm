@@ -89,7 +89,7 @@ namespace Victop.Frame.CmptRuntime
             stateModel.ActionSource = x.Source;
             stateModel.ActionTrigger = x.Trigger;
             dSession.modifyObject(stateHandle, stateModel);
-            Console.WriteLine("{0} OnTransitioned：Destination:{1},Source:{2},Trigger:{3}", MainView.GetType().FullName, x.Destination, x.Source, x.Trigger);
+            LoggerHelper.InfoFormat("{0} OnTransitioned：Destination:{1},Source:{2},Trigger:{3}", MainView.GetType().FullName, x.Destination, x.Source, x.Trigger);
             if (stateDefModel.DefEvents[x.Trigger] != null && stateDefModel.DefEvents[x.Trigger].Count > 0)
             {
                 ExecuteRule(stateDefModel.DefEvents[x.Trigger]);
@@ -115,7 +115,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="x"></param>
         protected void OnFeiDaoExit(StateMachine<string, string>.Transition x)
         {
-            Console.WriteLine("{0} OnFeiDaoExit：Destination:{1},Source:{2},Trigger:{3}", MainView.GetType().FullName, x.Destination, x.Source, x.Trigger);
+            LoggerHelper.InfoFormat("{0} OnFeiDaoExit：Destination:{1},Source:{2},Trigger:{3}", MainView.GetType().FullName, x.Destination, x.Source, x.Trigger);
             if (stateDefModel.DefStates[x.Source].StateExit != null && stateDefModel.DefStates[x.Source].StateExit.Count > 0)
             {
                 ExecuteRule(stateDefModel.DefStates[x.Source].StateExit);
@@ -127,7 +127,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="x"></param>
         protected void OnFeiDaoEntry(StateMachine<string, string>.Transition x)
         {
-            Console.WriteLine("{0} OnFeiDaoEntry：Destination:{1},Source:{2},Trigger:{3}", MainView.GetType().FullName, x.Destination, x.Source, x.Trigger);
+            LoggerHelper.InfoFormat("{0} OnFeiDaoEntry：Destination:{1},Source:{2},Trigger:{3}", MainView.GetType().FullName, x.Destination, x.Source, x.Trigger);
             if (stateDefModel.DefStates[x.Destination].StateEntry != null && stateDefModel.DefStates[x.Destination].StateEntry.Count > 0)
             {
                 ExecuteRule(stateDefModel.DefStates[x.Destination].StateEntry);
