@@ -403,10 +403,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     }
                 }
             }
-            else
-            {
-                VicMessageBoxNormal.Show("请选择选中行！");
-            }
         }
 
     }

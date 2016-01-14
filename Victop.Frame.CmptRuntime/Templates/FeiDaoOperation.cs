@@ -564,7 +564,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="dgridName">控件名</param>
         /// <param name="oav">接收oav</param>
         /// <param name="oavmsg">消息oav</param>
-        public void VicDataGridIsSelectItem(string dgridName, OAVModel oav, OAVModel oavmsg)
+        public void VicDataGridIsSelectItem(string dgridName, OAVModel oav, OAVModel oavmsg=null)
         {
             uIElementOperation.VicDataGridIsSelectItem(dgridName, oav, oavmsg);
         }
