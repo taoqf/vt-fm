@@ -238,6 +238,20 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.VicDataGridSelectRowDelete( pblockName);
         }
+        /// <summary>
+        /// 设置PBlock数据
+        /// </summary>
+        /// <param name="pblockNameOne">需要赋值的区块名称</param>
+        /// <param name="pblockNameTwo">作为模板赋值的区块名称</param>
+        /// <param name="pblockNameThree">作为赋值的区块名称</param>
+        /// <param name="fildone">左表</param>
+        /// <param name="fildtwo">右表</param>
+        /// <param name="fildthree">左表</param>
+        /// <param name="fildfour">右表</param>
+        public void SetPBlockData(string pblockNameOne, string pblockNameTwo, string pblockNameThree, string fildone, string fildtwo, string fildthree, string fildfour)
+        {
+            dataOperation.SetPBlockData(pblockNameOne, pblockNameTwo, pblockNameThree, fildone, fildtwo, fildthree, fildfour);
+        }
         #endregion
 
         #region 系统操作

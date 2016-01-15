@@ -456,6 +456,34 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+        /// <summary>
+        /// 设置PBlock数据
+        /// </summary>
+        /// <param name="pblockNameOne">需要赋值的区块名称</param>
+        /// <param name="pblockNameTwo">作为模板赋值的区块名称</param>
+        /// <param name="pblockNameThree">作为赋值的区块名称</param>
+        /// <param name="fildone">左表</param>
+        /// <param name="fildtwo">右表</param>
+        /// <param name="fildthree">左表</param>
+        /// <param name="fildfour">右表</param>
+        public void SetPBlockData(string pblockNameOne, string pblockNameTwo, string pblockNameThree, string fildone, string fildtwo, string fildthree, string fildfour)
+        {
+            if (!string.IsNullOrWhiteSpace(pblockNameOne) && !string.IsNullOrWhiteSpace(pblockNameTwo) && !string.IsNullOrWhiteSpace(pblockNameThree))
+            {
+                PresentationBlockModel pBlockOne = MainView.GetPresentationBlockModel(pblockNameOne);
+                PresentationBlockModel pBlockTwo = MainView.GetPresentationBlockModel(pblockNameTwo);
+                PresentationBlockModel pBlockThree = MainView.GetPresentationBlockModel(pblockNameThree);
+                if (pBlockOne != null && pBlockTwo != null && pBlockThree != null)
+                {
+                    pBlockOne.ViewBlockDataTable = pBlockTwo.ViewBlockDataTable.Copy();
+                    DataRow dr = pBlockOne.ViewBlockDataTable.NewRow();
+                    dr["_id"] = Guid.NewGuid().ToString();
+                    dr[fildone] = pBlockThree.ViewBlockDataTable.Rows[0][fildtwo];
+                    dr[fildthree] = pBlockThree.ViewBlockDataTable.Rows[0][fildfour];
+                    pBlockOne.ViewBlockDataTable.Rows.Add(dr);
+                }
+            }
+        }
 
     }
 }
