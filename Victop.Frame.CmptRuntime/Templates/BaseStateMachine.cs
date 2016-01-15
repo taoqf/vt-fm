@@ -31,6 +31,8 @@ namespace Victop.Frame.CmptRuntime
         private org.drools.FactHandle stateHandle;
         private StateDefineModel stateDefModel;
         private WorkingMemory dSession;
+        private bool fromRule = false;
+        private List<string> transGroup = new List<string>();
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -142,14 +144,33 @@ namespace Victop.Frame.CmptRuntime
             {
                 ExecuteRule(stateDefModel.DefStates[x.Destination].StateDone);
             }
+            if (fromRule && transGroup.Count > 0)
+            {
+                for (int i = transGroup.Count - 1; i >= 0; i--)
+                {
+                    dSession.setFocus(transGroup[i]);
+                    dSession.fireAllRules();
+                }
+                transGroup.Clear();
+            }
         }
 
         private void ExecuteRule(List<string> ListStr)
         {
-            foreach (var item in ListStr)
+            if (fromRule)
             {
-                dSession.setFocus(item);
-                dSession.fireAllRules();
+                foreach (var item in ListStr)
+                {
+                    transGroup.Add(item);
+                }
+            }
+            else
+            {
+                foreach (var item in ListStr)
+                {
+                    dSession.setFocus(item);
+                    dSession.fireAllRules();
+                }
             }
         }
         /// <summary>
@@ -164,7 +185,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 插入事实
         /// </summary>
-        /// <param name="oav"></param>
+        /// <param name="oav">事实</param>
         public void InsertFact(OAVModel oav)
         {
             dSession.assertObject(oav);
@@ -172,7 +193,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 修改事实
         /// </summary>
-        /// <param name="oav"></param>
+        /// <param name="oav">事实</param>
         public void UpdateFact(OAVModel oav)
         {
             dSession.modifyObject(dSession.getFactHandle(oav), oav);
@@ -180,7 +201,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 移除事实
         /// </summary>
-        /// <param name="oav"></param>
+        /// <param name="oav">事实</param>
         public void RemoveFact(OAVModel oav)
         {
             dSession.retractObject(dSession.getFactHandle(oav));
@@ -191,8 +212,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="triggerName">动作名称</param>
         /// <param name="triggerSource">动作触发源</param>
-        public void Do(string triggerName, object triggerSource)
+        /// <param name="fromRule">是否来源与规则</param>
+        public void Do(string triggerName, object triggerSource, bool fromRule = false)
         {
+            this.fromRule = fromRule;
             if (FeiDaoFSM.CanFire(triggerName) && OnFeiDaoGuard(triggerName))
             {
                 stateModel.ActionName = triggerName;

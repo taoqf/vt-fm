@@ -41,7 +41,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="triggerSource">触发源</param>
         public void TranslationState(string triggerName,object triggerSource)
         {
-            MainView.FeiDaoFSM.Do(triggerName, triggerSource);
+            MainView.FeiDaoFSM.Do(triggerName, triggerSource,true);
         }
 
         /// <summary>
