@@ -109,7 +109,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="paramInfo">事件触发元素</param>
         public void ExcutePageTrigger(string pageTrigger, object paramInfo)
         {
-            MainView.ParentControl.FeiDaoFSM.Do(pageTrigger, paramInfo);
+            if (MainView.ParentControl != null)
+            {
+                MainView.ParentControl.FeiDaoFSM.Do(pageTrigger, paramInfo);
+            }
         }
         /// <summary>
         /// 执行组件动作
