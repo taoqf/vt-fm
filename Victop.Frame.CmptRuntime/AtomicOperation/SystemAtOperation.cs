@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
@@ -314,6 +317,56 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     tc.Visibility = Visibility.Collapsed;
                 }
             }
+        }
+        /// <summary>
+        /// 弹框展示当前组件中的一部分
+        /// </summary>
+        /// <param name="layoutName">布局名称</param>
+        public void UcCurrentCompntContentShow(string layoutName)
+        {
+            VicPopup controlConten = MainView.FindName(layoutName) as VicPopup;
+            if (controlConten == null)
+            {
+                Console.WriteLine("原子操作：UcCurrentCompntContentShow未找到布局" + layoutName);
+                LoggerHelper.Info("原子操作：UcCurrentCompntContentShow未找到布局" + layoutName);
+                return;
+            }
+            controlConten.IsOpen = true;
+            controlConten.PlacementTarget = MainView.ParentControl;
+            controlConten.Placement=PlacementMode.Center;
+        }
+        /// <summary>
+        /// 弹框关闭操作
+        /// </summary>
+        /// <param name="layoutName">布局名称</param>
+        public void UcCurrentCompntContentClose(string layoutName)
+        {
+            VicPopup controlConten = MainView.FindName(layoutName) as VicPopup;
+            if (controlConten!=null)
+            {
+                controlConten.IsOpen = false;
+            }
+        }
+        /// <summary>
+        /// 将文件写入指定文件
+        /// </summary>
+        /// <param name="fileName">文件名称</param>
+        /// <param name="content">规则内容</param>
+        public void WriteTextToFile(string fileName,string content)
+        {
+            string fullfile = string.Format("{0}\\{1}", AppDomain.CurrentDomain.BaseDirectory, fileName);
+            StreamReader objReader = new StreamReader(fullfile);
+            string text = objReader.ReadToEnd();
+            int positon = text.IndexOf("#");
+            text.Remove(positon);
+            objReader.Close();
+            FileStream fs = new FileStream(fullfile, FileMode.Create);
+            StreamWriter sw = new StreamWriter(fs);
+            sw.Write(text);
+            sw.WriteLine(content);
+            sw.Flush();
+            sw.Close();
+            fs.Close();
         }
         #region 类型转换
         /// <summary>
