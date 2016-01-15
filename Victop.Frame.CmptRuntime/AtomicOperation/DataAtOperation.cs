@@ -345,7 +345,15 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             VicDataGrid datagrid = dgrid as VicDataGrid;
             if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && datagrid != null)
             {
-                pBlock.PreBlockSelectedRow = datagrid.SelectedItem != null ? ((DataRowView)datagrid.SelectedItem).Row : null;
+                if (datagrid.SelectedItem != null)
+                {
+                    pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
+                    pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
+                }
+                else
+                {
+                    pBlock.PreBlockSelectedRow = null;
+                }
             }
         }
 
