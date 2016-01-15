@@ -64,6 +64,7 @@ namespace Victop.Frame.CmptRuntime
         {
             if (stateDefModel != null)
             {
+                List<string> configFromList = new List<string>();
                 foreach (var item in stateDefModel.DefTransitions)
                 {
                     if (item.InfoFrom.Equals(item.InfoTo))
@@ -76,9 +77,13 @@ namespace Victop.Frame.CmptRuntime
                         FeiDaoFSM.Configure(item.InfoFrom)
                             .Permit(item.InfoName, item.InfoTo);
                     }
-                    FeiDaoFSM.Configure(item.InfoFrom)
-                        .OnEntry((x) => OnFeiDaoEntry(x))
-                        .OnExit((x) => OnFeiDaoExit(x));
+                    if (!configFromList.Contains(item.InfoFrom))
+                    {
+                        FeiDaoFSM.Configure(item.InfoFrom)
+                            .OnEntry((x) => OnFeiDaoEntry(x))
+                            .OnExit((x) => OnFeiDaoExit(x));
+                        configFromList.Add(item.InfoFrom);
+                    }
                 }
             }
         }
