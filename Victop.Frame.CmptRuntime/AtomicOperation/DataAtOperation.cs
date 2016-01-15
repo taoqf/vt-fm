@@ -293,7 +293,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void PBlockAddRow(string pBlockName)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
-            if (pBlock != null&&pBlock.ViewBlockDataTable!=null)
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
             {
                 DataRow dr = pBlock.ViewBlockDataTable.NewRow();
                 dr["_id"] = Guid.NewGuid().ToString();
@@ -345,7 +345,59 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             VicDataGrid datagrid = dgrid as VicDataGrid;
             if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && datagrid != null)
             {
-                    pBlock.PreBlockSelectedRow = datagrid.SelectedItem != null?((DataRowView)datagrid.SelectedItem).Row:null;
+                pBlock.PreBlockSelectedRow = datagrid.SelectedItem != null ? ((DataRowView)datagrid.SelectedItem).Row : null;
+            }
+        }
+
+        /// <summary>
+        /// 移动选择行
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="oavdirection">方向oav</param>
+        /// <param name="oavfield">排序字段oav</param>
+        public void VicDataGridSelectRowMove(string pblockName, OAVModel oavdirection, OAVModel oavfield)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.PreBlockSelectedRow != null && oavfield.AtrributeValue != null && !string.IsNullOrEmpty(oavfield.AtrributeValue.ToString()))
+            {
+                string field = oavfield.AtrributeValue.ToString();
+                DataRow[] drTem = pBlock.ViewBlockDataTable.Select("_id='" + pBlock.PreBlockSelectedRow["_id"].ToString() + "'");
+                if (drTem.Length > 0)
+                {
+                    if (oavdirection.AtrributeValue.Equals("up"))
+                    {
+                        int order = 0;
+                        if (Int32.TryParse(drTem[0][field].ToString(), out order))
+                        {
+                            if (order > 1)
+                            {
+                                DataRow[] drSub = pBlock.ViewBlockDataTable.Select("" + field + "='" + (order - 1).ToString() + "'");
+                                if (drSub.Length > 0)
+                                {
+                                    drSub[0][field] = order;
+                                    drTem[0][field] = order - 1;
+                                }
+                            }
+                        }
+                    }
+                    if (oavdirection.AtrributeValue.Equals("down"))
+                    {
+                        int order = 0;
+                        if (Int32.TryParse(drTem[0][field].ToString(), out order))
+                        {
+                            if (order < pBlock.ViewBlockDataTable.Rows.Count)
+                            {
+                                DataRow[] drAdd = pBlock.ViewBlockDataTable.Select("" + field + "='" + (order + 1).ToString() + "'");
+                                if (drAdd.Length > 0)
+                                {
+                                    drAdd[0][field] = order + 1;
+                                    drTem[0][field] = order;
+                                }
+                            }
+                        }
+                    }
+                    pBlock.ViewBlockDataTable.DefaultView.Sort = "" + field + " asc";
+                }
             }
         }
         /// <summary>
@@ -385,10 +437,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 删除选中行
         /// </summary>
         /// <param name="pblockName">区块名称</param>
-        public void VicDataGridSelectRowDelete( string pblockName)
+        public void VicDataGridSelectRowDelete(string pblockName)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.PreBlockSelectedRow!=null)
+            if (pBlock != null && pBlock.PreBlockSelectedRow != null)
             {
                 DataRow[] drTem = pBlock.ViewBlockDataTable.Select("_id='" + pBlock.PreBlockSelectedRow["_id"].ToString() + "'");
                 if (drTem.Length > 0)

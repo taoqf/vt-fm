@@ -167,6 +167,16 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetPBlockCurrentRowByDataGrid(pBlockName, dgrid);
         }
         /// <summary>
+        /// 移动选择行
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="oavdirection">方向oav</param>
+        /// <param name="oavfield">字段oav</param>
+        public void VicDataGridSelectRowMove(string pblockName, OAVModel oavdirection, OAVModel oavfield)
+        {
+            dataOperation.VicDataGridSelectRowMove(pblockName, oavdirection, oavfield);
+        }
+        /// <summary>
         /// 提交BlockData的数据
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
