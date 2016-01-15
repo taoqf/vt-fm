@@ -429,6 +429,31 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.SetActionGuard(se, oav, oavmsg);
         }
+        /// <summary>
+        /// 弹框展示当前组件中的一部分
+        /// </summary>
+        /// <param name="layoutName">布局名称</param>
+        public void UcCurrentCompntContentShow(string layoutName)
+        {
+            systemOperation.UcCurrentCompntContentShow(layoutName);
+        }
+        /// <summary>
+        /// 弹框关闭操作
+        /// </summary>
+        /// <param name="layoutName">布局名称</param>
+        public void UcCurrentCompntContentClose(string layoutName)
+        {
+            systemOperation.UcCurrentCompntContentClose(layoutName);
+        }
+        /// <summary>
+        /// 将文件写入指定文件
+        /// </summary>
+        /// <param name="fileName">文件名称</param>
+        /// <param name="content">规则内容</param>
+        public void WriteTextToFile(string fileName, string content)
+        {
+            systemOperation.WriteTextToFile(fileName, content);
+        }
 
         #region 类型转换
         /// <summary>
