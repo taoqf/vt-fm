@@ -31,7 +31,6 @@ namespace Victop.Frame.CmptRuntime
         private org.drools.FactHandle stateHandle;
         private StateDefineModel stateDefModel;
         private WorkingMemory dSession;
-        private List<string> transGroup = new List<string>();
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -143,23 +142,14 @@ namespace Victop.Frame.CmptRuntime
             {
                 ExecuteRule(stateDefModel.DefStates[x.Destination].StateDone);
             }
-            if (transGroup.Count > 0)
-            {
-                for (int i = transGroup.Count - 1; i >= 0; i--)
-                {
-                    LoggerHelper.InfoFormat("{0} setFocus:{1}", MainView.GetType().FullName, transGroup[i]);
-                    dSession.setFocus(transGroup[i]);
-                    dSession.fireAllRules();
-                }
-                transGroup.Clear();
-            }
         }
 
         private void ExecuteRule(List<string> ListStr)
         {
             foreach (var item in ListStr)
             {
-                transGroup.Add(item);
+                dSession.setFocus(item);
+                dSession.fireAllRules();
             }
         }
         /// <summary>
