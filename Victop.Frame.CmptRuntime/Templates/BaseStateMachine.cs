@@ -148,6 +148,7 @@ namespace Victop.Frame.CmptRuntime
             {
                 for (int i = transGroup.Count - 1; i >= 0; i--)
                 {
+                    LoggerHelper.InfoFormat("{0} OnFeiDaoEntry  setFocus:{1}", MainView.GetType().FullName, transGroup[i]);
                     dSession.setFocus(transGroup[i]);
                     dSession.fireAllRules();
                 }
@@ -168,6 +169,7 @@ namespace Victop.Frame.CmptRuntime
             {
                 foreach (var item in ListStr)
                 {
+                    LoggerHelper.InfoFormat("{0} ExecuteRule  setFocus:{1}", MainView.GetType().FullName, item);
                     dSession.setFocus(item);
                     dSession.fireAllRules();
                 }
@@ -179,7 +181,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="groupName"></param>
         public void SetFocus(string groupName)
         {
-            LoggerHelper.InfoFormat("{0} setFocus:{1}", MainView.GetType().FullName, groupName);
+            LoggerHelper.InfoFormat("{0} SetFocus setFocus:{1}", MainView.GetType().FullName, groupName);
             dSession.setFocus(groupName);
         }
         /// <summary>
