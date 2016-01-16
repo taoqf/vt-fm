@@ -167,16 +167,6 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetPBlockCurrentRowByDataGrid(pBlockName, dgrid);
         }
         /// <summary>
-        /// 移动选择行
-        /// </summary>
-        /// <param name="pblockName">区块名称</param>
-        /// <param name="oavdirection">方向oav</param>
-        /// <param name="oavfield">字段oav</param>
-        public void VicDataGridSelectRowMove(string pblockName, OAVModel oavdirection, OAVModel oavfield)
-        {
-            dataOperation.VicDataGridSelectRowMove(pblockName, oavdirection, oavfield);
-        }
-        /// <summary>
         /// 提交BlockData的数据
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
@@ -219,6 +209,65 @@ namespace Victop.Frame.CmptRuntime
         public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
         {
            dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
+        }
+        /// <summary>
+        /// 获取选中行的上一行列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowUpGet(string pblockName, string paramName, OAVModel oav)
+        {
+            dataOperation.ParamsCurrentRowUpGet(pblockName, paramName, oav);
+        }
+        /// <summary>
+        /// 获取选中行的下一行列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowDownGet(string pblockName, string paramName, OAVModel oav)
+        {
+            dataOperation.ParamsCurrentRowDownGet(pblockName, paramName, oav);
+        }
+        /// <summary>
+        /// 数据行交换
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="oavCurrent">当行选择行</param>
+        /// <param name="oavUpOrDown">当前行的上一行或下一行</param>
+        /// <param name="fieldName">排序字段</param>
+        public void BlockDataExChange(string pblockName, OAVModel oavCurrent, OAVModel oavUpOrDown, string fieldName)
+        {
+            dataOperation.BlockDataExChange(pblockName, oavCurrent, oavUpOrDown, fieldName);
+        }
+        /// <summary>
+        /// 获取最大序号加1
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="oav">接受oav</param>
+        public void GetMaxNumber(string pblockName, string fieldName, OAVModel oav)
+        {
+            dataOperation.GetMaxNumber(pblockName, fieldName, oav);
+        }
+        /// <summary>
+        /// 重新排序
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">排序字段名称</param>
+        public void SetBlockAgainOrder(string pblockName, string fieldName)
+        {
+            dataOperation.SetBlockAgainOrder(pblockName, fieldName);
+        }
+        /// <summary>
+        /// 设置排序
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">排序字段名称</param>
+        public void SetBlockOrder(string pblockName, string fieldName)
+        {
+            dataOperation.SetBlockOrder(pblockName, fieldName);
         }
         /// <summary>
         /// 赋值选中行的列值
@@ -528,6 +577,15 @@ namespace Victop.Frame.CmptRuntime
         public void SetButtonText(string btnName, string btnContent)
         {
             uIElementOperation.SetButtonText(btnName, btnContent);
+        }
+        /// <summary>
+        /// 获取界面元素名称
+        /// </summary>
+        /// <param name="element">界面元素</param>
+        /// <param name="oav">接受oav</param>
+        public void GetElementName(FrameworkElement element, OAVModel oav)
+        {
+            uIElementOperation.GetElementName(element, oav);
         }
         /// <summary>
         /// 设置按钮是否被选择

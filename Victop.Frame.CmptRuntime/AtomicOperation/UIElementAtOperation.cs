@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -42,6 +43,18 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             Button btn = MainView.FindName(btnName) as Button;
             if (btn != null)
                 btn.Content = btnContent;
+        }
+        /// <summary>
+        /// 获取界面元素名称
+        /// </summary>
+        /// <param name="element">界面元素</param>
+        /// <param name="oav">接受oav</param>
+        public void GetElementName(FrameworkElement element, OAVModel oav)
+        {
+            if (element != null && oav != null)
+            {
+                oav.AtrributeValue = element.Name;
+            }
         }
         /// <summary>
         /// 设置按钮是否被选择

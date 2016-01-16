@@ -356,58 +356,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
-
-        /// <summary>
-        /// 移动选择行
-        /// </summary>
-        /// <param name="pblockName">区块名称</param>
-        /// <param name="oavdirection">方向oav</param>
-        /// <param name="oavfield">排序字段oav</param>
-        public void VicDataGridSelectRowMove(string pblockName, OAVModel oavdirection, OAVModel oavfield)
-        {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.PreBlockSelectedRow != null && oavfield.AtrributeValue != null && !string.IsNullOrEmpty(oavfield.AtrributeValue.ToString()))
-            {
-                string field = oavfield.AtrributeValue.ToString();
-                DataRow[] drTem = pBlock.ViewBlockDataTable.Select("_id='" + pBlock.PreBlockSelectedRow["_id"].ToString() + "'");
-                if (drTem.Length > 0)
-                {
-                    if (oavdirection.AtrributeValue.Equals("up"))
-                    {
-                        int order = 0;
-                        if (Int32.TryParse(drTem[0][field].ToString(), out order))
-                        {
-                            if (order > 1)
-                            {
-                                DataRow[] drSub = pBlock.ViewBlockDataTable.Select("" + field + "='" + (order - 1).ToString() + "'");
-                                if (drSub.Length > 0)
-                                {
-                                    drSub[0][field] = order;
-                                    drTem[0][field] = order - 1;
-                                }
-                            }
-                        }
-                    }
-                    if (oavdirection.AtrributeValue.Equals("down"))
-                    {
-                        int order = 0;
-                        if (Int32.TryParse(drTem[0][field].ToString(), out order))
-                        {
-                            if (order < pBlock.ViewBlockDataTable.Rows.Count)
-                            {
-                                DataRow[] drAdd = pBlock.ViewBlockDataTable.Select("" + field + "='" + (order + 1).ToString() + "'");
-                                if (drAdd.Length > 0)
-                                {
-                                    drAdd[0][field] = order + 1;
-                                    drTem[0][field] = order;
-                                }
-                            }
-                        }
-                    }
-                    pBlock.ViewBlockDataTable.DefaultView.Sort = "" + field + " asc";
-                }
-            }
-        }
         /// <summary>
         /// 获取选中行的列值
         /// </summary>
@@ -420,6 +368,147 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
             {
                 oav.AtrributeValue = pBlock.PreBlockSelectedRow[paramName];
+            }
+        }
+        /// <summary>
+        /// 获取选中行的上一行列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowUpGet(string pblockName, string fieldName, OAVModel oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.PreBlockSelectedRow != null && !string.IsNullOrEmpty(fieldName) && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+            {
+                if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+                {
+                    int index = 1;
+                    if (Int32.TryParse(pBlock.PreBlockSelectedRow[fieldName].ToString(), out index))
+                    {
+                        if (index > 1)
+                        {
+                            oav.AtrributeValue = index - 1;
+                        }
+                        else if (index == 1)
+                        {
+                            oav.AtrributeValue = index;
+                        }
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 获取选中行的下一行列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowDownGet(string pblockName, string fieldName, OAVModel oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.PreBlockSelectedRow != null && !string.IsNullOrEmpty(fieldName) && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+            {
+                if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+                {
+                    int index = 1;
+                    if (Int32.TryParse(pBlock.PreBlockSelectedRow[fieldName].ToString(), out index))
+                    {
+                        if (index < pBlock.ViewBlockDataTable.Rows.Count)
+                        {
+                            oav.AtrributeValue = index + 1;
+                        }
+                        else if (index == pBlock.ViewBlockDataTable.Rows.Count)
+                        {
+                            oav.AtrributeValue = index;
+                        }
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 数据行交换
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="oavCurrent">当行选择行</param>
+        /// <param name="oavUpOrDown">当前行的上一行或下一行</param>
+        /// <param name="fieldName">排序字段</param>
+        public void BlockDataExChange(string pblockName, OAVModel oavCurrent, OAVModel oavUpOrDown, string fieldName)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.PreBlockSelectedRow != null && oavCurrent.AtrributeValue != null & oavUpOrDown.AtrributeValue != null)
+            {
+                int indexCurrent = 1;
+                int indexUpOrDown = 1;
+                if (Int32.TryParse(oavCurrent.AtrributeValue.ToString(), out indexCurrent) && Int32.TryParse(oavUpOrDown.AtrributeValue.ToString(), out indexUpOrDown))
+                {
+                    DataRow[] drCurrent = pBlock.ViewBlockDataTable.Select("" + fieldName + "='" + oavCurrent.AtrributeValue.ToString() + "'");
+                    DataRow[] drUpOrDown = pBlock.ViewBlockDataTable.Select("" + fieldName + "='" + oavUpOrDown.AtrributeValue.ToString() + "'");
+                    if (drCurrent.Length > 0 && drUpOrDown.Length > 0)
+                    {
+                        drCurrent[0][fieldName] = indexUpOrDown;
+                        drUpOrDown[0][fieldName] = indexCurrent;
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 获取最大序号加1
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="oav">接受oav</param>
+        public void GetMaxNumber(string pblockName, string fieldName, OAVModel oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
+            {
+                if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+                {
+                    int item_number = 1;
+                    if (Int32.TryParse(pBlock.ViewBlockDataTable.Compute("max(" + fieldName + ")", string.Empty).ToString(), out item_number))
+                    {
+                        oav.AtrributeValue = item_number + 1;
+                    }
+                    else
+                    {
+                        oav.AtrributeValue = 1;
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 重新排序
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">排序字段名称</param>
+        public void SetBlockAgainOrder(string pblockName, string fieldName)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+            {
+                int RowCount = 0;
+                foreach (DataRow Dr in pBlock.ViewBlockDataTable.Rows)
+                {
+                    if (Dr.RowState != DataRowState.Deleted && Dr.RowState != DataRowState.Detached)
+                    {
+                        RowCount++;
+                        Dr[fieldName] = RowCount;
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 设置排序
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldname">排序字段名称</param>
+        public void SetBlockOrder(string pblockName, string fieldname)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
+            {
+                pBlock.ViewBlockDataTable.DefaultView.Sort = "order asc";
             }
         }
         /// <summary>
