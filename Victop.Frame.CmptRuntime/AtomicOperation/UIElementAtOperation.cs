@@ -193,6 +193,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             else
             {
                 oav.AtrributeValue = false;
+                if(oavmsg!=null)
                 oavmsg.AtrributeValue = "当前选择项为空";
             }
         }
