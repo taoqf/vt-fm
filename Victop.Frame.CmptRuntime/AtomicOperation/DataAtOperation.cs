@@ -25,7 +25,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 新增行参数
         /// </summary>
         private Dictionary<string, Dictionary<string, object>> rowAddParamDic = new Dictionary<string, Dictionary<string, object>>();
+        /// <summary>
+        /// p生成的oav集合
+        /// </summary>
+        private Dictionary<string, Dictionary<string, List<OAVModel>>> pblockOAVDic = new Dictionary<string, Dictionary<string, List<OAVModel>>>();
         #endregion
+
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -582,6 +587,106 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
-
+        /// <summary>
+        /// 新增OAV根据区块数据
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        public void InsertOAVByPBlock(string pblockName,string fieldName)
+        {
+            PresentationBlockModel pBlock= MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+            {
+                List<OAVModel> listOAV=new List<OAVModel>();
+                foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
+                {
+                    string objectName = pblockName + ":" + dr["_id"].ToString();
+                    foreach (DataColumn col in pBlock.ViewBlockDataTable.Columns)
+                    {
+                        if (col.ColumnName == fieldName)
+                        {
+                            OAVModel oavNew = new OAVModel(objectName, col.ColumnName, dr[col.ColumnName]);
+                            MainView.FeiDaoFSM.InsertFact(oavNew);
+                            listOAV.Add(oavNew);
+                        }
+                    }
+                }
+                //存在oav清除
+                if (pblockOAVDic.ContainsKey(pblockName) && pblockOAVDic[pblockName].ContainsKey(fieldName))
+                {
+                    try
+                    {
+                        foreach (OAVModel oav in pblockOAVDic[pblockName][fieldName])
+                        {
+                            MainView.FeiDaoFSM.RemoveFact(oav);
+                        }
+                        pblockOAVDic[pblockName].Remove(fieldName);
+                    }
+                    catch (Exception ex)
+                    {
+                        pblockOAVDic[pblockName].Remove(fieldName);
+                        LoggerHelper.Error(ex.ToString());
+                    }
+                }
+                if (pblockOAVDic.ContainsKey(pblockName))
+                {
+                    pblockOAVDic[pblockName].Add(fieldName, listOAV);
+                }
+                else
+                {
+                    Dictionary<string, List<OAVModel>> dicOAV = new Dictionary<string, List<OAVModel>>();
+                    dicOAV.Add(fieldName, listOAV);
+                    pblockOAVDic.Add(pblockName, dicOAV);
+                }
+            }
+        }
+        /// <summary>
+        /// 设置选中集合
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名</param>
+        /// <param name="fieldValue">字段值</param>
+        public void SetSelectRows(string pblockName, string fieldName, object fieldValue)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            {
+                    DataRow[] drSelect = pBlock.ViewBlockDataTable.Select(fieldName + "='" + fieldValue.ToString() + "'");
+                    foreach (DataRow dr in drSelect)
+                    {
+                        dr["VicCheckFlag"] = true;
+                    }
+            }
+        }
+        /// <summary>
+        /// 设置全不选
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        public void SetSelectRowsNull(string pblockName)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            {
+                foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
+                {
+                    dr["VicCheckFlag"] = false;
+                }
+            }
+        }
+        /// <summary>
+        /// 设置全选
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        public void SetSelectRowsAll(string pblockName)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            {
+                foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
+                {
+                    dr["VicCheckFlag"] = true;
+                }
+            }
+        }
     }
 }

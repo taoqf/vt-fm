@@ -302,6 +302,41 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetPBlockData(pblockNameOne, pblockNameTwo, pblockNameThree, fildone, fildtwo, fildthree, fildfour);
         }
+        // <summary>
+        /// 新增OAV根据区块数据
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="pblockName">字段名称</param>
+        public void InsertOAVByPBlock(string pblockName, string fieldName)
+        {
+            dataOperation.InsertOAVByPBlock(pblockName, fieldName);
+        }
+        /// <summary>
+        /// 设置选中集合
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名</param>
+        /// <param name="fieldValue">字段值</param>
+        public void SetSelectRows(string pblockName, string fieldName, object fieldValue)
+        {
+            dataOperation.SetSelectRows(pblockName, fieldName, fieldValue);
+        }
+        /// <summary>
+        /// 设置全不选
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        public void SetSelectRowsNull(string pblockName)
+        {
+            dataOperation.SetSelectRowsNull(pblockName);
+        }
+        /// <summary>
+        /// 设置全选
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        public void SetSelectRowsAll(string pblockName)
+        {
+            dataOperation.SetSelectRowsAll(pblockName);
+        }
         #endregion
 
         #region 系统操作
