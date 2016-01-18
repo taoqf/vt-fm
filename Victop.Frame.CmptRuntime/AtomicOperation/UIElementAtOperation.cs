@@ -57,6 +57,22 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 设置元素是否启用
+        /// </summary>
+        /// <param name="elementName">界面元素名称</param>
+        /// <param name="state">状态（0启用，1不可用）</param>
+        public void SetElementIsEnabled(string elementName, int state = 0)
+        {
+            FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
+            if (element != null )
+            {
+                if (state == 0)
+                    element.IsEnabled = true;
+                else
+                    element.IsEnabled = false;
+            }
+        }
+        /// <summary>
         /// 设置按钮是否被选择
         /// </summary>
         /// <param name="paramValue">按钮的名称(Name)</param>

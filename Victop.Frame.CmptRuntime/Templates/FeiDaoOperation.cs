@@ -596,6 +596,15 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.SetButtonSelect(paramValue, isSelect);
         }
+        /// <summary>
+        /// 设置元素是否启用
+        /// </summary>
+        /// <param name="elementName">界面元素名称</param>
+        /// <param name="state">状态（0启用，1不可用）</param>
+        public void SetElementIsEnabled(string elementName, int state = 0)
+        {
+            uIElementOperation.SetElementIsEnabled(elementName, state);
+        }
         #region VicTreeView原子操作
         /// <summary>
         /// 得到tree选中的值
