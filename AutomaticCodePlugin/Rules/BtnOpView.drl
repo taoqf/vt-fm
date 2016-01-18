@@ -14,7 +14,7 @@ rule RecurseLoad
 	then
 		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionTrigger);
 		FeiDao.SysConsole("BtnOpViewRules:"+se.ActionDestination);
-		FeiDao.InsertFact(new OAVModel("a","a",true));
+		FeiDao.InsertFact(new OAVModel("a","a","true"));
 end
 
 rule RecurseSearch
@@ -22,7 +22,7 @@ rule RecurseSearch
 	salience 10
 	when
 		se : StateTransitionModel ()
-		o1:  OAVModel(ObjectName=="a",AtrributeName=="a",AtrributeValueString=="true")
+		o1:  OAVModel(ObjectName=="a",AtrributeName=="a",AtrributeValue=="true")
 	then
 		
 		FeiDao.ExcutePageTrigger("search",se.ActionSourceElement);
