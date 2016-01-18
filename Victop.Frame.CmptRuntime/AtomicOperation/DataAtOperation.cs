@@ -269,10 +269,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 提交BlockData的数据
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        public void SavePBlockData(string pBlockName)
+        /// <param name="isSaveServer">是否提交服务器</param>
+        public void SavePBlockData(string pBlockName,bool isSaveServer=true)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
-            pBlock.SaveData(true);
+            pBlock.SaveData(isSaveServer);
         }
         /// <summary>
         /// 设置block选中行数据

@@ -170,9 +170,10 @@ namespace Victop.Frame.CmptRuntime
         /// 提交BlockData的数据
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        public void SavePBlockData(string pBlockName)
+        /// <param name="isSaveServer">是否提交服务器</param>
+        public void SavePBlockData(string pBlockName, bool isSaveServer = true)
         {
-            dataOperation.SavePBlockData(pBlockName);
+            dataOperation.SavePBlockData(pBlockName, isSaveServer);
         }
         /// <summary>
         /// 设置block选中行数据
