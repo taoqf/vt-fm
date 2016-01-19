@@ -271,7 +271,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="isSaveServer">是否提交服务器</param>
-        public void SavePBlockData(string pBlockName,bool isSaveServer=true)
+        public void SavePBlockData(string pBlockName, bool isSaveServer = true)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             pBlock.SaveData(isSaveServer);
@@ -293,7 +293,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="oav">接收OAV</param>
-        public void PBlockAddRow(string pBlockName,OAVModel oav)
+        public void PBlockAddRow(string pBlockName, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             if (pBlock != null && pBlock.ViewBlockDataTable != null)
@@ -416,28 +416,23 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 数据行交换
+        /// 数据行列值交换
         /// </summary>
         /// <param name="pblockName">区块名称</param>
-        /// <param name="oavCurrent">当行选择行</param>
-        /// <param name="oavUpOrDown">当前行的上一行或下一行</param>
-        /// <param name="fieldName">排序字段</param>
-        public void BlockDataExChange(string pblockName, OAVModel oavCurrent, OAVModel oavUpOrDown, string fieldName)
+        /// <param name="valueCurrentRow">当行选择行指定列的值</param>
+        /// <param name="valueUpOrDown">当前行的上一行或下一行指定列的值</param>
+        /// <param name="fieldName">字段名称</param>
+        public void BlockDataExChange(string pblockName, object valueCurrentRow, object valueUpOrDown, string fieldName)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.PreBlockSelectedRow != null && oavCurrent.AtrributeValue != null & oavUpOrDown.AtrributeValue != null)
+            if (pBlock != null && pBlock.PreBlockSelectedRow != null && valueCurrentRow != null && valueUpOrDown != null)
             {
-                int indexCurrent = 1;
-                int indexUpOrDown = 1;
-                if (Int32.TryParse(oavCurrent.AtrributeValue.ToString(), out indexCurrent) && Int32.TryParse(oavUpOrDown.AtrributeValue.ToString(), out indexUpOrDown))
+                DataRow[] drCurrent = pBlock.ViewBlockDataTable.Select("" + fieldName + "='" + valueCurrentRow + "'");
+                DataRow[] drUpOrDown = pBlock.ViewBlockDataTable.Select("" + fieldName + "='" + valueUpOrDown + "'");
+                if (drCurrent.Length > 0 && drUpOrDown.Length > 0)
                 {
-                    DataRow[] drCurrent = pBlock.ViewBlockDataTable.Select("" + fieldName + "='" + oavCurrent.AtrributeValue.ToString() + "'");
-                    DataRow[] drUpOrDown = pBlock.ViewBlockDataTable.Select("" + fieldName + "='" + oavUpOrDown.AtrributeValue.ToString() + "'");
-                    if (drCurrent.Length > 0 && drUpOrDown.Length > 0)
-                    {
-                        drCurrent[0][fieldName] = indexUpOrDown;
-                        drUpOrDown[0][fieldName] = indexCurrent;
-                    }
+                    drCurrent[0][fieldName] = valueUpOrDown;
+                    drUpOrDown[0][fieldName] = valueCurrentRow;
                 }
             }
         }
@@ -507,7 +502,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="rowid">行id</param>
         /// <param name="paramName">列名</param>
         /// <param name="paramValue">列值</param>
-        public void ParamsRowSet(string pblockName,object rowid, string paramName, object paramValue)
+        public void ParamsRowSet(string pblockName, object rowid, string paramName, object paramValue)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
@@ -618,12 +613,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="blockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
-        public void BlockSelectRowsToOAV(string blockName,string fieldName)
+        public void BlockSelectRowsToOAV(string blockName, string fieldName)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
             if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName) && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
             {
-                List<OAVModel> listOAV=new List<OAVModel>();
+                List<OAVModel> listOAV = new List<OAVModel>();
                 foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
                 {
                     if (Convert.ToBoolean(dr["VicCheckFlag"].ToString()))
@@ -760,11 +755,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag") && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
             {
-                    DataRow[] drSelect = pBlock.ViewBlockDataTable.Select(fieldName + "='" + fieldValue.ToString() + "'");
-                    foreach (DataRow dr in drSelect)
-                    {
-                        dr["VicCheckFlag"] = true;
-                    }
+                DataRow[] drSelect = pBlock.ViewBlockDataTable.Select(fieldName + "='" + fieldValue.ToString() + "'");
+                foreach (DataRow dr in drSelect)
+                {
+                    dr["VicCheckFlag"] = true;
+                }
             }
         }
         /// <summary>

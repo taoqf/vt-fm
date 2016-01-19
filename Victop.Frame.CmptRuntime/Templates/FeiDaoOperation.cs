@@ -244,15 +244,15 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.ParamsCurrentRowDownGet(pblockName, paramName, oav);
         }
         /// <summary>
-        /// 数据行交换
+        /// 数据行列值交换
         /// </summary>
         /// <param name="pblockName">区块名称</param>
-        /// <param name="oavCurrent">当行选择行</param>
-        /// <param name="oavUpOrDown">当前行的上一行或下一行</param>
-        /// <param name="fieldName">排序字段</param>
-        public void BlockDataExChange(string pblockName, OAVModel oavCurrent, OAVModel oavUpOrDown, string fieldName)
+        /// <param name="valueCurrentRow">当行选择行指定列的值</param>
+        /// <param name="valueUpOrDown">当前行的上一行或下一行指定列的值</param>
+        /// <param name="fieldName">字段名称</param>
+        public void BlockDataExChange(string pblockName, object valueCurrentRow, object valueUpOrDown, string fieldName)
         {
-            dataOperation.BlockDataExChange(pblockName, oavCurrent, oavUpOrDown, fieldName);
+            dataOperation.BlockDataExChange(pblockName, valueCurrentRow, valueUpOrDown, fieldName);
         }
         /// <summary>
         /// 获取最大序号加1
