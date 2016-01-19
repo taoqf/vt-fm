@@ -311,7 +311,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="blockName">区块名称</param>
         /// <param name="position">插入位置</param>
         /// <param name="oav">接收oav</param>
-        public void blockInsertRow(string blockName, int position, OAVModel oav)
+        public void BlockInsertRow(string blockName, int position, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
             if (pBlock != null && pBlock.ViewBlockDataTable != null)
@@ -507,7 +507,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="rowid">行id</param>
         /// <param name="paramName">列名</param>
         /// <param name="paramValue">列值</param>
-        public void ParamsCurrentRowSet(string pblockName,object rowid, string paramName, object paramValue)
+        public void ParamsRowSet(string pblockName,object rowid, string paramName, object paramValue)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
@@ -794,6 +794,41 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
                 {
                     dr["VicCheckFlag"] = true;
+                }
+            }
+        }
+        /// <summary>
+        /// 获取最大序号加1(字段中首字母为字母)
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="firstLetter">首字母</param>
+        /// <param name="oav">接受oav</param>
+        public void GetMaxNumberFromOneLetter(string pblockName, string fieldName, string firstLetter, OAVModel oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
+            {
+                if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+                {
+                    int i = 0;
+                    foreach (DataRow row in pBlock.ViewBlockDataTable.Rows)
+                    {
+                        if (row.RowState == DataRowState.Deleted)
+                            continue;
+                        int param = 0;
+                        int.TryParse(row[fieldName].ToString().Substring(1), out param);
+                        i = i > param ? i : param;
+                    }
+                    if (i < 9)
+                    {
+                        string temp = "0" + (i + 1).ToString();
+                        oav.AtrributeValue = firstLetter + temp;
+                    }
+                    else
+                    {
+                        oav.AtrributeValue = firstLetter + (i + 1).ToString();
+                    }
                 }
             }
         }

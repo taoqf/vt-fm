@@ -200,7 +200,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void blockInsertRow(string blockName, int position, OAVModel oav=null)
         {
-            dataOperation.blockInsertRow(blockName, position,oav);
+            dataOperation.BlockInsertRow(blockName, position,oav);
         }
         /// <summary>
         /// 获取选中行的列值
@@ -219,9 +219,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="rowid">行id</param>
         /// <param name="paramName">列名</param>
         /// <param name="paramValue">列值</param>
-        public void ParamsCurrentRowSet(string pblockName, object rowid, string paramName, object paramValue)
+        public void ParamsRowSet(string pblockName, object rowid, string paramName, object paramValue)
         {
-            dataOperation.ParamsCurrentRowSet(pblockName, rowid, paramName, paramValue);
+            dataOperation.ParamsRowSet(pblockName, rowid, paramName, paramValue);
         }
         /// <summary>
         /// 获取选中行的上一行列值
@@ -373,6 +373,17 @@ namespace Victop.Frame.CmptRuntime
         public void SetSelectRowsAll(string pblockName)
         {
             dataOperation.SetSelectRowsAll(pblockName);
+        }
+        /// <summary>
+        /// 获取最大序号加1(字段中首字母为字母)
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="firstLetter">首字母</param>
+        /// <param name="oav">接受oav</param>
+        public void GetMaxNumberFromOneLetter(string pblockName, string fieldName, string firstLetter, OAVModel oav)
+        {
+            dataOperation.GetMaxNumberFromOneLetter(pblockName, fieldName, firstLetter, oav);
         }
         #endregion
 
