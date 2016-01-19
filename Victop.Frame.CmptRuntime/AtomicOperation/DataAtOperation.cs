@@ -486,13 +486,21 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 设置排序
         /// </summary>
         /// <param name="pblockName">区块名称</param>
-        /// <param name="fieldname">排序字段名称</param>
-        public void SetBlockOrder(string pblockName, string fieldname)
+        /// <param name="fieldName">排序字段名称</param>
+        /// <param name="sort">排序方式1正序-1倒序</param>
+        public void SetBlockOrder(string pblockName, string fieldName, int sort = 1)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable != null)
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
             {
-                pBlock.ViewBlockDataTable.DefaultView.Sort = "order asc";
+                if (sort == 1)
+                {
+                    pBlock.ViewBlockDataTable.DefaultView.Sort = fieldName + " asc";
+                }
+                if (sort == -1)
+                {
+                    pBlock.ViewBlockDataTable.DefaultView.Sort = fieldName + " desc";
+                }
             }
         }
         /// <summary>

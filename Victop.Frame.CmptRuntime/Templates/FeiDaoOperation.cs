@@ -188,7 +188,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="oav">接收OAV</param>
-        public void PBlockAddRow(string pBlockName, OAVModel oav=null)
+        public void PBlockAddRow(string pBlockName, OAVModel oav = null)
         {
             dataOperation.PBlockAddRow(pBlockName, oav);
         }
@@ -198,9 +198,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="blockName">区块名称</param>
         /// <param name="position">插入位置</param>
         /// <param name="oav">接收oav</param>
-        public void blockInsertRow(string blockName, int position, OAVModel oav=null)
+        public void blockInsertRow(string blockName, int position, OAVModel oav = null)
         {
-            dataOperation.BlockInsertRow(blockName, position,oav);
+            dataOperation.BlockInsertRow(blockName, position, oav);
         }
         /// <summary>
         /// 获取选中行的列值
@@ -210,7 +210,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
         {
-           dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
+            dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
         }
         /// <summary>
         /// 赋值行的列值
@@ -278,9 +278,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">排序字段名称</param>
-        public void SetBlockOrder(string pblockName, string fieldName)
+        /// <param name="sort">排序方式1正序-1倒序</param>
+        public void SetBlockOrder(string pblockName, string fieldName, int sort = 1)
         {
-            dataOperation.SetBlockOrder(pblockName, fieldName);
+            dataOperation.SetBlockOrder(pblockName, fieldName, sort);
         }
         /// <summary>
         /// 赋值选中行的列值
@@ -290,15 +291,15 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void ParamsCurrentRowSet(string pblockName, string paramName, OAVModel oav)
         {
-           dataOperation.ParamsCurrentRowSet(pblockName, paramName, oav);
+            dataOperation.ParamsCurrentRowSet(pblockName, paramName, oav);
         }
         /// <summary>
         /// 删除选中行
         /// </summary>
         /// <param name="pblockName">区块名称</param>
-        public void VicDataGridSelectRowDelete( string pblockName)
+        public void VicDataGridSelectRowDelete(string pblockName)
         {
-            dataOperation.VicDataGridSelectRowDelete( pblockName);
+            dataOperation.VicDataGridSelectRowDelete(pblockName);
         }
         /// <summary>
         /// 设置PBlock数据
@@ -454,7 +455,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="paramInfo">事件触发元素</param>
         public void ExcuteComponentTrigger(string compntName, string compntTrigger, object paramInfo)
         {
-            systemOperation.ExcuteComponentTrigger(compntName,compntTrigger, paramInfo);
+            systemOperation.ExcuteComponentTrigger(compntName, compntTrigger, paramInfo);
         }
         /// <summary>
         /// 获取页面参数值
@@ -475,7 +476,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ParamsGetByDictionary(oavDic, paramName, oav);
         }
-        
+
         /// <summary>
         /// 组件参数封装
         /// </summary>
@@ -493,7 +494,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void ParamsInterCompntParse(StateTransitionModel se, string paramName, OAVModel oav)
         {
-           systemOperation.ParamsInterCompntParse( se, paramName, oav);
+            systemOperation.ParamsInterCompntParse(se, paramName, oav);
         }
         /// <summary>
         /// 弹框展示组件操作
@@ -503,7 +504,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="width">宽度</param>
         public void UCCompntShowDialog(string compntName, int height = 600, int width = 600)
         {
-            systemOperation.UCCompntShowDialog( compntName, height = 600, width = 600);
+            systemOperation.UCCompntShowDialog(compntName, height = 600, width = 600);
         }
         /// <summary>
         /// 弹框展示组件操作
@@ -564,7 +565,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="visibility">是否显示</param>
         public void SetCompontVisility(string paramValue, bool visibility)
         {
-          systemOperation.SetCompontVisility( paramValue, visibility);
+            systemOperation.SetCompontVisility(paramValue, visibility);
         }
         /// <summary>
         /// 设置警戒条件
@@ -764,7 +765,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="dgridName">控件名</param>
         /// <param name="oav">接收oav</param>
         /// <param name="oavmsg">消息oav</param>
-        public void VicDataGridIsSelectItem(string dgridName, OAVModel oav, OAVModel oavmsg=null)
+        public void VicDataGridIsSelectItem(string dgridName, OAVModel oav, OAVModel oavmsg = null)
         {
             uIElementOperation.VicDataGridIsSelectItem(dgridName, oav, oavmsg);
         }
@@ -794,11 +795,11 @@ namespace Victop.Frame.CmptRuntime
         #endregion
 
         #endregion
-     
-        
-   
 
 
-        
+
+
+
+
     }
 }
