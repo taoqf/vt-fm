@@ -513,7 +513,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void ParamsRowSet(string pblockName, object rowid, string paramName, object paramValue)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
+            if (pBlock.ViewBlockDataTable.Columns.Contains(paramName))
             {
                 DataRow[] drSelected = pBlock.ViewBlockDataTable.Select("_id='" + rowid.ToString() + "'");
                 if (drSelected.Length > 0)

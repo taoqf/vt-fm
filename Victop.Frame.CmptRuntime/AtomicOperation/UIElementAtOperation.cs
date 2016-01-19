@@ -268,9 +268,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (dgrid != null )
             {
                 if (state == 0)
+                {
                     dgrid.IsReadOnly = true;
+                }
                 else
+                {
                     dgrid.IsReadOnly = false;
+                }
             }
         }
 
