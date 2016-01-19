@@ -187,19 +187,20 @@ namespace Victop.Frame.CmptRuntime
         /// 新增行
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        public void PBlockAddRow(string pBlockName)
+        /// <param name="oav">接收OAV</param>
+        public void PBlockAddRow(string pBlockName, OAVModel oav=null)
         {
-            dataOperation.PBlockAddRow(pBlockName);
+            dataOperation.PBlockAddRow(pBlockName, oav);
         }
         /// <summary>
-        /// 新增行参数
+        /// 插入行
         /// </summary>
-        /// <param name="pBlockName">区块名称</param>
-        /// <param name="fieldName">字段名称</param>
-        /// <param name="paramValue">字段值</param>
-        public void PBlockAddRowParam(string pBlockName, string fieldName, object paramValue)
+        /// <param name="blockName">区块名称</param>
+        /// <param name="position">插入位置</param>
+        /// <param name="oav">接收oav</param>
+        public void blockInsertRow(string blockName, int position, OAVModel oav=null)
         {
-            dataOperation.PBlockAddRowParam(pBlockName, fieldName, paramValue);
+            dataOperation.blockInsertRow(blockName, position,oav);
         }
         /// <summary>
         /// 获取选中行的列值
@@ -210,6 +211,17 @@ namespace Victop.Frame.CmptRuntime
         public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
         {
            dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
+        }
+        /// <summary>
+        /// 赋值行的列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="rowid">行id</param>
+        /// <param name="paramName">列名</param>
+        /// <param name="paramValue">列值</param>
+        public void ParamsCurrentRowSet(string pblockName, object rowid, string paramName, object paramValue)
+        {
+            dataOperation.ParamsCurrentRowSet(pblockName, rowid, paramName, paramValue);
         }
         /// <summary>
         /// 获取选中行的上一行列值

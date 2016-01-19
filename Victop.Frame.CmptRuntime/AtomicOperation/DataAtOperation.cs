@@ -22,10 +22,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         private Dictionary<string, ViewsConditionModel> conditionModelDic = new Dictionary<string, ViewsConditionModel>();
         /// <summary>
-        /// 新增行参数
-        /// </summary>
-        private Dictionary<string, Dictionary<string, object>> rowAddParamDic = new Dictionary<string, Dictionary<string, object>>();
-        /// <summary>
         /// p生成的oav集合
         /// </summary>
         private Dictionary<string, Dictionary<string, List<OAVModel>>> blockOAVDic = new Dictionary<string, Dictionary<string, List<OAVModel>>>();
@@ -296,48 +292,35 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 新增行
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        public void PBlockAddRow(string pBlockName)
+        /// <param name="oav">接收OAV</param>
+        public void PBlockAddRow(string pBlockName,OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             if (pBlock != null && pBlock.ViewBlockDataTable != null)
             {
                 DataRow dr = pBlock.ViewBlockDataTable.NewRow();
                 dr["_id"] = Guid.NewGuid().ToString();
-                if (rowAddParamDic.ContainsKey(pBlockName))
-                {
-                    Dictionary<string, object> dicParam = rowAddParamDic[pBlockName];
-                    foreach (string key in dicParam.Keys)
-                    {
-                        if (dr.Table.Columns.Contains(key))
-                        {
-                            dr[key] = dicParam[key];
-                        }
-                    }
-                    rowAddParamDic.Remove(pBlockName);
-                }
-
                 pBlock.ViewBlockDataTable.Rows.Add(dr);
+                if (oav != null)
+                    oav.AtrributeValue = dr["_id"];
             }
         }
         /// <summary>
-        /// 新增行参数
+        /// 插入行
         /// </summary>
-        /// <param name="pBlockName">区块名称</param>
-        /// <param name="fieldName">字段名</param>
-        /// <param name="paramValue">字段值</param>
-        public void PBlockAddRowParam(string pBlockName, string fieldName, object paramValue)
+        /// <param name="blockName">区块名称</param>
+        /// <param name="position">插入位置</param>
+        /// <param name="oav">接收oav</param>
+        public void blockInsertRow(string blockName, int position, OAVModel oav)
         {
-            if (!rowAddParamDic.ContainsKey(pBlockName))
-                rowAddParamDic.Add(pBlockName, new Dictionary<string, object>());
-
-            Dictionary<string, object> dicParam = rowAddParamDic[pBlockName];
-            if (dicParam.ContainsKey(fieldName))
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
             {
-                dicParam[fieldName] = paramValue;
-            }
-            else
-            {
-                dicParam.Add(fieldName, paramValue);
+                DataRow dr = pBlock.ViewBlockDataTable.NewRow();
+                dr["_id"] = Guid.NewGuid().ToString();
+                pBlock.ViewBlockDataTable.Rows.InsertAt(dr, position);
+                if (oav != null)
+                    oav.AtrributeValue = dr["_id"];
             }
         }
         /// <summary>
@@ -515,6 +498,26 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (pBlock != null && pBlock.ViewBlockDataTable != null)
             {
                 pBlock.ViewBlockDataTable.DefaultView.Sort = "order asc";
+            }
+        }
+        /// <summary>
+        /// 赋值行的列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="rowid">行id</param>
+        /// <param name="paramName">列名</param>
+        /// <param name="paramValue">列值</param>
+        public void ParamsCurrentRowSet(string pblockName,object rowid, string paramName, object paramValue)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
+            {
+                DataRow[] drSelected = pBlock.ViewBlockDataTable.Select("_id='" + rowid.ToString() + "'");
+                if (drSelected.Length > 0)
+                {
+                    drSelected[0][paramName] = paramValue;
+                    pBlock.PreBlockSelectedRow = drSelected[0];
+                }
             }
         }
         /// <summary>
