@@ -302,14 +302,39 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetPBlockData(pblockNameOne, pblockNameTwo, pblockNameThree, fildone, fildtwo, fildthree, fildfour);
         }
-        // <summary>
-        /// 新增OAV根据区块数据
+        /// <summary>
+        /// 区块数据转换OAV
         /// </summary>
-        /// <param name="pblockName">区块名称</param>
-        /// <param name="pblockName">字段名称</param>
-        public void InsertOAVByPBlock(string pblockName, string fieldName)
+        /// <param name="blockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        public void BlockToOAV(string blockName, string fieldName)
         {
-            dataOperation.InsertOAVByPBlock(pblockName, fieldName);
+            dataOperation.BlockToOAV(blockName, fieldName);
+        }
+        /// <summary>
+        /// 区块选中的数据集合转换OAV
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        public void BlockSelectRowsToOAV(string blockName, string fieldName)
+        {
+            dataOperation.BlockSelectRowsToOAV(blockName, fieldName);
+        }
+        /// <summary>
+        /// 清除区块生成的OAV
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        public void ClearOAVByBlock(string blockName)
+        {
+            dataOperation.ClearOAVByBlock(blockName);
+        }
+        /// <summary>
+        /// 清除区块数据
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        public void ClearBlockData(string blockName)
+        {
+            dataOperation.ClearBlockData(blockName);
         }
         /// <summary>
         /// 设置选中集合
