@@ -167,6 +167,15 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetPBlockCurrentRowByDataGrid(pBlockName, dgrid);
         }
         /// <summary>
+        /// 设置选中数据通过ListBox控件
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="lbox">ListBox控件</param>
+        public void SetPBlockCurrentRowByListBox(string pBlockName, FrameworkElement lbox)
+        {
+            dataOperation.SetPBlockCurrentRowByListBox(pBlockName, lbox);
+        }
+        /// <summary>
         /// 提交BlockData的数据
         /// </summary>
         /// <param name="pBlockName">区块名称</param>

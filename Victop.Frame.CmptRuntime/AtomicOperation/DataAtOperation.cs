@@ -346,6 +346,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 设置选中数据通过ListBox控件
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="lbox">ListBox控件</param>
+        public void SetPBlockCurrentRowByListBox(string pBlockName, FrameworkElement lbox)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            VicListBoxNormal listbox = lbox as VicListBoxNormal;
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && listbox != null)
+            {
+                if (listbox.SelectedItem != null)
+                {
+                    pBlock.PreBlockSelectedRow = ((DataRowView)listbox.SelectedItem).Row;
+                    pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
+                }
+                else
+                {
+                    pBlock.PreBlockSelectedRow = null;
+                }
+            }
+        }
+        /// <summary>
         /// 获取选中行的列值
         /// </summary>
         /// <param name="pblockName">区块名称</param>
