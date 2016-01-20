@@ -1,4 +1,4 @@
-﻿﻿
+﻿
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -280,8 +280,10 @@ namespace DocumentManagerService
             else
             {
                 List<RequestParamsModel> rqobj = JsonHelper.ToObject<List<RequestParamsModel>>(myrequest);
+                List<string> fileIds = rqobj.Select(it => it.FileName).ToList();
                 string fileName = rqobj[0].FileName;
                 returnDic.Add("imgurl", fileName);
+                returnDic.Add("fileNameList", fileIds);
                 returnDic.Add("imgname", fileName);
                 returnDic.Add("fileId", fileName.Substring(0, fileName.LastIndexOf(".")));
                 returnDic.Add("fileSuffix", fileName.Substring(fileName.LastIndexOf(".")));
