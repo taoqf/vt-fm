@@ -187,19 +187,20 @@ namespace Victop.Frame.CmptRuntime
         /// 新增行
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        public void PBlockAddRow(string pBlockName)
+        /// <param name="oav">接收OAV</param>
+        public void PBlockAddRow(string pBlockName, OAVModel oav=null)
         {
-            dataOperation.PBlockAddRow(pBlockName);
+            dataOperation.PBlockAddRow(pBlockName, oav);
         }
         /// <summary>
-        /// 新增行参数
+        /// 插入行
         /// </summary>
-        /// <param name="pBlockName">区块名称</param>
-        /// <param name="fieldName">字段名称</param>
-        /// <param name="paramValue">字段值</param>
-        public void PBlockAddRowParam(string pBlockName, string fieldName, object paramValue)
+        /// <param name="blockName">区块名称</param>
+        /// <param name="position">插入位置</param>
+        /// <param name="oav">接收oav</param>
+        public void blockInsertRow(string blockName, int position, OAVModel oav=null)
         {
-            dataOperation.PBlockAddRowParam(pBlockName, fieldName, paramValue);
+            dataOperation.BlockInsertRow(blockName, position,oav);
         }
         /// <summary>
         /// 获取选中行的列值
@@ -210,6 +211,17 @@ namespace Victop.Frame.CmptRuntime
         public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
         {
            dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
+        }
+        /// <summary>
+        /// 赋值行的列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="rowid">行id</param>
+        /// <param name="paramName">列名</param>
+        /// <param name="paramValue">列值</param>
+        public void ParamsRowSet(string pblockName, object rowid, string paramName, object paramValue)
+        {
+            dataOperation.ParamsRowSet(pblockName, rowid, paramName, paramValue);
         }
         /// <summary>
         /// 获取选中行的上一行列值
@@ -232,15 +244,15 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.ParamsCurrentRowDownGet(pblockName, paramName, oav);
         }
         /// <summary>
-        /// 数据行交换
+        /// 数据行列值交换
         /// </summary>
         /// <param name="pblockName">区块名称</param>
-        /// <param name="oavCurrent">当行选择行</param>
-        /// <param name="oavUpOrDown">当前行的上一行或下一行</param>
-        /// <param name="fieldName">排序字段</param>
-        public void BlockDataExChange(string pblockName, OAVModel oavCurrent, OAVModel oavUpOrDown, string fieldName)
+        /// <param name="valueCurrentRow">当行选择行指定列的值</param>
+        /// <param name="valueUpOrDown">当前行的上一行或下一行指定列的值</param>
+        /// <param name="fieldName">字段名称</param>
+        public void BlockDataExChange(string pblockName, object valueCurrentRow, object valueUpOrDown, string fieldName)
         {
-            dataOperation.BlockDataExChange(pblockName, oavCurrent, oavUpOrDown, fieldName);
+            dataOperation.BlockDataExChange(pblockName, valueCurrentRow, valueUpOrDown, fieldName);
         }
         /// <summary>
         /// 获取最大序号加1
@@ -266,9 +278,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">排序字段名称</param>
-        public void SetBlockOrder(string pblockName, string fieldName)
+        /// <param name="sort">排序方式1正序-1倒序</param>
+        public void SetBlockOrder(string pblockName, string fieldName, int sort = 1)
         {
-            dataOperation.SetBlockOrder(pblockName, fieldName);
+            dataOperation.SetBlockOrder(pblockName, fieldName, sort);
         }
         /// <summary>
         /// 赋值选中行的列值
@@ -302,14 +315,39 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetPBlockData(pblockNameOne, pblockNameTwo, pblockNameThree, fildone, fildtwo, fildthree, fildfour);
         }
-        // <summary>
-        /// 新增OAV根据区块数据
+        /// <summary>
+        /// 区块数据转换OAV
         /// </summary>
-        /// <param name="pblockName">区块名称</param>
-        /// <param name="pblockName">字段名称</param>
-        public void InsertOAVByPBlock(string pblockName, string fieldName)
+        /// <param name="blockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        public void BlockToOAV(string blockName, string fieldName)
         {
-            dataOperation.InsertOAVByPBlock(pblockName, fieldName);
+            dataOperation.BlockToOAV(blockName, fieldName);
+        }
+        /// <summary>
+        /// 区块选中的数据集合转换OAV
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        public void BlockSelectRowsToOAV(string blockName, string fieldName)
+        {
+            dataOperation.BlockSelectRowsToOAV(blockName, fieldName);
+        }
+        /// <summary>
+        /// 清除区块生成的OAV
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        public void ClearOAVByBlock(string blockName)
+        {
+            dataOperation.ClearOAVByBlock(blockName);
+        }
+        /// <summary>
+        /// 清除区块数据
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        public void ClearBlockData(string blockName)
+        {
+            dataOperation.ClearBlockData(blockName);
         }
         /// <summary>
         /// 设置选中集合
@@ -336,6 +374,17 @@ namespace Victop.Frame.CmptRuntime
         public void SetSelectRowsAll(string pblockName)
         {
             dataOperation.SetSelectRowsAll(pblockName);
+        }
+        /// <summary>
+        /// 获取最大序号加1(字段中首字母为字母)
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="firstLetter">首字母</param>
+        /// <param name="oav">接受oav</param>
+        public void GetMaxNumberFromOneLetter(string pblockName, string fieldName, string firstLetter, OAVModel oav)
+        {
+            dataOperation.GetMaxNumberFromOneLetter(pblockName, fieldName, firstLetter, oav);
         }
         #endregion
 
@@ -727,6 +776,15 @@ namespace Victop.Frame.CmptRuntime
         public void VicDataGridUpdateColumn(string dgridName)
         {
             uIElementOperation.VicDataGridUpdateColumn(dgridName);
+        }
+        /// <summary>
+        /// VicDataGrid是否只读
+        /// </summary>
+        /// <param name="dgridName">控件名</param>
+        /// <param name="state">状态（0启用，1不可用）</param>
+        public void VicDataGridIsReadOnly(string dgridName, int state = 0)
+        {
+            uIElementOperation.VicDataGridIsReadOnly(dgridName, state);
         }
 
         #endregion

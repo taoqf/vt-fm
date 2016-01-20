@@ -194,7 +194,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
 
         #region VicDataGrid原子操作
         /// <summary>
-        /// 是否有选中项
+        /// VicDataGrid是否有选中项
         /// </summary>
         /// <param name="dgridName">控件名</param>
         /// <param name="oav">接收oav</param>
@@ -214,7 +214,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 更新列
+        /// VicDataGrid更新列
         /// </summary>
         /// <param name="dgridName">控件名</param>
         public void VicDataGridUpdateColumn(string dgridName)
@@ -257,6 +257,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+        /// <summary>
+        /// VicDataGrid是否只读
+        /// </summary>
+        /// <param name="dgridName">控件名</param>
+        /// <param name="state">状态（0启用，1不可用）</param>
+        public void VicDataGridIsReadOnly(string dgridName, int state = 0)
+        {
+            VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
+            if (dgrid != null )
+            {
+                if (state == 0)
+                {
+                    dgrid.IsReadOnly = true;
+                }
+                else
+                {
+                    dgrid.IsReadOnly = false;
+                }
+            }
+        }
+
         #endregion
 
         #region UnitPageRule原子操作

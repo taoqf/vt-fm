@@ -22,13 +22,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         private Dictionary<string, ViewsConditionModel> conditionModelDic = new Dictionary<string, ViewsConditionModel>();
         /// <summary>
-        /// 新增行参数
-        /// </summary>
-        private Dictionary<string, Dictionary<string, object>> rowAddParamDic = new Dictionary<string, Dictionary<string, object>>();
-        /// <summary>
         /// p生成的oav集合
         /// </summary>
-        private Dictionary<string, Dictionary<string, List<OAVModel>>> pblockOAVDic = new Dictionary<string, Dictionary<string, List<OAVModel>>>();
+        private Dictionary<string, Dictionary<string, List<OAVModel>>> blockOAVDic = new Dictionary<string, Dictionary<string, List<OAVModel>>>();
         #endregion
 
         /// <summary>
@@ -275,7 +271,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="isSaveServer">是否提交服务器</param>
-        public void SavePBlockData(string pBlockName,bool isSaveServer=true)
+        public void SavePBlockData(string pBlockName, bool isSaveServer = true)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             pBlock.SaveData(isSaveServer);
@@ -296,48 +292,35 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 新增行
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        public void PBlockAddRow(string pBlockName)
+        /// <param name="oav">接收OAV</param>
+        public void PBlockAddRow(string pBlockName, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             if (pBlock != null && pBlock.ViewBlockDataTable != null)
             {
                 DataRow dr = pBlock.ViewBlockDataTable.NewRow();
                 dr["_id"] = Guid.NewGuid().ToString();
-                if (rowAddParamDic.ContainsKey(pBlockName))
-                {
-                    Dictionary<string, object> dicParam = rowAddParamDic[pBlockName];
-                    foreach (string key in dicParam.Keys)
-                    {
-                        if (dr.Table.Columns.Contains(key))
-                        {
-                            dr[key] = dicParam[key];
-                        }
-                    }
-                    rowAddParamDic.Remove(pBlockName);
-                }
-
                 pBlock.ViewBlockDataTable.Rows.Add(dr);
+                if (oav != null)
+                    oav.AtrributeValue = dr["_id"];
             }
         }
         /// <summary>
-        /// 新增行参数
+        /// 插入行
         /// </summary>
-        /// <param name="pBlockName">区块名称</param>
-        /// <param name="fieldName">字段名</param>
-        /// <param name="paramValue">字段值</param>
-        public void PBlockAddRowParam(string pBlockName, string fieldName, object paramValue)
+        /// <param name="blockName">区块名称</param>
+        /// <param name="position">插入位置</param>
+        /// <param name="oav">接收oav</param>
+        public void BlockInsertRow(string blockName, int position, OAVModel oav)
         {
-            if (!rowAddParamDic.ContainsKey(pBlockName))
-                rowAddParamDic.Add(pBlockName, new Dictionary<string, object>());
-
-            Dictionary<string, object> dicParam = rowAddParamDic[pBlockName];
-            if (dicParam.ContainsKey(fieldName))
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
             {
-                dicParam[fieldName] = paramValue;
-            }
-            else
-            {
-                dicParam.Add(fieldName, paramValue);
+                DataRow dr = pBlock.ViewBlockDataTable.NewRow();
+                dr["_id"] = Guid.NewGuid().ToString();
+                pBlock.ViewBlockDataTable.Rows.InsertAt(dr, position);
+                if (oav != null)
+                    oav.AtrributeValue = dr["_id"];
             }
         }
         /// <summary>
@@ -433,28 +416,23 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 数据行交换
+        /// 数据行列值交换
         /// </summary>
         /// <param name="pblockName">区块名称</param>
-        /// <param name="oavCurrent">当行选择行</param>
-        /// <param name="oavUpOrDown">当前行的上一行或下一行</param>
-        /// <param name="fieldName">排序字段</param>
-        public void BlockDataExChange(string pblockName, OAVModel oavCurrent, OAVModel oavUpOrDown, string fieldName)
+        /// <param name="valueCurrentRow">当行选择行指定列的值</param>
+        /// <param name="valueUpOrDown">当前行的上一行或下一行指定列的值</param>
+        /// <param name="fieldName">字段名称</param>
+        public void BlockDataExChange(string pblockName, object valueCurrentRow, object valueUpOrDown, string fieldName)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.PreBlockSelectedRow != null && oavCurrent.AtrributeValue != null & oavUpOrDown.AtrributeValue != null)
+            if (pBlock != null && pBlock.PreBlockSelectedRow != null && valueCurrentRow != null && valueUpOrDown != null)
             {
-                int indexCurrent = 1;
-                int indexUpOrDown = 1;
-                if (Int32.TryParse(oavCurrent.AtrributeValue.ToString(), out indexCurrent) && Int32.TryParse(oavUpOrDown.AtrributeValue.ToString(), out indexUpOrDown))
+                DataRow[] drCurrent = pBlock.ViewBlockDataTable.Select("" + fieldName + "='" + valueCurrentRow + "'");
+                DataRow[] drUpOrDown = pBlock.ViewBlockDataTable.Select("" + fieldName + "='" + valueUpOrDown + "'");
+                if (drCurrent.Length > 0 && drUpOrDown.Length > 0)
                 {
-                    DataRow[] drCurrent = pBlock.ViewBlockDataTable.Select("" + fieldName + "='" + oavCurrent.AtrributeValue.ToString() + "'");
-                    DataRow[] drUpOrDown = pBlock.ViewBlockDataTable.Select("" + fieldName + "='" + oavUpOrDown.AtrributeValue.ToString() + "'");
-                    if (drCurrent.Length > 0 && drUpOrDown.Length > 0)
-                    {
-                        drCurrent[0][fieldName] = indexUpOrDown;
-                        drUpOrDown[0][fieldName] = indexCurrent;
-                    }
+                    drCurrent[0][fieldName] = valueUpOrDown;
+                    drUpOrDown[0][fieldName] = valueCurrentRow;
                 }
             }
         }
@@ -508,13 +486,41 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 设置排序
         /// </summary>
         /// <param name="pblockName">区块名称</param>
-        /// <param name="fieldname">排序字段名称</param>
-        public void SetBlockOrder(string pblockName, string fieldname)
+        /// <param name="fieldName">排序字段名称</param>
+        /// <param name="sort">排序方式1正序-1倒序</param>
+        public void SetBlockOrder(string pblockName, string fieldName, int sort = 1)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable != null)
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
             {
-                pBlock.ViewBlockDataTable.DefaultView.Sort = "order asc";
+                if (sort == 1)
+                {
+                    pBlock.ViewBlockDataTable.DefaultView.Sort = fieldName + " asc";
+                }
+                if (sort == -1)
+                {
+                    pBlock.ViewBlockDataTable.DefaultView.Sort = fieldName + " desc";
+                }
+            }
+        }
+        /// <summary>
+        /// 赋值行的列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="rowid">行id</param>
+        /// <param name="paramName">列名</param>
+        /// <param name="paramValue">列值</param>
+        public void ParamsRowSet(string pblockName, object rowid, string paramName, object paramValue)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock.ViewBlockDataTable.Columns.Contains(paramName))
+            {
+                DataRow[] drSelected = pBlock.ViewBlockDataTable.Select("_id='" + rowid.ToString() + "'");
+                if (drSelected.Length > 0)
+                {
+                    drSelected[0][paramName] = paramValue;
+                    pBlock.PreBlockSelectedRow = drSelected[0];
+                }
             }
         }
         /// <summary>
@@ -588,19 +594,98 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 新增OAV根据区块数据
+        /// 清除区块数据
         /// </summary>
-        /// <param name="pblockName">区块名称</param>
-        /// <param name="fieldName">字段名称</param>
-        public void InsertOAVByPBlock(string pblockName,string fieldName)
+        /// <param name="blockName">区块名称</param>
+        public void ClearBlockData(string blockName)
         {
-            PresentationBlockModel pBlock= MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
             {
-                List<OAVModel> listOAV=new List<OAVModel>();
+                for (int i = 0; i < pBlock.ViewBlockDataTable.Rows.Count; i++)
+                {
+                    if (pBlock.ViewBlockDataTable.Rows[i].RowState == DataRowState.Added)
+                    {
+                        pBlock.ViewBlockDataTable.Rows.RemoveAt(i);
+                        i--;
+                    }
+                    else
+                    {
+                        pBlock.ViewBlockDataTable.Rows[i].Delete();
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 区块选中的数据集合转换OAV
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        public void BlockSelectRowsToOAV(string blockName, string fieldName)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName) && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            {
+                List<OAVModel> listOAV = new List<OAVModel>();
                 foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
                 {
-                    string objectName = pblockName + ":" + dr["_id"].ToString();
+                    if (Convert.ToBoolean(dr["VicCheckFlag"].ToString()))
+                    {
+                        string objectName = blockName + ":" + dr["_id"].ToString();
+                        foreach (DataColumn col in pBlock.ViewBlockDataTable.Columns)
+                        {
+                            if (col.ColumnName == fieldName)
+                            {
+                                OAVModel oavNew = new OAVModel(objectName, col.ColumnName, dr[col.ColumnName]);
+                                MainView.FeiDaoFSM.InsertFact(oavNew);
+                                listOAV.Add(oavNew);
+                            }
+                        }
+                    }
+                }
+                //存在oav清除
+                if (blockOAVDic.ContainsKey(blockName) && blockOAVDic[blockName].ContainsKey(fieldName))
+                {
+                    try
+                    {
+                        foreach (OAVModel oav in blockOAVDic[blockName][fieldName])
+                        {
+                            MainView.FeiDaoFSM.RemoveFact(oav);
+                        }
+                        blockOAVDic[blockName].Remove(fieldName);
+                    }
+                    catch (Exception ex)
+                    {
+                        blockOAVDic[blockName].Remove(fieldName);
+                        LoggerHelper.Error(ex.ToString());
+                    }
+                }
+                if (blockOAVDic.ContainsKey(blockName))
+                {
+                    blockOAVDic[blockName].Add(fieldName, listOAV);
+                }
+                else
+                {
+                    Dictionary<string, List<OAVModel>> dicOAV = new Dictionary<string, List<OAVModel>>();
+                    dicOAV.Add(fieldName, listOAV);
+                    blockOAVDic.Add(blockName, dicOAV);
+                }
+            }
+        }
+        /// <summary>
+        /// 区块数据转换OAV
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        public void BlockToOAV(string blockName, string fieldName)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+            {
+                List<OAVModel> listOAV = new List<OAVModel>();
+                foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
+                {
+                    string objectName = blockName + ":" + dr["_id"].ToString();
                     foreach (DataColumn col in pBlock.ViewBlockDataTable.Columns)
                     {
                         if (col.ColumnName == fieldName)
@@ -612,31 +697,58 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     }
                 }
                 //存在oav清除
-                if (pblockOAVDic.ContainsKey(pblockName) && pblockOAVDic[pblockName].ContainsKey(fieldName))
+                if (blockOAVDic.ContainsKey(blockName) && blockOAVDic[blockName].ContainsKey(fieldName))
                 {
                     try
                     {
-                        foreach (OAVModel oav in pblockOAVDic[pblockName][fieldName])
+                        foreach (OAVModel oav in blockOAVDic[blockName][fieldName])
                         {
                             MainView.FeiDaoFSM.RemoveFact(oav);
                         }
-                        pblockOAVDic[pblockName].Remove(fieldName);
+                        blockOAVDic[blockName].Remove(fieldName);
                     }
                     catch (Exception ex)
                     {
-                        pblockOAVDic[pblockName].Remove(fieldName);
+                        blockOAVDic[blockName].Remove(fieldName);
                         LoggerHelper.Error(ex.ToString());
                     }
                 }
-                if (pblockOAVDic.ContainsKey(pblockName))
+                if (blockOAVDic.ContainsKey(blockName))
                 {
-                    pblockOAVDic[pblockName].Add(fieldName, listOAV);
+                    blockOAVDic[blockName].Add(fieldName, listOAV);
                 }
                 else
                 {
                     Dictionary<string, List<OAVModel>> dicOAV = new Dictionary<string, List<OAVModel>>();
                     dicOAV.Add(fieldName, listOAV);
-                    pblockOAVDic.Add(pblockName, dicOAV);
+                    blockOAVDic.Add(blockName, dicOAV);
+                }
+            }
+        }
+        /// <summary>
+        /// 清除区块生成的OAV
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        public void ClearOAVByBlock(string blockName)
+        {
+            //存在oav清除
+            if (blockOAVDic.ContainsKey(blockName))
+            {
+                try
+                {
+                    foreach (string keyFieldName in blockOAVDic[blockName].Keys)
+                    {
+                        foreach (OAVModel oav in blockOAVDic[blockName][keyFieldName])
+                        {
+                            MainView.FeiDaoFSM.RemoveFact(oav);
+                        }
+                    }
+                    blockOAVDic.Remove(blockName);
+                }
+                catch (Exception ex)
+                {
+                    blockOAVDic.Remove(blockName);
+                    LoggerHelper.Error(ex.ToString());
                 }
             }
         }
@@ -649,13 +761,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void SetSelectRows(string pblockName, string fieldName, object fieldValue)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag") && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
             {
-                    DataRow[] drSelect = pBlock.ViewBlockDataTable.Select(fieldName + "='" + fieldValue.ToString() + "'");
-                    foreach (DataRow dr in drSelect)
-                    {
-                        dr["VicCheckFlag"] = true;
-                    }
+                DataRow[] drSelect = pBlock.ViewBlockDataTable.Select(fieldName + "='" + fieldValue.ToString() + "'");
+                foreach (DataRow dr in drSelect)
+                {
+                    dr["VicCheckFlag"] = true;
+                }
             }
         }
         /// <summary>
@@ -685,6 +797,41 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
                 {
                     dr["VicCheckFlag"] = true;
+                }
+            }
+        }
+        /// <summary>
+        /// 获取最大序号加1(字段中首字母为字母)
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="firstLetter">首字母</param>
+        /// <param name="oav">接受oav</param>
+        public void GetMaxNumberFromOneLetter(string pblockName, string fieldName, string firstLetter, OAVModel oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
+            {
+                if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+                {
+                    int i = 0;
+                    foreach (DataRow row in pBlock.ViewBlockDataTable.Rows)
+                    {
+                        if (row.RowState == DataRowState.Deleted)
+                            continue;
+                        int param = 0;
+                        int.TryParse(row[fieldName].ToString().Substring(1), out param);
+                        i = i > param ? i : param;
+                    }
+                    if (i < 9)
+                    {
+                        string temp = "0" + (i + 1).ToString();
+                        oav.AtrributeValue = firstLetter + temp;
+                    }
+                    else
+                    {
+                        oav.AtrributeValue = firstLetter + (i + 1).ToString();
+                    }
                 }
             }
         }
