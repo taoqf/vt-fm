@@ -308,7 +308,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="visibility">是否显示</param>
         public void SetCompontVisility(string paramValue, bool visibility)
         {
-            TemplateControl tc = MainView.FindName(paramValue) as TemplateControl;
+            FrameworkElement tc = MainView.FindName(paramValue) as FrameworkElement;
             if (tc != null)
             {
                 if (visibility)
