@@ -239,7 +239,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 LoggerHelper.Info("原子操作：UCCompntShowDialog未找到组件" + compntName);
                 return;
             }
-            ucCom.ParentControl = MainView.ParentControl;
+            ucCom.ParentControl = MainView;
 
             VicWindowNormal win = new VicWindowNormal();
             win.Owner = XamlTreeHelper.GetParentObject<Window>(MainView);
