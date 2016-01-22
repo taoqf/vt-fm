@@ -75,7 +75,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             if (element != null && oav != null)
             {
-                oav.AtrributeValue = element;
+                oav.AtrributeValue = element.Name;
             }
         }
         /// <summary>

@@ -400,6 +400,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (listbox != null & listbox.SelectedItem != null)
             {
                 ListBoxItem lbi = (ListBoxItem)listbox.SelectedItem;
+                oav.AtrributeValue = lbi.Content;
             }
         }
         /// <summary>
