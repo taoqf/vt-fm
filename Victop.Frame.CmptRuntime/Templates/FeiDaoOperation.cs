@@ -795,6 +795,23 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicDataGridIsReadOnly(dgridName, state);
         }
+         /// <summary>
+        /// 清除dgrid数据集合
+        /// </summary>
+        /// <param name="dgridName">控件名</param>
+        public void VicDataGridClearData(string dgridName)
+        {
+            uIElementOperation.VicDataGridClearData(dgridName);
+        }
+        /// <summary>
+        /// 设置dgrid选中行
+        /// </summary>
+        /// <param name="dgridName">控件名</param>
+        /// <param name="selectedIndex">选中行号</param>
+        public void VicDataGridSetSelectedIndex(string dgridName, int selectedIndex)
+        {
+            uIElementOperation.VicDataGridSetSelectedIndex(dgridName, selectedIndex);
+        }
 
         #endregion
 

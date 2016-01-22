@@ -332,17 +332,17 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             VicDataGrid datagrid = dgrid as VicDataGrid;
-            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && datagrid != null)
+            if (pBlock != null && datagrid != null)
             {
                 if (datagrid.SelectedItem != null)
                 {
                     pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
-                    pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
                 }
                 else
                 {
                     pBlock.PreBlockSelectedRow = null;
                 }
+                pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
             }
         }
         /// <summary>
