@@ -73,7 +73,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             if (!string.IsNullOrEmpty(serviceName) && serviceParamList.ContainsKey(serviceName))
             {
-                Dictionary<string, object> resultDic = messageOp.SendMessage(serviceName, serviceParamList[serviceName]);
+                Dictionary<string, object> resultDic = messageOp.SendMessage("js_custom_func", serviceParamList[serviceName]);
                 if (resultDic != null)
                 {
                     //已调用过先清除OAV,防止重复添加
