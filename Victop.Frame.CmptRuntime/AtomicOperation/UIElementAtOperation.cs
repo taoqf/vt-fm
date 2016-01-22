@@ -27,9 +27,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         }
 
         #region 私有字段
-       /// <summary>
-       /// 页面/组件基类
-       /// </summary>
+        /// <summary>
+        /// 页面/组件基类
+        /// </summary>
         private TemplateControl MainView;
         #endregion
 
@@ -45,6 +45,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 btn.Content = btnContent;
         }
         /// <summary>
+        /// 设置文本标签内容
+        /// </summary>
+        /// <param name="lblName">标签名称</param>
+        /// <param name="lblContent">标签内容</param>
+        public void SetLabelText(string lblName, object lblContent)
+        {
+            Label lbl = MainView.FindName(lblName) as Label;
+            if (lbl != null && lblContent != null)
+                lbl.Content = lblContent;
+        }
+        /// <summary>
+        /// 获取文本标签内容
+        /// </summary>
+        /// <param name="lblName">标签名称</param>
+        /// <param name="oav">接受oav</param>
+        public void GetLabelText(string lblName, OAVModel oav)
+        {
+            Label lbl = MainView.FindName(lblName) as Label;
+            if (lbl != null && oav != null)
+                oav.AtrributeValue = lbl.Content;
+        }
+        /// <summary>
         /// 获取界面元素名称
         /// </summary>
         /// <param name="element">界面元素</param>
@@ -53,7 +75,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             if (element != null && oav != null)
             {
-                oav.AtrributeValue = element.Name;
+                oav.AtrributeValue = element;
             }
         }
         /// <summary>
@@ -64,7 +86,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void SetElementIsEnabled(string elementName, int state = 0)
         {
             FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
-            if (element != null )
+            if (element != null)
             {
                 if (state == 0)
                     element.IsEnabled = true;
@@ -209,8 +231,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             else
             {
                 oav.AtrributeValue = false;
-                if(oavmsg!=null)
-                oavmsg.AtrributeValue = "当前选择项为空";
+                if (oavmsg != null)
+                    oavmsg.AtrributeValue = "当前选择项为空";
             }
         }
         /// <summary>
@@ -265,7 +287,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void VicDataGridIsReadOnly(string dgridName, int state = 0)
         {
             VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
-            if (dgrid != null )
+            if (dgrid != null)
             {
                 if (state == 0)
                 {
