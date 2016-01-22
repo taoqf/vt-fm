@@ -507,7 +507,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
                 {
-                    int item_number = 1;
+                    int item_number = 0;
                     if (Int32.TryParse(pBlock.ViewBlockDataTable.Compute("max(" + fieldName + ")", string.Empty).ToString(), out item_number))
                     {
                         oav.AtrributeValue = item_number + 1;
