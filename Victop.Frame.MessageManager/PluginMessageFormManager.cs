@@ -29,14 +29,14 @@ namespace Victop.Frame.MessageManager
         /// <param name="callBack">消息回调方法</param>
         /// <param name="validTime">有效时间</param>
         /// </summary>
-        public virtual void CheckMessageFormat(string messageType,Dictionary<string,object> messageContent,WaitCallback callBack, long validTime)
+        public virtual void CheckMessageFormat(string messageType, Dictionary<string, object> messageContent, WaitCallback callBack, long validTime)
         {
             PluginMessageManager pluginMessageManager = new PluginMessageManager();
             if (true)//验证成功
             {
                 RequestMessage message = new RequestMessage()
                 {
-                    MessageId = Guid.NewGuid().ToString(),
+                    MessageId = messageContent.ContainsKey("DataChannelId") && messageContent["DataChannelId"] != null ? messageContent["DataChannelId"].ToString() : Guid.NewGuid().ToString(),
                     MessageType = messageType,
                     MessageContent = JsonHelper.ToJson(messageContent)
                 };
@@ -54,16 +54,16 @@ namespace Victop.Frame.MessageManager
                 }
                 else
                 {
-                    ReturnReplyMessageToPlugin(callBack,MesssageStatusEnum.EXIST);
+                    ReturnReplyMessageToPlugin(callBack, MesssageStatusEnum.EXIST);
                 }
             }
         }
 
-        private void ReturnReplyMessageToPlugin(WaitCallback callBack,MesssageStatusEnum messageStatus)
+        private void ReturnReplyMessageToPlugin(WaitCallback callBack, MesssageStatusEnum messageStatus)
         {
             RequestMessage message = CreateMessage(callBack);
             //1.调用自身方法创建对应的消息格式信息。
-            ReplyMessage replyMessage=new ReplyMessage();
+            ReplyMessage replyMessage = new ReplyMessage();
             switch (messageStatus)
             {
                 case MesssageStatusEnum.EXIST:

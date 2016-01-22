@@ -247,6 +247,10 @@ namespace SystemTestingPlugin.ViewModels
                                 contentDic.Add("condition", conDic);
                             }
                         }
+                        if (!string.IsNullOrEmpty(DataInfoModel.ChannelId))
+                        {
+                            contentDic.Add("DataChannelId", DataInfoModel.ChannelId);
+                        }
                         Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                         if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
                         {
