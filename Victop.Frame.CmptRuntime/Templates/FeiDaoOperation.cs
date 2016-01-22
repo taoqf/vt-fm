@@ -139,6 +139,15 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetConditionPaging(pBlockName, index, size);
         }
+        /// <summary>
+        /// 设置区块是否取空数据
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        /// <param name="isEmptyData">true取空数据</param>
+        public void SetConditionIsEmptyData(string blockName, bool isEmptyData)
+        {
+            dataOperation.SetConditionIsEmptyData(blockName, isEmptyData);
+        }
         #endregion
 
         /// <summary>

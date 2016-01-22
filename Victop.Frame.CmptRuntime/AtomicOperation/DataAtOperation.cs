@@ -176,6 +176,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+        /// <summary>
+        /// 设置区块是否取空数据
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        /// <param name="isEmptyData">true取空数据</param>
+        public void SetConditionIsEmptyData(string blockName, bool isEmptyData)
+        {
+            if (!string.IsNullOrEmpty(blockName))
+            {
+                if (conditionModelDic.ContainsKey(blockName))
+                {
+                    conditionModelDic[blockName].EmptyData = isEmptyData;
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    viewConModel.EmptyData = isEmptyData;
+                    conditionModelDic.Add(blockName, viewConModel);
+                }
+            }
+        }
 
         /// <summary>
         /// 设置区块排序
