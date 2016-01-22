@@ -333,17 +333,17 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             VicDataGrid datagrid = dgrid as VicDataGrid;
-            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && datagrid != null)
+            if (pBlock != null && datagrid != null)
             {
                 if (datagrid.SelectedItem != null)
                 {
                     pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
-                    pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
                 }
                 else
                 {
                     pBlock.PreBlockSelectedRow = null;
                 }
+                pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
             }
         }
         /// <summary>
@@ -859,15 +859,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         int.TryParse(row[fieldName].ToString().Substring(1), out param);
                         i = i > param ? i : param;
                     }
-                    if (i < 9)
-                    {
-                        string temp = "0" + (i + 1).ToString();
-                        oav.AtrributeValue = firstLetter + temp;
-                    }
-                    else
-                    {
-                        oav.AtrributeValue = firstLetter + (i + 1).ToString();
-                    }
+                    oav.AtrributeValue = firstLetter + (i + 1).ToString();
                 }
             }
         }

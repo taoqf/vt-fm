@@ -164,19 +164,19 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="dr"></param>
         internal void SetCurrentRow(DataRow dr)
         {
+            if (CurrentRow == null)
+            {
+                CurrentRow = new Dictionary<string, object>();
+            }
+            CurrentRow.Clear();
             if (dr != null)
             {
-                if (CurrentRow == null)
-                {
-                    CurrentRow = new Dictionary<string, object>();
-                }
-                CurrentRow.Clear();
                 foreach (DataColumn item in dr.Table.Columns)
                 {
                     CurrentRow.Add(item.ColumnName, dr[item.ColumnName]);
                 }
-                RebuildPath();
             }
+            RebuildPath();
         }
 
         private void RebuildPath()
