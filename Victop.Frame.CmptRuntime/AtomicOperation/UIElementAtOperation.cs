@@ -327,6 +327,42 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
 
         #endregion
 
+        #region VicListBoxNormal原子操作库
+        /// <summary>
+        /// 设置VicListBoxNormal控件选中行
+        /// </summary>
+        /// <param name="lboxName">ListBox控件</param>
+        /// <param name="selectedIndex">oav接受</param>
+        public void VicListBoxNormalSelectIndex(string lboxName, int selectedIndex)
+        {
+            VicListBoxNormal lbox = MainView.FindName(lboxName) as VicListBoxNormal;
+            if (lbox != null)
+            {
+                lbox.SelectedIndex = selectedIndex;
+            }
+        }
+        /// <summary>
+        /// VicListBoxNormal是否有选中项
+        /// </summary>
+        /// <param name="lboxName">控件名</param>
+        /// <param name="oav">接收oav</param>
+        /// <param name="oavmsg">消息oav</param>
+        public void VicListBoxNormalIsSelectItem(string lboxName, OAVModel oav, OAVModel oavmsg)
+        {
+            VicListBoxNormal lbox = MainView.FindName(lboxName) as VicListBoxNormal;
+            if (lbox != null && lbox.SelectedItem != null)
+            {
+                oav.AtrributeValue = true;
+            }
+            else
+            {
+                oav.AtrributeValue = false;
+                if (oavmsg != null)
+                    oavmsg.AtrributeValue = "当前选择项为空";
+            }
+        }
+        #endregion
+
         #region UnitPageRule原子操作
         /// <summary>
         /// UnitPageRule分页加载
