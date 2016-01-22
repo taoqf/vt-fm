@@ -845,15 +845,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         int.TryParse(row[fieldName].ToString().Substring(1), out param);
                         i = i > param ? i : param;
                     }
-                    if (i < 9)
-                    {
-                        string temp = "0" + (i + 1).ToString();
-                        oav.AtrributeValue = firstLetter + temp;
-                    }
-                    else
-                    {
-                        oav.AtrributeValue = firstLetter + (i + 1).ToString();
-                    }
+                    oav.AtrributeValue = firstLetter + (i + 1).ToString();
                 }
             }
         }
