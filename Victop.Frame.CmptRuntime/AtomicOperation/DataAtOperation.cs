@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
@@ -386,6 +387,19 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 {
                     pBlock.PreBlockSelectedRow = null;
                 }
+            }
+        }
+        /// <summary>
+        /// 设置选中数据通过ListBox控件
+        /// </summary>
+        /// <param name="lbox">ListBox控件</param>
+        /// <param name="oav">oav接受</param>
+        public void GetListBoxSelectItem(FrameworkElement lbox, OAVModel oav)
+        {
+            VicListBoxNormal listbox = lbox as VicListBoxNormal;
+            if (listbox != null & listbox.SelectedItem != null)
+            {
+                ListBoxItem lbi = (ListBoxItem)listbox.SelectedItem;
             }
         }
         /// <summary>
@@ -866,15 +880,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         int.TryParse(row[fieldName].ToString().Substring(1), out param);
                         i = i > param ? i : param;
                     }
-                    if (i < 9)
-                    {
-                        string temp = "0" + (i + 1).ToString();
-                        oav.AtrributeValue = firstLetter + temp;
-                    }
-                    else
-                    {
-                        oav.AtrributeValue = firstLetter + (i + 1).ToString();
-                    }
+                    oav.AtrributeValue = firstLetter + (i + 1).ToString();
                 }
             }
         }

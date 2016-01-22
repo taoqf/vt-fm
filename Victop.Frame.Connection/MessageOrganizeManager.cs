@@ -66,6 +66,11 @@ namespace Victop.Frame.Connection
                         }
                         messageInfo.MessageControl = JsonHelper.ToJson(dicMessageControl);
                     }
+                    if (dicContent.ContainsKey("ControlParams"))
+                    {
+                        messageInfo.MessageControl = JsonHelper.ToJson(dicContent["ControlParams"]);
+                        dicContent.Remove("ControlParams");
+                    }
                     if (!dicContent.ContainsKey("spaceid"))
                     {
                         dicContent.Add("spaceid", cloudGallyInfo.ClientId);

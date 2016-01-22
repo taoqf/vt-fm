@@ -682,6 +682,24 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.SetButtonText(btnName, btnContent);
         }
         /// <summary>
+        /// 设置文本标签内容
+        /// </summary>
+        /// <param name="lblName">标签名称</param>
+        /// <param name="lblContent">标签内容</param>
+        public void SetLabelText(string lblName, object lblContent)
+        {
+            uIElementOperation.SetLabelText(lblName, lblContent);
+        }
+        /// <summary>
+        /// 获取文本标签内容
+        /// </summary>
+        /// <param name="lblName">标签名称</param>
+        /// <param name="oav">接受oav</param>
+        public void GetLabelText(string lblName, OAVModel oav)
+        {
+            uIElementOperation.GetLabelText(lblName, oav);
+        }
+        /// <summary>
         /// 获取界面元素名称
         /// </summary>
         /// <param name="element">界面元素</param>
