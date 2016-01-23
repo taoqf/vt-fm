@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
@@ -430,5 +431,45 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             return i;
         }
         #endregion
+
+        #region 发送获取编码消息
+        /// <summary>
+        /// 发送获取编码消息
+        /// </summary>
+        /// <param name="SystemId">系统ID</param>
+        /// <param name="iPName">规则名称(例如:"BH005")</param>
+        /// <param name="iCodeRule">编码规则</param>
+        /// <returns>单号</returns>
+        public  string SendGetCodeMessage(string SystemId,string iPName, string iCodeRule)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(iPName) || string.IsNullOrEmpty(iCodeRule) || string.IsNullOrEmpty(SystemId))
+                {
+                    return string.Empty;
+                }
+                string MessageType = "MongoDataChannelService.findDocCode";
+                DataMessageOperation messageOp = new DataMessageOperation();
+                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                contentDic.Add("systemid", SystemId);
+                contentDic.Add("pname", iPName);
+                contentDic.Add("setinfo", iCodeRule);
+                Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
+                if (returnDic != null || returnDic.ContainsKey("ReplyContent"))
+                {
+                    return JsonHelper.ReadJsonString(returnDic["ReplyContent"].ToString(), "result");
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.InfoFormat("发送获取编码消息异常（string SendGetCodeMessage）：{0}", ex.Message);
+                return string.Empty;
+            }
+        }
+        #endregion 
     }
 }
