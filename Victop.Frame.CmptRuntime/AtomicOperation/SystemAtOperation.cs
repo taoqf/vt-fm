@@ -154,6 +154,22 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 新增页面参数值
+        /// </summary>
+        /// <param name="paramName">参数名</param>
+        /// <param name="paramValue">参数值</param>
+        public void ParamsPageAdd(string paramName, object paramValue)
+        {
+            if (MainView.ParentControl.ParamDict.ContainsKey(paramName))
+            {
+                MainView.ParentControl.ParamDict[paramName] = paramValue;
+            }
+            else
+            {
+                MainView.ParentControl.ParamDict.Add(paramName, paramValue);
+            }
+        }
+        /// <summary>
         /// 组件参数封装
         /// </summary>
         /// <param name="oavCom">组件参数</param>
@@ -431,6 +447,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             return i;
         }
         #endregion
+        
 
         #region 发送获取编码消息
         /// <summary>

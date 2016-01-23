@@ -503,7 +503,15 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ParamsGetByDictionary(oavDic, paramName, oav);
         }
-        
+        /// <summary>
+        /// 新增页面参数值
+        /// </summary>
+        /// <param name="paramName">参数名</param>
+        /// <param name="paramValue">参数值</param>
+        public void ParamsPageAdd(string paramName, object paramValue)
+        {
+            systemOperation.ParamsPageAdd(paramName, paramValue);
+        }
         /// <summary>
         /// 组件参数封装
         /// </summary>
