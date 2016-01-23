@@ -494,6 +494,15 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.ParamsPageGet(paramName, oav);
         }
         /// <summary>
+        /// 获取组件参数值
+        /// </summary>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">oav载体</param>
+        public void ParamsCompntGet(string paramName, OAVModel oav)
+        {
+            systemOperation.ParamsCompntGet(paramName, oav);
+        }
+        /// <summary>
         /// 获取Dictionary中参数值
         /// </summary>
         /// <param name="oavDic">存储dic类型的oav</param>
@@ -550,6 +559,16 @@ namespace Victop.Frame.CmptRuntime
         public void UCCompntShow(string compntName, int height = 600, int width = 600)
         {
             systemOperation.UCCompntShow(compntName, height = 600, width = 600);
+        }
+        /// <summary>
+        /// 设置组件参数
+        /// </summary>
+        /// <param name="compntName">组件名称</param>
+        /// <param name="paramName">参数名称</param>
+        /// <param name="paramValue">参数值</param>
+        public void SetCompntParamDic(string compntName, string paramName, object paramValue)
+        {
+            systemOperation.SetCompntParamDic(compntName,paramName,paramValue);
         }
         /// <summary>
         /// 弹框关闭操作
