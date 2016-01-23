@@ -19,7 +19,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
     public class SystemAtOperation
     {
         private TemplateControl MainView;
-        private Dictionary<string, object> paramCompntDic = new Dictionary<string, object>();
+        private static Dictionary<string, object> paramCompntDic = new Dictionary<string, object>();
         /// <summary>
         /// 构造函数
         /// </summary>
