@@ -361,6 +361,20 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     oavmsg.AtrributeValue = "当前选择项为空";
             }
         }
+        /// <summary>
+        /// 获取ListBox选中项内容
+        /// </summary>
+        /// <param name="lboxName">ListBox控件</param>
+        /// <param name="oav">接受oav</param>
+        public void GetListBoxSelectItem(string lboxName, OAVModel oav)
+        {
+            VicListBoxNormal listbox = MainView.FindName(lboxName) as VicListBoxNormal;
+            if (listbox != null & listbox.SelectedItem != null)
+            {
+                ListBoxItem lbi = (ListBoxItem)listbox.SelectedItem;
+                oav.AtrributeValue = lbi.Content;
+            }
+        }
         #endregion
 
         #region UnitPageRule原子操作

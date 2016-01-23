@@ -390,20 +390,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 设置选中数据通过ListBox控件
-        /// </summary>
-        /// <param name="lbox">ListBox控件</param>
-        /// <param name="oav">oav接受</param>
-        public void GetListBoxSelectItem(FrameworkElement lbox, OAVModel oav)
-        {
-            VicListBoxNormal listbox = lbox as VicListBoxNormal;
-            if (listbox != null & listbox.SelectedItem != null)
-            {
-                ListBoxItem lbi = (ListBoxItem)listbox.SelectedItem;
-                oav.AtrributeValue = lbi.Content;
-            }
-        }
-        /// <summary>
         /// 获取选中行的列值
         /// </summary>
         /// <param name="pblockName">区块名称</param>

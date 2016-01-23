@@ -185,13 +185,13 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetPBlockCurrentRowByListBox(pBlockName, lbox);
         }
         /// <summary>
-        /// 设置选中数据通过ListBox控件
+        /// 获取ListBox选中项内容
         /// </summary>
-        /// <param name="lbox">ListBox控件</param>
-        /// <param name="oav">oav接受</param>
-        public void GetListBoxSelectItem(FrameworkElement lbox, OAVModel oav)
+        /// <param name="lboxName">ListBox控件</param>
+        /// <param name="oav">接受oav</param>
+        public void GetListBoxSelectItem(string lboxName, OAVModel oav)
         {
-            dataOperation.GetListBoxSelectItem(lbox, oav);
+            uIElementOperation.GetListBoxSelectItem(lboxName, oav);
         }
         /// <summary>
         /// 提交BlockData的数据
