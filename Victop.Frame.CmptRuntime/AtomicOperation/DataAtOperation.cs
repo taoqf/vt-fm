@@ -563,7 +563,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 if (drSelected.Length > 0)
                 {
                     drSelected[0][paramName] = paramValue;
-                    pBlock.PreBlockSelectedRow = drSelected[0];
                 }
             }
         }
