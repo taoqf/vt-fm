@@ -239,17 +239,6 @@ namespace Victop.Frame.CmptRuntime
         {
            dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
         }
-
-        /// <summary>
-        /// 根据DataGrid名称获取当前选择行中某一字段的值
-        /// </summary>
-        /// <param name="gridName">grid名称</param>
-        /// <param name="paramName">字段名</param>
-        /// <param name="oav">返回OAV值</param>
-        public void ParamsCurrentRowGetFromGridName(string gridName, string paramName, OAVModel oav)
-        {
-            dataOperation.ParamsCurrentRowGetFromGridName(gridName, paramName, oav);
-        }
         /// <summary>
         /// 赋值行的列值
         /// </summary>
@@ -792,6 +781,16 @@ namespace Victop.Frame.CmptRuntime
         public void SetElementIsEnabled(string elementName, int state = 0)
         {
             uIElementOperation.SetElementIsEnabled(elementName, state);
+        }
+        /// <summary>
+        /// 根据DataGrid名称获取当前选择行中某一字段的值
+        /// </summary>
+        /// <param name="gridName">grid名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">返回OAV值</param>
+        public void ParamsCurrentRowGetFromGridName(string gridName, string paramName, OAVModel oav)
+        {
+            uIElementOperation.ParamsCurrentRowGetFromGridName(gridName, paramName, oav);
         }
         #region VicTreeView原子操作
         /// <summary>
