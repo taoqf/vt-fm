@@ -77,6 +77,21 @@ namespace Victop.Server.Controls.Models
             }
         }
         /// <summary>
+        /// 属性值字符串
+        /// </summary>
+        public string AtrributeValueString
+        {
+            get
+            {
+                string temp = "";
+                if (AtrributeValue != null)
+                {
+                    temp = AtrributeValue.ToString();
+                }
+                return temp;
+            }
+        }
+        /// <summary>
         /// 属性值长整型
         /// </summary>
         public long AtrributeValueLong

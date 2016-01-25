@@ -560,6 +560,16 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.UCCompntShow(compntName, height = 600, width = 600);
         }
+
+        /// <summary>
+        /// 使用window弹出内容
+        /// </summary>
+        /// <param name="content">弹出内容</param>
+        public void ShowVicWindowContent(object content)
+        {
+            systemOperation.ShowVicWindowContent(content);
+        }
+
         /// <summary>
         /// 设置组件参数
         /// </summary>
@@ -648,13 +658,12 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.UcCurrentCompntContentClose(layoutName);
         }
         /// <summary>
-        /// 将文件写入指定文件
+        /// 将规则文件另存
         /// </summary>
-        /// <param name="fileName">文件名称</param>
         /// <param name="content">规则内容</param>
-        public void WriteTextToFile(string fileName, string content)
+        public void WriteTextToFile( object content)
         {
-            systemOperation.WriteTextToFile(fileName, content);
+            systemOperation.WriteTextToFile(content);
         }
         /// <summary>
         /// 发送获取编码消息

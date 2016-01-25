@@ -6,6 +6,8 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using gnu.CORBA.Poa;
+using Microsoft.Win32;
 using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
@@ -320,6 +322,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             win.Show();
         }
         /// <summary>
+        /// 使用window弹出内容
+        /// </summary>
+        /// <param name="content">弹出内容</param>
+        public void ShowVicWindowContent(object content)
+        {
+            VicTextBoxNormal textBox=new VicTextBoxNormal();
+            textBox.VicText = content.ToString();
+            textBox.Height = 580;
+            textBox.Width = 780;
+            VicWindowNormal win = new VicWindowNormal();
+            win.Owner = XamlTreeHelper.GetParentObject<Window>(MainView);
+            win.ShowInTaskbar = false;
+            win.SetResourceReference(VicWindowNormal.StyleProperty, "WindowMessageSkin");
+            win.Height = 600;
+            win.Width = 800;
+            win.Title = "预览";
+            win.Content = textBox;
+            win.Show();
+        }
+
+        /// <summary>
         /// 弹框关闭操作
         /// </summary>
         public void UCCompntClose()
@@ -419,25 +442,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 将文件写入指定文件
+        /// 将规则文件另存
         /// </summary>
-        /// <param name="fileName">文件名称</param>
         /// <param name="content">规则内容</param>
-        public void WriteTextToFile(string fileName, string content)
+        public void WriteTextToFile(object content)
         {
-            string fullfile = string.Format("{0}\\{1}", AppDomain.CurrentDomain.BaseDirectory, fileName);
-            StreamReader objReader = new StreamReader(fullfile);
-            string text = objReader.ReadToEnd();
-            int positon = text.IndexOf("#");
-            text.Remove(positon);
-            objReader.Close();
-            FileStream fs = new FileStream(fullfile, FileMode.Create);
-            StreamWriter sw = new StreamWriter(fs);
-            sw.Write(text);
-            sw.WriteLine(content);
-            sw.Flush();
-            sw.Close();
-            fs.Close();
+            List<Dictionary<string, object>> dicList = JsonHelper.ToObject<List<Dictionary<string, object>>>(content.ToString());
+            if (dicList.Count > 0 && dicList[0].ContainsKey("rules_string"))
+            {
+                SaveFileDialog saveFile = new SaveFileDialog();
+                saveFile.Filter = "Files (*.drl)|*.drl|All Files (*.*)|*.*";
+                saveFile.FileName = "Rules";
+                if (saveFile.ShowDialog() == true)
+                {
+                    FileStream fs = new FileStream(saveFile.FileName, FileMode.Create);
+                    StreamWriter sw = new StreamWriter(fs);
+                    sw.Write(dicList[0]["rules_string"]);
+                    sw.Flush();
+                    sw.Close();
+                    fs.Close();
+                }
+            }
         }
         #region 类型转换
         /// <summary>
