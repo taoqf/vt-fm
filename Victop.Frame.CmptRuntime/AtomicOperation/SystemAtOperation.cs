@@ -162,7 +162,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="oav">接收oav</param>
         public void ParamsGetByDictionary(OAVModel oavDic, string paramName, OAVModel oav)
         {
-            Dictionary<string, object> dic = oavDic.AtrributeValue as Dictionary<string, object>;
+            Dictionary<string, object> dic =JsonHelper.ToObject<Dictionary<string, object>>(oavDic.AtrributeValue.ToString());
             if (dic != null && dic.ContainsKey(paramName))
             {
                 oav.AtrributeValue = dic[paramName];
