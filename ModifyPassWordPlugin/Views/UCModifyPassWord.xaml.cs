@@ -11,33 +11,41 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Victop.Frame.CmptRuntime;
 
 namespace ModifyPassWordPlugin.Views
 {
     /// <summary>
     /// UCModifyPassWord.xaml 的交互逻辑
     /// </summary>
-    public partial class UCModifyPassWord : UserControl
+    public partial class UCModifyPassWord : TemplateControl
     {
         public UCModifyPassWord()
         {
             InitializeComponent();
         }
-        private static Dictionary<string, object> paramDict;
-
-        public static Dictionary<string, object> ParamDict
+        public UCModifyPassWord(Dictionary<string, object> paramDict, int showType)
         {
-            get { return UCModifyPassWord.paramDict; }
-            set { UCModifyPassWord.paramDict = value; }
+            InitializeComponent();
+            ParamDict = paramDict;
+            ShowType = showType;
+          
         }
+        //private static Dictionary<string, object> paramDict;
 
-        private static int _showType;
+        //public static Dictionary<string, object> ParamDict
+        //{
+        //    get { return UCModifyPassWord.paramDict; }
+        //    set { UCModifyPassWord.paramDict = value; }
+        //}
 
-        public static int ShowType
-        {
-            get { return UCModifyPassWord._showType; }
-            set { UCModifyPassWord._showType = value; }
-        }
+        //private static int _showType;
+
+        //public static int ShowType
+        //{
+        //    get { return UCModifyPassWord._showType; }
+        //    set { UCModifyPassWord._showType = value; }
+        //}
         
     }
 }

@@ -25,20 +25,11 @@ namespace ModifyPassWordPlugin.Views
         {
             InitializeComponent();
         }
-        private static Dictionary<string, object> paramDict;
-
-        public static Dictionary<string, object> ParamDict
+        public ModifyPassWordWindow(Dictionary<string, object> paramDict, int showType)
         {
-            get { return ModifyPassWordWindow.paramDict; }
-            set { ModifyPassWordWindow.paramDict = value; }
-        }
-
-        private static int _showType;
-
-        public static int ShowType
-        {
-            get { return ModifyPassWordWindow._showType; }
-            set { ModifyPassWordWindow._showType = value; }
+            InitializeComponent();
+            ucModifyPassWord.ParamDict = paramDict;
+            ucModifyPassWord.ShowType = showType;
         }
     }
 }

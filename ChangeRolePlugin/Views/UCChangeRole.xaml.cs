@@ -11,34 +11,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Victop.Frame.CmptRuntime;
 
 namespace ChangeRolePlugin.Views
 {
     /// <summary>
     /// UCChangeRole.xaml 的交互逻辑
     /// </summary>
-    public partial class UCChangeRole : UserControl
+    public partial class UCChangeRole : TemplateControl
     {
         public UCChangeRole()
         {
             InitializeComponent();
         }
-        private static Dictionary<string, object> paramDict;
-
-        public static Dictionary<string, object> ParamDict
+        public UCChangeRole(Dictionary<string, object> paramDict, int showType)
         {
-            get { 
-                return UCChangeRole.paramDict; 
-            }
-            set { UCChangeRole.paramDict = value; }
-        }
-
-        private static int _showType;
-
-        public static int ShowType
-        {
-            get { return UCChangeRole._showType; }
-            set { UCChangeRole._showType = value; }
+            InitializeComponent();
+            ParamDict = paramDict;
+            ShowType = showType;
+          
         }
     }
 }

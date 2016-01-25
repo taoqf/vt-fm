@@ -5,6 +5,6 @@
         xmlns:views="clr-namespace:ChangeRolePlugin.Views"
         Title="" Height="626" Width="386" Style="{DynamicResource feidaologinWindowStyle}"  WindowStartupLocation="CenterScreen">
     <Grid>
-        <views:UCChangeRole></views:UCChangeRole>
+        <views:UCChangeRole x:Name="ucChangRole"></views:UCChangeRole>
     </Grid>
 </Window>

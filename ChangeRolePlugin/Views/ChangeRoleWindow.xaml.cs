@@ -25,21 +25,11 @@ namespace ChangeRolePlugin.Views
         {
             InitializeComponent();
         }
-        private static Dictionary<string, object> paramDict;
-
-        public static Dictionary<string, object> ParamDict
+        public ChangeRoleWindow(Dictionary<string, object> paramDict, int showType)
         {
-            get {
-                return ChangeRoleWindow.paramDict;
-            }
-            set { ChangeRoleWindow.paramDict = value; }
-        }
-        private static int _showType;
-
-        public static int ShowType
-        {
-            get { return ChangeRoleWindow._showType; }
-            set { ChangeRoleWindow._showType = value; }
+            InitializeComponent();
+            ucChangRole.ParamDict = paramDict;
+            ucChangRole.ShowType = showType;
         }
     }
 }

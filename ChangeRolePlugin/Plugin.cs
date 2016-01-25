@@ -25,7 +25,7 @@ namespace ChangeRolePlugin
 
         public int ShowType
         {
-            get { return 0; }
+            get { return 1; }
         }
 
         public int SystemPlugin
@@ -35,7 +35,7 @@ namespace ChangeRolePlugin
 
         public int AutoInit
         {
-            get { return 0; }
+            get { return 1; }
         }
 
         public void Init()
@@ -44,14 +44,25 @@ namespace ChangeRolePlugin
         }
 
 
+        /// <summary>
+        /// 起始窗口
+        /// </summary>
         public Window StartWindow
         {
-            get { return new ChangeRoleWindow(); }
+            get
+            {
+                return new ChangeRoleWindow(ParamDict, ShowType);
+            }
         }
-
+        /// <summary>
+        /// 用户控件
+        /// </summary>
         public UserControl StartControl
         {
-            get { return new UCChangeRole(); }
+            get
+            {
+                return new UCChangeRole(ParamDict, ShowType);
+            }
         }
 
 
@@ -61,24 +72,8 @@ namespace ChangeRolePlugin
         }
         public Dictionary<string, object> ParamDict
         {
-            get
-            {
-                if (ShowType == 0)
-                {
-                    return ChangeRoleWindow.ParamDict;
-                }
-                else
-                {
-                    return UCChangeRole.ParamDict;
-                }
-            }
-            set
-            {
-                UCChangeRole.ParamDict = value;
-                ChangeRoleWindow.ParamDict = value;
-                UCChangeRole.ShowType = this.ShowType;
-                ChangeRoleWindow.ShowType = this.ShowType;
-            }
+            get;
+            set;
         }
 
     }

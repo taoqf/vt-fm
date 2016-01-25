@@ -25,17 +25,17 @@ namespace ModifyPassWordPlugin
 
         public int ShowType
         {
-            get { return 0; }
+            get { return 1; }
         }
 
         public int SystemPlugin
         {
-            get { return 0; }
+            get { return 1; }
         }
 
         public int AutoInit
         {
-            get { return 0; }
+            get { return 1; }
         }
 
         public void Init()
@@ -44,14 +44,25 @@ namespace ModifyPassWordPlugin
         }
 
 
+        /// <summary>
+        /// 起始窗口
+        /// </summary>
         public Window StartWindow
         {
-            get { return new ModifyPassWordWindow(); }
+            get
+            {
+                return new ModifyPassWordWindow(ParamDict, ShowType);
+            }
         }
-
+        /// <summary>
+        /// 用户控件
+        /// </summary>
         public UserControl StartControl
         {
-            get { return new UCModifyPassWord(); }
+            get
+            {
+                return new UCModifyPassWord(ParamDict, ShowType);
+            }
         }
 
 
@@ -61,24 +72,8 @@ namespace ModifyPassWordPlugin
         }
         public Dictionary<string, object> ParamDict
         {
-            get
-            {
-                if (ShowType == 0)
-                {
-                    return ModifyPassWordWindow.ParamDict;
-                }
-                else
-                {
-                    return UCModifyPassWord.ParamDict;
-                }
-            }
-            set
-            {
-                UCModifyPassWord.ParamDict = value;
-                ModifyPassWordWindow.ParamDict = value;
-                UCModifyPassWord.ShowType = this.ShowType;
-                ModifyPassWordWindow.ShowType = this.ShowType;
-            }
+            get;
+            set;
         }
     
     }

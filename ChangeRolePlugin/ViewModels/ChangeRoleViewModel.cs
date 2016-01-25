@@ -11,13 +11,14 @@ using Victop.Wpf.Controls;
 using System.Configuration;
 using Victop.Frame.PublicLib.Managers;
 using Victop.Server.Controls.MVVM;
+using ChangeRolePlugin.Views;
 
 namespace ChangeRolePlugin.ViewModels
 {
     public class ChangeRoleViewModel : ModelBase
     {
         #region 字段
-        private UserControl mainWindow;
+        private UCChangeRole mainWindow;
         private ObservableCollection<ChangeRoleModel> roleInfoList;
         DataMessageOperation messageOp = new DataMessageOperation();
         private Window roleWindow;
@@ -129,7 +130,7 @@ namespace ChangeRolePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    mainWindow = (UserControl)x;
+                    mainWindow = (UCChangeRole)x;
                     FrameworkElement ct = (FrameworkElement)mainWindow.Parent;
                     while (true)
                     {
@@ -146,6 +147,17 @@ namespace ChangeRolePlugin.ViewModels
                     ClientId = ConfigManager.GetAttributeOfNodeByName("UserInfo", "ClientId");
                     Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
                     RoleInfoList = JsonHelper.ToObject<ObservableCollection<ChangeRoleModel>>(JsonHelper.ReadJsonString(result["ReplyContent"].ToString(), "UserRole"));
+                    int i = 0;
+                });
+            }
+        }
+        public ICommand MainUnloadedCommand
+        {
+            get {
+                return new RelayCommand<object>((x) =>
+                {
+                    DataMessageOperation pluginOp = new DataMessageOperation();
+                    pluginOp.StopPlugin(mainWindow.Uid);
                     int i = 0;
                 });
             }

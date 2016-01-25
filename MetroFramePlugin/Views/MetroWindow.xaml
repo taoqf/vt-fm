@@ -71,7 +71,7 @@
                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <!--<Button Name="btnFeedBack" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>-->
                     <!--插件集合-->
-                    <controls:VicButtonNormal Name="btnCountDown"  Style="{DynamicResource btnCountDownStyle}" ToolTip="倒计时">
+                    <controls:VicButtonNormal Name="btnCountDown" Visibility="Collapsed" Style="{DynamicResource btnCountDownStyle}" ToolTip="倒计时">
                         <i:Interaction.Triggers>
                             <!--<i:EventTrigger EventName="MouseEnter">
                                 <i:InvokeCommandAction Command="{Binding btnCountDownMouseEnterCommand}"/>

@@ -16,7 +16,7 @@ namespace ModifyPassWordPlugin.ViewModels
     public class ModifyPassWordViewModel : ModelBase
     {
         #region 字段
-        private UserControl mainView;
+        private UCModifyPassWord mainView;
         private ModifyPassWordModel pwdModel;
         private PasswordBox pwdOldUser;
         private PasswordBox pwdNewUser;
@@ -53,7 +53,7 @@ namespace ModifyPassWordPlugin.ViewModels
             get {
                 return new RelayCommand<object>((x) =>
                 {
-                    mainView = (UserControl)x;
+                    mainView = (UCModifyPassWord)x;
                     pwdOldUser = (PasswordBox)mainView.FindName("pwdOldUser");
                     pwdNewUser = (PasswordBox)mainView.FindName("pwdNewUser");
                     pwdAffirmUser = (PasswordBox)mainView.FindName("pwdAffirmUser");
@@ -64,7 +64,24 @@ namespace ModifyPassWordPlugin.ViewModels
                     pwdNewUser.LostFocus += pwdNewUser_LostFocus;
                     pwdAffirmUser.LostFocus += pwdAffirmUser_LostFocus;
                    // PwdModel.UserCode = GetUserCode();
-                   PwdModel.UserCode = ModifyPassWordWindow.ParamDict["usercode"].ToString();
+                    PwdModel.UserCode = mainView.ParamDict["usercode"].ToString();
+                });
+            }
+        }
+        /// <summary>
+        /// 插件卸载
+        /// </summary>
+        public ICommand MainUnloadedCommand
+        {
+            get {
+                return new RelayCommand<object>((x) =>
+                {
+                    if (mainView.ShowType == 0)
+                    {
+                        DataMessageOperation pluginOp = new DataMessageOperation();
+                        pluginOp.StopPlugin(mainView.Uid);
+                    }
+                  
                 });
             }
         }
