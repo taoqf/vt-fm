@@ -41,7 +41,7 @@
                         <RowDefinition Height="46"/>
                         <RowDefinition Height="46"/>
                         <RowDefinition Height="46"/>
-                        <RowDefinition Height="46"/>
+                        <RowDefinition Height="0"/>
                         <RowDefinition Height="46"/>
                         <RowDefinition Height="46"/>
                         <RowDefinition Height="46"/>
@@ -64,8 +64,9 @@
                     <controls:VicCheckBoxNormal Grid.Row="2" Grid.Column="3" VerticalAlignment="Top" Margin="5,10,0,0" IsChecked="{Binding SysConfigModel.AutoSearch,Converter={StaticResource CheckboxBoolConverter}}"/>
                     <controls:VicTextBlockNormal Text="模式" HorizontalAlignment="Left"  Style="{DynamicResource logoTextBlockStyle}" Grid.Row="2" Grid.Column="4"  Height="28"></controls:VicTextBlockNormal>
                     <controls:VicCheckBoxNormal Grid.Column="5" HorizontalAlignment="Left"  Grid.Row="2" VerticalAlignment="Top" Margin="0,10,0,0" IsChecked="{Binding SysConfigModel.Mode,Converter={StaticResource CheckboxBoolConverter}}"/>
-                    <controls:VicTextBlockNormal Text="广播次数" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="3" Grid.Column="0"  Height="28"></controls:VicTextBlockNormal>
-                    <controls:VicNumericUpDown Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Width="195" Margin="5,5" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding SysConfigModel.BroadCastTime}"/>
+                    <controls:VicTextBlockNormal Text="心跳频率(重启生效)" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="3" Grid.Column="0"  Height="28"></controls:VicTextBlockNormal>
+                    <controls:VicNumericUpDown Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Width="195" Margin="5,5" HorizontalAlignment="Left" VerticalAlignment="Top" Minimum="0" Maximum="30" Value="{Binding SysConfigModel.BroadCastTime}"/>
+                    <controls:VicLabelNormal Grid.Row="3" Grid.Column="5">秒</controls:VicLabelNormal>
                     <controls:VicTextBlockNormal Text="起始端口" Style="{DynamicResource logoTextBlockStyle}" Grid.Row="4" Grid.Column="0"  Height="28"></controls:VicTextBlockNormal>
                     <controls:VicTextBoxNormal Grid.Row="4" Grid.Column="1" Width="60" Margin="5,0,0,5" HorizontalAlignment="Left"  Grid.ColumnSpan="2" VicText="{Binding SysConfigModel.StartPoint}"/>
                     <controls:VicTextBlockNormal Text="结束端口" Style="{DynamicResource logoTextBlockStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="4" Grid.Column="3" Height="28"></controls:VicTextBlockNormal>

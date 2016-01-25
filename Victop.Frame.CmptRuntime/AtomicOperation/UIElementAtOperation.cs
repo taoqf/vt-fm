@@ -27,9 +27,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         }
 
         #region 私有字段
-       /// <summary>
-       /// 页面/组件基类
-       /// </summary>
+        /// <summary>
+        /// 页面/组件基类
+        /// </summary>
         private TemplateControl MainView;
         #endregion
 
@@ -43,6 +43,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             Button btn = MainView.FindName(btnName) as Button;
             if (btn != null)
                 btn.Content = btnContent;
+        }
+        /// <summary>
+        /// 设置文本标签内容
+        /// </summary>
+        /// <param name="lblName">标签名称</param>
+        /// <param name="lblContent">标签内容</param>
+        public void SetLabelText(string lblName, object lblContent)
+        {
+            Label lbl = MainView.FindName(lblName) as Label;
+            if (lbl != null && lblContent != null)
+                lbl.Content = lblContent;
+        }
+        /// <summary>
+        /// 获取文本标签内容
+        /// </summary>
+        /// <param name="lblName">标签名称</param>
+        /// <param name="oav">接受oav</param>
+        public void GetLabelText(string lblName, OAVModel oav)
+        {
+            Label lbl = MainView.FindName(lblName) as Label;
+            if (lbl != null && oav != null)
+                oav.AtrributeValue = lbl.Content;
         }
         /// <summary>
         /// 获取界面元素名称
@@ -64,7 +86,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void SetElementIsEnabled(string elementName, int state = 0)
         {
             FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
-            if (element != null )
+            if (element != null)
             {
                 if (state == 0)
                     element.IsEnabled = true;
@@ -209,8 +231,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             else
             {
                 oav.AtrributeValue = false;
-                if(oavmsg!=null)
-                oavmsg.AtrributeValue = "当前选择项为空";
+                if (oavmsg != null)
+                    oavmsg.AtrributeValue = "当前选择项为空";
             }
         }
         /// <summary>
@@ -265,7 +287,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void VicDataGridIsReadOnly(string dgridName, int state = 0)
         {
             VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
-            if (dgrid != null )
+            if (dgrid != null)
             {
                 if (state == 0)
                 {
@@ -277,7 +299,82 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+        /// <summary>
+        /// 清除dgrid数据集合
+        /// </summary>
+        /// <param name="dgridName">控件名</param>
+        public void VicDataGridClearData(string dgridName)
+        {
+             VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
+             if (dgrid != null)
+             {
+                 dgrid.ItemsSource = null;
+             }
+        }
+        /// <summary>
+        /// 设置dgrid选中行
+        /// </summary>
+        /// <param name="dgridName">控件名</param>
+        /// <param name="selectedIndex">选中行号</param>
+        public void VicDataGridSetSelectedIndex(string dgridName, int selectedIndex)
+        {
+            VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
+            if (dgrid != null)
+            {
+                dgrid.SelectedIndex = selectedIndex;
+            }
+        }
 
+        #endregion
+
+        #region VicListBoxNormal原子操作库
+        /// <summary>
+        /// 设置VicListBoxNormal控件选中行
+        /// </summary>
+        /// <param name="lboxName">ListBox控件</param>
+        /// <param name="selectedIndex">oav接受</param>
+        public void VicListBoxNormalSelectIndex(string lboxName, int selectedIndex)
+        {
+            VicListBoxNormal lbox = MainView.FindName(lboxName) as VicListBoxNormal;
+            if (lbox != null)
+            {
+                lbox.SelectedIndex = selectedIndex;
+            }
+        }
+        /// <summary>
+        /// VicListBoxNormal是否有选中项
+        /// </summary>
+        /// <param name="lboxName">控件名</param>
+        /// <param name="oav">接收oav</param>
+        /// <param name="oavmsg">消息oav</param>
+        public void VicListBoxNormalIsSelectItem(string lboxName, OAVModel oav, OAVModel oavmsg)
+        {
+            VicListBoxNormal lbox = MainView.FindName(lboxName) as VicListBoxNormal;
+            if (lbox != null && lbox.SelectedItem != null)
+            {
+                oav.AtrributeValue = true;
+            }
+            else
+            {
+                oav.AtrributeValue = false;
+                if (oavmsg != null)
+                    oavmsg.AtrributeValue = "当前选择项为空";
+            }
+        }
+        /// <summary>
+        /// 获取ListBox选中项内容
+        /// </summary>
+        /// <param name="lboxName">ListBox控件</param>
+        /// <param name="oav">接受oav</param>
+        public void GetListBoxSelectItem(string lboxName, OAVModel oav)
+        {
+            VicListBoxNormal listbox = MainView.FindName(lboxName) as VicListBoxNormal;
+            if (listbox != null & listbox.SelectedItem != null)
+            {
+                ListBoxItem lbi = (ListBoxItem)listbox.SelectedItem;
+                oav.AtrributeValue = lbi.Content;
+            }
+        }
         #endregion
 
         #region UnitPageRule原子操作

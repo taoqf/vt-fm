@@ -11,6 +11,22 @@ namespace Victop.Frame.CmptRuntime
     /// </summary>
     public class ViewsConditionModel
     {
+        private bool emptyData = false;
+        /// <summary>
+        /// 取空数据标识(true:取空结构,false:取数据)
+        /// </summary>
+        [JsonIgnore]
+        public bool EmptyData
+        {
+            get
+            {
+                return emptyData;
+            }
+            set
+            {
+                emptyData = value;
+            }
+        }
         /// <summary>
         /// 表条件
         /// </summary>

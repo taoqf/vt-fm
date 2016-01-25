@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
@@ -176,6 +177,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+        /// <summary>
+        /// 设置区块是否取空数据
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        /// <param name="isEmptyData">true取空数据</param>
+        public void SetConditionIsEmptyData(string blockName, bool isEmptyData)
+        {
+            if (!string.IsNullOrEmpty(blockName))
+            {
+                if (conditionModelDic.ContainsKey(blockName))
+                {
+                    conditionModelDic[blockName].EmptyData = isEmptyData;
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    viewConModel.EmptyData = isEmptyData;
+                    conditionModelDic.Add(blockName, viewConModel);
+                }
+            }
+        }
 
         /// <summary>
         /// 设置区块排序
@@ -332,17 +354,17 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             VicDataGrid datagrid = dgrid as VicDataGrid;
-            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && datagrid != null)
+            if (pBlock != null && datagrid != null)
             {
                 if (datagrid.SelectedItem != null)
                 {
                     pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
-                    pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
                 }
                 else
                 {
                     pBlock.PreBlockSelectedRow = null;
                 }
+                pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
             }
         }
         /// <summary>
@@ -471,7 +493,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
                 {
-                    int item_number = 1;
+                    int item_number = 0;
                     if (Int32.TryParse(pBlock.ViewBlockDataTable.Compute("max(" + fieldName + ")", string.Empty).ToString(), out item_number))
                     {
                         oav.AtrributeValue = item_number + 1;
@@ -541,7 +563,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 if (drSelected.Length > 0)
                 {
                     drSelected[0][paramName] = paramValue;
-                    pBlock.PreBlockSelectedRow = drSelected[0];
                 }
             }
         }
@@ -845,15 +866,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         int.TryParse(row[fieldName].ToString().Substring(1), out param);
                         i = i > param ? i : param;
                     }
-                    if (i < 9)
-                    {
-                        string temp = "0" + (i + 1).ToString();
-                        oav.AtrributeValue = firstLetter + temp;
-                    }
-                    else
-                    {
-                        oav.AtrributeValue = firstLetter + (i + 1).ToString();
-                    }
+                    oav.AtrributeValue = firstLetter + (i + 1).ToString();
                 }
             }
         }

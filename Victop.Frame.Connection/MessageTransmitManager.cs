@@ -204,7 +204,6 @@ namespace Victop.Frame.Connection
         {
             MessageOrganizeManager organizeManager = new MessageOrganizeManager();
             DataOperateEnum saveDataFlag = DataOperateEnum.NONE;
-            string DataChannelId = JsonHelper.ReadJsonString(messageInfo.MessageContent, "DataChannelId");
             messageInfo = organizeManager.OrganizeMessage(messageInfo, out saveDataFlag);
             string DataSource = ConfigurationManager.AppSettings.Get("DataSource").ToLower();
             ReplyMessage replyMessage = new ReplyMessage();
@@ -230,7 +229,7 @@ namespace Victop.Frame.Connection
                             replyMessage = replyMessageResolver.ResolveReplyMessage(replyMessage, messageInfo);
                             break;
                         case DataOperateEnum.COMMIT:
-                            bool result = replyMessageResolver.CommitDataSetChange(DataChannelId);
+                            bool result = replyMessageResolver.CommitDataSetChange(messageInfo.MessageId);
                             break;
                         case DataOperateEnum.NONE:
                         default:

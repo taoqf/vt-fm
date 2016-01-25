@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
@@ -18,6 +19,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
     public class SystemAtOperation
     {
         private TemplateControl MainView;
+        private static Dictionary<string, object> paramCompntDic = new Dictionary<string, object>();
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -39,9 +41,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="triggerName">触发事件名</param>
         /// <param name="triggerSource">触发源</param>
-        public void TranslationState(string triggerName,object triggerSource)
+        public void TranslationState(string triggerName, object triggerSource)
         {
-            MainView.FeiDaoFSM.Do(triggerName, triggerSource,true);
+            MainView.FeiDaoFSM.Do(triggerName, triggerSource, true);
         }
 
         /// <summary>
@@ -67,7 +69,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void UpdateFact(OAVModel oav)
         {
             if (oav.AtrributeValue != null)
-            MainView.FeiDaoFSM.UpdateFact(oav);
+                MainView.FeiDaoFSM.UpdateFact(oav);
         }
         /// <summary>
         /// 系统输出
@@ -139,6 +141,18 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 获取组件参数值
+        /// </summary>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">oav载体</param>
+        public void ParamsCompntGet(string paramName, OAVModel oav)
+        {
+            if (MainView.ParamDict.ContainsKey(paramName))
+            {
+                oav.AtrributeValue = MainView.ParamDict[paramName];
+            }
+        }
+        /// <summary>
         /// 获取Dictionary中参数值
         /// </summary>
         /// <param name="oavDic">存储dic类型的oav</param>
@@ -150,6 +164,22 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (dic != null && dic.ContainsKey(paramName))
             {
                 oav.AtrributeValue = dic[paramName];
+            }
+        }
+        /// <summary>
+        /// 新增页面参数值
+        /// </summary>
+        /// <param name="paramName">参数名</param>
+        /// <param name="paramValue">参数值</param>
+        public void ParamsPageAdd(string paramName, object paramValue)
+        {
+            if (MainView.ParentControl.ParamDict.ContainsKey(paramName))
+            {
+                MainView.ParentControl.ParamDict[paramName] = paramValue;
+            }
+            else
+            {
+                MainView.ParentControl.ParamDict.Add(paramName, paramValue);
             }
         }
         /// <summary>
@@ -213,7 +243,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 return;
             }
             ucCom.ParentControl = MainView.ParentControl;
-
+            if (paramCompntDic.ContainsKey(compntName))
+            {
+                ucCom.ParamDict = paramCompntDic[compntName] as Dictionary<string, object>;
+                paramCompntDic.Remove(compntName);
+            }
             VicWindowNormal win = new VicWindowNormal();
             win.Owner = XamlTreeHelper.GetParentObject<Window>(MainView);
             win.ShowInTaskbar = false;
@@ -223,6 +257,36 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             win.Title = ucCom.Tag.ToString();
             win.Content = ucCom;
             win.ShowDialog();
+        }
+        /// <summary>
+        /// 设置组件参数
+        /// </summary>
+        /// <param name="compntName">组件名称</param>
+        /// <param name="paramName">参数名称</param>
+        /// <param name="paramValue">参数值</param>
+        public void SetCompntParamDic(string compntName, string paramName, object paramValue)
+        {
+            if (!string.IsNullOrEmpty(compntName) && !string.IsNullOrEmpty(paramName))
+            {
+                if (paramCompntDic.ContainsKey(compntName))
+                {
+                    Dictionary<string, object> paramDic = paramCompntDic[compntName] as Dictionary<string, object>;
+                    if (paramDic.ContainsKey(paramName))
+                    {
+                        paramDic[paramName] = paramValue;
+                    }
+                    else
+                    {
+                        paramDic.Add(paramName, paramValue);
+                    }
+                }
+                else
+                {
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    paramDic.Add(paramName, paramValue);
+                    paramCompntDic.Add(compntName, paramDic);
+                }
+            }
         }
         /// <summary>
         /// 弹框展示组件操作
@@ -240,7 +304,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 return;
             }
             ucCom.ParentControl = MainView;
-
+            if (paramCompntDic.ContainsKey(compntName))
+            {
+                ucCom.ParamDict = paramCompntDic[compntName] as Dictionary<string,object>;
+                paramCompntDic.Remove(compntName);
+            }
             VicWindowNormal win = new VicWindowNormal();
             win.Owner = XamlTreeHelper.GetParentObject<Window>(MainView);
             win.ShowInTaskbar = false;
@@ -336,7 +404,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             controlConten.IsOpen = true;
             controlConten.PlacementTarget = MainView.ParentControl;
-            controlConten.Placement=PlacementMode.Center;
+            controlConten.Placement = PlacementMode.Center;
         }
         /// <summary>
         /// 弹框关闭操作
@@ -345,7 +413,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void UcCurrentCompntContentClose(string layoutName)
         {
             VicPopup controlConten = MainView.FindName(layoutName) as VicPopup;
-            if (controlConten!=null)
+            if (controlConten != null)
             {
                 controlConten.IsOpen = false;
             }
@@ -355,7 +423,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="fileName">文件名称</param>
         /// <param name="content">规则内容</param>
-        public void WriteTextToFile(string fileName,string content)
+        public void WriteTextToFile(string fileName, string content)
         {
             string fullfile = string.Format("{0}\\{1}", AppDomain.CurrentDomain.BaseDirectory, fileName);
             StreamReader objReader = new StreamReader(fullfile);
@@ -428,6 +496,47 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (paramValue != null)
                 bool.TryParse(paramValue.ToString(), out i);
             return i;
+        }
+        #endregion
+
+
+        #region 发送获取编码消息
+        /// <summary>
+        /// 发送获取编码消息
+        /// </summary>
+        /// <param name="SystemId">系统ID</param>
+        /// <param name="iPName">规则名称(例如:"BH005")</param>
+        /// <param name="iCodeRule">编码规则</param>
+        /// <returns>单号</returns>
+        public string SendGetCodeMessage(string SystemId, string iPName, string iCodeRule)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(iPName) || string.IsNullOrEmpty(iCodeRule) || string.IsNullOrEmpty(SystemId))
+                {
+                    return string.Empty;
+                }
+                string MessageType = "MongoDataChannelService.findDocCode";
+                DataMessageOperation messageOp = new DataMessageOperation();
+                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                contentDic.Add("systemid", SystemId);
+                contentDic.Add("pname", iPName);
+                contentDic.Add("setinfo", iCodeRule);
+                Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
+                if (returnDic != null || returnDic.ContainsKey("ReplyContent"))
+                {
+                    return JsonHelper.ReadJsonString(returnDic["ReplyContent"].ToString(), "result");
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.InfoFormat("发送获取编码消息异常（string SendGetCodeMessage）：{0}", ex.Message);
+                return string.Empty;
+            }
         }
         #endregion
     }

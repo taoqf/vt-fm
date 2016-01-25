@@ -189,6 +189,7 @@ namespace Victop.Frame.CmptRuntime
                 contentDic.Add("refsystemid", RefSystemId);
             }
             contentDic.Add("modelid", ModelId);
+            contentDic.Add("emptydataflag", Condition.EmptyData ? 1 : 0);
             if (!string.IsNullOrEmpty(SpaceId))
             {
                 contentDic.Add("spaceid", SpaceId);
@@ -222,6 +223,10 @@ namespace Victop.Frame.CmptRuntime
             conDic.Add("paging", newPageDic);
             contentDic.Add("condition", conDic);
             #endregion
+            if (!string.IsNullOrEmpty(ViewId))
+            {
+                contentDic.Add("DataChannelId", ViewId);
+            }
             Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
             {

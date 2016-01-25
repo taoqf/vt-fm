@@ -357,6 +357,10 @@ namespace Victop.Frame.CmptRuntime
                 ViewBlock.ViewModel.Condition.PageSize = conditionModel.PageSize;
                 ViewBlock.ViewModel.Condition.PageIndex = conditionModel.PageIndex;
             }
+            if (conditionModel != null)
+            {
+                ViewBlock.ViewModel.Condition.EmptyData = conditionModel.EmptyData;
+            }
             ViewBlock.ViewModel.SearchData();
         }
 
