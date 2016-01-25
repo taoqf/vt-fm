@@ -540,7 +540,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             try
             {
-                if (string.IsNullOrEmpty(iPName) || string.IsNullOrEmpty(iCodeRule) || string.IsNullOrEmpty(SystemId))
+                if (string.IsNullOrEmpty(iPName) || string.IsNullOrEmpty(SystemId))
                 {
                     return string.Empty;
                 }
