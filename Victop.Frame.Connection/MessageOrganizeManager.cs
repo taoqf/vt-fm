@@ -57,15 +57,6 @@ namespace Victop.Frame.Connection
                         replyIsToChannel = DataOperateEnum.COMMIT;
                         opFlag = true;
                     }
-                    else if (messageInfo.MessageType.Equals("postServiceIntranet"))
-                    {
-                        Dictionary<string, object> dicMessageControl = new Dictionary<string, object>();
-                        if (dicContent != null && dicContent.ContainsKey("doccode"))
-                        {
-                            dicMessageControl.Add("BusinessKey", dicContent["doccode"]);
-                        }
-                        messageInfo.MessageControl = JsonHelper.ToJson(dicMessageControl);
-                    }
                     if (dicContent.ContainsKey("ControlParams"))
                     {
                         messageInfo.MessageControl = JsonHelper.ToJson(dicContent["ControlParams"]);

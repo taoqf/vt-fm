@@ -12,6 +12,8 @@ using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
+using System.Reflection;
+using System.Resources;
 
 namespace Victop.Frame.CmptRuntime.AtomicOperation
 {
@@ -311,7 +313,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             ucCom.ParentControl = MainView;
             if (paramCompntDic.ContainsKey(compntName))
             {
-                ucCom.ParamDict = paramCompntDic[compntName] as Dictionary<string,object>;
+                ucCom.ParamDict = paramCompntDic[compntName] as Dictionary<string, object>;
                 paramCompntDic.Remove(compntName);
             }
             VicWindowNormal win = new VicWindowNormal();
@@ -330,7 +332,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="content">弹出内容</param>
         public void ShowVicWindowContent(object content)
         {
-            VicTextBoxNormal textBox=new VicTextBoxNormal();
+            VicTextBoxNormal textBox = new VicTextBoxNormal();
             textBox.VicText = content.ToString();
             textBox.Height = 580;
             textBox.Width = 780;
@@ -372,7 +374,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="oav">接收oav</param>
         public void ShowMessageResult(object messageInfo, object caption, OAVModel oav)
         {
-            MessageBoxResult msgboxresult = VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption == null ? "空值" : messageInfo.ToString(), MessageBoxButton.YesNo, MessageBoxImage.Information);
+            MessageBoxResult msgboxresult = VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption == null ? "空值" : caption.ToString(), MessageBoxButton.YesNo, MessageBoxImage.Information);
             if (MessageBoxResult.Yes == msgboxresult)
             {
                 oav.AtrributeValue = "1";
@@ -467,6 +469,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+        #region 获取资源/// <summary>
+        /// <summary>
+        /// 返回指定名称资源的值
+        /// </summary>
+        /// <param name="name">资源名称</param>
+        /// <returns>返回资源值</returns>
+        public string GetStringByResourceName(string name)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                Type type = MainView.GetType();
+                Assembly assembly = Assembly.GetAssembly(type);
+                type = assembly.GetTypes().FirstOrDefault(it => it.Name.Equals("Resources"));
+                if (type != null)
+                {
+                    ResourceManager rm = new ResourceManager(type.FullName, assembly);
+                    return rm.GetString(name);
+                }
+            }
+            return string.Empty;
+        }
+        #endregion
         #region 类型转换
         /// <summary>
         /// 转换字符串类型
