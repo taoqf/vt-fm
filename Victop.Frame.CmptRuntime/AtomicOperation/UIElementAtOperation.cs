@@ -114,6 +114,20 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+        /// <summary>
+        /// 根据DataGrid名称获取当前选择行中某一字段的值
+        /// </summary>
+        /// <param name="gridName">grid名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">返回OAV值</param>
+        public void ParamsCurrentRowGetFromGridName(string gridName, string paramName, OAVModel oav)
+        {
+            VicDataGrid dataGrid = (VicDataGrid)MainView.FindName(gridName);
+            if (dataGrid != null && dataGrid.SelectedItem != null)
+            {
+                oav.AtrributeValue = ((DataRowView)dataGrid.SelectedItem).Row[paramName];
+            }
+        }
         #region VicTreeView原子操作
         /// <summary>
         /// 得到tree选中的值
