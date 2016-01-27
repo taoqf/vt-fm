@@ -317,10 +317,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="paramName">字段名</param>
-        /// <param name="oav">接收oav</param>
-        public void ParamsCurrentRowSet(string pblockName, string paramName, OAVModel oav)
+        /// <param name="value">值</param>
+        public void ParamsCurrentRowSet(string pblockName, string paramName, object value)
         {
-           dataOperation.ParamsCurrentRowSet(pblockName, paramName, oav);
+            dataOperation.ParamsCurrentRowSet(pblockName, paramName, value);
         }
         /// <summary>
         /// 删除选中行
@@ -835,10 +835,10 @@ namespace Victop.Frame.CmptRuntime
         /// VicTextBoxNormal赋值VicText
         /// </summary>
         /// <param name="txtName">控件名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicTextBoxNormalSetVicText(string txtName, OAVModel oav)
+        /// <param name="value">文本值</param>
+        public void VicTextBoxNormalSetVicText(string txtName, object value)
         {
-            uIElementOperation.VicTextBoxNormalSetVicText(txtName, oav);
+            uIElementOperation.VicTextBoxNormalSetVicText(txtName, value);
         }
         /// <summary>
         /// 得到VicTextBox VicText值
@@ -853,10 +853,10 @@ namespace Victop.Frame.CmptRuntime
         /// VicTextBox赋值VicText
         /// </summary>
         /// <param name="txtName">控件名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicTextBoxSetVicText(string txtName, OAVModel oav)
+        /// <param name="value">文本值</param>
+        public void VicTextBoxSetVicText(string txtName, object value)
         {
-            uIElementOperation.VicTextBoxSetVicText(txtName, oav);
+            uIElementOperation.VicTextBoxSetVicText(txtName, value);
         }
         /// <summary>
         /// 是否有选中项
