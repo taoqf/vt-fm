@@ -20,7 +20,24 @@ namespace Victop.Frame.CmptRuntime
     /// </summary>
     public class TemplateControl : UserControl, INotifyPropertyChanged
     {
+        #region 私有变量
+        /// <summary>
+        /// 组件定义
+        /// </summary>
+        private CompntDefinModel DefinModel;
+        private WebBrowser executeBrowser = new WebBrowser();
         private bool initFlag;
+        private int businessModel;
+        #endregion
+        #region 公用属性
+        /// <summary>
+        /// 业务模式(0:C#,1:JS)
+        /// </summary>
+        public int BusinessModel
+        {
+            get { return businessModel; }
+            set { businessModel = value; }
+        }
         /// <summary>
         /// 是否初始化
         /// </summary>
@@ -31,16 +48,28 @@ namespace Victop.Frame.CmptRuntime
                 return initFlag;
             }
         }
-        #region 公用属性
-        /// <summary>
-        /// 组件定义
-        /// </summary>
-        private CompntDefinModel DefinModel;
         /// <summary>
         /// SpaceId
         /// </summary>
         public string SpaceId { get; set; }
-
+        /// <summary>
+        /// 飞道状态机
+        /// </summary>
+        public BaseStateMachine FeiDaoFSM;
+        /// <summary>
+        /// 参数键值对
+        /// </summary>
+        public Dictionary<string, object> ParamDict { get; set; }
+        /// <summary>
+        /// 展示方式
+        /// </summary>
+        public int ShowType { get; set; }
+        /// <summary>
+        /// 模板委托事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="paramDic">事件参数</param>
+        public delegate void TemplateDelegateEvent(object sender, Dictionary<string, object> paramDic);
         /// <summary>
         /// 系统Id
         /// </summary>
@@ -82,7 +111,6 @@ namespace Victop.Frame.CmptRuntime
             set { SetValue(ParentControlProperty, value); }
         }
         #endregion
-
         #region 依赖属性
         /// <summary>
         /// 系统Id
@@ -140,6 +168,7 @@ namespace Victop.Frame.CmptRuntime
             }
             return initFlag;
         }
+
         /// <summary>
         /// 获取展示层实体
         /// </summary>
@@ -157,25 +186,7 @@ namespace Victop.Frame.CmptRuntime
                 return null;
             }
         }
-        #endregion
-        /// <summary>
-        /// 飞道状态机
-        /// </summary>
-        public BaseStateMachine FeiDaoFSM;
-        /// <summary>
-        /// 参数键值对
-        /// </summary>
-        public Dictionary<string, object> ParamDict { get; set; }
-        /// <summary>
-        /// 展示方式
-        /// </summary>
-        public int ShowType { get; set; }
-        /// <summary>
-        /// 模板委托事件
-        /// </summary>
-        /// <param name="sender">事件对象</param>
-        /// <param name="paramDic">事件参数</param>
-        public delegate void TemplateDelegateEvent(object sender, Dictionary<string, object> paramDic);
+
         /// <summary>
         /// 执行通用方法
         /// </summary>
@@ -209,5 +220,67 @@ namespace Victop.Frame.CmptRuntime
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        /// <summary>
+        /// 内置webbrowser加载完成委托
+        /// </summary>
+        public delegate void BrowserLoadComplateDelegate();
+        /// <summary>
+        /// 内置webbrowser加载完成
+        /// </summary>
+        public event BrowserLoadComplateDelegate BrowserLoadComplate;
+        #endregion
+        #region WebBrowser相关
+        /// <summary>
+        /// 初始化内置浏览器
+        /// </summary>
+        /// <param name="fileUrl"></param>
+        private void InitWebBrowser(string fileUrl)
+        {
+            executeBrowser.ObjectForScripting = new FeiDaoOperation(this);
+            executeBrowser.Source = new Uri(fileUrl);
+            executeBrowser.LoadCompleted += ExecuteBrowser_LoadCompleted;
+            executeBrowser.Visibility = Visibility.Collapsed;
+            DockPanel panel = this.FindName("dockpanel") as DockPanel;
+            if (panel != null)
+            {
+                panel.Children.Add(executeBrowser);
+            }
+        }
+
+        private void ExecuteBrowser_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            if (BusinessModel.Equals(1))
+            {
+                FeiDaoFSM.Do("beforeinit", this);
+                if (BrowserLoadComplate != null)
+                {
+                    BrowserLoadComplate();
+                }
+            }
+        }
+        /// <summary>
+        /// 执行js方法
+        /// </summary>
+        /// <param name="methodName"></param>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public object MainViewInvokeScript(string methodName, params object[] args)
+        {
+            return executeBrowser.InvokeScript(methodName, args);
+        }
+        #endregion
+        #region 重写事件
+        /// <summary>
+        /// 初始化完成
+        /// </summary>
+        public override void EndInit()
+        {
+            base.EndInit();
+            if (BusinessModel.Equals(1))
+            {
+                InitWebBrowser("G:\\VictopTeach\\victopFramework\\Bin\\form\\index.html");
+            }
+        }
+        #endregion
     }
 }

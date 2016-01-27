@@ -11,12 +11,14 @@ using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 using Victop.Frame.CmptRuntime.AtomicOperation;
 using System.Windows.Data;
+using System.Runtime.InteropServices;
 
 namespace Victop.Frame.CmptRuntime
 {
     /// <summary>
     /// 飞道原子操作映射类
     /// </summary>
+    [ComVisible(true)]
     public class FeiDaoOperation
     {
         private TemplateControl MainView;
@@ -39,7 +41,6 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         private UIElementAtOperation uIElementOperation;
         #endregion
-
         /// <summary>
         /// 构造函数，页面/组件实体
         /// </summary>
@@ -73,7 +74,6 @@ namespace Victop.Frame.CmptRuntime
             customServiceOperation.SendServiceMessage(serviceName);
         }
         #endregion
-
         #region 数据操作
 
         #region 查询条件操作
@@ -414,7 +414,6 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.GetMaxNumberFromOneLetter(pblockName, fieldName, firstLetter, oav);
         }
         #endregion
-
         #region 系统操作
         /// <summary>
         /// 系统输出
@@ -717,7 +716,6 @@ namespace Victop.Frame.CmptRuntime
         #endregion
 
         #endregion
-
         #region UI操作
         /// <summary>
         /// 设置按钮文本
@@ -773,7 +771,6 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.SetElementIsEnabled(elementName, state);
         }
-        #region VicTreeView原子操作
         /// <summary>
         /// 得到tree选中的值
         /// </summary>
@@ -784,9 +781,6 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicTreeViewGetParam(treeName, paramName, oav);
         }
-        #endregion
-
-        #region VicListView原子操作
         /// <summary>
         /// 得到list选中的值
         /// </summary>
@@ -797,9 +791,6 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicListViewGetParam(listName, paramName, oav);
         }
-        #endregion
-
-        #region VicTextBoxNormal原子操作
         /// <summary>
         /// 得到VicTextBoxNormal VicText值
         /// </summary>
@@ -818,9 +809,6 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicTextBoxNormalSetVicText(txtName, oav);
         }
-        #endregion
-
-        #region VicTextBox 原子操作
         /// <summary>
         /// 得到VicTextBox VicText值
         /// </summary>
@@ -839,9 +827,6 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicTextBoxSetVicText(txtName, oav);
         }
-        #endregion
-
-        #region VicDataGrid原子操作
         /// <summary>
         /// 是否有选中项
         /// </summary>
@@ -886,10 +871,6 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicDataGridSetSelectedIndex(dgridName, selectedIndex);
         }
-
-        #endregion
-
-        #region UnitPageRule原子操作
         /// <summary>
         /// UnitPageRule分页加载
         /// </summary>
@@ -902,13 +883,8 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.UnitPageRuleLoad(unitPageName, pblockName, currentPage = 1, pageSize = 20);
         }
         #endregion
+        #region 错误处理方法
 
         #endregion
-     
-        
-   
-
-
-        
     }
 }
