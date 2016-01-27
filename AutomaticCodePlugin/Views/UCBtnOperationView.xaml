@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Name="BtnOpView">
     <ctrl:VicGridNormal>
-        <ctrl:VicDockPanelNormal VerticalAlignment="Center" HorizontalAlignment="Left">
+        <ctrl:VicDockPanelNormal VerticalAlignment="Center" HorizontalAlignment="Left" Name="feidaopanel">
             <ctrl:VicButtonNormal Width="100" Height="24" Content="查询" Name="searchBtn" Margin="0,0,10,0" Click="searchBtn_Click"/>
             <ctrl:VicButtonNormal Width="100" Height="24" Content="添加" Name="addBtn" Margin="0,0,10,0" Click="addBtn_Click" />
             <ctrl:VicButtonNormal Width="100" Height="24" Content="删除" Name="delBtn" Margin="0,0,10,0"/>

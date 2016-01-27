@@ -14,26 +14,33 @@ namespace AutomaticCodePlugin.Views
         public UCBtnOperationView()
         {
             InitializeComponent();
-            FeiDaoFSM = new BaseStateMachine("BtnOpView", Assembly.GetExecutingAssembly(), this);
+            FeiDaoMachine = new BaseBusinessMachine("BtnOpView", this);
+            BusinessModel = 1;
             this.Loaded += UCBtnOperationView_Loaded;
+            this.BrowserLoadComplate += UCBtnOperationView_BrowserLoadComplate;
+        }
+
+        private void UCBtnOperationView_BrowserLoadComplate()
+        {
+            
         }
 
         private void UCBtnOperationView_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                FeiDaoFSM.Do("afterinit", sender);
+                //FeiDaoMachine.Do("afterinit", sender);
             }
         }
 
         private void searchBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("search", sender);
+            //FeiDaoMachine.Do("search", sender);
         }
 
         private void addBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("add", sender);
+            //FeiDaoMachine.Do("add", sender);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace AutomaticCodePlugin.Views
         {
             InitializeComponent();
             this.DataContext = this;
-            FeiDaoFSM = new BaseStateMachine("MainView", Assembly.GetExecutingAssembly(), this);
+            //FeiDaoFSM = new BaseStateMachine("MainView", Assembly.GetExecutingAssembly(), this);
             ParamDict = paramDict;
             ShowType = showType;
             this.Loaded += mainView_Loaded;
@@ -27,7 +27,7 @@ namespace AutomaticCodePlugin.Views
 
         private void mainView_Loaded(object sender, RoutedEventArgs e)
         {
-            FeiDaoFSM.Do("afterinit", sender);
+            //FeiDaoFSM.Do("afterinit", sender);
         }
     }
 }

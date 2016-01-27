@@ -239,7 +239,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
         {
-           dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
+            dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
         }
         /// <summary>
         /// 赋值行的列值
@@ -320,7 +320,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void ParamsCurrentRowSet(string pblockName, string paramName, OAVModel oav)
         {
-           dataOperation.ParamsCurrentRowSet(pblockName, paramName, oav);
+            dataOperation.ParamsCurrentRowSet(pblockName, paramName, oav);
         }
         /// <summary>
         /// 删除选中行
@@ -885,7 +885,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicDataGridIsReadOnly(dgridName, state);
         }
-         /// <summary>
+        /// <summary>
         /// 清除dgrid数据集合
         /// </summary>
         /// <param name="dgridName">控件名</param>
@@ -915,7 +915,21 @@ namespace Victop.Frame.CmptRuntime
         }
         #endregion
         #region 错误处理方法
-
+        /// <summary>
+        /// 错误处理(JS专用)
+        /// </summary>
+        /// <param name="args"></param>
+        public void SendErrMsg(string args)
+        {
+            SysFeiDaoLog("js businessmachine error:" + args);
+        }
+        /// <summary>
+        /// 确认初始化(JS专用)
+        /// </summary>
+        public void SendInit()
+        {
+            MainView.BuiltBrowserInit();
+        }
         #endregion
     }
 }

@@ -85,6 +85,7 @@
       <HintPath>..\VictopLib\Stateless.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -107,6 +108,7 @@
     <Compile Include="AtomicOperation\DataAtOperation.cs" />
     <Compile Include="AtomicOperation\SystemAtOperation.cs" />
     <Compile Include="AtomicOperation\UIElementAtOperation.cs" />
+    <Compile Include="Templates\BaseBusinessMachine.cs" />
     <Compile Include="PVDModel\CompntDefinModel.cs" />
     <Compile Include="PVDModel\DefinPresentationModel.cs" />
     <Compile Include="PVDModel\DefinViewsModel.cs" />

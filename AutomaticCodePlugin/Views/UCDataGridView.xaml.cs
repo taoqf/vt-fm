@@ -30,17 +30,17 @@ namespace AutomaticCodePlugin.Views
 #if DEBUG
             SpaceId = "feidao";
 #endif
-            FeiDaoFSM = new BaseStateMachine("DataGridView", Assembly.GetExecutingAssembly(), this);
+            //FeiDaoFSM = new BaseStateMachine("DataGridView", Assembly.GetExecutingAssembly(), this);
             DataContext = this;
             this.Loaded += UCDataGridView_Loaded;
         }
         private void UCDataGridView_Loaded(object sender, RoutedEventArgs e)
         {
-            if (InitFlag)
-            {
-                MainPBlock = GetPresentationBlockModel("masterPBlock");
-                FeiDaoFSM.Do("afterinit", sender);
-            }
+            //if (InitFlag)
+            //{
+            //    MainPBlock = GetPresentationBlockModel("masterPBlock");
+            //    FeiDaoFSM.Do("afterinit", sender);
+            //}
         }
     }
 }

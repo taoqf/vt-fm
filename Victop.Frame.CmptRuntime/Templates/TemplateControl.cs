@@ -12,6 +12,9 @@ using Victop.Frame.CmptRuntime;
 using Victop.Frame.PublicLib.Helpers;
 using System.Linq.Expressions;
 using Victop.Server.Controls;
+using System.Reflection;
+using System.Threading;
+using System.Configuration;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -25,7 +28,10 @@ namespace Victop.Frame.CmptRuntime
         /// 组件定义
         /// </summary>
         private CompntDefinModel DefinModel;
-        private WebBrowser executeBrowser = new WebBrowser();
+        /// <summary>
+        /// 内置浏览器
+        /// </summary>
+        public WebBrowser BuiltBrowser = new WebBrowser();
         private bool initFlag;
         private int businessModel;
         #endregion
@@ -56,6 +62,10 @@ namespace Victop.Frame.CmptRuntime
         /// 飞道状态机
         /// </summary>
         public BaseStateMachine FeiDaoFSM;
+        /// <summary>
+        /// 飞道引擎
+        /// </summary>
+        public BaseBusinessMachine FeiDaoMachine;
         /// <summary>
         /// 参数键值对
         /// </summary>
@@ -236,22 +246,40 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="fileUrl"></param>
         private void InitWebBrowser(string fileUrl)
         {
-            executeBrowser.ObjectForScripting = new FeiDaoOperation(this);
-            executeBrowser.Source = new Uri(fileUrl);
-            executeBrowser.LoadCompleted += ExecuteBrowser_LoadCompleted;
-            executeBrowser.Visibility = Visibility.Collapsed;
-            DockPanel panel = this.FindName("dockpanel") as DockPanel;
+            BuiltBrowser.ObjectForScripting = new FeiDaoOperation(this);
+            BuiltBrowser.Navigating += BuiltBrowser_Navigating;
+            BuiltBrowser.Source = new Uri(fileUrl);
+            BuiltBrowser.Visibility = Visibility.Collapsed;
+            DockPanel panel = this.FindName("feidaopanel") as DockPanel;
             if (panel != null)
             {
-                panel.Children.Add(executeBrowser);
+                panel.Children.Add(BuiltBrowser);
             }
         }
 
-        private void ExecuteBrowser_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        private void BuiltBrowser_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
+        {
+            SuppressScriptErrors((WebBrowser)sender, true);
+        }
+        private void SuppressScriptErrors(WebBrowser webBrowser, bool Hide)
+        {
+            FieldInfo fiComWebBrowser = typeof(WebBrowser).GetField("_axIWebBrowser2", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (fiComWebBrowser == null) return;
+
+            object objComWebBrowser = fiComWebBrowser.GetValue(webBrowser);
+            if (objComWebBrowser == null) return;
+
+            objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { Hide });
+        }
+        /// <summary>
+        /// 向内置浏览器传入规则及状态
+        /// </summary>
+        internal void BuiltBrowserInit()
         {
             if (BusinessModel.Equals(1))
             {
-                FeiDaoFSM.Do("beforeinit", this);
+                FeiDaoMachine.Init();
+                FeiDaoMachine.Do("beforeinit", this);
                 if (BrowserLoadComplate != null)
                 {
                     BrowserLoadComplate();
@@ -266,7 +294,7 @@ namespace Victop.Frame.CmptRuntime
         /// <returns></returns>
         public object MainViewInvokeScript(string methodName, params object[] args)
         {
-            return executeBrowser.InvokeScript(methodName, args);
+            return BuiltBrowser.InvokeScript(methodName, args);
         }
         #endregion
         #region 重写事件
@@ -276,9 +304,9 @@ namespace Victop.Frame.CmptRuntime
         public override void EndInit()
         {
             base.EndInit();
-            if (BusinessModel.Equals(1))
+            if (BusinessModel.Equals(1)&& !DesignerProperties.GetIsInDesignMode(this))
             {
-                InitWebBrowser("G:\\VictopTeach\\victopFramework\\Bin\\form\\index.html");
+                InitWebBrowser(ConfigurationManager.AppSettings["businessurl"]);
             }
         }
         #endregion
