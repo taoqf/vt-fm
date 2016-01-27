@@ -188,13 +188,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// VicTextBoxNormal赋值VicText
         /// </summary>
         /// <param name="txtName">控件名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicTextBoxNormalSetVicText(string txtName, OAVModel oav)
+        /// <param name="value">文本值</param>
+        public void VicTextBoxNormalSetVicText(string txtName, object value)
         {
             VicTextBoxNormal txtBox = MainView.FindName(txtName) as VicTextBoxNormal;
             if (txtBox != null)
             {
-                txtBox.VicText = oav.AtrributeValue == null ? "" : oav.AtrributeValue.ToString();
+                txtBox.VicText = value == null ? "" : value.ToString();
             }
         }
         #endregion
@@ -217,13 +217,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// VicTextBox赋值VicText
         /// </summary>
         /// <param name="txtName">控件名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicTextBoxSetVicText(string txtName, OAVModel oav)
+        /// <param name="value">文本值</param>
+        public void VicTextBoxSetVicText(string txtName, object value)
         {
             VicTextBox txtBox = MainView.FindName(txtName) as VicTextBox;
             if (txtBox != null)
             {
-                txtBox.VicText = oav.AtrributeValue == null ? "" : oav.AtrributeValue.ToString();
+                txtBox.VicText = value == null ? "" : value.ToString();
             }
         }
         #endregion

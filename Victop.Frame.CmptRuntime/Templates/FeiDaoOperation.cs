@@ -76,6 +76,7 @@ namespace Victop.Frame.CmptRuntime
             customServiceOperation.SendServiceMessage(serviceName);
         }
         #endregion
+
         #region 数据操作
 
         #region 查询条件操作
@@ -239,7 +240,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
         {
-            dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
+           dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
         }
         /// <summary>
         /// 赋值行的列值
@@ -317,10 +318,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="paramName">字段名</param>
-        /// <param name="oav">接收oav</param>
-        public void ParamsCurrentRowSet(string pblockName, string paramName, OAVModel oav)
+        /// <param name="value">值</param>
+        public void ParamsCurrentRowSet(string pblockName, string paramName, object value)
         {
-            dataOperation.ParamsCurrentRowSet(pblockName, paramName, oav);
+            dataOperation.ParamsCurrentRowSet(pblockName, paramName, value);
         }
         /// <summary>
         /// 删除选中行
@@ -416,6 +417,7 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.GetMaxNumberFromOneLetter(pblockName, fieldName, firstLetter, oav);
         }
         #endregion
+
         #region 系统操作
         /// <summary>
         /// 系统输出
@@ -688,6 +690,7 @@ namespace Victop.Frame.CmptRuntime
             return systemOperation.GetStringByResourceName(name);
         }
         #endregion
+
         #region 类型转换
         /// <summary>
         /// 转换字符串类型
@@ -737,6 +740,20 @@ namespace Victop.Frame.CmptRuntime
         #endregion
 
         #endregion
+
+        #region 字符串处理
+        /// <summary>
+        /// 指定的字符串是否出现在字符串实例中
+        /// </summary>
+        /// <param name="strValue">字符串实例</param>
+        /// <param name="value">指定的字符串</param>
+        /// <returns>是否包含</returns>
+        public bool StrContains(object strValue, string value)
+        {
+            return systemOperation.StrContains(strValue, value);
+        }
+        #endregion
+
         #region UI操作
         /// <summary>
         /// 设置按钮文本
@@ -835,10 +852,10 @@ namespace Victop.Frame.CmptRuntime
         /// VicTextBoxNormal赋值VicText
         /// </summary>
         /// <param name="txtName">控件名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicTextBoxNormalSetVicText(string txtName, OAVModel oav)
+        /// <param name="value">文本值</param>
+        public void VicTextBoxNormalSetVicText(string txtName, object value)
         {
-            uIElementOperation.VicTextBoxNormalSetVicText(txtName, oav);
+            uIElementOperation.VicTextBoxNormalSetVicText(txtName, value);
         }
         /// <summary>
         /// 得到VicTextBox VicText值
@@ -853,10 +870,10 @@ namespace Victop.Frame.CmptRuntime
         /// VicTextBox赋值VicText
         /// </summary>
         /// <param name="txtName">控件名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicTextBoxSetVicText(string txtName, OAVModel oav)
+        /// <param name="value">文本值</param>
+        public void VicTextBoxSetVicText(string txtName, object value)
         {
-            uIElementOperation.VicTextBoxSetVicText(txtName, oav);
+            uIElementOperation.VicTextBoxSetVicText(txtName, value);
         }
         /// <summary>
         /// 是否有选中项
@@ -885,7 +902,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicDataGridIsReadOnly(dgridName, state);
         }
-        /// <summary>
+         /// <summary>
         /// 清除dgrid数据集合
         /// </summary>
         /// <param name="dgridName">控件名</param>

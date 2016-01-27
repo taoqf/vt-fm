@@ -571,8 +571,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="paramName">字段名</param>
-        /// <param name="oav">接收oav</param>
-        public void ParamsCurrentRowSet(string pblockName, string paramName, OAVModel oav)
+        /// <param name="value">值</param>
+        public void ParamsCurrentRowSet(string pblockName, string paramName, object value)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
@@ -580,7 +580,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 DataRow[] drSelected = pBlock.ViewBlockDataTable.Select("_id='" + pBlock.PreBlockSelectedRow["_id"].ToString() + "'");
                 if (drSelected.Length > 0)
                 {
-                    drSelected[0][paramName] = oav.AtrributeValue;
+                    drSelected[0][paramName] = value;
                     pBlock.PreBlockSelectedRow = drSelected[0];
                 }
             }
