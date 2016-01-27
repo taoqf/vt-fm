@@ -49,7 +49,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             MainView.FeiDaoFSM.Do(triggerName, triggerSource, true);
         }
-
         /// <summary>
         /// 插入事实
         /// </summary>
@@ -346,7 +345,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             win.Content = textBox;
             win.Show();
         }
-
         /// <summary>
         /// 弹框关闭操作
         /// </summary>
@@ -469,7 +467,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
-        #region 获取资源/// <summary>
+
+        #region 获取资源
         /// <summary>
         /// 返回指定名称资源的值
         /// </summary>
@@ -491,6 +490,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             return string.Empty;
         }
         #endregion
+
         #region 类型转换
         /// <summary>
         /// 转换字符串类型
@@ -551,6 +551,20 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         }
         #endregion
 
+        #region 字符串处理
+        /// <summary>
+        /// 指定的字符串是否出现在字符串实例中
+        /// </summary>
+        /// <param name="strValue">字符串实例</param>
+        /// <param name="value">指定的字符串</param>
+        /// <returns>是否包含</returns>
+        public bool StrContains(object strValue, string value)
+        {
+            if (strValue == null || value == null)
+                return false;
+            return strValue.ToString().Contains(value);
+        }
+        #endregion
 
         #region 发送获取编码消息
         /// <summary>
