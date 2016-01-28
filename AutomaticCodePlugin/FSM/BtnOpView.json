@@ -1,1 +1,34 @@
-{"events": {"beforeinit": ["beforeinit"],"afterinit": ["afterinit"]},"transitions": [{"name": "beforeinit","from": "none","to": "init"}, {"name": "afterinit","from": "init","to": "ready"}]}
+{
+	"events": {
+		"beforeinit": [
+			"beforeinit"
+		],
+		"afterinit": [
+			"afterinit"
+		],
+		"search":[
+			"search"
+		]
+	},
+	"transitions": [
+		{
+			"name": "beforeinit",
+			"from": "none",
+			"to": "init"
+		}, {
+			"name": "afterinit",
+			"from": "init",
+			"to": "ready"
+		},
+    {
+      "name": "search",
+      "from": "ready",
+      "to": "searched"
+    },
+    {
+			"name": "search",
+			"from": "searched",
+			"to": "searched"
+		}
+	]
+}

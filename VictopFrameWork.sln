@@ -69,6 +69,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeidaoUserLoginPlugin", "Fe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VictopUploadHelper", "VictopUploadHelper\VictopUploadHelper.csproj", "{855AE60E-11E8-4031-BB95-0BD9EBB480E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VictopHttpServer", "VictopHttpServer\VictopHttpServer.csproj", "{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -480,6 +482,22 @@ Global
 		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Release|x64.Build.0 = Release|Any CPU
 		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Release|x86.ActiveCfg = Release|Any CPU
 		{855AE60E-11E8-4031-BB95-0BD9EBB480E8}.Release|x86.Build.0 = Release|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Debug|x64.Build.0 = Debug|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Debug|x86.ActiveCfg = Debug|x86
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Debug|x86.Build.0 = Debug|x86
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Release|x64.ActiveCfg = Release|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Release|x64.Build.0 = Release|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Release|x86.ActiveCfg = Release|Any CPU
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -513,5 +531,6 @@ Global
 		{D3E841FD-F841-4D6D-B29C-B683B3F9B0A0} = {16B6FEB5-77C9-4BAD-93AD-4CD04B6C17F7}
 		{7AD2B683-504B-48C1-A06C-98DCE0485C6F} = {9F897C3B-E34A-43F9-972E-1DE4BBE833AA}
 		{855AE60E-11E8-4031-BB95-0BD9EBB480E8} = {961360E6-BCB7-44D6-89DC-92250E45FD46}
+		{511DC1C4-651F-4336-A2D7-9EF3EFB16DAD} = {961360E6-BCB7-44D6-89DC-92250E45FD46}
 	EndGlobalSection
 EndGlobal

@@ -25,7 +25,7 @@ namespace AutomaticCodePlugin.Views
         }
         private void searchBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            //FeiDaoMachine.Do("search", sender);
+            FeiDaoMachine.Do("search", sender);
         }
 
         private void addBtn_Click(object sender, System.Windows.RoutedEventArgs e)
