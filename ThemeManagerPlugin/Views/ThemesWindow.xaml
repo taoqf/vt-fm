@@ -3,11 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:ThemeManagerPlugin.ViewModels" 
+        xmlns:converter="clr-namespace:ThemeManagerPlugin.Converters"
         xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
        xmlns:Unit="clr-namespace:Victop.Frame.Units;assembly=Victop.Frame.Units"
-       Title="飞道皮肤中心" Name="portalWindow" Height="620" Width="965" ShowInTaskbar="False"
+       Title="飞道皮肤中心" Name="portalWindow" Height="635" Width="965" ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"  WindowStyle="None" ResizeMode="NoResize" RenderTransformOrigin="0.5,0.5">
     <Window.Resources>
+        <converter:VisibilityConverter x:Key="visibilityConverter"/>
         <Storyboard x:Key="StoryboardRightImage">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="imageRight">
                 <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
@@ -69,13 +71,10 @@
             <RowDefinition RowDefinition.Height="5"/>
             <RowDefinition RowDefinition.Height="*"/>
         </Grid.RowDefinitions>
-        <Border BorderBrush="{DynamicResource SkinColor}" BorderThickness="1"  Grid.RowSpan="4"></Border>
+        <Border BorderBrush="{DynamicResource SkinColor}" BorderThickness="1"  Grid.RowSpan="3"></Border>
         <Border Grid.Row="0" Background="{DynamicResource WindowBackground}"/>
         <Grid Name="gridTitleBar" Grid.Row="0" Style="{DynamicResource loginMainGridStyle}" >
             <Label Name="lblTitle"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18px" Content="飞道皮肤中心" FontWeight="Bold" Foreground="{DynamicResource MsgBoxTitleColor}"/>
-            <!--<controls:VicButtonNormal  Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right" Margin="0,0,33,0" VerticalAlignment="Top"  Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="最小化">
-                <Line x:Name="PART_Path" X1="2"  X2="12" Y1="2" Y2="2" Stroke="White"  StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </controls:VicButtonNormal>-->
             <controls:VicButtonNormal  Style="{DynamicResource WindowButtonStyle}" HorizontalAlignment="Right"  VerticalAlignment="Top" Height="34" Width="34" FocusVisualStyle="{x:Null}" ToolTip="关闭">
                 <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z" SnapsToDevicePixels="True"  Fill="{DynamicResource MainFrmWinBtnForeColor}"   VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <i:Interaction.Triggers>
@@ -86,105 +85,78 @@
             </controls:VicButtonNormal>
         </Grid>
         <Grid Background="{DynamicResource SkinColor}"  Grid.Row="1"/>
-        <controls:VicTabControlNormal Name="ThemeTabControl"  Grid.Row="2" Grid.RowSpan="2"  Style="{DynamicResource ThemeTabControlStyle}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding ThemeTabControlSelectionChanged}" CommandParameter="{Binding ElementName=ThemeTabControl}"></i:InvokeCommandAction>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <TabItem Name="localityTabItem" Header="本地皮肤" Style="{DynamicResource ThemeTabItemStyle}" >
-
-                <Grid>
-                    <!--<Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="66*"/>
-                        <ColumnDefinition Width="65*"/>
-                        <ColumnDefinition Width="218*"/>
-                    </Grid.ColumnDefinitions>-->
-                    <Grid.RowDefinitions>
-                        <RowDefinition RowDefinition.Height="30"/>
-                        <RowDefinition RowDefinition.Height="*"/>
-                        <RowDefinition RowDefinition.Height="30"/>
-                        <!--<RowDefinition RowDefinition.Height="30"/>-->
-                    </Grid.RowDefinitions>
-                    <Grid Background="{DynamicResource WhiteShade}">
-                        <TextBlock HorizontalAlignment="Left" Margin="823,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" Text="共有"/>
-                        <TextBlock Name="tblockSkinNum" Text="{Binding SkinNum}" HorizontalAlignment="Left" Margin="850,7,0,0" TextWrapping="Wrap"   VerticalAlignment="Top" Width="22" Height="16" TextAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Left" Margin="874,7,0,0" TextWrapping="Wrap" Text="款皮肤" VerticalAlignment="Top" RenderTransformOrigin="0.655,-0.688"/>
-                    </Grid>
-                    <Border Background="{DynamicResource WhiteShade}" Grid.Row="1"></Border>
-                    <!--<ScrollViewer CanContentScroll="True"  Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3">-->
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="30"></ColumnDefinition>
-                            <ColumnDefinition Width="900"></ColumnDefinition>
-                            <ColumnDefinition Width="30"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Canvas  Grid.Column="1" Margin="0,0,0,0"  Width="930" Height="460" Name="canvasPageContent">
-                            <Canvas.Clip>
-                                <RectangleGeometry x:Name="canvasPageRectangle" RadiusX="0" RadiusY="0" Rect="0,0,960,460" />
-                            </Canvas.Clip>
-                            <WrapPanel Orientation="Vertical" Canvas.Left="0" Name="wrapPanelPages" Width="930" Height="460">
-                                <WrapPanel.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </WrapPanel.RenderTransform>
-                            </WrapPanel>
-                        </Canvas>
-                        <Button Grid.Column="0" x:Name="imageLeft" FontWeight="Bold" FontSize="40" Width="35" Height="60" Content="&#xe61e;" RenderTransformOrigin="0.5,0.5" Style="{DynamicResource PageStyle}" >
-                            <Button.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Button.RenderTransform>
-                        </Button>
-
-                        <Button Grid.Column="2" x:Name="imageRight"  FontWeight="Bold" FontSize="40" Width="35" Height="60" Content="&#xe612;" RenderTransformOrigin="0.5,0.5" Style="{DynamicResource PageStyle}">
-                            <Button.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Button.RenderTransform>
-                        </Button>
-                    </Grid>
-                    <Unit:UnitPageBar Grid.Row="2" x:Name="pageBar1" Margin="3,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
-                    <!--<StackPanel Height="20" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">-->
-                    <!--<Button  x:Name="imageLeft" RenderTransformOrigin="0.5,0.5" Style="{DynamicResource LeftPageStyle}" >
-                            <Button.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Button.RenderTransform>
-                        </Button>-->
-                    <!--<Unit:UnitPageBar  x:Name="pageBar1" Margin="0,5" Visibility="Hidden"/>-->
-                    <!--<Button x:Name="imageRight" RenderTransformOrigin="0.5,0.5" Style="{DynamicResource RightPageStyle}">
-                            <Button.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Button.RenderTransform>
-                        </Button>-->
-                    <!--</StackPanel>-->
-
+        <Grid Grid.Row="2" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="1"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <controls:VicRadioButtonRectangle IsChecked="True" Style="{DynamicResource ThemeButtonStyle}" Name="btnLocaSkin" Command="{Binding LocalSkinBtnClickCommand}" CommandParameter="{Binding ElementName=btnLocaSkin}" Content="本地皮肤"></controls:VicRadioButtonRectangle>
+                <controls:VicRadioButtonRectangle Style="{DynamicResource ThemeButtonStyle}" Name="btnOnlineSkin" Command="{Binding OnLineSkinBtnClickCommand}" CommandParameter="{Binding ElementName=btnOnlineSkin}" Content="在线皮肤" ></controls:VicRadioButtonRectangle>
+                <controls:VicRadioButtonRectangle Style="{DynamicResource ThemeButtonStyle}" Name="btnWallPaper" Command="{Binding WallpaperGridBtnClickCommand}" CommandParameter="{Binding ElementName=btnWallPaper}" Content="壁纸"></controls:VicRadioButtonRectangle>
+            </StackPanel>
+            <Grid Background="{DynamicResource SkinColor}"  Grid.Row="1"/>
+            <Grid Grid.Row="2" Name="LocalSkinGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition RowDefinition.Height="30"/>
+                    <RowDefinition RowDefinition.Height="*"/>
+                    <RowDefinition RowDefinition.Height="30"/>
+                </Grid.RowDefinitions>
+                <Grid Background="{DynamicResource WhiteShade}">
+                    <TextBlock HorizontalAlignment="Left" Margin="823,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="24" Text="共有"/>
+                    <TextBlock Name="tblockSkinNum" Text="{Binding SkinNum}" HorizontalAlignment="Left" Margin="850,7,0,0" TextWrapping="Wrap"   VerticalAlignment="Top" Width="22" Height="16" TextAlignment="Center"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="874,7,0,0" TextWrapping="Wrap" Text="款皮肤" VerticalAlignment="Top" RenderTransformOrigin="0.655,-0.688"/>
                 </Grid>
-            </TabItem>
-            <TabItem  Header="在线皮肤" Style="{DynamicResource ThemeTabItemStyle}">
-                <Grid>
+                <Border Background="{DynamicResource WhiteShade}" Grid.Row="1"></Border>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"></ColumnDefinition>
+                        <ColumnDefinition Width="900"></ColumnDefinition>
+                        <ColumnDefinition Width="30"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Canvas  Grid.Column="1" Width="930" Height="460" Name="canvasPageContent">
+                        <Canvas.Clip>
+                            <RectangleGeometry x:Name="canvasPageRectangle" RadiusX="0" RadiusY="0" Rect="0,0,960,460" />
+                        </Canvas.Clip>
+                        <WrapPanel Orientation="Vertical" Canvas.Left="0" Name="wrapPanelPages" Width="930" Height="460">
+                            <WrapPanel.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </WrapPanel.RenderTransform>
+                        </WrapPanel>
+                    </Canvas>
+                    <Button Grid.Column="0" x:Name="imageLeft" FontWeight="Bold" FontSize="40" Width="35" Height="60" Content="&#xe61e;" RenderTransformOrigin="0.5,0.5" Style="{DynamicResource PageStyle}" >
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                    </Button>
+
+                    <Button Grid.Column="2" x:Name="imageRight"  FontWeight="Bold" FontSize="40" Width="35" Height="60" Content="&#xe612;" RenderTransformOrigin="0.5,0.5" Style="{DynamicResource PageStyle}">
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                    </Button>
+                </Grid>
+                <Unit:UnitPageBar Grid.Row="2" x:Name="pageBar1" Margin="3,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
+            </Grid>
+
+            <Grid Grid.Row="2" Name="OnlineSkinGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="18*"/>
                         <ColumnDefinition Width="461*"/>
@@ -197,17 +169,18 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Grid.ColumnSpan="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="830"></ColumnDefinition>
+                            <ColumnDefinition Width="33"></ColumnDefinition>
+                            <ColumnDefinition Width="797"/>
                             <ColumnDefinition Width="150"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <ListBox Name="listboxCategory" Grid.Column="0"  SelectedIndex="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource RadioButtonWallPaperCategoryListStyle}">
+                        <ListBox Name="listboxCategory" Grid.Column="0"  SelectedIndex="0" ItemsSource="{Binding SystemOnLineCategoryList,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource RadioButtonWallPaperCategoryListStyle}" Grid.ColumnSpan="2">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding OnLineListBoxSelectionChangedCommand}" CommandParameter="{Binding ElementName=listboxCategory,Path=SelectedItem}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </ListBox>
-                        <StackPanel Orientation="Horizontal" Grid.Column="1">
+                        <StackPanel Orientation="Horizontal" Grid.Column="2">
                             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="24" Text="共有"/>
                             <TextBlock Name="tblockOnlineSkinNum" Text="{Binding SkinOnlinNum}" HorizontalAlignment="Left"  TextWrapping="Wrap"   VerticalAlignment="Center" Width="22" Height="16" TextAlignment="Center"/>
                             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="款皮肤" VerticalAlignment="Center"/>
@@ -259,39 +232,27 @@
                         </Button>
                     </Grid>
                     <Unit:UnitPageBar Grid.Row="3" x:Name="pageBarOnline" Margin="438,5,474,5" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Grid.Column="1"/>
-                    <!--<ScrollViewer CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MouseUp="ScrollViewer_MouseUp">
-                        <ListBox Name="listBoxOnLineList"  Style="{DynamicResource RadioButtonOnLineListStyle}" ItemsSource="{Binding SystemOnLineList,UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseUp">
-                                    <i:InvokeCommandAction Command="{Binding OnLineListBoxSkinMouseUpCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </ListBox>                       
-                    </ScrollViewer>-->
                 </Grid>
-            </TabItem>
-            <TabItem Header="壁纸"  Style="{DynamicResource ThemeTabItemStyle}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"></RowDefinition>
-                        <RowDefinition Height="2"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <ListBox Name="WallPaperType" SelectedIndex="0" ItemsSource="{Binding WallPaperCategoryList,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource RadioButtonWallPaperCategoryListStyle}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding WallPaperCategoryListSelectionChangedCommand}" CommandParameter="{Binding ElementName=WallPaperType,Path=SelectedItem}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ListBox>
-                    <Border Grid.Row="1" BorderBrush="{DynamicResource SkinColor}" BorderThickness="1"/>
-                    <ScrollViewer  CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                        <ListBox Name="listBoxWallList" Style="{DynamicResource RadioButtonWallPaperListStyle}" ItemsSource="{Binding SeletetedTabControlWallPaperList,UpdateSourceTrigger=PropertyChanged}"/>
-                    </ScrollViewer>
-                </Grid>
-            </TabItem>
-        </controls:VicTabControlNormal>
-    </Grid>
+            <Grid Grid.Row="2" Name="WallpaperGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"></RowDefinition>
+                    <RowDefinition Height="2"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ListBox Name="WallPaperType" SelectedIndex="0" ItemsSource="{Binding WallPaperCategoryList,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource RadioButtonWallPaperCategoryListStyle}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding WallPaperCategoryListSelectionChangedCommand}" CommandParameter="{Binding ElementName=WallPaperType,Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListBox>
+                <Border Grid.Row="1" BorderBrush="{DynamicResource SkinColor}" BorderThickness="1"/>
+                <ScrollViewer  CanContentScroll="True"  Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <ListBox Name="listBoxWallList" Style="{DynamicResource RadioButtonWallPaperListStyle}" ItemsSource="{Binding SeletetedTabControlWallPaperList,UpdateSourceTrigger=PropertyChanged}"/>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        </Grid>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding gridMainLoadedCommand}" CommandParameter="{Binding ElementName=portalWindow}"/>
