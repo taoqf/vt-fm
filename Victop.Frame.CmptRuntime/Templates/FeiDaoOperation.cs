@@ -191,7 +191,7 @@ namespace Victop.Frame.CmptRuntime
         /// 获取ListBox选中项内容
         /// </summary>
         /// <param name="lboxName">ListBox控件</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetListBoxSelectItem(string lboxName, OAVModel oav)
         {
             uIElementOperation.GetListBoxSelectItem(lboxName, oav);
@@ -289,7 +289,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetMaxNumber(string pblockName, string fieldName, OAVModel oav)
         {
             dataOperation.GetMaxNumber(pblockName, fieldName, oav);
@@ -411,7 +411,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="firstLetter">首字母</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetMaxNumberFromOneLetter(string pblockName, string fieldName, string firstLetter, OAVModel oav)
         {
             dataOperation.GetMaxNumberFromOneLetter(pblockName, fieldName, firstLetter, oav);
@@ -777,7 +777,7 @@ namespace Victop.Frame.CmptRuntime
         /// 获取文本标签内容
         /// </summary>
         /// <param name="lblName">标签名称</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetLabelText(string lblName, OAVModel oav)
         {
             uIElementOperation.GetLabelText(lblName, oav);
@@ -786,7 +786,7 @@ namespace Victop.Frame.CmptRuntime
         /// 获取界面元素名称
         /// </summary>
         /// <param name="element">界面元素</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetElementName(FrameworkElement element, OAVModel oav)
         {
             uIElementOperation.GetElementName(element, oav);
@@ -874,6 +874,15 @@ namespace Victop.Frame.CmptRuntime
         public void VicTextBoxSetVicText(string txtName, object value)
         {
             uIElementOperation.VicTextBoxSetVicText(txtName, value);
+        }
+        /// <summary>
+        /// 判断VicRadioButtonNormal是否被选中
+        /// </summary>
+        /// <param name="radioBtnName">VicRadioButtonNormal名称</param>
+        /// <param name="oav">接收oav</param>
+        public void VicRadioButtonNormalIsChecked(string radioBtnName, OAVModel oav)
+        {
+            uIElementOperation.VicRadioButtonNormalIsChecked(radioBtnName, oav);
         }
         /// <summary>
         /// 是否有选中项

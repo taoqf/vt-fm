@@ -59,7 +59,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 获取文本标签内容
         /// </summary>
         /// <param name="lblName">标签名称</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetLabelText(string lblName, OAVModel oav)
         {
             Label lbl = MainView.FindName(lblName) as Label;
@@ -70,7 +70,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 获取界面元素名称
         /// </summary>
         /// <param name="element">界面元素</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetElementName(FrameworkElement element, OAVModel oav)
         {
             if (element != null && oav != null)
@@ -226,6 +226,22 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 txtBox.VicText = value == null ? "" : value.ToString();
             }
         }
+        #endregion 
+
+        #region VicRadioButtonNormal原子操作
+        /// <summary>
+        /// 判断VicRadioButtonNormal是否被选中
+        /// </summary>
+        /// <param name="radioBtnName">VicRadioButtonNormal名称</param>
+        /// <param name="oav">接收oav</param>
+        public void VicRadioButtonNormalIsChecked(string radioBtnName, OAVModel oav)
+        {
+            VicRadioButtonNormal radBtn = MainView.FindName(radioBtnName) as VicRadioButtonNormal;
+            if (radBtn != null)
+            {
+                oav.AtrributeValue = radBtn.IsChecked;
+            }
+        }
         #endregion
 
         #region VicDataGrid原子操作
@@ -346,7 +362,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 设置VicListBoxNormal控件选中行
         /// </summary>
         /// <param name="lboxName">ListBox控件</param>
-        /// <param name="selectedIndex">oav接受</param>
+        /// <param name="selectedIndex">接收oav</param>
         public void VicListBoxNormalSelectIndex(string lboxName, int selectedIndex)
         {
             VicListBoxNormal lbox = MainView.FindName(lboxName) as VicListBoxNormal;
@@ -379,7 +395,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 获取ListBox选中项内容
         /// </summary>
         /// <param name="lboxName">ListBox控件</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetListBoxSelectItem(string lboxName, OAVModel oav)
         {
             VicListBoxNormal listbox = MainView.FindName(lboxName) as VicListBoxNormal;
