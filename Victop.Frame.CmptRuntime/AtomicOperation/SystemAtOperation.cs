@@ -116,7 +116,14 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             if (MainView.ParentControl != null)
             {
-                MainView.ParentControl.FeiDaoFSM.Do(pageTrigger, paramInfo);
+                if (MainView.ParentControl.BusinessModel.Equals(0))
+                {
+                    MainView.ParentControl.FeiDaoFSM.Do(pageTrigger, paramInfo);
+                }
+                if (MainView.ParentControl.BusinessModel.Equals(1))
+                {
+                    MainView.ParentControl.FeiDaoMachine.Do(pageTrigger, paramInfo);
+                }
             }
         }
         /// <summary>
@@ -129,7 +136,16 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             TemplateControl tc = MainView.FindName(compntName) as TemplateControl;
             if (tc != null)
-                tc.FeiDaoFSM.Do(compntTrigger, paramInfo);
+            {
+                if (tc.BusinessModel.Equals(0))
+                {
+                    tc.FeiDaoFSM.Do(compntTrigger, paramInfo);
+                }
+                if (tc.BusinessModel.Equals(1))
+                {
+                    tc.FeiDaoMachine.Do(compntTrigger, paramInfo);
+                }
+            }
         }
         /// <summary>
         /// 获取页面参数值

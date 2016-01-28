@@ -8,20 +8,21 @@
              xmlns:local="clr-namespace:AutomaticCodePlugin.Views"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Name="mainView">
+             d:DesignHeight="300" d:DesignWidth="300" Name="ucPage001">
     <ctrl:VicGridNormal Name="masterPBlock">
         <ctrl:VicGridNormal.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0"/>
         </ctrl:VicGridNormal.RowDefinitions>
-        <local:UCBtnOperationView Grid.Row="0" x:Name="ucBtnOp" ParentControl="{Binding ElementName=mainView}">
+        <local:UCBtnOperationView Grid.Row="0" x:Name="ucCompont001" ParentControl="{Binding ElementName=ucPage001}">
         </local:UCBtnOperationView>
-        
-        <local:UCDataGridView Grid.Row="1" x:Name="ucdgrid" ParentControl="{Binding ElementName=mainView}"/>
-        <ctrl:VicDockPanelNormal Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left">
-            <TextBox Width="100" Height="24" Name="tbox" Text="{Binding MainPBlock.PreBlockSelectedRow[_id]}"/>
-            <TextBox Width="100" Height="24" Name="tbox1" Text="{Binding MainPBlock.PreBlockSelectedRow[productid]}"/>
+        <local:UCDataGridView Grid.Row="1" x:Name="ucCompont002" ParentControl="{Binding ElementName=ucPage001}"/>
+        <ctrl:VicDockPanelNormal Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" Name="feidaopanel">
+            <!--<TextBox Width="100" Height="24" Name="tbox" Text="{Binding MainPBlock.PreBlockSelectedRow[_id]}"/>
+            <TextBox Width="100" Height="24" Name="tbox1" Text="{Binding MainPBlock.PreBlockSelectedRow[productid]}"/>-->
         </ctrl:VicDockPanelNormal>
+        <ctrl:VicGridNormal Grid.Row="3" Name="ucPage001BuiltGrid"/>
     </ctrl:VicGridNormal>
 </tc:TemplateControl>

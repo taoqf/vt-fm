@@ -7,9 +7,14 @@
              xmlns:ctrl="http://schemas.ifeidao.com/wpfcontrol"
              xmlns:tc="clr-namespace:Victop.Frame.CmptRuntime;assembly=Victop.Frame.CmptRuntime"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Name="ucCompont002">
     <ctrl:VicGridNormal Name="masterPBlock">
-        <ctrl:VicDataGrid Name="maindgrid" ItemsSource="{Binding MainPBlock.ViewBlockDataTable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+        <ctrl:VicGridNormal.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0"/>
+        </ctrl:VicGridNormal.RowDefinitions>
+        <ctrl:VicDataGrid Name="maindgrid" Grid.Row="0" ItemsSource="{Binding MainPBlock.ViewBlockDataTable,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
         </ctrl:VicDataGrid>
+        <ctrl:VicGridNormal Grid.Row="1" Name="ucCompont002BuiltGrid"/>
     </ctrl:VicGridNormal>
 </tc:TemplateControl>

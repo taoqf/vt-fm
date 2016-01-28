@@ -250,10 +250,10 @@ namespace Victop.Frame.CmptRuntime
             BuiltBrowser.Navigating += BuiltBrowser_Navigating;
             BuiltBrowser.Source = new Uri(fileUrl);
             BuiltBrowser.Visibility = Visibility.Collapsed;
-            DockPanel panel = this.FindName("feidaopanel") as DockPanel;
-            if (panel != null)
+            Grid grid = this.FindName(string.Format("{0}BuiltGrid", this.Name)) as Grid;
+            if (grid != null)
             {
-                panel.Children.Add(BuiltBrowser);
+                grid.Children.Add(BuiltBrowser);
             }
         }
 
@@ -304,7 +304,7 @@ namespace Victop.Frame.CmptRuntime
         public override void EndInit()
         {
             base.EndInit();
-            if (BusinessModel.Equals(1)&& !DesignerProperties.GetIsInDesignMode(this))
+            if (BusinessModel.Equals(1) && !DesignerProperties.GetIsInDesignMode(this))
             {
                 InitWebBrowser(ConfigurationManager.AppSettings["businessurl"]);
             }

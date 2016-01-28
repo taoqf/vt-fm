@@ -7,13 +7,20 @@
              xmlns:tc="clr-namespace:Victop.Frame.CmptRuntime;assembly=Victop.Frame.CmptRuntime"
              xmlns:ctrl="http://schemas.ifeidao.com/wpfcontrol"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Name="BtnOpView">
+             d:DesignHeight="300" d:DesignWidth="300" Name="ucCompont001">
     <ctrl:VicGridNormal>
-        <ctrl:VicDockPanelNormal VerticalAlignment="Center" HorizontalAlignment="Left" Name="feidaopanel">
+        <ctrl:VicGridNormal.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="0"/>
+        </ctrl:VicGridNormal.RowDefinitions>
+        <ctrl:VicDockPanelNormal VerticalAlignment="Center" HorizontalAlignment="Left" Name="feidaopanel" Grid.Row="0">
             <ctrl:VicButtonNormal Width="100" Height="24" Content="查询" Name="searchBtn" Margin="0,0,10,0" Click="searchBtn_Click"/>
             <ctrl:VicButtonNormal Width="100" Height="24" Content="添加" Name="addBtn" Margin="0,0,10,0" Click="addBtn_Click" />
             <ctrl:VicButtonNormal Width="100" Height="24" Content="删除" Name="delBtn" Margin="0,0,10,0"/>
             <ctrl:VicButtonNormal Width="100" Height="24" Content="保存" Name="saveBtn" Margin="0,0,10,0"/>
         </ctrl:VicDockPanelNormal>
+        <ctrl:VicGridNormal Grid.Row="1" Name="ucCompont001BuiltGrid">
+            
+        </ctrl:VicGridNormal>
     </ctrl:VicGridNormal>
 </tc:TemplateControl>

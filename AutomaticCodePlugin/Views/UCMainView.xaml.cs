@@ -13,21 +13,23 @@ namespace AutomaticCodePlugin.Views
     {
         public UCMainView(Dictionary<string, object> paramDict, int showType)
         {
+            BusinessModel = 1;
             InitializeComponent();
-            this.DataContext = this;
-            //FeiDaoFSM = new BaseStateMachine("MainView", Assembly.GetExecutingAssembly(), this);
+            FeiDaoMachine = new BaseBusinessMachine("MainView", this);
+            BrowserLoadComplate += UCMainView_BrowserLoadComplate;
             ParamDict = paramDict;
             ShowType = showType;
-            this.Loaded += mainView_Loaded;
+            this.DataContext = this;
         }
+
+        private void UCMainView_BrowserLoadComplate()
+        {
+            FeiDaoMachine.Do("afterinit", this);
+        }
+
         private void dgridProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //FeiDaoFSM.Do("SelectRow");
-        }
-
-        private void mainView_Loaded(object sender, RoutedEventArgs e)
-        {
-            //FeiDaoFSM.Do("afterinit", sender);
         }
     }
 }

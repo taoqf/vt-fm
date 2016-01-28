@@ -3,6 +3,7 @@ using Victop.Frame.CmptRuntime;
 using System.Reflection;
 using System.IO;
 using Victop.Frame.PublicLib.Helpers;
+using System.Data;
 
 namespace AutomaticCodePlugin.Views
 {
@@ -30,17 +31,16 @@ namespace AutomaticCodePlugin.Views
 #if DEBUG
             SpaceId = "feidao";
 #endif
-            //FeiDaoFSM = new BaseStateMachine("DataGridView", Assembly.GetExecutingAssembly(), this);
+            FeiDaoMachine = new BaseBusinessMachine("DataGridView", this);
+            BusinessModel = 1;
+            BrowserLoadComplate += UCDataGridView_BrowserLoadComplate;
             DataContext = this;
-            this.Loaded += UCDataGridView_Loaded;
         }
-        private void UCDataGridView_Loaded(object sender, RoutedEventArgs e)
+
+        private void UCDataGridView_BrowserLoadComplate()
         {
-            //if (InitFlag)
-            //{
-            //    MainPBlock = GetPresentationBlockModel("masterPBlock");
-            //    FeiDaoFSM.Do("afterinit", sender);
-            //}
+            FeiDaoMachine.Do("afterinit", this);
+            MainPBlock = GetPresentationBlockModel("masterPBlock");
         }
     }
 }

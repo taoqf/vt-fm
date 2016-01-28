@@ -11,7 +11,7 @@ namespace VictopHttpServer
 {
     public partial class VicHttpServer : ServiceBase
     {
-        public Thread VicServerThread { get; set; }
+        private Thread VicServerThread { get; set; }
         public VicHttpServer()
         {
             InitializeComponent();

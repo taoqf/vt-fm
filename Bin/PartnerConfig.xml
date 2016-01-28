@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Partner version="1.0">
   <!--系统配置-->
-  <System AppName="VictopDesktop" Mode="1" ComLink="1" AutoSearch="1" StartPoint="9990" EndPoint="10000" BroadCastTime="3" ModelData="model.db" MetaData="meta.db" BizData="biz.db">
+  <System AppName="VictopDesktop" Mode="1" ComLink="1" AutoSearch="1" StartPoint="9990" EndPoint="10000" BroadCastTime="0" ModelData="model.db" MetaData="meta.db" BizData="biz.db">
   </System>
   <!--日志配置-->
   <Log Debug="0" Clean="1" Unit="day" Num="1">
