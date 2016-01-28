@@ -485,7 +485,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetMaxNumber(string pblockName, string fieldName, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
@@ -849,7 +849,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="firstLetter">首字母</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetMaxNumberFromOneLetter(string pblockName, string fieldName, string firstLetter, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
