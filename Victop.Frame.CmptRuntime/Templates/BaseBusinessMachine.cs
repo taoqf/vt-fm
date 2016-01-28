@@ -70,5 +70,46 @@ namespace Victop.Frame.CmptRuntime
                 MainView.BuiltBrowser.InvokeScript("send_msg", "fsm", businessSope, triggerName, triggerSource);
             }
         }
+        /// <summary>
+        /// 插入事实
+        /// </summary>
+        /// <param name="O">O</param>
+        /// <param name="A">A</param>
+        /// <param name="V">V</param>
+        public void InsertFact(string O, string A, object V = null)
+        {
+            if (V == null)
+            {
+                MainView.BuiltBrowser.InvokeScript("send_msg", "oav_insert", O, A);
+            }
+            else
+            {
+                MainView.BuiltBrowser.InvokeScript("send_msg", "oav_insert", O, A,V);
+            }
+        }
+        /// <summary>
+        /// 修改事实
+        /// </summary>
+        /// <param name="OAV">OAV事实实例</param>
+        /// <param name="V">v值</param>
+        public void UpdateFact(object OAV, object V)
+        {
+            MainView.BuiltBrowser.InvokeScript("send_msg", "oav_modify", OAV,V);
+        }
+        /// <summary>
+        /// 提交事实
+        /// </summary>
+        /// <param name="OAV">OAV事实实例</param>
+        public void CommitFact(object OAV)
+        {
+            MainView.BuiltBrowser.InvokeScript("send_msg", "oav_validate", OAV);
+        }
+        /// <summary>
+        /// 清空事实空间
+        /// </summary>
+        public void ClearFact()
+        {
+            MainView.BuiltBrowser.InvokeScript("send_msg", "oav_clear");
+        }
     }
 }

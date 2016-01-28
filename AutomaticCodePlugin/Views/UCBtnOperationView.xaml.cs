@@ -16,23 +16,13 @@ namespace AutomaticCodePlugin.Views
             InitializeComponent();
             FeiDaoMachine = new BaseBusinessMachine("BtnOpView", this);
             BusinessModel = 1;
-            this.Loaded += UCBtnOperationView_Loaded;
             this.BrowserLoadComplate += UCBtnOperationView_BrowserLoadComplate;
         }
 
         private void UCBtnOperationView_BrowserLoadComplate()
         {
-            
+            FeiDaoMachine.Do("afterinit", this);
         }
-
-        private void UCBtnOperationView_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (!DesignerProperties.GetIsInDesignMode(this))
-            {
-                //FeiDaoMachine.Do("afterinit", sender);
-            }
-        }
-
         private void searchBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             //FeiDaoMachine.Do("search", sender);
