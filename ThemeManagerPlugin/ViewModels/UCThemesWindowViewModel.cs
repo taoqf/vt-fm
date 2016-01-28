@@ -32,6 +32,9 @@ namespace ThemeManagerPlugin.ViewModels
         private StackPanel spLayout;
         private Button btnUse;
         private Button btnAccomplish;
+        private Grid LocalSkinGrid;
+        private Grid OnLineSkinGrid;
+        private Grid WallpaperGrid;
         #region 分屏字段属性
         /// <summary>
         /// 左翻页
@@ -184,7 +187,7 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
-
+      
         /// <summary>壁纸列表 </summary>
         private ObservableCollection<WallPaperModel> systemWallPaperList;
         public ObservableCollection<WallPaperModel> SystemWallPaperList
@@ -294,6 +297,32 @@ namespace ThemeManagerPlugin.ViewModels
                 }
             }
         }
+        private bool localSkinVisibility;
+        public bool LocalSkinVisibility
+        {
+            get { return localSkinVisibility; }
+            set
+            {
+                if (localSkinVisibility != value)
+                {
+                    localSkinVisibility = value;
+                    RaisePropertyChanged(() => LocalSkinVisibility);
+                }
+            }
+        }
+        private bool onlineSkinVisibility;
+        public bool OnlineSkinVisibility
+        {
+            get { return onlineSkinVisibility; }
+            set
+            {
+                if (onlineSkinVisibility != value)
+                {
+                    onlineSkinVisibility = value;
+                    RaisePropertyChanged(() => OnlineSkinVisibility);
+                }
+            }
+        }
         /// <summary>在线N款皮肤 </summary>
         private int skinOnlinNum;
         public int SkinOnlinNum
@@ -342,6 +371,9 @@ namespace ThemeManagerPlugin.ViewModels
                     portalWindow = (Window)x;
                     listBoxOnLineList = (ListBox)portalWindow.FindName("listBoxOnLineList");
                     ThemeTabControl = (TabControl)portalWindow.FindName("ThemeTabControl");
+                    LocalSkinGrid = (Grid)portalWindow.FindName("LocalSkinGrid");
+                    OnLineSkinGrid = (Grid)portalWindow.FindName("OnlineSkinGrid");
+                    WallpaperGrid = (Grid)portalWindow.FindName("WallpaperGrid");
                     wrapPanelPages = (WrapPanel)portalWindow.FindName("wrapPanelPages");
                     canvasPageContent = (Canvas)portalWindow.FindName("canvasPageContent");
                     imageLeft = (Button)portalWindow.FindName("imageLeft");
@@ -351,6 +383,9 @@ namespace ThemeManagerPlugin.ViewModels
                     sboardRightIamge = (System.Windows.Media.Animation.Storyboard)portalWindow.FindResource("StoryboardRightImage");
                     pageBar1 = (UnitPageBar)portalWindow.FindName("pageBar1");
                     pageBarOnline = (UnitPageBar)portalWindow.FindName("pageBarOnline");
+                    OnLineSkinGrid.Visibility = Visibility.Collapsed;
+                    WallpaperGrid.Visibility = Visibility.Collapsed;
+                    //OnlineSkinVisibility = false;
                     //stdEnd = (Storyboard)portalWindow.Resources["end"];
                     #region 翻页按钮事件
                     imageLeft.MouseEnter += imageLeft_MouseEnter;
@@ -428,16 +463,83 @@ namespace ThemeManagerPlugin.ViewModels
                     GetWallPaperCategory();
                     GetWallPaperDisplay();//一次从服务器取到所有壁纸
                     if (WallPaperCategoryList.Count == 0) return;
-                    GetSelectedTabControlWallPaperDisplay(WallPaperCategoryList[0].Category_No);
+                    //GetSelectedTabControlWallPaperDisplay(WallPaperCategoryList[0].Category_No);
 
                 });
             }
         }
 
-
-
-
-
+        /// <summary>
+        /// 本地皮肤命令
+        /// </summary>
+        public ICommand LocalSkinBtnClickCommand
+        {
+            get { 
+                return new RelayCommand(()=>{
+                  
+                    //LocalSkinVisibility = true;
+                    //OnlineSkinVisibility = false;
+                    LocalSkinGrid.Visibility = Visibility.Visible;
+                    OnLineSkinGrid.Visibility = Visibility.Collapsed;
+                    WallpaperGrid.Visibility = Visibility.Collapsed;
+                    wrapPanelPages.Children.Clear();
+                    totalPage = SystemThemeList.Count / pageSize;
+                    if ((SystemThemeList.Count % pageSize) == 0)
+                    {
+                        totalPage = SystemThemeList.Count / pageSize;
+                    }
+                    else
+                    {
+                        totalPage = SystemThemeList.Count / pageSize + 1;
+                    }
+                    setInit(totalPage);
+                });
+            }
+        }
+      /// <summary>
+      /// 在线皮肤命令
+      /// </summary>
+        public ICommand OnLineSkinBtnClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    //LocalSkinVisibility = false;
+                    //OnlineSkinVisibility = true;
+                    LocalSkinGrid.Visibility = Visibility.Collapsed;
+                    OnLineSkinGrid.Visibility = Visibility.Visible;
+                    WallpaperGrid.Visibility = Visibility.Collapsed;
+                    totalPageOnline = SystemOnLineList.Count / pageSizeOnline;
+                    if ((SystemOnLineList.Count % pageSize) == 0)
+                    {
+                        totalPageOnline = SystemOnLineList.Count / pageSizeOnline;
+                    }
+                    else
+                    {
+                        totalPageOnline = SystemOnLineList.Count / pageSizeOnline + 1;
+                    }
+                    setOnlineInit(totalPageOnline);
+                });
+            }
+        }
+        /// <summary>
+        /// /壁纸命令
+        /// </summary>
+        public ICommand WallpaperGridBtnClickCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    LocalSkinGrid.Visibility = Visibility.Collapsed;
+                    OnLineSkinGrid.Visibility = Visibility.Collapsed;
+                    WallpaperGrid.Visibility = Visibility.Visible;
+                    GetSelectedTabControlWallPaperDisplay(WallPaperCategoryList[0].Category_No);
+                    
+                });
+            }
+        }
 
         public ICommand ThemeTabControlSelectionChanged
         {
@@ -1492,6 +1594,8 @@ namespace ThemeManagerPlugin.ViewModels
         /// </summary>
         private void GetSelectedTabControlWallPaperDisplay(string categoryNo)
         {
+            SeletetedTabControlWallPaperList.Clear();
+
             foreach (WallPaperModel model in SystemWallPaperList)
             {
                 if (model.Category_No.Equals(categoryNo))

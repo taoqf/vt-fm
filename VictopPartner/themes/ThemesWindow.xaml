@@ -16,7 +16,8 @@
     </Style> 
 
     <Style  x:Key="RadioButtonListStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility"   Value="Auto"/>
@@ -31,6 +32,8 @@
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                     <Setter Property="Margin"  Value="10,0"/>
                     <Setter Property="Template">
                         <Setter.Value>
@@ -47,26 +50,6 @@
                                             <Button x:Name="btnLocaAccomplish" Visibility="{Binding StateType, Converter={StaticResource visibilityConverterEx}}" Style="{DynamicResource btnStyle}"
                                                      Content="完成" Width="25" Height="25"></Button>
                                         </StackPanel>
-                                        <!--<Grid>
-                                                <Path Fill="Red" HorizontalAlignment="Left" 
-                                                  StrokeThickness="0" 
-                                                  VerticalAlignment="Top"  
-                                                  Margin="8.383,10.541,0,0" 
-                                                  Data="M0,0 L12,0 12,0.38199188 12.230031,0.36226721 12.913506,8.3330173 10.920817,8.5038862 10.363123,2 0,2 z" 
-                                                  Height="8.504" 
-                                                  RenderTransformOrigin="0.464629838490983,0.117593290001535" 
-                                                  Stretch="Fill" 
-                                                  Width="12.914">
-                                                    <Path.RenderTransform>
-                                                        <TransformGroup>
-                                                            <ScaleTransform/>
-                                                            <SkewTransform/>
-                                                            <RotateTransform Angle="135.502"/>
-                                                            <TranslateTransform/>
-                                                        </TransformGroup>
-                                                    </Path.RenderTransform>
-                                                </Path>
-                                            </Grid>-->
                                     
                                     </Border>
                                     <TextBlock Text="{Binding SkinName}" MinWidth="60" MinHeight="30" TextAlignment="Center"/>
@@ -76,18 +59,8 @@
                                         <Setter Property="Opacity" TargetName="stackPanel" Value="1"></Setter>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true" >
-                                        <!--<Setter Property="BorderBrush" TargetName="border"  Value="Yellow"/>
-                                        <Setter Property="Opacity" TargetName="stackPanel"  Value="1"/>
-                                        <Setter Property="Visibility" TargetName="btnLocaUse" Value="Collapsed"></Setter>
-                                        <Setter Property="Visibility" TargetName="btnLocaAccomplish" Value="Visible"></Setter>-->
+                                       
                                     </Trigger>
-                                    
-                                    <!--<DataTrigger Binding="{Binding ElementName=btnUse,Path=Tag}" Value="2">
-                                        <Setter TargetName="btnUse" Property="Visibility" Value="Visible"></Setter>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding ElementName=btnAccomplish,Path=Tag}" Value="3">
-                                        <Setter TargetName="btnUse" Property="Visibility" Value="Collapsed"></Setter>
-                                    </DataTrigger>-->
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -192,8 +165,9 @@
         </Setter>
     </Style>
     <Style  x:Key="RadioButtonOnLineListStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility"   Value="Auto"/>
         <Setter Property="Template">
@@ -207,7 +181,8 @@
             <Setter.Value>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                    <Setter Property="Margin"  Value="10,15"/>
+                    <Setter Property="Margin" Value="10,15"></Setter>
+                    <Setter Property="HorizontalAlignment" Value="Center"></Setter>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -262,14 +237,6 @@
                                         <Setter Property="BorderThickness" Value="3" TargetName="border"/>
                                         <Setter Property="CornerRadius" Value="5" TargetName="border"></Setter>
                                     </Trigger>
-                                    <!--<MultiTrigger>
-                                        <MultiTrigger.EnterActions>
-                                            <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
-                                        </MultiTrigger.EnterActions>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsSelected" Value="True"/>
-                                        </MultiTrigger.Conditions>
-                                    </MultiTrigger>-->
                                     <DataTrigger Binding="{Binding ElementName=btnDown,Path=Tag}" Value="1">
                                         <Setter TargetName="btnDown" Property="Visibility" Value="Visible"></Setter>
                                         <Setter TargetName="btnUse" Property="Visibility" Value="Collapsed"></Setter>
@@ -414,7 +381,7 @@
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
                                 <Border x:Name="Bd" Margin="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"  SnapsToDevicePixels="True">
                                     <!--<ContentPresenter  Content="{Binding Category_Name}" Width="40"  VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
-                                    <TextBlock Text="{Binding Category_Name}" Padding="7,3,0,0" Width="40" Height="20"  HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                                    <Label Content="{Binding Category_Name}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="50" Height="25" VerticalAlignment="Center"></Label>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="true">
@@ -432,140 +399,13 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!--壁纸分类样式控制结束-->
-    <!--皮肤窗口TabControl样式开始-->
-    <!--<LinearGradientBrush x:Key="background" EndPoint="0.5,1" StartPoint="0.5,0">
-        <GradientStop Color="#FF006691" Offset="1"/>
-        <GradientStop Color="White"/>
-    </LinearGradientBrush>-->
-    <!--<Style x:Key="ThemeTabControlStyle" TargetType="{x:Type TabControl}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TabControl}">
-                    <Grid ClipToBounds="true" SnapsToDevicePixels="true" KeyboardNavigation.TabNavigation="Local">
-                        <Grid.RowDefinitions>
-                            <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
-                            <RowDefinition x:Name="RowDefinition1" Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Border Grid.Row="0"
-                                    CornerRadius="7,7,0,0"
-                                    Background="Transparent">
-                            <TabPanel x:Name="HeaderPanel" 
-                                          IsItemsHost="true" 
-                                          Margin="2,2,2,0" 
-                                          KeyboardNavigation.TabIndex="1" 
-                                          Panel.ZIndex="1"/>
-                        </Border>
-                        <Border Grid.Row="1" x:Name="ContentPanel" BorderBrush="{DynamicResource SkinColor}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
-                            <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <SolidColorBrush x:Key="TabControlNormalBorderBrush" Color="Transparent"/>
-    <SolidColorBrush x:Key="ButtonNormalBackground" Color="Transparent"/>
-    <SolidColorBrush x:Key="TabItemHotBackground" Color="Transparent"/>
-    <SolidColorBrush x:Key="TabItemSelectedBackground" Color="Transparent"/>
-    <SolidColorBrush x:Key="TabItemHotBorderBrush" Color="Transparent"/>
-    <SolidColorBrush x:Key="TabItemDisabledBackground" Color="Transparent"/>
-    <SolidColorBrush x:Key="TabItemDisabledBorderBrush" Color="Transparent"/>
-    <Style x:Key="ThemeTabItemStyle" TargetType="{x:Type TabItem}">
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="Padding" Value="6,1,6,1"/>
-        <Setter Property="BorderBrush" Value="{StaticResource TabControlNormalBorderBrush}"/>
-        <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
-        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TabItem}">
-                    <Grid SnapsToDevicePixels="true" Margin="3,0">
-                        <Border x:Name="Bd" Width="100"  Height="30" BorderBrush="#FFFDDA" BorderThickness="1"  Background="#FFFDDA">
-                            <ContentPresenter x:Name="Content" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header"/>
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource TabItemHotBackground}"/>
-                            <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
-                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="true">
-                            <Setter Property="Panel.ZIndex" Value="1"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
-                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="false"/>
-                                <Condition Property="IsMouseOver" Value="true"/>
-                            </MultiTrigger.Conditions>
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="Transparent"/>
-                        </MultiTrigger>
-                        <Trigger Property="TabStripPlacement" Value="Bottom">
-                            <Setter Property="BorderThickness" TargetName="Bd" Value="1,0,1,1"/>
-                        </Trigger>
-                        <Trigger Property="TabStripPlacement" Value="Left">
-                            <Setter Property="BorderThickness" TargetName="Bd" Value="1,1,0,1"/>
-                        </Trigger>
-                        <Trigger Property="TabStripPlacement" Value="Right">
-                            <Setter Property="BorderThickness" TargetName="Bd" Value="0,1,1,1"/>
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="true"/>
-                                <Condition Property="TabStripPlacement" Value="Top"/>
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Margin" Value="-2,-2,-2,-1"/>
-                            <Setter Property="Margin" TargetName="Content" Value="0,0,0,1"/>
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="Transparent"/>
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="true"/>
-                                <Condition Property="TabStripPlacement" Value="Bottom"/>
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Margin" Value="-2,-1,-2,-2"/>
-                            <Setter Property="Margin" TargetName="Content" Value="0,1,0,0"/>
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="true"/>
-                                <Condition Property="TabStripPlacement" Value="Left"/>
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Margin" Value="-2,-2,-1,-2"/>
-                            <Setter Property="Margin" TargetName="Content" Value="0,0,1,0"/>
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="true"/>
-                                <Condition Property="TabStripPlacement" Value="Right"/>
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Margin" Value="-1,-2,-2,-2"/>
-                            <Setter Property="Margin" TargetName="Content" Value="1,0,0,0"/>
-                        </MultiTrigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource TabItemDisabledBackground}"/>
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource TabItemDisabledBorderBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>-->
-    <!--皮肤窗口TabControl样式结束-->
     <!--本地皮肤分屏左右按钮样式开始-->
     <Style x:Key="PageStyle" TargetType="Button">
         <Setter Property="FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="MinHeight" Value="25"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
         <Setter Property="MinWidth" Value="20"/>
         <Setter Property="Foreground" Value="{DynamicResource  SkinColor}"></Setter>
         <Setter Property="Template" >
@@ -581,4 +421,109 @@
         </Setter>
     </Style>
     <!--本地皮肤分屏左右按钮样式结束-->
+    <Style x:Key="ThemeButtonStyle1" TargetType="{x:Type controls:VicButtonNormal}">
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Padding" Value="6,1,6,1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TabControlNormalBorderBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ButtonNormalBackground}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
+                    <Grid SnapsToDevicePixels="true" Margin="3,1">
+                        <Border x:Name="Bd" Width="100" CornerRadius="10,10,0,0" Height="30" BorderBrush="#FFFDDA" BorderThickness="1"  Background="#FFFDDA">
+                            <ContentPresenter x:Name="Content" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource TabItemHotBackground}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ThemeButtonStyle" TargetType="{x:Type controls:VicRadioButtonRectangle}">
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TabControlNormalBorderBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ButtonNormalBackground}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:VicRadioButtonRectangle}">
+                    <Grid SnapsToDevicePixels="true" Margin="3,1">
+                        <Border x:Name="Bd" Width="100" CornerRadius="10,10,0,0" Height="35" BorderBrush="#FFFDDA" BorderThickness="1"  Background="#FFFDDA">
+                            <ContentPresenter x:Name="Content" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource TabItemHotBackground}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+                <!--<ControlTemplate TargetType="{x:Type controls:VicRadioButtonRectangle}">
+                        <Border x:Name="border"  
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MinWidth="30"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter  Grid.Column="0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <Label Grid.Column="1" Foreground="White" FontSize="10" Padding="3"  HorizontalContentAlignment="Right" VerticalContentAlignment="Top"  Content="{TemplateBinding RadioButtonRectangleNum}"/>
+                            </Grid>
+                        </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="border" Property="Background" Value="WhiteSmoke" />
+                            <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="border" Property="Background" Value="#174c73" />
+                            <Setter  Property="Foreground" Value="#FFFFFF" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsChecked" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="border" Property="Background" Value="WhiteSmoke" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>-->
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
