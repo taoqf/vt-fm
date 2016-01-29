@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gnu.javax.crypto.assembly;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -359,6 +360,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 if (datagrid.SelectedItem != null)
                 {
                     pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
+                }
+                else
+                {
+                    pBlock.PreBlockSelectedRow = null;
+                }
+                pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
+            }
+        }
+        /// <summary>
+        /// 设置选中数据通过TreeView控件
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="treeview">TreeView控件</param>
+        public void SetPBlockCurrentRowByTreeView(string pBlockName, FrameworkElement treeview)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            VicTreeView tview = treeview as VicTreeView;
+            if (pBlock != null && tview != null)
+            {
+                if (tview.SelectedItem != null)
+                {
+                    pBlock.PreBlockSelectedRow = ((DataRowView)tview.SelectedItem).Row;
                 }
                 else
                 {

@@ -179,6 +179,15 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetPBlockCurrentRowByDataGrid(pBlockName, dgrid);
         }
         /// <summary>
+        /// 设置选中数据通过TreeView控件
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="treeview">TreeView控件</param>
+        public void SetPBlockCurrentRowByTreeView(string pBlockName, FrameworkElement treeview)
+        {
+            dataOperation.SetPBlockCurrentRowByTreeView(pBlockName, treeview);
+        }
+        /// <summary>
         /// 设置选中数据通过ListBox控件
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
