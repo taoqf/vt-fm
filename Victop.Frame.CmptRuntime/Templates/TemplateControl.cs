@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using Victop.Wpf.Controls;
-using Victop.Frame.CmptRuntime;
 using Victop.Frame.PublicLib.Helpers;
 using System.Linq.Expressions;
-using Victop.Server.Controls;
 using System.Reflection;
-using System.Threading;
 using System.Configuration;
+using Victop.Frame.PublicLib.Managers;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -306,7 +300,8 @@ namespace Victop.Frame.CmptRuntime
             base.EndInit();
             if (BusinessModel.Equals(1) && !DesignerProperties.GetIsInDesignMode(this))
             {
-                InitWebBrowser(ConfigurationManager.AppSettings["businessurl"]);
+                string url = string.Format("http://localhost:{0}/{1}", ConfigManager.GetAttributeOfNodeByName("System", "StartPoint"), ConfigurationManager.AppSettings["businesspath"]);
+                InitWebBrowser(url);
             }
         }
         #endregion
