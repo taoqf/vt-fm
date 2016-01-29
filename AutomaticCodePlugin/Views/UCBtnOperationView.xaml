@@ -7,7 +7,7 @@
              xmlns:tc="clr-namespace:Victop.Frame.CmptRuntime;assembly=Victop.Frame.CmptRuntime"
              xmlns:ctrl="http://schemas.ifeidao.com/wpfcontrol"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Name="ucCompont001">
+             d:DesignHeight="300" d:DesignWidth="300" Name="ucCompont001" BusinessModel="1">
     <ctrl:VicGridNormal>
         <ctrl:VicGridNormal.RowDefinitions>
             <RowDefinition Height="40"/>

@@ -15,7 +15,6 @@ namespace AutomaticCodePlugin.Views
         {
             InitializeComponent();
             FeiDaoMachine = new BaseBusinessMachine("BtnOpView", this);
-            BusinessModel = 1;
             this.BrowserLoadComplate += UCBtnOperationView_BrowserLoadComplate;
         }
 

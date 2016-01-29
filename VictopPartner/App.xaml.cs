@@ -148,7 +148,7 @@ namespace VictopPartner
             {
                 using (HttpListener listerner = new HttpListener())
                 {
-                    string httpweb = string.Format("http://localhost:{0}/", ConfigManager.GetAttributeOfNodeByName("System", "StartPoint"));
+                    string httpweb = ConfigManager.GetLocalHttpServerBaseUrl();
                     listerner.AuthenticationSchemes = AuthenticationSchemes.Anonymous;//指定身份验证 Anonymous匿名访问
                     listerner.Prefixes.Add(httpweb);
                     listerner.Start();

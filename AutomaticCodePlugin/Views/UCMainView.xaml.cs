@@ -13,7 +13,6 @@ namespace AutomaticCodePlugin.Views
     {
         public UCMainView(Dictionary<string, object> paramDict, int showType)
         {
-            BusinessModel = 1;
             InitializeComponent();
             FeiDaoMachine = new BaseBusinessMachine("MainView", this);
             BrowserLoadComplate += UCMainView_BrowserLoadComplate;

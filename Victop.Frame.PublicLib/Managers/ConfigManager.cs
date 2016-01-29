@@ -18,7 +18,6 @@ namespace Victop.Frame.PublicLib.Managers
         /// 配置文件XML文档
         /// </summary>
         private static XmlDocument xmlDoc = null;
-
         /// <summary>
         /// 获取节点下的属性集合
         /// </summary>
@@ -51,7 +50,7 @@ namespace Victop.Frame.PublicLib.Managers
         /// <summary>
         /// 根据节点名和属性名获取属性的值
         /// </summary>
-        /// <param name="NodeName">节点名称</param>
+        /// <param name="nodeName">节点名称</param>
         /// <param name="attributeName">属性名称</param>
         /// <returns></returns>
         public static string GetAttributeOfNodeByName(string nodeName, string attributeName)
@@ -88,7 +87,7 @@ namespace Victop.Frame.PublicLib.Managers
         /// <param name="nodeName">节点名称</param>
         /// <param name="attrDic">属性键值对</param>
         /// <returns>保存是否成功</returns>
-        public static bool SaveAttributeOfNodeByName(string nodeName, Dictionary<string,string> attrDic)
+        public static bool SaveAttributeOfNodeByName(string nodeName, Dictionary<string, string> attrDic)
         {
             if (xmlDoc == null)
             {
@@ -124,6 +123,15 @@ namespace Victop.Frame.PublicLib.Managers
             return SaveFlag;
         }
         /// <summary>
+        /// 获取本地httpServer基础url
+        /// </summary>
+        /// <returns>"http://localhost:端口/"</returns>
+        public static string GetLocalHttpServerBaseUrl()
+        {
+            string urlPort = GetAttributeOfNodeByName("System", "StartPoint");
+            return string.Format("http://localhost:{0}/", urlPort);
+        }
+        /// <summary>
         ///  加载配置文件
         /// </summary>
         private static void LoadPartnerConfig()
@@ -143,7 +151,7 @@ namespace Victop.Frame.PublicLib.Managers
             if (!File.Exists(fileFullPath))
             {
                 File.Create(fileFullPath);
-                
+
             }
             xmlDoc.Save(fileFullPath);
         }

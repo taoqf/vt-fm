@@ -32,7 +32,6 @@ namespace AutomaticCodePlugin.Views
             SpaceId = "feidao";
 #endif
             FeiDaoMachine = new BaseBusinessMachine("DataGridView", this);
-            BusinessModel = 1;
             BrowserLoadComplate += UCDataGridView_BrowserLoadComplate;
             DataContext = this;
         }

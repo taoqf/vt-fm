@@ -244,9 +244,11 @@ namespace Victop.Frame.CmptRuntime
             BuiltBrowser.Navigating += BuiltBrowser_Navigating;
             BuiltBrowser.Source = new Uri(fileUrl);
             BuiltBrowser.Visibility = Visibility.Collapsed;
+            BuiltBrowser.Name = string.Format("{0}BuiltBrowser", this.Name);
             Grid grid = this.FindName(string.Format("{0}BuiltGrid", this.Name)) as Grid;
             if (grid != null)
             {
+                grid.Children.Clear();
                 grid.Children.Add(BuiltBrowser);
             }
         }
@@ -300,7 +302,7 @@ namespace Victop.Frame.CmptRuntime
             base.EndInit();
             if (BusinessModel.Equals(1) && !DesignerProperties.GetIsInDesignMode(this))
             {
-                string url = string.Format("http://localhost:{0}/{1}", ConfigManager.GetAttributeOfNodeByName("System", "StartPoint"), ConfigurationManager.AppSettings["businesspath"]);
+                string url = string.Format("{0}/{1}", ConfigManager.GetLocalHttpServerBaseUrl(), ConfigurationManager.AppSettings["businesspath"]);
                 InitWebBrowser(url);
             }
         }
