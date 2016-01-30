@@ -43,6 +43,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         private UIElementAtOperation uIElementOperation;
         #endregion
+
         /// <summary>
         /// 构造函数，页面/组件实体
         /// </summary>
@@ -78,8 +79,6 @@ namespace Victop.Frame.CmptRuntime
         #endregion
 
         #region 数据操作
-
-        #region 查询条件操作
         /// <summary>
         /// 设置区块查询条件日期区间
         /// </summary>
@@ -121,7 +120,6 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetConditionSearch(pBlockName, paramField, paramValue);
         }
-
         /// <summary>
         /// 设置区块排序
         /// </summary>
@@ -151,8 +149,6 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetConditionIsEmptyData(blockName, isEmptyData);
         }
-        #endregion
-
         /// <summary>
         /// 查询
         /// </summary>
@@ -170,40 +166,13 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.GetPBlockData(pBlockName);
         }
         /// <summary>
-        /// 设置选中数据通过dataGrid控件
+        /// 设置元素选中行
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        /// <param name="dgrid">dataGird控件</param>
-        public void SetPBlockCurrentRowByDataGrid(string pBlockName, FrameworkElement dgrid)
+        /// <param name="element">元素</param>
+        public void SetPBlockCurrentRowByElement(string pBlockName, FrameworkElement element)
         {
-            dataOperation.SetPBlockCurrentRowByDataGrid(pBlockName, dgrid);
-        }
-        /// <summary>
-        /// 设置选中数据通过TreeView控件
-        /// </summary>
-        /// <param name="pBlockName">区块名称</param>
-        /// <param name="treeview">TreeView控件</param>
-        public void SetPBlockCurrentRowByTreeView(string pBlockName, FrameworkElement treeview)
-        {
-            dataOperation.SetPBlockCurrentRowByTreeView(pBlockName, treeview);
-        }
-        /// <summary>
-        /// 设置选中数据通过ListBox控件
-        /// </summary>
-        /// <param name="pBlockName">区块名称</param>
-        /// <param name="lbox">ListBox控件</param>
-        public void SetPBlockCurrentRowByListBox(string pBlockName, FrameworkElement lbox)
-        {
-            dataOperation.SetPBlockCurrentRowByListBox(pBlockName, lbox);
-        }
-        /// <summary>
-        /// 获取ListBox选中项内容
-        /// </summary>
-        /// <param name="lboxName">ListBox控件</param>
-        /// <param name="oav">接收oav</param>
-        public void GetListBoxSelectItem(string lboxName, OAVModel oav)
-        {
-            uIElementOperation.GetListBoxSelectItem(lboxName, oav);
+            dataOperation.SetPBlockCurrentRowByElement(pBlockName, element);
         }
         /// <summary>
         /// 提交BlockData的数据
@@ -339,20 +308,6 @@ namespace Victop.Frame.CmptRuntime
         public void VicDataGridSelectRowDelete(string pblockName)
         {
             dataOperation.VicDataGridSelectRowDelete(pblockName);
-        }
-        /// <summary>
-        /// 设置PBlock数据
-        /// </summary>
-        /// <param name="pblockNameOne">需要赋值的区块名称</param>
-        /// <param name="pblockNameTwo">作为模板赋值的区块名称</param>
-        /// <param name="pblockNameThree">作为赋值的区块名称</param>
-        /// <param name="fildone">左表</param>
-        /// <param name="fildtwo">右表</param>
-        /// <param name="fildthree">左表</param>
-        /// <param name="fildfour">右表</param>
-        public void SetPBlockData(string pblockNameOne, string pblockNameTwo, string pblockNameThree, string fildone, string fildtwo, string fildthree, string fildfour)
-        {
-            dataOperation.SetPBlockData(pblockNameOne, pblockNameTwo, pblockNameThree, fildone, fildtwo, fildthree, fildfour);
         }
         /// <summary>
         /// 区块数据转换OAV
@@ -572,7 +527,6 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.UCCompntShow(compntName, height = 600, width = 600);
         }
-
         /// <summary>
         /// 使用window弹出内容
         /// </summary>
@@ -581,7 +535,6 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ShowVicWindowContent(content);
         }
-
         /// <summary>
         /// 设置组件参数
         /// </summary>
@@ -688,7 +641,6 @@ namespace Victop.Frame.CmptRuntime
         {
             return systemOperation.SendGetCodeMessage(SystemId, iPName, iCodeRule);
         }
-        #region 获取资源
         /// <summary>
         /// 返回指定名称资源的值
         /// </summary>
@@ -698,9 +650,6 @@ namespace Victop.Frame.CmptRuntime
         {
             return systemOperation.GetStringByResourceName(name);
         }
-        #endregion
-
-        #region 类型转换
         /// <summary>
         /// 转换字符串类型
         /// </summary>
@@ -748,8 +697,6 @@ namespace Victop.Frame.CmptRuntime
         }
         #endregion
 
-        #endregion
-
         #region 字符串处理
         /// <summary>
         /// 指定的字符串是否出现在字符串实例中
@@ -765,31 +712,31 @@ namespace Victop.Frame.CmptRuntime
 
         #region UI操作
         /// <summary>
-        /// 设置按钮文本
+        /// 设置元素内容
         /// </summary>
-        /// <param name="btnName">按钮名称</param>
-        /// <param name="btnContent">按钮内容</param>
-        public void SetButtonText(string btnName, string btnContent)
+        /// <param name="elementName">元素名称</param>
+        /// <param name="content">内容</param>
+        public void SetElementContent(string elementName, object content)
         {
-            uIElementOperation.SetButtonText(btnName, btnContent);
+            uIElementOperation.SetElementContent(elementName, content);
         }
         /// <summary>
-        /// 设置文本标签内容
+        /// 获取元素内容
         /// </summary>
-        /// <param name="lblName">标签名称</param>
-        /// <param name="lblContent">标签内容</param>
-        public void SetLabelText(string lblName, object lblContent)
-        {
-            uIElementOperation.SetLabelText(lblName, lblContent);
-        }
-        /// <summary>
-        /// 获取文本标签内容
-        /// </summary>
-        /// <param name="lblName">标签名称</param>
+        /// <param name="elementName">元素名称</param>
         /// <param name="oav">接收oav</param>
-        public void GetLabelText(string lblName, OAVModel oav)
+        public void GetElementContent(string elementName, OAVModel oav)
         {
-            uIElementOperation.GetLabelText(lblName, oav);
+            uIElementOperation.GetElementContent(elementName, oav);
+        }
+        /// <summary>
+        /// 设置元素选中项索引
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="selectedIndex">索引</param>
+        public void SetElementSelectIndex(string elementName, int selectedIndex)
+        {
+            uIElementOperation.SetElementSelectIndex(elementName, selectedIndex);
         }
         /// <summary>
         /// 获取界面元素名称
@@ -829,62 +776,6 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.ParamsCurrentRowGetFromGridName(gridName, paramName, oav);
         }
         /// <summary>
-        /// 得到tree选中的值
-        /// </summary>
-        /// <param name="treeName">控件名</param>
-        /// <param name="paramName">字段名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicTreeViewGetParam(string treeName, string paramName, OAVModel oav)
-        {
-            uIElementOperation.VicTreeViewGetParam(treeName, paramName, oav);
-        }
-        /// <summary>
-        /// 得到list选中的值
-        /// </summary>
-        /// <param name="listName">控件名</param>
-        /// <param name="paramName">字段名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicListViewGetParam(string listName, string paramName, OAVModel oav)
-        {
-            uIElementOperation.VicListViewGetParam(listName, paramName, oav);
-        }
-        /// <summary>
-        /// 得到VicTextBoxNormal VicText值
-        /// </summary>
-        /// <param name="txtName">控件名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicTextBoxNormalGetParamByVicText(string txtName, OAVModel oav)
-        {
-            uIElementOperation.VicTextBoxNormalGetParamByVicText(txtName, oav);
-        }
-        /// <summary>
-        /// VicTextBoxNormal赋值VicText
-        /// </summary>
-        /// <param name="txtName">控件名</param>
-        /// <param name="value">文本值</param>
-        public void VicTextBoxNormalSetVicText(string txtName, object value)
-        {
-            uIElementOperation.VicTextBoxNormalSetVicText(txtName, value);
-        }
-        /// <summary>
-        /// 得到VicTextBox VicText值
-        /// </summary>
-        /// <param name="txtName">控件名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicTextBoxGetParamByVicText(string txtName, OAVModel oav)
-        {
-            uIElementOperation.VicTextBoxGetParamByVicText(txtName, oav);
-        }
-        /// <summary>
-        /// VicTextBox赋值VicText
-        /// </summary>
-        /// <param name="txtName">控件名</param>
-        /// <param name="value">文本值</param>
-        public void VicTextBoxSetVicText(string txtName, object value)
-        {
-            uIElementOperation.VicTextBoxSetVicText(txtName, value);
-        }
-        /// <summary>
         /// 判断VicRadioButtonNormal是否被选中
         /// </summary>
         /// <param name="radioBtnName">VicRadioButtonNormal名称</param>
@@ -920,22 +811,13 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicDataGridIsReadOnly(dgridName, state);
         }
-         /// <summary>
+        /// <summary>
         /// 清除dgrid数据集合
         /// </summary>
         /// <param name="dgridName">控件名</param>
         public void VicDataGridClearData(string dgridName)
         {
             uIElementOperation.VicDataGridClearData(dgridName);
-        }
-        /// <summary>
-        /// 设置dgrid选中行
-        /// </summary>
-        /// <param name="dgridName">控件名</param>
-        /// <param name="selectedIndex">选中行号</param>
-        public void VicDataGridSetSelectedIndex(string dgridName, int selectedIndex)
-        {
-            uIElementOperation.VicDataGridSetSelectedIndex(dgridName, selectedIndex);
         }
         /// <summary>
         /// UnitPageRule分页加载
@@ -949,6 +831,7 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.UnitPageRuleLoad(unitPageName, pblockName, currentPage = 1, pageSize = 20);
         }
         #endregion
+
         #region 错误处理方法
         /// <summary>
         /// 错误处理(JS专用)

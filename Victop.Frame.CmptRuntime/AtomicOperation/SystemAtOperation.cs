@@ -483,8 +483,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
-
-        #region 获取资源
         /// <summary>
         /// 返回指定名称资源的值
         /// </summary>
@@ -505,7 +503,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             return string.Empty;
         }
-        #endregion
 
         #region 类型转换
         /// <summary>

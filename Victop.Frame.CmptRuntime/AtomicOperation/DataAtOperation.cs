@@ -37,7 +37,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             MainView = mainView;
         }
-        #region 查询条件操作
+
         /// <summary>
         /// 设置区块查询条件日期区间
         /// </summary>
@@ -199,7 +199,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
-
         /// <summary>
         /// 设置区块排序
         /// </summary>
@@ -256,7 +255,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
-        #endregion
         /// <summary>
         /// 区块查询
         /// </summary>
@@ -347,68 +345,68 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 设置选中数据通过dataGrid控件
+        /// 设置元素选中行
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        /// <param name="dgrid">dataGird控件</param>
-        public void SetPBlockCurrentRowByDataGrid(string pBlockName, FrameworkElement dgrid)
+        /// <param name="element">元素</param>
+        public void SetPBlockCurrentRowByElement(string pBlockName, FrameworkElement element)
         {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
-            VicDataGrid datagrid = dgrid as VicDataGrid;
-            if (pBlock != null && datagrid != null)
+            if (!string.IsNullOrEmpty(pBlockName) && element != null)
             {
-                if (datagrid.SelectedItem != null)
+                PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+                if (pBlock != null)
                 {
-                    pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
-                }
-                else
-                {
-                    pBlock.PreBlockSelectedRow = null;
-                }
-                pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
-            }
-        }
-        /// <summary>
-        /// 设置选中数据通过TreeView控件
-        /// </summary>
-        /// <param name="pBlockName">区块名称</param>
-        /// <param name="treeview">TreeView控件</param>
-        public void SetPBlockCurrentRowByTreeView(string pBlockName, FrameworkElement treeview)
-        {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
-            VicTreeView tview = treeview as VicTreeView;
-            if (pBlock != null && tview != null)
-            {
-                if (tview.SelectedItem != null)
-                {
-                    pBlock.PreBlockSelectedRow = ((DataRowView)tview.SelectedItem).Row;
-                }
-                else
-                {
-                    pBlock.PreBlockSelectedRow = null;
-                }
-                pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
-            }
-        }
-        /// <summary>
-        /// 设置选中数据通过ListBox控件
-        /// </summary>
-        /// <param name="pBlockName">区块名称</param>
-        /// <param name="lbox">ListBox控件</param>
-        public void SetPBlockCurrentRowByListBox(string pBlockName, FrameworkElement lbox)
-        {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
-            VicListBoxNormal listbox = lbox as VicListBoxNormal;
-            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && listbox != null)
-            {
-                if (listbox.SelectedItem != null)
-                {
-                    pBlock.PreBlockSelectedRow = ((DataRowView)listbox.SelectedItem).Row;
+                    string typeName = element.GetType().Name;
+                    switch (typeName)
+                    {
+                        case "VicDataGrid":
+                            VicDataGrid datagrid = element as VicDataGrid;
+                            if (datagrid.SelectedItem == null)
+                            {
+                                pBlock.PreBlockSelectedRow = null;
+                            }
+                            else
+                            {
+                                pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
+                            }
+                            break;
+                        case "VicTreeView":
+                            VicTreeView treeview = element as VicTreeView;
+                            if (treeview.SelectedItem == null)
+                            {
+                                pBlock.PreBlockSelectedRow = null;
+                            }
+                            else
+                            {
+                                pBlock.PreBlockSelectedRow = ((DataRowView)treeview.SelectedItem).Row;
+                            }
+                            break;
+                        case "VicListBoxNormal":
+                            VicListBoxNormal listbox = element as VicListBoxNormal;
+                            if (listbox.SelectedItem == null)
+                            {
+                                pBlock.PreBlockSelectedRow = null;
+                            }
+                            else
+                            {
+                                pBlock.PreBlockSelectedRow = ((DataRowView)listbox.SelectedItem).Row;
+                            }
+                            break;
+                        case "VicListViewNormal":
+                            VicListViewNormal listview = element as VicListViewNormal;
+                            if (listview.SelectedItem == null)
+                            {
+                                pBlock.PreBlockSelectedRow = null;
+                            }
+                            else
+                            {
+                                pBlock.PreBlockSelectedRow = ((DataRowView)listview.SelectedItem).Row;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                     pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
-                }
-                else
-                {
-                    pBlock.PreBlockSelectedRow = null;
                 }
             }
         }
@@ -628,34 +626,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     {
                         drTem[0].Delete();
                     }
-                }
-            }
-        }
-        /// <summary>
-        /// 设置PBlock数据
-        /// </summary>
-        /// <param name="pblockNameOne">需要赋值的区块名称</param>
-        /// <param name="pblockNameTwo">作为模板赋值的区块名称</param>
-        /// <param name="pblockNameThree">作为赋值的区块名称</param>
-        /// <param name="fildone">左表</param>
-        /// <param name="fildtwo">右表</param>
-        /// <param name="fildthree">左表</param>
-        /// <param name="fildfour">右表</param>
-        public void SetPBlockData(string pblockNameOne, string pblockNameTwo, string pblockNameThree, string fildone, string fildtwo, string fildthree, string fildfour)
-        {
-            if (!string.IsNullOrWhiteSpace(pblockNameOne) && !string.IsNullOrWhiteSpace(pblockNameTwo) && !string.IsNullOrWhiteSpace(pblockNameThree))
-            {
-                PresentationBlockModel pBlockOne = MainView.GetPresentationBlockModel(pblockNameOne);
-                PresentationBlockModel pBlockTwo = MainView.GetPresentationBlockModel(pblockNameTwo);
-                PresentationBlockModel pBlockThree = MainView.GetPresentationBlockModel(pblockNameThree);
-                if (pBlockOne != null && pBlockTwo != null && pBlockThree != null)
-                {
-                    pBlockOne.ViewBlockDataTable = pBlockTwo.ViewBlockDataTable.Copy();
-                    DataRow dr = pBlockOne.ViewBlockDataTable.NewRow();
-                    dr["_id"] = Guid.NewGuid().ToString();
-                    dr[fildone] = pBlockThree.ViewBlockDataTable.Rows[0][fildtwo];
-                    dr[fildthree] = pBlockThree.ViewBlockDataTable.Rows[0][fildfour];
-                    pBlockOne.ViewBlockDataTable.Rows.Add(dr);
                 }
             }
         }

@@ -34,37 +34,155 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         #endregion
 
         /// <summary>
-        /// 设置按钮文本
+        /// 设置元素内容
         /// </summary>
-        /// <param name="btnName">按钮名称</param>
-        /// <param name="btnContent">按钮内容</param>
-        public void SetButtonText(string btnName, string btnContent)
+        /// <param name="elementName">元素名称</param>
+        /// <param name="content">内容</param>
+        public void SetElementContent(string elementName, object content)
         {
-            Button btn = MainView.FindName(btnName) as Button;
-            if (btn != null)
-                btn.Content = btnContent;
+            if (!string.IsNullOrEmpty(elementName))
+            {
+                FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
+                if (element != null)
+                {
+                    string typeName = element.GetType().Name;
+                    switch (typeName)
+                    {
+                        case "VicButtonNormal":
+                            VicButtonNormal button = element as VicButtonNormal;
+                            button.Content = content;
+                            break;
+                        case "VicLabelNormal":
+                            VicLabelNormal label = element as VicLabelNormal;
+                            label.Content = content;
+                            break;
+                        case "VicTextBlockNormal":
+                            VicTextBlockNormal textblock = element as VicTextBlockNormal;
+                            textblock.Text = Convert.ToString(content);
+                            break;
+                        case "VicTextBox":
+                            VicTextBox textbox = element as VicTextBox;
+                            textbox.VicText = Convert.ToString(content);
+                            break;
+                        case "VicTextBoxNormal":
+                            VicTextBoxNormal textboxnormal = element as VicTextBoxNormal;
+                            textboxnormal.VicText = Convert.ToString(content);
+                            break;
+                        case "VicDatePickerNormal":
+                            VicDatePickerNormal datepicker = element as VicDatePickerNormal;
+                            datepicker.Value = Convert.ToDateTime(content);
+                            break;
+                        case "VicCheckBoxNormal":
+                            VicCheckBoxNormal checkbox = element as VicCheckBoxNormal;
+                            checkbox.Content = content;
+                            break;
+                        case "VicRadioButtonNormal":
+                            VicRadioButtonNormal radiobutton = element as VicRadioButtonNormal;
+                            radiobutton.Content = content;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
         /// <summary>
-        /// 设置文本标签内容
+        /// 获取元素内容
         /// </summary>
-        /// <param name="lblName">标签名称</param>
-        /// <param name="lblContent">标签内容</param>
-        public void SetLabelText(string lblName, object lblContent)
-        {
-            Label lbl = MainView.FindName(lblName) as Label;
-            if (lbl != null && lblContent != null)
-                lbl.Content = lblContent;
-        }
-        /// <summary>
-        /// 获取文本标签内容
-        /// </summary>
-        /// <param name="lblName">标签名称</param>
+        /// <param name="elementName">元素名称</param>
         /// <param name="oav">接收oav</param>
-        public void GetLabelText(string lblName, OAVModel oav)
+        public void GetElementContent(string elementName, OAVModel oav)
         {
-            Label lbl = MainView.FindName(lblName) as Label;
-            if (lbl != null && oav != null)
-                oav.AtrributeValue = lbl.Content;
+            if (!string.IsNullOrEmpty(elementName))
+            {
+                FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
+                if (element != null)
+                {
+                    string typeName = element.GetType().Name;
+                    switch (typeName)
+                    {
+                        case "VicButtonNormal":
+                            VicButtonNormal button = element as VicButtonNormal;
+                            oav.AtrributeValue = button.Content;
+                            break;
+                        case "VicLabelNormal":
+                            VicLabelNormal label = element as VicLabelNormal;
+                            oav.AtrributeValue = label.Content;
+                            break;
+                        case "VicTextBlockNormal":
+                            VicTextBlockNormal textblock = element as VicTextBlockNormal;
+                            oav.AtrributeValue = textblock.Text;
+                            break;
+                        case "VicTextBox":
+                            VicTextBox textbox = element as VicTextBox;
+                            oav.AtrributeValue = textbox.VicText;
+                            break;
+                        case "VicTextBoxNormal":
+                            VicTextBoxNormal textboxnormal = element as VicTextBoxNormal;
+                            oav.AtrributeValue = textboxnormal.VicText;
+                            break;
+                        case "VicDatePickerNormal":
+                            VicDatePickerNormal datepicker = element as VicDatePickerNormal;
+                            oav.AtrributeValue = datepicker.Value;
+                            break;
+                        case "VicCheckBoxNormal":
+                            VicCheckBoxNormal checkbox = element as VicCheckBoxNormal;
+                            oav.AtrributeValue = checkbox.Content;
+                            break;
+                        case "VicRadioButtonNormal":
+                            VicRadioButtonNormal radiobutton = element as VicRadioButtonNormal;
+                            oav.AtrributeValue = radiobutton.Content;
+                            break;
+                        case "VicTreeView":
+                            VicTreeView treeview = element as VicTreeView;
+                            if (treeview.SelectedItem != null)
+                            {
+                                TreeViewItem tvi = (TreeViewItem)treeview.SelectedItem;
+                                oav.AtrributeValue = tvi.Header;
+                            }
+                            break;
+                        case "VicListBoxNormal":
+                            VicListBoxNormal listbox = element as VicListBoxNormal;
+                            if (listbox.SelectedItem != null)
+                            {
+                                ListBoxItem lbi = (ListBoxItem)listbox.SelectedItem;
+                                oav.AtrributeValue = lbi.Content;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 设置元素选中项索引
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="selectedIndex">索引</param>
+        public void SetElementSelectIndex(string elementName, int selectedIndex)
+        {
+            if (!string.IsNullOrEmpty(elementName))
+            {
+                FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
+                if (element != null)
+                {
+                    string typeName = element.GetType().Name;
+                    switch (typeName)
+                    {
+                        case "VicDataGrid":
+                            VicDataGrid datagrid = element as VicDataGrid;
+                            datagrid.SelectedIndex = selectedIndex;
+                            break;
+                        case "VicListBoxNormal":
+                            VicListBoxNormal listbox = element as VicListBoxNormal;
+                            listbox.SelectedIndex = selectedIndex;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
         /// <summary>
         /// 获取界面元素名称
@@ -128,107 +246,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 oav.AtrributeValue = ((DataRowView)dataGrid.SelectedItem).Row[paramName];
             }
         }
-        #region VicTreeView原子操作
-        /// <summary>
-        /// 得到tree选中的值
-        /// </summary>
-        /// <param name="treeName">控件名</param>
-        /// <param name="paramName">字段名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicTreeViewGetParam(string treeName, string paramName, OAVModel oav)
-        {
-            VicTreeView treeView = MainView.FindName(treeName) as VicTreeView;
-            if (treeView != null && treeView.SelectedItem != null)
-            {
-                DataRow drSelect = ((DataRowView)treeView.SelectedItem).Row;
-                if (drSelect.Table.Columns.Contains(paramName))
-                {
-                    oav.AtrributeValue = drSelect[paramName];
-                }
-            }
-        }
-        #endregion
-
-        #region VicListView原子操作
-        /// <summary>
-        /// 得到list选中的值
-        /// </summary>
-        /// <param name="listName">控件名</param>
-        /// <param name="paramName">字段名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicListViewGetParam(string listName, string paramName, OAVModel oav)
-        {
-            VicListViewNormal listView = MainView.FindName(listName) as VicListViewNormal;
-            if (listView != null && listView.SelectedItem != null)
-            {
-                DataRow drSelect = ((DataRowView)listView.SelectedItem).Row;
-                if (drSelect.Table.Columns.Contains(paramName))
-                {
-                    oav.AtrributeValue = drSelect[paramName];
-                }
-            }
-        }
-        #endregion
-
-        #region VicTextBoxNormal原子操作
-        /// <summary>
-        /// 得到VicTextBoxNormal VicText值
-        /// </summary>
-        /// <param name="txtName">控件名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicTextBoxNormalGetParamByVicText(string txtName, OAVModel oav)
-        {
-            VicTextBoxNormal txtBox = MainView.FindName(txtName) as VicTextBoxNormal;
-            if (txtBox != null)
-            {
-                oav.AtrributeValue = txtBox.VicText;
-            }
-        }
-        /// <summary>
-        /// VicTextBoxNormal赋值VicText
-        /// </summary>
-        /// <param name="txtName">控件名</param>
-        /// <param name="value">文本值</param>
-        public void VicTextBoxNormalSetVicText(string txtName, object value)
-        {
-            VicTextBoxNormal txtBox = MainView.FindName(txtName) as VicTextBoxNormal;
-            if (txtBox != null)
-            {
-                txtBox.VicText = value == null ? "" : value.ToString();
-            }
-        }
-        #endregion
-
-        #region VicTextBox 原子操作
-        /// <summary>
-        /// 得到VicTextBox VicText值
-        /// </summary>
-        /// <param name="txtName">控件名</param>
-        /// <param name="oav">接收oav</param>
-        public void VicTextBoxGetParamByVicText(string txtName, OAVModel oav)
-        {
-            VicTextBox txtBox = MainView.FindName(txtName) as VicTextBox;
-            if (txtBox != null)
-            {
-                oav.AtrributeValue = txtBox.VicText;
-            }
-        }
-        /// <summary>
-        /// VicTextBox赋值VicText
-        /// </summary>
-        /// <param name="txtName">控件名</param>
-        /// <param name="value">文本值</param>
-        public void VicTextBoxSetVicText(string txtName, object value)
-        {
-            VicTextBox txtBox = MainView.FindName(txtName) as VicTextBox;
-            if (txtBox != null)
-            {
-                txtBox.VicText = value == null ? "" : value.ToString();
-            }
-        }
-        #endregion 
-
-        #region VicRadioButtonNormal原子操作
         /// <summary>
         /// 判断VicRadioButtonNormal是否被选中
         /// </summary>
@@ -242,9 +259,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 oav.AtrributeValue = radBtn.IsChecked;
             }
         }
-        #endregion
-
-        #region VicDataGrid原子操作
         /// <summary>
         /// VicDataGrid是否有选中项
         /// </summary>
@@ -335,40 +349,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="dgridName">控件名</param>
         public void VicDataGridClearData(string dgridName)
         {
-             VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
-             if (dgrid != null)
-             {
-                 dgrid.ItemsSource = null;
-             }
-        }
-        /// <summary>
-        /// 设置dgrid选中行
-        /// </summary>
-        /// <param name="dgridName">控件名</param>
-        /// <param name="selectedIndex">选中行号</param>
-        public void VicDataGridSetSelectedIndex(string dgridName, int selectedIndex)
-        {
             VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
             if (dgrid != null)
             {
-                dgrid.SelectedIndex = selectedIndex;
-            }
-        }
-
-        #endregion
-
-        #region VicListBoxNormal原子操作库
-        /// <summary>
-        /// 设置VicListBoxNormal控件选中行
-        /// </summary>
-        /// <param name="lboxName">ListBox控件</param>
-        /// <param name="selectedIndex">接收oav</param>
-        public void VicListBoxNormalSelectIndex(string lboxName, int selectedIndex)
-        {
-            VicListBoxNormal lbox = MainView.FindName(lboxName) as VicListBoxNormal;
-            if (lbox != null)
-            {
-                lbox.SelectedIndex = selectedIndex;
+                dgrid.ItemsSource = null;
             }
         }
         /// <summary>
@@ -391,23 +375,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     oavmsg.AtrributeValue = "当前选择项为空";
             }
         }
-        /// <summary>
-        /// 获取ListBox选中项内容
-        /// </summary>
-        /// <param name="lboxName">ListBox控件</param>
-        /// <param name="oav">接收oav</param>
-        public void GetListBoxSelectItem(string lboxName, OAVModel oav)
-        {
-            VicListBoxNormal listbox = MainView.FindName(lboxName) as VicListBoxNormal;
-            if (listbox != null & listbox.SelectedItem != null)
-            {
-                ListBoxItem lbi = (ListBoxItem)listbox.SelectedItem;
-                oav.AtrributeValue = lbi.Content;
-            }
-        }
-        #endregion
-
-        #region UnitPageRule原子操作
         /// <summary>
         /// UnitPageRule分页加载
         /// </summary>
@@ -432,6 +399,5 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             unitPage.Excute(dicParam);
         }
-        #endregion
     }
 }
