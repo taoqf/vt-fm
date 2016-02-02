@@ -24,54 +24,69 @@ namespace FeidaoUserLoginPlugin.Views
     /// </summary>
     public partial class UCFeidaoCountdown : TemplateControl
     {
-        DoubleAnimation da = new DoubleAnimation();
-        bool b = false;
-        bool dacomplated = true;
+        bool isGo = true;
+        private bool isNoClick = true;
+        private int count=0;
+        private Storyboard look3DStoryboard;
+        private Storyboard lookOpposite3DStoryboard;
+        private Storyboard look3D1Storyboard;
+        private Storyboard look3D2Storyboard;
         DispatcherTimer timer = new DispatcherTimer();
         public UCFeidaoCountdown()
         {
             InitializeComponent();
-            da.Duration = new Duration(TimeSpan.FromSeconds(1));
-            da.Completed += da_Completed;
+            look3DStoryboard = (Storyboard)this.Resources["begin3DStoryboard"];
+            lookOpposite3DStoryboard = (Storyboard)this.Resources["beginOpposite3DStoryboard"];
+            look3D1Storyboard = (Storyboard)this.Resources["begin3D1Storyboard"];
+            look3D2Storyboard = (Storyboard)this.Resources["beginOpposite3D1Storyboard"];
             timer.Interval = TimeSpan.FromSeconds(5);
             timer.Tick += timer_Tick;
             timer.Start();
-
-        }
-
-        void da_Completed(object sender, EventArgs e)
-        {
-            dacomplated = true;
-            timer.IsEnabled = true;
         }
 
         void timer_Tick(object sender, EventArgs e)
         {
-            BeginAnimation();
+            count++;
+            if (isNoClick)
+            { 
+                if (count %2 == 0)
+                {
+                    look3DStoryboard.Begin();
+                    lookOpposite3DStoryboard.Stop();
+                }
+                else
+                {
+                    lookOpposite3DStoryboard.Begin();
+                    look3DStoryboard.Stop();
+                }
+            
+            }
+           
         }
-
-        private void TemplateControl_MouseDown(object sender, MouseButtonEventArgs e)
+        private void UCFeidaoCountdown_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            timer.IsEnabled = false;
-            BeginAnimation();
-        }
-        private void BeginAnimation()
-        {
-            if (dacomplated)
+            isNoClick=false;
+            look3DStoryboard.Stop();
+            if (isGo)
             {
-                if (b == false)
-                {
-                    da.To = 180d;
-                    b = true;
-                }
-                else if (b == true)
-                {
-                    da.To = 0d;
-                    b = false;
-                }
-                this.axr.BeginAnimation(AxisAngleRotation3D.AngleProperty, da);
-                dacomplated = false;
+                look3D1Storyboard.Begin();
+                look3D2Storyboard.Stop();
+                isGo = false;
+            }
+            else
+            {
+                look3D1Storyboard.Stop();
+                look3D2Storyboard.Begin();
+                isGo = true;
             }
         }
+       void  BeginAnimation()
+         {
+             look3DStoryboard.Begin();
+         }
+       void BeginOppositeAnimation()
+       {
+           lookOpposite3DStoryboard.Begin();
+       }
     }
 }
