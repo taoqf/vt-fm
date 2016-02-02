@@ -65,9 +65,13 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="triggerSource">动作触发源</param>
         public void Do(string triggerName, object triggerSource)
         {
-            if (MainView.BuiltBrowser != null)
+            if (MainView.BuiltBrowser != null && businessSope != null)
             {
                 MainView.BuiltBrowser.InvokeScript("send_msg", "fsm", businessSope, triggerName, triggerSource);
+            }
+            else
+            {
+                LoggerHelper.ErrorFormat("状态转移失败:{0}:动作{1}", MainView.GetType().Assembly.GetName().Name, triggerName);
             }
         }
         /// <summary>
@@ -84,7 +88,7 @@ namespace Victop.Frame.CmptRuntime
             }
             else
             {
-                MainView.BuiltBrowser.InvokeScript("send_msg", "oav_insert", O, A,V);
+                MainView.BuiltBrowser.InvokeScript("send_msg", "oav_insert", O, A, V);
             }
         }
         /// <summary>
@@ -94,7 +98,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="V">v值</param>
         public void UpdateFact(object OAV, object V)
         {
-            MainView.BuiltBrowser.InvokeScript("send_msg", "oav_modify", OAV,V);
+            MainView.BuiltBrowser.InvokeScript("send_msg", "oav_modify", OAV, V);
         }
         /// <summary>
         /// 提交事实
