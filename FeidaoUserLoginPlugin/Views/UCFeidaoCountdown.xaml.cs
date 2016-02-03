@@ -80,13 +80,6 @@ namespace FeidaoUserLoginPlugin.Views
                 isGo = true;
             }
         }
-       void  BeginAnimation()
-         {
-             look3DStoryboard.Begin();
-         }
-       void BeginOppositeAnimation()
-       {
-           lookOpposite3DStoryboard.Begin();
-       }
+     
     }
 }
