@@ -7,8 +7,22 @@
              xmlns:ctrl="http://schemas.ifeidao.com/wpfcontrol"
              xmlns:tc="clr-namespace:Victop.Frame.CmptRuntime;assembly=Victop.Frame.CmptRuntime"
              mc:Ignorable="d" 
-             d:DesignHeight="56" d:DesignWidth="234" FontSize="28" Foreground="White" MouseDown="TemplateControl_MouseDown">
-    <Grid><!--MouseLeave="TemplateControl_MouseLeave"-->
+             d:DesignHeight="56" d:DesignWidth="234" FontSize="28" Foreground="White" MouseDown="UCFeidaoCountdown_OnMouseDown">
+    <tc:TemplateControl.Resources>
+        <Storyboard x:Key="begin3DStoryboard">
+            <DoubleAnimation Storyboard.TargetName="axr" Storyboard.TargetProperty="Angle" Duration="0:0:2" From="0" To="180" ></DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="beginOpposite3DStoryboard">
+            <DoubleAnimation Storyboard.TargetName="axr" Storyboard.TargetProperty="Angle" Duration="0:0:2" From="180" To="360" ></DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="begin3D1Storyboard">
+            <DoubleAnimation Storyboard.TargetName="axr" Storyboard.TargetProperty="Angle" Duration="0:0:2" From="0" To="180" ></DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="beginOpposite3D1Storyboard">
+            <DoubleAnimation Storyboard.TargetName="axr" Storyboard.TargetProperty="Angle" Duration="0:0:2"  From ="180" To="360" ></DoubleAnimation>
+        </Storyboard>
+    </tc:TemplateControl.Resources>
+     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
