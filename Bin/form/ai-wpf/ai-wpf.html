@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="IE=7,9,10" >
+		<title>test</title>
+		<script type="text/javascript" src='./ai.js'></script>
+		<script type="text/javascript" src='./nools.min.js'></script>
+		<!-- <script type="text/javascript">
+			var dojoConfig = {
+				baseUrl: '../js-src',
+				packages:[{
+					name: 'feidao-web',
+					location: 'src'
+				},{
+					name: 'feidao-core',
+					location: 'feidao-core/dist-amd'
+				},{
+					name: 'state-machine',
+					location: 'javascript-state-machine',
+					main: 'state-machine'
+				},{
+					name: 'nools',
+					location: 'nools',
+					main: 'nools.min',
+				},{
+					name: 'dojo',
+					location: 'dojo-release-1.10.4-src/dojo'
+				}],
+				deps: ['feidao-web/ai-wpf']
+			};
+		</script> -->
+		<script type="text/javascript">
+			var dojoConfig = {
+				baseUrl: './',
+				packages:[{
+					name: 'feidao-web',
+					location: 'feidao-web'
+				},{
+					name: 'state-machine',
+					location: 'state-machine',
+					main: 'state-machine'
+				},{
+					name: 'nools',
+					location: 'nools',
+					main: '../nools.min'
+				}],
+				deps: ['feidao-web/ai-wpf']
+			};
+		</script>
+		<script type="text/javascript" src='./feidao.js'></script>
+		<!-- <script type="text/javascript" src='../js/feidao-web/feidao.js.uncompressed.js'></script> -->
+		<!-- <script type="text/javascript" src='../js-src/dojo-release-1.10.4-src/dojo/dojo.js'></script> -->
+		<script type="text/javascript">
+			// function test(){
+			// 	require(['dojo/ready'], function(ready){
+			// 		ready(function() {
+			// 			// var scope = send_msg('init', null, 'rule "r1" {salience: 1;agenda-group: "beforeinit";when{a:Object;} then{feidao.SysConsole("lalala");console.log("lalala");}} rule "r2" {salience: 1;agenda-group: "afterinit";when{a:Object;} then{console.log("blablabla");feidao.js_method("abc", 123)}}', '{"events": {"beforeinit": ["beforeinit"],"afterinit": ["afterinit"]},"transitions": [{"name": "beforeinit","from": "none","to": "init"}, {"name": "afterinit","from": "init","to": "ready"}]}');
+			// 			var scope = send_msg('init', null, 'rule "r1" {salience: 1;agenda-group: "beforeinit";when{a:Array;} then{console.log("132", a);feidao.oav_insert("o", "a"); console.log("lalala");console.log("lalala");}} rule "r2" {salience: 1;agenda-group: "afterinit";when{a:Array;} then{console.log("blablabla");feidao.js_method("abc", 123)}}', '{"events": {"beforeinit": ["beforeinit"],"afterinit": ["afterinit"]},"transitions": [{"name": "beforeinit","from": "none","to": "init"}, {"name": "afterinit","from": "init","to": "ready"}]}');
+			// 			send_msg('fsm', scope, 'beforeinit', 'aaa');
+			// 			// send_msg('fsm', scope, 'afterinit');
+			// 		});
+			// 	});
+			// }
+			// test();
+		</script>
+	</head>
+	<body>
+
+	</body>
+</html>
