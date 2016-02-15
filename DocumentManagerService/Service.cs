@@ -198,7 +198,7 @@ namespace DocumentManagerService
                         }
                         else
                         {
-                            string dropuploadUrl = ConfigurationManager.AppSettings.Get("uploadfilehttp") + "dropupload?productid=" + dropuploadProductId + "&delfile_name=" + deleteFilePath;
+                            string dropuploadUrl = ConfigurationManager.AppSettings.Get("uploadfilehttp") + "delfile?productid=" + dropuploadProductId + "&delfile_name=" + deleteFilePath;
                             if (this.DeleteFile(dropuploadUrl))
                             {
                                 returnDic.Add("ReplyContent", "删除成功");
@@ -413,10 +413,10 @@ namespace DocumentManagerService
                 Dictionary<string, object> dicReturn = JsonHelper.ToObject<Dictionary<string, object>>(html);
                 if (dicReturn != null && dicReturn.Count > 0)
                 {
-                    if (dicReturn.ContainsKey("ErrorReportDL"))
+                    if (dicReturn.ContainsKey("code")) //code(0:失败 1：成功)
                     {
-                        string error = dicReturn["ErrorReportDL"].ToString();
-                        if (error == "[]")
+                        string code = dicReturn["code"].ToString();
+                        if (code == "1")
                         {
                             result = true;
                         }
