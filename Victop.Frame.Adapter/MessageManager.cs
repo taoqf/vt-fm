@@ -100,7 +100,7 @@ namespace Victop.Frame.Adapter
         /// </summary>
         public virtual ReplyMessage SubmitRequest(RequestMessage message)
         {
-            return SubmitRequest(message, 12000);
+            return SubmitRequest(message, 30000);
         }
 
         /// <summary>
