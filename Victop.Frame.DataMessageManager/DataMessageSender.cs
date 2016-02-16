@@ -64,6 +64,7 @@ namespace Victop.Frame.DataMessageManager
                     returnDic = new Dictionary<string, object>();
                     returnDic.Add("ReplyMode", "0");
                     returnDic.Add("ReplyAlertMessage", string.Format("消息类型为:{0}的消息未收到服务端返回信息", messageType));
+                    replyMessageInfo = returnDic;
                 }
             }
             return replyMessageInfo;
