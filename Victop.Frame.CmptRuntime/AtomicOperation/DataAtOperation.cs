@@ -292,10 +292,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="isSaveServer">是否提交服务器</param>
-        public void SavePBlockData(string pBlockName, bool isSaveServer = true)
+        /// <returns>返回保存成功true，失败false</returns>
+        public bool SavePBlockData(string pBlockName, bool isSaveServer = true)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
-            pBlock.SaveData(isSaveServer);
+            return pBlock.SaveData(isSaveServer);
         }
         /// <summary>
         /// 设置block选中行数据
@@ -721,6 +722,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 List<OAVModel> listOAV = new List<OAVModel>();
                 foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
                 {
+                    if (dr.RowState == DataRowState.Deleted) continue;
                     string objectName = blockName + ":" + dr["_id"].ToString();
                     foreach (DataColumn col in pBlock.ViewBlockDataTable.Columns)
                     {

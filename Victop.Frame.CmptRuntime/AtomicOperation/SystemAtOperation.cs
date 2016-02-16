@@ -487,7 +487,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 返回指定名称资源的值
         /// </summary>
         /// <param name="name">资源名称</param>
-        /// <returns>返回资源值</returns>
+        /// <returns>资源值</returns>
         public string GetStringByResourceName(string name)
         {
             if (!string.IsNullOrEmpty(name))
@@ -576,6 +576,19 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (strValue == null || value == null)
                 return false;
             return strValue.ToString().Contains(value);
+        }
+        /// <summary>
+        /// 从当前 System.String 对象移除数组中指定的一组字符的所有尾部匹配项
+        /// </summary>
+        /// <param name="strValue">字符串实例</param>
+        /// <param name="value">一组字符组成的字符串</param>
+        /// <returns>移除后的字符串</returns>
+        public string StrTrimEnd(object strValue, string value)
+        {
+            if (strValue == null || value == null)
+                return "";
+            char[] chararray = value.ToCharArray();
+            return strValue.ToString().TrimEnd(chararray);
         }
         #endregion
 

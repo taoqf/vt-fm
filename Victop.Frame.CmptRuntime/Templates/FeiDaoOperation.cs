@@ -179,9 +179,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="isSaveServer">是否提交服务器</param>
-        public void SavePBlockData(string pBlockName, bool isSaveServer = true)
+        /// <returns>返回保存成功true，失败false</returns>
+        public bool SavePBlockData(string pBlockName, bool isSaveServer = true)
         {
-            dataOperation.SavePBlockData(pBlockName, isSaveServer);
+            return dataOperation.SavePBlockData(pBlockName, isSaveServer);
         }
         /// <summary>
         /// 设置block选中行数据
@@ -708,6 +709,16 @@ namespace Victop.Frame.CmptRuntime
         {
             return systemOperation.StrContains(strValue, value);
         }
+        /// <summary>
+        /// 从当前 System.String 对象移除数组中指定的一组字符的所有尾部匹配项
+        /// </summary>
+        /// <param name="strValue">字符串实例</param>
+        /// <param name="value">一组字符组成的字符串</param>
+        /// <returns>移除后的字符串</returns>
+        public string StrTrimEnd(object strValue, string value)
+        {
+            return systemOperation.StrTrimEnd(strValue, value);
+        }
         #endregion
 
         #region UI操作
@@ -776,13 +787,13 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.ParamsCurrentRowGetFromGridName(gridName, paramName, oav);
         }
         /// <summary>
-        /// 判断VicRadioButtonNormal是否被选中
+        /// 获取元素是否选中
         /// </summary>
-        /// <param name="radioBtnName">VicRadioButtonNormal名称</param>
+        /// <param name="elementName">元素名称</param>
         /// <param name="oav">接收oav</param>
-        public void VicRadioButtonNormalIsChecked(string radioBtnName, OAVModel oav)
+        public void GetElementIsChecked(string elementName, OAVModel oav)
         {
-            uIElementOperation.VicRadioButtonNormalIsChecked(radioBtnName, oav);
+            uIElementOperation.GetElementIsChecked(elementName, oav);
         }
         /// <summary>
         /// 是否有选中项

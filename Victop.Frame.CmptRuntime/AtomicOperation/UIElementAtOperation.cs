@@ -247,16 +247,32 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 判断VicRadioButtonNormal是否被选中
+        /// 获取元素是否选中
         /// </summary>
-        /// <param name="radioBtnName">VicRadioButtonNormal名称</param>
+        /// <param name="elementName">元素名称</param>
         /// <param name="oav">接收oav</param>
-        public void VicRadioButtonNormalIsChecked(string radioBtnName, OAVModel oav)
+        public void GetElementIsChecked(string elementName, OAVModel oav)
         {
-            VicRadioButtonNormal radBtn = MainView.FindName(radioBtnName) as VicRadioButtonNormal;
-            if (radBtn != null)
+            if (!string.IsNullOrEmpty(elementName))
             {
-                oav.AtrributeValue = radBtn.IsChecked;
+                FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
+                if (element != null)
+                {
+                    string typeName = element.GetType().Name;
+                    switch (typeName)
+                    {
+                        case "VicCheckBoxNormal":
+                            VicCheckBoxNormal checkbox = element as VicCheckBoxNormal;
+                            oav.AtrributeValue = checkbox.IsChecked;
+                            break;
+                        case "VicRadioButtonNormal":
+                            VicRadioButtonNormal radiobutton = element as VicRadioButtonNormal;
+                            oav.AtrributeValue = radiobutton.IsChecked;
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
         }
         /// <summary>
