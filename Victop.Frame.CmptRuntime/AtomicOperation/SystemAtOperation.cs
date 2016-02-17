@@ -508,7 +508,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             if (dicList.Count > 0 && dicList[0].ContainsKey("rules_string"))
             {
-                FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate);
+                FileStream fs = new FileStream(filepath, FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
                 sw.Write(dicList[0]["rules_string"]);
                 sw.Flush();
