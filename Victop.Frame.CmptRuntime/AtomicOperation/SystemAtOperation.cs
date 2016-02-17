@@ -484,6 +484,68 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 保存规则文件
+        /// </summary>
+        /// <param name="content">规则内容</param>
+        public string SaveWriteTextToFile(object content)
+        {
+            string filepath = AppDomain.CurrentDomain.BaseDirectory + "\\Stencils\\Rule.drl";
+            List<Dictionary<string, object>> dicList = JsonHelper.ToObject<List<Dictionary<string, object>>>(content.ToString());
+            if (dicList.Count > 0 && dicList[0].ContainsKey("rules_string"))
+            {
+                FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate);
+                StreamWriter sw = new StreamWriter(fs);
+                sw.Write(dicList[0]["rules_string"]);
+                sw.Flush();
+                sw.Close();
+                fs.Close();
+            }
+            return filepath;
+        }
+        /// <summary>
+        /// 上传文件或者替换文件
+        /// </summary>
+        /// <param name="localFilePath">本地文件地址</param>
+        /// <param name="filePath">新的文件路径或者老的文件路径</param>
+        /// <param name="productId">产品ID,默认“feidao”</param>
+        /// <returns>文件路径</returns>
+        public string UpLoadFile(string localFilePath, string filePath, string productId = "feidao")
+        {
+            try
+            {
+                Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                Dictionary<string, string> address = new Dictionary<string, string>();
+                address.Add("UploadFromPath", localFilePath);
+                address.Add("DelFileId", filePath);
+                address.Add("ProductId", productId);
+                messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+                Dictionary<string, object> returnDic = new DataMessageOperation().SendSyncMessage("ServerCenterService.UploadDocument", messageContent);
+                if (returnDic != null && returnDic["ReplyMode"].ToString() != "0")
+                {
+                    Dictionary<string, object> replyContent = JsonHelper.ToObject<Dictionary<string, object>>(returnDic["ReplyContent"].ToString());
+                    filePath = replyContent["fileId"].ToString();
+                    return filePath;
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.InfoFormat("上传文件异常(string UpLoadFile)：{0}", ex.Message);
+                return "";
+            }
+        }
+        /// <summary>
+        /// 获取一个新的guid
+        /// </summary>
+        /// <returns></returns>
+        public string GetNewGuid()
+        {
+            return Guid.NewGuid().ToString();
+        }
+        /// <summary>
         /// 返回指定名称资源的值
         /// </summary>
         /// <param name="name">资源名称</param>
