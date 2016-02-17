@@ -24,22 +24,9 @@ namespace VictopPartner
     /// </summary>
     public partial class App : Application
     {
-        private bool partnerRun = false;
         public App()
         {
-            Process[] processes = Process.GetProcessesByName("VictopPartner");
-            if (processes.Length >= 1&& !ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
-            {
-                partnerRun = true;
-                string appName = ConfigManager.GetAttributeOfNodeByName("System", "AppName");
-                MessageBox.Show(appName + "已在运行中……", "提示", MessageBoxButton.OK, MessageBoxImage.Stop);
-                Thread.Sleep(1000);
-                Environment.Exit(1);
-            }
-            else
-            {
-                DispatcherUnhandledException += App_DispatcherUnhandledException;
-            }
+            DispatcherUnhandledException += App_DispatcherUnhandledException;
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
@@ -65,14 +52,6 @@ namespace VictopPartner
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            if (partnerRun)
-            {
-                return;
-            }
-            #region 启动内置HttpServer
-            VicServerThread = new Thread(new ParameterizedThreadStart(RefreshSessionThreadProc));
-            VicServerThread.Start(this);
-            #endregion
             #region 自动更新
             if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             {
@@ -82,7 +61,22 @@ namespace VictopPartner
                     Process updatePro = Process.Start(ConfigurationManager.AppSettings["updateconfig"] + ".exe", Process.GetCurrentProcess().Id.ToString());
                     updatePro.WaitForExit();
                 }
+                #region 单例判断
+                Process[] processes = Process.GetProcessesByName("VictopPartner");
+                MessageBox.Show(processes.Length.ToString());
+                if (processes.Length > 1)
+                {
+                    string appName = ConfigManager.GetAttributeOfNodeByName("System", "AppName");
+                    MessageBox.Show(appName + "已在运行中……", "提示", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    Thread.Sleep(1000);
+                    Environment.Exit(1);
+                }
+                #endregion
             }
+            #endregion
+            #region 启动内置HttpServer
+            VicServerThread = new Thread(new ParameterizedThreadStart(RefreshSessionThreadProc));
+            VicServerThread.Start(this);
             #endregion
             if (FrameInit.GetInstance().FrameRun())
             {
