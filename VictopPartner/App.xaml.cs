@@ -24,9 +24,22 @@ namespace VictopPartner
     /// </summary>
     public partial class App : Application
     {
+        private bool partnerRun = false;
         public App()
         {
-            DispatcherUnhandledException += App_DispatcherUnhandledException;
+            Process[] processes = Process.GetProcessesByName("VictopPartner");
+            if (processes.Length >= 1)
+            {
+                partnerRun = true;
+                string appName = ConfigManager.GetAttributeOfNodeByName("System", "AppName");
+                MessageBox.Show(appName + "已在运行中……", "提示", MessageBoxButton.OK, MessageBoxImage.Stop);
+                Thread.Sleep(1000);
+                Environment.Exit(1);
+            }
+            else
+            {
+                DispatcherUnhandledException += App_DispatcherUnhandledException;
+            }
         }
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
@@ -52,6 +65,10 @@ namespace VictopPartner
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            if (partnerRun)
+            {
+                return;
+            }
             #region 启动内置HttpServer
             VicServerThread = new Thread(new ParameterizedThreadStart(RefreshSessionThreadProc));
             VicServerThread.Start(this);
