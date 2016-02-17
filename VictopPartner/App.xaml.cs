@@ -28,7 +28,7 @@ namespace VictopPartner
         public App()
         {
             Process[] processes = Process.GetProcessesByName("VictopPartner");
-            if (processes.Length >= 1)
+            if (processes.Length >= 1&& !ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
             {
                 partnerRun = true;
                 string appName = ConfigManager.GetAttributeOfNodeByName("System", "AppName");
