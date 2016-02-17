@@ -219,7 +219,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
         {
-           dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
+            dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
         }
         /// <summary>
         /// 赋值行的列值
@@ -630,6 +630,33 @@ namespace Victop.Frame.CmptRuntime
         public void WriteTextToFile(object content)
         {
             systemOperation.WriteTextToFile(content);
+        }
+        /// <summary>
+        /// 保存规则文件
+        /// </summary>
+        /// <param name="content">规则内容</param>
+        public string SaveWriteTextToFile(object content)
+        {
+            return systemOperation.SaveWriteTextToFile(content);
+        }
+        /// <summary>
+        /// 上传文件或者替换文件
+        /// </summary>
+        /// <param name="localFilePath">本地文件地址</param>
+        /// <param name="filePath">新的文件路径或者老的文件路径</param>
+        /// <param name="productId">产品ID,默认“feidao”</param>
+        /// <returns>文件路径</returns>
+        public string UpLoadFile(string localFilePath, string filePath, string productId = "feidao")
+        {
+            return systemOperation.UpLoadFile(localFilePath, filePath, productId);
+        }
+        /// <summary>
+        /// 获取一个新的guid
+        /// </summary>
+        /// <returns></returns>
+        public string GetNewGuid()
+        {
+            return systemOperation.GetNewGuid();
         }
         /// <summary>
         /// 发送获取编码消息
