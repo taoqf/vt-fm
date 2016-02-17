@@ -175,6 +175,15 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetPBlockCurrentRowByElement(pBlockName, element);
         }
         /// <summary>
+        /// 设置元素选中行
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="name">元素名称</param>
+        public void SetPBlockCurrentRowByName(string pBlockName, string name)
+        {
+            dataOperation.SetPBlockCurrentRowByName(pBlockName, name);
+        }
+        /// <summary>
         /// 提交BlockData的数据
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
