@@ -63,7 +63,6 @@ namespace VictopPartner
                 }
                 #region 单例判断
                 Process[] processes = Process.GetProcessesByName("VictopPartner");
-                MessageBox.Show(processes.Length.ToString());
                 if (processes.Length > 1)
                 {
                     string appName = ConfigManager.GetAttributeOfNodeByName("System", "AppName");
