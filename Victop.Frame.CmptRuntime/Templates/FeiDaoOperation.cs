@@ -877,6 +877,19 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitPageRuleLoad(unitPageName, pblockName, currentPage = 1, pageSize = 20);
         }
+        /// <summary>
+        /// UnitUCWebBrowserRule加载
+        /// </summary>
+        /// <param name="unitWebBrowserName">浏览器控件名</param>
+        /// <param name="content">展示内容</param>
+        /// <param name="pblockName">区块名称用于传入当前行可为空字符串</param>
+        /// <param name="columnName">列名可为空字符串</param>
+        /// <param name="ctrl">控制是否支持提交修改默认true</param>
+        /// <param name="executeJsFunc">接收JS方法名默认ExcuteWPF</param>
+        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF")
+        {
+            uIElementOperation.UnitWebBrowserLoad(unitWebBrowserName, content, pblockName, columnName, ctrl, executeJsFunc);
+        }
         #endregion
 
         #region 错误处理方法
