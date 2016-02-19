@@ -175,6 +175,15 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetPBlockCurrentRowByElement(pBlockName, element);
         }
         /// <summary>
+        /// 设置元素选中行
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="name">元素名称</param>
+        public void SetPBlockCurrentRowByName(string pBlockName, string name)
+        {
+            dataOperation.SetPBlockCurrentRowByName(pBlockName, name);
+        }
+        /// <summary>
         /// 提交BlockData的数据
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
@@ -867,6 +876,19 @@ namespace Victop.Frame.CmptRuntime
         public void UnitPageRuleLoad(string unitPageName, string pblockName, int currentPage = 1, int pageSize = 20)
         {
             uIElementOperation.UnitPageRuleLoad(unitPageName, pblockName, currentPage = 1, pageSize = 20);
+        }
+        /// <summary>
+        /// UnitUCWebBrowserRule加载
+        /// </summary>
+        /// <param name="unitWebBrowserName">浏览器控件名</param>
+        /// <param name="content">展示内容</param>
+        /// <param name="pblockName">区块名称用于传入当前行可为空字符串</param>
+        /// <param name="columnName">列名可为空字符串</param>
+        /// <param name="ctrl">控制是否支持提交修改默认true</param>
+        /// <param name="executeJsFunc">接收JS方法名默认ExcuteWPF</param>
+        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF")
+        {
+            uIElementOperation.UnitWebBrowserLoad(unitWebBrowserName, content, pblockName, columnName, ctrl, executeJsFunc);
         }
         #endregion
 

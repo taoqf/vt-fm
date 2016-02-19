@@ -466,20 +466,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="content">规则内容</param>
         public void WriteTextToFile(object content)
         {
-            List<Dictionary<string, object>> dicList = JsonHelper.ToObject<List<Dictionary<string, object>>>(content.ToString());
-            if (dicList.Count > 0 && dicList[0].ContainsKey("rules_string"))
+            if (content==null)
             {
-                SaveFileDialog saveFile = new SaveFileDialog();
-                saveFile.Filter = "Files (*.drl)|*.drl|All Files (*.*)|*.*";
-                saveFile.FileName = "Rules";
-                if (saveFile.ShowDialog() == true)
+                return;
+            }
+            List<Dictionary<string, object>> dicList = JsonHelper.ToObject<List<Dictionary<string, object>>>(content.ToString());
+            if (dicList!=null)
+            {
+                if (dicList.Count > 0 && dicList[0].ContainsKey("rules_string"))
                 {
-                    FileStream fs = new FileStream(saveFile.FileName, FileMode.Create);
-                    StreamWriter sw = new StreamWriter(fs);
-                    sw.Write(dicList[0]["rules_string"]);
-                    sw.Flush();
-                    sw.Close();
-                    fs.Close();
+                    SaveFileDialog saveFile = new SaveFileDialog();
+                    saveFile.Filter = "Files (*.drl)|*.drl|All Files (*.*)|*.*";
+                    saveFile.FileName = "Rules";
+                    if (saveFile.ShowDialog() == true)
+                    {
+                        FileStream fs = new FileStream(saveFile.FileName, FileMode.Create);
+                        StreamWriter sw = new StreamWriter(fs);
+                        sw.Write(dicList[0]["rules_string"]);
+                        sw.Flush();
+                        sw.Close();
+                        fs.Close();
+                    }
                 }
             }
         }
@@ -489,11 +496,19 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="content">规则内容</param>
         public string SaveWriteTextToFile(object content)
         {
-            string filepath = AppDomain.CurrentDomain.BaseDirectory + "\\Stencils\\Rule.drl";
+            string filepath = AppDomain.CurrentDomain.BaseDirectory + "\\data\\Rule.drl";
+            if (content == null)
+            {
+                return filepath;
+            }
             List<Dictionary<string, object>> dicList = JsonHelper.ToObject<List<Dictionary<string, object>>>(content.ToString());
+            if (dicList == null)
+            {
+                return filepath;
+            }
             if (dicList.Count > 0 && dicList[0].ContainsKey("rules_string"))
             {
-                FileStream fs = new FileStream(filepath, FileMode.OpenOrCreate);
+                FileStream fs = new FileStream(filepath, FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
                 sw.Write(dicList[0]["rules_string"]);
                 sw.Flush();

@@ -412,6 +412,73 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 设置元素选中行
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="name">元素名称</param>
+        public void SetPBlockCurrentRowByName(string pBlockName,string name)
+        {
+            FrameworkElement element = MainView.FindName(name) as FrameworkElement;
+            if (!string.IsNullOrEmpty(pBlockName) && element != null)
+            {
+                PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+                if (pBlock != null)
+                {
+                    string typeName = element.GetType().Name;
+                    switch (typeName)
+                    {
+                        case "VicDataGrid":
+                            VicDataGrid datagrid = element as VicDataGrid;
+                            if (datagrid.SelectedItem == null)
+                            {
+                                pBlock.PreBlockSelectedRow = null;
+                            }
+                            else
+                            {
+                                pBlock.PreBlockSelectedRow = ((DataRowView)datagrid.SelectedItem).Row;
+                            }
+                            break;
+                        case "VicTreeView":
+                            VicTreeView treeview = element as VicTreeView;
+                            if (treeview.SelectedItem == null)
+                            {
+                                pBlock.PreBlockSelectedRow = null;
+                            }
+                            else
+                            {
+                                pBlock.PreBlockSelectedRow = ((DataRowView)treeview.SelectedItem).Row;
+                            }
+                            break;
+                        case "VicListBoxNormal":
+                            VicListBoxNormal listbox = element as VicListBoxNormal;
+                            if (listbox.SelectedItem == null)
+                            {
+                                pBlock.PreBlockSelectedRow = null;
+                            }
+                            else
+                            {
+                                pBlock.PreBlockSelectedRow = ((DataRowView)listbox.SelectedItem).Row;
+                            }
+                            break;
+                        case "VicListViewNormal":
+                            VicListViewNormal listview = element as VicListViewNormal;
+                            if (listview.SelectedItem == null)
+                            {
+                                pBlock.PreBlockSelectedRow = null;
+                            }
+                            else
+                            {
+                                pBlock.PreBlockSelectedRow = ((DataRowView)listview.SelectedItem).Row;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
+                }
+            }
+        }
+        /// <summary>
         /// 获取选中行的列值
         /// </summary>
         /// <param name="pblockName">区块名称</param>

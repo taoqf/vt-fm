@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -414,6 +415,40 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 dicParam.Add("TotalPage", int.Parse(ds.Tables["summary"].Rows[0]["totalPage"].ToString()));
             }
             unitPage.Excute(dicParam);
+        }
+        /// <summary>
+        /// UnitUCWebBrowserRule加载
+        /// </summary>
+        /// <param name="unitWebBrowserName">浏览器控件名</param>
+        /// <param name="content">展示内容</param>
+        /// <param name="pblockName">区块名称用于传入当前行可为空字符串</param>
+        /// <param name="columnName">列名可为空字符串</param>
+        /// <param name="ctrl">控制是否支持提交修改默认true</param>
+        /// <param name="executeJsFunc">接收JS方法名默认ExcuteWPF</param>
+        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF")
+        {
+            TemplateControl unitWebBrowser = MainView.FindName(unitWebBrowserName) as TemplateControl;
+            if (unitWebBrowser == null)
+                return;
+
+            Dictionary<string, object> dicParam = new Dictionary<string, object>();
+            dicParam.Add("ParamContent", content);
+            dicParam.Add("ParamCtrl", ctrl);
+            dicParam.Add("URL", ConfigurationManager.AppSettings["htmleditor"] + "?productid=feidao");
+            dicParam.Add("ExecuteJsFunc", executeJsFunc);
+            if (!string.IsNullOrEmpty(columnName))
+            {
+                dicParam.Add("ColumnName", columnName);
+            }
+            if (!string.IsNullOrEmpty(pblockName))
+            {
+                PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+                if (pBlock != null && pBlock.PreBlockSelectedRow != null)
+                {
+                    dicParam.Add("Dr", pBlock.PreBlockSelectedRow);
+                }
+            }
+            unitWebBrowser.Excute(dicParam);
         }
     }
 }
