@@ -219,7 +219,7 @@ namespace VictopPartner
             }
             catch (System.Exception ex)
             {
-
+                LoggerHelper.ErrorFormat("httpServer Error:{0}", string.IsNullOrEmpty(ex.Message) ? ex.InnerException.Message : ex.Message);
             }
         }
 
