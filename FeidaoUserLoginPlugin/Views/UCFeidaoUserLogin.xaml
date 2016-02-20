@@ -56,7 +56,16 @@
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
                     </Border.BorderBrush>
-                    <Image Width="100" Height="120" Source="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}" Stretch="Uniform"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition  Height="4*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Image  Source="{Binding LoginInfoModel.UserName, Converter={StaticResource imgeNameToBackgroundConverter}}" Stretch="Uniform"/>
+                    </Grid>
+                    
                 </Border>
             </controls:VicGridNormal>
             <controls:VicGridNormal Grid.Row="1">
