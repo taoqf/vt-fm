@@ -68,6 +68,7 @@ namespace Victop.Frame.Connection
                         loginContent.Add("usercode", currentGallery.ClientInfo.UserCode);
                         loginContent.Add("userpw", currentGallery.ClientInfo.UserPwd);
                         loginContent.Add("logintypenew", GetUserLoginForm(currentGallery.ClientInfo.UserCode));
+                        loginContent.Add("roleid", currentGallery.ClientInfo.UserRole);
                         userLoginMsg.MessageContent = JsonHelper.ToJson(loginContent);
                         ReplyMessage loginReplyMessage = UserLoginSubmit(adapter, userLoginMsg);
                         if (loginReplyMessage.ReplyMode != ReplyModeEnum.CAST)
