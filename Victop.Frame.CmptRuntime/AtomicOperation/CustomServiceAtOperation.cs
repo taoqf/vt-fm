@@ -69,11 +69,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 发送服务消息
         /// </summary>
         /// <param name="serviceName">服务名称</param>
-        public void SendServiceMessage(string serviceName)
+        /// <param name="waiteTime">等待时间</param>
+        public void SendServiceMessage(string serviceName, int waiteTime = 60)
         {
             if (!string.IsNullOrEmpty(serviceName) && serviceParamList.ContainsKey(serviceName))
             {
-                Dictionary<string, object> resultDic = messageOp.SendMessage("js_custom_func", serviceParamList[serviceName]);
+                Dictionary<string, object> resultDic = messageOp.SendSyncMessage("js_custom_func", serviceParamList[serviceName], waiteTime);
                 if (resultDic != null)
                 {
                     //已调用过先清除OAV,防止重复添加
@@ -90,7 +91,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         catch (Exception ex)
                         {
                             serviceOAVList[serviceName].Clear();
-                            LoggerHelper.Error("删除服务OAV失败!服务为：" + serviceName +"。错误原因"+ ex.ToString());
+                            LoggerHelper.Error("删除服务OAV失败!服务为：" + serviceName + "。错误原因" + ex.ToString());
                         }
                     }
                     else
@@ -107,7 +108,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     serviceOAVList[serviceName].Add(oavCode);
                     serviceOAVList[serviceName].Add(oavMessage);
                     serviceOAVList[serviceName].Add(oavContent);
-                    
+
                 }
                 serviceParamList.Remove(serviceName);
             }
