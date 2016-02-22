@@ -152,7 +152,7 @@ namespace VictopPartner
             }
             return ret;
         }
-        private static void RefreshSessionThreadProc(System.Object threadArgument)
+        private void RefreshSessionThreadProc(System.Object threadArgument)
         {
             try
             {
@@ -192,7 +192,8 @@ namespace VictopPartner
                             {
                                 Console.WriteLine("AcceptTypes 是空");
                             }
-                            string fileExtendName = ctx.Request.Url.LocalPath.Substring(ctx.Request.Url.LocalPath.LastIndexOf("."));
+                            int fileExtendIndex = ctx.Request.Url.LocalPath.LastIndexOf(".");
+                            string fileExtendName = fileExtendIndex != -1 ? ctx.Request.Url.LocalPath.Substring(ctx.Request.Url.LocalPath.LastIndexOf(".")) : "html";
                             HttpListenerResponse response = ctx.Response;
                             if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + ctx.Request.Url.LocalPath))
                             {
@@ -220,6 +221,7 @@ namespace VictopPartner
             catch (System.Exception ex)
             {
                 LoggerHelper.ErrorFormat("httpServer Error:{0}", string.IsNullOrEmpty(ex.Message) ? ex.InnerException.Message : ex.Message);
+                //VicServerThread.Start(this);
             }
         }
 
