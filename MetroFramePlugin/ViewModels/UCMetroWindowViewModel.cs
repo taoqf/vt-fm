@@ -873,7 +873,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    MessageBoxResult result = VicMessageBoxNormal.Show("确定要注销么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
+                    MessageBoxResult result = VicMessageBoxNormal.Show("是否确认注销？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
                     if (result == MessageBoxResult.Yes)
                     {
                         DataMessageOperation dataMsgOp = new DataMessageOperation();

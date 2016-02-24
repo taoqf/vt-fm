@@ -2,6 +2,7 @@
 using ModifyPassWordPlugin.Views;
 using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -17,6 +18,7 @@ namespace ModifyPassWordPlugin.ViewModels
     {
         #region 字段
         private UCModifyPassWord mainView;
+        private Window ModifyPwdWindow;
         private ModifyPassWordModel pwdModel;
         private PasswordBox pwdOldUser;
         private PasswordBox pwdNewUser;
@@ -126,6 +128,18 @@ namespace ModifyPassWordPlugin.ViewModels
                             {
                                 PwdModel.AffirmIsEnabled = true;
                                 VicMessageBoxNormal.Show(dic["msg"].ToString());
+                                FrameworkElement ct = (FrameworkElement)mainView.Parent;
+                                while (true)
+                                {
+                                    if (ct is Window)
+                                    {
+                                        ModifyPwdWindow = (Window)ct;
+                                        break;
+                                    }
+                                    ct = (FrameworkElement)ct.Parent;
+                                }
+                                ModifyPwdWindow.Close();
+
                             }
                         }
                         else
