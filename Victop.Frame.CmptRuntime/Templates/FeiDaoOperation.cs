@@ -105,10 +105,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="paramField">参数字段</param>
-        /// <param name="oav">事实</param>
-        public void SetConditionSearchIn(string pBlockName, string paramField, OAVModel oav)
+        /// <param name="listIn">子查询集合</param>
+        public void SetConditionSearchIn(string pBlockName, string paramField, object listIn)
         {
-            dataOperation.SetConditionSearchIn(pBlockName, paramField, oav);
+            dataOperation.SetConditionSearchIn(pBlockName, paramField, listIn);
         }
         /// <summary>
         /// 设置区块查询条件
@@ -478,6 +478,23 @@ namespace Victop.Frame.CmptRuntime
         public void ParamsCompntGet(string paramName, OAVModel oav)
         {
             systemOperation.ParamsCompntGet(paramName, oav);
+        }
+        /// <summary>
+        /// 获取List集合
+        /// </summary>
+        /// <returns>List集合</returns>
+        public List<object> GetList()
+        {
+            return systemOperation.GetList();
+        }
+        /// <summary>
+        /// 将对象加入List集合结尾处
+        /// </summary>
+        /// <param name="value">集合中的项</param>
+        /// <param name="paramList">List集合</param>
+        public void ListAdd(object value, object paramList)
+        {
+            systemOperation.ListAdd(value, paramList);
         }
         /// <summary>
         /// 获取Dictionary中参数值

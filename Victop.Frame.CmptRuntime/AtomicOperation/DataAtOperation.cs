@@ -113,12 +113,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="paramField">参数字段</param>
-        /// <param name="oav">事实</param>
-        public void SetConditionSearchIn(string pBlockName, string paramField, OAVModel oav)
+        /// <param name="listIn">子查询集合</param>
+        public void SetConditionSearchIn(string pBlockName, string paramField, object listIn)
         {
-            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && oav != null)
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && listIn != null)
             {
-                List<object> list = oav.AtrributeValue as List<object>;
+                List<object> list = listIn as List<object>;
                 if (list != null)
                 {
                     Dictionary<string, object> inDic = new Dictionary<string, object>();

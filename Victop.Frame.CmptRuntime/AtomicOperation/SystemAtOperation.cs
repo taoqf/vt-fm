@@ -172,6 +172,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 获取List集合
+        /// </summary>
+        /// <returns>List集合</returns>
+        public List<object> GetList()
+        {
+            return new List<object>();
+        }
+        /// <summary>
+        /// 将对象加入List集合结尾处
+        /// </summary>
+        /// <param name="value">集合中的项</param>
+        /// <param name="paramList">List集合</param>
+        public void ListAdd(object value, object paramList)
+        {
+            List<object> list = (List<object>)paramList;
+            if (list != null)
+            {
+                list.Add(value);
+            }
+        }
+        /// <summary>
         /// 获取Dictionary中参数值
         /// </summary>
         /// <param name="oavDic">存储dic类型的oav</param>
