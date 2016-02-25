@@ -206,6 +206,15 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="oav">接收OAV</param>
+        public void PBlockAddRow(string pBlockName, object oav)
+        {
+            dataOperation.PBlockAddRow(pBlockName, oav);
+        }
+        /// <summary>
+        /// 新增行
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="oav">接收OAV</param>
         public void PBlockAddRow(string pBlockName, OAVModel oav = null)
         {
             dataOperation.PBlockAddRow(pBlockName, oav);
@@ -413,14 +422,35 @@ namespace Victop.Frame.CmptRuntime
         /// 插入事实
         /// </summary>
         /// <param name="oav"></param>
+        [Obsolete("使用三个参数的方法")]
+        [ComVisible(false)]
         public void InsertFact(OAVModel oav)
         {
             systemOperation.InsertFact(oav);
         }
         /// <summary>
+        /// 插入事实
+        /// </summary>
+        /// <param name="o">o</param>
+        /// <param name="a">a</param>
+        /// <param name="v">v</param>
+        public void InsertFact(string o, string a, object v = null)
+        {
+            systemOperation.InsertFact(o, a, v);
+        }
+        /// <summary>
         /// 移除事实
         /// </summary>
         /// <param name="oav"></param>
+        public void RemoveFact(object oav)
+        {
+            systemOperation.RemoveFact(oav);
+        }
+        /// <summary>
+        /// 移除事实
+        /// </summary>
+        /// <param name="oav"></param>
+        [ComVisible(false)]
         public void RemoveFact(OAVModel oav)
         {
             systemOperation.RemoveFact(oav);
@@ -428,7 +458,17 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 修改事实
         /// </summary>
+        /// <param name="oav">oav事实</param>
+        /// <param name="v">v</param>
+        public void UpdateFact(object oav, object v)
+        {
+            systemOperation.UpdateFact(oav, v);
+        }
+        /// <summary>
+        /// 修改事实
+        /// </summary>
         /// <param name="oav"></param>
+        [ComVisible(false)]
         public void UpdateFact(OAVModel oav)
         {
             systemOperation.UpdateFact(oav);
@@ -460,6 +500,16 @@ namespace Victop.Frame.CmptRuntime
         public void ExcuteComponentTrigger(string compntName, string compntTrigger, object paramInfo)
         {
             systemOperation.ExcuteComponentTrigger(compntName, compntTrigger, paramInfo);
+        }
+        /// <summary>
+        /// 获取页面参数值
+        /// </summary>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">oav载体</param>
+        public void ParamsPageGet(string paramName, object oav)
+        {
+            dynamic o1 = oav;
+            o1.v = "nnn";
         }
         /// <summary>
         /// 获取页面参数值

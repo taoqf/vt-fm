@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -315,6 +316,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="oav">接收OAV</param>
+        public void PBlockAddRow(string pBlockName, object oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
+            {
+                DataRow dr = pBlock.ViewBlockDataTable.NewRow();
+                dr["_id"] = Guid.NewGuid().ToString();
+                pBlock.ViewBlockDataTable.Rows.Add(dr);
+                if (oav != null)
+                {
+                    dynamic o = oav;
+                    o.v = dr["_id"];  
+                }  
+            }
+        }
+        /// <summary>
+        /// 新增行
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="oav">接收OAV</param>
+        [ComVisible(false)]
         public void PBlockAddRow(string pBlockName, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
@@ -333,6 +356,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="blockName">区块名称</param>
         /// <param name="position">插入位置</param>
         /// <param name="oav">接收oav</param>
+        public void BlockInsertRow(string blockName, int position, object oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
+            {
+                DataRow dr = pBlock.ViewBlockDataTable.NewRow();
+                dr["_id"] = Guid.NewGuid().ToString();
+                pBlock.ViewBlockDataTable.Rows.InsertAt(dr, position);
+                if (oav != null)
+                {
+                    dynamic o = oav;
+                    o.v = dr["_id"];
+                }  
+            }
+        }
+        /// <summary>
+        /// 插入行
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        /// <param name="position">插入位置</param>
+        /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void BlockInsertRow(string blockName, int position, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
@@ -575,6 +620,33 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="oav">接收oav</param>
+        public void GetMaxNumber(string pblockName, string fieldName, object oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
+            {
+                if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+                {
+                    int item_number = 0;
+                    dynamic o = oav;
+                    if (Int32.TryParse(pBlock.ViewBlockDataTable.Compute("max(" + fieldName + ")", string.Empty).ToString(), out item_number))
+                    {
+                        o.v = item_number + 1;
+                    }
+                    else
+                    {
+                        o.v = 1;
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 获取最大序号加1
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void GetMaxNumber(string pblockName, string fieldName, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);

@@ -58,12 +58,40 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             MainView.FeiDaoFSM.InsertFact(oav);
         }
         /// <summary>
+        /// 插入事实
+        /// </summary>
+        /// <param name="o">o</param>
+        /// <param name="a">a</param>
+        /// <param name="v">v</param>
+        public void InsertFact(string o, string a, object v=null)
+        {
+            MainView.FeiDaoMachine.InsertFact(o, a, v);
+        }
+        /// <summary>
+        /// 移除事实
+        /// </summary>
+        /// <param name="oav"></param>
+        public void RemoveFact(object oav)
+        {
+            MainView.FeiDaoMachine.RemoveFact(oav);
+        }
+        /// <summary>
         /// 移除事实
         /// </summary>
         /// <param name="oav">oav事实</param>
         public void RemoveFact(OAVModel oav)
         {
             MainView.FeiDaoFSM.RemoveFact(oav);
+        }
+        /// <summary>
+        /// 修改事实
+        /// </summary>
+        /// <param name="oav">oav事实</param>
+        /// <param name="v">v</param>
+        public void UpdateFact(object oav,object v)
+        {
+            if (oav != null)
+                MainView.FeiDaoMachine.UpdateFact(oav, v);
         }
         /// <summary>
         /// 修改事实
