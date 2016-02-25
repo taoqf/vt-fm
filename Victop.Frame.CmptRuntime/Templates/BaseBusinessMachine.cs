@@ -109,6 +109,14 @@ namespace Victop.Frame.CmptRuntime
             MainView.BuiltBrowser.InvokeScript("send_msg", "oav_validate", OAV);
         }
         /// <summary>
+        /// 移除事实
+        /// </summary>
+        /// <param name="OAV">事实实例</param>
+        public void RemoveFact(object OAV)
+        {
+            MainView.BuiltBrowser.InvokeScript("send_msg", "oav_remove", OAV);
+        }
+        /// <summary>
         /// 清空事实空间
         /// </summary>
         public void ClearFact()
