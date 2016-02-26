@@ -289,6 +289,20 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             pBlock.GetData();
         }
         /// <summary>
+        /// 获取BlockData行数
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        public int GetPBlockDataRowCount(string pBlockName)
+        {
+            int rowcount = 0;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable!= null)
+            {
+                rowcount = pBlock.ViewBlockDataTable.Rows.Count;
+            }
+            return rowcount;
+        }
+        /// <summary>
         /// 提交BlockData的数据
         /// </summary>
         /// <param name="pBlockName">区块名称</param>

@@ -166,6 +166,14 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.GetPBlockData(pBlockName);
         }
         /// <summary>
+        /// 获取BlockData行数
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        public int GetPBlockDataRowCount(string pBlockName)
+        {
+            return dataOperation.GetPBlockDataRowCount(pBlockName);
+        }
+        /// <summary>
         /// 设置元素选中行
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
