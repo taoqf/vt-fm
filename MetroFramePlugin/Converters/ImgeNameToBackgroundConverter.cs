@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-
+using System.IO;
 namespace MetroFramePlugin.Converters
 {
     /// <summary>
@@ -23,11 +23,10 @@ namespace MetroFramePlugin.Converters
                 {
                     return Application.Current.Resources["Logo"] as ImageBrush;
                 }
-
-                ImageBrush image = new ImageBrush();
-                image.Stretch = Stretch.UniformToFill;
-                image.ImageSource = new BitmapImage(new Uri(value.ToString()));
-                return image;
+                    ImageBrush image = new ImageBrush();
+                    image.Stretch = Stretch.UniformToFill;
+                    image.ImageSource = new BitmapImage(new Uri(value.ToString()));
+                    return image;
             }
             catch
             {
