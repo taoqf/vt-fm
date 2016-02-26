@@ -1418,7 +1418,7 @@ namespace MetroFramePlugin.ViewModels
             IPlugin PluginInstance = pluginModel.PluginInterface;
             Window loginWin = PluginInstance.StartWindow;
             loginWin.Uid = pluginModel.ObjectId;
-            loginWin.Owner = mainWindow;
+            loginWin.Owner = mainWindow; 
             UserInfo.OldUserCode = UserInfo.UserCode;
             UserInfo.OldRole = UserInfo.UserRole;
             bool? result = loginWin.ShowDialog();
@@ -1432,8 +1432,16 @@ namespace MetroFramePlugin.ViewModels
                 UserInfo.UserName = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserName");
                 UserInfo.UserRole = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "CurrentRole");
                 UserInfo.UserCode = JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode");
-                UserInfo.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
+                if (UserInfo.UserRole != string.Empty || UserInfo.UserCode != string.Empty)
+                {
+                    UserInfo.UserImg = this.DownLoadUserImg(JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserCode"), JsonHelper.ReadJsonString(userDic["ReplyContent"].ToString(), "UserImg"));
+                }
+                else
+                {
+                    UserInfo.UserImg = "";
+                }
             }
+         
             IsShowMenu = Visibility.Visible;
             LoadStandardMenu();
         }
@@ -1446,7 +1454,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 Directory.CreateDirectory(dir);
             }
-
+             
             path = dir + userCode + ".jpg";
             if (File.Exists(path))
             {
