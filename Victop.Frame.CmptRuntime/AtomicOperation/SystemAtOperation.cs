@@ -63,7 +63,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="o">o</param>
         /// <param name="a">a</param>
         /// <param name="v">v</param>
-        public void InsertFact(string o, string a, object v=null)
+        public void InsertFact(string o, string a, object v = null)
         {
             MainView.FeiDaoMachine.InsertFact(o, a, v);
         }
@@ -88,7 +88,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="oav">oav事实</param>
         /// <param name="v">v</param>
-        public void UpdateFact(object oav,object v)
+        public void UpdateFact(object oav, object v)
         {
             if (oav != null)
                 MainView.FeiDaoMachine.UpdateFact(oav, v);
@@ -499,7 +499,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             win.SetResourceReference(VicWindowNormal.StyleProperty, "WindowMessageSkin");
             win.Height = height;
             win.Width = width;
-            win.Title = ucCom.Tag.ToString();
+            win.Title = ucCom.Tag == null ? "" : ucCom.Tag.ToString();
             win.Content = ucCom;
             win.Show();
         }
@@ -661,12 +661,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="content">规则内容</param>
         public void WriteTextToFile(object content)
         {
-            if (content==null)
+            if (content == null)
             {
                 return;
             }
             List<Dictionary<string, object>> dicList = JsonHelper.ToObject<List<Dictionary<string, object>>>(content.ToString());
-            if (dicList!=null)
+            if (dicList != null)
             {
                 if (dicList.Count > 0 && dicList[0].ContainsKey("rules_string"))
                 {
