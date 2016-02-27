@@ -223,6 +223,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="oav">接收OAV</param>
+        [ComVisible(false)]
         public void PBlockAddRow(string pBlockName, OAVModel oav = null)
         {
             dataOperation.PBlockAddRow(pBlockName, oav);
@@ -233,6 +234,17 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="blockName">区块名称</param>
         /// <param name="position">插入位置</param>
         /// <param name="oav">接收oav</param>
+        public void BlockInsertRow(string blockName, int position, object oav)
+        {
+            dataOperation.BlockInsertRow(blockName, position, oav);
+        }
+        /// <summary>
+        /// 插入行
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        /// <param name="position">插入位置</param>
+        /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void blockInsertRow(string blockName, int position, OAVModel oav = null)
         {
             dataOperation.BlockInsertRow(blockName, position, oav);
@@ -243,7 +255,18 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">区块名称</param>
         /// <param name="paramName">字段名</param>
         /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
+        {
+            dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
+        }
+        /// <summary>
+        /// 获取选中行的列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowGet(string pblockName, string paramName, object oav)
         {
             dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
         }
@@ -264,6 +287,17 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">区块名称</param>
         /// <param name="paramName">字段名</param>
         /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowUpGet(string pblockName, string paramName, object oav)
+        {
+            dataOperation.ParamsCurrentRowUpGet(pblockName, paramName, oav);
+        }
+        /// <summary>
+        /// 获取选中行的上一行列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void ParamsCurrentRowUpGet(string pblockName, string paramName, OAVModel oav)
         {
             dataOperation.ParamsCurrentRowUpGet(pblockName, paramName, oav);
@@ -274,6 +308,17 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">区块名称</param>
         /// <param name="paramName">字段名</param>
         /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowDownGet(string pblockName, string paramName, object oav)
+        {
+            dataOperation.ParamsCurrentRowDownGet(pblockName, paramName, oav);
+        }
+        /// <summary>
+        /// 获取选中行的下一行列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void ParamsCurrentRowDownGet(string pblockName, string paramName, OAVModel oav)
         {
             dataOperation.ParamsCurrentRowDownGet(pblockName, paramName, oav);
@@ -295,6 +340,17 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="oav">接收oav</param>
+        public void GetMaxNumber(string pblockName, string fieldName, object oav)
+        {
+            dataOperation.GetMaxNumber(pblockName, fieldName, oav);
+        }
+        /// <summary>
+        /// 获取最大序号加1
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void GetMaxNumber(string pblockName, string fieldName, OAVModel oav)
         {
             dataOperation.GetMaxNumber(pblockName, fieldName, oav);
@@ -516,14 +572,14 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">oav载体</param>
         public void ParamsPageGet(string paramName, object oav)
         {
-            dynamic o1 = oav;
-            o1.v = "nnn";
+            systemOperation.ParamsPageGet(paramName, oav);
         }
         /// <summary>
         /// 获取页面参数值
         /// </summary>
         /// <param name="paramName">参数名</param>
         /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void ParamsPageGet(string paramName, OAVModel oav)
         {
             systemOperation.ParamsPageGet(paramName, oav);
@@ -533,6 +589,16 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="paramName">参数名</param>
         /// <param name="oav">oav载体</param>
+        public void ParamsCompntGet(string paramName, object oav)
+        {
+            systemOperation.ParamsCompntGet(paramName, oav);
+        }
+        /// <summary>
+        /// 获取组件参数值
+        /// </summary>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">oav载体</param>
+        [ComVisible(false)]
         public void ParamsCompntGet(string paramName, OAVModel oav)
         {
             systemOperation.ParamsCompntGet(paramName, oav);
@@ -560,6 +626,17 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oavDic">存储dic类型的oav</param>
         /// <param name="paramName">参数名</param>
         /// <param name="oav">接收oav</param>
+        public void ParamsGetByDictionary(object oavDic, string paramName, object oav)
+        {
+            systemOperation.ParamsGetByDictionary(oavDic, paramName, oav);
+        }
+        /// <summary>
+        /// 获取Dictionary中参数值
+        /// </summary>
+        /// <param name="oavDic">存储dic类型的oav</param>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void ParamsGetByDictionary(OAVModel oavDic, string paramName, OAVModel oav)
         {
             systemOperation.ParamsGetByDictionary(oavDic, paramName, oav);
@@ -578,6 +655,16 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="oavCom">组件参数</param>
         /// <param name="oavPage">页面接收参数</param>
+        public void ParamsInterCompntAdd(object oavCom, object oavPage)
+        {
+            systemOperation.ParamsInterCompntAdd(oavCom, oavPage);
+        }
+        /// <summary>
+        /// 组件参数封装
+        /// </summary>
+        /// <param name="oavCom">组件参数</param>
+        /// <param name="oavPage">页面接收参数</param>
+        [ComVisible(false)]
         public void ParamsInterCompntAdd(OAVModel oavCom, OAVModel oavPage)
         {
             systemOperation.ParamsInterCompntAdd(oavCom, oavPage);
@@ -588,6 +675,17 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="se">状态信息</param>
         /// <param name="paramName">参数名</param>
         /// <param name="oav">接收oav</param>
+        public void ParamsInterCompntParse(StateTransitionModel se, string paramName, object oav)
+        {
+            systemOperation.ParamsInterCompntParse(se, paramName, oav);
+        }
+        /// <summary>
+        /// 组件取参数
+        /// </summary>
+        /// <param name="se">状态信息</param>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void ParamsInterCompntParse(StateTransitionModel se, string paramName, OAVModel oav)
         {
             systemOperation.ParamsInterCompntParse(se, paramName, oav);
@@ -651,6 +749,17 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="messageInfo">提示信息</param>
         /// <param name="caption">标题</param>
         /// <param name="oav">接收oav</param>
+        public void ShowMessageResult(object messageInfo, object caption, object oav)
+        {
+            systemOperation.ShowMessageResult(messageInfo, caption, oav);
+        }
+        /// <summary>
+        /// 弹出提示询问
+        /// </summary>
+        /// <param name="messageInfo">提示信息</param>
+        /// <param name="caption">标题</param>
+        /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void ShowMessageResult(object messageInfo, object caption, OAVModel oav)
         {
             systemOperation.ShowMessageResult(messageInfo, caption, oav);
@@ -668,6 +777,16 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="paramValue">参数值</param>
         /// <param name="oav">接收oav</param>
+        public void SetParamValue(object paramValue, object oav)
+        {
+            systemOperation.SetParamValue(paramValue, oav);
+        }
+        /// <summary>
+        /// 赋值
+        /// </summary>
+        /// <param name="paramValue">参数值</param>
+        /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void SetParamValue(object paramValue, OAVModel oav)
         {
             systemOperation.SetParamValue(paramValue, oav);
@@ -687,6 +806,17 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="se">状体转移实体</param>
         /// <param name="oav">oav警戒值</param>
         /// <param name="oavmsg">oav消息内容</param>
+        public void SetActionGuard(StateTransitionModel se, object oav, object oavmsg)
+        {
+            systemOperation.SetActionGuard(se, oav, oavmsg);
+        }
+        /// <summary>
+        /// 设置警戒条件
+        /// </summary>
+        /// <param name="se">状体转移实体</param>
+        /// <param name="oav">oav警戒值</param>
+        /// <param name="oavmsg">oav消息内容</param>
+        [ComVisible(false)]
         public void SetActionGuard(StateTransitionModel se, OAVModel oav, OAVModel oavmsg)
         {
             systemOperation.SetActionGuard(se, oav, oavmsg);
@@ -847,7 +977,17 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="elementName">元素名称</param>
         /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void GetElementContent(string elementName, OAVModel oav)
+        {
+            uIElementOperation.GetElementContent(elementName, oav);
+        }
+        /// <summary>
+        /// 获取元素内容
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="oav">接收oav</param>
+        public void GetElementContent(string elementName, object oav)
         {
             uIElementOperation.GetElementContent(elementName, oav);
         }
@@ -865,7 +1005,17 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="element">界面元素</param>
         /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void GetElementName(FrameworkElement element, OAVModel oav)
+        {
+            uIElementOperation.GetElementName(element, oav);
+        }
+        /// <summary>
+        /// 获取界面元素名称
+        /// </summary>
+        /// <param name="element">界面元素</param>
+        /// <param name="oav">接收oav</param>
+        public void GetElementName(FrameworkElement element, object oav)
         {
             uIElementOperation.GetElementName(element, oav);
         }
@@ -893,6 +1043,17 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="gridName">grid名称</param>
         /// <param name="paramName">字段名</param>
         /// <param name="oav">返回OAV值</param>
+        public void ParamsCurrentRowGetFromGridName(string gridName, string paramName, object oav)
+        {
+            uIElementOperation.ParamsCurrentRowGetFromGridName(gridName, paramName, oav);
+        }
+        /// <summary>
+        /// 根据DataGrid名称获取当前选择行中某一字段的值
+        /// </summary>
+        /// <param name="gridName">grid名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">返回OAV值</param>
+        [ComVisible(false)]
         public void ParamsCurrentRowGetFromGridName(string gridName, string paramName, OAVModel oav)
         {
             uIElementOperation.ParamsCurrentRowGetFromGridName(gridName, paramName, oav);
@@ -902,6 +1063,16 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="elementName">元素名称</param>
         /// <param name="oav">接收oav</param>
+        public void GetElementIsChecked(string elementName, object oav)
+        {
+            uIElementOperation.GetElementIsChecked(elementName, oav);
+        }
+        /// <summary>
+        /// 获取元素是否选中
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="oav">接收oav</param>
+        [ComVisible(false)]
         public void GetElementIsChecked(string elementName, OAVModel oav)
         {
             uIElementOperation.GetElementIsChecked(elementName, oav);
@@ -909,12 +1080,23 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 是否有选中项
         /// </summary>
-        /// <param name="dgridName">控件名</param>
+        /// <param name="itemsControlName">控件名</param>
         /// <param name="oav">接收oav</param>
         /// <param name="oavmsg">消息oav</param>
-        public void VicDataGridIsSelectItem(string dgridName, OAVModel oav, OAVModel oavmsg = null)
+        public void VicDataGridIsSelectItem(string itemsControlName, object oav, object oavmsg = null)
         {
-            uIElementOperation.VicDataGridIsSelectItem(dgridName, oav, oavmsg);
+            uIElementOperation.VicDataGridIsSelectItem(itemsControlName, oav, oavmsg);
+        }
+        /// <summary>
+        /// 是否有选中项
+        /// </summary>
+        /// <param name="itemsControlName">控件名</param>
+        /// <param name="oav">接收oav</param>
+        /// <param name="oavmsg">消息oav</param>
+        [ComVisible(false)]
+        public void VicDataGridIsSelectItem(string itemsControlName, OAVModel oav, OAVModel oavmsg = null)
+        {
+            uIElementOperation.VicDataGridIsSelectItem(itemsControlName, oav, oavmsg);
         }
         /// <summary>
         /// 更新列

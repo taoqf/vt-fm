@@ -351,7 +351,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="oav">接收OAV</param>
-        [ComVisible(false)]
         public void PBlockAddRow(string pBlockName, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
@@ -391,7 +390,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="blockName">区块名称</param>
         /// <param name="position">插入位置</param>
         /// <param name="oav">接收oav</param>
-        [ComVisible(false)]
         public void BlockInsertRow(string blockName, int position, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
@@ -543,12 +541,56 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockName">区块名称</param>
         /// <param name="paramName">字段名</param>
         /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowGet(string pblockName, string paramName, object oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
+            {
+                dynamic o = oav;
+                o.v = pBlock.PreBlockSelectedRow[paramName];
+            }
+        }
+        /// <summary>
+        /// 获取选中行的列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
         public void ParamsCurrentRowGet(string pblockName, string paramName, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             if (pBlock.PreBlockSelectedRow != null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
             {
                 oav.AtrributeValue = pBlock.PreBlockSelectedRow[paramName];
+            }
+        }
+        /// <summary>
+        /// 获取选中行的上一行列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowUpGet(string pblockName, string fieldName, object oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.PreBlockSelectedRow != null && !string.IsNullOrEmpty(fieldName) && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+            {
+                if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+                {
+                    int index = 1;
+                    if (Int32.TryParse(pBlock.PreBlockSelectedRow[fieldName].ToString(), out index))
+                    {
+                        dynamic o = oav;
+                        if (index > 1)
+                        {
+                            o.v = index - 1;
+                        }
+                        else if (index == 1)
+                        {
+                            o.v = index;
+                        }
+                    }
+                }
             }
         }
         /// <summary>
@@ -574,6 +616,35 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         else if (index == 1)
                         {
                             oav.AtrributeValue = index;
+                        }
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 获取选中行的下一行列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsCurrentRowDownGet(string pblockName, string fieldName, object oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.PreBlockSelectedRow != null && !string.IsNullOrEmpty(fieldName) && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+            {
+                if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+                {
+                    int index = 1;
+                    if (Int32.TryParse(pBlock.PreBlockSelectedRow[fieldName].ToString(), out index))
+                    {
+                        dynamic o = oav;
+                        if (index < pBlock.ViewBlockDataTable.Rows.Count)
+                        {
+                            o.v = index + 1;
+                        }
+                        else if (index == pBlock.ViewBlockDataTable.Rows.Count)
+                        {
+                            o.v = index;
                         }
                     }
                 }
@@ -660,7 +731,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="oav">接收oav</param>
-        [ComVisible(false)]
         public void GetMaxNumber(string pblockName, string fieldName, OAVModel oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);

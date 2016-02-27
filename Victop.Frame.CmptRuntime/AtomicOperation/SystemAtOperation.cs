@@ -124,6 +124,25 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="se">状体转移实体</param>
         /// <param name="oav">oav警戒值</param>
         /// <param name="oavmsg">oav消息内容</param>
+        public void SetActionGuard(StateTransitionModel se, object oav, object oavmsg)
+        {
+            dynamic o1 = oav;
+            dynamic o2 = oavmsg;
+            if (o1.v != null && (bool)o1.v)
+                se.ActionGuard = true;
+            else
+            {
+                string msg = o2.v != null ? o2.v.ToString() : "条件不满足！";
+                VicMessageBoxNormal.Show(msg);
+                se.ActionGuard = false;
+            }
+        }
+        /// <summary>
+        /// 设置警戒条件
+        /// </summary>
+        /// <param name="se">状体转移实体</param>
+        /// <param name="oav">oav警戒值</param>
+        /// <param name="oavmsg">oav消息内容</param>
         public void SetActionGuard(StateTransitionModel se, OAVModel oav, OAVModel oavmsg)
         {
             if (oav.AtrributeValue != null && (bool)oav.AtrributeValue)
@@ -180,11 +199,37 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="paramName">参数名</param>
         /// <param name="oav">oav载体</param>
+        public void ParamsPageGet(string paramName, object oav)
+        {
+            if (MainView.ParentControl.ParamDict.ContainsKey(paramName))
+            {
+                dynamic o = oav;
+                o.v = MainView.ParentControl.ParamDict[paramName];
+            }
+        }
+        /// <summary>
+        /// 获取页面参数值
+        /// </summary>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">oav载体</param>
         public void ParamsPageGet(string paramName, OAVModel oav)
         {
             if (MainView.ParentControl.ParamDict.ContainsKey(paramName))
             {
                 oav.AtrributeValue = MainView.ParentControl.ParamDict[paramName];
+            }
+        }
+        /// <summary>
+        /// 获取组件参数值
+        /// </summary>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">oav载体</param>
+        public void ParamsCompntGet(string paramName, object oav)
+        {
+            if (MainView.ParamDict.ContainsKey(paramName))
+            {
+                dynamic o = oav;
+                o.v = MainView.ParamDict[paramName];
             }
         }
         /// <summary>
@@ -226,6 +271,25 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="oavDic">存储dic类型的oav</param>
         /// <param name="paramName">参数名</param>
         /// <param name="oav">接收oav</param>
+        public void ParamsGetByDictionary(object oavDic, string paramName, object oav)
+        {
+            dynamic o1 = oavDic;
+            dynamic o2 = oav;
+            if (o1.v != null)
+            {
+                Dictionary<string, object> dic = JsonHelper.ToObject<Dictionary<string, object>>(o1.v.ToString());
+                if (dic != null && dic.ContainsKey(paramName))
+                {
+                    o2.v = dic[paramName];
+                }
+            }
+        }
+        /// <summary>
+        /// 获取Dictionary中参数值
+        /// </summary>
+        /// <param name="oavDic">存储dic类型的oav</param>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">接收oav</param>
         public void ParamsGetByDictionary(OAVModel oavDic, string paramName, OAVModel oav)
         {
             if (oavDic.AtrributeValue != null)
@@ -252,6 +316,37 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 MainView.ParentControl.ParamDict.Add(paramName, paramValue);
             }
+        }
+
+        /// <summary>
+        /// 组件参数封装
+        /// </summary>
+        /// <param name="oavCom">组件参数</param>
+        /// <param name="oavPage">页面接收参数</param>
+        public void ParamsInterCompntAdd(object oavCom, object oavPage)
+        {
+            dynamic o1 = oavCom;
+            dynamic o2 = oavPage;
+            FrameworkElement fElement = o1.v as FrameworkElement;
+            if (fElement == null)
+            {
+                fElement = new FrameworkElement();
+            }
+            Dictionary<string, object> dicParams = fElement.Tag as Dictionary<string, object>;
+            if (dicParams == null)
+            {
+                dicParams = new Dictionary<string, object>();
+            }
+            if (!dicParams.ContainsKey(o1.a))
+            {
+                dicParams.Add(o1.a, o1.v);
+            }
+            else
+            {
+                dicParams[o1.a] = o1.v;
+            }
+            fElement.Tag = dicParams;
+            o2.v = fElement;
         }
         /// <summary>
         /// 组件参数封装
@@ -280,6 +375,24 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             fElement.Tag = dicParams;
             oavPage.AtrributeValue = fElement;
+        }
+        /// <summary>
+        /// 组件取参数
+        /// </summary>
+        /// <param name="se">状态信息</param>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsInterCompntParse(StateTransitionModel se, string paramName, object oav)
+        {
+            if (se.ActionSourceElement != null)
+            {
+                Dictionary<string, object> dicParams = se.ActionSourceElement.Tag as Dictionary<string, object>;
+                if (dicParams != null && dicParams.ContainsKey(paramName))
+                {
+                    dynamic o = oav;
+                    o.v = dicParams[paramName];
+                }
+            }
         }
         /// <summary>
         /// 组件取参数
@@ -435,6 +548,29 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="messageInfo">提示信息</param>
         /// <param name="caption">标题</param>
         /// <param name="oav">接收oav</param>
+        public void ShowMessageResult(object messageInfo, object caption, object oav)
+        {
+            dynamic o = oav;
+            MessageBoxResult msgboxresult = VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption == null ? "空值" : caption.ToString(), MessageBoxButton.YesNo, MessageBoxImage.Information);
+            if (MessageBoxResult.Yes == msgboxresult)
+            {
+                o.v = "1";
+            }
+            else if (MessageBoxResult.No == msgboxresult)
+            {
+                o.v = "0";
+            }
+            else
+            {
+                o.v = "";
+            }
+        }
+        /// <summary>
+        /// 弹出提示询问
+        /// </summary>
+        /// <param name="messageInfo">提示信息</param>
+        /// <param name="caption">标题</param>
+        /// <param name="oav">接收oav</param>
         public void ShowMessageResult(object messageInfo, object caption, OAVModel oav)
         {
             MessageBoxResult msgboxresult = VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption == null ? "空值" : caption.ToString(), MessageBoxButton.YesNo, MessageBoxImage.Information);
@@ -450,6 +586,16 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 oav.AtrributeValue = "";
             }
+        }
+        /// <summary>
+        /// 赋值
+        /// </summary>
+        /// <param name="paramValue">参数值</param>
+        /// <param name="oav">接收oav</param>
+        public void SetParamValue(object paramValue, object oav)
+        {
+            dynamic o = oav;
+            o.v = paramValue;
         }
         /// <summary>
         /// 赋值
