@@ -125,8 +125,8 @@
                     <controls:VicTextBoxNormal  Width="150" Margin="5,0" Grid.Row="6" Grid.Column="1" VicText="{Binding SysConfigModel.EnterpriseRouterIP}"/>
                     <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="6" Grid.Column="2" Margin="10,0,0,0" Text="端口"/>
                     <controls:VicNumericUpDown Grid.Row="6" Grid.Column="3" Value="{Binding SysConfigModel.EnterpriseRouterPort}"/>
-                    <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="7" Text="企业Lan"/>
-                    <controls:VicCheckBoxNormal Grid.Row="7" Margin="5,0" Grid.Column="1" IsChecked="{Binding SysConfigModel.EnterpriseLan,Converter={StaticResource CheckboxBoolConverter}}"/>
+                    <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="7" Text="调试运行"/>
+                    <controls:VicCheckBoxNormal Grid.Row="7" Margin="5,0" Grid.Column="1" IsChecked="{Binding SysConfigModel.RunMode,Converter={StaticResource CheckboxBoolConverter}}"/>
                     <controls:VicTextBlockNormal Style="{DynamicResource logoTextBlockStyle}" Grid.Row="7" Grid.Column="2" Margin="10,0,0,0" Text="路由"/>
                     <controls:VicCheckBoxNormal Grid.Row="7" Grid.Column="3" IsChecked="{Binding SysConfigModel.EnterpriseIsNeedRouter,Converter={StaticResource CheckboxBoolConverter}}"/>
                     <controls:VicTextBlockNormal Grid.Row="8" HorizontalAlignment="Right" Style="{DynamicResource logoTextBlockStyle}" Text="P2P地址"/>

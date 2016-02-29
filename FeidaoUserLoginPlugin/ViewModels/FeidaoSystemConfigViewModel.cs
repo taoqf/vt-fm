@@ -170,7 +170,7 @@ namespace FeidaoUserLoginPlugin.ViewModels
             SysConfigModel.EnterpriseRouterIP = string.IsNullOrEmpty(clientRouter) ? string.Empty : clientRouter.Split(':')[0];
             SysConfigModel.EnterpriseRouterPort = string.IsNullOrEmpty(clientRouter) ? string.Empty : clientRouter.Split(':')[1];
 
-            SysConfigModel.EnterpriseLan = clientDic["Lan"];
+            SysConfigModel.RunMode = clientDic["Debug"];
             SysConfigModel.EnterpriseIsNeedRouter = clientDic["IsNeedRouter"];
 
             string p2pServer = ConfigManager.GetAttributeOfNodeByName("P2PClient", "Server");
@@ -221,7 +221,7 @@ namespace FeidaoUserLoginPlugin.ViewModels
                 Dictionary<string, string> clientDic = new Dictionary<string, string>();
                 clientDic.Add("Server", GetIPAddressPort(SysConfigModel.EnterpriseServerIP, SysConfigModel.EnterpriseServerPort));
                 clientDic.Add("Router", GetIPAddressPort(SysConfigModel.EnterpriseRouterIP, SysConfigModel.EnterpriseRouterPort));
-                clientDic.Add("Lan", SysConfigModel.EnterpriseLan);
+                clientDic.Add("Debug", SysConfigModel.RunMode);
                 clientDic.Add("IsNeedRouter", SysConfigModel.EnterpriseIsNeedRouter);
                 ConfigManager.SaveAttributeOfNodeByName("Client", clientDic);
 

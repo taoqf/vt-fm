@@ -6,6 +6,7 @@
 //------------------------------------------------------------------------------
 namespace Victop.Frame.MessageManager
 {
+    using PublicLib.Managers;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -16,11 +17,11 @@ namespace Victop.Frame.MessageManager
     using Victop.Frame.CoreLibrary.Enums;
     using Victop.Frame.CoreLibrary.Models;
 
-	/// <summary>
-	/// 插件消息线程管理 【线程池】
-	/// </summary>
-	/// <remarks>插件消息线程管理</remarks>
-	public class PluginMessageThreadManager
+    /// <summary>
+    /// 插件消息线程管理 【线程池】
+    /// </summary>
+    /// <remarks>插件消息线程管理</remarks>
+    public class PluginMessageThreadManager
 	{
         private static PluginMessageThreadManager instance = null;
   
@@ -33,7 +34,7 @@ namespace Victop.Frame.MessageManager
                 PluginMessageManager pluginMessageManager = new PluginMessageManager();
                 Thread thread = new Thread(new ThreadStart(pluginMessageManager.CheckPluginMessageValid));
                 thread.IsBackground = true;
-                if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+                if (!ConfigManager.GetAttributeOfNodeByName("Client", "Debug").Equals("1"))
                 {
                     thread.Start();
                 }

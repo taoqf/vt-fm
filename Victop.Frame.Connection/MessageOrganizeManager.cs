@@ -96,7 +96,7 @@ namespace Victop.Frame.Connection
             definition.Add("ref");
             definition.Add("version");
             definition.Add("extInfo");
-            if (ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+            if (ConfigManager.GetAttributeOfNodeByName("Client", "Debug").Equals("1"))
             {
                 definition.Add("relation");
                 definition.Add("params");

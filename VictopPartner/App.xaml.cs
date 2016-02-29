@@ -53,7 +53,7 @@ namespace VictopPartner
         {
             base.OnStartup(e);
             #region 自动更新
-            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+            if (!ConfigManager.GetAttributeOfNodeByName("Client", "Debug").Equals("1"))
             {
                 string[] argsStr = Environment.GetCommandLineArgs();
                 if (argsStr.Count() <= 1 || (argsStr.Count() > 1 && !Convert.ToBoolean(argsStr[1].ToString())))

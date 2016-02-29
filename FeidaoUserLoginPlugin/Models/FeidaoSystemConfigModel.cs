@@ -396,20 +396,20 @@ namespace FeidaoUserLoginPlugin.Models
             }
         }
 
-        private string enterpriseLan;
+        private string runMode;
         /// <summary> 企业Lan</summary>
-        public string EnterpriseLan
+        public string RunMode
         {
             get
             {
-                return enterpriseLan;
+                return runMode;
             }
             set
             {
-                if (enterpriseLan != value)
+                if (runMode != value)
                 {
-                    enterpriseLan = value;
-                    RaisePropertyChanged(() => EnterpriseLan);
+                    runMode = value;
+                    RaisePropertyChanged(() => RunMode);
                 }
             }
         }

@@ -1220,7 +1220,7 @@ namespace MetroFramePlugin.ViewModels
             }
             this.SystemMenuListLocal = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
             localMenuListEx = JsonHelper.ToObject<ObservableCollection<MenuModel>>(menuList);
-            if (!ConfigurationManager.AppSettings["DevelopMode"].Equals("Debug"))
+            if (!ConfigManager.GetAttributeOfNodeByName("Client", "Debug").Equals("1"))
             {
                 IsDebug = false;
                 this.SystemMenuListLocal.Clear();
