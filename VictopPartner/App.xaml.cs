@@ -179,19 +179,19 @@ namespace VictopPartner
                         }
                         if (ctx.Request.Url.AbsoluteUri.Contains(httpweb))
                         {
-                            Console.WriteLine(ctx.Request.Url.LocalPath);
-                            HttpListenerRequest request = ctx.Request;
-                            if (request.AcceptTypes != null)
-                            {
-                                foreach (string item in request.AcceptTypes)
-                                {
-                                    Console.WriteLine(item);
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("AcceptTypes 是空");
-                            }
+                            //Console.WriteLine(ctx.Request.Url.LocalPath);
+                            //HttpListenerRequest request = ctx.Request;
+                            //if (request.AcceptTypes != null)
+                            //{
+                            //    foreach (string item in request.AcceptTypes)
+                            //    {
+                            //        Console.WriteLine(item);
+                            //    }
+                            //}
+                            //else
+                            //{
+                            //    Console.WriteLine("AcceptTypes 是空");
+                            //}
                             int fileExtendIndex = ctx.Request.Url.LocalPath.LastIndexOf(".");
                             string fileExtendName = fileExtendIndex != -1 ? ctx.Request.Url.LocalPath.Substring(ctx.Request.Url.LocalPath.LastIndexOf(".")) : "html";
                             HttpListenerResponse response = ctx.Response;
