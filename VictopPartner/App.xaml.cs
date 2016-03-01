@@ -199,7 +199,7 @@ namespace VictopPartner
                             {
                                 byte[] responseString = File.ReadAllBytes(AppDomain.CurrentDomain.BaseDirectory + ctx.Request.Url.LocalPath);
                                 // 设置回应头部内容，长度，编码
-                                response.ContentLength64 = responseString.LongLength;
+                                //response.ContentLength64 = responseString.LongLength;
                                 response.ContentType = string.Format("{0};charset=UTF-8", FileTypeHelper.GetMimeType(fileExtendName));
                                 System.IO.Stream output = response.OutputStream;
                                 output.Write(responseString, 0, responseString.Length);

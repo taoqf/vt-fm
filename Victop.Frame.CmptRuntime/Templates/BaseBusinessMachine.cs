@@ -124,5 +124,13 @@ namespace Victop.Frame.CmptRuntime
         {
             MainView.BuiltBrowser.InvokeScript("send_msg", "oav_clear");
         }
+        /// <summary>
+        /// 设置规则分组
+        /// </summary>
+        /// <param name="groupName">分组名称</param>
+        public void SetFocus(string groupName)
+        {
+            MainView.BuiltBrowser.InvokeScript("send_msg", "set_focus", groupName);
+        }
     }
 }
