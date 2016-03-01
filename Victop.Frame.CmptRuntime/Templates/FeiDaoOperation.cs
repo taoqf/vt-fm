@@ -672,12 +672,12 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 组件取参数
         /// </summary>
-        /// <param name="se">状态信息</param>
+        /// <param name="oavParams">参数oav</param>
         /// <param name="paramName">参数名</param>
         /// <param name="oav">接收oav</param>
-        public void ParamsInterCompntParse(StateTransitionModel se, string paramName, object oav)
+        public void ParamsInterCompntParse(object oavParams, string paramName, object oav)
         {
-            systemOperation.ParamsInterCompntParse(se, paramName, oav);
+            systemOperation.ParamsInterCompntParse(oavParams, paramName, oav);
         }
         /// <summary>
         /// 组件取参数
@@ -962,6 +962,18 @@ namespace Victop.Frame.CmptRuntime
         }
         #endregion
 
+        #region 时间
+        /// <summary>
+        /// 获取服务器时间
+        /// </summary>
+        /// <param name="oav">接受oav</param>
+        /// <param name="day">指定要添加的天数默认0</param>
+        public void GetDateTime(object oav, int day = 0)
+        {
+            systemOperation.GetDateTime(oav, day);
+        }
+        #endregion
+
         #region UI操作
         /// <summary>
         /// 设置元素内容
@@ -971,6 +983,15 @@ namespace Victop.Frame.CmptRuntime
         public void SetElementContent(string elementName, object content)
         {
             uIElementOperation.SetElementContent(elementName, content);
+        }
+        /// <summary>
+        /// 设置元素是否选中
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="isChecked">是否选中</param>
+        public void SetElementChecked(string elementName, bool isChecked)
+        {
+            uIElementOperation.SetElementChecked(elementName, isChecked);
         }
         /// <summary>
         /// 获取元素内容

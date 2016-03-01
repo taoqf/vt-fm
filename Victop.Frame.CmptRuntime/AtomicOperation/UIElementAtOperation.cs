@@ -88,6 +88,35 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 设置元素是否选中
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="isChecked">是否选中</param>
+        public void SetElementChecked(string elementName, bool isChecked)
+        {
+            if (!string.IsNullOrEmpty(elementName))
+            {
+                FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
+                if (element != null)
+                {
+                    string typeName = element.GetType().Name;
+                    switch (typeName)
+                    {
+                        case "VicCheckBoxNormal":
+                            VicCheckBoxNormal checkbox = element as VicCheckBoxNormal;
+                            checkbox.IsChecked = isChecked;
+                            break;
+                        case "VicRadioButtonNormal":
+                            VicRadioButtonNormal radiobutton = element as VicRadioButtonNormal;
+                            radiobutton.IsChecked = isChecked;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+        /// <summary>
         /// 获取元素内容
         /// </summary>
         /// <param name="elementName">元素名称</param>
@@ -248,6 +277,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         case "VicListBoxNormal":
                             VicListBoxNormal listbox = element as VicListBoxNormal;
                             listbox.SelectedIndex = selectedIndex;
+                            break;
+                        case "VicComboBoxNormal":
+                            VicComboBoxNormal combobx = element as VicComboBoxNormal;
+                            combobx.SelectedIndex = selectedIndex;
                             break;
                         default:
                             break;
