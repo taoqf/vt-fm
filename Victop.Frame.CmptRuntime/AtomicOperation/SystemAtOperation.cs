@@ -327,12 +327,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             dynamic o1 = oavCom;
             dynamic o2 = oavPage;
-            FrameworkElement fElement = o1.v as FrameworkElement;
-            if (fElement == null)
-            {
-                fElement = new FrameworkElement();
-            }
-            Dictionary<string, object> dicParams = fElement.Tag as Dictionary<string, object>;
+            Dictionary<string, object> dicParams = o1.v as Dictionary<string, object>;
             if (dicParams == null)
             {
                 dicParams = new Dictionary<string, object>();
@@ -345,8 +340,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 dicParams[o1.a] = o1.v;
             }
-            fElement.Tag = dicParams;
-            o2.v = fElement;
+            o2.v = dicParams;
         }
         /// <summary>
         /// 组件参数封装
@@ -379,19 +373,17 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <summary>
         /// 组件取参数
         /// </summary>
-        /// <param name="se">状态信息</param>
+        /// <param name="oavParams">参数oav</param>
         /// <param name="paramName">参数名</param>
         /// <param name="oav">接收oav</param>
-        public void ParamsInterCompntParse(StateTransitionModel se, string paramName, object oav)
+        public void ParamsInterCompntParse(object oavParams, string paramName, object oav)
         {
-            if (se.ActionSourceElement != null)
+            dynamic o1 = oavParams;
+            Dictionary<string, object> dicParams = o1.v as Dictionary<string, object>;
+            if (dicParams != null && dicParams.ContainsKey(paramName))
             {
-                Dictionary<string, object> dicParams = se.ActionSourceElement.Tag as Dictionary<string, object>;
-                if (dicParams != null && dicParams.ContainsKey(paramName))
-                {
-                    dynamic o = oav;
-                    o.v = dicParams[paramName];
-                }
+                dynamic o2 = oav;
+                o2.v = dicParams[paramName];
             }
         }
         /// <summary>
@@ -861,6 +853,26 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 return "";
             char[] chararray = value.ToCharArray();
             return strValue.ToString().TrimEnd(chararray);
+        }
+        #endregion
+
+        #region 时间
+        /// <summary>
+        /// 获取服务器时间
+        /// </summary>
+        /// <param name="oav">接受oav</param>
+        /// <param name="day">指定要添加的天数</param>
+        public void GetDateTime(object oav, int day = 0)
+        {
+            dynamic o = oav;
+            DataMessageOperation messageOp = new DataMessageOperation();
+            Dictionary<string, object> resultDic = messageOp.SendSyncMessage("MongoDataChannelService.fetchSystime", new Dictionary<string, object>());
+            string result = JsonHelper.ReadJsonString(resultDic["ReplyContent"].ToString(), "simpleDate");
+            DateTime dt = Convert.ToDateTime(result);
+            dt = TimeZone.CurrentTimeZone.ToLocalTime(dt);
+            dt.AddDays(day);
+            result = dt.ToString();
+            o.v = result;
         }
         #endregion
 
