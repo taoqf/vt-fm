@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,9 +112,493 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="TCBillDefinition" xml:space="preserve">
+    <value>{
+	"views": [
+		{
+			"viewname": "voucherdefineview",
+			"modelid": "feidao_voucher-model-voucher_define-0001",
+			"loaddata": 2,
+			"editable": false,
+			"blocks": [
+				{
+					"blockname": "masterblock",
+					"datasettype": "table",
+					"superiors": "root",
+					"tablename": "voucher_define",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "accessoryblock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "accessory",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "gsdocstateblock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "gsdocstate",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "dom_treeblock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "dom_tree",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "voucher_deriveblock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "voucher_derive",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "voucher_derive_paramsblock",
+					"datasettype": "table",
+					"superiors": "voucher_deriveblock",
+					"tablename": "data_map",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "business_typeblock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "business_type",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "print_templateblock",
+					"datasettype": "table",
+					"superiors": "business_typeblock",
+					"tablename": "print_template",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "grid_configureblock",
+					"datasettype": "table",
+					"superiors": "business_typeblock",
+					"tablename": "grid_configure",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "voucher_field_expandblock",
+					"datasettype": "table",
+					"superiors": "business_typeblock",
+					"tablename": "voucher_field_expand",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "business_informationblock",
+					"datasettype": "table",
+					"superiors": "voucher_field_expandblock",
+					"tablename": "business_information",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "encoded_serviceblock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "encoded_service",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "formulablock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "formula",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "queryfieldsblock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "queryfields",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "paramsblock",
+					"datasettype": "table",
+					"superiors": "queryfieldsblock",
+					"tablename": "params",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "datacheckblock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "datacheck",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "rulersblock",
+					"datasettype": "table",
+					"superiors": "datacheckblock",
+					"tablename": "rulers",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "summaryblock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "summary",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "griddatacopyblock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "griddatacopy",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "cleardatablock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "cleardata",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "defaultvaluesblock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "defaultvalues",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}, {
+					"blockname": "list_fieldsblock",
+					"datasettype": "table",
+					"superiors": "masterblock",
+					"tablename": "list_fields",
+					"conditions": {
+						"tablecondition": {},
+						"sort": {},
+						"pagesize": 0,
+						"pageindex": 1
+					}
+				}
+			],
+			"systemid": "18",
+			"refsystemid": null
+		}
+	],
+	"presentation": {
+		"blocks": [
+			{
+				"name": "masterPblock",
+				"type": 1,
+				"superiors": "root",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "masterblock"
+			}, {
+				"name": "accessoryPblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "accessoryblock"
+			}, {
+				"name": "gsdocstatePblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "gsdocstateblock"
+			}, {
+				"name": "dom_treePblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "dom_treeblock"
+			}, {
+				"name": "voucher_derivePblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "voucher_deriveblock"
+			}, {
+				"name": "business_typePblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "business_typeblock"
+			}, {
+				"name": "encoded_servicePblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "encoded_serviceblock"
+			}, {
+				"name": "formulaPblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "formulablock"
+			}, {
+				"name": "queryfieldsPblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "queryfieldsblock"
+			}, {
+				"name": "datacheckPblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "datacheckblock"
+			}, {
+				"name": "summaryPblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "summaryblock"
+			}, {
+				"name": "griddatacopyPblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "griddatacopyblock"
+			}, {
+				"name": "cleardataPblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "cleardatablock"
+			}, {
+				"name": "defaultvaluesPblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "defaultvaluesblock"
+			}, {
+				"name": "voucher_derive_paramsPblock",
+				"type": 1,
+				"superiors": "voucher_derivePblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "voucher_derive_paramsblock"
+			}, {
+				"name": "print_templatePblock",
+				"type": 1,
+				"superiors": "business_typePblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "print_templateblock"
+			}, {
+				"name": "grid_configurePblock",
+				"type": 1,
+				"superiors": "business_typePblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "grid_configureblock"
+			}, {
+				"name": "voucher_field_expandPblock",
+				"type": 1,
+				"superiors": "business_typePblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "voucher_field_expandblock"
+			}, {
+				"name": "paramsPblock",
+				"type": 1,
+				"superiors": "queryfieldsPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "paramsblock"
+			}, {
+				"name": "rulersPblock",
+				"type": 1,
+				"superiors": "datacheckPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "rulersblock"
+			}, {
+				"name": "business_informationPblock",
+				"type": 1,
+				"superiors": "voucher_field_expandPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "business_informationblock"
+			}, {
+				"name": "list_fieldsPblock",
+				"type": 1,
+				"superiors": "masterPblock",
+				"keyword": "",
+				"method": "loop",
+				"view": "voucherdefineview",
+				"autorender": 0,
+				"rendertype": 0,
+				"binding": "list_fieldsblock"
+			}
+		]
+	}
+}</value>
+  </data>
 </root>

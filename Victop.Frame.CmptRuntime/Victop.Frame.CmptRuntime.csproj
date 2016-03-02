@@ -108,6 +108,7 @@
     <Compile Include="AtomicOperation\DataAtOperation.cs" />
     <Compile Include="AtomicOperation\SystemAtOperation.cs" />
     <Compile Include="AtomicOperation\UIElementAtOperation.cs" />
+    <Compile Include="AtomicOperation\VoucherAtOperation.cs" />
     <Compile Include="Templates\BaseBusinessMachine.cs" />
     <Compile Include="PVDModel\CompntDefinModel.cs" />
     <Compile Include="PVDModel\DefinPresentationModel.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="StateJson\StateDefineModel.cs" />
     <Compile Include="StateJson\StateTransitionInfoModel.cs" />
     <Compile Include="Templates\BaseStateMachine.cs" />
+    <Compile Include="Templates\BillTemplateControl.cs" />
     <Compile Include="Templates\FeiDaoOperation.cs" />
     <Compile Include="Templates\StateTransitionModel.cs" />
     <Compile Include="Templates\TemplateControl.cs" />

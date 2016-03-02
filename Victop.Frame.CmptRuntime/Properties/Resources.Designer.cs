@@ -59,5 +59,36 @@ namespace Victop.Frame.CmptRuntime.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似 {
+        ///	&quot;views&quot;: [
+        ///		{
+        ///			&quot;viewname&quot;: &quot;voucherdefineview&quot;,
+        ///			&quot;modelid&quot;: &quot;feidao_voucher-model-voucher_define-0001&quot;,
+        ///			&quot;loaddata&quot;: 2,
+        ///			&quot;editable&quot;: false,
+        ///			&quot;blocks&quot;: [
+        ///				{
+        ///					&quot;blockname&quot;: &quot;masterblock&quot;,
+        ///					&quot;datasettype&quot;: &quot;table&quot;,
+        ///					&quot;superiors&quot;: &quot;root&quot;,
+        ///					&quot;tablename&quot;: &quot;voucher_define&quot;,
+        ///					&quot;conditions&quot;: {
+        ///						&quot;tablecondition&quot;: {},
+        ///						&quot;sort&quot;: {},
+        ///						&quot;pagesize&quot;: 0,
+        ///						&quot;pageindex&quot;: 1
+        ///					}
+        ///				}, {
+        ///					&quot;blockname&quot;: &quot;accessoryblock&quot;,
+        ///					&quot;datasettype&quot;: &quot;table&quot;,
+        ///			 [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string TCBillDefinition {
+            get {
+                return ResourceManager.GetString("TCBillDefinition", resourceCulture);
+            }
+        }
     }
 }

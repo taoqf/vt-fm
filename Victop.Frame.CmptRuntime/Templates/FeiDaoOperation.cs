@@ -42,6 +42,10 @@ namespace Victop.Frame.CmptRuntime
         /// UI元素原子操作
         /// </summary>
         private UIElementAtOperation uIElementOperation;
+        /// <summary>
+        /// 凭证原子操作
+        /// </summary>
+        private VoucherAtOperation vercherAtOperation;
         #endregion
 
         /// <summary>
@@ -55,6 +59,7 @@ namespace Victop.Frame.CmptRuntime
             dataOperation = new DataAtOperation(MainView);
             systemOperation = new SystemAtOperation(MainView);
             uIElementOperation = new UIElementAtOperation(MainView);
+            vercherAtOperation = new VoucherAtOperation(mainView);
         }
 
         #region 自定义服务操作
