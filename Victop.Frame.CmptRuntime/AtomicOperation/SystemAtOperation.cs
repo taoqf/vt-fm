@@ -38,7 +38,14 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="groupName">分组信息</param>
         public void SetFocus(string groupName)
         {
-            MainView.FeiDaoFSM.SetFocus(groupName);
+            if (MainView.BusinessModel.Equals(0))
+            {
+                MainView.FeiDaoFSM.SetFocus(groupName);
+            }
+            if (MainView.BusinessModel.Equals(1))
+            {
+                MainView.FeiDaoMachine.SetFocus(groupName);
+            }
         }
         /// <summary>
         /// 转移触发事件
@@ -870,8 +877,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             string result = JsonHelper.ReadJsonString(resultDic["ReplyContent"].ToString(), "simpleDate");
             DateTime dt = Convert.ToDateTime(result);
             dt = TimeZone.CurrentTimeZone.ToLocalTime(dt);
-            dt.AddDays(day);
-            result = dt.ToString();
+            DateTime dtnew = dt.AddDays(day);
+            result = dtnew.ToString();
             o.v = result;
         }
         #endregion
