@@ -184,17 +184,19 @@ namespace VictopPartner
                             HttpListenerResponse response = ctx.Response;
                             if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + ctx.Request.Url.LocalPath))
                             {
-                                byte[] responseString = File.ReadAllBytes(AppDomain.CurrentDomain.BaseDirectory + ctx.Request.Url.LocalPath);
-                                // 设置回应头部内容，长度，编码
+                                FileStream stream = new FileStream(AppDomain.CurrentDomain.BaseDirectory + ctx.Request.Url.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
                                 try
                                 {
-                                    response.ContentLength64 = responseString.LongLength;
+                                    response.ContentLength64 = stream.Length;
                                     response.ContentType = string.Format("{0};charset=UTF-8", FileTypeHelper.GetMimeType(fileExtendName));
-                                    System.IO.Stream output = response.OutputStream;
-                                    output.Write(responseString, 0, responseString.Length);
-                                    // 必须关闭输出流
-                                    output.Close();
-                                    ctx.Response.Close();
+                                    byte[] buff = new byte[4096];
+                                    int count = 0;
+                                    while ((count = stream.Read(buff, 0, 4096)) != 0)
+                                    {
+                                        ctx.Response.OutputStream.Write(buff, 0, count);
+                                    }
+                                    response.Close();
+                                    stream.Close();
                                 }
                                 catch (Exception ex)
                                 {
@@ -203,10 +205,8 @@ namespace VictopPartner
                             }
                             else
                             {
-                                string responseString = "请求的内容不存在";
-                                StreamWriter writer = new StreamWriter(ctx.Response.OutputStream, UTF8Encoding.UTF8);
-                                writer.WriteLine(responseString);
-                                writer.Close();
+                                response.StatusCode = 404;
+                                response.Close();
                             }
                         }
                     }
