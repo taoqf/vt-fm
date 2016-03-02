@@ -1,3 +1,32 @@
 ﻿rule "r1" {salience: 1;agenda-group: "beforeinit";when{a:OAV a.o=="event_parameter"&&a.a=="1";} then{feidao.SysConsole("BtnOpView:beforeinit");}} 
 rule "r2" {salience: 1;agenda-group: "afterinit";when{a:OAV a.o=="event_parameter"&&a.a=="1";} then{feidao.SysConsole("BtnOpView:afterinit");feidao.ExcutePageTrigger("search",a.v);}}
-rule "r3" {salience: 1;agenda-group: "search";when{a:OAV a.o=="event_parameter"&&a.a=="1";} then{feidao.ExcutePageTrigger("search",a.v);}}
+rule "r3"
+{
+	salience: 10;
+	agenda-group: "search";
+	when
+	{
+		o1:OAV o1.o==="event_parameter"&&o1.a==="1";
+	}
+	then
+	{
+		feidao.InsertFact("param","productid","001");
+	}
+}
+rule "r3_1"
+ {
+	salience: 9;
+	agenda-group: "search";
+	when
+	{
+		o1:OAV o1.o==="event_parameter"&&o1.a==="1";
+		o2:OAV o2.o=="param"&&o2.a=="productid";
+	}
+	then
+	{
+		feidao.ParamsInterCompntAdd(o2,o1);
+		feidao.ExcutePageTrigger("search",o1.v);
+		feidao.RemoveFact(o1);
+		feidao.RemoveFact(o2);
+	}
+}
