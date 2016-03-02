@@ -54,7 +54,14 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="triggerSource">触发源</param>
         public void TranslationState(string triggerName, object triggerSource)
         {
-            MainView.FeiDaoFSM.Do(triggerName, triggerSource, true);
+            if (MainView.BusinessModel.Equals(0))
+            {
+                MainView.FeiDaoFSM.Do(triggerName, triggerSource, true);
+            }
+            if (MainView.BusinessModel.Equals(1))
+            {
+                MainView.FeiDaoMachine.Do(triggerName, triggerSource);
+            }
         }
         /// <summary>
         /// 插入事实
@@ -334,7 +341,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             dynamic o1 = oavCom;
             dynamic o2 = oavPage;
-            Dictionary<string, object> dicParams = o1.v as Dictionary<string, object>;
+            FrameworkElement fElement = o1.v as FrameworkElement;
+            if (fElement == null)
+            {
+                fElement = new FrameworkElement();
+            }
+            Dictionary<string, object> dicParams = fElement.Tag as Dictionary<string, object>;
             if (dicParams == null)
             {
                 dicParams = new Dictionary<string, object>();
@@ -347,7 +359,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 dicParams[o1.a] = o1.v;
             }
-            o2.v = dicParams;
+            fElement.Tag = dicParams;
+            o2.v = fElement;
         }
         /// <summary>
         /// 组件参数封装
@@ -386,11 +399,15 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void ParamsInterCompntParse(object oavParams, string paramName, object oav)
         {
             dynamic o1 = oavParams;
-            Dictionary<string, object> dicParams = o1.v as Dictionary<string, object>;
-            if (dicParams != null && dicParams.ContainsKey(paramName))
+            dynamic o2 = oav;
+            FrameworkElement fElement = o1.v as FrameworkElement;
+            if (fElement != null)
             {
-                dynamic o2 = oav;
-                o2.v = dicParams[paramName];
+                Dictionary<string, object> dicParams = fElement.Tag as Dictionary<string, object>;
+                if (dicParams != null && dicParams.ContainsKey(paramName))
+                {
+                    o2.v = dicParams[paramName];
+                } 
             }
         }
         /// <summary>
