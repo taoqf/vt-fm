@@ -435,7 +435,15 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="width">宽度</param>
         public void UCCompntShowDialog(string compntName, int height = 600, int width = 600)
         {
-            TemplateControl ucCom = MainView.ParentControl.GetComponentInstanceByName(compntName);
+            TemplateControl ucCom = null;
+            if (MainView.BusinessModel.Equals(0))
+            {
+                ucCom = MainView.ParentControl.GetComponentInstanceByName(compntName);
+            }
+            if (MainView.BusinessModel.Equals(1))
+            {
+                ucCom = MainView.ParentControl.GetComponentInstanceByName("UC" + compntName);
+            }
             if (ucCom == null)
             {
                 Console.WriteLine("原子操作：UCCompntShowDialog未找到组件" + compntName);
@@ -496,7 +504,15 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="width">宽度</param>
         public void UCCompntShow(string compntName, int height = 600, int width = 600)
         {
-            TemplateControl ucCom = MainView.GetComponentInstanceByName("UC"+compntName);
+            TemplateControl ucCom = null;
+            if (MainView.BusinessModel.Equals(0))
+            {
+                ucCom = MainView.GetComponentInstanceByName(compntName);
+            }
+            if (MainView.BusinessModel.Equals(1))
+            {
+                ucCom = MainView.GetComponentInstanceByName("UC"+compntName);
+            }
             if (ucCom == null)
             {
                 Console.WriteLine("原子操作：UCCompntShowDialog未找到组件" + compntName);
