@@ -179,19 +179,6 @@ namespace VictopPartner
                         }
                         if (ctx.Request.Url.AbsoluteUri.Contains(httpweb))
                         {
-                            //Console.WriteLine(ctx.Request.Url.LocalPath);
-                            //HttpListenerRequest request = ctx.Request;
-                            //if (request.AcceptTypes != null)
-                            //{
-                            //    foreach (string item in request.AcceptTypes)
-                            //    {
-                            //        Console.WriteLine(item);
-                            //    }
-                            //}
-                            //else
-                            //{
-                            //    Console.WriteLine("AcceptTypes 是空");
-                            //}
                             int fileExtendIndex = ctx.Request.Url.LocalPath.LastIndexOf(".");
                             string fileExtendName = fileExtendIndex != -1 ? ctx.Request.Url.LocalPath.Substring(ctx.Request.Url.LocalPath.LastIndexOf(".")) : "html";
                             HttpListenerResponse response = ctx.Response;
@@ -199,13 +186,20 @@ namespace VictopPartner
                             {
                                 byte[] responseString = File.ReadAllBytes(AppDomain.CurrentDomain.BaseDirectory + ctx.Request.Url.LocalPath);
                                 // 设置回应头部内容，长度，编码
-                                //response.ContentLength64 = responseString.LongLength;
-                                response.ContentType = string.Format("{0};charset=UTF-8", FileTypeHelper.GetMimeType(fileExtendName));
-                                System.IO.Stream output = response.OutputStream;
-                                output.Write(responseString, 0, responseString.Length);
-                                // 必须关闭输出流
-                                output.Close();
-                                ctx.Response.Close();
+                                try
+                                {
+                                    response.ContentLength64 = responseString.LongLength;
+                                    response.ContentType = string.Format("{0};charset=UTF-8", FileTypeHelper.GetMimeType(fileExtendName));
+                                    System.IO.Stream output = response.OutputStream;
+                                    output.Write(responseString, 0, responseString.Length);
+                                    // 必须关闭输出流
+                                    output.Close();
+                                    ctx.Response.Close();
+                                }
+                                catch (Exception ex)
+                                {
+                                    LoggerHelper.ErrorFormat("设置回应内容异常:{0}", string.IsNullOrEmpty(ex.Message) ? ex.InnerException.Message : ex.Message);
+                                }
                             }
                             else
                             {
