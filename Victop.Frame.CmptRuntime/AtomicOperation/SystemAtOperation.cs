@@ -207,6 +207,21 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     tc.FeiDaoMachine.Do(compntTrigger, paramInfo);
                 }
             }
+            else
+            {
+                tc = MainView.GetCompntInstance(compntName);
+                if (tc != null)
+                {
+                    if (tc.BusinessModel.Equals(0))
+                    {
+                        tc.FeiDaoFSM.Do(compntTrigger, paramInfo);
+                    }
+                    if (tc.BusinessModel.Equals(1))
+                    {
+                        tc.FeiDaoMachine.Do(compntTrigger, paramInfo);
+                    }
+                }
+            }
         }
         /// <summary>
         /// 获取页面参数值
@@ -407,7 +422,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 if (dicParams != null && dicParams.ContainsKey(paramName))
                 {
                     o2.v = dicParams[paramName];
-                } 
+                }
             }
         }
         /// <summary>
@@ -511,7 +526,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             if (MainView.BusinessModel.Equals(1))
             {
-                ucCom = MainView.GetComponentInstanceByName("UC"+compntName);
+                ucCom = MainView.GetComponentInstanceByName("UC" + compntName);
             }
             if (ucCom == null)
             {

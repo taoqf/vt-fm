@@ -28,6 +28,7 @@ namespace Victop.Frame.CmptRuntime
         public WebBrowser BuiltBrowser = new WebBrowser();
         private bool initFlag;
         private int businessModel;
+        private Dictionary<string, TemplateControl> listCompnt = new Dictionary<string, TemplateControl>();
         #endregion
         #region 公用属性
         /// <summary>
@@ -199,6 +200,7 @@ namespace Victop.Frame.CmptRuntime
         {
 
         }
+
         /// <summary>
         /// 获取组件实例，用于独立窗体展示组件
         /// </summary>
@@ -207,6 +209,35 @@ namespace Victop.Frame.CmptRuntime
         public virtual TemplateControl GetComponentInstanceByName(string componetName)
         {
             return this;
+        }
+        /// <summary>
+        /// 组件集合添加组件实例
+        /// </summary>
+        /// <param name="componetName">组价名称</param>
+        /// <param name="templateControl">组件实例</param>
+        public void AddListCompnt(string componetName, TemplateControl templateControl)
+        {
+            if (listCompnt.ContainsKey(componetName))
+            {
+                listCompnt[componetName] = templateControl;
+            }
+            else
+            {
+                listCompnt.Add(componetName, templateControl);
+            }
+        }
+        /// <summary>
+        /// 得到组件实例
+        /// </summary>
+        /// <param name="componetName">组价名称</param>
+        /// <returns></returns>
+        public TemplateControl GetCompntInstance(string componetName)
+        {
+            if (listCompnt.ContainsKey(componetName))
+            {
+                return listCompnt[componetName];
+            }
+            return null;
         }
         /// <summary>
         /// 属性改变

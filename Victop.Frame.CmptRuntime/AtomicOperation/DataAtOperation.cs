@@ -296,11 +296,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             int rowcount = 0;
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable!= null)
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
             {
                 rowcount = pBlock.ViewBlockDataTable.Rows.Count;
             }
             return rowcount;
+        }
+        /// <summary>
+        /// 提交BlockData的数据
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="oav">接受oav返回结果true或false</param>
+        /// <param name="isSaveServer">是否提交服务器</param>
+        /// <returns>返回保存成功true，失败false</returns>
+        public void SavePBlockData(string pBlockName, object oav = null, bool isSaveServer = true)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            bool result = pBlock.SaveData(isSaveServer);
+            if(!string.IsNullOrEmpty(oav.ToString()))
+            {
+                dynamic o = oav;
+                o.v = result;
+            }
         }
         /// <summary>
         /// 提交BlockData的数据
@@ -333,7 +350,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void PBlockAddRow(string pBlockName, object oav)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
-            
+
             if (pBlock != null && pBlock.ViewBlockDataTable != null)
             {
                 DataRow dr = pBlock.ViewBlockDataTable.NewRow();
@@ -342,8 +359,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 if (oav != null)
                 {
                     dynamic o = oav;
-                    o.v = dr["_id"];  
-                }  
+                    o.v = dr["_id"];
+                }
             }
         }
         /// <summary>
@@ -381,7 +398,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 {
                     dynamic o = oav;
                     o.v = dr["_id"];
-                }  
+                }
             }
         }
         /// <summary>
@@ -473,7 +490,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="name">元素名称</param>
-        public void SetPBlockCurrentRowByName(string pBlockName,string name)
+        public void SetPBlockCurrentRowByName(string pBlockName, string name)
         {
             FrameworkElement element = MainView.FindName(name) as FrameworkElement;
             if (!string.IsNullOrEmpty(pBlockName) && element != null)
