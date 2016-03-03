@@ -250,7 +250,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="position">插入位置</param>
         /// <param name="oav">接收oav</param>
         [ComVisible(false)]
-        public void blockInsertRow(string blockName, int position, OAVModel oav = null)
+        public void BlockInsertRow(string blockName, int position, OAVModel oav = null)
         {
             dataOperation.BlockInsertRow(blockName, position, oav);
         }
@@ -942,7 +942,6 @@ namespace Victop.Frame.CmptRuntime
         {
             return systemOperation.ConvertToBool(paramValue);
         }
-        #endregion
 
         #region 字符串处理
         /// <summary>
@@ -977,6 +976,8 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetDateTime(oav, day);
         }
+        #endregion
+
         #endregion
 
         #region UI操作

@@ -462,7 +462,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         else
                         {
                             o1.v = false;
-                            if (oavmsg != null)
+                            if (!string.IsNullOrEmpty(oavmsg.ToString()))
                             {
                                 dynamic o2 = oavmsg;
                                 o2.v = msg;
@@ -478,7 +478,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         else
                         {
                             o1.v = false;
-                            if (oavmsg != null)
+                            if (!string.IsNullOrEmpty(oavmsg.ToString()))
                             {
                                 dynamic o2 = oavmsg;
                                 o2.v = msg;
@@ -494,7 +494,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         else
                         {
                             o1.v = false;
-                            if (oavmsg != null)
+                            if (!string.IsNullOrEmpty(oavmsg.ToString()))
                             {
                                 dynamic o2 = oavmsg;
                                 o2.v = msg;
@@ -510,7 +510,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         else
                         {
                             o1.v = false;
-                            if (oavmsg != null)
+                            if (!string.IsNullOrEmpty(oavmsg.ToString()))
                             {
                                 dynamic o2 = oavmsg;
                                 o2.v = msg;
