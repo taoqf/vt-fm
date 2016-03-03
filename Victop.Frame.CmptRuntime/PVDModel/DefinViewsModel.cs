@@ -331,6 +331,10 @@ namespace Victop.Frame.CmptRuntime
             contentDic.Add("systemid", SystemId);
             contentDic.Add("refsystemid", RefSystemId);
             contentDic.Add("modelid", ModelId);
+            if (!string.IsNullOrEmpty(SpaceId))
+            {
+                contentDic.Add("spaceid", SpaceId);
+            }
             contentDic.Add("DataChannelId", ViewId);
             Dictionary<string, object> returnDic = messageOp.SendSyncMessage(messageType, contentDic);
             if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
