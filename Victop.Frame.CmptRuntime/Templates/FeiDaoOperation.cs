@@ -203,7 +203,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接受oav返回结果true或false</param>
         /// <param name="isSaveServer">是否提交服务器</param>
         /// <returns>返回保存成功true，失败false</returns>
-        public void SavePBlockData(string pBlockName, object oav = null, bool isSaveServer = true)
+        public void SavePBlockData(string pBlockName, object oav, bool isSaveServer = true)
         {
             dataOperation.SavePBlockData(pBlockName, oav, isSaveServer);
         }

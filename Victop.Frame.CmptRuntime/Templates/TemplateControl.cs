@@ -213,7 +213,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 组件集合添加组件实例
         /// </summary>
-        /// <param name="componetName">组价名称</param>
+        /// <param name="componetName">组件名称</param>
         /// <param name="templateControl">组件实例</param>
         public void AddListCompnt(string componetName, TemplateControl templateControl)
         {
@@ -229,15 +229,16 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 得到组件实例
         /// </summary>
-        /// <param name="componetName">组价名称</param>
-        /// <returns></returns>
+        /// <param name="componetName">组件名称</param>
+        /// <returns>组件实例</returns>
         public TemplateControl GetCompntInstance(string componetName)
         {
-            if (listCompnt.ContainsKey(componetName))
+            object obj = FindName(componetName);
+            if (obj == null && listCompnt.ContainsKey(componetName))
             {
                 return listCompnt[componetName];
             }
-            return null;
+            return obj as TemplateControl;
         }
         /// <summary>
         /// 属性改变
