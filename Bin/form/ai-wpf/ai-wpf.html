@@ -4,6 +4,12 @@
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="IE=7,9,10" >
 		<title>test</title>
+		<script>
+		if(!window.console){
+			function ef(){}
+			window.console = {log:ef,info:ef,debug:ef,error:ef,trace:ef}; 
+		}
+		</script>
 		<script type="text/javascript" src='./ai.js'></script>
 		<script type="text/javascript" src='./nools.min.js'></script>
 		<!-- <script type="text/javascript">
