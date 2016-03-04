@@ -168,45 +168,48 @@ namespace VictopPartner
                     while (true)
                     {
                         HttpListenerContext ctx = listerner.GetContext();
-                        ctx.Response.StatusCode = 200;//设置返回给客服端http状态代码
-                        if (ctx.Response.Headers.AllKeys.Contains("Access-Control-Allow-Origin"))
+                        lock (ctx)
                         {
-                            ctx.Response.Headers.Set("Access-Control-Allow-Origin", "*");
-                        }
-                        else
-                        {
-                            ctx.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-                        }
-                        if (ctx.Request.Url.AbsoluteUri.Contains(httpweb))
-                        {
-                            int fileExtendIndex = ctx.Request.Url.LocalPath.LastIndexOf(".");
-                            string fileExtendName = fileExtendIndex != -1 ? ctx.Request.Url.LocalPath.Substring(ctx.Request.Url.LocalPath.LastIndexOf(".")) : "html";
-                            HttpListenerResponse response = ctx.Response;
-                            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + ctx.Request.Url.LocalPath))
+                            ctx.Response.StatusCode = 200;//设置返回给客服端http状态代码
+                            if (ctx.Response.Headers.AllKeys.Contains("Access-Control-Allow-Origin"))
                             {
-                                FileStream stream = new FileStream(AppDomain.CurrentDomain.BaseDirectory + ctx.Request.Url.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                                try
-                                {
-                                    response.ContentLength64 = stream.Length;
-                                    response.ContentType = string.Format("{0};charset=UTF-8", FileTypeHelper.GetMimeType(fileExtendName));
-                                    byte[] buff = new byte[4096];
-                                    int count = 0;
-                                    while ((count = stream.Read(buff, 0, 4096)) != 0)
-                                    {
-                                        ctx.Response.OutputStream.Write(buff, 0, count);
-                                    }
-                                    response.Close();
-                                    stream.Close();
-                                }
-                                catch (Exception ex)
-                                {
-                                    LoggerHelper.ErrorFormat("设置回应内容异常:{0}", string.IsNullOrEmpty(ex.Message) ? ex.InnerException.Message : ex.Message);
-                                }
+                                ctx.Response.Headers.Set("Access-Control-Allow-Origin", "*");
                             }
                             else
                             {
-                                response.StatusCode = 404;
-                                response.Close();
+                                ctx.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                            }
+                            if (ctx.Request.Url.AbsoluteUri.Contains(httpweb))
+                            {
+                                int fileExtendIndex = ctx.Request.Url.LocalPath.LastIndexOf(".");
+                                string fileExtendName = fileExtendIndex != -1 ? ctx.Request.Url.LocalPath.Substring(ctx.Request.Url.LocalPath.LastIndexOf(".")) : "html";
+                                HttpListenerResponse response = ctx.Response;
+                                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + ctx.Request.Url.LocalPath))
+                                {
+                                    FileStream stream = new FileStream(AppDomain.CurrentDomain.BaseDirectory + ctx.Request.Url.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                                    try
+                                    {
+                                        response.ContentLength64 = stream.Length;
+                                        response.ContentType = string.Format("{0};charset=UTF-8", FileTypeHelper.GetMimeType(fileExtendName));
+                                        byte[] buff = new byte[4096];
+                                        int count = 0;
+                                        while ((count = stream.Read(buff, 0, 4096)) != 0)
+                                        {
+                                            ctx.Response.OutputStream.Write(buff, 0, count);
+                                        }
+                                        response.Close();
+                                        stream.Close();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        LoggerHelper.ErrorFormat("设置回应内容异常:{0}", string.IsNullOrEmpty(ex.Message) ? ex.InnerException.Message : ex.Message);
+                                    }
+                                }
+                                else
+                                {
+                                    response.StatusCode = 404;
+                                    response.Close();
+                                }
                             }
                         }
                     }
