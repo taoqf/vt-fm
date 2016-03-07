@@ -6,7 +6,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using gnu.CORBA.Poa;
 using Microsoft.Win32;
 using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
@@ -38,14 +37,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="groupName">分组信息</param>
         public void SetFocus(string groupName)
         {
-            if (MainView.BusinessModel.Equals(0))
-            {
-                MainView.FeiDaoFSM.SetFocus(groupName);
-            }
-            if (MainView.BusinessModel.Equals(1))
-            {
-                MainView.FeiDaoMachine.SetFocus(groupName);
-            }
+            MainView.FeiDaoMachine.SetFocus(groupName);
         }
         /// <summary>
         /// 转移触发事件
@@ -54,22 +46,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="triggerSource">触发源</param>
         public void TranslationState(string triggerName, object triggerSource)
         {
-            if (MainView.BusinessModel.Equals(0))
-            {
-                MainView.FeiDaoFSM.Do(triggerName, triggerSource, true);
-            }
-            if (MainView.BusinessModel.Equals(1))
-            {
-                MainView.FeiDaoMachine.Do(triggerName, triggerSource);
-            }
-        }
-        /// <summary>
-        /// 插入事实
-        /// </summary>
-        /// <param name="oav">oav事实</param>
-        public void InsertFact(OAVModel oav)
-        {
-            MainView.FeiDaoFSM.InsertFact(oav);
+            MainView.FeiDaoMachine.Do(triggerName, triggerSource);
         }
         /// <summary>
         /// 插入事实
@@ -77,9 +54,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="o">o</param>
         /// <param name="a">a</param>
         /// <param name="v">v</param>
-        public void InsertFact(string o, string a, object v = null)
+        public object InsertFact(string o, string a, object v = null)
         {
-            MainView.FeiDaoMachine.InsertFact(o, a, v);
+            return MainView.FeiDaoMachine.InsertFact(o, a, v);
         }
         /// <summary>
         /// 移除事实
@@ -90,31 +67,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             MainView.FeiDaoMachine.RemoveFact(oav);
         }
         /// <summary>
-        /// 移除事实
-        /// </summary>
-        /// <param name="oav">oav事实</param>
-        public void RemoveFact(OAVModel oav)
-        {
-            MainView.FeiDaoFSM.RemoveFact(oav);
-        }
-        /// <summary>
         /// 修改事实
         /// </summary>
         /// <param name="oav">oav事实</param>
-        /// <param name="v">v</param>
-        public void UpdateFact(object oav, object v)
+        public void UpdateFact(object oav)
         {
             if (oav != null)
-                MainView.FeiDaoMachine.UpdateFact(oav, v);
-        }
-        /// <summary>
-        /// 修改事实
-        /// </summary>
-        /// <param name="oav">oav事实</param>
-        public void UpdateFact(OAVModel oav)
-        {
-            if (oav.AtrributeValue != null)
-                MainView.FeiDaoFSM.UpdateFact(oav);
+                MainView.FeiDaoMachine.UpdateFact(oav);
         }
         /// <summary>
         /// 系统输出
@@ -138,34 +97,18 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="se">状体转移实体</param>
         /// <param name="oav">oav警戒值</param>
         /// <param name="oavmsg">oav消息内容</param>
-        public void SetActionGuard(StateTransitionModel se, object oav, object oavmsg)
+        public void SetActionGuard(object se, object oav, object oavmsg)
         {
             dynamic o1 = oav;
             dynamic o2 = oavmsg;
+            dynamic o3 = se;
             if (o1.v != null && (bool)o1.v)
-                se.ActionGuard = true;
+                o3.v = true;
             else
             {
                 string msg = o2.v != null ? o2.v.ToString() : "条件不满足！";
                 VicMessageBoxNormal.Show(msg);
-                se.ActionGuard = false;
-            }
-        }
-        /// <summary>
-        /// 设置警戒条件
-        /// </summary>
-        /// <param name="se">状体转移实体</param>
-        /// <param name="oav">oav警戒值</param>
-        /// <param name="oavmsg">oav消息内容</param>
-        public void SetActionGuard(StateTransitionModel se, OAVModel oav, OAVModel oavmsg)
-        {
-            if (oav.AtrributeValue != null && (bool)oav.AtrributeValue)
-                se.ActionGuard = true;
-            else
-            {
-                string msg = oavmsg.AtrributeValue != null ? oavmsg.AtrributeValue.ToString() : "条件不满足！";
-                VicMessageBoxNormal.Show(msg);
-                se.ActionGuard = false;
+                o3.v = false;
             }
         }
         /// <summary>
@@ -177,14 +120,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             if (MainView.ParentControl != null)
             {
-                if (MainView.ParentControl.BusinessModel.Equals(0))
-                {
-                    MainView.ParentControl.FeiDaoFSM.Do(pageTrigger, paramInfo);
-                }
-                if (MainView.ParentControl.BusinessModel.Equals(1))
-                {
-                    MainView.ParentControl.FeiDaoMachine.Do(pageTrigger, paramInfo);
-                }
+                MainView.ParentControl.FeiDaoMachine.Do(pageTrigger, paramInfo);
             }
         }
         /// <summary>
@@ -198,14 +134,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             TemplateControl tc = MainView.GetCompntInstance(compntName);
             if (tc != null)
             {
-                if (tc.BusinessModel.Equals(0))
-                {
-                    tc.FeiDaoFSM.Do(compntTrigger, paramInfo);
-                }
-                if (tc.BusinessModel.Equals(1))
-                {
-                    tc.FeiDaoMachine.Do(compntTrigger, paramInfo);
-                }
+                tc.FeiDaoMachine.Do(compntTrigger, paramInfo);
             }
         }
         /// <summary>
@@ -222,18 +151,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 获取页面参数值
-        /// </summary>
-        /// <param name="paramName">参数名</param>
-        /// <param name="oav">oav载体</param>
-        public void ParamsPageGet(string paramName, OAVModel oav)
-        {
-            if (MainView.ParentControl.ParamDict.ContainsKey(paramName))
-            {
-                oav.AtrributeValue = MainView.ParentControl.ParamDict[paramName];
-            }
-        }
-        /// <summary>
         /// 获取组件参数值
         /// </summary>
         /// <param name="paramName">参数名</param>
@@ -247,24 +164,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 获取组件参数值
-        /// </summary>
-        /// <param name="paramName">参数名</param>
-        /// <param name="oav">oav载体</param>
-        public void ParamsCompntGet(string paramName, OAVModel oav)
-        {
-            if (MainView.ParamDict.ContainsKey(paramName))
-            {
-                oav.AtrributeValue = MainView.ParamDict[paramName];
-            }
-        }
-        /// <summary>
         /// 获取List集合
         /// </summary>
         /// <returns>List集合</returns>
-        public List<object> GetList()
+        public void GetList(object oav)
         {
-            return new List<object>();
+            dynamic o = oav;
+            o.v = new List<object>();
         }
         /// <summary>
         /// 将对象加入List集合结尾处
@@ -299,23 +205,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 获取Dictionary中参数值
-        /// </summary>
-        /// <param name="oavDic">存储dic类型的oav</param>
-        /// <param name="paramName">参数名</param>
-        /// <param name="oav">接收oav</param>
-        public void ParamsGetByDictionary(OAVModel oavDic, string paramName, OAVModel oav)
-        {
-            if (oavDic.AtrributeValue != null)
-            {
-                Dictionary<string, object> dic = JsonHelper.ToObject<Dictionary<string, object>>(oavDic.AtrributeValue.ToString());
-                if (dic != null && dic.ContainsKey(paramName))
-                {
-                    oav.AtrributeValue = dic[paramName];
-                }
-            }
-        }
-        /// <summary>
         /// 新增页面参数值
         /// </summary>
         /// <param name="paramName">参数名</param>
@@ -331,7 +220,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 MainView.ParentControl.ParamDict.Add(paramName, paramValue);
             }
         }
-
         /// <summary>
         /// 组件参数封装
         /// </summary>
@@ -363,34 +251,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             o2.v = fElement;
         }
         /// <summary>
-        /// 组件参数封装
-        /// </summary>
-        /// <param name="oavCom">组件参数</param>
-        /// <param name="oavPage">页面接收参数</param>
-        public void ParamsInterCompntAdd(OAVModel oavCom, OAVModel oavPage)
-        {
-            FrameworkElement fElement = oavPage.AtrributeValue as FrameworkElement;
-            if (fElement == null)
-            {
-                fElement = new FrameworkElement();
-            }
-            Dictionary<string, object> dicParams = fElement.Tag as Dictionary<string, object>;
-            if (dicParams == null)
-            {
-                dicParams = new Dictionary<string, object>();
-            }
-            if (!dicParams.ContainsKey(oavCom.AtrributeName))
-            {
-                dicParams.Add(oavCom.AtrributeName, oavCom.AtrributeValue);
-            }
-            else
-            {
-                dicParams[oavCom.AtrributeName] = oavCom.AtrributeValue;
-            }
-            fElement.Tag = dicParams;
-            oavPage.AtrributeValue = fElement;
-        }
-        /// <summary>
         /// 组件取参数
         /// </summary>
         /// <param name="oavParams">参数oav</param>
@@ -407,23 +267,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 if (dicParams != null && dicParams.ContainsKey(paramName))
                 {
                     o2.v = dicParams[paramName];
-                }
-            }
-        }
-        /// <summary>
-        /// 组件取参数
-        /// </summary>
-        /// <param name="se">状态信息</param>
-        /// <param name="paramName">参数名</param>
-        /// <param name="oav">接收oav</param>
-        public void ParamsInterCompntParse(StateTransitionModel se, string paramName, OAVModel oav)
-        {
-            if (se.ActionSourceElement != null)
-            {
-                Dictionary<string, object> dicParams = se.ActionSourceElement.Tag as Dictionary<string, object>;
-                if (dicParams != null && dicParams.ContainsKey(paramName))
-                {
-                    oav.AtrributeValue = dicParams[paramName];
                 }
             }
         }
@@ -582,28 +425,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 弹出提示询问
-        /// </summary>
-        /// <param name="messageInfo">提示信息</param>
-        /// <param name="caption">标题</param>
-        /// <param name="oav">接收oav</param>
-        public void ShowMessageResult(object messageInfo, object caption, OAVModel oav)
-        {
-            MessageBoxResult msgboxresult = VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption == null ? "空值" : caption.ToString(), MessageBoxButton.YesNo, MessageBoxImage.Information);
-            if (MessageBoxResult.Yes == msgboxresult)
-            {
-                oav.AtrributeValue = "1";
-            }
-            else if (MessageBoxResult.No == msgboxresult)
-            {
-                oav.AtrributeValue = "0";
-            }
-            else
-            {
-                oav.AtrributeValue = "";
-            }
-        }
-        /// <summary>
         /// 赋值
         /// </summary>
         /// <param name="paramValue">参数值</param>
@@ -612,15 +433,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             dynamic o = oav;
             o.v = paramValue;
-        }
-        /// <summary>
-        /// 赋值
-        /// </summary>
-        /// <param name="paramValue">参数值</param>
-        /// <param name="oav">接收oav</param>
-        public void SetParamValue(object paramValue, OAVModel oav)
-        {
-            oav.AtrributeValue = paramValue;
         }
         /// <summary>
         /// 设置页面显示元素
@@ -705,17 +517,19 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 保存规则文件
         /// </summary>
         /// <param name="content">规则内容</param>
-        public string SaveWriteTextToFile(object content)
+        /// <param name="oav">接受oav</param>
+        public void SaveWriteTextToFile(object content, object oav)
         {
+            dynamic o = oav;
             string filepath = AppDomain.CurrentDomain.BaseDirectory + "\\data\\Rule.drl";
             if (content == null)
             {
-                return filepath;
+                o.v = filepath;
             }
             List<Dictionary<string, object>> dicList = JsonHelper.ToObject<List<Dictionary<string, object>>>(content.ToString());
             if (dicList == null)
             {
-                return filepath;
+                o.v = filepath;
             }
             if (dicList.Count > 0 && dicList[0].ContainsKey("rules_string"))
             {
@@ -726,17 +540,18 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 sw.Close();
                 fs.Close();
             }
-            return filepath;
+            o.v = filepath;
         }
         /// <summary>
         /// 上传文件或者替换文件
         /// </summary>
         /// <param name="localFilePath">本地文件地址</param>
         /// <param name="filePath">新的文件路径或者老的文件路径</param>
+        /// <param name="oav">接受oav</param>
         /// <param name="productId">产品ID,默认“feidao”</param>
-        /// <returns>文件路径</returns>
-        public string UpLoadFile(string localFilePath, string filePath, string productId = "feidao")
+        public void UpLoadFile(string localFilePath, string filePath, object oav, string productId = "feidao")
         {
+            dynamic o = oav;
             try
             {
                 Dictionary<string, object> messageContent = new Dictionary<string, object>();
@@ -750,34 +565,36 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 {
                     Dictionary<string, object> replyContent = JsonHelper.ToObject<Dictionary<string, object>>(returnDic["ReplyContent"].ToString());
                     filePath = replyContent["fileId"].ToString();
-                    return filePath;
+                    o.v = filePath;
                 }
                 else
                 {
-                    return "";
+                    o.v = "";
                 }
             }
             catch (Exception ex)
             {
                 LoggerHelper.InfoFormat("上传文件异常(string UpLoadFile)：{0}", ex.Message);
-                return "";
+                o.v = "";
             }
         }
         /// <summary>
         /// 获取一个新的guid
         /// </summary>
-        /// <returns></returns>
-        public string GetNewGuid()
+        /// <param name="oav">接受oav</param>
+        public void GetNewGuid(object oav)
         {
-            return Guid.NewGuid().ToString();
+            dynamic o = oav;
+            o.v = Guid.NewGuid().ToString();
         }
         /// <summary>
         /// 返回指定名称资源的值
         /// </summary>
         /// <param name="name">资源名称</param>
-        /// <returns>资源值</returns>
-        public string GetStringByResourceName(string name)
+        /// <param name="oav">接受oav</param>
+        public void GetStringByResourceName(string name, object oav)
         {
+            dynamic o = oav;
             if (!string.IsNullOrEmpty(name))
             {
                 Type type = MainView.GetType();
@@ -786,71 +603,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 if (type != null)
                 {
                     ResourceManager rm = new ResourceManager(type.FullName, assembly);
-                    return rm.GetString(name);
+                    o.v = rm.GetString(name);
                 }
             }
-            return string.Empty;
+            o.v = string.Empty;
         }
-
-        #region 类型转换
-        /// <summary>
-        /// 转换字符串类型
-        /// </summary>
-        /// <param name="paramValue">参数值</param>
-        /// <returns></returns>
-        public string ConvertToString(object paramValue)
-        {
-            return paramValue == null ? "" : paramValue.ToString();
-        }
-        /// <summary>
-        /// 转换整型
-        /// </summary>
-        /// <param name="paramValue">参数值</param>
-        /// <returns></returns>
-        public int ConvertToInt(object paramValue)
-        {
-            int i = 0;
-            if (paramValue != null)
-                int.TryParse(paramValue.ToString(), out i);
-            return i;
-        }
-        /// <summary>
-        /// 转换长整形
-        /// </summary>
-        /// <param name="paramValue">参数值</param>
-        /// <returns></returns>
-        public long ConvertToLong(object paramValue)
-        {
-            long i = 0;
-            if (paramValue != null)
-                long.TryParse(paramValue.ToString(), out i);
-            return i;
-        }
-        /// <summary>
-        /// 转换浮点型
-        /// </summary>
-        /// <param name="paramValue">参数值</param>
-        /// <returns></returns>
-        public decimal ConvertToDecimal(object paramValue)
-        {
-            decimal i = 0;
-            if (paramValue != null)
-                decimal.TryParse(paramValue.ToString(), out i);
-            return i;
-        }
-        /// <summary>
-        /// 转换bool型
-        /// </summary>
-        /// <param name="paramValue">参数值</param>
-        /// <returns></returns>
-        public bool ConvertToBool(object paramValue)
-        {
-            bool i = false;
-            if (paramValue != null)
-                bool.TryParse(paramValue.ToString(), out i);
-            return i;
-        }
-        #endregion
 
         #region 字符串处理
         /// <summary>
@@ -858,25 +615,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="strValue">字符串实例</param>
         /// <param name="value">指定的字符串</param>
-        /// <returns>是否包含</returns>
-        public bool StrContains(object strValue, string value)
+        /// <param name="oav">接受oav</param>
+        public void StrContains(object strValue, string value, object oav)
         {
+            dynamic o = oav;
             if (strValue == null || value == null)
-                return false;
-            return strValue.ToString().Contains(value);
+                o.v = false;
+            o.v = strValue.ToString().Contains(value);
         }
         /// <summary>
         /// 从当前 System.String 对象移除数组中指定的一组字符的所有尾部匹配项
         /// </summary>
         /// <param name="strValue">字符串实例</param>
         /// <param name="value">一组字符组成的字符串</param>
-        /// <returns>移除后的字符串</returns>
-        public string StrTrimEnd(object strValue, string value)
+        /// <param name="oav">接受oav</param>
+        public void StrTrimEnd(object strValue, string value, object oav)
         {
+            dynamic o = oav;
             if (strValue == null || value == null)
-                return "";
+                o.v = "";
             char[] chararray = value.ToCharArray();
-            return strValue.ToString().TrimEnd(chararray);
+            o.v = strValue.ToString().TrimEnd(chararray);
         }
         #endregion
 
@@ -907,14 +666,15 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="SystemId">系统ID</param>
         /// <param name="iPName">规则名称(例如:"BH005")</param>
         /// <param name="iCodeRule">编码规则</param>
-        /// <returns>单号</returns>
-        public string SendGetCodeMessage(string SystemId, string iPName, string iCodeRule)
+        /// <param name="oav">接受oav</param>
+        public void SendGetCodeMessage(string SystemId, string iPName, string iCodeRule, object oav)
         {
+            dynamic o = oav;
             try
             {
                 if (string.IsNullOrEmpty(iPName) || string.IsNullOrEmpty(SystemId))
                 {
-                    return string.Empty;
+                    o.v = string.Empty;
                 }
                 string MessageType = "MongoDataChannelService.findDocCode";
                 DataMessageOperation messageOp = new DataMessageOperation();
@@ -925,17 +685,17 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
                 if (returnDic != null || returnDic.ContainsKey("ReplyContent"))
                 {
-                    return JsonHelper.ReadJsonString(returnDic["ReplyContent"].ToString(), "result");
+                    o.v = JsonHelper.ReadJsonString(returnDic["ReplyContent"].ToString(), "result");
                 }
                 else
                 {
-                    return string.Empty;
+                    o.v = string.Empty;
                 }
             }
             catch (Exception ex)
             {
                 LoggerHelper.InfoFormat("发送获取编码消息异常（string SendGetCodeMessage）：{0}", ex.Message);
-                return string.Empty;
+                o.v = string.Empty;
             }
         }
         #endregion

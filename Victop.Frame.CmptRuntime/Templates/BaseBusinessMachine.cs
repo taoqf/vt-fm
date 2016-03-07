@@ -80,25 +80,25 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="O">O</param>
         /// <param name="A">A</param>
         /// <param name="V">V</param>
-        public void InsertFact(string O, string A, object V = null)
+        public object InsertFact(string O, string A, object V = null)
         {
             if (V == null)
             {
-                MainView.BuiltBrowser.InvokeScript("send_msg", "oav_insert", O, A);
+               return MainView.BuiltBrowser.InvokeScript("send_msg", "oav_insert", O, A);
             }
             else
             {
-                MainView.BuiltBrowser.InvokeScript("send_msg", "oav_insert", O, A, V);
+                return MainView.BuiltBrowser.InvokeScript("send_msg", "oav_insert", O, A, V);
             }
         }
         /// <summary>
         /// 修改事实
         /// </summary>
         /// <param name="OAV">OAV事实实例</param>
-        /// <param name="V">v值</param>
-        public void UpdateFact(object OAV, object V)
+        public void UpdateFact(object OAV)
         {
-            MainView.BuiltBrowser.InvokeScript("send_msg", "oav_modify", OAV, V);
+            dynamic o = OAV;
+            MainView.BuiltBrowser.InvokeScript("send_msg", "oav_modify", OAV, o.v);
             MainView.BuiltBrowser.InvokeScript("send_msg", "oav_validate", OAV);
         }
         /// <summary>

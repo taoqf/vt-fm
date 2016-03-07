@@ -121,75 +121,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="elementName">元素名称</param>
         /// <param name="oav">接收oav</param>
-        public void GetElementContent(string elementName, OAVModel oav)
-        {
-            if (!string.IsNullOrEmpty(elementName))
-            {
-                FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
-                if (element != null)
-                {
-                    string typeName = element.GetType().Name;
-                    switch (typeName)
-                    {
-                        case "VicButtonNormal":
-                            VicButtonNormal button = element as VicButtonNormal;
-                            oav.AtrributeValue = button.Content;
-                            break;
-                        case "VicLabelNormal":
-                            VicLabelNormal label = element as VicLabelNormal;
-                            oav.AtrributeValue = label.Content;
-                            break;
-                        case "VicTextBlockNormal":
-                            VicTextBlockNormal textblock = element as VicTextBlockNormal;
-                            oav.AtrributeValue = textblock.Text;
-                            break;
-                        case "VicTextBox":
-                            VicTextBox textbox = element as VicTextBox;
-                            oav.AtrributeValue = textbox.VicText;
-                            break;
-                        case "VicTextBoxNormal":
-                            VicTextBoxNormal textboxnormal = element as VicTextBoxNormal;
-                            oav.AtrributeValue = textboxnormal.VicText;
-                            break;
-                        case "VicDatePickerNormal":
-                            VicDatePickerNormal datepicker = element as VicDatePickerNormal;
-                            oav.AtrributeValue = datepicker.Value;
-                            break;
-                        case "VicCheckBoxNormal":
-                            VicCheckBoxNormal checkbox = element as VicCheckBoxNormal;
-                            oav.AtrributeValue = checkbox.Content;
-                            break;
-                        case "VicRadioButtonNormal":
-                            VicRadioButtonNormal radiobutton = element as VicRadioButtonNormal;
-                            oav.AtrributeValue = radiobutton.Content;
-                            break;
-                        case "VicTreeView":
-                            VicTreeView treeview = element as VicTreeView;
-                            if (treeview.SelectedItem != null)
-                            {
-                                TreeViewItem tvi = (TreeViewItem)treeview.SelectedItem;
-                                oav.AtrributeValue = tvi.Header;
-                            }
-                            break;
-                        case "VicListBoxNormal":
-                            VicListBoxNormal listbox = element as VicListBoxNormal;
-                            if (listbox.SelectedItem != null)
-                            {
-                                ListBoxItem lbi = (ListBoxItem)listbox.SelectedItem;
-                                oav.AtrributeValue = lbi.Content;
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// 获取元素内容
-        /// </summary>
-        /// <param name="elementName">元素名称</param>
-        /// <param name="oav">接收oav</param>
         public void GetElementContent(string elementName, object oav)
         {
             if (!string.IsNullOrEmpty(elementName))
@@ -293,24 +224,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="element">界面元素</param>
         /// <param name="oav">接收oav</param>
-        public void GetElementName(FrameworkElement element, object oav)
+        public void GetElementName(object element, object oav)
         {
-            if (element != null && oav != null)
+            FrameworkElement fElement = element as FrameworkElement;
+            if (fElement != null && oav != null)
             {
                 dynamic o = oav;
-                o.v = element.Name;
-            }
-        }
-        /// <summary>
-        /// 获取界面元素名称
-        /// </summary>
-        /// <param name="element">界面元素</param>
-        /// <param name="oav">接收oav</param>
-        public void GetElementName(FrameworkElement element, OAVModel oav)
-        {
-            if (element != null && oav != null)
-            {
-                oav.AtrributeValue = element.Name;
+                o.v = fElement.Name;
             }
         }
         /// <summary>
@@ -365,20 +285,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 根据DataGrid名称获取当前选择行中某一字段的值
-        /// </summary>
-        /// <param name="gridName">grid名称</param>
-        /// <param name="paramName">字段名</param>
-        /// <param name="oav">返回OAV值</param>
-        public void ParamsCurrentRowGetFromGridName(string gridName, string paramName, OAVModel oav)
-        {
-            VicDataGrid dataGrid = (VicDataGrid)MainView.FindName(gridName);
-            if (dataGrid != null && dataGrid.SelectedItem != null)
-            {
-                oav.AtrributeValue = ((DataRowView)dataGrid.SelectedItem).Row[paramName];
-            }
-        }
-        /// <summary>
         /// 获取元素是否选中
         /// </summary>
         /// <param name="elementName">元素名称</param>
@@ -401,35 +307,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         case "VicRadioButtonNormal":
                             VicRadioButtonNormal radiobutton = element as VicRadioButtonNormal;
                             o.v = radiobutton.IsChecked;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// 获取元素是否选中
-        /// </summary>
-        /// <param name="elementName">元素名称</param>
-        /// <param name="oav">接收oav</param>
-        public void GetElementIsChecked(string elementName, OAVModel oav)
-        {
-            if (!string.IsNullOrEmpty(elementName))
-            {
-                FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
-                if (element != null)
-                {
-                    string typeName = element.GetType().Name;
-                    switch (typeName)
-                    {
-                        case "VicCheckBoxNormal":
-                            VicCheckBoxNormal checkbox = element as VicCheckBoxNormal;
-                            oav.AtrributeValue = checkbox.IsChecked;
-                            break;
-                        case "VicRadioButtonNormal":
-                            VicRadioButtonNormal radiobutton = element as VicRadioButtonNormal;
-                            oav.AtrributeValue = radiobutton.IsChecked;
                             break;
                         default:
                             break;
@@ -462,7 +339,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         else
                         {
                             o1.v = false;
-                            if (!string.IsNullOrEmpty(oavmsg.ToString()))
+                            if (oavmsg != null & oavmsg != DBNull.Value && !string.IsNullOrEmpty(oavmsg.ToString()))
                             {
                                 dynamic o2 = oavmsg;
                                 o2.v = msg;
@@ -478,7 +355,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         else
                         {
                             o1.v = false;
-                            if (!string.IsNullOrEmpty(oavmsg.ToString()))
+                            if (oavmsg != null & oavmsg != DBNull.Value && !string.IsNullOrEmpty(oavmsg.ToString()))
                             {
                                 dynamic o2 = oavmsg;
                                 o2.v = msg;
@@ -494,7 +371,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         else
                         {
                             o1.v = false;
-                            if (!string.IsNullOrEmpty(oavmsg.ToString()))
+                            if (oavmsg != null & oavmsg != DBNull.Value && !string.IsNullOrEmpty(oavmsg.ToString()))
                             {
                                 dynamic o2 = oavmsg;
                                 o2.v = msg;
@@ -510,83 +387,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         else
                         {
                             o1.v = false;
-                            if (!string.IsNullOrEmpty(oavmsg.ToString()))
+                            if (oavmsg != null & oavmsg != DBNull.Value && !string.IsNullOrEmpty(oavmsg.ToString()))
                             {
                                 dynamic o2 = oavmsg;
                                 o2.v = msg;
                             }
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        /// <summary>
-        /// VicDataGrid是否有选中项
-        /// </summary>
-        /// <param name="dgridName">控件名</param>
-        /// <param name="oav">接收oav</param>
-        /// <param name="oavmsg">消息oav</param>
-        public void VicDataGridIsSelectItem(string dgridName, OAVModel oav, OAVModel oavmsg)
-        {
-            FrameworkElement element = MainView.FindName(dgridName) as FrameworkElement;
-            string msg = "当前选择项为空";
-            if (element != null)
-            {
-                string typeName = element.GetType().Name;
-                switch (typeName)
-                {
-                    case "VicDataGrid":
-                        VicDataGrid datagrid = element as VicDataGrid;
-                        if (datagrid != null && datagrid.SelectedItem != null)
-                        {
-                            oav.AtrributeValue = true;
-                        }
-                        else
-                        {
-                            oav.AtrributeValue = false;
-                            if (oavmsg != null)
-                                oavmsg.AtrributeValue = msg;
-                        }
-                        break;
-                    case "VicTreeView":
-                        VicTreeView treeview = element as VicTreeView;
-                        if (treeview != null && treeview.SelectedItem != null)
-                        {
-                            oav.AtrributeValue = true;
-                        }
-                        else
-                        {
-                            oav.AtrributeValue = false;
-                            if (oavmsg != null)
-                                oavmsg.AtrributeValue = msg;
-                        }
-                        break;
-                    case "VicListBoxNormal":
-                        VicListBoxNormal listbox = element as VicListBoxNormal;
-                        if (listbox != null && listbox.SelectedItem != null)
-                        {
-                            oav.AtrributeValue = true;
-                        }
-                        else
-                        {
-                            oav.AtrributeValue = false;
-                            if (oavmsg != null)
-                                oavmsg.AtrributeValue = msg;
-                        }
-                        break;
-                    case "VicListViewNormal":
-                        VicListViewNormal listview = element as VicListViewNormal;
-                        if (listview != null && listview.SelectedItem != null)
-                        {
-                            oav.AtrributeValue = true;
-                        }
-                        else
-                        {
-                            oav.AtrributeValue = false;
-                            if (oavmsg != null)
-                                oavmsg.AtrributeValue = msg;
                         }
                         break;
                     default:

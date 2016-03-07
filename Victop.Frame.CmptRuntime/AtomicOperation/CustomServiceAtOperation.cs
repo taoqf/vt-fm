@@ -20,7 +20,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <summary>
         /// 服务OAV集合
         /// </summary>
-        Dictionary<string, List<OAVModel>> serviceOAVList = new Dictionary<string, List<OAVModel>>();
+        Dictionary<string, List<dynamic>> serviceOAVList = new Dictionary<string, List<dynamic>>();
         /// <summary>
         /// 数据消息管理
         /// </summary>
@@ -82,9 +82,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     {
                         try
                         {
-                            foreach (OAVModel oav in serviceOAVList[serviceName])
+                            foreach (dynamic oav in serviceOAVList[serviceName])
                             {
-                                MainView.FeiDaoFSM.RemoveFact(oav);
+                                MainView.FeiDaoMachine.RemoveFact(oav);
                             }
                             serviceOAVList[serviceName].Clear();
                         }
@@ -96,19 +96,15 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     }
                     else
                     {
-                        serviceOAVList.Add(serviceName, new List<OAVModel>());
+                        serviceOAVList.Add(serviceName, new List<dynamic>());
                     }
-                    OAVModel oavCode = new OAVModel(serviceName, "code", resultDic["ReplyMode"]);
-                    OAVModel oavMessage = new OAVModel(serviceName, "message", resultDic["ReplyAlertMessage"]);
-                    OAVModel oavContent = new OAVModel(serviceName, "content", resultDic["ReplyContent"]);
-                    MainView.FeiDaoFSM.InsertFact(oavCode);
-                    MainView.FeiDaoFSM.InsertFact(oavMessage);
-                    MainView.FeiDaoFSM.InsertFact(oavContent);
+                    dynamic oavCode = MainView.FeiDaoMachine.InsertFact(serviceName, "code", resultDic["ReplyMode"]);
+                    dynamic oavMessage = MainView.FeiDaoMachine.InsertFact(serviceName, "message", resultDic["ReplyAlertMessage"]);
+                    dynamic oavContent = MainView.FeiDaoMachine.InsertFact(serviceName, "content", resultDic["ReplyContent"]);
                     //oav存入集合
                     serviceOAVList[serviceName].Add(oavCode);
                     serviceOAVList[serviceName].Add(oavMessage);
                     serviceOAVList[serviceName].Add(oavContent);
-
                 }
                 serviceParamList.Remove(serviceName);
             }

@@ -6,7 +6,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using gnu.CORBA.Poa;
 using Microsoft.Win32;
 using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;

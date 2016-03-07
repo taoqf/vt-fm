@@ -54,10 +54,6 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         public string SpaceId { get; set; }
         /// <summary>
-        /// 飞道状态机
-        /// </summary>
-        public BaseStateMachine FeiDaoFSM;
-        /// <summary>
         /// 飞道引擎
         /// </summary>
         public BaseBusinessMachine FeiDaoMachine;
