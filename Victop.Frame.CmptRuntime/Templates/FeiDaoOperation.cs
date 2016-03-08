@@ -394,6 +394,17 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetSelectRowsAll(pblockName);
         }
+        /// <summary>
+        /// 获取最大序号加1(字段中首字母为字母)
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="firstLetter">首字母</param>
+        /// <param name="oav">接收oav</param>
+        public void GetMaxNumberFromOneLetter(string pblockName, string fieldName, string firstLetter, object oav)
+        {
+            dataOperation.GetMaxNumberFromOneLetter(pblockName, fieldName, firstLetter, oav);
+        }
         #endregion
 
         #region 系统操作
