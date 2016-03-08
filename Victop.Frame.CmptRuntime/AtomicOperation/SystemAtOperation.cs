@@ -229,7 +229,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             dynamic o1 = oavCom;
             dynamic o2 = oavPage;
-            FrameworkElement fElement = o1.v as FrameworkElement;
+            FrameworkElement fElement = o2.v as FrameworkElement;
             if (fElement == null)
             {
                 fElement = new FrameworkElement();

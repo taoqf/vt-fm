@@ -71,7 +71,7 @@ namespace Victop.Frame.CmptRuntime
             }
             else
             {
-                LoggerHelper.ErrorFormat("状态转移失败:{0}:动作{1}", MainView.GetType().Assembly.GetName().Name, triggerName);
+                LoggerHelper.ErrorFormat("状态转移失败:{0}:动作{1}", MainView.GetType().Assembly.GetName().Name + ":" + MainView.Name, triggerName);
             }
         }
         /// <summary>
@@ -84,7 +84,7 @@ namespace Victop.Frame.CmptRuntime
         {
             if (V == null)
             {
-               return MainView.BuiltBrowser.InvokeScript("send_msg", "oav_insert", O, A);
+                return MainView.BuiltBrowser.InvokeScript("send_msg", "oav_insert", O, A);
             }
             else
             {

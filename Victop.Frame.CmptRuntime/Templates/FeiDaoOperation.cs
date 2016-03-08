@@ -432,8 +432,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="v">v</param>
         public void InsertFact(string o, string a, object v = null)
         {
-            dynamic obj = systemOperation.InsertFact(o, a, v);
-            string ob = obj.o;
+            systemOperation.InsertFact(o, a, v);
         }
         /// <summary>
         /// 移除事实
