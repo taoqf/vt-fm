@@ -902,7 +902,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="args"></param>
         public void SendErrMsg(string args)
         {
-            SysFeiDaoLog("js businessmachine error:" + args);
+            SysFeiDaoLog("js businessmachine error:" + MainView.Name + args);
         }
         /// <summary>
         /// 确认初始化(JS专用)
