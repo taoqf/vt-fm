@@ -32,6 +32,7 @@
 	"ClearOAVByBlock":"ClearOAVByBlock",
 	"BlockSelectRowsToOAV":"BlockSelectRowsToOAV",
 	"ClearBlockData":"ClearBlockData",
+	"SetSelectRows":"SetSelectRows",
 	"SetSelectRowsNull":"SetSelectRowsNull",
 	"SetSelectRowsAll":"SetSelectRowsAll",
 	"GetMaxNumberFromOneLetter":"GetMaxNumberFromOneLetter",
