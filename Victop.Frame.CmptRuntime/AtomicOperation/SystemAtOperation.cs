@@ -103,12 +103,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dynamic o2 = oavmsg;
             dynamic o3 = se;
             if (o1.v != null && (bool)o1.v)
-                o3.v = true;
+                o3.v = false;
             else
             {
                 string msg = o2.v != null ? o2.v.ToString() : "条件不满足！";
                 VicMessageBoxNormal.Show(msg);
-                o3.v = false;
+                o3.v = true;
             }
         }
         /// <summary>
