@@ -179,6 +179,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                                 ListBoxItem lbi = (ListBoxItem)listbox.SelectedItem;
                                 o.v = lbi.Content;
                             }
+                            else
+                            {
+                                o.v = "";
+                            }
                             break;
                         default:
                             break;
