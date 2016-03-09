@@ -94,5 +94,6 @@
 	"UnitPageRuleLoad":"UnitPageRuleLoad",
 	"UnitWebBrowserLoad":"UnitWebBrowserLoad",
 	"SendErrMsg":"SendErrMsg",
-	"SendInit":"SendInit"
+	"SendInit":"SendInit",
+	"SendGetCodeMessage":"SendGetCodeMessage"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
