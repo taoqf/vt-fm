@@ -522,6 +522,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             dynamic o = oav;
             string filepath = AppDomain.CurrentDomain.BaseDirectory + "\\data\\Rule.drl";
+            FileStream fs = new FileStream(filepath, FileMode.Create);
+            StreamWriter sw = new StreamWriter(fs);
             if (content == null)
             {
                 o.v = filepath;
@@ -531,15 +533,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 o.v = filepath;
             }
-            if (dicList.Count > 0 && dicList[0].ContainsKey("rules_string"))
+            else if (dicList.Count > 0 && dicList[0].ContainsKey("rules_string"))
             {
-                FileStream fs = new FileStream(filepath, FileMode.Create);
-                StreamWriter sw = new StreamWriter(fs);
                 sw.Write(dicList[0]["rules_string"]);
-                sw.Flush();
-                sw.Close();
-                fs.Close();
             }
+            sw.Flush();
+            sw.Close();
+            fs.Close();
             o.v = filepath;
         }
         /// <summary>
