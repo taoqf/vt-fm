@@ -560,7 +560,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="width">宽度</param>
         public void UCCompntShowDialog(string compntName, int height = 600, int width = 600)
         {
-            systemOperation.UCCompntShowDialog(compntName, height = 600, width = 600);
+            systemOperation.UCCompntShowDialog(compntName, height, width);
         }
         /// <summary>
         /// 弹框展示组件操作
@@ -570,7 +570,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="width">宽度</param>
         public void UCCompntShow(string compntName, int height = 600, int width = 600)
         {
-            systemOperation.UCCompntShow(compntName, height = 600, width = 600);
+            systemOperation.UCCompntShow(compntName, height, width);
         }
         /// <summary>
         /// 使用window弹出内容
