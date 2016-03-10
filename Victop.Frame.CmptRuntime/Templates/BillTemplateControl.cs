@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -18,6 +19,7 @@ namespace Victop.Frame.CmptRuntime
     /// </summary>
     public class BillTemplateControl : TemplateControl
     {
+        private TemplateControl MainView;
         BillDefinModel definModel = new BillDefinModel();
         /// <summary>
         /// 凭证
@@ -26,6 +28,23 @@ namespace Victop.Frame.CmptRuntime
         {
             get { return definModel; }
             set { definModel = value; }
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="groupName">规则分组名</param>
+        /// <param name="mainView">主应用程序</param>
+        public BillTemplateControl(TemplateControl mainView)
+        {
+            MainView = mainView;            
+            string pvdPath = string.Format("{0}.PVD.{1}.json", mainView.GetType().Assembly.GetName().Name, "billsetting");
+            Stream pvdStream = mainView.GetType().Assembly.GetManifestResourceStream(pvdPath);
+            if (pvdStream != null)
+            {
+                string pvdStr = FileHelper.ReadText(pvdStream);
+                DefinModel = JsonHelper.ToObject<BillDefinModel>(pvdStr);//反解析JSON串
+            }
         }
 
         #region 发送获取编码消息
@@ -37,6 +56,10 @@ namespace Victop.Frame.CmptRuntime
             string codeNo = string.Empty;
             try
             {
+                if (DefinModel == null)
+                {
+                    return string.Empty;
+                }
                 string relStr = JsonHelper.ReadJsonString(DefinModel.EncodedService.ToString(), "dataArray");
                 if (!string.IsNullOrEmpty(relStr))
                 {

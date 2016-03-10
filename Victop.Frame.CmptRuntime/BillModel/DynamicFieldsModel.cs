@@ -36,5 +36,19 @@ namespace Victop.Frame.CmptRuntime
             get { return fieldType; }
             set { fieldType = value; }
         }
+
+        /// <summary>
+        /// 字段默认值
+        /// </summary>
+        private object fieldValue;
+        /// <summary>
+        /// 字段默认值
+        /// </summary>
+        [JsonProperty(PropertyName = "fieldvalue")]
+        public object FieldValue
+        {
+            get { return fieldValue; }
+            set { fieldValue = value; }
+        }
     }
 }
