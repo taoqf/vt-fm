@@ -1,0 +1,5 @@
+﻿rule "r1" {salience: 1;when{a:OAV a.o=="event_parameter"&&a.a=="0";} 
+then{feidao.SysConsole("BtnOpView:beforeinit");
+}} 
+
+rule "r2" {salience: 1;when{a:OAV a.o=="a"&&a.a=="aaaaa";} then{feidao.SysConsole("BtnOpView:"+a.a);}} 

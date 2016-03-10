@@ -38,7 +38,7 @@ namespace AutomaticCodePlugin.Views
 
         private void UCDataGridView_BrowserLoadComplate()
         {
-            FeiDaoMachine.Do("afterinit", this);
+            //FeiDaoMachine.Do("init", this);
             MainPBlock = GetPresentationBlockModel("masterPBlock");
         }
     }

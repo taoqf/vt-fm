@@ -20,7 +20,7 @@ namespace AutomaticCodePlugin.Views
 
         private void UCBtnOperationView_BrowserLoadComplate()
         {
-            FeiDaoMachine.Do("afterinit", this);
+            //FeiDaoMachine.Do("init", this);
         }
         private void searchBtn_Click(object sender, System.Windows.RoutedEventArgs e)
         {

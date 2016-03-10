@@ -921,6 +921,13 @@ namespace Victop.Frame.CmptRuntime
         {
             MainView.BuiltBrowserInit();
         }
+        /// <summary>
+        /// 确认加载
+        /// </summary>
+        public void SendLoad()
+        {
+            MainView.MainViewLoaded();
+        }
         #endregion
     }
 }

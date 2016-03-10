@@ -1,5 +1,4 @@
-﻿rule "r1" {salience: 1;agenda-group: "beforeinit";when{a:OAV a.o=="event_parameter"&&a.a=="1";} then{feidao.SysConsole("DataGridView:beforeinit");}} 
-rule "r2" {salience: 1;agenda-group: "afterinit";when{a:OAV a.o=="event_parameter"&&a.a=="1";} then{feidao.SysConsole("DataGridView:afterinit");}}
+﻿rule "r2" {salience: 1;agenda-group: "afterinit";when{a:OAV a.o=="event_parameter"&&a.a=="1";} then{feidao.SysConsole("DataGridView:afterinit");}}
 rule "r3" 
 {
 	salience: 10;

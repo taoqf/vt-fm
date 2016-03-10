@@ -23,7 +23,7 @@ namespace AutomaticCodePlugin.Views
 
         private void UCMainView_BrowserLoadComplate()
         {
-            FeiDaoMachine.Do("afterinit", this);
+            //FeiDaoMachine.Do("init", this);
         }
 
         private void dgridProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)

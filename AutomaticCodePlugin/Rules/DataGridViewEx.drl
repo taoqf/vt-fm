@@ -1,0 +1,1 @@
+﻿rule "r1" {salience: 1; when{a:OAV a.o=="event_parameter"&&a.a=="0";} then{feidao.SysConsole("DataGridView:beforeinit");}} 

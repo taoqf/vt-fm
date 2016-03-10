@@ -123,6 +123,9 @@
     <EmbeddedResource Include="Rules\DataGridView.drl" />
     <EmbeddedResource Include="Rules\MainView.drl" />
     <EmbeddedResource Include="PVD\DataGridView.json" />
+    <EmbeddedResource Include="Rules\DataGridViewEx.drl" />
+    <EmbeddedResource Include="Rules\BtnOpViewEx.drl" />
+    <EmbeddedResource Include="Rules\MainViewEx.drl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Victop.Frame.CmptRuntime\Victop.Frame.CmptRuntime.csproj">

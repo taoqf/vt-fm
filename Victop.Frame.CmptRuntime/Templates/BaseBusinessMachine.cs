@@ -38,9 +38,23 @@ namespace Victop.Frame.CmptRuntime
             }
         }
         /// <summary>
-        /// 初始化数据
+        /// 页面初始化
         /// </summary>
         public void Init()
+        {
+            string ruleString = string.Empty;
+            string fullName = string.Format("{0}.Rules.{1}Ex.drl", MainView.GetType().Assembly.GetName().Name, GroupName);
+            Stream manifestResourceStream = MainView.GetType().Assembly.GetManifestResourceStream(fullName);
+            if (manifestResourceStream != null)
+            {
+                ruleString = FileHelper.ReadText(manifestResourceStream);
+            }
+            MainView.BuiltBrowser.InvokeScript("send_msg", "render", null, ruleString);
+        }
+        /// <summary>
+        /// 页面加载
+        /// </summary>
+        public void Loaded()
         {
             string fsmString = string.Empty;
             string ruleString = string.Empty;

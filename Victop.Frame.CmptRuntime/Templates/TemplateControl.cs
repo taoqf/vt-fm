@@ -300,16 +300,22 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         internal void BuiltBrowserInit()
         {
+            FeiDaoMachine.Init();
+        }
+
+        internal void MainViewLoaded()
+        {
             if (BusinessModel.Equals(1))
             {
-                FeiDaoMachine.Init();
-                FeiDaoMachine.Do("beforeinit", this);
+                FeiDaoMachine.Loaded();
+                FeiDaoMachine.Do("init", this);
                 if (BrowserLoadComplate != null)
                 {
                     BrowserLoadComplate();
                 }
             }
         }
+
         /// <summary>
         /// 执行js方法
         /// </summary>

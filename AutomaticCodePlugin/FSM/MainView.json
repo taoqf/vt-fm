@@ -1,9 +1,6 @@
 {
 	"events": {
-		"beforeinit": [
-			"beforeinit"
-		],
-		"afterinit": [
+		"init": [
 			"afterinit"
 		],
 		"search":[
@@ -11,13 +8,9 @@
 		]
 	},
 	"transitions": [
-		{
-			"name": "beforeinit",
+		 {
+			"name": "init",
 			"from": "none",
-			"to": "init"
-		}, {
-			"name": "afterinit",
-			"from": "init",
 			"to": "ready"
 		},
     {
