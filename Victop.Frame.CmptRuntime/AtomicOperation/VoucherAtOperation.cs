@@ -29,7 +29,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="mainView"></param>
         public VoucherAtOperation(TemplateControl mainView)
         {
-            MainView = mainView;
+            MainView = mainView;            
         }
     }
 }
