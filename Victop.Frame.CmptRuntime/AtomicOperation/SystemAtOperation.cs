@@ -549,7 +549,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="filePath">新的文件路径或者老的文件路径</param>
         /// <param name="oav">接受oav</param>
         /// <param name="productId">产品ID,默认“feidao”</param>
-        public void UpLoadFile(string localFilePath, string filePath, object oav, string productId = "feidao")
+        public void UpLoadFile(string localFilePath, object filePath, object oav, string productId = "feidao")
         {
             dynamic o = oav;
             try
@@ -557,7 +557,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 Dictionary<string, object> messageContent = new Dictionary<string, object>();
                 Dictionary<string, string> address = new Dictionary<string, string>();
                 address.Add("UploadFromPath", localFilePath);
-                address.Add("DelFileId", filePath);
+                address.Add("DelFileId",Convert.ToString(filePath));
                 address.Add("ProductId", productId);
                 messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
                 Dictionary<string, object> returnDic = new DataMessageOperation().SendSyncMessage("ServerCenterService.UploadDocument", messageContent);

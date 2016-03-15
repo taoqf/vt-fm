@@ -691,7 +691,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="filePath">新的文件路径或者老的文件路径</param>
         /// <param name="oav">接受oav</param>
         /// <param name="productId">产品ID,默认“feidao”</param>
-        public void UpLoadFile(string localFilePath, string filePath, object oav, string productId = "feidao")
+        public void UpLoadFile(string localFilePath, object filePath, object oav, string productId = "feidao")
         {
             systemOperation.UpLoadFile(localFilePath, filePath, oav, productId);
         }
