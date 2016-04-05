@@ -557,7 +557,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 Dictionary<string, object> messageContent = new Dictionary<string, object>();
                 Dictionary<string, string> address = new Dictionary<string, string>();
                 address.Add("UploadFromPath", localFilePath);
-                address.Add("DelFileId",Convert.ToString(filePath));
+                address.Add("DelFileId", Convert.ToString(filePath));
                 address.Add("ProductId", productId);
                 messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
                 Dictionary<string, object> returnDic = new DataMessageOperation().SendSyncMessage("ServerCenterService.UploadDocument", messageContent);
@@ -656,6 +656,61 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             DateTime dtnew = dt.AddDays(day);
             result = dtnew.ToString();
             o.v = result;
+        }
+        #endregion
+
+        #region 获取系统变量
+        /// <summary>
+        /// 获取系统变量值
+        /// </summary>
+        /// <param name="sysVariableName">变量名称（用户编号：usercode 用户姓名：username 客户端编号：clientno 产品ID：productid 服务器时间：timestemp 命名空间:spaceid）</param>
+        /// <param name="oav">接受oav</param>
+        public void GetSysVariableValue(string sysVariableName, object oav)
+        {
+            dynamic o = oav;
+            DataMessageOperation messageOp = new DataMessageOperation();
+            Dictionary<string, object> resultDic = new Dictionary<string, object>();
+            try
+            {
+                switch (sysVariableName)
+                {
+                    case "usercode":
+                        resultDic = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                        o.v = JsonHelper.ReadJsonString(resultDic["ReplyContent"].ToString(), "UserCode");
+                        break;
+                    case "username":
+                        resultDic = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                        o.v = JsonHelper.ReadJsonString(resultDic["ReplyContent"].ToString(), "UserName");
+                        break;
+                    case "clientno":
+                        resultDic = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                        o.v = JsonHelper.ReadJsonString(resultDic["ReplyContent"].ToString(), "ClientNo");
+                        break;
+                    case "productid":
+                        resultDic = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                        o.v = JsonHelper.ReadJsonString(resultDic["ReplyContent"].ToString(), "ProductId");
+                        break;
+                    case "spaceid":
+                        resultDic = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
+                        o.v = JsonHelper.ReadJsonString(resultDic["ReplyContent"].ToString(), "SpaceId");
+                        break;
+                    case "systime":
+                        break;
+                    case "timestemp":
+                        resultDic = messageOp.SendSyncMessage("MongoDataChannelService.fetchSystime", new Dictionary<string, object>());
+                        string result = JsonHelper.ReadJsonString(resultDic["ReplyContent"].ToString(), "simpleDate");
+                        DateTime dt = Convert.ToDateTime(result);
+                        dt = TimeZone.CurrentTimeZone.ToLocalTime(dt);
+                        o.v = dt.ToString();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.InfoFormat("获取系统变量值异常（string GetSysVariableValue）：{0}", ex.Message);
+            }
         }
         #endregion
 

@@ -14,6 +14,7 @@ using System.Windows.Data;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
+using Victop.Frame.DataMessageManager;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -756,6 +757,18 @@ namespace Victop.Frame.CmptRuntime
         public void GetDateTime(object oav, int day = 0)
         {
             systemOperation.GetDateTime(oav, day);
+        }
+        #endregion
+
+        #region 获取系统变量
+        /// <summary>
+        /// 获取系统变量值
+        /// </summary>
+        /// <param name="sysVariableName">变量名称（用户编号：usercode 用户姓名：username 客户端编号：clientno 产品ID：productid 服务器时间：timestemp 命名空间:spaceid）</param>
+        /// <param name="oav">接受oav</param>
+        public void GetSysVariableValue(string sysVariableName, object oav)
+        {
+            systemOperation.GetSysVariableValue(sysVariableName, oav);
         }
         #endregion
 
