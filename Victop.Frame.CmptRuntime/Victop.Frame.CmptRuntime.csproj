@@ -93,6 +93,9 @@
     <Compile Include="AtomicOperation\DataAtOperation.cs" />
     <Compile Include="AtomicOperation\SystemAtOperation.cs" />
     <Compile Include="AtomicOperation\UIElementAtOperation.cs" />
+    <Compile Include="AtomicOperation\WebVisioAtOperation.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="AtomicOperation\VoucherAtOperation.cs" />
     <Compile Include="BillModel\BillDefinModel.cs" />
     <Compile Include="BillModel\DynamicFieldsModel.cs" />
