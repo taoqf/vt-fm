@@ -35,7 +35,7 @@ namespace MetroFramePlugin.ViewModels
     public class UCMetroWindowViewModel : ModelBase
     {
         #region 字段
-        private Window mainWindow;
+        private VicMetroWindow mainWindow;
         private VicButtonNormal btnPluginList;
 
         private Window win_PluginList;
@@ -454,13 +454,14 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    mainWindow = (Window)x;
+                  
+                    mainWindow = (VicMetroWindow)x;
                     mainWindow.Uid = "mainWindow";
                     toggleLock = (VicToggleSwitchNormal)mainWindow.FindName("toggleLock");
                     pwdLockSpace = (VicPasswordBoxNormal)mainWindow.FindName("pwdLockSpace");
                     mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
-                    mainWindow.MouseDown += mainWindow_MouseDown;
+                    //mainWindow.MouseDown += mainWindow_MouseDown;
                     //toggleLock.IsCheckedChanged += toggleLock_IsCheckedChanged;
                     Rect rect = SystemParameters.WorkArea;
                     mainWindow.MaxWidth = rect.Width;
@@ -939,7 +940,6 @@ namespace MetroFramePlugin.ViewModels
                 TabItemList[1].Header = "功能列表";
 
             }
-
             MenuModel menuModel = (MenuModel)x;
             SystemThirdLevelMenuList = menuModel.SystemMenuList;
             if (SystemThirdLevelMenuList.Count > 0)

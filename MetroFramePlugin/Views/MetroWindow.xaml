@@ -1,4 +1,4 @@
-﻿<Window x:Class="MetroFramePlugin.Views.MetroWindow"
+﻿<controls:VicMetroWindow x:Class="MetroFramePlugin.Views.MetroWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -6,7 +6,7 @@
         xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
         xmlns:unit="http://schemas.ifeidao.com/wpfunits"
         xmlns:converter="clr-namespace:MetroFramePlugin.Converters"
-        Name="mainWindow" Style="{DynamicResource ShadowWindow}">
+        Name="mainWindow" Style="{DynamicResource MetroWindowStyle}"  ResizeMode="NoResize"  CanResize="True">
     <Window.InputBindings>
         <KeyBinding Modifiers="Alt" Key="L" Command="{Binding btnLockSpaceClickCommand}"/>
     </Window.InputBindings>
@@ -63,19 +63,16 @@
       
         <Grid Name="gridMain">
             <Grid.RowDefinitions>
-                <RowDefinition RowDefinition.Height="45"/>
+                <RowDefinition RowDefinition.Height="0"/>
                 <RowDefinition RowDefinition.Height="*"/>
             </Grid.RowDefinitions>
-            <Grid Name="gridTitle" Grid.Row="0">
+            <Grid Name="gridTitle" Grid.Row="0" Visibility="Collapsed">
                 <!--Width="260"-->
                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <!--<Button Name="btnFeedBack" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>-->
                     <!--插件集合-->
                     <controls:VicButtonNormal Name="btnCountDown" Visibility="Collapsed" Style="{DynamicResource btnCountDownStyle}" ToolTip="倒计时">
                         <i:Interaction.Triggers>
-                            <!--<i:EventTrigger EventName="MouseEnter">
-                                <i:InvokeCommandAction Command="{Binding btnCountDownMouseEnterCommand}"/>
-                            </i:EventTrigger>-->
                             <i:EventTrigger EventName="Click">
                                 <i:InvokeCommandAction Command="{Binding btnCountDownClickCommand}"/>
                             </i:EventTrigger>
@@ -105,7 +102,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Column="0">
+                <Grid Grid.Column="0" Name="gridTitleState">
                     <controls:VicTabControlNormal  Name="MainTabControl" Style="{DynamicResource MainVicTabControlStyle}" ItemsSource="{Binding TabItemList}" SelectedItem="{Binding SelectedTabItem}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="TabItemClosing">
@@ -163,4 +160,4 @@
             <i:InvokeCommandAction Command="{Binding gridMainLoadedCommand}"  CommandParameter="{Binding ElementName=mainWindow}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-</Window>
+</controls:VicMetroWindow>

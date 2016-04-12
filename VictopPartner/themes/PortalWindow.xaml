@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
                     xmlns:local="clr-namespace:VictopPartner"
+                    xmlns:sys ="clr-namespace:System;assembly=mscorlib"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
     <local:HorizontalOffsetConverter x:Key="HorizontalOffsetConverter"/>
     <LinearGradientBrush x:Key="borStyle" EndPoint="0,1" StartPoint="0,0">
@@ -226,13 +227,13 @@
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="Content" Value="&#xe61d;"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="13"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Height" Value="30"/>
+        <Setter Property="Height" Value="18"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border x:Name="PART_Border" CornerRadius="20"  BorderThickness="0" Padding="2" Background="Transparent">
+                    <Border x:Name="PART_Border"  BorderThickness="0" Padding="2" Background="Transparent">
                         <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <!--<Border Name="PART_Border" CornerRadius="20"  BorderThickness="0" Background="Transparent">
@@ -804,13 +805,13 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Margin" Value="5,0,5,0"/>
         <Setter Property="Width" Value="30"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontSize" Value="8"/>
         <Setter Property="Content" Value="&#xe64e;"/>
-        <Setter Property="Height" Value="30"/>
+        <Setter Property="Height" Value="16"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border x:Name="PART_Border" CornerRadius="20"  BorderThickness="0"  Background="Transparent">
+                    <Border x:Name="PART_Border"  BorderThickness="0"  Background="Transparent">
                                         <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -880,19 +881,18 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
     <Style x:Key="btnChangeSkinStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="Width" Value="30"/>
-        <Setter Property="Height" Value="30"/>
+        <Setter Property="Height" Value="20"/>
         <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Margin" Value="5,0,5,0"/>
+        <Setter Property="Margin" Value="0,-1,0,0"></Setter>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="0"/>
         <Setter Property="Content" Value="&#xe6e8;"/> 
-        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontSize" Value="16"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
-                    <Border x:Name="PART_Border" CornerRadius="20" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="Transparent"  BorderThickness="0" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Border x:Name="PART_Border" Width="{TemplateBinding Width}" Padding="2" Height="{TemplateBinding Height}" Background="Transparent"  BorderThickness="0">
                         <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -1264,4 +1264,294 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         </Setter>
     </Style>
     <!--自定义机台主题颜色结束-->
+
+    <!--MetroWindow-->
+    <controls:BoolToVisibilityExConverter x:Key="BoolToVisibilityConverter"></controls:BoolToVisibilityExConverter>
+    <Style x:Key ="styleWindowButtonMinimize"  TargetType ="{x:Type  Button }">
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter  Property ="Template">
+            <Setter.Value >
+                <ControlTemplate  TargetType ="{ x:Type Button }">
+                    <Grid  x:Name ="buttonClose">
+                        <Border x:Name="PART_Border"   BorderThickness="0" Padding="2" Background="Transparent">
+                        </Border>
+                        <Path  x:Name ="iconMin"  Width ="11.1641"  Height ="2.06641"  Canvas.Left ="3.97266"  Canvas.Top ="8.51962"  Stretch ="Fill"  Fill ="#FFFFFFFF"  Data ="F1 M 5.00659,8.51962C 4.43613,8.51831 3.97266,8.98184 3.97266,9.55347C 3.97266,10.1238 4.435,10.586 5.00659,10.586L 14.1028,10.586C 14.6733,10.586 15.1353,10.1238 15.1367,9.55215C 15.1367,8.98056 14.6733,8.51962 14.1028,8.51962L 5.00659,8.51962 Z "/>
+                        <ContentPresenter  SnapsToDevicePixels ="{ TemplateBinding  SnapsToDevicePixels }"  HorizontalAlignment ="{ TemplateBinding  HorizontalContentAlignment }"  VerticalAlignment ="{ TemplateBinding  VerticalContentAlignment }"  RecognizesAccessKey ="True"/>
+
+                    </Grid>
+                    <ControlTemplate.Triggers >
+                        <Trigger  Property ="IsFocused"  Value ="True"/>
+                        <Trigger  Property ="IsDefaulted"  Value ="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="PART_Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                        <GradientStop Color="White" Offset="0.5" />
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Fill"  Value="#3ABFF9" TargetName="iconMin" />
+                        </Trigger>
+                        <Trigger  Property ="IsPressed"  Value ="True"/>
+                        <Trigger  Property ="IsEnabled"  Value ="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style  x:Key ="styleWindowButtonMaximize"  TargetType ="{x:Type  ToggleButton }">
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Height" Value="18"/>
+        <Setter  Property ="Template">
+            <Setter.Value >
+                <ControlTemplate  TargetType ="{x:Type  ToggleButton }">
+                    <Grid >
+                        <Border x:Name="PART_Border" BorderThickness="0" Padding="2" Background="Transparent">
+                        </Border>
+                        <Path  x:Name ="iconMax"  Width ="12.4011"  Height ="9.93359"  Stretch ="Fill"  Fill ="#FFFFFFFF"  Data ="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"/>
+                        <Path  x:Name ="iconRestore"  Visibility ="Collapsed"  Width ="11.6719"  Height ="9.48242"  Stretch ="Fill"  Fill ="#FFFFFFFF"  Data ="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z"/>
+                        <ContentPresenter  SnapsToDevicePixels ="{ TemplateBinding  SnapsToDevicePixels }"  HorizontalAlignment ="{ TemplateBinding  HorizontalContentAlignment }"  VerticalAlignment ="{ TemplateBinding  VerticalContentAlignment }"  RecognizesAccessKey ="True"/>
+                    </Grid>
+                    <ControlTemplate.Triggers >
+                        <Trigger  Property ="IsFocused"  Value ="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="PART_Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                        <GradientStop Color="White" Offset="0.5" />
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Fill"  Value="{DynamicResource MainFrmWinBtnOverForeColor}" TargetName="iconMax" />
+                            <Setter Property="Fill"  Value="{DynamicResource MainFrmWinBtnOverForeColor}" TargetName="iconRestore" />
+                        </Trigger>
+                        <Trigger  Property ="IsPressed"  Value ="True"/>
+                        <Trigger  Property ="IsEnabled"  Value ="False"/>
+                        <Trigger  Property ="IsChecked"  Value ="True">
+                            <Setter  TargetName ="iconMax"  Property ="Visibility"  Value ="Collapsed" />
+                            <Setter  TargetName ="iconRestore"  Property ="Visibility"  Value ="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style  x:Key ="styleMainWindowButtonClose"  TargetType ="{x:Type  Button }">
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter  Property ="Template">
+            <Setter.Value >
+                <ControlTemplate  TargetType ="{x:Type  Button }">
+                    <Grid  x:Name ="buttonClose">
+                        <Border x:Name="PART_Border"   BorderThickness="0" Padding="2" Background="Transparent">
+                        </Border>
+                        <Path  x:Name ="iconX"  Width ="8.50003"  Height ="8.50006"  Stretch ="Fill"  Fill ="#FF8D1200"  Data ="F1 M 401.281,299.818L 398.795,297.333L 401.281,294.847C 401.684,294.445 401.684,293.79 401.281,293.386C 400.877,292.982 400.222,292.982 399.82,293.386L 397.334,295.872L 394.848,293.386C 394.445,292.982 393.79,292.982 393.386,293.386C 392.982,293.79 392.982,294.445 393.386,294.848L 395.872,297.334L 393.387,299.818C 392.984,300.222 392.982,300.876 393.387,301.281C 393.791,301.684 394.445,301.683 394.848,301.279L 397.333,298.795L 399.818,301.281C 400.222,301.684 400.877,301.684 401.281,301.281C 401.684,300.877 401.684,300.222 401.281,299.818 Z "/>
+                        <ContentPresenter  SnapsToDevicePixels ="{ TemplateBinding  SnapsToDevicePixels }"  HorizontalAlignment ="{ TemplateBinding  HorizontalContentAlignment }"  VerticalAlignment ="{ TemplateBinding  VerticalContentAlignment }"  RecognizesAccessKey ="True"/>
+                    </Grid>
+                    <ControlTemplate.Triggers >
+                        <Trigger  Property ="IsFocused"  Value ="True"/>
+                        <Trigger  Property ="IsDefaulted"  Value ="True"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="PART_Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                        <GradientStop Color="White" Offset="0.5" />
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger  Property ="IsPressed"  Value ="True"/>
+                        <Trigger  Property ="IsEnabled"  Value ="False"/>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--Window Style-->
+    <!--{DynamicResource WindowBackground}-->
+    <Style x:Key="MetroWindowStyle"  TargetType ="{ x:Type  controls:VicMetroWindow }">
+
+        <Setter  Property ="WindowStyle"  Value ="None"/>
+        <Setter Property="Left" Value="0"/>
+        <Setter Property="Top" Value="0"/>
+        <!--<Setter  Property ="ResizeMode"  Value ="CanResizeWithGrip"/>-->
+
+        <!--<Setter  Property ="Background" Value="{DynamicResource WindowBackground}"/>-->
+        <Setter  Property ="Background" Value="{DynamicResource MainBackgroundImage}"/>
+        <Setter  Property ="BorderBrush"  Value ="Transparent"/>
+
+        <Setter  Property ="BorderThickness"  Value ="1"/>
+
+        <Setter  Property ="MinWidth"  Value ="200"/>
+
+        <Setter  Property ="MinHeight"  Value ="80"/>
+
+        <Setter  Property ="VerticalContentAlignment"  Value ="Stretch"/>
+
+        <Setter  Property ="HorizontalContentAlignment"  Value ="Stretch"/>
+
+        <Setter  Property ="Template">
+
+            <Setter.Value >
+
+                <ControlTemplate  TargetType ="{x:Type  controls:VicMetroWindow}">
+
+                    <Border  BorderBrush ="Transparent"  
+                    BorderThickness ="1">
+                        <Grid  SnapsToDevicePixels ="True" Background ="{ TemplateBinding  Background }">
+                            <Grid.RowDefinitions >
+                                <RowDefinition  Height ="35" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <!-- Window header-->
+
+                            <Grid  Name ="PART_HeaderContainer"  Background ="Transparent" VerticalAlignment="Bottom">
+                                <StackPanel  Orientation ="Horizontal"  Margin ="4,0"  Visibility ="{ Binding  RelativeSource ={ RelativeSource TemplatedParent},  Path =ShowDefaultHeader,  Converter ={ StaticResource  BoolToVisibilityConverter }}">
+                                    <Image  Height ="24"  Width ="24"  HorizontalAlignment ="Left"  VerticalAlignment ="Center"  Source ="{ TemplateBinding  Icon }"/>
+                                    <TextBlock  Text ="{ TemplateBinding  Title }"  
+
+                           Margin ="4,0"                                 
+
+                           VerticalAlignment ="Center"  
+
+                           FontFamily ="Arial"  
+
+                           FontSize ="15"  
+
+                           Foreground ="#FFFFFFFF"  
+
+                           TextWrapping="NoWrap"/>
+                                </StackPanel>
+                                <StackPanel  HorizontalAlignment ="Right"  Orientation ="Horizontal"  Margin ="0,0,10,0">
+                                    <controls:VicButtonNormal Name="btnChangeSkin" Visibility="Visible" Style="{DynamicResource btnChangeSkinStyle}" ToolTip="皮肤管理"  Command="{Binding DataContext.btnChangeSkinClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" ></controls:VicButtonNormal>
+                                    <controls:VicButtonNormal Name="btnSet" Style="{DynamicResource btnSetStyle}" ToolTip="锁定工作区" Command="{Binding DataContext.btnLockSpaceClickCommand,RelativeSource={RelativeSource AncestorType=Window}}"></controls:VicButtonNormal>
+                                    <controls:VicButtonNormal  x:Name ="PART_MinimizeButton"  IsTabStop ="False"  Cursor ="Hand"  Style ="{ StaticResource  btnMiniStyle }"  Width ="30"  Height ="16" FontSize="15"  Margin ="5,0,5,0"  ToolTip ="最小化"   
+
+                            Visibility ="{ Binding  RelativeSource ={RelativeSource TemplatedParent},  Path =CanResize,  Converter ={ StaticResource  BoolToVisibilityConverter }}"/>
+
+                                    <ToggleButton  x:Name ="PART_RestoreButton"  IsTabStop ="False"  Cursor ="Hand"  Style ="{ StaticResource  styleWindowButtonMaximize }"  Width ="30"  Height ="16" FontSize="15"  Margin ="5,0,5,0"  ToolTip ="最大化/还原" 
+
+                            Visibility ="{ Binding  RelativeSource ={RelativeSource TemplatedParent},  Path =CanResize,  Converter ={ StaticResource  BoolToVisibilityConverter }}"/>
+
+                                    <Button  x:Name ="PART_CloseButton"  IsTabStop ="False"  Cursor ="Hand"  Style ="{ StaticResource  styleMainWindowButtonClose }"  Width ="30"  Height ="16" FontSize="15"  Margin ="0,0,0,0"  ToolTip ="关闭"/>
+
+                                </StackPanel> 
+                                <ContentPresenter   VerticalAlignment ="Stretch"  HorizontalAlignment ="Stretch"/>
+                            </Grid>
+                            <Grid  Grid.RowSpan ="2"  x:Name ="PART_ResizerContainers"  Visibility ="Hidden">
+                                <Grid.Resources>
+                                    <sys:Double x:Key ="StraightResizerSize">8</sys:Double >
+
+                                    <sys:Double x:Key ="SlantResizerSize">16</sys:Double >
+
+                                    <Style  TargetType="{ x:Type  Thumb }">
+
+                                        <Setter  Property ="Template">
+
+                                            <Setter.Value >
+
+                                                <ControlTemplate >
+
+                                                    <Rectangle  Fill ="Transparent"/>
+                                                        
+                                                </ControlTemplate>
+
+                                            </Setter.Value>
+
+                                        </Setter>
+
+                                    </Style>
+
+                                </Grid.Resources>
+
+                                <Thumb  Width ="{ StaticResource  StraightResizerSize }"  VerticalAlignment ="Stretch"  HorizontalAlignment ="Left"  Cursor ="SizeWE"  x:Name ="PART_LeftResizer"/>
+
+                                <Thumb  Height ="{ StaticResource  StraightResizerSize }"  VerticalAlignment ="Top"  HorizontalAlignment ="Stretch"  Cursor ="SizeNS"  x:Name ="PART_TopResizer"/>
+
+                                <Thumb  Width ="{ StaticResource  StraightResizerSize }"  VerticalAlignment ="Stretch"  HorizontalAlignment ="Right"  Cursor ="SizeWE"  x:Name ="PART_RightResizer"/>
+
+                                <Thumb  Height ="{ StaticResource  StraightResizerSize }"  VerticalAlignment ="Bottom"  HorizontalAlignment ="Stretch"  Cursor ="SizeNS"  x:Name ="PART_BottomResizer"/>
+                                <ResizeGrip  Width ="{ StaticResource  SlantResizerSize }"  Height ="{ StaticResource  SlantResizerSize }"  HorizontalAlignment ="Right"  VerticalAlignment ="Bottom"  Visibility ="{ Binding  RelativeSource ={RelativeSource TemplatedParent},  Path =ShowResizeGrip,  Converter ={ StaticResource  BoolToVisibilityConverter }}"/>
+
+                                <Thumb  Width ="{ StaticResource  SlantResizerSize }"  Height ="{ StaticResource  SlantResizerSize }"  HorizontalAlignment ="Right"  VerticalAlignment ="Bottom"  Cursor ="SizeNWSE"  x:Name ="PART_BottomRightResizer"/>
+
+                                <Thumb  Width ="{ StaticResource  SlantResizerSize }"  Height ="{ StaticResource  SlantResizerSize }"  HorizontalAlignment ="Right"  VerticalAlignment ="Top"  Cursor ="SizeNESW"  x:Name ="PART_TopRightResizer"/>
+
+                                <Thumb  Width ="{ StaticResource  SlantResizerSize }"  Height ="{ StaticResource  SlantResizerSize }"  HorizontalAlignment ="Left"  VerticalAlignment ="Top"  Cursor ="SizeNWSE"  x:Name ="PART_TopLeftResizer"/>
+
+                                <Thumb  Width ="{ StaticResource  SlantResizerSize }"  Height ="{ StaticResource  SlantResizerSize }"  HorizontalAlignment ="Left"  VerticalAlignment ="Bottom"  Cursor ="SizeNESW"  x:Name ="PART_BottomLeftResizer"/>
+
+                            </Grid>
+                            <Border  x:Name ="PART_ContentBorder"  Grid.Row ="1"  
+                                
+                      BorderBrush ="Transparent"  
+
+                      BorderThickness ="2"  
+
+                      Margin ="6,0,6,6"  
+
+                      ClipToBounds ="True">
+
+                                <AdornerDecorator >
+
+                                    <ContentPresenter  Margin ="{ TemplateBinding  Padding }"  
+
+                                    VerticalAlignment ="{ TemplateBinding  VerticalContentAlignment }"  
+
+                                    HorizontalAlignment ="{ TemplateBinding  HorizontalContentAlignment }"/>
+
+                                </AdornerDecorator>
+                                <!--<Border.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.6"></SolidColorBrush>
+                                </Border.Background>-->
+                            </Border>
+
+                        </Grid>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <MultiTrigger >
+
+                            <MultiTrigger.Conditions >
+
+                                <Condition  Property ="CanResize"  Value ="True"/>
+
+                                <Condition  Property ="WindowState"  Value ="Normal"/>
+
+                            </MultiTrigger.Conditions>
+
+                            <Setter  TargetName ="PART_ResizerContainers"  Property ="Visibility"  Value ="Visible"/>
+
+                        </MultiTrigger>
+
+                        <Trigger  Property ="WindowState"  Value ="Maximized">
+
+                            <Setter  TargetName ="PART_ContentBorder"  Property ="Margin"  Value ="0"/>
+
+                            <Setter  TargetName ="PART_ContentBorder"  Property ="BorderThickness"  Value ="0,2,0,0"/>
+
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+
+            </Setter.Value>
+
+        </Setter>
+
+
+    </Style >
 </ResourceDictionary>
