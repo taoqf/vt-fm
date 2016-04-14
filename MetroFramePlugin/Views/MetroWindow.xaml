@@ -6,7 +6,7 @@
         xmlns:controls="http://schemas.ifeidao.com/wpfcontrol"
         xmlns:unit="http://schemas.ifeidao.com/wpfunits"
         xmlns:converter="clr-namespace:MetroFramePlugin.Converters"
-        Name="mainWindow" Style="{DynamicResource MetroWindowStyle}"  ResizeMode="NoResize"  CanResize="True">
+        Name="mainWindow" Style="{DynamicResource MetroWindowStyle}" Title="飞道体系" ResizeMode="NoResize"  CanResize="True">
     <Window.InputBindings>
         <KeyBinding Modifiers="Alt" Key="L" Command="{Binding btnLockSpaceClickCommand}"/>
     </Window.InputBindings>

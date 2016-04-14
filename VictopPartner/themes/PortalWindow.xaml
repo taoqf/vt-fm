@@ -1037,7 +1037,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border Name="Bd"  BorderThickness="0"  Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
+                                <Border Name="Bd" CornerRadius="8" BorderThickness="0"  Background="{DynamicResource DataGridHeaderBgColor}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="80"/>
@@ -1063,14 +1063,21 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Effect">
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
+                                        <!--<Setter Property="Effect">
                                             <Setter.Value>
                                                 <DropShadowEffect ShadowDepth="0" Color="Blue"/>
                                             </Setter.Value>
-                                        </Setter>
+                                        </Setter>-->
                                         <Setter Property="Cursor" Value="Hand"/>
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
                                     </Trigger>
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
+                                    </Trigger>
+                                   
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -1106,7 +1113,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border Name="Bd"  BorderThickness="0" Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
+                                <Border Name="Bd" CornerRadius="8" BorderThickness="0" Background="{DynamicResource DataGridHeaderBgColor}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="100"/>
@@ -1132,13 +1139,19 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Effect">
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
+                                        <!--<Setter Property="Effect">
                                             <Setter.Value>
                                                 <DropShadowEffect ShadowDepth="0" Color="Blue"/>
                                             </Setter.Value>
-                                        </Setter>
+                                        </Setter>-->
                                         <Setter Property="Cursor" Value="Hand"/>
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -1176,7 +1189,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                <Border Name="Bd"  BorderThickness="0"  Background="{Binding PluginBG, Converter={StaticResource StringToBackgroundConverter}}">
+                                <Border Name="Bd" CornerRadius="8" BorderThickness="0"  Background="{DynamicResource DataGridHeaderBgColor}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="60"/>
@@ -1202,13 +1215,19 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Effect">
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
+                                        <!--<Setter Property="Effect">
                                             <Setter.Value>
                                                 <DropShadowEffect ShadowDepth="0" Color="Blue"/>
                                             </Setter.Value>
-                                        </Setter>
+                                        </Setter>-->
                                         <Setter Property="Cursor" Value="Hand"/>
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
