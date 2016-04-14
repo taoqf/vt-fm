@@ -884,7 +884,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Height" Value="20"/>
         <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Margin" Value="0,-1,0,0"></Setter>
+        <Setter Property="Margin" Value="0,0,0,0"></Setter>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Content" Value="&#xe6e8;"/>
         <Setter Property="FontSize" Value="16"/>
@@ -1416,7 +1416,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
 
                             Visibility ="{ Binding  RelativeSource ={RelativeSource TemplatedParent},  Path =CanResize,  Converter ={ StaticResource  BoolToVisibilityConverter }}"/>
 
-                                    <Button  x:Name ="PART_CloseButton"  IsTabStop ="False"  Cursor ="Hand"  Style ="{ StaticResource  styleMainWindowButtonClose }"  Width ="30"  Height ="16" FontSize="15"  Margin ="0,0,0,0"  ToolTip ="关闭"/>
+                                    <Button  x:Name ="PART_CloseButton"  IsTabStop ="False"  Cursor ="Hand" Command="{Binding DataContext.btnCloseClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style ="{ StaticResource  styleMainWindowButtonClose }"  Width ="30"  Height ="16" FontSize="15"  Margin ="0,0,0,0"  ToolTip ="关闭"/>
 
                                 </StackPanel> 
                                 <ContentPresenter   VerticalAlignment ="Stretch"  HorizontalAlignment ="Stretch"/>
