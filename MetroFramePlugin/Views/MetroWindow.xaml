@@ -18,13 +18,14 @@
         <vm:UCMetroWindowViewModel/>
     </Window.DataContext>
     <DockPanel LastChildFill="True">
-        <Border Width="1" Background="Black">
+        <Border Name="bor" Width="1" Background="Black">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseEnter">
                     <i:InvokeCommandAction Command="{Binding BtnSystemSet_OnMouseEnter}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Border>
+  
         <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Visible" Width="72"  Visibility="{Binding IsShowMenu}"  Style="{DynamicResource MenuScrollViewer}">
             
             <Grid Style="{DynamicResource LeftGrid}">
@@ -34,7 +35,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <StackPanel>
-                    <StackPanel Margin="0,10,0,0"  Style="{DynamicResource MainFrmUserStackPanelStyle}">
+                    <StackPanel Margin="0,0,0,0"  Style="{DynamicResource MainFrmUserStackPanelStyle}">
                         <controls:VicButtonImage Name="btnUserLogin" Background="{Binding UserInfo.UserImg, Converter={StaticResource imgeNameToBackgroundConverter}}"
                                          Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}"/>
                         <controls:VicTextBlockNormal  Text="{Binding UserInfo.UserName}" Style="{DynamicResource MainFrmUserName}"/>
@@ -60,7 +61,7 @@
                 </StackPanel>
             </Grid>
         </ScrollViewer>
-      
+  
         <Grid Name="gridMain">
             <Grid.RowDefinitions>
                 <RowDefinition RowDefinition.Height="0"/>

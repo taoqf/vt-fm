@@ -1853,8 +1853,8 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                    if (!isFirstLoad)
-                        return;
+                    //if (!isFirstLoad)
+                    //    return;
 
                     area = (UserControl)x;
                     mainPanel = area.FindName("bigPanel") as Canvas;//找到“添加新区域面板”

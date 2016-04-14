@@ -13,16 +13,16 @@
     <LinearGradientBrush x:Key="ellipseOuter" Opacity="0.5" EndPoint="0.5,1" StartPoint="0.5,0">
         <GradientStop Color="White" Offset="0.1"  />
     </LinearGradientBrush>
-  
-    
-    
+
+
+
     <Storyboard x:Key="Storyboard2">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ellipseOuter">
             <EasingDoubleKeyFrame KeyTime="0" Value="360"/>
             <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="722.49"/>
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
-    
+
     <Style x:Key="FloatWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Background" Value="Blue" />
         <Setter Property="WindowStyle" Value="None" />
@@ -38,16 +38,16 @@
                         </Grid.RowDefinitions>
                         <Ellipse x:Name="ellipseOuter"  Stroke="Transparent" Grid.Row="0"  HorizontalAlignment="Left" Height="80"  VerticalAlignment="Top" Width="80" StrokeThickness="5" RenderTransformOrigin="0.5,0.5">
                             <Ellipse.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Ellipse.RenderTransform>
-                        <Ellipse.Fill>
-                            <VisualBrush >
-                                <VisualBrush.Visual>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Ellipse.RenderTransform>
+                            <Ellipse.Fill>
+                                <VisualBrush >
+                                    <VisualBrush.Visual>
                                         <Ellipse Stroke="{DynamicResource ellipseCore}" x:Name="ellipseCore" HorizontalAlignment="Left" Height="61" Margin="323,121,0,0" StrokeThickness="5" VerticalAlignment="Top" Width="61" RenderTransformOrigin="0.5,0.5">
                                             <Ellipse.RenderTransform>
                                                 <TransformGroup>
@@ -72,10 +72,10 @@
                                                 </LinearGradientBrush>
                                             </Ellipse.Stroke>-->
                                         </Ellipse>
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </Ellipse.Fill>
-                    </Ellipse>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
                         <ContentPresenter Grid.Row="1"/>
                     </Grid>
                     <!--</Border>-->
@@ -87,7 +87,7 @@
                             <Setter Property="StrokeThickness" Value="5" TargetName="ellipseCore"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -241,7 +241,7 @@
                         </Themes:ButtonChrome>
                     </Border>-->
                     <ControlTemplate.Triggers>
-                       
+
                         <Trigger Property="IsMouseOver" Value="True">
                             <!--<Setter Property="Background" TargetName="Chrome" Value="{DynamicResource SetMouseOver}"/>
                             <Setter Property="OpacityMask" TargetName="Chrome" Value="{DynamicResource SetMouseOver}"/>-->
@@ -531,39 +531,39 @@
         <Setter Property="Height" Value="16"></Setter>
         <Setter Property="Template">
             <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="PART_Border" CornerRadius="0,3,0,3" 
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="PART_Border" CornerRadius="0,3,0,3" 
 BorderBrush="Transparent" BorderThickness="0" Padding="2">
-                            <Path x:Name="PART_Path" Data="M6,6 L6,6 10,10 M10,6 L10,6 6,10"
+                        <Path x:Name="PART_Path" Data="M6,6 L6,6 10,10 M10,6 L10,6 6,10"
  Fill="Gray" Stretch="Fill" Stroke="Gray" StrokeThickness="2" HorizontalAlignment="Center"
  VerticalAlignment="Center" />
 
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" TargetName="PART_Border">
-                                    <Setter.Value>
-                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                                            <GradientStop Color="Silver" Offset="0.0" />
-                                            <GradientStop Color="White" Offset="0.5" />
-                                            <GradientStop Color="Silver" Offset="0.0" />
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="Stroke" TargetName="PART_Path" 
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="PART_Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                        <GradientStop Color="White" Offset="0.5" />
+                                        <GradientStop Color="Silver" Offset="0.0" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Stroke" TargetName="PART_Path" 
 Value="#FFBA3232" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="UIElement.Effect">
-                                    <Setter.Value>
-                                        <DropShadowEffect BlurRadius="10" 
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="UIElement.Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect BlurRadius="10" 
 Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDepth="0" />
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                            <Trigger Property="IsFocused" Value="True" />
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True" />
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
@@ -782,7 +782,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                         <GradientStop Color="Silver" Offset="0.0" />
                                         <GradientStop Color="White" Offset="0.5" />
                                         <GradientStop Color="Silver" Offset="0.0" />
-                                    </LinearGradientBrush> 
+                                    </LinearGradientBrush>
                                 </Setter.Value>
                             </Setter>
                             <Setter Property="Foreground"  Value="{DynamicResource MainFrmWinBtnOverForeColor}" />
@@ -805,14 +805,14 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Margin" Value="5,0,5,0"/>
         <Setter Property="Width" Value="30"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="FontSize" Value="8"/>
+        <Setter Property="FontSize" Value="10"/>
         <Setter Property="Content" Value="&#xe64e;"/>
-        <Setter Property="Height" Value="16"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <Border x:Name="PART_Border"  BorderThickness="0"  Background="Transparent">
-                                        <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
+                        <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -886,7 +886,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Margin" Value="0,-1,0,0"></Setter>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Content" Value="&#xe6e8;"/> 
+        <Setter Property="Content" Value="&#xe6e8;"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
@@ -983,7 +983,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         </Setter>
     </Style>
     <!--图标字体专用按钮样式结束-->
-   <!--浮窗分屏按钮样式开始-->
+    <!--浮窗分屏按钮样式开始-->
     <Style x:Key="LeftButtonStyle" TargetType="Button">
         <Setter Property="Margin" Value="5,0,5,0"/>
         <Setter Property="Width" Value="35"/>
@@ -1264,45 +1264,6 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         </Setter>
     </Style>
     <!--自定义机台主题颜色结束-->
-
-    <!--MetroWindow-->
-    <controls:BoolToVisibilityExConverter x:Key="BoolToVisibilityConverter"></controls:BoolToVisibilityExConverter>
-    <Style x:Key ="styleWindowButtonMinimize"  TargetType ="{x:Type  Button }">
-        <Setter Property="Width" Value="25"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Height" Value="25"/>
-        <Setter  Property ="Template">
-            <Setter.Value >
-                <ControlTemplate  TargetType ="{ x:Type Button }">
-                    <Grid  x:Name ="buttonClose">
-                        <Border x:Name="PART_Border"   BorderThickness="0" Padding="2" Background="Transparent">
-                        </Border>
-                        <Path  x:Name ="iconMin"  Width ="11.1641"  Height ="2.06641"  Canvas.Left ="3.97266"  Canvas.Top ="8.51962"  Stretch ="Fill"  Fill ="#FFFFFFFF"  Data ="F1 M 5.00659,8.51962C 4.43613,8.51831 3.97266,8.98184 3.97266,9.55347C 3.97266,10.1238 4.435,10.586 5.00659,10.586L 14.1028,10.586C 14.6733,10.586 15.1353,10.1238 15.1367,9.55215C 15.1367,8.98056 14.6733,8.51962 14.1028,8.51962L 5.00659,8.51962 Z "/>
-                        <ContentPresenter  SnapsToDevicePixels ="{ TemplateBinding  SnapsToDevicePixels }"  HorizontalAlignment ="{ TemplateBinding  HorizontalContentAlignment }"  VerticalAlignment ="{ TemplateBinding  VerticalContentAlignment }"  RecognizesAccessKey ="True"/>
-
-                    </Grid>
-                    <ControlTemplate.Triggers >
-                        <Trigger  Property ="IsFocused"  Value ="True"/>
-                        <Trigger  Property ="IsDefaulted"  Value ="True"/>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="PART_Border">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                                        <GradientStop Color="Silver" Offset="0.0" />
-                                        <GradientStop Color="White" Offset="0.5" />
-                                        <GradientStop Color="Silver" Offset="0.0" />
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Fill"  Value="#3ABFF9" TargetName="iconMin" />
-                        </Trigger>
-                        <Trigger  Property ="IsPressed"  Value ="True"/>
-                        <Trigger  Property ="IsEnabled"  Value ="False"/>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
     <Style  x:Key ="styleWindowButtonMaximize"  TargetType ="{x:Type  ToggleButton }">
         <Setter Property="Width" Value="25"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -1377,16 +1338,11 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
             </Setter.Value>
         </Setter>
     </Style>
-    <!--Window Style-->
-    <!--{DynamicResource WindowBackground}-->
     <Style x:Key="MetroWindowStyle"  TargetType ="{ x:Type  controls:VicMetroWindow }">
 
         <Setter  Property ="WindowStyle"  Value ="None"/>
         <Setter Property="Left" Value="0"/>
         <Setter Property="Top" Value="0"/>
-        <!--<Setter  Property ="ResizeMode"  Value ="CanResizeWithGrip"/>-->
-
-        <!--<Setter  Property ="Background" Value="{DynamicResource WindowBackground}"/>-->
         <Setter  Property ="Background" Value="{DynamicResource MainBackgroundImage}"/>
         <Setter  Property ="BorderBrush"  Value ="Transparent"/>
 
@@ -1410,11 +1366,9 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                     BorderThickness ="1">
                         <Grid  SnapsToDevicePixels ="True" Background ="{ TemplateBinding  Background }">
                             <Grid.RowDefinitions >
-                                <RowDefinition  Height ="35" />
+                                <RowDefinition  Height ="30" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <!-- Window header-->
-
                             <Grid  Name ="PART_HeaderContainer"  Background ="Transparent" VerticalAlignment="Bottom">
                                 <StackPanel  Orientation ="Horizontal"  Margin ="4,0"  Visibility ="{ Binding  RelativeSource ={ RelativeSource TemplatedParent},  Path =ShowDefaultHeader,  Converter ={ StaticResource  BoolToVisibilityConverter }}">
                                     <Image  Height ="24"  Width ="24"  HorizontalAlignment ="Left"  VerticalAlignment ="Center"  Source ="{ TemplateBinding  Icon }"/>
@@ -1511,9 +1465,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                     HorizontalAlignment ="{ TemplateBinding  HorizontalContentAlignment }"/>
 
                                 </AdornerDecorator>
-                                <!--<Border.Background>
-                                    <SolidColorBrush Color="White" Opacity="0.6"></SolidColorBrush>
-                                </Border.Background>-->
+                     
                             </Border>
 
                         </Grid>
