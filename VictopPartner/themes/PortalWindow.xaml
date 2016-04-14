@@ -1064,20 +1064,22 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
-                                        <!--<Setter Property="Effect">
-                                            <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="0" Color="Blue"/>
-                                            </Setter.Value>
-                                        </Setter>-->
+                                       
                                         <Setter Property="Cursor" Value="Hand"/>
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true">
                                         <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
+                        
                                     </Trigger>
-                                   
+                                   <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsSelected" Value="true"/>
+                                            <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="Background" TargetName="Bd" Value="WhiteSmoke"/>
+                                      
+                                    </MultiTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -1140,19 +1142,22 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
-                                        <!--<Setter Property="Effect">
-                                            <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="0" Color="Blue"/>
-                                            </Setter.Value>
-                                        </Setter>-->
+
                                         <Setter Property="Cursor" Value="Hand"/>
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true">
                                         <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
+
                                     </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsSelected" Value="true"/>
+                                            <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="Background" TargetName="Bd" Value="WhiteSmoke"/>
+
+                                    </MultiTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -1216,19 +1221,22 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsMouseOver" Value="true">
                                         <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
-                                        <!--<Setter Property="Effect">
-                                            <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="0" Color="Blue"/>
-                                            </Setter.Value>
-                                        </Setter>-->
+
                                         <Setter Property="Cursor" Value="Hand"/>
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true">
                                         <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                        <Setter Property="Foreground" Value="{DynamicResource DataGridRowSelectForeColor}"/>
+
                                     </Trigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsSelected" Value="true"/>
+                                            <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="Background" TargetName="Bd" Value="WhiteSmoke"/>
+
+                                    </MultiTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
