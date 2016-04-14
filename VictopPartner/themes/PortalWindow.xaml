@@ -884,7 +884,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Height" Value="20"/>
         <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Margin" Value="0,0,0,0"></Setter>
+        <Setter Property="Margin" Value="0,-2,0,0"></Setter>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Content" Value="&#xe6e8;"/>
         <Setter Property="FontSize" Value="16"/>
