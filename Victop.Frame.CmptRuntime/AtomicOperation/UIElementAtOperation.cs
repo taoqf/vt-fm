@@ -254,6 +254,26 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 设置元素是否可见
+        /// </summary>
+        /// <param name="paramValue">元素名称</param>
+        /// <param name="visibility">是否显示</param>
+        public void SetElementVisility(string elementName, bool visibility)
+        {
+            FrameworkElement tc = MainView.FindName(elementName) as FrameworkElement;
+            if (tc != null)
+            {
+                if (visibility)
+                {
+                    tc.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    tc.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+        /// <summary>
         /// 设置按钮是否被选择
         /// </summary>
         /// <param name="paramValue">按钮的名称(Name)</param>

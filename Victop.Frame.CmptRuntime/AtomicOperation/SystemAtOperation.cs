@@ -435,7 +435,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             o.v = paramValue;
         }
         /// <summary>
-        /// 设置页面显示元素
+        /// 设置页面显示元素（已经停用，建议使用SetElementVisility原子操作）
         /// </summary>
         /// <param name="paramValue">元素名称</param>
         /// <param name="visibility">是否显示</param>

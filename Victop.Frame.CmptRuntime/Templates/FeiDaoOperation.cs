@@ -411,6 +411,15 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetMaxNumberFromOneLetter(pblockName, fieldName, firstLetter, oav);
         }
+        /// <summary>
+        ///复制控件内容到剪贴板
+        /// </summary>
+        /// <param name="elementName">控件名称</param>
+        ///</summary>
+        public void CopyControlContent(string elementName)
+        {
+            dataOperation.CopyControlContent(elementName);
+        }
         #endregion
 
         #region 系统操作
@@ -842,6 +851,15 @@ namespace Victop.Frame.CmptRuntime
         public void SetElementIsEnabled(string elementName, int state = 0)
         {
             uIElementOperation.SetElementIsEnabled(elementName, state);
+        }
+        /// <summary>
+        /// 设置元素是否可见
+        /// </summary>
+        /// <param name="paramValue">元素名称</param>
+        /// <param name="visibility">是否显示</param>
+        public void SetElementVisility(string paramValue, bool visibility)
+        {
+            uIElementOperation.SetElementVisility(paramValue, visibility);
         }
         /// <summary>
         /// 根据DataGrid名称获取当前选择行中某一字段的值

@@ -964,5 +964,57 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+        /// <summary>
+        ///复制元素内容到剪贴板
+        /// </summary>
+        /// <param name="elementName">控件名称</param>
+        ///</summary>
+        public void CopyControlContent(string elementName)
+        {
+            FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
+            if (element != null)
+            {
+              
+                string typeName = element.GetType().Name;
+                switch (typeName)
+                {
+                    case "VicButtonNormal":
+                        VicButtonNormal button = element as VicButtonNormal;
+                        Clipboard.SetText(button.Content.ToString()); 
+                        break;
+                    case "VicLabelNormal":
+                        VicLabelNormal label = element as VicLabelNormal;
+                        Clipboard.SetText(label.Content.ToString()); 
+                        break;
+                    case "VicTextBlockNormal":
+                        VicTextBlockNormal textblock = element as VicTextBlockNormal;
+                        Clipboard.SetText(textblock.Text); 
+                        break;
+                    case "VicTextBox":
+                        VicTextBox textbox = element as VicTextBox;
+                        Clipboard.SetText(textbox.VicText);
+                        break;
+                    case "VicTextBoxNormal":
+                        VicTextBoxNormal textboxnormal = element as VicTextBoxNormal;
+                        Clipboard.SetText(textboxnormal.VicText);
+                        break;
+                    case "VicDatePickerNormal":
+                        VicDatePickerNormal datepicker = element as VicDatePickerNormal;
+                         Clipboard.SetText(datepicker.Value.ToString()); 
+                        break;
+                    case "VicCheckBoxNormal":
+                        VicCheckBoxNormal checkbox = element as VicCheckBoxNormal;
+                       Clipboard.SetText(checkbox.Content.ToString());
+                        break;
+                    case "VicRadioButtonNormal":
+                        VicRadioButtonNormal radiobutton = element as VicRadioButtonNormal;
+                        Clipboard.SetText(radiobutton.Content.ToString());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
     }
 }
