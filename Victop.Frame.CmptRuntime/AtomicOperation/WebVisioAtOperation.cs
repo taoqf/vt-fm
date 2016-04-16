@@ -97,7 +97,94 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 {
                     Dictionary<string, object> dic = new Dictionary<string, object>();
                     dic.Add("MessageType", "delete");
+                    dic.Add("canvasId", canvasId);
                     dic.Add("nodeIds", nodeIds);
+                    tc.Excute(dic);
+                }
+            }
+        }
+        /// <summary>
+        /// 连接元素
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="targetNodeId">目标节点id</param>
+        /// <param name="lineId">连接线id</param>
+        public void ConnectElements(string drawingName, string canvasId, string targetNodeId, string lineId)
+        {
+            if (!string.IsNullOrEmpty(drawingName) && !string.IsNullOrEmpty(targetNodeId) && !string.IsNullOrEmpty(lineId))
+            {
+                TemplateControl tc = (TemplateControl)MainView.FindName(drawingName);
+                if (tc != null)
+                {
+                    Dictionary<string, object> dic = new Dictionary<string, object>();
+                    dic.Add("MessageType", "connectElements");
+                    dic.Add("canvasId", canvasId);
+                    dic.Add("targetNodeId", targetNodeId);
+                    dic.Add("lineId", lineId);
+                    tc.Excute(dic);
+                }
+            }
+        }
+        /// <summary>
+        /// 克隆元素
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        public void CloneElement(string drawingName, string canvasId, string nodeId)
+        {
+            if (!string.IsNullOrEmpty(drawingName) && !string.IsNullOrEmpty(nodeId))
+            {
+                TemplateControl tc = (TemplateControl)MainView.FindName(drawingName);
+                if (tc != null)
+                {
+                    Dictionary<string, object> dic = new Dictionary<string, object>();
+                    dic.Add("MessageType", "cloneElement");
+                    dic.Add("canvasId", canvasId);
+                    dic.Add("nodeId", nodeId);
+                    tc.Excute(dic);
+                }
+            }
+        }
+        /// <summary>
+        /// 选中元素
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        public void SelectElement(string drawingName, string canvasId, string nodeId)
+        {
+            if (!string.IsNullOrEmpty(drawingName) && !string.IsNullOrEmpty(nodeId))
+            {
+                TemplateControl tc = (TemplateControl)MainView.FindName(drawingName);
+                if (tc != null)
+                {
+                    Dictionary<string, object> dic = new Dictionary<string, object>();
+                    dic.Add("MessageType", "selectElement");
+                    dic.Add("canvasId", canvasId);
+                    dic.Add("nodeId", nodeId);
+                    tc.Excute(dic);
+                }
+            }
+        }
+        /// <summary>
+        ///  断开target线连接
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="lineId">连接线id</param>
+        public void BreakTargetConnection(string drawingName, string canvasId, string lineId)
+        {
+            if (!string.IsNullOrEmpty(drawingName) && !string.IsNullOrEmpty(lineId))
+            {
+                TemplateControl tc = (TemplateControl)MainView.FindName(drawingName);
+                if (tc != null)
+                {
+                    Dictionary<string, object> dic = new Dictionary<string, object>();
+                    dic.Add("MessageType", "delete");
+                    dic.Add("canvasId", canvasId);
+                    dic.Add("lineId", lineId);
                     tc.Excute(dic);
                 }
             }
@@ -552,23 +639,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             if (listDic != null && !string.IsNullOrWhiteSpace(keyName))
             {
+                
                 foreach (Dictionary<string, object> dic in listDic)
                 {
-                    string objectName = Guid.NewGuid().ToString();
-                    if (dic.ContainsKey(keyName))
+                    if (dic.ContainsKey("nodeId"))
                     {
-                        dynamic oav = MainView.FeiDaoMachine.InsertFact(objectName, keyName, dic[keyName]);
-                        listOAV.Add(oav);
-                    }
-                    else
-                    {
-                        Dictionary<string, object> businessDataDic = JsonHelper.ReadJsonObject<Dictionary<string, object>>(dic["businessData"].ToString());
-                        if (businessDataDic != null && businessDataDic.ContainsKey(keyName))
+                        string objectName = dic["nodeId"].ToString();
+                        if (dic.ContainsKey(keyName))
                         {
-                            dynamic oav = MainView.FeiDaoMachine.InsertFact(objectName, keyName, businessDataDic[keyName]);
+                            dynamic oav = MainView.FeiDaoMachine.InsertFact(objectName, keyName, dic[keyName]);
                             listOAV.Add(oav);
                         }
+                        else
+                        {
+                            Dictionary<string, object> businessDataDic = JsonHelper.ReadJsonObject<Dictionary<string, object>>(dic["businessData"].ToString());
+                            if (businessDataDic != null && businessDataDic.ContainsKey(keyName))
+                            {
+                                dynamic oav = MainView.FeiDaoMachine.InsertFact(objectName, keyName, businessDataDic[keyName]);
+                                listOAV.Add(oav);
+                            }
+                        }
                     }
+                    
                 }
             }
         }

@@ -996,12 +996,52 @@ namespace Victop.Frame.CmptRuntime
         /// 删除节点
         /// </summary>
         /// <param name="drawingName">webvisio部件名称</param>
-        /// <param name="drawingName">控件名称</param>
         /// <param name="canvasId">画布id</param>
         /// <param name="nodeIds">节点id,多个id用逗号隔开</param>
         public void DeleteNode(string drawingName, string canvasId, string nodeIds)
         {
             webvisioAtOperation.DeleteNode(drawingName, canvasId, nodeIds);
+        }
+        /// <summary>
+        /// 连接元素
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="targetNodeId">目标节点id</param>
+        /// <param name="lineId">连接线id</param>
+        public void ConnectElements(string drawingName, string canvasId, string targetNodeId, string lineId)
+        {
+            webvisioAtOperation.ConnectElements(drawingName, canvasId, targetNodeId, lineId);
+        }
+        /// <summary>
+        /// 克隆元素
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        public void CloneElement(string drawingName, string canvasId, string nodeId)
+        {
+            webvisioAtOperation.CloneElement(drawingName, canvasId, nodeId);
+        }
+        /// <summary>
+        /// 选中元素
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        public void SelectElement(string drawingName, string canvasId, string nodeId)
+        {
+            webvisioAtOperation.SelectElement(drawingName, canvasId, nodeId);
+        }
+        /// <summary>
+        ///  断开target线连接
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="lineId">连接线id</param>
+        public void BreakTargetConnection(string drawingName, string canvasId, string lineId)
+        {
+            webvisioAtOperation.BreakTargetConnection(drawingName, canvasId, lineId);
         }
         /// <summary>
         /// 删除画布
