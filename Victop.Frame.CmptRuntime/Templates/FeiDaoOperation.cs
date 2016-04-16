@@ -47,6 +47,10 @@ namespace Victop.Frame.CmptRuntime
         /// 凭证原子操作
         /// </summary>
         private VoucherAtOperation vercherAtOperation;
+        /// <summary>
+        /// webvisio原子操作
+        /// </summary>
+        private WebVisioAtOperation webvisioAtOperation;
         #endregion
 
         /// <summary>
@@ -61,6 +65,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation = new SystemAtOperation(MainView);
             uIElementOperation = new UIElementAtOperation(MainView);
             vercherAtOperation = new VoucherAtOperation(mainView);
+            webvisioAtOperation = new WebVisioAtOperation(mainView);
         }
 
         #region 自定义服务操作
@@ -940,6 +945,204 @@ namespace Victop.Frame.CmptRuntime
         public void SendLoad()
         {
             MainView.MainViewLoaded();
+        }
+        #endregion
+
+        #region webviso原子操作
+        /// <summary>
+        /// 更新节点数据
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="drawingName">控件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        /// <param name="dataNo">数据编号</param>
+        /// <param name="Data">数据</param>
+        public void UpdateNodeData(string drawingName, string canvasId, string nodeId, int dataNo, object Data)
+        {
+            webvisioAtOperation.UpdateNodeData(drawingName, canvasId, nodeId, dataNo, Data);
+        }
+        /// <summary>
+        /// 更新节点文本
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="drawingName">控件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        /// <param name="nodeText">数据</param>
+        public void UpdateNodeText(string drawingName, string canvasId, string nodeId, string nodeText)
+        {
+            webvisioAtOperation.UpdateNodeText(drawingName, canvasId, nodeId, nodeText);
+        }
+        /// <summary>
+        /// 删除节点
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="drawingName">控件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeIds">节点id,多个id用逗号隔开</param>
+        public void DeleteNode(string drawingName, string canvasId, string nodeIds)
+        {
+            webvisioAtOperation.DeleteNode(drawingName, canvasId, nodeIds);
+        }
+        /// <summary>
+        /// 删除画布
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        public void DeletePage(string drawingName, string canvasId)
+        {
+            webvisioAtOperation.DeletePage(drawingName, canvasId);
+        }
+        /// <summary>
+        /// 导入
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="drawingName">控件名称</param>
+        /// <param name="content"></param>
+        public void WebVisioImportData(string drawingName, object content)
+        {
+            webvisioAtOperation.WebVisioImportData(drawingName, content);
+        }
+        /// <summary>
+        /// 导入模板
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="drawingName">控件名称</param>
+        /// <param name="content"></param>
+        public void WebVisioImportTemplateData(string drawingName, object content)
+        {
+            webvisioAtOperation.WebVisioImportTemplateData(drawingName, content);
+        }
+        /// <summary>
+        /// 更新节点颜色
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="drawingName">控件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        /// <param name="color">颜色值(#FFFFFF/red)</param>
+        public void UpdateShapeColor(string drawingName, string canvasId, string nodeId, string color)
+        {
+            webvisioAtOperation.UpdateShapeColor(drawingName, canvasId, nodeId, color);
+        }
+        /// <summary>
+        /// 改变元素类型
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="drawingName">控件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        /// <param name="targetType">目标类型</param> 
+        public void ChangeElement(string drawingName, string canvasId, string nodeId, string targetType)
+        {
+            webvisioAtOperation.ChangeElement(drawingName, canvasId, nodeId, targetType);
+        }
+        /// <summary>
+        /// 设置图形缩放比例
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        /// <param name="scaleWidth">宽度缩放倍数</param>
+        /// <param name="scaleHeight">高度缩放倍数</param>
+        public void SetShapeScale(string drawingName, string canvasId, string nodeId, double scaleWidth, double scaleHeight)
+        {
+            webvisioAtOperation.SetShapeScale(drawingName, canvasId, nodeId, scaleWidth, scaleHeight);
+        }
+        /// <summary>
+        /// 生成图形
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="businessType">业务类型</param>
+        /// <param name="positionX">X轴坐标</param>
+        /// <param name="positionY">Y轴坐标</param>
+        public void CreateShapeElement(string drawingName, string canvasId, string businessType, double positionX, double positionY)
+        {
+            webvisioAtOperation.CreateShapeElement(drawingName, canvasId, businessType, positionX, positionY);
+        }
+        /// <summary>
+        /// 生成连接线
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="businessType">业务类型</param>
+        /// <param name="sourceId">源端图形id</param>
+        /// <param name="targetId">目标图形id</param>
+        public void CreateLineElement(string drawingName, string canvasId, string businessType, string sourceId, string targetId)
+        {
+            webvisioAtOperation.CreateLineElement(drawingName, canvasId, businessType, sourceId, targetId);
+        }
+        /// <summary>
+        /// 获取画布中的所有元素
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <returns>元素集合</returns>
+        public void GetAllElement(string drawingName, string canvasId)
+        {
+            webvisioAtOperation.GetAllElement(drawingName, canvasId);
+        }
+        /// <summary>
+        /// 获取图形上离开线集合
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        public void GetOutLinesByShape(string drawingName, string canvasId, string nodeId)
+        {
+            webvisioAtOperation.GetOutLinesByShape(drawingName, canvasId, nodeId);
+        }
+        /// <summary>
+        /// 获取图形进入线集合
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        public void GetInLinesByShape(string drawingName, string canvasId, string nodeId)
+        {
+            webvisioAtOperation.GetInLinesByShape(drawingName, canvasId, nodeId);
+        }
+        /// <summary>
+        /// 获取线源端的图形
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        /// <returns>源端图形</returns>
+        public void GetSourceShapeByLine(string drawingName, string canvasId, string nodeId)
+        {
+            webvisioAtOperation.GetSourceShapeByLine(drawingName, canvasId, nodeId);
+        }
+        /// <summary>
+        /// 获取线源端的图形
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="canvasId">画布id</param>
+        /// <param name="nodeId">节点id</param>
+        /// <returns>源端图形</returns>
+        public void GetTargetShapeByLine(string drawingName, string canvasId, string nodeId)
+        {
+            webvisioAtOperation.GetTargetShapeByLine(drawingName, canvasId, nodeId);
+        }
+        /// <summary>
+        /// 获取导出图形内容
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="oav">接受oav</param>
+        public void GetExportData(string drawingName, object oav)
+        {
+            webvisioAtOperation.GetExportData(drawingName,oav);
+        }
+        /// <summary>
+        /// 消息转OAV
+        /// </summary>
+        /// <param name="drawingName">webvisio部件名称</param>
+        /// <param name="keyName">消息体键值</param>
+        public void MessageToOAV(string drawingName, string keyName)
+        {
+            webvisioAtOperation.MessageToOAV(drawingName, keyName);
         }
         #endregion
     }
