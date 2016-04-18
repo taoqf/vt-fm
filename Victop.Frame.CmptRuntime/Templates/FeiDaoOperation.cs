@@ -970,7 +970,6 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 更新节点数据
         /// </summary>
-        /// <param name="drawingName">webvisio部件名称</param>
         /// <param name="drawingName">控件名称</param>
         /// <param name="canvasId">画布id</param>
         /// <param name="nodeId">节点id</param>
@@ -983,7 +982,6 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 更新节点文本
         /// </summary>
-        /// <param name="drawingName">webvisio部件名称</param>
         /// <param name="drawingName">控件名称</param>
         /// <param name="canvasId">画布id</param>
         /// <param name="nodeId">节点id</param>

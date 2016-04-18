@@ -36,7 +36,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 更新节点数据
         /// </summary>
         /// <param name="drawingName">webvisio部件名称</param>
-        /// <param name="drawingName">控件名称</param>
         /// <param name="canvasId">画布id</param>
         /// <param name="nodeId">节点id</param>
         /// <param name="dataNo">数据编号</param>
@@ -62,7 +61,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 更新节点文本
         /// </summary>
         /// <param name="drawingName">webvisio部件名称</param>
-        /// <param name="drawingName">控件名称</param>
         /// <param name="canvasId">画布id</param>
         /// <param name="nodeId">节点id</param>
         /// <param name="nodeText">数据</param>
@@ -182,7 +180,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 if (tc != null)
                 {
                     Dictionary<string, object> dic = new Dictionary<string, object>();
-                    dic.Add("MessageType", "delete");
+                    dic.Add("MessageType", "breakTargetConnection");
                     dic.Add("canvasId", canvasId);
                     dic.Add("lineId", lineId);
                     tc.Excute(dic);
@@ -312,7 +310,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 if (tc != null)
                 {
                     Dictionary<string, object> dic = new Dictionary<string, object>();
-                    dic.Add("MessageType", "changeElement");
+                    dic.Add("MessageType", "setShapeScale");
                     dic.Add("canvasId", canvasId);
                     dic.Add("nodeId", nodeId);
                     dic.Add("scaleWidth", scaleWidth);
@@ -337,7 +335,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 if (tc != null)
                 {
                     Dictionary<string, object> dic = new Dictionary<string, object>();
-                    dic.Add("MessageType", "changeElement");
+                    dic.Add("MessageType", "createShapeElement");
                     dic.Add("canvasId", canvasId);
                     dic.Add("businessType", businessType);
                     dic.Add("positionX", positionX);
@@ -362,7 +360,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 if (tc != null)
                 {
                     Dictionary<string, object> dic = new Dictionary<string, object>();
-                    dic.Add("MessageType", "changeElement");
+                    dic.Add("MessageType", "createLineElement");
                     dic.Add("canvasId", canvasId);
                     dic.Add("businessType", businessType);
                     dic.Add("sourceId", sourceId);
@@ -507,7 +505,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 消息转OAV
         /// </summary>
         /// <param name="drawingName">webvisio部件名称</param>
-        /// <param name="keyName">消息体键值</param>
+        /// <param name="keyName">键值</param>
         public void MessageToOAV(string drawingName, string keyName)
         {
             string blockName = "webvisio";
@@ -605,9 +603,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <summary>
         /// 单个元素转oav
         /// </summary>
-        /// <param name="dic"></param>
-        /// <param name="listOAV"></param>
-        /// <param name="keyName"></param>
+        /// <param name="dic">消息体</param>
+        /// <param name="listOAV">oav存储集合</param>
+        /// <param name="keyName">键值</param>
         private void SingleShapeToOAV(Dictionary<string, object> dic, List<dynamic> listOAV, string keyName)
         {
             if (dic != null && !string.IsNullOrWhiteSpace(keyName))
@@ -632,9 +630,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <summary>
         /// 多个元素转oav
         /// </summary>
-        /// <param name="listDic"></param>
-        /// <param name="listOAV"></param>
-        /// <param name="keyName"></param>
+        /// <param name="listDic">消息体</param>
+        /// <param name="listOAV">oav存储集合</param>
+        /// <param name="keyName">键值</param>
         private void MutilShapeToOAV(List<Dictionary<string, object>> listDic, List<dynamic> listOAV, string keyName)
         {
             if (listDic != null && !string.IsNullOrWhiteSpace(keyName))
