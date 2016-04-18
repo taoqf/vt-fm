@@ -87,6 +87,16 @@ namespace Victop.Frame.CmptRuntime
         {
             customServiceOperation.SendServiceMessage(serviceName);
         }
+
+        /// <summary>
+        /// 发送服务消息
+        /// </summary>
+        /// <param name="serviceName">服务名称</param>
+        public void SendHttpRequest(string requestUrl, object oav)
+        {
+           customServiceOperation.SendHttpRequest(requestUrl,oav);
+        }
+
         #endregion
 
         #region 数据操作
@@ -420,6 +430,17 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.CopyControlContent(elementName);
         }
+        /// <summary>
+        ///将json转换成DT
+        /// </summary>
+        /// <param name="elementName">控件名称</param>
+        ///</summary>
+        public void JsonToDataTable(object str, string elementName)
+        {
+            dataOperation.JsonToDataTable(str,elementName);
+        }
+
+
         #endregion
 
         #region 系统操作

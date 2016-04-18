@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Windows;
 using Victop.Frame.DataMessageManager;
 using Victop.Server.Controls.Models;
 using Victop.Frame.PublicLib.Helpers;
@@ -107,6 +110,46 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     serviceOAVList[serviceName].Add(oavContent);
                 }
                 serviceParamList.Remove(serviceName);
+            }
+        }
+
+        /// <summary>
+        /// 发送http请求
+        /// </summary>
+        /// <param name="requestUrl">请求地址</param>
+        public void SendHttpRequest(string requestUrl,object oav)
+        {
+            Stream instream = null;
+            StreamReader sr = null;
+            HttpWebResponse response = null;
+            HttpWebRequest request = null;
+            // 准备请求...
+            try
+            {
+                // 设置参数
+                request = WebRequest.Create(requestUrl) as HttpWebRequest;
+                CookieContainer cookieContainer = new CookieContainer();
+                request.CookieContainer = cookieContainer;
+                request.AllowAutoRedirect = true;
+                request.Method = "GET"; //请求方式GET或POST
+                request.ContentType = "application/x-www-form-urlencoded";
+                request.Headers.Add("Authorization", "Basic YWRtaW46YWRtaW4=");
+
+                //发送请求并获取相应回应数据
+                response = request.GetResponse() as HttpWebResponse;
+                //直到request.GetResponse()程序才开始向目标网页发送Post请求
+                instream = response.GetResponseStream();
+                sr = new StreamReader(instream, Encoding.UTF8);
+                //返回结果网页（html）代码
+                string content = sr.ReadToEnd();
+                string err = string.Empty;
+                dynamic o1= oav;
+                o1.v = content;
+               
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "服务连接");
             }
         }
     }

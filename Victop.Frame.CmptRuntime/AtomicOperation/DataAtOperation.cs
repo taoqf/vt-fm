@@ -974,21 +974,21 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
             if (element != null)
             {
-              
+
                 string typeName = element.GetType().Name;
                 switch (typeName)
                 {
                     case "VicButtonNormal":
                         VicButtonNormal button = element as VicButtonNormal;
-                        Clipboard.SetText(button.Content.ToString()); 
+                        Clipboard.SetText(button.Content.ToString());
                         break;
                     case "VicLabelNormal":
                         VicLabelNormal label = element as VicLabelNormal;
-                        Clipboard.SetText(label.Content.ToString()); 
+                        Clipboard.SetText(label.Content.ToString());
                         break;
                     case "VicTextBlockNormal":
                         VicTextBlockNormal textblock = element as VicTextBlockNormal;
-                        Clipboard.SetText(textblock.Text); 
+                        Clipboard.SetText(textblock.Text);
                         break;
                     case "VicTextBox":
                         VicTextBox textbox = element as VicTextBox;
@@ -1000,11 +1000,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         break;
                     case "VicDatePickerNormal":
                         VicDatePickerNormal datepicker = element as VicDatePickerNormal;
-                         Clipboard.SetText(datepicker.Value.ToString()); 
+                        Clipboard.SetText(datepicker.Value.ToString());
                         break;
                     case "VicCheckBoxNormal":
                         VicCheckBoxNormal checkbox = element as VicCheckBoxNormal;
-                       Clipboard.SetText(checkbox.Content.ToString());
+                        Clipboard.SetText(checkbox.Content.ToString());
                         break;
                     case "VicRadioButtonNormal":
                         VicRadioButtonNormal radiobutton = element as VicRadioButtonNormal;
@@ -1014,6 +1014,26 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        ///将json转换成DT
+        /// </summary>
+        public void JsonToDataTable(object str, string elementName)
+        {
+            DataTable dt = new DataTable();
+            dt = JsonHelper.ToObject<DataTable>(str.ToString());
+            TemplateControl element = MainView.FindName(elementName) as TemplateControl;
+            if (element != null)
+            {
+                
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("source", dt);
+                element.Excute(dic);
+
+
+            }
+
         }
 
     }
