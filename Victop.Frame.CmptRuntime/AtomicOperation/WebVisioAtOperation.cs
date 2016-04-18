@@ -64,7 +64,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="canvasId">画布id</param>
         /// <param name="nodeId">节点id</param>
         /// <param name="nodeText">数据</param>
-        public void UpdateNodeText(string drawingName, string canvasId, string nodeId, string nodeText)
+        /// <param name="textIndex">当模具是状态图时，0是标题，1是文本，其余模具可以使用默认值0</param>
+        public void UpdateNodeText(string drawingName, string canvasId, string nodeId, string nodeText,int textIndex = 0)
         {
             if (!string.IsNullOrEmpty(drawingName) && !string.IsNullOrEmpty(nodeId))
             {
@@ -76,6 +77,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     dic.Add("canvasId", canvasId);
                     dic.Add("nodeId", nodeId);
                     dic.Add("nodeText", nodeText);
+                    dic.Add("textIndex", nodeText);
                     tc.Excute(dic);
                 }
             }
