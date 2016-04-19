@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using ThoughtWorks.QRCode.Codec;
 
 namespace Victop.Frame.PublicLib.Helpers
 {
@@ -49,6 +51,28 @@ namespace Victop.Frame.PublicLib.Helpers
             cs.Write(inputByteArray, 0, inputByteArray.Length);
             cs.FlushFinalBlock();
             return Encoding.UTF8.GetString(ms.ToArray());
+        }
+        /// <summary>
+        /// 生成二维码
+        /// </summary>
+        /// <param name="QrCodeContent">二维码内容</param>
+        /// <returns></returns>
+        public static Bitmap GenerateQrCode(string QrCodeContent)
+        {
+            if (!string.IsNullOrWhiteSpace(QrCodeContent))
+            {
+                QRCodeEncoder enCoder = new QRCodeEncoder();
+                enCoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
+                enCoder.QRCodeScale = 8;
+                enCoder.QRCodeVersion = 0;
+                enCoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.M;
+                string qrdata = QrCodeContent.Trim();
+                return enCoder.Encode(qrdata, Encoding.UTF8);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
