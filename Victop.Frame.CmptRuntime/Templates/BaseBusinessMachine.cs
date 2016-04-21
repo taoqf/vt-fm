@@ -116,6 +116,15 @@ namespace Victop.Frame.CmptRuntime
             MainView.BuiltBrowser.InvokeScript("send_msg", "oav_validate", OAV);
         }
         /// <summary>
+        /// 修改事实
+        /// </summary>
+        /// <param name="OAV">OAV事实实例</param>
+        /// <param name="V">v值</param>
+        public void UpdateFact(object OAV, object V)
+        {
+            MainView.BuiltBrowser.InvokeScript("send_msg", "oav_modify", OAV, V);
+        }
+        /// <summary>
         /// 提交事实
         /// </summary>
         /// <param name="OAV">OAV事实实例</param>

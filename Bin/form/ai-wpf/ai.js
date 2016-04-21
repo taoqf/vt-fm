@@ -41,6 +41,7 @@
 	"InsertFact":"InsertFact",
 	"RemoveFact":"RemoveFact",
 	"UpdateFact":"UpdateFact",
+	"CommitFact":"CommitFact",
 	"TranslationState":"TranslationState",
 	"ExcutePageTrigger":"ExcutePageTrigger",
 	"ExcuteComponentTrigger":"ExcuteComponentTrigger",

@@ -481,11 +481,27 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 修改事实
         /// </summary>
+        /// <param name="oav">oav事实实例</param>
+        /// <param name="v">v值</param>
+        public void UpdateFact(object oav, object v)
+        {
+            systemOperation.UpdateFact(oav, v);
+        }
+        /// <summary>
+        /// 修改事实
+        /// </summary>
         /// <param name="oav">oav事实</param>
-        /// <param name="v">v</param>
         public void UpdateFact(object oav)
         {
             systemOperation.UpdateFact(oav);
+        }
+        /// <summary>
+        /// 提交事实
+        /// </summary>
+        /// <param name="oav">oav事实实例</param>
+        public void CommitFact(object oav)
+        {
+            systemOperation.CommitFact(oav);
         }
         /// <summary>
         /// 转移触发事件
