@@ -55,23 +55,34 @@ namespace Victop.Frame.PublicLib.Helpers
         /// <summary>
         /// 生成二维码
         /// </summary>
-        /// <param name="QrCodeContent">二维码内容</param>
+        /// <param name="qrCodeContent">二维码内容</param>
+        /// <param name="logoImg">logo图片路径</param>
+        /// <param name="logoSize">logo图片尺寸</param>
         /// <returns></returns>
-        public static Bitmap GenerateQrCode(string QrCodeContent)
+        public static Bitmap GenerateQrCode(string qrCodeContent, string logoImg = "", int logoSize = 30)
         {
-            if (!string.IsNullOrWhiteSpace(QrCodeContent))
+            if (!string.IsNullOrWhiteSpace(qrCodeContent))
             {
                 QRCodeEncoder enCoder = new QRCodeEncoder();
                 enCoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
                 enCoder.QRCodeScale = 8;
                 enCoder.QRCodeVersion = 0;
                 enCoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.M;
-                string qrdata = QrCodeContent.Trim();
-                return enCoder.Encode(qrdata, Encoding.UTF8);
+                string qrdata = qrCodeContent.Trim();
+                Bitmap dataImg = enCoder.Encode(qrdata, Encoding.UTF8);
+                if (!string.IsNullOrEmpty(logoImg) && File.Exists(logoImg))
+                {
+                    Graphics g = Graphics.FromImage(dataImg);
+                    Bitmap logobm = new Bitmap(logoImg);
+                    logobm = new Bitmap(logobm, new System.Drawing.Size(logoSize, logoSize));
+                    PointF point = new PointF(dataImg.Width / 2 - logoSize / 2, dataImg.Height / 2 - logoSize / 2);
+                    g.DrawImage(logobm, point);
+                }
+                return dataImg;
             }
             else
             {
-                return null;
+                return new Bitmap(100, 100);
             }
         }
     }
