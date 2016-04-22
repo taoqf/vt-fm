@@ -63,6 +63,7 @@
 	"SysFeiDaoLog":"SysFeiDaoLog",
 	"SetParamValue":"SetParamValue",
 	"SetCompontVisility":"SetCompontVisility",
+	"SetElementVisility":"SetElementVisility",
 	"SetActionGuard":"SetActionGuard",
 	"UcCurrentCompntContentShow":"UcCurrentCompntContentShow",
 	"UcCurrentCompntContentClose":"UcCurrentCompntContentClose",
