@@ -74,7 +74,7 @@ namespace Victop.Frame.PublicLib.Helpers
                 {
                     Graphics g = Graphics.FromImage(dataImg);
                     Bitmap logobm = new Bitmap(logoImg);
-                    logobm = new Bitmap(logobm, new System.Drawing.Size(logoSize, logoSize));
+                    logobm = new Bitmap(logobm, new Size(logoSize, logoSize));
                     PointF point = new PointF(dataImg.Width / 2 - logoSize / 2, dataImg.Height / 2 - logoSize / 2);
                     g.DrawImage(logobm, point);
                 }

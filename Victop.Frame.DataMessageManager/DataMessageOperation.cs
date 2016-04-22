@@ -918,6 +918,40 @@ namespace Victop.Frame.DataMessageManager
             DataMessageSender sender = new DataMessageSender();
             return sender.SendMessage(messageType, messageContent);
         }
+        /// <summary>
+        /// 设置Storage数据
+        /// </summary>
+        /// <param name="pluginName">插件名称</param>
+        /// <param name="paramName">参数名称</param>
+        /// <param name="paramValue">参数值</param>
+        /// <returns></returns>
+        public virtual bool SetStorageData(string pluginName, string paramName, string paramValue)
+        {
+            DataOperation dataOp = new DataOperation();
+            return dataOp.SetStorageData(pluginName, paramName, paramValue);
+        }
+        /// <summary>
+        /// 获取Storage数据
+        /// </summary>
+        /// <param name="pluginName">插件名称</param>
+        /// <param name="paramName">参数名称</param>
+        /// <returns></returns>
+        public virtual string GetStorageData(string pluginName, string paramName)
+        {
+            DataOperation dataOp = new DataOperation();
+            return dataOp.GetStorageData(pluginName, paramName);
+        }
+        /// <summary>
+        /// 清理Storage数据
+        /// </summary>
+        /// <param name="pluginName">插件名称</param>
+        /// <param name="paramName">参数名称</param>
+        /// <returns></returns>
+        public virtual bool ClearStorageData(string pluginName, string paramName = "")
+        {
+            DataOperation dataOp = new DataOperation();
+            return dataOp.ClearStorageData(pluginName, paramName);
+        }
 
         #region 私有方法
         /// <summary>

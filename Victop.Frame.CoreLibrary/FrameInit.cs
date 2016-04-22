@@ -31,12 +31,21 @@ namespace Victop.Frame.CoreLibrary
         /// </summary>
         private static FrameInit frameInitstance;
         private IComlink comlinkObject;
+        private IFeiDaoDataOperation feiDaoDataObject = FeiDaoDBFactory.CreateDefaultFeiDaoDB();
         /// <summary>
         /// 通信实例对象
         /// </summary>
         public IComlink ComlinkObject
         {
             get { return comlinkObject; }
+        }
+
+        public IFeiDaoDataOperation FeiDaoDataObject
+        {
+            get
+            {
+                return feiDaoDataObject;
+            }
         }
         private Base baseObject;
         /// <summary>
@@ -94,6 +103,7 @@ namespace Victop.Frame.CoreLibrary
         {
             BuildInServerInit();
             CloudGalleryInit();
+            FeiDaoDataObject.DataBaseInit();
             return MessageComLinkOpen();
         }
         /// <summary>

@@ -142,6 +142,26 @@ namespace Victop.Frame.PublicLib.Helpers
             resultDic.Add("$ne", relativeValue);
             return resultDic;
         }
+        /// <summary>
+        /// 时间转时间戳
+        /// </summary>
+        /// <param name="dateTime">时间</param>
+        /// <returns></returns>
+        public static long DateTimeToTimestamp(DateTime dateTime)
+        {
+            DateTime zeroTime = new DateTime(1970, 1, 1);
+            return (long)(dateTime.ToUniversalTime() - zeroTime.ToUniversalTime()).TotalMilliseconds;
+        }
+        /// <summary>
+        /// 时间戳转为本地时间
+        /// </summary>
+        /// <param name="timestamp">时间戳</param>
+        /// <returns></returns>
+        public static DateTime TimestampToDateTime(long timestamp)
+        {
+            DateTime dt = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1, 0, 0, 0));
+            return dt.AddMilliseconds(timestamp);
+        }
 
     }
 }

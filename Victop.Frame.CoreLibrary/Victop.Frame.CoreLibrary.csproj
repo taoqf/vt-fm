@@ -94,13 +94,14 @@
     <Compile Include="Enums\ResourceEnum.cs" />
     <Compile Include="Enums\ServerTypeEnum.cs" />
     <Compile Include="Enums\ThreadStatusEnum.cs" />
+    <Compile Include="Factorys\FeiDaoDBFactory.cs" />
     <Compile Include="Factorys\ServerFactory.cs" />
     <Compile Include="FrameInit.cs" />
     <Compile Include="FrameUnload.cs" />
     <Compile Include="GalleryManager.cs" />
     <Compile Include="Interfaces\IAdapter.cs" />
     <Compile Include="Interfaces\IComlink.cs" />
-    <Compile Include="Interfaces\IDataOperation.cs" />
+    <Compile Include="Interfaces\IFeiDaoDataOperation.cs" />
     <Compile Include="Interfaces\IPluginMessage.cs" />
     <Compile Include="Interfaces\IResponse.cs" />
     <Compile Include="Models\ActivePluginInfo.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Models\ChannelData.cs" />
     <Compile Include="Models\CloudGalleryInfo.cs" />
     <Compile Include="Models\DataStoreInfo.cs" />
+    <Compile Include="Models\FeiDaoDBModel.cs" />
     <Compile Include="Models\IPInfo.cs" />
     <Compile Include="Models\JsonMapKey.cs" />
     <Compile Include="Models\LoginUserInfoModel.cs" />
