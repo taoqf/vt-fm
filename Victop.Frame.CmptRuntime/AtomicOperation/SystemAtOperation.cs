@@ -75,6 +75,26 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (oav != null)
                 MainView.FeiDaoMachine.UpdateFact(oav);
         }
+
+        /// <summary>
+        /// 修改事实
+        /// </summary>
+        /// <param name="oav">oav事实实例</param>
+        /// <param name="v">v值</param>
+        public void UpdateFact(object oav, object v)
+        {
+            MainView.FeiDaoMachine.UpdateFact(oav,v);
+        }
+
+        /// <summary>
+        /// 提交事实
+        /// </summary>
+        /// <param name="oav">oav事实实例</param>
+        public void CommitFact(object oav)
+        {
+            MainView.FeiDaoMachine.CommitFact(oav);
+        }
+
         /// <summary>
         /// 系统输出
         /// </summary>
