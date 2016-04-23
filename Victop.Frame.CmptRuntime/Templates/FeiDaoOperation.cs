@@ -799,6 +799,48 @@ namespace Victop.Frame.CmptRuntime
         }
         #endregion
 
+        #region 加减乘除
+        /// <summary>
+        /// 数相加
+        /// </summary>
+        /// <param name="v1">数1</param>
+        /// <param name="v2">数2</param>
+        /// <param name="oav">接收oav</param>
+        public void NumAdd(object v1, object v2, object oav)
+        {
+            systemOperation.NumAdd( v1,  v2,  oav);
+        }
+        /// <summary>
+        /// 数相减
+        /// </summary>
+        /// <param name="v1">数1</param>
+        /// <param name="v2">数2</param>
+        /// <param name="oav">接收oav</param>
+        public void NumMinux(object v1, object v2, object oav)
+        {
+            systemOperation.NumMinux(v1, v2, oav);
+        }
+        /// <summary>
+        /// 数相成
+        /// </summary>
+        /// <param name="v1">数1</param>
+        /// <param name="v2">数2</param>
+        /// <param name="oav">接收oav</param>
+        public void NumMultiply(object v1, object v2, object oav)
+        {
+            systemOperation.NumMultiply(v1, v2, oav);
+        }
+        /// <summary>
+        /// 数相除
+        /// </summary>
+        /// <param name="v1">数1</param>
+        /// <param name="v2">数2</param>
+        /// <param name="oav">接收oav</param>
+        public void NumDivide(object v1, object v2, object oav)
+        {
+            systemOperation.NumDivide(v1, v2, oav);
+        }
+
         #region 时间
         /// <summary>
         /// 获取服务器时间

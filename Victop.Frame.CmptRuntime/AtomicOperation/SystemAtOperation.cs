@@ -659,6 +659,90 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         }
         #endregion
 
+        #region 加减乘除
+        /// <summary>
+        /// 数相加
+        /// </summary>
+        /// <param name="v1">数1</param>
+        /// <param name="v2">数2</param>
+        /// <param name="oav">接收oav</param>
+        public void NumAdd(object v1, object v2, object oav)
+        {
+            dynamic o = oav;
+            if (v1 == null || v2 == null)
+            {
+                o.v = "";
+                return;
+            }
+            double i=0;
+            double j=0;
+            double.TryParse(v1.ToString(), out i);
+            double.TryParse(v2.ToString(), out j);
+            o.v = i + j;
+        }
+        /// <summary>
+        /// 数相减
+        /// </summary>
+        /// <param name="v1">数1</param>
+        /// <param name="v2">数2</param>
+        /// <param name="oav">接收oav</param>
+        public void NumMinux(object v1, object v2, object oav)
+        {
+            dynamic o = oav;
+            if (v1 == null || v2 == null)
+            {
+                o.v = "";
+                return;
+            }
+            double i = 0;
+            double j = 0;
+            double.TryParse(v1.ToString(), out i);
+            double.TryParse(v2.ToString(), out j);
+            o.v = i - j;
+        }
+        /// <summary>
+        /// 数相成
+        /// </summary>
+        /// <param name="v1">数1</param>
+        /// <param name="v2">数2</param>
+        /// <param name="oav">接收oav</param>
+        public void NumMultiply(object v1, object v2, object oav)
+        {
+            dynamic o = oav;
+            if (v1 == null || v2 == null)
+            {
+                o.v = "";
+                return;
+            }
+            double i = 0;
+            double j = 0;
+            double.TryParse(v1.ToString(), out i);
+            double.TryParse(v2.ToString(), out j);
+            o.v = i * j;
+        }
+        /// <summary>
+        /// 数相除
+        /// </summary>
+        /// <param name="v1">数1</param>
+        /// <param name="v2">数2</param>
+        /// <param name="oav">接收oav</param>
+        public void NumDivide(object v1, object v2, object oav)
+        {
+            dynamic o = oav;
+            if (v1 == null || v2 == null)
+            {
+                o.v = "";
+                return;
+            }
+            double i = 0;
+            double j = 0;
+            double.TryParse(v1.ToString(), out i);
+            double.TryParse(v2.ToString(), out j);
+            o.v = i / j;
+        }
+
+        #endregion
+
         #region 时间
         /// <summary>
         /// 获取服务器时间
