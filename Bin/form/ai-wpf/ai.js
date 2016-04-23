@@ -80,6 +80,7 @@
 	"StrContains":"StrContains",
 	"StrTrimEnd":"StrTrimEnd",
 	"GetDateTime":"GetDateTime",
+	"ConvertDateTimeToString":"ConvertDateTimeToString",
 	"GetSysVariableValue":"GetSysVariableValue",
 	"SetElementContent":"SetElementContent",
 	"SetElementChecked":"SetElementChecked",
