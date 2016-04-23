@@ -256,7 +256,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <summary>
         /// 设置元素是否可见
         /// </summary>
-        /// <param name="paramValue">元素名称</param>
+        /// <param name="elementName">元素名称</param>
         /// <param name="visibility">是否显示</param>
         public void SetElementVisility(string elementName, bool visibility)
         {
