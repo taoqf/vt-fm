@@ -119,5 +119,9 @@
 	"GetSourceShapeByLine":"GetSourceShapeByLine",
 	"GetTargetShapeByLine":"GetTargetShapeByLine",
 	"GetExportData":"GetExportData",
-	"MessageToOAV":"MessageToOAV"
+	"MessageToOAV":"MessageToOAV",
+	"NumAdd":"NumAdd",
+	"NumMinux":"NumMinux",
+	"NumMultiply":"NumMultiply",
+	"NumDivide":"NumDivide"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
