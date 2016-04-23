@@ -840,6 +840,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.NumDivide(v1, v2, oav);
         }
+        #endregion
 
         #region 时间
         /// <summary>
