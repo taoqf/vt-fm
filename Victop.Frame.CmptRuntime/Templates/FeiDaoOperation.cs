@@ -821,7 +821,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.NumMinux(v1, v2, oav);
         }
         /// <summary>
-        /// 数相成
+        /// 数相乘
         /// </summary>
         /// <param name="v1">数1</param>
         /// <param name="v2">数2</param>
@@ -853,6 +853,17 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetDateTime(oav, day);
         }
         #endregion
+
+        /// <summary>
+        /// 日期类型转为自定义格式字符串
+        /// </summary>
+        /// <param name="oav">接收oav</param>
+        /// <param name="datetime">时间</param>
+        /// <param name="format">转换格式，如（yyyy-MM-dd、yyyy-MM-dd HH:mm:ss、yyyy/MM/dd HH:mm等）</param>        
+        public void ConvertDateTimeToString(object oav, object datetime, string format = "yyyy-MM-dd HH:mm:ss") 
+        {
+            systemOperation.ConvertDateTimeToString(oav,datetime, format);
+        }
 
         #region 获取系统变量
         /// <summary>
