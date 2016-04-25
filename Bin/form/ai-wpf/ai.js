@@ -124,5 +124,6 @@
 	"NumAdd":"NumAdd",
 	"NumMinux":"NumMinux",
 	"NumMultiply":"NumMultiply",
-	"NumDivide":"NumDivide"
+	"NumDivide":"NumDivide",
+	"CmpStrIsEqual":"CmpStrIsEqual"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
