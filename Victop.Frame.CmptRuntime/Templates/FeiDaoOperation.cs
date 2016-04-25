@@ -797,6 +797,16 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.StrTrimEnd(strValue, value, oav);
         }
+        /// <summary>
+        /// 比较字符串一致性
+        /// </summary>
+        /// <param name="firstValue">字符串实例</param>
+        /// <param name="secondValue">指定的字符串</param>
+        /// <param name="oav">接受oav</param>
+        public void CmpStrIsEqual(string firstValue, string secondValue, object oav)
+        {
+            systemOperation.CmpStrIsEqual(firstValue, secondValue, oav);
+        }
         #endregion
 
         #region 加减乘除
