@@ -799,6 +799,49 @@ namespace Victop.Frame.CmptRuntime
         }
         #endregion
 
+        #region 加减乘除
+        /// <summary>
+        /// 数相加
+        /// </summary>
+        /// <param name="v1">数1</param>
+        /// <param name="v2">数2</param>
+        /// <param name="oav">接收oav</param>
+        public void NumAdd(object v1, object v2, object oav)
+        {
+            systemOperation.NumAdd( v1,  v2,  oav);
+        }
+        /// <summary>
+        /// 数相减
+        /// </summary>
+        /// <param name="v1">数1</param>
+        /// <param name="v2">数2</param>
+        /// <param name="oav">接收oav</param>
+        public void NumMinux(object v1, object v2, object oav)
+        {
+            systemOperation.NumMinux(v1, v2, oav);
+        }
+        /// <summary>
+        /// 数相乘
+        /// </summary>
+        /// <param name="v1">数1</param>
+        /// <param name="v2">数2</param>
+        /// <param name="oav">接收oav</param>
+        public void NumMultiply(object v1, object v2, object oav)
+        {
+            systemOperation.NumMultiply(v1, v2, oav);
+        }
+        /// <summary>
+        /// 数相除
+        /// </summary>
+        /// <param name="v1">数1</param>
+        /// <param name="v2">数2</param>
+        /// <param name="oav">接收oav</param>
+        public void NumDivide(object v1, object v2, object oav)
+        {
+            systemOperation.NumDivide(v1, v2, oav);
+        }
+        #endregion
+
         #region 时间
         /// <summary>
         /// 获取服务器时间
@@ -810,6 +853,17 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetDateTime(oav, day);
         }
         #endregion
+
+        /// <summary>
+        /// 日期类型转为自定义格式字符串
+        /// </summary>
+        /// <param name="oav">接收oav</param>
+        /// <param name="datetime">时间</param>
+        /// <param name="format">转换格式，如（yyyy-MM-dd、yyyy-MM-dd HH:mm:ss、yyyy/MM/dd HH:mm等）</param>        
+        public void ConvertDateTimeToString(object oav, object datetime, string format = "yyyy-MM-dd HH:mm:ss") 
+        {
+            systemOperation.ConvertDateTimeToString(oav,datetime, format);
+        }
 
         #region 获取系统变量
         /// <summary>
@@ -892,11 +946,11 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 设置元素是否可见
         /// </summary>
-        /// <param name="paramValue">元素名称</param>
+        /// <param name="elementName">元素名称</param>
         /// <param name="visibility">是否显示</param>
-        public void SetElementVisility(string paramValue, bool visibility)
+        public void SetElementVisility(string elementName, bool visibility)
         {
-            uIElementOperation.SetElementVisility(paramValue, visibility);
+            uIElementOperation.SetElementVisility(elementName, visibility);
         }
         /// <summary>
         /// 根据DataGrid名称获取当前选择行中某一字段的值
