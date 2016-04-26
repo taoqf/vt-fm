@@ -1036,5 +1036,68 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
 
         }
 
+        /// <summary>
+        /// 数据存在性验证
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="oav">返回结果</param>
+        public void DataExistenceVerification(string pblockName, string fieldName, object oav)
+        {
+            dynamic o = oav;
+            o.v = false;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
+            {
+                if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+                {
+                    foreach (DataRow row in pBlock.ViewBlockDataTable.Rows)
+                    {
+                        if ((row.RowState == DataRowState.Modified || row.RowState == DataRowState.Added) &&
+                            string.IsNullOrEmpty(row[fieldName].ToString()))
+                        {
+                            o.v = true;
+                            break; //college_website
+                        }
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 格式正确性验证 
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="length">字段长度限制</param>
+        /// <param name="oav">返回结果</param>
+        public void FormatCorrectnessVerification(string pblockName, string fieldName, int length, object oav)
+        {
+            dynamic o = oav;
+            o.v = false;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
+            {
+                if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+                {
+                    foreach (DataRow row in pBlock.ViewBlockDataTable.Rows)
+                    {
+                        if ((row.RowState == DataRowState.Modified || row.RowState == DataRowState.Added) &&
+                            !string.IsNullOrEmpty(row[fieldName].ToString()))
+                        {
+                            byte[] b = Encoding.Default.GetBytes(row[fieldName].ToString());
+
+                            if (sizeof(byte) * b.Length > length)
+                            {
+                                o.v = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }

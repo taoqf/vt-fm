@@ -439,7 +439,27 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.JsonToDataTable(str,elementName);
         }
-
+        /// <summary>
+        /// 数据存在性验证
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="oav">返回结果</param>
+        public void DataExistenceVerification(string pblockName, string fieldName, object oav)
+        {
+            dataOperation.DataExistenceVerification(pblockName, fieldName, oav);
+        }
+        /// <summary>
+        /// 格式正确性验证 
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="length">字段长度限制</param>
+        /// <param name="oav">返回结果</param>
+        public void FormatCorrectnessVerification(string pblockName, string fieldName, int length, object oav)
+        {
+            dataOperation.FormatCorrectnessVerification(pblockName, fieldName, length, oav);
+        }
 
         #endregion
 
