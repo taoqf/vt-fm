@@ -71,6 +71,7 @@
 	"SaveWriteTextToFile":"SaveWriteTextToFile",
 	"UpLoadFile":"UpLoadFile",
 	"GetNewGuid":"GetNewGuid",
+	"SendGetCodeMessage":"SendGetCodeMessage",
 	"GetStringByResourceName":"GetStringByResourceName",
 	"ConvertToString":"ConvertToString",
 	"ConvertToInt":"ConvertToInt",

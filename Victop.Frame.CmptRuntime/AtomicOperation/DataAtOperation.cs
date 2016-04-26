@@ -956,7 +956,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         if (row.RowState == DataRowState.Deleted)
                             continue;
                         int param = 0;
-                        int.TryParse(row[fieldName].ToString().Substring(1), out param);
+                        int.TryParse(row[fieldName].ToString().Replace(firstLetter, ""), out param);
                         i = i > param ? i : param;
                     }
                     dynamic o = oav;
