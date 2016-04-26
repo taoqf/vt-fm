@@ -125,5 +125,6 @@
 	"NumMinux":"NumMinux",
 	"NumMultiply":"NumMultiply",
 	"NumDivide":"NumDivide",
-	"CmpStrIsEqual":"CmpStrIsEqual"
+	"CmpStrIsEqual":"CmpStrIsEqual",
+	"RoundNumbers":"RoundNumbers"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

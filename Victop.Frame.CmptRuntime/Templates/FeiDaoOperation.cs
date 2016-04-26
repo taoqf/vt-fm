@@ -852,6 +852,16 @@ namespace Victop.Frame.CmptRuntime
         }
         #endregion
 
+        /// <summary>
+        /// 四舍五入取整
+        /// </summary>
+        /// <param name="value">输入值</param>
+        /// <param name="oav">接收oav</param>
+        public void RoundNumbers(object value, object oav)
+        {
+            systemOperation.RoundNumbers(value, oav);
+        }
+
         #region 时间
         /// <summary>
         /// 获取服务器时间

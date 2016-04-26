@@ -756,6 +756,24 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
 
         #endregion
 
+        /// <summary>
+        /// 四舍五入取整
+        /// </summary>
+        /// <param name="value">输入值</param>
+        /// <param name="oav">接收oav</param>
+        public void RoundNumbers(object value, object oav)
+        {
+            dynamic o = oav;
+            if (value == null)
+            {
+                o.v = "";
+                return;
+            }
+            double i = 0;
+            double.TryParse(value.ToString(), out i);
+            o.v = Math.Round(i, MidpointRounding.AwayFromZero);
+        }
+
         #region 时间
         /// <summary>
         /// 获取服务器时间
