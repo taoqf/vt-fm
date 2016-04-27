@@ -128,5 +128,6 @@
 	"NumMultiply":"NumMultiply",
 	"NumDivide":"NumDivide",
 	"CmpStrIsEqual":"CmpStrIsEqual",
+        "AppendStr":"AppendStr",
 	"RoundNumbers":"RoundNumbers"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

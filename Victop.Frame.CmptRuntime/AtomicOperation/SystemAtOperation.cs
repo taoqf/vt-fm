@@ -23,6 +23,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
     {
         private TemplateControl MainView;
         private static Dictionary<string, object> paramCompntDic = new Dictionary<string, object>();
+        
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -670,6 +671,19 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 o.v = false;
             o.v = firstValue.Equals(secondValue);
         }
+
+        /// <summary>
+        /// 获取拼接字符串
+        /// </summary>
+        /// <param name="str">字符串实例</param>
+        /// <param name="join">指定的字符串连接符</param>
+        /// <param name="oav">接收oav</param>
+        public void AppendStr(object str,string join, object oav)
+        {
+            dynamic o = oav;
+            o.v += str + join;
+        }
+      
         #endregion
 
         #region 加减乘除

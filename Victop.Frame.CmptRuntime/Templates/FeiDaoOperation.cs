@@ -837,6 +837,18 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.CmpStrIsEqual(firstValue, secondValue, oav);
         }
+
+        /// <summary>
+        /// 获取拼接字符串
+        /// </summary>
+        /// <param name="str">字符串实例</param>
+        /// <param name="join">指定的字符串连接符</param>
+        /// <param name="oav">接收oav</param>
+        public void AppendStr(object str, string join, object oav)
+        {
+            systemOperation.AppendStr(str, join, oav);
+        }
+      
         #endregion
 
         #region 加减乘除
