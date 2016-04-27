@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
@@ -764,17 +765,17 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
             if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(filedName) && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
-            {                
+            {
                 foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
                 {
                     if (Convert.ToBoolean(dr["VicCheckFlag"].ToString()))
                     {
-                        if(dr.Table.Columns.Contains(filedName))
+                        if (dr.Table.Columns.Contains(filedName))
                         {
                             dr[filedName] = filedValue;
                         }
                     }
-                }                
+                }
             }
         }
 
@@ -1051,7 +1052,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             TemplateControl element = MainView.FindName(elementName) as TemplateControl;
             if (element != null)
             {
-                
+
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 dic.Add("source", dt);
                 element.Excute(dic);
@@ -1124,5 +1125,124 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
 
+        #region 规则机台专用原子操作
+        /// <summary>
+        /// 规则机台模板then专用原子操作
+        /// </summary>
+        /// <param name="pblockrhs">规则右实例block</param>
+        /// <param name="pblockparams">规则右实例参数block</param>
+        /// <param name="action_no">原子操作实例编号</param>
+        /// <param name="rule_no">规则编号</param>
+        public void AddThenTemplate(string pblockrhs, string pblockparams, string action_no, string rule_no)
+        {
+            PresentationBlockModel pBlockRhs = MainView.GetPresentationBlockModel(pblockrhs);
+            PresentationBlockModel pBlockParam = MainView.GetPresentationBlockModel(pblockparams);
+            SetConditionSearch(pblockparams, "owner_type", "then");
+            SetConditionSearch(pblockparams, "owner_no", action_no);
+            SetConditionSearch(pblockparams, "rule_no", rule_no);
+            SearchData(pblockparams);
+            DataRow[] drRhsSelect = pBlockRhs.ViewBlockDataTable.Select("action_no='" + action_no + "'");
+            if (drRhsSelect.Length > 0)
+            {
+                int item_number = 0;
+                int order = 0;
+                if (Int32.TryParse(pBlockRhs.ViewBlockDataTable.Compute("max(order)", string.Empty).ToString(), out item_number))
+                {
+                    order = item_number + 1;
+                }
+                else
+                {
+                    order = 1;
+                }
+                string action_nonew = SendGetCodeMessage("12", "BH101");
+                if (!string.IsNullOrEmpty(action_nonew))
+                {
+                    DataRow drRhs = pBlockRhs.ViewBlockDataTable.NewRow();
+                    drRhs["_id"] = Guid.NewGuid().ToString();
+                    drRhs["action_no"] = action_nonew;
+                    drRhs["rule_no"] = rule_no;
+                    drRhs["is_return"] = drRhsSelect[0]["is_return"];
+                    drRhs["atom_no"] = drRhsSelect[0]["atom_no"];
+                    drRhs["atom_name"] = drRhsSelect[0]["atom_name"];
+                    drRhs["str_param"] = "";
+                    drRhs["is_commented"] = "false";
+                    drRhs["is_note"] = "false";
+                    drRhs["str_note"] = "";
+                    drRhs["order"] = order;
+                    StringBuilder str_param = new StringBuilder();
+                    DataRow[] drParamSelect = pBlockParam.ViewBlockDataTable.Select("action_no='" + action_no + "' and owner_type='then' and rule_no='" + rule_no + "'");
+                    foreach (DataRow rowselect in drParamSelect)
+                    {
+                        string param_nonew = SendGetCodeMessage("12", "BH101");
+                        if (!string.IsNullOrEmpty(param_nonew))
+                        {
+                            if (Int32.TryParse(pBlockParam.ViewBlockDataTable.Compute("max(order)", string.Empty).ToString(), out item_number))
+                            {
+                                order = item_number + 1;
+                            }
+                            else
+                            {
+                                order = 1;
+                            }
+                            DataRow dradd = pBlockParam.ViewBlockDataTable.NewRow();
+                            dradd["_id"] = Guid.NewGuid().ToString();
+                            dradd["param_no"] = SendGetCodeMessage("12", "BH101");
+                            dradd["rule_no"] = rowselect["rule_no"];
+                            dradd["param_template"] = rowselect["param_template"];
+                            dradd["param_instance"] = rowselect["param_template"];
+                            str_param.Append(dradd["param_instance"] + ",");
+                            dradd["is_replace"] = rowselect["is_replace"];
+                            dradd["owner_type"] = rowselect["owner_type"];
+                            dradd["owner_no"] = action_no;
+                            dradd["order"] = order;
+                            pBlockParam.ViewBlockDataTable.Rows.Add(dradd); 
+                        }
+                    }
+                    drRhs["str_param"] = str_param.ToString().TrimEnd(',');
+                    bool result = pBlockRhs.SaveData();
+                    if (result)
+                    {
+                        result = pBlockParam.SaveData();
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 获取编码返回值
+        /// </summary>
+        /// <param name="SystemId"></param>
+        /// <param name="iPName"></param>
+        /// <returns></returns>
+        private string SendGetCodeMessage(string SystemId, string iPName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(iPName) || string.IsNullOrEmpty(SystemId))
+                {
+                    return string.Empty;
+                }
+                string MessageType = "MongoDataChannelService.findDocCode";
+                DataMessageOperation messageOp = new DataMessageOperation();
+                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                contentDic.Add("systemid", SystemId);
+                contentDic.Add("pname", iPName);
+                contentDic.Add("setinfo", "");
+                Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
+                if (returnDic != null || returnDic.ContainsKey("ReplyContent"))
+                {
+                    return JsonHelper.ReadJsonString(returnDic["ReplyContent"].ToString(), "result");
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.InfoFormat("发送获取编码消息异常（string SendGetCodeMessage）：{0}", ex.Message);
+                return string.Empty;
+            }
+        }
+        #endregion
     }
 }

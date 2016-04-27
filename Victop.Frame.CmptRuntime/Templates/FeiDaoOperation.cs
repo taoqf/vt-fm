@@ -94,7 +94,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="serviceName">服务名称</param>
         public void SendHttpRequest(string requestUrl, object oav)
         {
-           customServiceOperation.SendHttpRequest(requestUrl,oav);
+            customServiceOperation.SendHttpRequest(requestUrl, oav);
         }
 
         #endregion
@@ -447,7 +447,7 @@ namespace Victop.Frame.CmptRuntime
         ///</summary>
         public void JsonToDataTable(object str, string elementName)
         {
-            dataOperation.JsonToDataTable(str,elementName);
+            dataOperation.JsonToDataTable(str, elementName);
         }
         /// <summary>
         /// 数据存在性验证
@@ -848,7 +848,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.AppendStr(str, join, oav);
         }
-      
+
         #endregion
 
         #region 加减乘除
@@ -860,7 +860,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void NumAdd(object v1, object v2, object oav)
         {
-            systemOperation.NumAdd( v1,  v2,  oav);
+            systemOperation.NumAdd(v1, v2, oav);
         }
         /// <summary>
         /// 数相减
@@ -922,9 +922,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         /// <param name="datetime">时间</param>
         /// <param name="format">转换格式，如（yyyy-MM-dd、yyyy-MM-dd HH:mm:ss、yyyy/MM/dd HH:mm等）</param>        
-        public void ConvertDateTimeToString(object oav, object datetime, string format = "yyyy-MM-dd HH:mm:ss") 
+        public void ConvertDateTimeToString(object oav, object datetime, string format = "yyyy-MM-dd HH:mm:ss")
         {
-            systemOperation.ConvertDateTimeToString(oav,datetime, format);
+            systemOperation.ConvertDateTimeToString(oav, datetime, format);
         }
 
         #region 获取系统变量
@@ -1343,7 +1343,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接受oav</param>
         public void GetExportData(string drawingName, object oav)
         {
-            webvisioAtOperation.GetExportData(drawingName,oav);
+            webvisioAtOperation.GetExportData(drawingName, oav);
         }
         /// <summary>
         /// 消息转OAV
@@ -1353,6 +1353,20 @@ namespace Victop.Frame.CmptRuntime
         public void MessageToOAV(string drawingName, string keyName)
         {
             webvisioAtOperation.MessageToOAV(drawingName, keyName);
+        }
+        #endregion
+
+        #region 专用原子操作
+        /// <summary>
+        /// 规则机台模板then专用原子操作
+        /// </summary>
+        /// <param name="pblockrhs">规则右实例block</param>
+        /// <param name="pblockparams">规则右实例参数block</param>
+        /// <param name="action_no">原子操作实例编号</param>
+        /// <param name="rule_no">规则编号</param>
+        public void AddThenTemplate(string pblockrhs, string pblockparams, string action_no, string rule_no)
+        {
+            dataOperation.AddThenTemplate(pblockrhs, pblockparams, action_no, rule_no);
         }
         #endregion
     }
