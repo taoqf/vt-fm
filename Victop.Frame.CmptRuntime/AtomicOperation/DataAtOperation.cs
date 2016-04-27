@@ -110,6 +110,59 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 设置区块查询条件大于小于
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="paramValue">参数值</param>
+        /// <param name="operatorStr">操作符</param>
+        public void SetConditionSearchMoreOrLess(string pBlockName, string paramField, string paramValue, string operatorStr)
+        {
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && !string.IsNullOrEmpty(paramValue) && !string.IsNullOrEmpty(operatorStr))
+            {
+                Dictionary<string, object> operatorDic = new Dictionary<string, object>();
+                int num = 0;
+                int.TryParse(paramValue.ToString(), out num);
+                switch (operatorStr)
+                {
+                    case ">":
+                        operatorDic = RegexHelper.longGreatThan(num, false);
+                        break;
+                    case ">=":
+                        operatorDic = RegexHelper.longGreatThan(num, true);
+                        break;
+                    case "<":
+                        operatorDic = RegexHelper.longLessThan(num, false);
+                        break;
+                    case "<=":
+                        operatorDic = RegexHelper.longLessThan(num, true);
+                        break;
+                    default:
+                        break;
+                }
+                if (conditionModelDic.ContainsKey(pBlockName))
+                {
+                    Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
+                    if (paramDic.ContainsKey(paramField))
+                    {
+                        paramDic[paramField] = operatorDic;
+                    }
+                    else
+                    {
+                        paramDic.Add(paramField, operatorDic);
+                    }
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    paramDic.Add(paramField, operatorDic);
+                    viewConModel.TableCondition = paramDic;
+                    conditionModelDic.Add(pBlockName, viewConModel);
+                }
+            }
+        }
+        /// <summary>
         /// 设置区块查询条件子查询
         /// </summary>
         /// <param name="pBlockName">区块名称</param>

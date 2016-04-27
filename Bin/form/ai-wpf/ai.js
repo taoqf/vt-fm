@@ -130,5 +130,6 @@
 	"NumDivide":"NumDivide",
 	"CmpStrIsEqual":"CmpStrIsEqual",
         "AppendStr":"AppendStr",
-	"RoundNumbers":"RoundNumbers"
+	"RoundNumbers":"RoundNumbers",
+	"SetConditionSearchMoreOrLess":"SetConditionSearchMoreOrLess"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

@@ -121,6 +121,20 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetConditionSearchLike(pBlockName, paramField, paramValue);
         }
+
+        /// <summary>
+        /// 设置区块查询条件大于小于
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="paramValue">参数值</param>
+        /// <param name="operatorStr">操作符</param>
+        public void SetConditionSearchMoreOrLess(string pBlockName, string paramField, string paramValue,
+                                                 string operatorStr)
+        {
+            dataOperation.SetConditionSearchMoreOrLess(pBlockName, paramField, paramValue, operatorStr);
+        }
+
         /// <summary>
         /// 设置区块查询条件子查询
         /// </summary>
