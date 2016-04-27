@@ -577,6 +577,24 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 获取最后一行的列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsLastRowGet(string pblockName, string paramName, object oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock!= null && pBlock.ViewBlockDataTable.Columns.Contains(paramName))
+            {
+                if (pBlock.ViewBlockDataTable.Rows.Count>0)
+                { 
+                   dynamic o = oav;
+                   o.v = pBlock.ViewBlockDataTable.Rows[pBlock.ViewBlockDataTable.Rows.Count - 1][paramName];
+                }
+            }
+        }
+        /// <summary>
         /// 获取选中行的上一行列值
         /// </summary>
         /// <param name="pblockName">区块名称</param>

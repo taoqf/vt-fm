@@ -273,8 +273,20 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void ParamsCurrentRowGet(string pblockName, string paramName, object oav)
         {
+            dataOperation.ParamsLastRowGet(pblockName, paramName, oav);
+        }
+
+        /// <summary>
+        /// 获取最后一行的列值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="paramName">字段名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsLastRowGet(string pblockName, string paramName, object oav)
+        {
             dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
         }
+
         /// <summary>
         /// 赋值行的列值
         /// </summary>

@@ -19,6 +19,7 @@
 	"PBlockAddRow":"PBlockAddRow",
 	"BlockInsertRow":"BlockInsertRow",
 	"ParamsCurrentRowGet":"ParamsCurrentRowGet",
+        "ParamsLastRowGet":"ParamsLastRowGet",
 	"ParamsRowSet":"ParamsRowSet",
 	"ParamsCurrentRowUpGet":"ParamsCurrentRowUpGet",
 	"ParamsCurrentRowDownGet":"ParamsCurrentRowDownGet",
