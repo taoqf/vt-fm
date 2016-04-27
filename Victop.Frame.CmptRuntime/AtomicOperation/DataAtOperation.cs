@@ -753,6 +753,31 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+
+        /// <summary>
+        /// 批量修改区块选中的数据集合中的某列值
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        /// <param name="filedName">字段名称</param>
+        /// <param name="filedValue">字段值</param>
+        public void BlockSelectRowsUpdate(string blockName, string filedName, string filedValue)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(filedName) && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            {                
+                foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
+                {
+                    if (Convert.ToBoolean(dr["VicCheckFlag"].ToString()))
+                    {
+                        if(dr.Table.Columns.Contains(filedName))
+                        {
+                            dr[filedName] = filedValue;
+                        }
+                    }
+                }                
+            }
+        }
+
         /// <summary>
         /// 区块选中的数据集合转换OAV
         /// </summary>

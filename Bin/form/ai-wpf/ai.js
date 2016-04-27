@@ -30,6 +30,7 @@
 	"VicDataGridSelectRowDelete":"VicDataGridSelectRowDelete",
 	"BlockToOAV":"BlockToOAV",
 	"ClearOAVByBlock":"ClearOAVByBlock",
+	"BlockSelectRowsUpdate":"BlockSelectRowsUpdate",
 	"BlockSelectRowsToOAV":"BlockSelectRowsToOAV",
 	"ClearBlockData":"ClearBlockData",
 	"SetSelectRows":"SetSelectRows",

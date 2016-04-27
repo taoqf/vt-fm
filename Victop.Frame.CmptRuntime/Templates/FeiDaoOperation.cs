@@ -360,6 +360,16 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.BlockToOAV(blockName, fieldName);
         }
         /// <summary>
+        /// 批量修改区块选中的数据集合中的某列值
+        /// </summary>
+        /// <param name="blockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="fileValue">字段值</param>
+        public void BlockSelectRowsUpdate(string blockName, string filedName, string filedValue)
+        {
+            dataOperation.BlockSelectRowsUpdate(blockName, filedName, filedValue);
+        }
+        /// <summary>
         /// 区块选中的数据集合转换OAV
         /// </summary>
         /// <param name="blockName">区块名称</param>
