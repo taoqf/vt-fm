@@ -351,6 +351,14 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.VicDataGridSelectRowDelete(pblockName);
         }
         /// <summary>
+        /// 删除最后一行
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        public void VicDataGridtLastRowDelete(string pblockName)
+        {
+            dataOperation.VicDataGridtLastRowDelete(pblockName);
+        }
+        /// <summary>
         /// 区块数据转换OAV
         /// </summary>
         /// <param name="blockName">区块名称</param>

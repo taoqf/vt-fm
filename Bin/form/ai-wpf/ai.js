@@ -97,6 +97,7 @@
 	"VicDataGridUpdateColumn":"VicDataGridUpdateColumn",
 	"VicDataGridIsReadOnly":"VicDataGridIsReadOnly",
 	"VicDataGridClearData":"VicDataGridClearData",
+        "VicDataGridtLastRowDelete":"VicDataGridtLastRowDelete",
 	"UnitPageRuleLoad":"UnitPageRuleLoad",
 	"UnitWebBrowserLoad":"UnitWebBrowserLoad",
 	"SendErrMsg":"SendErrMsg",

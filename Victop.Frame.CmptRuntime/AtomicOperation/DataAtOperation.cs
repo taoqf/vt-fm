@@ -731,6 +731,22 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+
+        /// <summary>
+        /// 删除dt最后一行
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        public void VicDataGridtLastRowDelete(string pblockName)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null )
+            {
+              
+                pBlock.ViewBlockDataTable.Rows[pBlock.ViewBlockDataTable.Rows.Count-1].Delete();
+                
+            }
+        }
+
         /// <summary>
         /// 清除区块数据
         /// </summary>
