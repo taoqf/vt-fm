@@ -741,7 +741,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             if (pBlock != null )
             {
-              
+                if (pBlock.ViewBlockDataTable.Rows.Count>0)
                 pBlock.ViewBlockDataTable.Rows[pBlock.ViewBlockDataTable.Rows.Count-1].Delete();
                 
             }
