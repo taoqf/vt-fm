@@ -98,7 +98,8 @@ namespace VictopPartner
                                 DeleteFolder(devPluginPath);
                             }
                             FrameInit.GetInstance().FrameUnload();
-                            Environment.Exit(0);
+                            //Environment.Exit(0);
+                            Process.GetCurrentProcess().Kill();
                             break;
                         }
                     }
