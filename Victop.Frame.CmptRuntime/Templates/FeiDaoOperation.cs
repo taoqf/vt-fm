@@ -273,7 +273,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void ParamsCurrentRowGet(string pblockName, string paramName, object oav)
         {
-            dataOperation.ParamsLastRowGet(pblockName, paramName, oav);
+            dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void ParamsLastRowGet(string pblockName, string paramName, object oav)
         {
-            dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
+            dataOperation.ParamsLastRowGet(pblockName, paramName, oav);            
         }
 
         /// <summary>
