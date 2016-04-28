@@ -132,5 +132,7 @@
 	"CmpStrIsEqual":"CmpStrIsEqual",
         "AppendStr":"AppendStr",
 	"RoundNumbers":"RoundNumbers",
-	"SetConditionSearchMoreOrLess":"SetConditionSearchMoreOrLess"
+	"SetConditionSearchMoreOrLess":"SetConditionSearchMoreOrLess",
+	"AddThenTemplate":"AddThenTemplate",
+	"UnitAvalonEditLoad":"UnitAvalonEditLoad"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

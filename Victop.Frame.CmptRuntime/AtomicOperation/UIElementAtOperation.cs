@@ -524,6 +524,23 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             unitPage.Excute(dicParam);
         }
         /// <summary>
+        /// 源编辑器
+        /// </summary>
+        /// <param name="unitAE">源编辑器部件名字</param>
+        /// <param name="text">内容</param>
+        public void UnitAvalonEditLoad(string unitAE, string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                TemplateControl tc = MainView.FindName(unitAE) as TemplateControl;
+                if (tc == null)
+                    return;
+                Dictionary<string, object> dicParam = new Dictionary<string, object>();
+                dicParam.Add("text", text);
+                tc.Excute(dicParam);
+            }
+        }
+        /// <summary>
         /// UnitUCWebBrowserRule加载
         /// </summary>
         /// <param name="unitWebBrowserName">浏览器控件名</param>

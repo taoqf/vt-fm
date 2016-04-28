@@ -1220,76 +1220,85 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockparams">规则右实例参数block</param>
         /// <param name="action_no">原子操作实例编号</param>
         /// <param name="rule_no">规则编号</param>
-        public void AddThenTemplate(string pblockrhs, string pblockparams, string action_no, string rule_no)
+        /// <param name="oav">jiehsouoav</param>
+        public void AddThenTemplate(string pblockrhs, string pblockparams, string action_no, string rule_no,object oav)
         {
-            PresentationBlockModel pBlockRhs = MainView.GetPresentationBlockModel(pblockrhs);
-            PresentationBlockModel pBlockParam = MainView.GetPresentationBlockModel(pblockparams);
-            SetConditionSearch(pblockparams, "owner_type", "then");
-            SetConditionSearch(pblockparams, "owner_no", action_no);
-            SetConditionSearch(pblockparams, "rule_no", rule_no);
-            SearchData(pblockparams);
-            DataRow[] drRhsSelect = pBlockRhs.ViewBlockDataTable.Select("action_no='" + action_no + "'");
-            if (drRhsSelect.Length > 0)
+            dynamic o = oav;
+            o.v = false;
+            if (!string.IsNullOrEmpty(pblockrhs) && !string.IsNullOrEmpty(pblockrhs) && !string.IsNullOrEmpty(pblockrhs) && !string.IsNullOrEmpty(pblockrhs))
             {
-                int item_number = 0;
-                int order = 0;
-                if (Int32.TryParse(pBlockRhs.ViewBlockDataTable.Compute("max(order)", string.Empty).ToString(), out item_number))
+                PresentationBlockModel pBlockRhs = MainView.GetPresentationBlockModel(pblockrhs);
+                PresentationBlockModel pBlockParam = MainView.GetPresentationBlockModel(pblockparams);
+                SetConditionSearch(pblockparams, "owner_type", "then");
+                SetConditionSearch(pblockparams, "owner_no", action_no);
+                SetConditionSearch(pblockparams, "rule_no", rule_no);
+                SearchData(pblockparams);
+                GetPBlockData(pblockparams);
+                DataRow[] drRhsSelect = pBlockRhs.ViewBlockDataTable.Select("action_no='" + action_no + "'");
+                if (drRhsSelect.Length > 0)
                 {
-                    order = item_number + 1;
-                }
-                else
-                {
-                    order = 1;
-                }
-                string action_nonew = SendGetCodeMessage("12", "BH101");
-                if (!string.IsNullOrEmpty(action_nonew))
-                {
-                    DataRow drRhs = pBlockRhs.ViewBlockDataTable.NewRow();
-                    drRhs["_id"] = Guid.NewGuid().ToString();
-                    drRhs["action_no"] = action_nonew;
-                    drRhs["rule_no"] = rule_no;
-                    drRhs["is_return"] = drRhsSelect[0]["is_return"];
-                    drRhs["atom_no"] = drRhsSelect[0]["atom_no"];
-                    drRhs["atom_name"] = drRhsSelect[0]["atom_name"];
-                    drRhs["str_param"] = "";
-                    drRhs["is_commented"] = "false";
-                    drRhs["is_note"] = "false";
-                    drRhs["str_note"] = "";
-                    drRhs["order"] = order;
-                    StringBuilder str_param = new StringBuilder();
-                    DataRow[] drParamSelect = pBlockParam.ViewBlockDataTable.Select("action_no='" + action_no + "' and owner_type='then' and rule_no='" + rule_no + "'");
-                    foreach (DataRow rowselect in drParamSelect)
+                    int item_number = 0;
+                    int order = 0;
+                    if (Int32.TryParse(pBlockRhs.ViewBlockDataTable.Compute("max(order)", string.Empty).ToString(), out item_number))
                     {
-                        string param_nonew = SendGetCodeMessage("12", "BH101");
-                        if (!string.IsNullOrEmpty(param_nonew))
-                        {
-                            if (Int32.TryParse(pBlockParam.ViewBlockDataTable.Compute("max(order)", string.Empty).ToString(), out item_number))
-                            {
-                                order = item_number + 1;
-                            }
-                            else
-                            {
-                                order = 1;
-                            }
-                            DataRow dradd = pBlockParam.ViewBlockDataTable.NewRow();
-                            dradd["_id"] = Guid.NewGuid().ToString();
-                            dradd["param_no"] = SendGetCodeMessage("12", "BH101");
-                            dradd["rule_no"] = rowselect["rule_no"];
-                            dradd["param_template"] = rowselect["param_template"];
-                            dradd["param_instance"] = rowselect["param_template"];
-                            str_param.Append(dradd["param_instance"] + ",");
-                            dradd["is_replace"] = rowselect["is_replace"];
-                            dradd["owner_type"] = rowselect["owner_type"];
-                            dradd["owner_no"] = action_no;
-                            dradd["order"] = order;
-                            pBlockParam.ViewBlockDataTable.Rows.Add(dradd); 
-                        }
+                        order = item_number + 1;
                     }
-                    drRhs["str_param"] = str_param.ToString().TrimEnd(',');
-                    bool result = pBlockRhs.SaveData();
-                    if (result)
+                    else
                     {
-                        result = pBlockParam.SaveData();
+                        order = 1;
+                    }
+                    string action_nonew = SendGetCodeMessage("12", "BH101");
+                    if (!string.IsNullOrEmpty(action_nonew))
+                    {
+                        DataRow drRhs = pBlockRhs.ViewBlockDataTable.NewRow();
+                        drRhs["_id"] = Guid.NewGuid().ToString();
+                        drRhs["action_no"] = action_nonew;
+                        drRhs["rule_no"] = rule_no;
+                        drRhs["is_return"] = drRhsSelect[0]["is_return"];
+                        drRhs["atom_no"] = drRhsSelect[0]["atom_no"];
+                        drRhs["atom_name"] = drRhsSelect[0]["atom_name"];
+                        drRhs["str_param"] = "";
+                        drRhs["is_commented"] = "false";
+                        drRhs["is_note"] = "false";
+                        drRhs["str_note"] = "";
+                        drRhs["order"] = order;
+                        StringBuilder str_param = new StringBuilder();
+                        DataRow[] drParamSelect = pBlockParam.ViewBlockDataTable.Select("owner_no='" + action_no + "' and owner_type='then' and rule_no='" + rule_no + "'");
+                        foreach (DataRow rowselect in drParamSelect)
+                        {
+                            string param_nonew = SendGetCodeMessage("12", "BH101");
+                            if (!string.IsNullOrEmpty(param_nonew))
+                            {
+                                if (Int32.TryParse(pBlockParam.ViewBlockDataTable.Compute("max(order)", string.Empty).ToString(), out item_number))
+                                {
+                                    order = item_number + 1;
+                                }
+                                else
+                                {
+                                    order = 1;
+                                }
+                                DataRow dradd = pBlockParam.ViewBlockDataTable.NewRow();
+                                dradd["_id"] = Guid.NewGuid().ToString();
+                                dradd["param_no"] = param_nonew;
+                                dradd["rule_no"] = rowselect["rule_no"];
+                                dradd["param_template"] = rowselect["param_template"];
+                                dradd["param_instance"] = rowselect["param_template"];
+                                str_param.Append(dradd["param_instance"] + ",");
+                                dradd["is_replace"] = rowselect["is_replace"];
+                                dradd["owner_type"] = rowselect["owner_type"];
+                                dradd["owner_no"] = action_no;
+                                dradd["order"] = order;
+                                pBlockParam.ViewBlockDataTable.Rows.Add(dradd);
+                            }
+                        }
+                        drRhs["str_param"] = str_param.ToString().TrimEnd(',');
+                        pBlockRhs.ViewBlockDataTable.Rows.Add(drRhs);
+                        bool result = pBlockRhs.SaveData();
+                        if (result)
+                        {
+                            result = pBlockParam.SaveData();
+                            o.v = true;
+                        }
                     }
                 }
             }

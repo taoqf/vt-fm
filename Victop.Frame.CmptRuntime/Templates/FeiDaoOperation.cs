@@ -1126,6 +1126,15 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitWebBrowserLoad(unitWebBrowserName, content, pblockName, columnName, ctrl, executeJsFunc);
         }
+        /// <summary>
+        /// 源编辑器
+        /// </summary>
+        /// <param name="unitAE">源编辑器部件名字</param>
+        /// <param name="text">内容</param>
+        public void UnitAvalonEditLoad(string unitAE, string text)
+        {
+            uIElementOperation.UnitAvalonEditLoad(unitAE, text);
+        }
         #endregion
 
         #region 错误处理方法
@@ -1398,9 +1407,10 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockparams">规则右实例参数block</param>
         /// <param name="action_no">原子操作实例编号</param>
         /// <param name="rule_no">规则编号</param>
-        public void AddThenTemplate(string pblockrhs, string pblockparams, string action_no, string rule_no)
+        /// <param name="oav">接受oav</param>
+        public void AddThenTemplate(string pblockrhs, string pblockparams, string action_no, string rule_no, object oav)
         {
-            dataOperation.AddThenTemplate(pblockrhs, pblockparams, action_no, rule_no);
+            dataOperation.AddThenTemplate(pblockrhs, pblockparams, action_no, rule_no, oav);
         }
         #endregion
     }
