@@ -129,7 +129,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="paramField">参数字段</param>
         /// <param name="paramValue">参数值</param>
         /// <param name="operatorStr">操作符</param>
-        public void SetConditionSearchMoreOrLess(string pBlockName, string paramField, string paramValue,
+        public void SetConditionSearchMoreOrLess(string pBlockName, string paramField, object paramValue,
                                                  string operatorStr)
         {
             dataOperation.SetConditionSearchMoreOrLess(pBlockName, paramField, paramValue, operatorStr);

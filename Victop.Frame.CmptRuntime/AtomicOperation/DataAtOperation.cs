@@ -116,9 +116,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="paramField">参数字段</param>
         /// <param name="paramValue">参数值</param>
         /// <param name="operatorStr">操作符</param>
-        public void SetConditionSearchMoreOrLess(string pBlockName, string paramField, string paramValue, string operatorStr)
+        public void SetConditionSearchMoreOrLess(string pBlockName, string paramField, object paramValue, string operatorStr)
         {
-            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && !string.IsNullOrEmpty(paramValue) && !string.IsNullOrEmpty(operatorStr))
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) &&paramValue!=null&& !string.IsNullOrEmpty(paramValue.ToString()) && !string.IsNullOrEmpty(operatorStr))
             {
                 Dictionary<string, object> operatorDic = new Dictionary<string, object>();
                 int num = 0;
