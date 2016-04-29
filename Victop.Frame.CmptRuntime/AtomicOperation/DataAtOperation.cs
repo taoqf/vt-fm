@@ -700,6 +700,32 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 获取最小序号减1
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="oav">接收oav</param>
+        public void GetMinNumber(string pblockName, string fieldName, object oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null)
+            {
+                if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+                {
+                    int item_number = 0;
+                    dynamic o = oav;
+                    if (Int32.TryParse(pBlock.ViewBlockDataTable.Compute("min(" + fieldName + ")", string.Empty).ToString(), out item_number))
+                    {
+                        o.v = item_number -1;
+                    }
+                    else
+                    {
+                        o.v = 1;
+                    }
+                }
+            }
+        }
+        /// <summary>
         /// 重新排序
         /// </summary>
         /// <param name="pblockName">区块名称</param>

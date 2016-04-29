@@ -340,6 +340,16 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.GetMaxNumber(pblockName, fieldName, oav);
         }
         /// <summary>
+        /// 获取最小序号减1
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="oav">接收oav</param>
+        public void GetMinNumber(string pblockName, string fieldName, object oav)
+        {
+            dataOperation.GetMinNumber(pblockName, fieldName, oav);
+        }
+        /// <summary>
         /// 重新排序
         /// </summary>
         /// <param name="pblockName">区块名称</param>

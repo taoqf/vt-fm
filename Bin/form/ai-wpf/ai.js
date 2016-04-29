@@ -25,6 +25,7 @@
 	"ParamsCurrentRowDownGet":"ParamsCurrentRowDownGet",
 	"BlockDataExChange":"BlockDataExChange",
 	"GetMaxNumber":"GetMaxNumber",
+        "GetMinNumber":"GetMinNumber",
 	"SetBlockAgainOrder":"SetBlockAgainOrder",
 	"SetBlockOrder":"SetBlockOrder",
 	"ParamsCurrentRowSet":"ParamsCurrentRowSet",
