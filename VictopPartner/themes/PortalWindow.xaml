@@ -1424,7 +1424,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
 
                             Visibility ="{ Binding  RelativeSource ={RelativeSource TemplatedParent},  Path =CanResize,  Converter ={ StaticResource  BoolToVisibilityConverter }}"/>
 
-                                    <Button  x:Name ="PART_CloseButton"  IsTabStop ="False"  Cursor ="Hand" Command="{Binding DataContext.btnCloseClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style ="{ StaticResource  styleMainWindowButtonClose }"  Width ="30"  Height ="16" FontSize="15"  Margin ="0,0,0,0"  ToolTip ="关闭"/>
+                                    <Button  x:Name ="PART_CloseButton"  IsTabStop ="False"  Cursor ="Hand" Style ="{ StaticResource  styleMainWindowButtonClose }"  Width ="30"  Height ="16" FontSize="15"  Margin ="0,0,0,0"  ToolTip ="关闭"/>
 
                                 </StackPanel> 
                                 <ContentPresenter   VerticalAlignment ="Stretch"  HorizontalAlignment ="Stretch"/>

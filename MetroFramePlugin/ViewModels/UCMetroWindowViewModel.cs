@@ -77,7 +77,7 @@ namespace MetroFramePlugin.ViewModels
                 if (userInfo != value)
                 {
                     userInfo = value;
-                    RaisePropertyChanged(()=> UserInfo);
+                    RaisePropertyChanged(() => UserInfo);
                 }
             }
         }
@@ -95,7 +95,7 @@ namespace MetroFramePlugin.ViewModels
                 if (isDebug != value)
                 {
                     isDebug = value;
-                    RaisePropertyChanged(()=> IsDebug);
+                    RaisePropertyChanged(() => IsDebug);
                 }
             }
         }
@@ -129,7 +129,7 @@ namespace MetroFramePlugin.ViewModels
                 if (poPupState != value)
                 {
                     poPupState = value;
-                    RaisePropertyChanged(()=> PoPupState);
+                    RaisePropertyChanged(() => PoPupState);
                 }
             }
         }
@@ -150,7 +150,7 @@ namespace MetroFramePlugin.ViewModels
                 if (systemMenuListLocal != value)
                 {
                     systemMenuListLocal = value;
-                    RaisePropertyChanged(()=> SystemMenuListLocal);
+                    RaisePropertyChanged(() => SystemMenuListLocal);
                 }
             }
         }
@@ -169,7 +169,7 @@ namespace MetroFramePlugin.ViewModels
                 if (systemMenuListEnterprise != value)
                 {
                     systemMenuListEnterprise = value;
-                    RaisePropertyChanged(()=> SystemMenuListEnterprise);
+                    RaisePropertyChanged(() => SystemMenuListEnterprise);
                 }
             }
         }
@@ -188,7 +188,7 @@ namespace MetroFramePlugin.ViewModels
                 SelectedThirdMenuModel = null;
                 systemThirdLevelMenuList = value;
                 SelectedThirdMenuModel = systemThirdLevelMenuList.First();
-                RaisePropertyChanged(()=> SystemThirdLevelMenuList);
+                RaisePropertyChanged(() => SystemThirdLevelMenuList);
             }
         }
 
@@ -206,7 +206,7 @@ namespace MetroFramePlugin.ViewModels
                 if (systemFourthLevelMenuList != value)
                 {
                     systemFourthLevelMenuList = value;
-                    RaisePropertyChanged(()=> SystemFourthLevelMenuList);
+                    RaisePropertyChanged(() => SystemFourthLevelMenuList);
                 }
             }
         }
@@ -222,7 +222,7 @@ namespace MetroFramePlugin.ViewModels
                     return;
                 }
                 selectedSecondMenuModel = value;
-                RaisePropertyChanged(()=> SelectedSecondMenuModel);
+                RaisePropertyChanged(() => SelectedSecondMenuModel);
             }
         }
 
@@ -233,7 +233,7 @@ namespace MetroFramePlugin.ViewModels
             set
             {
                 selectedThirdMenuModel = value;
-                RaisePropertyChanged(()=> SelectedThirdMenuModel);
+                RaisePropertyChanged(() => SelectedThirdMenuModel);
             }
         }
 
@@ -269,7 +269,7 @@ namespace MetroFramePlugin.ViewModels
                 if (tabItemList != value)
                 {
                     tabItemList = value;
-                    RaisePropertyChanged(()=> TabItemList);
+                    RaisePropertyChanged(() => TabItemList);
                 }
             }
         }
@@ -283,7 +283,7 @@ namespace MetroFramePlugin.ViewModels
                 if (selectedTabItem != value)
                 {
                     selectedTabItem = value;
-                    RaisePropertyChanged(()=> SelectedTabItem);
+                    RaisePropertyChanged(() => SelectedTabItem);
                 }
             }
         }
@@ -303,7 +303,7 @@ namespace MetroFramePlugin.ViewModels
                 if (activePluginNum != value)
                 {
                     activePluginNum = value;
-                    RaisePropertyChanged(()=> ActivePluginNum);
+                    RaisePropertyChanged(() => ActivePluginNum);
                 }
             }
         }
@@ -321,7 +321,7 @@ namespace MetroFramePlugin.ViewModels
                 if (appVersionCode != value)
                 {
                     appVersionCode = value;
-                    RaisePropertyChanged(()=> AppVersionCode);
+                    RaisePropertyChanged(() => AppVersionCode);
                 }
             }
         }
@@ -341,7 +341,7 @@ namespace MetroFramePlugin.ViewModels
                 if (isShowMenu != value)
                 {
                     isShowMenu = value;
-                    RaisePropertyChanged(()=> IsShowMenu);
+                    RaisePropertyChanged(() => IsShowMenu);
                 }
             }
         }
@@ -361,7 +361,7 @@ namespace MetroFramePlugin.ViewModels
                 if (showWorkSpace != value)
                 {
                     showWorkSpace = value;
-                    RaisePropertyChanged(()=> ShowWorkSpace);
+                    RaisePropertyChanged(() => ShowWorkSpace);
                 }
             }
         }
@@ -381,7 +381,7 @@ namespace MetroFramePlugin.ViewModels
                 if (showLockView != value)
                 {
                     showLockView = value;
-                    RaisePropertyChanged(()=> ShowLockView);
+                    RaisePropertyChanged(() => ShowLockView);
                 }
             }
         }
@@ -402,7 +402,7 @@ namespace MetroFramePlugin.ViewModels
                 if (roleInfoList != value)
                 {
                     roleInfoList = value;
-                    RaisePropertyChanged(()=> RoleInfoList);
+                    RaisePropertyChanged(() => RoleInfoList);
                 }
             }
         }
@@ -420,21 +420,23 @@ namespace MetroFramePlugin.ViewModels
                 if (isLockMenu != value)
                 {
                     isLockMenu = value;
-                    RaisePropertyChanged(()=> IsLockMenu);
+                    RaisePropertyChanged(() => IsLockMenu);
                 }
             }
         }
         public MenuModel SelectedFourMenuModel
         {
-            get {
-                if (selectedFourMenuModel==null)
+            get
+            {
+                if (selectedFourMenuModel == null)
                 {
                     selectedFourMenuModel = new MenuModel();
                 }
                 return selectedFourMenuModel;
             }
-            set {
-                if (selectedFourMenuModel!=value)
+            set
+            {
+                if (selectedFourMenuModel != value)
                 {
                     selectedFourMenuModel = value;
                 }
@@ -454,8 +456,9 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand<object>((x) =>
                 {
-                  
+
                     mainWindow = (VicMetroWindow)x;
+                    mainWindow.Closing += MainWindow_Closing;
                     mainWindow.Uid = "mainWindow";
                     toggleLock = (VicToggleSwitchNormal)mainWindow.FindName("toggleLock");
                     pwdLockSpace = (VicPasswordBoxNormal)mainWindow.FindName("pwdLockSpace");
@@ -483,6 +486,25 @@ namespace MetroFramePlugin.ViewModels
                 });
             }
         }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            if (result == MessageBoxResult.Yes)
+            {
+                DataMessageOperation dataMsgOp = new DataMessageOperation();
+                dataMsgOp.RemoveDataLock();
+                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                Dictionary<string, object> resultDic = dataMsgOp.SendSyncMessage("MongoDataChannelService.loginout", contentDic);
+                FrameInit.GetInstance().FrameUnload();
+                GC.Collect();
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+
         /// <summary>
         /// 倒计时
         /// </summary>
@@ -851,18 +873,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    MessageBoxResult result = VicMessageBoxNormal.Show("确定要退出么？", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        DataMessageOperation dataMsgOp = new DataMessageOperation();
-                        dataMsgOp.RemoveDataLock();
-                        Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                        Dictionary<string, object> resultDic = dataMsgOp.SendSyncMessage("MongoDataChannelService.loginout", contentDic);
-                        mainWindow.Close();
-                        FrameInit.GetInstance().FrameUnload();
-                        GC.Collect();
 
-                    }
                 });
             }
         }
@@ -1264,7 +1275,7 @@ namespace MetroFramePlugin.ViewModels
                 paramDic.Add("configsystemid", "11");
                 paramDic.Add("formid", selectedFourthMenu.FormId);
                 paramDic.Add("authoritycode", selectedFourthMenu.AuthorityCode);
-                PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = selectedFourthMenu.PackageUrl, ShowTitle = selectedFourthMenu.MenuName },paramDic);
+                PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = selectedFourthMenu.PackageUrl, ShowTitle = selectedFourthMenu.MenuName }, paramDic);
                 if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {
                     PluginShow(pluginModel, selectedFourthMenu.MenuName);
@@ -1418,7 +1429,7 @@ namespace MetroFramePlugin.ViewModels
             IPlugin PluginInstance = pluginModel.PluginInterface;
             Window loginWin = PluginInstance.StartWindow;
             loginWin.Uid = pluginModel.ObjectId;
-            loginWin.Owner = mainWindow; 
+            loginWin.Owner = mainWindow;
             UserInfo.OldUserCode = UserInfo.UserCode;
             UserInfo.OldRole = UserInfo.UserRole;
             bool? result = loginWin.ShowDialog();
@@ -1441,7 +1452,7 @@ namespace MetroFramePlugin.ViewModels
                     UserInfo.UserImg = "";
                 }
             }
-         
+
             IsShowMenu = Visibility.Visible;
             LoadStandardMenu();
         }
@@ -1454,7 +1465,7 @@ namespace MetroFramePlugin.ViewModels
             {
                 Directory.CreateDirectory(dir);
             }
-             
+
             path = dir + userCode + ".jpg";
             if (File.Exists(path))
             {
@@ -1737,7 +1748,7 @@ namespace MetroFramePlugin.ViewModels
                 if (newMenuListLocal != value)
                 {
                     newMenuListLocal = value;
-                    RaisePropertyChanged(()=> NewMenuListLocal);
+                    RaisePropertyChanged(() => NewMenuListLocal);
                 }
             }
         }
@@ -1757,7 +1768,7 @@ namespace MetroFramePlugin.ViewModels
                 if (newMenuListEnterprise != value)
                 {
                     newMenuListEnterprise = value;
-                    RaisePropertyChanged(()=> NewMenuListEnterprise);
+                    RaisePropertyChanged(() => NewMenuListEnterprise);
                 }
             }
         }
@@ -1777,7 +1788,7 @@ namespace MetroFramePlugin.ViewModels
                 if (newSystemFourthLevelMenuList != value)
                 {
                     newSystemFourthLevelMenuList = value;
-                    RaisePropertyChanged(()=> NewSystemFourthLevelMenuList);
+                    RaisePropertyChanged(() => NewSystemFourthLevelMenuList);
                 }
             }
         }
@@ -1797,7 +1808,7 @@ namespace MetroFramePlugin.ViewModels
                 if (selectPopupMenuList != value)
                 {
                     selectPopupMenuList = value;
-                    RaisePropertyChanged(()=> SelectPopupMenuList);
+                    RaisePropertyChanged(() => SelectPopupMenuList);
                 }
             }
         }
@@ -1837,7 +1848,7 @@ namespace MetroFramePlugin.ViewModels
                 if (popupIsShow != value)
                 {
                     popupIsShow = value;
-                    RaisePropertyChanged(()=> PopupIsShow);
+                    RaisePropertyChanged(() => PopupIsShow);
                 }
             }
         }
