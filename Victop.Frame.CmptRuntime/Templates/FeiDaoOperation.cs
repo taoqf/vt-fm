@@ -862,6 +862,16 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.StrTrimEnd(strValue, value, oav);
         }
         /// <summary>
+        /// 从当前 System.String 对象移除数组中指定的一组字符的所有头部匹配项
+        /// </summary>
+        /// <param name="strValue">字符串实例</param>
+        /// <param name="value">一组字符组成的字符串</param>
+        /// <param name="oav">接受oav</param>
+        public void StrTrimStart(object strValue, string value, object oav)
+        {
+            systemOperation.StrTrimStart(strValue, value, oav);
+        }
+        /// <summary>
         /// 比较字符串一致性
         /// </summary>
         /// <param name="firstValue">字符串实例</param>
@@ -878,9 +888,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="str">字符串实例</param>
         /// <param name="join">指定的字符串连接符</param>
         /// <param name="oav">接收oav</param>
-        public void AppendStr(object str, string join, object oav)
+        public void AppendStr(object str,string join, object oav,bool sort=true)
         {
-            systemOperation.AppendStr(str, join, oav);
+            systemOperation.AppendStr(str, join, oav, sort);
         }
 
         #endregion

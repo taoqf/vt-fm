@@ -659,6 +659,20 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             o.v = strValue.ToString().TrimEnd(chararray);
         }
         /// <summary>
+        /// 从当前 System.String 对象移除数组中指定的一组字符的所有头部匹配项
+        /// </summary>
+        /// <param name="strValue">字符串实例</param>
+        /// <param name="value">一组字符组成的字符串</param>
+        /// <param name="oav">接受oav</param>
+        public void StrTrimStart(object strValue, string value, object oav)
+        {
+            dynamic o = oav;
+            if (strValue == null || value == null)
+                o.v = "";
+            char[] chararray = value.ToCharArray();
+            o.v = strValue.ToString().TrimStart(chararray);
+        }
+        /// <summary>
         /// 比较字符串一致性
         /// </summary>
         /// <param name="firstValue">字符串实例</param>
@@ -678,10 +692,21 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="str">字符串实例</param>
         /// <param name="join">指定的字符串连接符</param>
         /// <param name="oav">接收oav</param>
-        public void AppendStr(object str,string join, object oav)
+        /// <param name="sort">排序方式true正序false倒序</param>
+        public void AppendStr(object str,string join, object oav,bool sort)
         {
             dynamic o = oav;
-            o.v += str + join;
+            if (sort)
+                o.v += str + join;
+            else
+            {
+                if (o.v==null)
+                o.v = join + str;
+                else
+                {
+                    o.v = join + str + o.v;
+                }
+            }
         }
       
         #endregion

@@ -131,6 +131,7 @@
 	"NumDivide":"NumDivide",
 	"CmpStrIsEqual":"CmpStrIsEqual",
         "AppendStr":"AppendStr",
+        "StrTrimStart":"StrTrimStart",
 	"RoundNumbers":"RoundNumbers",
 	"SetConditionSearchMoreOrLess":"SetConditionSearchMoreOrLess",
 	"AddThenTemplate":"AddThenTemplate",
