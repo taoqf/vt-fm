@@ -187,6 +187,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         default:
                             break;
                     }
+                    if (o.v == null)
+                        o.v = "";
                 }
             }
         }
