@@ -655,8 +655,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dynamic o = oav;
             if (strValue == null || value == null)
                 o.v = "";
-            char[] chararray = value.ToCharArray();
-            o.v = strValue.ToString().TrimEnd(chararray);
+            else
+            {
+                char[] chararray = value.ToCharArray();
+                o.v = strValue.ToString().TrimEnd(chararray);
+            }
+           
         }
         /// <summary>
         /// 从当前 System.String 对象移除数组中指定的一组字符的所有头部匹配项
@@ -669,8 +673,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dynamic o = oav;
             if (strValue == null || value == null)
                 o.v = "";
-            char[] chararray = value.ToCharArray();
-            o.v = strValue.ToString().TrimStart(chararray);
+            else
+            {
+                char[] chararray = value.ToCharArray();
+                o.v = strValue.ToString().TrimStart(chararray);
+            }
+           
         }
         /// <summary>
         /// 比较字符串一致性
