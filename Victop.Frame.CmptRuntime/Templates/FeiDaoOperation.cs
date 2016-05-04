@@ -993,6 +993,15 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetSysVariableValue(sysVariableName, oav);
         }
         #endregion
+        /// <summary>
+        /// 返回字符串类型
+        /// </summary>
+        /// <param name="o">需转换值</param>
+        /// <returns></returns>
+        public string GetStringByObject(object o)
+        {
+           return systemOperation.GetStringByObject(o);
+        }
 
         #endregion
 

@@ -136,5 +136,6 @@
 	"RoundNumbers":"RoundNumbers",
 	"SetConditionSearchMoreOrLess":"SetConditionSearchMoreOrLess",
 	"AddThenTemplate":"AddThenTemplate",
+	"GetStringByObject":"GetStringByObject",
 	"UnitAvalonEditLoad":"UnitAvalonEditLoad"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
