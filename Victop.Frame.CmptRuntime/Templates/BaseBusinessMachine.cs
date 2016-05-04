@@ -71,6 +71,10 @@ namespace Victop.Frame.CmptRuntime
                 ruleString = FileHelper.ReadText(manifestResourceStream);
             }
             businessSope = MainView.BuiltBrowser.InvokeScript("send_msg", "init", null, ruleString, fsmString);
+            if (businessSope == null)
+            {
+                LoggerHelper.DebugFormat("init rule fsm error");
+            }
         }
         /// <summary>
         /// 执行动作

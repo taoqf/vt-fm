@@ -337,6 +337,7 @@ namespace Victop.Frame.CmptRuntime
             if (BusinessModel.Equals(1) && !DesignerProperties.GetIsInDesignMode(this))
             {
                 string url = string.Format("{0}/{1}", ConfigManager.GetLocalHttpServerBaseUrl(), ConfigurationManager.AppSettings["businesspath"]);
+                LoggerHelper.DebugFormat("BuiltBrowser url:{0}", url);
                 InitWebBrowser(url);
             }
         }
