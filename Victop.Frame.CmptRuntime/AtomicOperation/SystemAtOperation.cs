@@ -642,7 +642,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dynamic o = oav;
             if (strValue == null || value == null)
                 o.v = false;
-            o.v = strValue.ToString().Contains(value);
+            else
+                o.v = strValue.ToString().Contains(value);
         }
         /// <summary>
         /// 从当前 System.String 对象移除数组中指定的一组字符的所有尾部匹配项

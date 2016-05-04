@@ -898,6 +898,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="str">字符串实例</param>
         /// <param name="join">指定的字符串连接符</param>
         /// <param name="oav">接收oav</param>
+        /// <param name="sort">排序方式true正序false倒序</param>
         public void AppendStr(object str,string join, object oav,bool sort=true)
         {
             systemOperation.AppendStr(str, join, oav, sort);
