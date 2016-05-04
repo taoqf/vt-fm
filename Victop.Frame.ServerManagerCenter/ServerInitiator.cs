@@ -399,7 +399,7 @@ namespace Victop.Frame.ServerManagerCenter
             }
             catch (Exception ex)
             {
-                LoggerHelper.InfoFormat("验证有效插件错误:{0}", ex.Message);
+                LoggerHelper.DebugFormat("验证有效插件错误:{0}", ex.Message);
             }
             return ret;
         }

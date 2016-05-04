@@ -111,7 +111,7 @@ namespace Victop.Frame.Adapter
             message = CreateMessage(MessageTargetEnum.NORMAL, message);
             MessagePoolManager messagePoolManager = new MessagePoolManager();
             ReplyMessage replyMessage = FrameInit.GetInstance().ComlinkObject.SendMessage(message);
-            LoggerHelper.InfoFormat("发送消息:{0}", JsonHelper.ToJson(message));
+            LoggerHelper.DebugFormat("发送消息:{0}", JsonHelper.ToJson(message));
             switch (replyMessage.ReplyMode)
             {
                 case ReplyModeEnum.ASYNC:
@@ -129,7 +129,7 @@ namespace Victop.Frame.Adapter
                             {
                                 replyMessage.ReplyControl = returnMessage.MessageControl;
                                 replyMessage.ReplyContent = returnMessage.MessageContent;
-                                LoggerHelper.InfoFormat("MessageControl:{0}", returnMessage.MessageControl);
+                                LoggerHelper.DebugFormat("MessageControl:{0}", returnMessage.MessageControl);
                                 string replyCode = JsonHelper.ReadJsonString(returnMessage.MessageControl, "code");
                                 if (!string.IsNullOrEmpty(replyCode))
                                 {

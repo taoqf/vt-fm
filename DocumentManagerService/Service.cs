@@ -367,10 +367,10 @@ namespace DocumentManagerService
             Stream s = response.GetResponseStream();
             if (!iDownloadToPath.Contains("."))
             {
-                LoggerHelper.InfoFormat("ContentType:{0}", response.ContentType);
+                LoggerHelper.DebugFormat("ContentType:{0}", response.ContentType);
                 iDownloadToPath += FileTypeHelper.GetExtensionType(response.ContentType);
             }
-            LoggerHelper.InfoFormat("iDownloadToPath:{0}", iDownloadToPath);
+            LoggerHelper.DebugFormat("iDownloadToPath:{0}", iDownloadToPath);
             //open　filestream　for　the　output　file
             FileStream fs = new FileStream(iDownloadToPath, FileMode.Create, FileAccess.Write);
             //copy　until　all　data　is　read　标准的缓存读取格式

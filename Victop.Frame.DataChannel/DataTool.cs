@@ -395,7 +395,7 @@ namespace Victop.Frame.DataChannel
             }
             catch (Exception ex)
             {
-                LoggerHelper.InfoFormat("curd保存异常:{0}", ex.Message);
+                LoggerHelper.DebugFormat("curd保存异常:{0}", ex.Message);
             }
             return true;
         }
@@ -720,7 +720,7 @@ namespace Victop.Frame.DataChannel
             }
             catch (Exception ex)
             {
-                LoggerHelper.InfoFormat("保存原数据异常：{0}", ex.Message);
+                LoggerHelper.DebugFormat("保存原数据异常：{0}", ex.Message);
                 return false;
             }
         }

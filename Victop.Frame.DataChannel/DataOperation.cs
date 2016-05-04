@@ -82,7 +82,7 @@ namespace Victop.Frame.DataChannel
             }
             catch (Exception ex)
             {
-                LoggerHelper.InfoFormat("重置数据错误:{0}", ex.Message);
+                LoggerHelper.DebugFormat("重置数据错误:{0}", ex.Message);
                 return false;
             }
 

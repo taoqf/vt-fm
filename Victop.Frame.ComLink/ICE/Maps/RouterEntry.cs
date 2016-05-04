@@ -139,7 +139,7 @@ namespace Victop.Frame.ComLink.ICE.Maps
                     try
                     {
                         routerEntry.RouterEntries.RouterProxy.refreshSession();
-                        LoggerHelper.InfoFormat("routerEntry.RouterEntries.RouterProxy.refreshSession");
+                        LoggerHelper.DebugFormat("routerEntry.RouterEntries.RouterProxy.refreshSession");
                     }
                     catch (System.Exception ex)
                     {
@@ -158,7 +158,7 @@ namespace Victop.Frame.ComLink.ICE.Maps
             }
             catch (System.Exception ex)
             {
-                LoggerHelper.InfoFormat("[{0}]路由刷新异常:{1}", DateTime.Now.ToLongTimeString(), ex.Message);
+                LoggerHelper.DebugFormat("[{0}]路由刷新异常:{1}", DateTime.Now.ToLongTimeString(), ex.Message);
             }
         }
 

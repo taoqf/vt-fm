@@ -96,7 +96,7 @@ namespace Victop.Frame.CmptRuntime
             }
             catch (Exception ex)
             {
-                LoggerHelper.InfoFormat("发送获取编码消息异常（string SendGetCodeMessage）：{0}", ex.Message);
+                LoggerHelper.DebugFormat("发送获取编码消息异常（string SendGetCodeMessage）：{0}", ex.Message);
                 return string.Empty;
             }
         }

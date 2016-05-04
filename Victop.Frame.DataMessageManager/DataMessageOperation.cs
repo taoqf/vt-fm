@@ -383,7 +383,7 @@ namespace Victop.Frame.DataMessageManager
                                         contentDic.Add("conditions", conditionList);
                                         if (string.IsNullOrEmpty(refTableName))
                                         {
-                                            LoggerHelper.InfoFormat("警告：refTableName未配置！");
+                                            LoggerHelper.DebugFormat("警告：refTableName未配置！");
                                         }
                                     }
                                     DataMessageSender sender = new DataMessageSender();
