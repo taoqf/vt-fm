@@ -209,6 +209,19 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetPBlockDataRowCount(pBlockName, oav);
         }
+
+        /// <summary>
+        /// 获取block数据指定条件的列值
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="condition">条件</param>
+        /// <param name="columnName">列名</param>
+        /// <param name="oav">接收OAV</param>
+        public void GetPBlockDataRowColumnValue(string pBlockName, string condition, string columnName, object oav)
+        {
+            dataOperation.GetPBlockDataRowColumnValue(pBlockName,condition,columnName,oav);
+        }
+
         /// <summary>
         /// 设置元素选中行
         /// </summary>

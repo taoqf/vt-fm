@@ -386,6 +386,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 获取block数据指定条件的列值
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="condition">条件</param>
+        /// <param name="columnName">列名</param>
+        /// <param name="oav">接收OAV</param>
+        public void GetPBlockDataRowColumnValue(string pBlockName,string condition,string columnName ,object oav)
+        {
+            object value = "";
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(columnName))
+            {
+                DataRow[] drArray = pBlock.ViewBlockDataTable.Select(condition);
+                if (drArray.Length > 0)
+                {
+                    value = drArray[0][columnName];
+                }
+            }
+            dynamic o = oav;
+            o.v = value;
+        }
+        /// <summary>
         /// 新增行
         /// </summary>
         /// <param name="pBlockName">区块名称</param>

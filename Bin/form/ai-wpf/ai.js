@@ -137,5 +137,6 @@
 	"SetConditionSearchMoreOrLess":"SetConditionSearchMoreOrLess",
 	"AddThenTemplate":"AddThenTemplate",
 	"GetStringByObject":"GetStringByObject",
+	"GetPBlockDataRowColumnValue":"GetPBlockDataRowColumnValue",
 	"UnitAvalonEditLoad":"UnitAvalonEditLoad"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
