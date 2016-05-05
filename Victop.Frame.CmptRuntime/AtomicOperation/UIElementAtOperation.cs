@@ -184,6 +184,18 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                                 o.v = "";
                             }
                             break;
+                        case "VicComboBoxNormal":
+                            VicComboBoxNormal cmbox = element as VicComboBoxNormal;
+                            if (cmbox.SelectedItem != null)
+                            {
+                                ComboBoxItem item = (ComboBoxItem)cmbox.SelectedItem;
+                                o.v = item.Content;
+                            }
+                            else
+                            {
+                                o.v = "";
+                            }
+                            break;
                         default:
                             break;
                     }
