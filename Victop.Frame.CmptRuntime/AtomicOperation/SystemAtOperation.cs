@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -205,6 +206,57 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 list.Add(value);
             }
+        }
+        /// <summary>
+        /// 获取ComboBox的DT
+        /// </summary>
+        /// <param name="oav">接收oav</param>
+        /// <returns>DT</returns>
+        public void GetComboBoxDt( object oav)
+        {
+            DataTable dt=new DataTable();
+            dt.Columns.Add(new DataColumn("key", typeof(string)));
+            dt.Columns.Add(new DataColumn("value", typeof(string)));
+            dynamic o = oav;
+            o.v = dt;
+          
+        }
+        
+        /// <summary>
+        ///给ComboBox的Dt赋值
+        /// </summary>
+        /// <param name="keyValue">selectValue值</param>
+        /// <param name="displayValue">displaymember值</param>
+        /// <param name="paramDt">oav</param>
+        public void SetComboBoxDtRow(string keyValue, string displayValue, object paramDt)
+        {
+           
+            DataTable dt = (DataTable)paramDt;
+            if (dt != null)
+            {
+                dt.Rows.Add(keyValue, displayValue);
+            }
+         
+        }
+        /// <summary>
+        /// 将DT表绑到ComboBox数据源
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="paramDt">oav</param>
+        public void SetComboItemsSource(string elementName, object paramDt)
+        {
+            DataTable dt = (DataTable)paramDt;
+            if (!string.IsNullOrEmpty(elementName))
+            {
+                VicComboBoxNormal combo = MainView.FindName(elementName) as VicComboBoxNormal;
+                if (combo != null && paramDt!=null)
+                {
+                    combo.ItemsSource = dt.DefaultView;
+                    combo.SelectedValuePath = "key";
+                    combo.DisplayMemberPath = "value";
+                }
+            }
+
         }
         /// <summary>
         /// 获取Dictionary中参数值
