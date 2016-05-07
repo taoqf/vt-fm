@@ -135,6 +135,7 @@
 	"NumDivide":"NumDivide",
 	"CmpStrIsEqual":"CmpStrIsEqual",
         "AppendStr":"AppendStr",
+        "GetStrLength":"GetStrLength",
         "StrTrimStart":"StrTrimStart",
 	"RoundNumbers":"RoundNumbers",
 	"SetConditionSearchMoreOrLess":"SetConditionSearchMoreOrLess",

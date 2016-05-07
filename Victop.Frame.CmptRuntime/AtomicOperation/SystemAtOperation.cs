@@ -744,11 +744,24 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dynamic o = oav;
             if (firstValue == null || secondValue == null)
                 o.v = false;
-            o.v = firstValue.Equals(secondValue);
+           else o.v = firstValue.Equals(secondValue);
         }
 
         /// <summary>
-        /// 获取拼接字符串
+        /// 获取字符串长度
+        /// </summary>
+        /// <param name="str">字符串实例</param>
+        /// <param name="oav">接收oav</param>
+        public void GetStrLength(object str, object oav)
+        {
+            dynamic o = oav;
+            if (str == null)
+                o.v = 0;
+            else o.v = str.ToString().Length;
+        }
+
+        /// <summary>
+        /// 拼接字符串
         /// </summary>
         /// <param name="str">字符串实例</param>
         /// <param name="join">指定的字符串连接符</param>

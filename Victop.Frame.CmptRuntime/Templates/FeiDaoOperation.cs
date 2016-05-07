@@ -937,7 +937,17 @@ namespace Victop.Frame.CmptRuntime
         }
 
         /// <summary>
-        /// 获取拼接字符串
+        /// 获取字符串长度
+        /// </summary>
+        /// <param name="str">字符串实例</param>
+        /// <param name="oav">接收oav</param>
+        public void GetStrLength(object str,  object oav)
+        {
+            systemOperation.GetStrLength(str, oav);
+        }
+
+        /// <summary>
+        /// 拼接字符串
         /// </summary>
         /// <param name="str">字符串实例</param>
         /// <param name="join">指定的字符串连接符</param>
@@ -948,6 +958,26 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.AppendStr(str, join, oav, sort);
         }
 
+        /// <summary>
+        /// 返回字符串类型
+        /// </summary>
+        /// <param name="o">需转换值</param>
+        /// <returns></returns>
+        public string GetStringByObject(object o)
+        {
+            return systemOperation.GetStringByObject(o);
+        }
+
+        /// <summary>
+        /// 日期类型转为自定义格式字符串
+        /// </summary>
+        /// <param name="oav">接收oav</param>
+        /// <param name="datetime">时间</param>
+        /// <param name="format">转换格式，如（yyyy-MM-dd、yyyy-MM-dd HH:mm:ss、yyyy/MM/dd HH:mm等）</param>        
+        public void ConvertDateTimeToString(object oav, object datetime, string format = "yyyy-MM-dd HH:mm:ss")
+        {
+            systemOperation.ConvertDateTimeToString(oav, datetime, format);
+        }
         #endregion
 
         #region 加减乘除
@@ -1015,16 +1045,7 @@ namespace Victop.Frame.CmptRuntime
         }
         #endregion
 
-        /// <summary>
-        /// 日期类型转为自定义格式字符串
-        /// </summary>
-        /// <param name="oav">接收oav</param>
-        /// <param name="datetime">时间</param>
-        /// <param name="format">转换格式，如（yyyy-MM-dd、yyyy-MM-dd HH:mm:ss、yyyy/MM/dd HH:mm等）</param>        
-        public void ConvertDateTimeToString(object oav, object datetime, string format = "yyyy-MM-dd HH:mm:ss")
-        {
-            systemOperation.ConvertDateTimeToString(oav, datetime, format);
-        }
+       
 
         #region 获取系统变量
         /// <summary>
@@ -1037,15 +1058,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetSysVariableValue(sysVariableName, oav);
         }
         #endregion
-        /// <summary>
-        /// 返回字符串类型
-        /// </summary>
-        /// <param name="o">需转换值</param>
-        /// <returns></returns>
-        public string GetStringByObject(object o)
-        {
-           return systemOperation.GetStringByObject(o);
-        }
+        
 
         #endregion
 
