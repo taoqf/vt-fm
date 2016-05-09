@@ -540,56 +540,56 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.SysConsole(consoleText);
         }
         /// <summary>
-        /// 设置分组
+        /// 设置分组，对应set_focus
         /// </summary>
         /// <param name="groupName">分组信息</param>
-        public void SetFocus(string groupName)
-        {
-            systemOperation.SetFocus(groupName);
-        }
+        //public void SetFocus(string groupName)
+        //{
+        //    systemOperation.SetFocus(groupName);
+        //}
         /// <summary>
-        /// 插入事实
+        /// 插入事实，对应oav_insert
         /// </summary>
         /// <param name="o">o</param>
         /// <param name="a">a</param>
         /// <param name="v">v</param>
-        public void InsertFact(string o, string a, object v = null)
-        {
-            systemOperation.InsertFact(o, a, v);
-        }
+        //public void InsertFact(string o, string a, object v = null)
+        //{
+        //    systemOperation.InsertFact(o, a, v);
+        //}
         /// <summary>
-        /// 移除事实
+        /// 移除事实，对应oav_remove
         /// </summary>
         /// <param name="oav"></param>
-        public void RemoveFact(object oav)
-        {
-            systemOperation.RemoveFact(oav);
-        }
+        //public void RemoveFact(object oav)
+        //{
+        //    systemOperation.RemoveFact(oav);
+        //}
         /// <summary>
-        /// 修改事实
+        /// 修改事实，对应oav_modify
         /// </summary>
         /// <param name="oav">oav事实实例</param>
         /// <param name="v">v值</param>
-        public void UpdateFact(object oav, object v)
-        {
-            systemOperation.UpdateFact(oav, v);
-        }
+        //public void UpdateFact(object oav, object v)
+        //{
+        //    systemOperation.UpdateFact(oav, v);
+        //}
         /// <summary>
-        /// 修改事实
+        /// 修改事实，对应oav_modify
         /// </summary>
         /// <param name="oav">oav事实</param>
-        public void UpdateFact(object oav)
-        {
-            systemOperation.UpdateFact(oav);
-        }
+        //public void UpdateFact(object oav)
+        //{
+        //    systemOperation.UpdateFact(oav);
+        //}
         /// <summary>
-        /// 提交事实
+        /// 提交事实，对应oav_validate
         /// </summary>
         /// <param name="oav">oav事实实例</param>
-        public void CommitFact(object oav)
-        {
-            systemOperation.CommitFact(oav);
-        }
+        //public void CommitFact(object oav)
+        //{
+        //    systemOperation.CommitFact(oav);
+        //}
         /// <summary>
         /// 转移触发事件
         /// </summary>
