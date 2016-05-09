@@ -370,7 +370,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             win.SetResourceReference(VicWindowNormal.StyleProperty, "WindowMessageSkin");
             win.Height = height;
             win.Width = width;
-            win.Title = ucCom.Tag.ToString();
+            win.Title = ucCom.Tag == null ? "" : ucCom.Tag.ToString();
             win.Content = ucCom;
             win.ShowDialog();
         }
