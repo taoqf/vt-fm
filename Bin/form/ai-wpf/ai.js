@@ -137,5 +137,6 @@
 	"AddThenTemplate":"AddThenTemplate",
 	"GetStringByObject":"GetStringByObject",
 	"GetPBlockDataRowColumnValue":"GetPBlockDataRowColumnValue",
-	"UnitAvalonEditLoad":"UnitAvalonEditLoad"
+	"UnitAvalonEditLoad":"UnitAvalonEditLoad",
+	"CompareNum":"CompareNum"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

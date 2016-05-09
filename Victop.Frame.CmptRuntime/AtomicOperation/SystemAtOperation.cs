@@ -870,6 +870,41 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         #endregion
 
         /// <summary>
+        /// 比较数字大小
+        /// </summary>
+        /// <param name="firstNum">数字实例</param>
+        /// <param name="secondNum">指定的数字</param>
+        /// <param name="type">比较类型</param>
+        /// <param name="oav">接受oav(>:0，<:1，=:2,条件不合法：-1)</param>
+        public void CompareNum(object firstNum, object secondNum, object oav)
+        {
+            dynamic o = oav;
+            if (firstNum == null || secondNum == null)
+            {
+                o.v = -1;
+            }
+            else
+            {
+                double i = 0;
+                double j = 0;
+                double.TryParse(firstNum.ToString(), out i);
+                double.TryParse(secondNum.ToString(), out j);
+                if (i > j)
+                {
+                    o.v = 0;
+                }
+                else if (i < j)
+                {
+                    o.v = 1;
+                }
+                else if (i == j)
+                {
+                    o.v = 2;
+                }
+            }
+        }
+
+        /// <summary>
         /// 四舍五入取整
         /// </summary>
         /// <param name="value">输入值</param>

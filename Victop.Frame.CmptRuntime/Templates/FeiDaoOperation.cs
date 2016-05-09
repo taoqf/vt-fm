@@ -1046,6 +1046,17 @@ namespace Victop.Frame.CmptRuntime
         #endregion
 
        
+        /// <summary>
+        /// 比较数字大小
+        /// </summary>
+        /// <param name="firstNum">数字实例</param>
+        /// <param name="secondNum">指定的数字</param>
+        /// <param name="type">比较类型</param>
+        /// <param name="oav">接受oav(>:0，<:1，=:2,条件不合法：-1)</param>
+        public void CompareNum(object firstNum, object secondNum, object oav)
+        {
+            systemOperation.CompareNum(firstNum, secondNum, oav);
+        }
 
         #region 获取系统变量
         /// <summary>
