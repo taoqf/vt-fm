@@ -528,7 +528,7 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.FormatCorrectnessVerification(pblockName, fieldName, length, oav);
         }
         /// <summary>
-        /// 获取选中列的确定字段值集合
+        /// 获取选中列的确定字段值集合（VicCheckFlag）
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
@@ -536,6 +536,15 @@ namespace Victop.Frame.CmptRuntime
         public void GetDataGridColumnValueList(string pblockName, string fieldName, object oav)
         {
             dataOperation.GetDataGridColumnValueList(pblockName, fieldName, oav);
+        }
+        /// <summary>
+        /// 获取列表选中行数（VicCheckFlag）
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="oav">返回结果</param>
+        public void GetDataGridSelectRowsCount(string pblockName, object oav)
+        {
+            dataOperation.GetDataGridSelectRowsCount(pblockName, oav);
         }
         #endregion
 

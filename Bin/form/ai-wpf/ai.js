@@ -139,5 +139,6 @@
 	"GetPBlockDataRowColumnValue":"GetPBlockDataRowColumnValue",
 	"UnitAvalonEditLoad":"UnitAvalonEditLoad",
 	"CompareNum":"CompareNum",
-	"GetDataGridColumnValueList":"GetDataGridColumnValueList"
+	"GetDataGridColumnValueList":"GetDataGridColumnValueList",
+	"GetDataGridSelectRowsCount":"GetDataGridSelectRowsCount"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

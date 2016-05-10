@@ -1261,7 +1261,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         }
 
         /// <summary>
-        /// 获取选中列的确定字段值集合
+        /// 获取选中列的确定字段值集合（VicCheckFlag）
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
@@ -1283,6 +1283,24 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
             o.v = list;
+        }
+
+        /// <summary>
+        /// 获取列表选中行数（VicCheckFlag）
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="oav">返回结果</param>
+        public void GetDataGridSelectRowsCount(string pblockName, object oav)
+        {
+            dynamic o = oav;
+            int count = 0;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            {
+                DataRow[] drArray = pBlock.ViewBlockDataTable.Select("VicCheckFlag = 'true'");
+                count = drArray.Length;
+            }
+            o.v = count;
         }
 
         #region 规则机台专用原子操作
