@@ -138,5 +138,6 @@
 	"GetStringByObject":"GetStringByObject",
 	"GetPBlockDataRowColumnValue":"GetPBlockDataRowColumnValue",
 	"UnitAvalonEditLoad":"UnitAvalonEditLoad",
-	"CompareNum":"CompareNum"
+	"CompareNum":"CompareNum",
+	"GetDataGridColumnValueList":"GetDataGridColumnValueList"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
