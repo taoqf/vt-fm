@@ -733,6 +733,16 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.ParamsGetByDictionary(oavDic, paramName, oav);
         }
         /// <summary>
+        /// 获取第一个数组中Dictionary中参数值
+        /// </summary>
+        /// <param name="oavDic">存储List<Dictionary>类型的oav</param>
+        /// <param name="paramName">key参数名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsGetByListDictionary(object oavDic, string paramName, object oav)
+        {
+            systemOperation.ParamsGetByListDictionary(oavDic, paramName, oav);
+        }
+        /// <summary>
         /// 新增页面参数值
         /// </summary>
         /// <param name="paramName">参数名</param>

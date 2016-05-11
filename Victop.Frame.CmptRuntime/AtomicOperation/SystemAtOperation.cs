@@ -278,6 +278,29 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 获取第一个数组中Dictionary中参数值
+        /// </summary>
+        /// <param name="oavDic">存储List<Dictionary>类型的oav</param>
+        /// <param name="paramName">key参数名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsGetByListDictionary(object oavDic, string paramName, object oav)
+        {
+            dynamic o1 = oavDic;
+            dynamic o2 = oav;
+            if (o1.v != null)
+            {
+                List<Dictionary<string, object>> list = JsonHelper.ToObject<List<Dictionary<string, object>>>(o1.v.ToString());
+                if (list != null && list.Count > 0)
+                {
+                    Dictionary<string, object> dic = list[0];
+                    if (dic != null && dic.ContainsKey(paramName))
+                    {
+                        o2.v = dic[paramName];
+                    }
+                }
+            }
+        }
+        /// <summary>
         /// 新增页面参数值
         /// </summary>
         /// <param name="paramName">参数名</param>

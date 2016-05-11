@@ -53,6 +53,7 @@
         "SetComboBoxDtRow":"SetComboBoxDtRow",
         "SetComboItemsSource":"SetComboItemsSource",
 	"ParamsGetByDictionary":"ParamsGetByDictionary",
+	"ParamsGetByListDictionary":"ParamsGetByListDictionary",
 	"ParamsPageAdd":"ParamsPageAdd",
 	"ParamsInterCompntAdd":"ParamsInterCompntAdd",
 	"ParamsInterCompntParse":"ParamsInterCompntParse",
