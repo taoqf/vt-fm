@@ -238,6 +238,46 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+
+        /// <summary>
+        /// 设置区块查询条件"不等于"查询
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="listNotEqual">不等于子查询集合</param>
+        public void SetConditionSearchNotEqual(string pBlockName, string paramField, object listNotEqual)
+        {
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && listNotEqual != null)
+            {
+                List<object> list = listNotEqual as List<object>;
+                if (list != null)
+                {
+                    Dictionary<string, object> inDic = new Dictionary<string, object>();
+                    inDic.Add("$ne", list);
+                    if (conditionModelDic.ContainsKey(pBlockName))
+                    {
+                        Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
+                        if (paramDic.ContainsKey(paramField))
+                        {
+                            paramDic[paramField] = inDic;
+                        }
+                        else
+                        {
+                            paramDic.Add(paramField, inDic);
+                        }
+                    }
+                    else
+                    {
+                        ViewsConditionModel viewConModel = new ViewsConditionModel();
+                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                        paramDic.Add(paramField, inDic);
+                        viewConModel.TableCondition = paramDic;
+                        conditionModelDic.Add(pBlockName, viewConModel);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// 设置区块查询条件
         /// </summary>

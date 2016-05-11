@@ -156,6 +156,16 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetConditionSearchNotIn(pBlockName, paramField, listNotIn);
         }
         /// <summary>
+        /// 设置区块查询条件"不等于"查询
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="listNotEqual">不等于子查询集合</param>
+        public void SetConditionSearchNotEqual(string pBlockName, string paramField, object listNotEqual)
+        {
+            dataOperation.SetConditionSearchNotEqual(pBlockName, paramField, listNotEqual);
+        }
+        /// <summary>
         /// 设置区块查询条件
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
