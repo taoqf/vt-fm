@@ -136,14 +136,24 @@ namespace Victop.Frame.CmptRuntime
         }
 
         /// <summary>
-        /// 设置区块查询条件子查询
+        /// 设置区块查询条件In子查询
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="paramField">参数字段</param>
-        /// <param name="listIn">子查询集合</param>
+        /// <param name="listIn">In子查询集合</param>
         public void SetConditionSearchIn(string pBlockName, string paramField, object listIn)
         {
             dataOperation.SetConditionSearchIn(pBlockName, paramField, listIn);
+        }
+        /// <summary>
+        /// 设置区块查询条件NotIn子查询
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="listNotIn">NotIn子查询集合</param>
+        public void SetConditionSearchNotIn(string pBlockName, string paramField, object listNotIn)
+        {
+            dataOperation.SetConditionSearchNotIn(pBlockName, paramField, listNotIn);
         }
         /// <summary>
         /// 设置区块查询条件

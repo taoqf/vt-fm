@@ -5,6 +5,7 @@
 	"SetConditionSearchDate":"SetConditionSearchDate",
 	"SetConditionSearchLike":"SetConditionSearchLike",
 	"SetConditionSearchIn":"SetConditionSearchIn",
+        "SetConditionSearchNotIn":"SetConditionSearchNotIn",
 	"SetConditionSearch":"SetConditionSearch",
 	"SetConditionSort":"SetConditionSort",
 	"SetConditionPaging":"SetConditionPaging",

@@ -201,6 +201,44 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 设置区块查询条件NotIn子查询
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="listNotIn">NotIn子查询集合</param>
+        public void SetConditionSearchNotIn(string pBlockName, string paramField, object listNotIn)
+        {
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && listNotIn != null)
+            {
+                List<object> list = listNotIn as List<object>;
+                if (list != null)
+                {
+                    Dictionary<string, object> inDic = new Dictionary<string, object>();
+                    inDic.Add("$nin", list);
+                    if (conditionModelDic.ContainsKey(pBlockName))
+                    {
+                        Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
+                        if (paramDic.ContainsKey(paramField))
+                        {
+                            paramDic[paramField] = inDic;
+                        }
+                        else
+                        {
+                            paramDic.Add(paramField, inDic);
+                        }
+                    }
+                    else
+                    {
+                        ViewsConditionModel viewConModel = new ViewsConditionModel();
+                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                        paramDic.Add(paramField, inDic);
+                        viewConModel.TableCondition = paramDic;
+                        conditionModelDic.Add(pBlockName, viewConModel);
+                    }
+                }
+            }
+        }
+        /// <summary>
         /// 设置区块查询条件
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
