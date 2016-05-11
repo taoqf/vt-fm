@@ -66,11 +66,15 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         public int ShowType { get; set; }
         /// <summary>
-        /// 模板委托事件
+        /// 模板委托代理
         /// </summary>
         /// <param name="sender">事件对象</param>
         /// <param name="paramDic">事件参数</param>
         public delegate void TemplateDelegateEvent(object sender, Dictionary<string, object> paramDic);
+        /// <summary>
+        /// 模板委托事件
+        /// </summary>
+        public event TemplateDelegateEvent ExcuteEvent;
         /// <summary>
         /// 系统Id
         /// </summary>
@@ -192,9 +196,12 @@ namespace Victop.Frame.CmptRuntime
         /// 执行通用方法
         /// </summary>
         /// <param name="paramDic">通用参数</param>
-        public virtual void Excute(Dictionary<string, object> paramDic)
+        public void Excute(Dictionary<string, object> paramDic)
         {
-
+            if (ExcuteEvent != null)
+            {
+                ExcuteEvent(this, paramDic);
+            }
         }
 
         /// <summary>
