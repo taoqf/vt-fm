@@ -196,7 +196,7 @@ namespace Victop.Frame.CmptRuntime
         /// 执行通用方法
         /// </summary>
         /// <param name="paramDic">通用参数</param>
-        public void Excute(Dictionary<string, object> paramDic)
+        public virtual void Excute(Dictionary<string, object> paramDic)
         {
             if (ExcuteEvent != null)
             {
