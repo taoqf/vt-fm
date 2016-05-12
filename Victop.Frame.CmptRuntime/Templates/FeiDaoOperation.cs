@@ -771,6 +771,16 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.ParamsInterCompntParse(oavParams, paramName, oav);
         }
         /// <summary>
+        /// 组件取参数
+        /// </summary>
+        /// <param name="oavParams">参数oav</param>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">接收oav</param>
+        public void GetParamsInterCompntParse(object oavParams, string paramName, object oav)
+        {
+            systemOperation.GetParamsInterCompntParse(oavParams, paramName, oav);
+        }
+        /// <summary>
         /// 弹框展示组件操作
         /// </summary>
         /// <param name="compntName">组件名</param>

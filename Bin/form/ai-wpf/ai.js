@@ -143,5 +143,6 @@
 	"UnitAvalonEditLoad":"UnitAvalonEditLoad",
 	"CompareNum":"CompareNum",
 	"GetDataGridColumnValueList":"GetDataGridColumnValueList",
-	"GetDataGridSelectRowsCount":"GetDataGridSelectRowsCount"
+	"GetDataGridSelectRowsCount":"GetDataGridSelectRowsCount",
+	"GetParamsInterCompntParse":"GetParamsInterCompntParse"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

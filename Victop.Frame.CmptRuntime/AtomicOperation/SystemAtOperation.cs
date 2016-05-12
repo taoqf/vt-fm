@@ -367,6 +367,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 组件取参数
+        /// </summary>
+        /// <param name="oavParams">参数oav</param>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">接收oav</param>
+        public void GetParamsInterCompntParse(object oavParams, string paramName, object oav)
+        {
+            dynamic o1 = oavParams;
+            dynamic o2 = oav;
+            TemplateControl fElement = o1.v as TemplateControl;
+            if (fElement != null)
+            {
+                Dictionary<string, object> dicParams = fElement.ParamDict;
+                if (dicParams != null && dicParams.ContainsKey(paramName))
+                {
+                    o2.v = dicParams[paramName];
+                }
+            }
+        }
+
+        /// <summary>
         /// 弹框展示组件操作
         /// </summary>
         /// <param name="compntName">组件名</param>
