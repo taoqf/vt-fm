@@ -151,5 +151,6 @@
 	"GetListSetCountContent":"GetListSetCountContent",
 	"UnitListBoxDynamicRuleRefresh":"UnitListBoxDynamicRuleRefresh",
 	"UnitListBoxDynamicRuleGetChosedRows":"UnitListBoxDynamicRuleGetChosedRows",
-	"UnitListBoxFontIconRuleRefresh":"UnitListBoxFontIconRuleRefresh"
+	"UnitListBoxFontIconRuleRefresh":"UnitListBoxFontIconRuleRefresh",
+	"SetDataGridColumnValueList":"SetDataGridColumnValueList"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
