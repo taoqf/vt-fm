@@ -501,7 +501,47 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
-
+        /// <summary>
+        /// webVisio部件渲染数据
+        /// </summary>
+        /// <param name="drawingName">部件名称</param>
+        /// <param name="message">消息内容</param>
+        public void WebVisionDoRender(string drawingName, string message)
+        {
+            if (!string.IsNullOrEmpty(drawingName))
+            {
+                TemplateControl tc = (TemplateControl)MainView.FindName(drawingName);
+                if (tc != null)
+                {
+                    Dictionary<string, object> dic = new Dictionary<string, object>();
+                    dic.Add("MessageType", "diagram_render");
+                    dic.Add("MessageContent", message);
+                    tc.Excute(dic);
+                }
+            }
+        }
+        /// <summary>
+        /// 获取webVisio中Tag中的值
+        /// </summary>
+        /// <param name="drawingName">部件名称</param>
+        /// <param name="key">关键字</param>
+        /// <param name="oav">返回oav</param>
+        public void WebVisionGetParams(string drawingName, string key, object oav)
+        {
+            if (!string.IsNullOrEmpty(drawingName))
+            {
+                TemplateControl tc = (TemplateControl)MainView.FindName(drawingName);
+                if (tc != null && tc.Tag != null)
+                {
+                    dynamic o = oav;
+                    Dictionary<string, object> messageinfo = JsonHelper.ToObject<Dictionary<string, object>>(tc.Tag.ToString());
+                    if (messageinfo != null && messageinfo.ContainsKey(key))
+                    {
+                        o.v = messageinfo[key];
+                    }
+                }
+            }
+        }
         #region 消息转oav
         /// <summary>
         /// 消息转OAV

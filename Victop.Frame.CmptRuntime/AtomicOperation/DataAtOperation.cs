@@ -1427,7 +1427,47 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+        /// <summary>
+        /// 设置block选中行数据
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="key">字段名</param>
+        /// <param name="param">id</param>
+        public void SetPBlockCurrentRowByKey(string pBlockName, string key, string param)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(key))
+            {
+                DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format(key + "='{0}'", param));
+                if (drc.Length > 0)
+                {
+                    pBlock.PreBlockSelectedRow = drc[0];
+                    pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
+                }
+            }
+        }
 
+        /// <summary>
+        /// 判断在pblock表中某列中的某个值是否存在
+        /// </summary>
+        /// <param name="pBlockName"></param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="oav"></param>
+        public void SetPBlockDtIsHavaExist(string pBlockName, string key, string value, object oav)
+        {
+            dynamic o = oav;
+            o.v = false;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(key))
+            {
+                DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format(key + "='{0}'", value));
+                if (drc.Length > 0)
+                {
+                    o.v = true;
+                }
+            }
+        }
         #region 规则机台专用原子操作
         /// <summary>
         /// 规则机台模板then专用原子操作

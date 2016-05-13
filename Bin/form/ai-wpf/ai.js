@@ -153,4 +153,10 @@
 	"UnitListBoxDynamicRuleGetChosedRows":"UnitListBoxDynamicRuleGetChosedRows",
 	"UnitListBoxFontIconRuleRefresh":"UnitListBoxFontIconRuleRefresh",
 	"SetDataGridColumnValueList":"SetDataGridColumnValueList"
+	"WebVisionDoRender":"WebVisionDoRender",
+        "WebVisionGetParams":"WebVisionGetParams",
+        "SetElementVisilityOrHidden":"SetElementVisilityOrHidden",
+        "SetPBlockCurrentRowByKey":"SetPBlockCurrentRowByKey",
+        "SetPBlockDtIsHavaExist":"SetPBlockDtIsHavaExist",
+        "ExtractProductData":"ExtractProductData"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

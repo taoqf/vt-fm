@@ -1640,5 +1640,68 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.UnitListBoxDynamicRuleGetChosedRows(unitName, oav);
         }
         #endregion 
+
+        #region webVisio部件专用原子操作
+        /// <summary>
+        /// webVisio部件渲染数据
+        /// </summary>
+        /// <param name="drawingName">部件名称</param>
+        /// <param name="message">消息内容</param>
+        public void WebVisionDoRender(string drawingName, string message)
+        {
+            webvisioAtOperation.WebVisionDoRender(drawingName, message);
+        }
+        /// <summary>
+        /// 获取webVisio中Tag中的值
+        /// </summary>
+        /// <param name="drawingName">部件名称</param>
+        /// <param name="key">关键字</param>
+        /// <param name="oav">返回oav</param>
+        public void WebVisionGetParams(string drawingName, string key, object oav)
+        {
+            webvisioAtOperation.WebVisionGetParams(drawingName, key, oav);
+        }
+        /// <summary>
+        /// 设置元素是否可见(占空间)
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="visibility">是否显示</param>
+        public void SetElementVisilityOrHidden(string elementName, bool visibility)
+        {
+            uIElementOperation.SetElementVisilityOrHidden(elementName, visibility);
+        }
+        /// <summary>
+        /// 设置block选中行数据
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="key">字段名</param>
+        /// <param name="param">id</param>
+        public void SetPBlockCurrentRowByKey(string pBlockName, string key, string param)
+        {
+            dataOperation.SetPBlockCurrentRowByKey(pBlockName, key, param);
+        }
+        /// <summary>
+        /// 判断在pblock表中某列中的某个值是否存在
+        /// </summary>
+        /// <param name="pBlockName"></param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="oav"></param>
+        public void SetPBlockDtIsHavaExist(string pBlockName, string key, string value, object oav)
+        {
+            dataOperation.SetPBlockDtIsHavaExist(pBlockName, key, value, oav);
+        }
+        /// <summary>
+        /// 抽取制品数据
+        /// </summary>
+        /// <param name="compntGroupNo">组件组合编号</param>
+        /// <param name="diagramNo">图号</param>
+        /// <param name="type">获取数据类型</param>
+        /// <param name="oav">返回消息oav</param>
+        public void ExtractProductData(object compntGroupNo, object diagramNo, string type, object oav)
+        {
+            systemOperation.ExtractProductData(compntGroupNo, diagramNo, type, oav);
+        }
+        #endregion
     }
 }

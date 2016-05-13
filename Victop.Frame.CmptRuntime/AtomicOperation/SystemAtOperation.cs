@@ -777,7 +777,46 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             o.v = string.Empty;
         }
-
+        /// <summary>
+        /// 抽取制品数据
+        /// </summary>
+        /// <param name="compntGroupNo">组件组合编号</param>
+        /// <param name="diagramNo">图号</param>
+        /// <param name="type">获取数据类型</param>
+        /// <param name="oav">返回消息oav</param>
+        public void ExtractProductData(object compntGroupNo, object diagramNo, string type, object oav)
+        {
+            dynamic o = oav;
+            o.v = "faile";
+            if (compntGroupNo != null && diagramNo != null && !string.IsNullOrWhiteSpace(compntGroupNo.ToString()) && !string.IsNullOrWhiteSpace(diagramNo.ToString()))
+            {
+                DataMessageOperation messageOp = new DataMessageOperation();
+                Dictionary<string, object> message = new Dictionary<string, object>();
+                message.Add("systemid", "18");
+                message.Add("spaceid", "feidao");
+                switch (type)
+                {
+                    case "pvd":
+                        message.Add("artifact_table", "presentation,view,view_block,data,control");
+                        message.Add("diagram_type_no", "DT00001");
+                        break;
+                    case "state":
+                        message.Add("artifact_table", "presentation,view,view_block,data,control");
+                        message.Add("diagram_type_no", "DT00001");
+                        break;
+                }
+                Dictionary<string, object> condition = new Dictionary<string, object>();
+                condition.Add("compnt_group_no", compntGroupNo);
+                message.Add("query_condition", condition);
+                message.Add("diagram_no", diagramNo);
+                Dictionary<string, object> resultDic = messageOp.SendSyncMessage("MongoDataChannelService.getfieldinfobyparafieldinfo", message);
+                if (resultDic != null && resultDic.ContainsKey("ReplyContent"))
+                {
+                    string result = resultDic["ReplyContent"].ToString();
+                    o.v = result;
+                }
+            }
+        }
         #region 字符串处理
         /// <summary>
         /// 指定的字符串是否出现在字符串实例中

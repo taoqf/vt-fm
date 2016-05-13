@@ -563,7 +563,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="columnName">列名可为空字符串</param>
         /// <param name="ctrl">控制是否支持提交修改默认true</param>
         /// <param name="executeJsFunc">接收JS方法名默认ExcuteWPF</param>
-        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF")
+        /// <param name="type">展示类型</param>
+        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF", string type = "json")
         {
             TemplateControl unitWebBrowser = MainView.FindName(unitWebBrowserName) as TemplateControl;
             if (unitWebBrowser == null)
@@ -572,7 +573,18 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             Dictionary<string, object> dicParam = new Dictionary<string, object>();
             dicParam.Add("ParamContent", content);
             dicParam.Add("ParamCtrl", ctrl);
-            dicParam.Add("URL", ConfigurationManager.AppSettings["htmleditor"] + "?productid=feidao");
+            switch (type)
+            {
+                case "editor":
+                    dicParam.Add("URL", ConfigurationManager.AppSettings["htmleditor"] + "?productid=feidao");
+                    break;
+                case "json":
+                    dicParam.Add("URL", AppDomain.CurrentDomain.BaseDirectory + "form/jsonview/jsonview.html");
+                    break;
+                default:
+                    dicParam.Add("URL", ConfigurationManager.AppSettings["htmleditor"] + "?productid=feidao");
+                    break;
+            }
             dicParam.Add("ExecuteJsFunc", executeJsFunc);
             if (!string.IsNullOrEmpty(columnName))
             {
@@ -623,7 +635,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 return;
             unitPage.Excute(new Dictionary<string, object> { { "MessageType", "refresh" } });
         }
-
+        /// <summary>
+        /// 设置元素是否可见(占空间)
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="visibility">是否显示</param>
+        public void SetElementVisilityOrHidden(string elementName, bool visibility)
+        {
+            FrameworkElement tc = MainView.FindName(elementName) as FrameworkElement;
+            if (tc != null)
+            {
+                if (visibility)
+                {
+                    tc.Visibility = Visibility.Visible;
+                    tc.Height = 700;
+                }
+                else
+                {
+                    tc.Visibility = Visibility.Hidden;
+                    tc.Height = 0;
+                }
+            }
+        }
         #region 动态构建的Listbox部件初始化或者刷新方法
         /// <summary>
         /// 动态构建的Listbox部件初始化或者刷新方法
