@@ -611,5 +611,17 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicParam.Add("MessageContent", dicContentParam);
             unitGallery.Excute(dicParam);
         }
+
+        /// <summary>
+        /// UnitListBoxFontIconRule部件刷新
+        /// </summary>
+        /// <param name="unitName">部件名称</param>
+        public void UnitListBoxFontIconRuleRefresh(string unitName)
+        {
+            TemplateControl unitPage = MainView.FindName(unitName) as TemplateControl;
+            if (unitPage == null)
+                return;
+            unitPage.Excute(new Dictionary<string, object> { { "MessageType", "refresh" } });
+        }
     }
 }
