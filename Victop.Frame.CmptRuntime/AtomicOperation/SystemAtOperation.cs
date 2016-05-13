@@ -278,6 +278,29 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 获取第一个数组中Dictionary中参数值
+        /// </summary>
+        /// <param name="oavDic">存储List<Dictionary>类型的oav</param>
+        /// <param name="paramName">key参数名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsGetByListDictionary(object oavDic, string paramName, object oav)
+        {
+            dynamic o1 = oavDic;
+            dynamic o2 = oav;
+            if (o1.v != null)
+            {
+                List<Dictionary<string, object>> list = JsonHelper.ToObject<List<Dictionary<string, object>>>(o1.v.ToString());
+                if (list != null && list.Count > 0)
+                {
+                    Dictionary<string, object> dic = list[0];
+                    if (dic != null && dic.ContainsKey(paramName))
+                    {
+                        o2.v = dic[paramName];
+                    }
+                }
+            }
+        }
+        /// <summary>
         /// 新增页面参数值
         /// </summary>
         /// <param name="paramName">参数名</param>
@@ -344,6 +367,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 组件取参数
+        /// </summary>
+        /// <param name="oavParams">参数oav</param>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">接收oav</param>
+        public void GetParamsInterCompntParse(object oavParams, string paramName, object oav)
+        {
+            dynamic o1 = oavParams;
+            dynamic o2 = oav;
+            TemplateControl fElement = o1.v as TemplateControl;
+            if (fElement != null)
+            {
+                Dictionary<string, object> dicParams = fElement.ParamDict;
+                if (dicParams != null && dicParams.ContainsKey(paramName))
+                {
+                    o2.v = dicParams[paramName];
+                }
+            }
+        }
+
+        /// <summary>
         /// 弹框展示组件操作
         /// </summary>
         /// <param name="compntName">组件名</param>
@@ -370,7 +414,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             win.SetResourceReference(VicWindowNormal.StyleProperty, "WindowMessageSkin");
             win.Height = height;
             win.Width = width;
-            win.Title = ucCom.Tag.ToString();
+            win.Title = ucCom.Tag == null ? "" : ucCom.Tag.ToString();
             win.Content = ucCom;
             win.ShowDialog();
         }
@@ -868,6 +912,41 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         }
 
         #endregion
+
+        /// <summary>
+        /// 比较数字大小
+        /// </summary>
+        /// <param name="firstNum">数字实例</param>
+        /// <param name="secondNum">指定的数字</param>
+        /// <param name="type">比较类型</param>
+        /// <param name="oav">接受oav(>:0，<:1，=:2,条件不合法：-1)</param>
+        public void CompareNum(object firstNum, object secondNum, object oav)
+        {
+            dynamic o = oav;
+            if (firstNum == null || secondNum == null)
+            {
+                o.v = -1;
+            }
+            else
+            {
+                double i = 0;
+                double j = 0;
+                double.TryParse(firstNum.ToString(), out i);
+                double.TryParse(secondNum.ToString(), out j);
+                if (i > j)
+                {
+                    o.v = 0;
+                }
+                else if (i < j)
+                {
+                    o.v = 1;
+                }
+                else if (i == j)
+                {
+                    o.v = 2;
+                }
+            }
+        }
 
         /// <summary>
         /// 四舍五入取整

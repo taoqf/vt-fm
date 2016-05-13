@@ -136,14 +136,34 @@ namespace Victop.Frame.CmptRuntime
         }
 
         /// <summary>
-        /// 设置区块查询条件子查询
+        /// 设置区块查询条件In子查询
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="paramField">参数字段</param>
-        /// <param name="listIn">子查询集合</param>
+        /// <param name="listIn">In子查询集合</param>
         public void SetConditionSearchIn(string pBlockName, string paramField, object listIn)
         {
             dataOperation.SetConditionSearchIn(pBlockName, paramField, listIn);
+        }
+        /// <summary>
+        /// 设置区块查询条件NotIn子查询
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="listNotIn">NotIn子查询集合</param>
+        public void SetConditionSearchNotIn(string pBlockName, string paramField, object listNotIn)
+        {
+            dataOperation.SetConditionSearchNotIn(pBlockName, paramField, listNotIn);
+        }
+        /// <summary>
+        /// 设置区块查询条件"不等于"查询
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="listNotEqual">不等于子查询集合</param>
+        public void SetConditionSearchNotEqual(string pBlockName, string paramField, object listNotEqual)
+        {
+            dataOperation.SetConditionSearchNotEqual(pBlockName, paramField, listNotEqual);
         }
         /// <summary>
         /// 设置区块查询条件
@@ -527,7 +547,25 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.FormatCorrectnessVerification(pblockName, fieldName, length, oav);
         }
-
+        /// <summary>
+        /// 获取选中列的确定字段值集合（VicCheckFlag）
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="oav">返回集合结果</param>
+        public void GetDataGridColumnValueList(string pblockName, string fieldName, object oav)
+        {
+            dataOperation.GetDataGridColumnValueList(pblockName, fieldName, oav);
+        }
+        /// <summary>
+        /// 获取列表选中行数（VicCheckFlag）
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="oav">返回结果</param>
+        public void GetDataGridSelectRowsCount(string pblockName, object oav)
+        {
+            dataOperation.GetDataGridSelectRowsCount(pblockName, oav);
+        }
         #endregion
 
         #region 系统操作
@@ -540,56 +578,56 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.SysConsole(consoleText);
         }
         /// <summary>
-        /// 设置分组
+        /// 设置分组，对应set_focus
         /// </summary>
         /// <param name="groupName">分组信息</param>
-        public void SetFocus(string groupName)
-        {
-            systemOperation.SetFocus(groupName);
-        }
+        //public void SetFocus(string groupName)
+        //{
+        //    systemOperation.SetFocus(groupName);
+        //}
         /// <summary>
-        /// 插入事实
+        /// 插入事实，对应oav_insert
         /// </summary>
         /// <param name="o">o</param>
         /// <param name="a">a</param>
         /// <param name="v">v</param>
-        public void InsertFact(string o, string a, object v = null)
-        {
-            systemOperation.InsertFact(o, a, v);
-        }
+        //public void InsertFact(string o, string a, object v = null)
+        //{
+        //    systemOperation.InsertFact(o, a, v);
+        //}
         /// <summary>
-        /// 移除事实
+        /// 移除事实，对应oav_remove
         /// </summary>
         /// <param name="oav"></param>
-        public void RemoveFact(object oav)
-        {
-            systemOperation.RemoveFact(oav);
-        }
+        //public void RemoveFact(object oav)
+        //{
+        //    systemOperation.RemoveFact(oav);
+        //}
         /// <summary>
-        /// 修改事实
+        /// 修改事实，对应oav_modify
         /// </summary>
         /// <param name="oav">oav事实实例</param>
         /// <param name="v">v值</param>
-        public void UpdateFact(object oav, object v)
-        {
-            systemOperation.UpdateFact(oav, v);
-        }
+        //public void UpdateFact(object oav, object v)
+        //{
+        //    systemOperation.UpdateFact(oav, v);
+        //}
         /// <summary>
-        /// 修改事实
+        /// 修改事实，对应oav_modify
         /// </summary>
         /// <param name="oav">oav事实</param>
-        public void UpdateFact(object oav)
-        {
-            systemOperation.UpdateFact(oav);
-        }
+        //public void UpdateFact(object oav)
+        //{
+        //    systemOperation.UpdateFact(oav);
+        //}
         /// <summary>
-        /// 提交事实
+        /// 提交事实，对应oav_validate
         /// </summary>
         /// <param name="oav">oav事实实例</param>
-        public void CommitFact(object oav)
-        {
-            systemOperation.CommitFact(oav);
-        }
+        //public void CommitFact(object oav)
+        //{
+        //    systemOperation.CommitFact(oav);
+        //}
         /// <summary>
         /// 转移触发事件
         /// </summary>
@@ -695,6 +733,16 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.ParamsGetByDictionary(oavDic, paramName, oav);
         }
         /// <summary>
+        /// 获取第一个数组中Dictionary中参数值
+        /// </summary>
+        /// <param name="oavDic">存储List<Dictionary>类型的oav</param>
+        /// <param name="paramName">key参数名</param>
+        /// <param name="oav">接收oav</param>
+        public void ParamsGetByListDictionary(object oavDic, string paramName, object oav)
+        {
+            systemOperation.ParamsGetByListDictionary(oavDic, paramName, oav);
+        }
+        /// <summary>
         /// 新增页面参数值
         /// </summary>
         /// <param name="paramName">参数名</param>
@@ -721,6 +769,16 @@ namespace Victop.Frame.CmptRuntime
         public void ParamsInterCompntParse(object oavParams, string paramName, object oav)
         {
             systemOperation.ParamsInterCompntParse(oavParams, paramName, oav);
+        }
+        /// <summary>
+        /// 组件取参数
+        /// </summary>
+        /// <param name="oavParams">参数oav</param>
+        /// <param name="paramName">参数名</param>
+        /// <param name="oav">接收oav</param>
+        public void GetParamsInterCompntParse(object oavParams, string paramName, object oav)
+        {
+            systemOperation.GetParamsInterCompntParse(oavParams, paramName, oav);
         }
         /// <summary>
         /// 弹框展示组件操作
@@ -1046,6 +1104,17 @@ namespace Victop.Frame.CmptRuntime
         #endregion
 
        
+        /// <summary>
+        /// 比较数字大小
+        /// </summary>
+        /// <param name="firstNum">数字实例</param>
+        /// <param name="secondNum">指定的数字</param>
+        /// <param name="type">比较类型</param>
+        /// <param name="oav">接受oav(>:0，<:1，=:2,条件不合法：-1)</param>
+        public void CompareNum(object firstNum, object secondNum, object oav)
+        {
+            systemOperation.CompareNum(firstNum, secondNum, oav);
+        }
 
         #region 获取系统变量
         /// <summary>

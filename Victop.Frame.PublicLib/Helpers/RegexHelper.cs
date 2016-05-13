@@ -120,6 +120,17 @@ namespace Victop.Frame.PublicLib.Helpers
             return resultDic;
         }
         /// <summary>
+        /// 检索值Not In
+        /// </summary>
+        /// <param name="valueList">值集合</param>
+        /// <returns></returns>
+        public static Dictionary<string, object> ValuesNotIn(List<object> valueList)
+        {
+            Dictionary<string, object> resultDic = new Dictionary<string, object>();
+            resultDic.Add("$nin", valueList);
+            return resultDic;
+        }
+        /// <summary>
         /// 检索值Or
         /// </summary>
         /// <param name="valueList">值集合</param>
