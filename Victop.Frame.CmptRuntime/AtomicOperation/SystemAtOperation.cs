@@ -235,7 +235,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             List<object> getlist = (List<object>)list;
             if (getlist != null && getlist.Count >= setcount)
             {
-                getlist.Remove(setcount);
+                getlist.RemoveAt(0);
             }
         }
         /// <summary>
