@@ -1354,7 +1354,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void GetDataGridColumnValueList(string pblockName, object oav, params string[] fieldName)
         {
             dynamic o = oav;
-            List<object> list = new List<object>();
+            List<Dictionary<string, object>> list = new List<Dictionary<string, object>>();
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
             {
@@ -1394,6 +1394,34 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 count = drArray.Length;
             }
             o.v = count;
+        }
+
+        /// <summary>
+        /// 对确定行字段赋值
+        /// </summary>
+        /// <param name="pblockName"区块名称>区块名称</param>
+        /// <param name="rowId">行id</param>
+        /// <param name="oav">集合</param>
+        /// <param name="fieldName">字段</param>
+        public void SetDataGridColumnValueList(string pblockName, string rowId, object oav, params string[] fieldName)
+        {
+            Dictionary<string, object> dic = (Dictionary<string, object>)oav;
+            List<string> list = dic.Keys.ToList();
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (dic != null && pBlock != null && pBlock.ViewBlockDataTable != null)
+            {
+                for (int i = 0; i < fieldName.Length; i++)
+                {
+                    if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName[i]))
+                    {
+                        DataRow[] drSelected = pBlock.ViewBlockDataTable.Select("_id='" + rowId.ToString() + "'");
+                        if (drSelected.Length > 0 && dic.Keys.Count >= i)
+                        {
+                            drSelected[0][fieldName[i]] = dic[list[i]];
+                        }
+                    }
+                }
+            }
         }
 
         #region 规则机台专用原子操作

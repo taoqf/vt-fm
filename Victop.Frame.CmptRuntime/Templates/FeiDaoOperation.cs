@@ -566,6 +566,17 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetDataGridSelectRowsCount(pblockName, oav);
         }
+        /// <summary>
+        /// 对确定行字段赋值
+        /// </summary>
+        /// <param name="pblockName"区块名称>区块名称</param>
+        /// <param name="rowId">行id</param>
+        /// <param name="oav">集合</param>
+        /// <param name="fieldName">字段</param>
+        public void SetDataGridColumnValueList(string pblockName, string rowId, object oav, params string[] fieldName)
+        {
+            dataOperation.SetDataGridColumnValueList(pblockName, rowId, oav, fieldName);
+        }
         #endregion
 
         #region 系统操作
