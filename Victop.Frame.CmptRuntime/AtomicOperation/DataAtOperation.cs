@@ -1351,10 +1351,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="oav">返回集合结果</param>
-        public void GetDataGridColumnValueList(string pblockName, object oav, params string[] fieldName)
+        public void GetDataGridColumnValueList(string pblockName, object oav, List<object> fieldName)
         {
             dynamic o = oav;
-            List<Dictionary<string, object>> list = new List<Dictionary<string, object>>();
+            List<object> list = new List<object>();
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
             {
@@ -1364,11 +1364,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     foreach (DataRow dr in drArray)
                     {
                         Dictionary<string, object> value = new Dictionary<string, object>();
-                        for (int i = 0; i < fieldName.Length; i++)
+                        for (int i = 0; i < fieldName.Count; i++)
                         {
-                            if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName[i]))
+                            if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName[i].ToString()))
                             {
-                                value.Add(fieldName[i], dr[fieldName[i]]);
+                                value.Add(fieldName[i].ToString(), dr[fieldName[i].ToString()]);
                             }
                         }
                         list.Add(value);
@@ -1399,25 +1399,29 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <summary>
         /// 对确定行字段赋值
         /// </summary>
-        /// <param name="pblockName"区块名称>区块名称</param>
+        /// <param name="pblockName">区块名称</param>
         /// <param name="rowId">行id</param>
         /// <param name="oav">集合</param>
         /// <param name="fieldName">字段</param>
-        public void SetDataGridColumnValueList(string pblockName, string rowId, object oav, params string[] fieldName)
+        public void SetDataGridColumnValueList(string pblockName, string rowId, object oav, List<object> fieldName)
         {
-            Dictionary<string, object> dic = (Dictionary<string, object>)oav;
-            List<string> list = dic.Keys.ToList();
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (dic != null && pBlock != null && pBlock.ViewBlockDataTable != null)
+            List<object> getlist = (List<object>)oav;
+            if (getlist != null)
             {
-                for (int i = 0; i < fieldName.Length; i++)
+                Dictionary<string, object> dic = (Dictionary<string, object>)getlist[0];
+                List<string> list = dic.Keys.ToList();
+                PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+                if (dic != null && pBlock != null && pBlock.ViewBlockDataTable != null)
                 {
-                    if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName[i]))
+                    for (int i = 0; i < fieldName.Count; i++)
                     {
-                        DataRow[] drSelected = pBlock.ViewBlockDataTable.Select("_id='" + rowId.ToString() + "'");
-                        if (drSelected.Length > 0 && dic.Keys.Count >= i)
+                        if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName[i].ToString()))
                         {
-                            drSelected[0][fieldName[i]] = dic[list[i]];
+                            DataRow[] drSelected = pBlock.ViewBlockDataTable.Select("_id='" + rowId.ToString() + "'");
+                            if (drSelected.Length > 0 && dic.Keys.Count >= i)
+                            {
+                                drSelected[0][fieldName[i].ToString()] = dic[list[i]];
+                            }
                         }
                     }
                 }

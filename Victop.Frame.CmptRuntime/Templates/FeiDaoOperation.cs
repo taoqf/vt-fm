@@ -553,7 +553,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="oav">返回集合结果</param>
-        public void GetDataGridColumnValueList(string pblockName, object oav, params string[] fieldName)
+        public void GetDataGridColumnValueList(string pblockName, object oav, List<object> fieldName)
         {
             dataOperation.GetDataGridColumnValueList(pblockName, oav, fieldName);
         }
@@ -573,7 +573,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="rowId">行id</param>
         /// <param name="oav">集合</param>
         /// <param name="fieldName">字段</param>
-        public void SetDataGridColumnValueList(string pblockName, string rowId, object oav, params string[] fieldName)
+        public void SetDataGridColumnValueList(string pblockName, string rowId, object oav, List<object> fieldName)
         {
             dataOperation.SetDataGridColumnValueList(pblockName, rowId, oav, fieldName);
         }
