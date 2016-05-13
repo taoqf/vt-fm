@@ -608,6 +608,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicContentParam.Add("data", dtData);
             dicContentParam.Add("image", imagecolumName);
             dicContentParam.Add("title", titlecolumName);
+            dicParam.Add("MessageContent", dicContentParam);
             unitGallery.Excute(dicParam);
         }
     }

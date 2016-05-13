@@ -701,7 +701,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetListCount(list,count);
         }
         /// <summary>
-        /// 移除指定元素，并返回长度
+        /// 移除指定位置元素
         /// </summary>
         /// <param name="list">集合</param>
         /// <param name="setcount">移除位置</param>
