@@ -160,10 +160,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="paramField">参数字段</param>
-        /// <param name="listNotEqual">不等于子查询集合</param>
-        public void SetConditionSearchNotEqual(string pBlockName, string paramField, object listNotEqual)
+        /// <param name="NotEqual">不等于的值</param>
+        public void SetConditionSearchNotEqual(string pBlockName, string paramField, object NotEqual)
         {
-            dataOperation.SetConditionSearchNotEqual(pBlockName, paramField, listNotEqual);
+            dataOperation.SetConditionSearchNotEqual(pBlockName, paramField, NotEqual);
         }
         /// <summary>
         /// 设置区块查询条件
@@ -1043,15 +1043,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.AppendStr(str, join, oav, sort);
         }
 
-        /// <summary>
-        /// 返回字符串类型
-        /// </summary>
-        /// <param name="o">需转换值</param>
-        /// <returns></returns>
-        public string GetStringByObject(object o)
-        {
-            return systemOperation.GetStringByObject(o);
-        }
+       
 
         /// <summary>
         /// 日期类型转为自定义格式字符串

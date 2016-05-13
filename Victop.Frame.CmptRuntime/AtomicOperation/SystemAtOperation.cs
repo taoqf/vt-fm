@@ -1151,24 +1151,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         #endregion
-        #region When 返回原子操作
-        /// <summary>
-        /// 返回字符串类型
-        /// </summary>
-        /// <param name="o">需转换值</param>
-        /// <returns></returns>
-        public string GetStringByObject(object o)
-        {
-            if (o != null)
-            {
-                return o.ToString();
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-        #endregion
+       
     }
 }
