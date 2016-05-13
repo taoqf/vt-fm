@@ -654,6 +654,17 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                                 pBlock.PreBlockSelectedRow = ((DataRowView)listview.SelectedItem).Row;
                             }
                             break;
+                        case "VicComboBoxNormal":
+                            VicComboBoxNormal combobox = element as VicComboBoxNormal;
+                            if (combobox.SelectedItem == null)
+                            {
+                                pBlock.PreBlockSelectedRow = null;
+                            }
+                            else
+                            {
+                                pBlock.PreBlockSelectedRow = ((DataRowView)combobox.SelectedItem).Row;
+                            }
+                            break;
                         default:
                             break;
                     }
