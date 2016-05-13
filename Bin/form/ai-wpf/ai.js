@@ -148,5 +148,7 @@
 	"UnitGalleryRuleLoad":"UnitGalleryRuleLoad",
 	"GetListCount":"GetListCount",
 	"RemoveListSetCount":"RemoveListSetCount",
-	"GetListSetCountContent":"GetListSetCountContent"
+	"GetListSetCountContent":"GetListSetCountContent",
+	"UnitListBoxDynamicRuleRefresh":"UnitListBoxDynamicRuleRefresh",
+	"UnitListBoxDynamicRuleGetChosedRows":"UnitListBoxDynamicRuleGetChosedRows"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

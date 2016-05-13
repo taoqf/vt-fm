@@ -1597,5 +1597,29 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.AddThenTemplate(pblockrhs, pblockparams, action_no, rule_no, oav);
         }
         #endregion
+
+        #region 动态构建的Listbox部件初始化或者刷新方法
+        /// <summary>
+        /// 动态构建的Listbox部件初始化或者刷新方法
+        /// </summary>
+        /// <param name="unitName">部件名称</param>
+        /// <param name="pblockName">p块名称</param>
+        public void UnitListBoxDynamicRuleRefresh(string unitName, string pblockName)
+        {
+            uIElementOperation.UnitListBoxDynamicRuleRefresh(unitName, pblockName);
+        }
+        #endregion
+
+        #region 动态构建的Listbox部件获取复选框选中的数据集合
+        /// <summary>
+        /// 动态构建的Listbox部件获取复选框选中的数据集合
+        /// <param name="unitName">部件名称</param>
+        /// <param name="oav">接收OAV</param>
+        /// </summary>
+        public void UnitListBoxDynamicRuleGetChosedRows(string unitName, object oav)
+        {
+            uIElementOperation.UnitListBoxDynamicRuleGetChosedRows(unitName, oav);
+        }
+        #endregion 
     }
 }
