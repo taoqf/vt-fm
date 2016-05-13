@@ -553,9 +553,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="oav">返回集合结果</param>
-        public void GetDataGridColumnValueList(string pblockName, string fieldName, object oav)
+        public void GetDataGridColumnValueList(string pblockName, object oav, params string[] fieldName)
         {
-            dataOperation.GetDataGridColumnValueList(pblockName, fieldName, oav);
+            dataOperation.GetDataGridColumnValueList(pblockName, oav, fieldName);
         }
         /// <summary>
         /// 获取列表选中行数（VicCheckFlag）
