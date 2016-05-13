@@ -1438,7 +1438,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         drRhs["atom_no"] = drRhsSelect[0]["atom_no"];
                         drRhs["atom_name"] = drRhsSelect[0]["atom_name"];
                         drRhs["str_param"] = "";
-                        drRhs["is_commented"] = "False";
+                        drRhs["is_commented"] = "false";
                         drRhs["is_note"] = "false";
                         drRhs["str_note"] = "";
                         drRhs["order"] = order;
