@@ -160,10 +160,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="paramField">参数字段</param>
-        /// <param name="listNotEqual">不等于子查询集合</param>
-        public void SetConditionSearchNotEqual(string pBlockName, string paramField, object listNotEqual)
+        /// <param name="NotEqual">不等于的值</param>
+        public void SetConditionSearchNotEqual(string pBlockName, string paramField, object NotEqual)
         {
-            dataOperation.SetConditionSearchNotEqual(pBlockName, paramField, listNotEqual);
+            dataOperation.SetConditionSearchNotEqual(pBlockName, paramField, NotEqual);
         }
         /// <summary>
         /// 设置区块查询条件
@@ -553,9 +553,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="oav">返回集合结果</param>
-        public void GetDataGridColumnValueList(string pblockName, string fieldName, object oav)
+        public void GetDataGridColumnValueList(string pblockName, object oav, params string[] fieldName)
         {
-            dataOperation.GetDataGridColumnValueList(pblockName, fieldName, oav);
+            dataOperation.GetDataGridColumnValueList(pblockName, oav, fieldName);
         }
         /// <summary>
         /// 获取列表选中行数（VicCheckFlag）
@@ -565,6 +565,17 @@ namespace Victop.Frame.CmptRuntime
         public void GetDataGridSelectRowsCount(string pblockName, object oav)
         {
             dataOperation.GetDataGridSelectRowsCount(pblockName, oav);
+        }
+        /// <summary>
+        /// 对确定行字段赋值
+        /// </summary>
+        /// <param name="pblockName"区块名称>区块名称</param>
+        /// <param name="rowId">行id</param>
+        /// <param name="oav">集合</param>
+        /// <param name="fieldName">字段</param>
+        public void SetDataGridColumnValueList(string pblockName, string rowId, object oav, params string[] fieldName)
+        {
+            dataOperation.SetDataGridColumnValueList(pblockName, rowId, oav, fieldName);
         }
         #endregion
 
@@ -692,6 +703,34 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.ListAdd(value, paramList);
         }
         /// <summary>
+        /// 获取集合长度
+        /// </summary>
+        /// <param name="list">集合</param>
+        /// <param name="count">长度</param>
+        public void GetListCount(object list,object count)
+        {
+            systemOperation.GetListCount(list,count);
+        }
+        /// <summary>
+        /// 移除指定位置元素
+        /// </summary>
+        /// <param name="list">集合</param>
+        /// <param name="setcount">移除位置</param>
+        public void RemoveListSetCount(object list, int setcount)
+        {
+            systemOperation.RemoveListSetCount(list, setcount);
+        }
+        /// <summary>
+        /// 获取集合指定位置元素
+        /// </summary>
+        /// <param name="list">集合</param>
+        /// <param name="setcount">获取位置</param>
+        /// <param name="getcontent">内容</param>
+        public void GetListSetCountContent(object list, int setcount, object getcontent)
+        {
+            systemOperation.GetListSetCountContent(list, setcount, getcontent);
+        }
+        /// <summary>
         /// 获取ComboBox的DT
         /// </summary>
         /// <param name="oav">接收oav</param>
@@ -701,7 +740,6 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetComboBoxDt(oav);
 
         }
-
         /// <summary>
         ///给ComboBox的Dt赋值
         /// </summary>
@@ -1016,15 +1054,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.AppendStr(str, join, oav, sort);
         }
 
-        /// <summary>
-        /// 返回字符串类型
-        /// </summary>
-        /// <param name="o">需转换值</param>
-        /// <returns></returns>
-        public string GetStringByObject(object o)
-        {
-            return systemOperation.GetStringByObject(o);
-        }
+       
 
         /// <summary>
         /// 日期类型转为自定义格式字符串
@@ -1102,7 +1132,6 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetDateTime(oav, day);
         }
         #endregion
-
        
         /// <summary>
         /// 比较数字大小
@@ -1126,9 +1155,8 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetSysVariableValue(sysVariableName, oav);
         }
-        #endregion
+        #endregion       
         
-
         #endregion
 
         #region UI操作
@@ -1290,6 +1318,25 @@ namespace Victop.Frame.CmptRuntime
         public void UnitAvalonEditLoad(string unitAE, string text)
         {
             uIElementOperation.UnitAvalonEditLoad(unitAE, text);
+        }
+        /// <summary>
+        /// 画廊部件初始化
+        /// </summary>
+        /// <param name="unitName">部件名称</param>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="imagecolumName">图片列</param>
+        /// <param name="titlecolumName">标题列</param>
+        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName)
+        {
+            uIElementOperation.UnitGalleryRuleLoad(unitName, pblockName, imagecolumName, titlecolumName);
+        }
+        /// <summary>
+        /// UnitListBoxFontIconRule部件刷新
+        /// </summary>
+        /// <param name="unitName">部件名称</param>
+        public void UnitListBoxFontIconRuleRefresh(string unitName)
+        {
+            uIElementOperation.UnitListBoxFontIconRuleRefresh(unitName);
         }
         #endregion
 
@@ -1569,5 +1616,29 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.AddThenTemplate(pblockrhs, pblockparams, action_no, rule_no, oav);
         }
         #endregion
+
+        #region 动态构建的Listbox部件初始化或者刷新方法
+        /// <summary>
+        /// 动态构建的Listbox部件初始化或者刷新方法
+        /// </summary>
+        /// <param name="unitName">部件名称</param>
+        /// <param name="pblockName">p块名称</param>
+        public void UnitListBoxDynamicRuleRefresh(string unitName, string pblockName)
+        {
+            uIElementOperation.UnitListBoxDynamicRuleRefresh(unitName, pblockName);
+        }
+        #endregion
+
+        #region 动态构建的Listbox部件获取复选框选中的数据集合
+        /// <summary>
+        /// 动态构建的Listbox部件获取复选框选中的数据集合
+        /// <param name="unitName">部件名称</param>
+        /// <param name="oav">接收OAV</param>
+        /// </summary>
+        public void UnitListBoxDynamicRuleGetChosedRows(string unitName, object oav)
+        {
+            uIElementOperation.UnitListBoxDynamicRuleGetChosedRows(unitName, oav);
+        }
+        #endregion 
     }
 }

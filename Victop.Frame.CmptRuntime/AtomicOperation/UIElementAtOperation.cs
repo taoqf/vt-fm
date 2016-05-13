@@ -588,5 +588,83 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             unitWebBrowser.Excute(dicParam);
         }
+        /// <summary>
+        /// 画廊部件初始化
+        /// </summary>
+        /// <param name="unitName">部件名称</param>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="imagecolumName">图片列</param>
+        /// <param name="titlecolumName">标题列</param>
+        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName)
+        {
+            TemplateControl unitGallery = MainView.FindName(unitName) as TemplateControl;
+            if (unitGallery == null)
+                return;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            DataTable dtData = pBlock.ViewBlockDataTable;
+            Dictionary<string, object> dicParam = new Dictionary<string, object>();
+            dicParam.Add("MessageType", "init");
+            Dictionary<string, object> dicContentParam = new Dictionary<string, object>();
+            dicContentParam.Add("data", dtData);
+            dicContentParam.Add("image", imagecolumName);
+            dicContentParam.Add("title", titlecolumName);
+            dicParam.Add("MessageContent", dicContentParam);
+            unitGallery.Excute(dicParam);
+        }
+
+        /// <summary>
+        /// UnitListBoxFontIconRule部件刷新
+        /// </summary>
+        /// <param name="unitName">部件名称</param>
+        public void UnitListBoxFontIconRuleRefresh(string unitName)
+        {
+            TemplateControl unitPage = MainView.FindName(unitName) as TemplateControl;
+            if (unitPage == null)
+                return;
+            unitPage.Excute(new Dictionary<string, object> { { "MessageType", "refresh" } });
+        }
+
+        #region 动态构建的Listbox部件初始化或者刷新方法
+        /// <summary>
+        /// 动态构建的Listbox部件初始化或者刷新方法
+        /// </summary>
+        /// <param name="unitName"></param>
+        /// <param name="pblockName">p块名称</param>
+        public void UnitListBoxDynamicRuleRefresh(string unitName, string pblockName)
+        {
+            TemplateControl unitListbox = MainView.FindName(unitName) as TemplateControl;
+            if (unitListbox == null) { return; }
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            DataTable dtData = pBlock.ViewBlockDataTable;
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            dicMessage.Add("MessageType", "refresh");
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("DtData", dtData);
+            dicMessage.Add("MessageContent", dicContent);
+            unitListbox.Excute(dicMessage);
+        }
+        #endregion
+
+        #region 动态构建的Listbox部件获取复选框选中的数据集合
+        /// <summary>
+        /// 动态构建的Listbox部件获取复选框选中的数据集合
+        /// <param name="unitName">部件名称</param>
+        /// <param name="oav">接收OAV</param>
+        /// </summary>
+        public void UnitListBoxDynamicRuleGetChosedRows(string unitName, object oav)
+        {
+            TemplateControl unitListbox = MainView.FindName(unitName) as TemplateControl;
+            if (unitListbox == null) { return; }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            dicMessage.Add("MessageType", "getrows");
+            unitListbox.Excute(dicMessage);
+            if (unitListbox.ParamDict != null && unitListbox.ParamDict.ContainsKey("ChosedRowsList"))
+            {
+                dynamic o = oav;
+                List<DataRow> list = unitListbox.ParamDict["ChosedRowsList"] as List<DataRow>;
+                o.v = list;
+            }
+        }
+        #endregion 
     }
 }
