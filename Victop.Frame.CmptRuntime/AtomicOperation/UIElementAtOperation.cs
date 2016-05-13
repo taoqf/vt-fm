@@ -588,5 +588,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             unitWebBrowser.Excute(dicParam);
         }
+        /// <summary>
+        /// 画廊部件初始化
+        /// </summary>
+        /// <param name="unitName">部件名称</param>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="imagecolumName">图片列</param>
+        /// <param name="titlecolumName">标题列</param>
+        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName)
+        {
+            TemplateControl unitGallery = MainView.FindName(unitName) as TemplateControl;
+            if (unitGallery == null)
+                return;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            DataTable dtData = pBlock.ViewBlockDataTable;
+            Dictionary<string, object> dicParam = new Dictionary<string, object>();
+            dicParam.Add("MessageType", "init");
+            Dictionary<string, object> dicContentParam = new Dictionary<string, object>();
+            dicContentParam.Add("data", dtData);
+            dicContentParam.Add("image", imagecolumName);
+            dicContentParam.Add("title", titlecolumName);
+            unitGallery.Excute(dicParam);
+        }
     }
 }

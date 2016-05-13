@@ -692,6 +692,35 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.ListAdd(value, paramList);
         }
         /// <summary>
+        /// 获取集合长度
+        /// </summary>
+        /// <param name="list">集合</param>
+        /// <param name="count">长度</param>
+        public void GetListCount(object list,object count)
+        {
+            systemOperation.GetListCount(list,count);
+        }
+        /// <summary>
+        /// 移除指定元素，并返回长度
+        /// </summary>
+        /// <param name="list">集合</param>
+        /// <param name="setcount">移除位置</param>
+        /// <param name="getcount">长度</param>
+        public void RemoveListSetCount(object list, int setcount,object getcount)
+        {
+            systemOperation.RemoveListSetCount(list, setcount, getcount);
+        }
+        /// <summary>
+        /// 获取集合指定位置元素
+        /// </summary>
+        /// <param name="list">集合</param>
+        /// <param name="setcount">获取位置</param>
+        /// <param name="getcontent">内容</param>
+        public void GetListSetCountContent(object list, int setcount, object getcontent)
+        {
+            systemOperation.GetListSetCountContent(list, setcount, getcontent);
+        }
+        /// <summary>
         /// 获取ComboBox的DT
         /// </summary>
         /// <param name="oav">接收oav</param>
@@ -701,7 +730,6 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetComboBoxDt(oav);
 
         }
-
         /// <summary>
         ///给ComboBox的Dt赋值
         /// </summary>
@@ -1102,7 +1130,6 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetDateTime(oav, day);
         }
         #endregion
-
        
         /// <summary>
         /// 比较数字大小
@@ -1126,9 +1153,8 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetSysVariableValue(sysVariableName, oav);
         }
-        #endregion
+        #endregion       
         
-
         #endregion
 
         #region UI操作
@@ -1290,6 +1316,17 @@ namespace Victop.Frame.CmptRuntime
         public void UnitAvalonEditLoad(string unitAE, string text)
         {
             uIElementOperation.UnitAvalonEditLoad(unitAE, text);
+        }
+        /// <summary>
+        /// 画廊部件初始化
+        /// </summary>
+        /// <param name="unitName">部件名称</param>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="imagecolumName">图片列</param>
+        /// <param name="titlecolumName">标题列</param>
+        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName)
+        {
+            uIElementOperation.UnitGalleryRuleLoad(unitName, pblockName, imagecolumName, titlecolumName);
         }
         #endregion
 

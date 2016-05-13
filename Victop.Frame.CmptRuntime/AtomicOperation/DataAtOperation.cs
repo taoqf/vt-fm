@@ -1355,19 +1355,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="oav">返回集合结果</param>
-        public void GetDataGridColumnValueList(string pblockName, string fieldName, object oav)
+        public void GetDataGridColumnValueList(string pblockName, object oav, params string[] fieldName)
         {
             dynamic o = oav;
             List<object> list = new List<object>();
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName) && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
             {
                 DataRow[] drArray = pBlock.ViewBlockDataTable.Select("VicCheckFlag = 'true'");
                 if (drArray.Length > 0)
                 {
                     foreach (DataRow dr in drArray)
                     {
-                        list.Add(dr[fieldName]);
+                        Dictionary<string, object> value = new Dictionary<string, object>();
+                        for (int i = 0; i < fieldName.Length; i++)
+                        {
+                            if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName[i]))
+                            {
+                                value.Add(fieldName[i], dr[fieldName[i]]);
+                            }
+                        }
+                        list.Add(value);
                     }
                 }
             }

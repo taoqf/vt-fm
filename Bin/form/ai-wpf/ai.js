@@ -144,5 +144,9 @@
 	"CompareNum":"CompareNum",
 	"GetDataGridColumnValueList":"GetDataGridColumnValueList",
 	"GetDataGridSelectRowsCount":"GetDataGridSelectRowsCount",
-	"GetParamsInterCompntParse":"GetParamsInterCompntParse"
+	"GetParamsInterCompntParse":"GetParamsInterCompntParse",
+	"UnitGalleryRuleLoad":"UnitGalleryRuleLoad",
+	"GetListCount":"GetListCount",
+	"RemoveListSetCount":"RemoveListSetCount",
+	"GetListSetCountContent":"GetListSetCountContent"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
