@@ -705,10 +705,9 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="list">集合</param>
         /// <param name="setcount">移除位置</param>
-        /// <param name="getcount">长度</param>
-        public void RemoveListSetCount(object list, int setcount,object getcount)
+        public void RemoveListSetCount(object list, int setcount)
         {
-            systemOperation.RemoveListSetCount(list, setcount, getcount);
+            systemOperation.RemoveListSetCount(list, setcount);
         }
         /// <summary>
         /// 获取集合指定位置元素

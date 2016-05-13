@@ -230,19 +230,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="list">集合</param>
         /// <param name="setcount">移除位置</param>
-        /// <param name="getcount">返回长度 -1：有异常</param>
-        public void RemoveListSetCount(object list, int setcount, object getcount)
+        public void RemoveListSetCount(object list, int setcount)
         {
-            dynamic o = getcount;
             List<object> getlist = (List<object>)list;
             if (getlist != null && getlist.Count >= setcount)
             {
                 getlist.Remove(setcount);
-                o.v = getlist.Count;
-            }
-            else
-            {
-                o.v = -1;
             }
         }
         /// <summary>
