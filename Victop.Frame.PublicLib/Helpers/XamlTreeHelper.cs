@@ -86,6 +86,55 @@ namespace Victop.Frame.PublicLib.Helpers
             }
             return null;
         }
+        /// <summary>
+        /// 查找子控件
+        /// </summary>
+        /// <typeparam name="T">要获得控件类名</typeparam>
+        /// <param name="obj">当前控件名</param>
+        /// <returns></returns>
+        public T GetChildObject<T>(DependencyObject obj) where T : FrameworkElement
+        {
+            DependencyObject child = null;
+            T grandChild = null;
+            for (int i = 0; i <= VisualTreeHelper.GetChildrenCount(obj) - 1; i++)
+            {
+                child = VisualTreeHelper.GetChild(obj, i);
+                if (child is T )
+                {
+                    return (T)child;
+                }
+                else
+                {
+                    grandChild = GetChildObject<T>(child);
+                    if (grandChild != null)
+                        return grandChild;
+                }
+            }
+            return null;
+        }
+        /// <summary>
+        /// 查找子控件集合
+        /// </summary>
+        /// <typeparam name="T">要获得控件类名</typeparam>
+        /// <param name="obj">当前控件名</param>
+        /// <returns></returns>
+        public List<T> GetChildObjects<T>(DependencyObject obj) where T : FrameworkElement
+        {
+            DependencyObject child = null;
+            List<T> childList = new List<T>();
+
+            for (int i = 0; i <= VisualTreeHelper.GetChildrenCount(obj) - 1; i++)
+            {
+                child = VisualTreeHelper.GetChild(obj, i);
+
+                if (child is T )
+                {
+                    childList.Add((T)child);
+                }
+                childList.AddRange(GetChildObjects<T>(child));
+            }
+            return childList;
+        }
 
     }
 }
