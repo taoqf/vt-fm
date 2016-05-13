@@ -1319,6 +1319,14 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitGalleryRuleLoad(unitName, pblockName, imagecolumName, titlecolumName);
         }
+        /// <summary>
+        /// UnitListBoxFontIconRule部件刷新
+        /// </summary>
+        /// <param name="unitName">部件名称</param>
+        public void UnitListBoxFontIconRuleRefresh(string unitName)
+        {
+            uIElementOperation.UnitListBoxFontIconRuleRefresh(unitName);
+        }
         #endregion
 
         #region 错误处理方法

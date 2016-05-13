@@ -150,5 +150,6 @@
 	"RemoveListSetCount":"RemoveListSetCount",
 	"GetListSetCountContent":"GetListSetCountContent",
 	"UnitListBoxDynamicRuleRefresh":"UnitListBoxDynamicRuleRefresh",
-	"UnitListBoxDynamicRuleGetChosedRows":"UnitListBoxDynamicRuleGetChosedRows"
+	"UnitListBoxDynamicRuleGetChosedRows":"UnitListBoxDynamicRuleGetChosedRows",
+	"UnitListBoxFontIconRuleRefresh":"UnitListBoxFontIconRuleRefresh"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
