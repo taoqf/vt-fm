@@ -152,7 +152,7 @@
 	"UnitListBoxDynamicRuleRefresh":"UnitListBoxDynamicRuleRefresh",
 	"UnitListBoxDynamicRuleGetChosedRows":"UnitListBoxDynamicRuleGetChosedRows",
 	"UnitListBoxFontIconRuleRefresh":"UnitListBoxFontIconRuleRefresh",
-	"SetDataGridColumnValueList":"SetDataGridColumnValueList"
+	"SetDataGridColumnValueList":"SetDataGridColumnValueList",
 	"WebVisionDoRender":"WebVisionDoRender",
         "WebVisionGetParams":"WebVisionGetParams",
         "SetElementVisilityOrHidden":"SetElementVisilityOrHidden",
