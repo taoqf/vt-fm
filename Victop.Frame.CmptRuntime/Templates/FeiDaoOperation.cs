@@ -289,6 +289,16 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.PBlockAddRow(pBlockName, oav);
         }
         /// <summary>
+        /// 根据OAV和旧值更新block中的数据
+        /// </summary>
+        /// <param name="block转换的oav">oav</param>
+        /// <param name="需要更新的旧值">oldValue</param>
+        /// <param name="新值">newValue</param>
+        public void UpdateBlockByOAV(object oav, object oldValue, object newValue)
+        {
+            dataOperation.UpdateBlockByOAV(oav, oldValue, newValue);
+        }
+        /// <summary>
         /// 插入行
         /// </summary>
         /// <param name="blockName">区块名称</param>

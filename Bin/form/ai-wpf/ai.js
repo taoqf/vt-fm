@@ -159,5 +159,6 @@
         "SetPBlockCurrentRowByKey":"SetPBlockCurrentRowByKey",
         "SetPBlockDtIsHavaExist":"SetPBlockDtIsHavaExist",
 		"ComponentVisioPropertyLoad":"ComponentVisioPropertyLoad",
-        "ExtractProductData":"ExtractProductData"
+        "ExtractProductData":"ExtractProductData",
+		"UpdateBlockByOAV":"UpdateBlockByOAV"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
