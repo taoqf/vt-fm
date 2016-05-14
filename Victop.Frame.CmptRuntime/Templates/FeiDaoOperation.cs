@@ -799,7 +799,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.ParamsInterCompntAdd(oavCom, oavPage);
         }
         /// <summary>
-        /// 组件取参数
+        /// 组件取参数，一般情况下组件回填页面传回来的参数时用到
         /// </summary>
         /// <param name="oavParams">参数oav</param>
         /// <param name="paramName">参数名</param>
@@ -809,7 +809,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.ParamsInterCompntParse(oavParams, paramName, oav);
         }
         /// <summary>
-        /// 组件取参数
+        /// 组件取参数，一般情况下中组件从部件中取回参数时用到
         /// </summary>
         /// <param name="oavParams">参数oav</param>
         /// <param name="paramName">参数名</param>
