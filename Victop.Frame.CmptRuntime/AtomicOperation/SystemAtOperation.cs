@@ -797,11 +797,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 switch (type)
                 {
                     case "pvd":
-                        message.Add("artifact_table", "presentation,view,view_block,data,control");
+                        message.Add("artifact_table", "data,view,view_block,presentation,model,m_v,control,c_m");
                         message.Add("diagram_type_no", "DT00001");
                         break;
                     case "state":
-                        message.Add("artifact_table", "presentation,view,view_block,data,control");
+                        message.Add("artifact_table", "data,view,view_block,presentation,model,m_v,control,c_m");
                         message.Add("diagram_type_no", "DT00001");
                         break;
                 }
@@ -810,10 +810,17 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 message.Add("query_condition", condition);
                 message.Add("diagram_no", diagramNo);
                 Dictionary<string, object> resultDic = messageOp.SendSyncMessage("MongoDataChannelService.getfieldinfobyparafieldinfo", message);
-                if (resultDic != null && resultDic.ContainsKey("ReplyContent"))
+                if (resultDic != null && resultDic.ContainsKey("ReplyControl"))
                 {
-                    string result = resultDic["ReplyContent"].ToString();
-                    o.v = result;
+                    Dictionary<string, object> dic = JsonHelper.ToObject<Dictionary<string,object>>(resultDic["ReplyControl"].ToString());
+                    if (dic!=null&&dic.ContainsKey("code"))
+                    {
+                        string str = dic["code"].ToString();
+                        if (str.Equals("1"))
+                        {
+                            o.v = "succ";
+                        }
+                    }
                 }
             }
         }

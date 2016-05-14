@@ -1307,9 +1307,10 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="columnName">列名可为空字符串</param>
         /// <param name="ctrl">控制是否支持提交修改默认true</param>
         /// <param name="executeJsFunc">接收JS方法名默认ExcuteWPF</param>
-        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF")
+        /// <param name="type">展示类型</param>
+        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF", string type = "editor")
         {
-            uIElementOperation.UnitWebBrowserLoad(unitWebBrowserName, content, pblockName, columnName, ctrl, executeJsFunc);
+            uIElementOperation.UnitWebBrowserLoad(unitWebBrowserName, content, pblockName, columnName, ctrl, executeJsFunc,type);
         }
         /// <summary>
         /// 源编辑器

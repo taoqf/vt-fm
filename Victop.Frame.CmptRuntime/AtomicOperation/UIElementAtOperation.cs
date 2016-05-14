@@ -572,7 +572,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="ctrl">控制是否支持提交修改默认true</param>
         /// <param name="executeJsFunc">接收JS方法名默认ExcuteWPF</param>
         /// <param name="type">展示类型</param>
-        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF", string type = "json")
+        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF", string type = "editor")
         {
             TemplateControl unitWebBrowser = MainView.FindName(unitWebBrowserName) as TemplateControl;
             if (unitWebBrowser == null)
@@ -590,7 +590,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     dicParam.Add("URL", AppDomain.CurrentDomain.BaseDirectory + "form/jsonview/jsonview.html");
                     break;
                 default:
-                    dicParam.Add("URL", ConfigurationManager.AppSettings["htmleditor"] + "?productid=feidao");
+                    dicParam.Add("URL", AppDomain.CurrentDomain.BaseDirectory + "form/jsonview/jsonview.html");
                     break;
             }
             dicParam.Add("ExecuteJsFunc", executeJsFunc);
