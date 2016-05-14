@@ -1428,11 +1428,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 设置block选中行数据
+        /// 通过字段值设置block当前选中行
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        /// <param name="key">字段名</param>
-        /// <param name="param">id</param>
+        /// <param name="key">关键字字段名，值在表中唯一</param>
+        /// <param name="param">字段值</param>
         public void SetPBlockCurrentRowByKey(string pBlockName, string key, string param)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
