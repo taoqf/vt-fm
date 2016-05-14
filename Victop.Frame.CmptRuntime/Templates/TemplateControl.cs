@@ -28,6 +28,7 @@ namespace Victop.Frame.CmptRuntime
         public WebBrowser BuiltBrowser = new WebBrowser();
         private bool initFlag;
         private int businessModel;
+        private Dictionary<string, object> paramDict;
         private Dictionary<string, TemplateControl> listCompnt = new Dictionary<string, TemplateControl>();
         #endregion
         #region 公用属性
@@ -60,7 +61,19 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 参数键值对
         /// </summary>
-        public Dictionary<string, object> ParamDict { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> ParamDict
+        {
+            get
+            {
+                if (paramDict == null)
+                    paramDict = new Dictionary<string, object>();
+                return paramDict;
+            }
+            set
+            {
+                paramDict = value;
+            }
+        }
         /// <summary>
         /// 展示方式
         /// </summary>
