@@ -718,10 +718,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pageType">客户端类型</param>
         /// <param name="nodeNo">节点编号</param>
         /// <param name="nodeTypeNo">节点类型编号</param>
+        /// <param name="nodeTypeName">节点类型名称</param>
         /// <param name="pblockNo">节点所属P编号</param>
         /// <param name="pblockName">节点所属P名称</param>
         /// <param name="formatNo">节点所属版式编号</param>
-        public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, string pageType, string nodeNo, string nodeTypeNo, string pblockNo , string pblockName , string formatNo)
+        public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, string pageType, string nodeNo, string nodeTypeNo,string nodeTypeName, string pblockNo , string pblockName , string formatNo)
         {
             TemplateControl componentVisioProperty = MainView.FindName(unitName) as TemplateControl;
             if (componentVisioProperty == null)
@@ -738,6 +739,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicContent.Add("pageType", pageType);
             dicContent.Add("nodeNo", nodeNo);
             dicContent.Add("nodeTypeNo", nodeTypeNo);
+            dicContent.Add("nodeTypeName", nodeTypeName);
             dicContent.Add("pblockNo", pblockNo);
             dicContent.Add("pblockName", pblockName);
             dicContent.Add("formatNo", formatNo);
