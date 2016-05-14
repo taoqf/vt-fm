@@ -272,7 +272,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="elementName">元素名称</param>
         /// <param name="visibility">是否显示</param>
-        public void SetElementVisility(string elementName, bool visibility)
+        ///  <param name="type">占空间还是不占空间隐藏：0,不占空间;1,不占空间</param>
+        public void SetElementVisility(string elementName, bool visibility, int type = 0)
         {
             FrameworkElement tc = MainView.FindName(elementName) as FrameworkElement;
             if (tc != null)
@@ -283,7 +284,14 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
                 else
                 {
-                    tc.Visibility = Visibility.Collapsed;
+                    if (type == 0)
+                    {
+                        tc.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        tc.Visibility = Visibility.Hidden;
+                    }
                 }
             }
         }

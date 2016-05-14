@@ -1228,9 +1228,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="elementName">元素名称</param>
         /// <param name="visibility">是否显示</param>
-        public void SetElementVisility(string elementName, bool visibility)
+        ///  <param name="type">占空间还是不占空间隐藏：0,不占空间;1;不占空间</param>
+        public void SetElementVisility(string elementName, bool visibility,int type=0)
         {
-            uIElementOperation.SetElementVisility(elementName, visibility);
+            uIElementOperation.SetElementVisility(elementName, visibility,type);
         }
         /// <summary>
         /// 根据DataGrid名称获取当前选择行中某一字段的值
