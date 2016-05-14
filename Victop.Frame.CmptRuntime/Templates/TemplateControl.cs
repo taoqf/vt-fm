@@ -60,7 +60,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 参数键值对
         /// </summary>
-        public Dictionary<string, object> ParamDict { get; set; }
+        public Dictionary<string, object> ParamDict { get; set; } = new Dictionary<string, object>();
         /// <summary>
         /// 展示方式
         /// </summary>
@@ -71,10 +71,6 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="sender">事件对象</param>
         /// <param name="paramDic">事件参数</param>
         public delegate void TemplateDelegateEvent(object sender, Dictionary<string, object> paramDic);
-        /// <summary>
-        /// 模板委托事件
-        /// </summary>
-        public event TemplateDelegateEvent ExcuteEvent;
         /// <summary>
         /// 系统Id
         /// </summary>
@@ -198,10 +194,6 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="paramDic">通用参数</param>
         public virtual void Excute(Dictionary<string, object> paramDic)
         {
-            if (ExcuteEvent != null)
-            {
-                ExcuteEvent(this, paramDic);
-            }
         }
 
         /// <summary>

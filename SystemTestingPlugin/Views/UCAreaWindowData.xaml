@@ -7,6 +7,8 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ctrl="clr-namespace:Victop.Wpf.Controls;assembly=Victop.Wpf.Controls"
              xmlns:local="clr-namespace:SystemTestingPlugin.Views"
+             xmlns:action="clr-namespace:SystemTestingPlugin.ActionMgrs"
+             xmlns:compnt="http://schemas.ifeidao.com/wpfcomponents"
              xmlns:uc="clr-namespace:Victop.Frame.CmptRuntime;assembly=Victop.Frame.CmptRuntime"
              mc:Ignorable="d" 
              d:DesignHeight="645" d:DesignWidth="900" Name="UCMain">
@@ -200,6 +202,9 @@
             </ctrl:VicTabItemNormal>
             <ctrl:VicTabItemNormal Header="飞道FTP" AllowDelete="False">
                 <local:UCVictopFTP/>
+            </ctrl:VicTabItemNormal>
+            <ctrl:VicTabItemNormal Header="动作列表" AllowDelete="False">
+                <compnt:UCActionManager/>
             </ctrl:VicTabItemNormal>
         </ctrl:VicTabControlNormal>
 

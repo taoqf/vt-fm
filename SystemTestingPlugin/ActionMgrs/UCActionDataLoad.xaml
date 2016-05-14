@@ -1,0 +1,38 @@
+﻿<tctrl:TemplateControl x:Class="SystemTestingPlugin.ActionMgrs.UCActionDataLoad"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SystemTestingPlugin.ActionMgrs"
+             xmlns:tctrl="clr-namespace:Victop.Frame.CmptRuntime;assembly=Victop.Frame.CmptRuntime"
+             xmlns:ctrl="http://schemas.ifeidao.com/wpfcontrol"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400" Name="mainView">
+    <ctrl:VicGridNormal>
+        <ctrl:VicGridNormal.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </ctrl:VicGridNormal.RowDefinitions>
+        <local:UCActionHeader Grid.Row="0" x:Name="actionHeader" ParentControl="{Binding ElementName=mainView}"/>
+        <ctrl:VicGridNormal Grid.Row="1" Name="gridContent" Visibility="Visible">
+            <ctrl:VicGridNormal.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="*"/>
+            </ctrl:VicGridNormal.ColumnDefinitions>
+            <ctrl:VicGridNormal.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </ctrl:VicGridNormal.RowDefinitions>
+            <ctrl:VicGridNormal Grid.Row="0" Grid.Column="0" Background="Silver">
+                <ctrl:VicTextBlockNormal TextAlignment="Center" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Text="引用主体档案名称"/>
+            </ctrl:VicGridNormal>
+            <ctrl:VicTextBlockNormal Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding ElementModel.TargetValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"/>
+            <ctrl:VicDataGrid Grid.Row="1" Grid.ColumnSpan="2" Name="dgrid" AutoGenerateColumns="False" IsUserSetColumn="True" ItemsSource="{Binding StageRelationModelList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <ctrl:VicDataGrid.Columns>
+                    <ctrl:VicDataGridTextColumn Header="阶段编号" Width="0.5*" Binding="{Binding Path=ActionValue1}" IsReadOnly="True"/>
+                    <ctrl:VicDataGridTextColumn Header="阶段描述" Width="0.5*" Binding="{Binding Path=ActionValue2}" IsReadOnly="True"/>
+                </ctrl:VicDataGrid.Columns>
+            </ctrl:VicDataGrid>
+        </ctrl:VicGridNormal>
+    </ctrl:VicGridNormal>
+</tctrl:TemplateControl>
