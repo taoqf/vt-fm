@@ -272,7 +272,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="elementName">元素名称</param>
         /// <param name="visibility">是否显示</param>
-        public void SetElementVisility(string elementName, bool visibility)
+        ///  <param name="type">占空间还是不占空间隐藏：0,不占空间;1,不占空间</param>
+        public void SetElementVisility(string elementName, bool visibility, int type = 0)
         {
             FrameworkElement tc = MainView.FindName(elementName) as FrameworkElement;
             if (tc != null)
@@ -283,7 +284,14 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
                 else
                 {
-                    tc.Visibility = Visibility.Collapsed;
+                    if (type == 0)
+                    {
+                        tc.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        tc.Visibility = Visibility.Hidden;
+                    }
                 }
             }
         }
@@ -563,7 +571,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="columnName">列名可为空字符串</param>
         /// <param name="ctrl">控制是否支持提交修改默认true</param>
         /// <param name="executeJsFunc">接收JS方法名默认ExcuteWPF</param>
-        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF")
+        /// <param name="type">展示类型</param>
+        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF", string type = "json")
         {
             TemplateControl unitWebBrowser = MainView.FindName(unitWebBrowserName) as TemplateControl;
             if (unitWebBrowser == null)
@@ -572,7 +581,18 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             Dictionary<string, object> dicParam = new Dictionary<string, object>();
             dicParam.Add("ParamContent", content);
             dicParam.Add("ParamCtrl", ctrl);
-            dicParam.Add("URL", ConfigurationManager.AppSettings["htmleditor"] + "?productid=feidao");
+            switch (type)
+            {
+                case "editor":
+                    dicParam.Add("URL", ConfigurationManager.AppSettings["htmleditor"] + "?productid=feidao");
+                    break;
+                case "json":
+                    dicParam.Add("URL", AppDomain.CurrentDomain.BaseDirectory + "form/jsonview/jsonview.html");
+                    break;
+                default:
+                    dicParam.Add("URL", ConfigurationManager.AppSettings["htmleditor"] + "?productid=feidao");
+                    break;
+            }
             dicParam.Add("ExecuteJsFunc", executeJsFunc);
             if (!string.IsNullOrEmpty(columnName))
             {
@@ -588,5 +608,144 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             unitWebBrowser.Excute(dicParam);
         }
+        /// <summary>
+        /// 画廊部件初始化
+        /// </summary>
+        /// <param name="unitName">部件名称</param>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="imagecolumName">图片列</param>
+        /// <param name="titlecolumName">标题列</param>
+        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName)
+        {
+            TemplateControl unitGallery = MainView.FindName(unitName) as TemplateControl;
+            if (unitGallery == null)
+                return;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            DataTable dtData = pBlock.ViewBlockDataTable;
+            Dictionary<string, object> dicParam = new Dictionary<string, object>();
+            dicParam.Add("MessageType", "init");
+            Dictionary<string, object> dicContentParam = new Dictionary<string, object>();
+            dicContentParam.Add("data", dtData);
+            dicContentParam.Add("image", imagecolumName);
+            dicContentParam.Add("title", titlecolumName);
+            dicParam.Add("MessageContent", dicContentParam);
+            unitGallery.Excute(dicParam);
+        }
+
+        /// <summary>
+        /// UnitListBoxFontIconRule部件刷新
+        /// </summary>
+        /// <param name="unitName">部件名称</param>
+        public void UnitListBoxFontIconRuleRefresh(string unitName)
+        {
+            TemplateControl unitPage = MainView.FindName(unitName) as TemplateControl;
+            if (unitPage == null)
+                return;
+            unitPage.Excute(new Dictionary<string, object> { { "MessageType", "refresh" } });
+        }
+        /// <summary>
+        /// 设置元素是否可见(占空间)
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="visibility">是否显示</param>
+        public void SetElementVisilityOrHidden(string elementName, bool visibility)
+        {
+            FrameworkElement tc = MainView.FindName(elementName) as FrameworkElement;
+            if (tc != null)
+            {
+                if (visibility)
+                {
+                    tc.Visibility = Visibility.Visible;
+                    tc.Height = 700;
+                }
+                else
+                {
+                    tc.Visibility = Visibility.Hidden;
+                    tc.Height = 0;
+                }
+            }
+        }
+        #region 动态构建的Listbox部件初始化或者刷新方法
+        /// <summary>
+        /// 动态构建的Listbox部件初始化或者刷新方法
+        /// </summary>
+        /// <param name="unitName"></param>
+        /// <param name="pblockName">p块名称</param>
+        public void UnitListBoxDynamicRuleRefresh(string unitName, string pblockName)
+        {
+            TemplateControl unitListbox = MainView.FindName(unitName) as TemplateControl;
+            if (unitListbox == null) { return; }
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            DataTable dtData = pBlock.ViewBlockDataTable;
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            dicMessage.Add("MessageType", "refresh");
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("DtData", dtData);
+            dicMessage.Add("MessageContent", dicContent);
+            unitListbox.Excute(dicMessage);
+        }
+        #endregion
+
+        #region 动态构建的Listbox部件获取复选框选中的数据集合
+        /// <summary>
+        /// 动态构建的Listbox部件获取复选框选中的数据集合
+        /// <param name="unitName">部件名称</param>
+        /// <param name="oav">接收OAV</param>
+        /// </summary>
+        public void UnitListBoxDynamicRuleGetChosedRows(string unitName, object oav)
+        {
+            TemplateControl unitListbox = MainView.FindName(unitName) as TemplateControl;
+            if (unitListbox == null) { return; }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            dicMessage.Add("MessageType", "getrows");
+            unitListbox.Excute(dicMessage);
+            if (unitListbox.ParamDict != null && unitListbox.ParamDict.ContainsKey("ChosedRowsList"))
+            {
+                dynamic o = oav;
+                List<DataRow> list = unitListbox.ParamDict["ChosedRowsList"] as List<DataRow>;
+                o.v = list;
+            }
+        }
+        #endregion 
+
+        #region 动态构建的ComponentVisioProperty初始化方法
+
+        /// <summary>
+        ///  动态构建的ComponentVisioProperty初始化方法
+        /// </summary>
+        /// <param name="unitName">组件名</param>
+        /// <param name="pblockNameProperty">节点属性P名称</param>
+        /// <param name="pageType">客户端类型</param>
+        /// <param name="nodeNo">节点编号</param>
+        /// <param name="nodeTypeNo">节点类型编号</param>
+        /// <param name="pblockNo">节点所属P编号</param>
+        /// <param name="pblockName">节点所属P名称</param>
+        /// <param name="formatNo">节点所属版式编号</param>
+        public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, string pageType, string nodeNo, string nodeTypeNo, string pblockNo , string pblockName , string formatNo)
+        {
+            TemplateControl componentVisioProperty = MainView.FindName(unitName) as TemplateControl;
+            if (componentVisioProperty == null)
+            {
+                return;
+            }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "init");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockNameProperty);
+            dicContent.Add("dtNodeProperty", pBlock.ViewBlockDataTable);
+            dicContent.Add("pageType", pageType);
+            dicContent.Add("nodeNo", nodeNo);
+            dicContent.Add("nodeTypeNo", nodeTypeNo);
+            dicContent.Add("pblockNo", pblockNo);
+            dicContent.Add("pblockName", pblockName);
+            dicContent.Add("formatNo", formatNo);
+            dicMessage.Add("MessageContent", dicContent);
+
+            componentVisioProperty.Excute(dicMessage);
+        }
+
+        #endregion
     }
 }

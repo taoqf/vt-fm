@@ -24,7 +24,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
     {
         private TemplateControl MainView;
         private static Dictionary<string, object> paramCompntDic = new Dictionary<string, object>();
-        
+
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -85,7 +85,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="v">v值</param>
         public void UpdateFact(object oav, object v)
         {
-            MainView.FeiDaoMachine.UpdateFact(oav,v);
+            MainView.FeiDaoMachine.UpdateFact(oav, v);
         }
 
         /// <summary>
@@ -208,20 +208,72 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 获取集合长度
+        /// </summary>
+        /// <param name="list">集合</param>
+        /// <param name="count">长度</param>
+        public void GetListCount(object list, object count)
+        {
+            dynamic o = count;
+            List<object> getlist = (List<object>)list;
+            if (getlist != null)
+            {
+                o.v = getlist.Count;
+            }
+            else
+            {
+                o.v = 0;
+            }
+        }
+        /// <summary>
+        /// 移除指定元素，并返回长度
+        /// </summary>
+        /// <param name="list">集合</param>
+        /// <param name="setcount">移除位置</param>
+        public void RemoveListSetCount(object list, int setcount)
+        {
+            List<object> getlist = (List<object>)list;
+            if (getlist != null && getlist.Count >= setcount)
+            {
+                getlist.RemoveAt(0);
+            }
+        }
+        /// <summary>
+        /// 获取集合指定位置元素
+        /// </summary>
+        /// <param name="list">集合</param>
+        /// <param name="setcount">获取位置</param>
+        /// <param name="getcontent">内容</param>
+        public void GetListSetCountContent(object list, int setcount, object getcontent)
+        {
+            dynamic o = getcontent;
+            List<object> getlist = (List<object>)list;
+            object content = new object();
+            if (getlist != null && getlist.Count >= setcount)
+            {
+                content = getlist[setcount];
+                o.v = content;
+            }
+            else
+            {
+                o.v = content;
+            }
+        }
+        /// <summary>
         /// 获取ComboBox的DT
         /// </summary>
         /// <param name="oav">接收oav</param>
         /// <returns>DT</returns>
-        public void GetComboBoxDt( object oav)
+        public void GetComboBoxDt(object oav)
         {
-            DataTable dt=new DataTable();
+            DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("key", typeof(string)));
             dt.Columns.Add(new DataColumn("value", typeof(string)));
             dynamic o = oav;
             o.v = dt;
-          
+
         }
-        
+
         /// <summary>
         ///给ComboBox的Dt赋值
         /// </summary>
@@ -230,13 +282,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="paramDt">oav</param>
         public void SetComboBoxDtRow(string keyValue, string displayValue, object paramDt)
         {
-           
+
             DataTable dt = (DataTable)paramDt;
             if (dt != null)
             {
                 dt.Rows.Add(keyValue, displayValue);
             }
-         
+
         }
         /// <summary>
         /// 将DT表绑到ComboBox数据源
@@ -249,7 +301,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (!string.IsNullOrEmpty(elementName))
             {
                 VicComboBoxNormal combo = MainView.FindName(elementName) as VicComboBoxNormal;
-                if (combo != null && paramDt!=null)
+                if (combo != null && paramDt != null)
                 {
                     combo.ItemsSource = dt.DefaultView;
                     combo.SelectedValuePath = "key";
@@ -725,7 +777,46 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             o.v = string.Empty;
         }
-
+        /// <summary>
+        /// 抽取制品数据
+        /// </summary>
+        /// <param name="compntGroupNo">组件组合编号</param>
+        /// <param name="diagramNo">图号</param>
+        /// <param name="type">获取数据类型</param>
+        /// <param name="oav">返回消息oav</param>
+        public void ExtractProductData(object compntGroupNo, object diagramNo, string type, object oav)
+        {
+            dynamic o = oav;
+            o.v = "faile";
+            if (compntGroupNo != null && diagramNo != null && !string.IsNullOrWhiteSpace(compntGroupNo.ToString()) && !string.IsNullOrWhiteSpace(diagramNo.ToString()))
+            {
+                DataMessageOperation messageOp = new DataMessageOperation();
+                Dictionary<string, object> message = new Dictionary<string, object>();
+                message.Add("systemid", "18");
+                message.Add("spaceid", "feidao");
+                switch (type)
+                {
+                    case "pvd":
+                        message.Add("artifact_table", "presentation,view,view_block,data,control");
+                        message.Add("diagram_type_no", "DT00001");
+                        break;
+                    case "state":
+                        message.Add("artifact_table", "presentation,view,view_block,data,control");
+                        message.Add("diagram_type_no", "DT00001");
+                        break;
+                }
+                Dictionary<string, object> condition = new Dictionary<string, object>();
+                condition.Add("compnt_group_no", compntGroupNo);
+                message.Add("query_condition", condition);
+                message.Add("diagram_no", diagramNo);
+                Dictionary<string, object> resultDic = messageOp.SendSyncMessage("MongoDataChannelService.getfieldinfobyparafieldinfo", message);
+                if (resultDic != null && resultDic.ContainsKey("ReplyContent"))
+                {
+                    string result = resultDic["ReplyContent"].ToString();
+                    o.v = result;
+                }
+            }
+        }
         #region 字符串处理
         /// <summary>
         /// 指定的字符串是否出现在字符串实例中
@@ -757,7 +848,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 char[] chararray = value.ToCharArray();
                 o.v = strValue.ToString().TrimEnd(chararray);
             }
-           
+
         }
         /// <summary>
         /// 从当前 System.String 对象移除数组中指定的一组字符的所有头部匹配项
@@ -775,7 +866,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 char[] chararray = value.ToCharArray();
                 o.v = strValue.ToString().TrimStart(chararray);
             }
-           
+
         }
         /// <summary>
         /// 比较字符串一致性
@@ -788,7 +879,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dynamic o = oav;
             if (firstValue == null || secondValue == null)
                 o.v = false;
-           else o.v = firstValue.Equals(secondValue);
+            else o.v = firstValue.Equals(secondValue);
         }
 
         /// <summary>
@@ -811,22 +902,22 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="join">指定的字符串连接符</param>
         /// <param name="oav">接收oav</param>
         /// <param name="sort">排序方式true正序false倒序</param>
-        public void AppendStr(object str,string join, object oav,bool sort)
+        public void AppendStr(object str, string join, object oav, bool sort)
         {
             dynamic o = oav;
             if (sort)
                 o.v += str + join;
             else
             {
-                if (o.v==null)
-                o.v = join + str;
+                if (o.v == null)
+                    o.v = join + str;
                 else
                 {
                     o.v = join + str + o.v;
                 }
             }
         }
-      
+
         #endregion
 
         #region 加减乘除
@@ -844,8 +935,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 o.v = "";
                 return;
             }
-            double i=0;
-            double j=0;
+            double i = 0;
+            double j = 0;
             double.TryParse(v1.ToString(), out i);
             double.TryParse(v2.ToString(), out j);
             o.v = i + j;
@@ -992,10 +1083,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="oav">接收oav</param>
         /// <param name="datetime">时间</param>
         /// <param name="format">转换格式，如（yyyy-MM-dd、yyyy-MM-dd HH:mm:ss、yyyy/MM/dd HH:mm等）</param>
-        public void ConvertDateTimeToString(object oav, object datetime, string format = "yyyy-MM-dd HH:mm:ss") 
+        public void ConvertDateTimeToString(object oav, object datetime, string format = "yyyy-MM-dd HH:mm:ss")
         {
             dynamic o = oav;
-            if (datetime == null) 
+            if (datetime == null)
             {
                 o.v = "";
                 return;
@@ -1099,24 +1190,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         #endregion
-        #region When 返回原子操作
-        /// <summary>
-        /// 返回字符串类型
-        /// </summary>
-        /// <param name="o">需转换值</param>
-        /// <returns></returns>
-        public string GetStringByObject(object o)
-        {
-            if (o != null)
-            {
-                return o.ToString();
-            }
-            else
-            {
-                return "";
-            }
-        }
-
-        #endregion
+       
     }
 }

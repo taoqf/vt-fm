@@ -244,36 +244,32 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="paramField">参数字段</param>
-        /// <param name="listNotEqual">不等于子查询集合</param>
-        public void SetConditionSearchNotEqual(string pBlockName, string paramField, object listNotEqual)
+        /// <param name="NotEqual">不等于的值</param>
+        public void SetConditionSearchNotEqual(string pBlockName, string paramField, object NotEqual)
         {
-            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && listNotEqual != null)
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && NotEqual != null)
             {
-                List<object> list = listNotEqual as List<object>;
-                if (list != null)
+                Dictionary<string, object> inDic = new Dictionary<string, object>();
+                inDic.Add("$ne", NotEqual);
+                if (conditionModelDic.ContainsKey(pBlockName))
                 {
-                    Dictionary<string, object> inDic = new Dictionary<string, object>();
-                    inDic.Add("$ne", list);
-                    if (conditionModelDic.ContainsKey(pBlockName))
+                    Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
+                    if (paramDic.ContainsKey(paramField))
                     {
-                        Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
-                        if (paramDic.ContainsKey(paramField))
-                        {
-                            paramDic[paramField] = inDic;
-                        }
-                        else
-                        {
-                            paramDic.Add(paramField, inDic);
-                        }
+                        paramDic[paramField] = inDic;
                     }
                     else
                     {
-                        ViewsConditionModel viewConModel = new ViewsConditionModel();
-                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
                         paramDic.Add(paramField, inDic);
-                        viewConModel.TableCondition = paramDic;
-                        conditionModelDic.Add(pBlockName, viewConModel);
                     }
+                }
+                else
+                {
+                    ViewsConditionModel viewConModel = new ViewsConditionModel();
+                    Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                    paramDic.Add(paramField, inDic);
+                    viewConModel.TableCondition = paramDic;
+                    conditionModelDic.Add(pBlockName, viewConModel);
                 }
             }
         }
@@ -652,6 +648,17 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                             else
                             {
                                 pBlock.PreBlockSelectedRow = ((DataRowView)listview.SelectedItem).Row;
+                            }
+                            break;
+                        case "VicComboBoxNormal":
+                            VicComboBoxNormal combobox = element as VicComboBoxNormal;
+                            if (combobox.SelectedItem == null)
+                            {
+                                pBlock.PreBlockSelectedRow = null;
+                            }
+                            else
+                            {
+                                pBlock.PreBlockSelectedRow = ((DataRowView)combobox.SelectedItem).Row;
                             }
                             break;
                         default:
@@ -1344,19 +1351,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="oav">返回集合结果</param>
-        public void GetDataGridColumnValueList(string pblockName, string fieldName, object oav)
+        public void GetDataGridColumnValueList(string pblockName, object oav, List<object> fieldName)
         {
             dynamic o = oav;
             List<object> list = new List<object>();
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName) && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
             {
                 DataRow[] drArray = pBlock.ViewBlockDataTable.Select("VicCheckFlag = 'true'");
                 if (drArray.Length > 0)
                 {
                     foreach (DataRow dr in drArray)
                     {
-                        list.Add(dr[fieldName]);
+                        Dictionary<string, object> value = new Dictionary<string, object>();
+                        for (int i = 0; i < fieldName.Count; i++)
+                        {
+                            if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName[i].ToString()))
+                            {
+                                value.Add(fieldName[i].ToString(), dr[fieldName[i].ToString()]);
+                            }
+                        }
+                        list.Add(value);
                     }
                 }
             }
@@ -1381,6 +1396,78 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             o.v = count;
         }
 
+        /// <summary>
+        /// 对确定行字段赋值
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="rowId">行id</param>
+        /// <param name="oav">集合</param>
+        /// <param name="fieldName">字段</param>
+        public void SetDataGridColumnValueList(string pblockName, string rowId, object oav, List<object> fieldName)
+        {
+            List<object> getlist = (List<object>)oav;
+            if (getlist != null)
+            {
+                Dictionary<string, object> dic = (Dictionary<string, object>)getlist[0];
+                List<string> list = dic.Keys.ToList();
+                PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+                if (dic != null && pBlock != null && pBlock.ViewBlockDataTable != null)
+                {
+                    for (int i = 0; i < fieldName.Count; i++)
+                    {
+                        if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName[i].ToString()))
+                        {
+                            DataRow[] drSelected = pBlock.ViewBlockDataTable.Select("_id='" + rowId.ToString() + "'");
+                            if (drSelected.Length > 0 && dic.Keys.Count >= i)
+                            {
+                                drSelected[0][fieldName[i].ToString()] = dic[list[i]];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 设置block选中行数据
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="key">字段名</param>
+        /// <param name="param">id</param>
+        public void SetPBlockCurrentRowByKey(string pBlockName, string key, string param)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(key))
+            {
+                DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format(key + "='{0}'", param));
+                if (drc.Length > 0)
+                {
+                    pBlock.PreBlockSelectedRow = drc[0];
+                    pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 判断在pblock表中某列中的某个值是否存在
+        /// </summary>
+        /// <param name="pBlockName"></param>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="oav"></param>
+        public void SetPBlockDtIsHavaExist(string pBlockName, string key, string value, object oav)
+        {
+            dynamic o = oav;
+            o.v = false;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(key))
+            {
+                DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format(key + "='{0}'", value));
+                if (drc.Length > 0)
+                {
+                    o.v = true;
+                }
+            }
+        }
         #region 规则机台专用原子操作
         /// <summary>
         /// 规则机台模板then专用原子操作
@@ -1427,7 +1514,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         drRhs["atom_no"] = drRhsSelect[0]["atom_no"];
                         drRhs["atom_name"] = drRhsSelect[0]["atom_name"];
                         drRhs["str_param"] = "";
-                        drRhs["is_commented"] = "False";
+                        drRhs["is_commented"] = "false";
                         drRhs["is_note"] = "false";
                         drRhs["str_note"] = "";
                         drRhs["order"] = order;
