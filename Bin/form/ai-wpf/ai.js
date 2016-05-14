@@ -158,5 +158,6 @@
         "SetElementVisilityOrHidden":"SetElementVisilityOrHidden",
         "SetPBlockCurrentRowByKey":"SetPBlockCurrentRowByKey",
         "SetPBlockDtIsHavaExist":"SetPBlockDtIsHavaExist",
+		"ComponentVisioPropertyLoad":"ComponentVisioPropertyLoad",
         "ExtractProductData":"ExtractProductData"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
