@@ -99,10 +99,16 @@ namespace Victop.Frame.Connection
 
         private ReplyMessage UserLoginOutSubmit(IAdapter adapter, RequestMessage messageInfo)
         {
+            CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
             Dictionary<string, string> contentDic = JsonHelper.ToObject<Dictionary<string, string>>(messageInfo.MessageContent);
             if (!contentDic.ContainsKey("systemid"))
             {
                 contentDic.Add("systemid", ConfigurationManager.AppSettings["clientsystem"]);
+                
+            }
+            if (!contentDic.ContainsKey("spaceid"))
+            {
+                contentDic.Add("spaceid", currentGallery.ClientId);
             }
             messageInfo.MessageContent = JsonHelper.ToJson(contentDic);
             MessageOrganizeManager organizeManager = new MessageOrganizeManager();
@@ -112,7 +118,6 @@ namespace Victop.Frame.Connection
             replyMessage.MessageId = messageInfo.MessageId;
             if (replyMessage.ReplyMode == ReplyModeEnum.SYNCH)
             {
-                CloudGalleryInfo currentGallery = new GalleryManager().GetGallery(GalleryManager.GetCurrentGalleryId().ToString());
                 currentGallery.IsLogin = false;
                 currentGallery.ClientInfo.SessionId = string.Empty;
                 currentGallery.ClientInfo.UserName = string.Empty;
