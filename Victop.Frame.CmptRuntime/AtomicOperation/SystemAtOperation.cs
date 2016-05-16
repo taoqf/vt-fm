@@ -781,11 +781,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <summary>
         /// 抽取制品数据【pvd，状态图】
         /// </summary>
+        /// <param name="pageNo">页面编号</param>
         /// <param name="compntGroupNo">组件组合编号</param>
         /// <param name="diagramNo">图号</param>
         /// <param name="type">获取数据类型</param>
         /// <param name="oav">返回消息oav</param>
-        public void ExtractProductData(object compntGroupNo, object diagramNo, string type, object oav)
+        public void ExtractProductData(object pageNo, object compntGroupNo, object diagramNo, string type, object oav)
         {
             dynamic o = oav;
             o.v = "faile";
@@ -795,26 +796,33 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 Dictionary<string, object> message = new Dictionary<string, object>();
                 message.Add("systemid", "18");
                 message.Add("spaceid", "feidao");
+                Dictionary<string, object> condition = new Dictionary<string, object>();
                 switch (type)
                 {
                     case "pvd":
                         message.Add("artifact_table", "data,view,view_block,presentation,model,m_v,control,c_m");
                         message.Add("diagram_type_no", "DT00001");
+                        condition.Add("compnt_group_no", compntGroupNo);
                         break;
                     case "state":
                         message.Add("artifact_table", "machine_evevts");
                         message.Add("diagram_type_no", "DT00002");
+                        condition.Add("compnt_group_no", compntGroupNo);
+                        condition.Add("page_no", pageNo);
+                        break;
+                    default:
+                        message.Add("artifact_table", "");
+                        message.Add("diagram_type_no", "");
+                        condition.Add("compnt_group_no", "");
                         break;
                 }
-                Dictionary<string, object> condition = new Dictionary<string, object>();
-                condition.Add("compnt_group_no", compntGroupNo);
                 message.Add("query_condition", condition);
                 message.Add("diagram_no", diagramNo);
                 Dictionary<string, object> resultDic = messageOp.SendSyncMessage("MongoDataChannelService.getfieldinfobyparafieldinfo", message);
                 if (resultDic != null && resultDic.ContainsKey("ReplyControl"))
                 {
-                    Dictionary<string, object> dic = JsonHelper.ToObject<Dictionary<string,object>>(resultDic["ReplyControl"].ToString());
-                    if (dic!=null&&dic.ContainsKey("code"))
+                    Dictionary<string, object> dic = JsonHelper.ToObject<Dictionary<string, object>>(resultDic["ReplyControl"].ToString());
+                    if (dic != null && dic.ContainsKey("code"))
                     {
                         string str = dic["code"].ToString();
                         if (str.Equals("1"))
