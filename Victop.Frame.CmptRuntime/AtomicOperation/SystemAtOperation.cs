@@ -1209,7 +1209,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dynamic o = oav;
             if (!string.IsNullOrEmpty(filePath))
             {
-                o.v = ConfigurationManager.AppSettings["downloadfilehttp"] + "?id=" + filePath + "&productid=" + productId;
+                o.v = ConfigurationManager.AppSettings["downloadfilehttp"] + "getfile?id=" + filePath + "&productid=" + productId;
             }
         }
     }
