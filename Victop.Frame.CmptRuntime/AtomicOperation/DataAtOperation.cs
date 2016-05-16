@@ -503,6 +503,32 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 根据OAV和旧值更新block中的数据
+        /// </summary>
+        /// <param name="block转换的oav">oav</param>
+        /// <param name="需要更新的旧值">oldValue</param>
+        /// <param name="新值">newValue</param>
+        public void UpdateBlockByOAV(object oav, object oldValue, object newValue)
+        {
+            if (oav != null && oav != DBNull.Value)
+            {
+                dynamic o = oav;
+                string ostr = ((string)o.o);
+                string columName = ((string)o.a);
+                string pblockName = ostr.Substring(0, ostr.IndexOf(':'));
+                string guid = ostr.Substring(ostr.IndexOf(':') + 1);
+                PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+                if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
+                {
+                    DataRow[] drs = pBlock.ViewBlockDataTable.Select("_id='" + guid + "' and " + columName + "='" + oldValue + "'");
+                    if (drs.Length > 0)
+                    {
+                        drs[0][columName] = newValue;
+                    }
+                }
+            }
+        }
+        /// <summary>
         /// 插入行
         /// </summary>
         /// <param name="blockName">区块名称</param>
@@ -1428,11 +1454,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 设置block选中行数据
+        /// 通过字段值设置block当前选中行
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        /// <param name="key">字段名</param>
-        /// <param name="param">id</param>
+        /// <param name="key">关键字字段名，值在表中唯一</param>
+        /// <param name="param">字段值</param>
         public void SetPBlockCurrentRowByKey(string pBlockName, string key, string param)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);

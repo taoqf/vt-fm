@@ -289,6 +289,16 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.PBlockAddRow(pBlockName, oav);
         }
         /// <summary>
+        /// 根据OAV和旧值更新block中的数据
+        /// </summary>
+        /// <param name="block转换的oav">oav</param>
+        /// <param name="需要更新的旧值">oldValue</param>
+        /// <param name="新值">newValue</param>
+        public void UpdateBlockByOAV(object oav, object oldValue, object newValue)
+        {
+            dataOperation.UpdateBlockByOAV(oav, oldValue, newValue);
+        }
+        /// <summary>
         /// 插入行
         /// </summary>
         /// <param name="blockName">区块名称</param>
@@ -799,7 +809,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.ParamsInterCompntAdd(oavCom, oavPage);
         }
         /// <summary>
-        /// 组件取参数
+        /// 组件取参数，一般情况下组件回填页面传回来的参数时用到
         /// </summary>
         /// <param name="oavParams">参数oav</param>
         /// <param name="paramName">参数名</param>
@@ -809,7 +819,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.ParamsInterCompntParse(oavParams, paramName, oav);
         }
         /// <summary>
-        /// 组件取参数
+        /// 组件取参数，一般情况下中组件从部件中取回参数时用到
         /// </summary>
         /// <param name="oavParams">参数oav</param>
         /// <param name="paramName">参数名</param>
@@ -1307,9 +1317,10 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="columnName">列名可为空字符串</param>
         /// <param name="ctrl">控制是否支持提交修改默认true</param>
         /// <param name="executeJsFunc">接收JS方法名默认ExcuteWPF</param>
-        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF")
+        /// <param name="type">展示类型</param>
+        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF", string type = "editor")
         {
-            uIElementOperation.UnitWebBrowserLoad(unitWebBrowserName, content, pblockName, columnName, ctrl, executeJsFunc);
+            uIElementOperation.UnitWebBrowserLoad(unitWebBrowserName, content, pblockName, columnName, ctrl, executeJsFunc,type);
         }
         /// <summary>
         /// 源编辑器
@@ -1672,11 +1683,11 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.SetElementVisilityOrHidden(elementName, visibility);
         }
         /// <summary>
-        /// 设置block选中行数据
+        /// 通过字段值设置block当前选中行
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        /// <param name="key">字段名</param>
-        /// <param name="param">id</param>
+        /// <param name="key">关键字字段名，值在表中唯一</param>
+        /// <param name="param">字段值</param>
         public void SetPBlockCurrentRowByKey(string pBlockName, string key, string param)
         {
             dataOperation.SetPBlockCurrentRowByKey(pBlockName, key, param);
@@ -1693,7 +1704,7 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetPBlockDtIsHavaExist(pBlockName, key, value, oav);
         }
         /// <summary>
-        /// 抽取制品数据
+        /// 抽取制品数据【pvd，状态图】
         /// </summary>
         /// <param name="compntGroupNo">组件组合编号</param>
         /// <param name="diagramNo">图号</param>
@@ -1714,15 +1725,16 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pageType">客户端类型</param>
         /// <param name="nodeNo">节点编号</param>
         /// <param name="nodeTypeNo">节点类型编号</param>
+        /// <param name="nodeTypeName">节点类型名称</param>
         /// <param name="pblockNo">节点所属P编号</param>
         /// <param name="pblockName">节点所属P名称</param>
         /// <param name="formatNo">节点所属版式编号</param>
         public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, string pageType,
-                                               string nodeNo, string nodeTypeNo, string pblockNo = "",
+                                               string nodeNo, string nodeTypeNo,string nodeTypeName, string pblockNo = "",
                                                string pblockName = "", string formatNo = "")
         {
             uIElementOperation.ComponentVisioPropertyLoad( unitName,  pblockNameProperty,  pageType,
-                                                nodeNo,  nodeTypeNo,  pblockNo ,
+                                                nodeNo,  nodeTypeNo,nodeTypeName,  pblockNo ,
                                                 pblockName ,  formatNo )
             ;
         }

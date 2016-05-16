@@ -399,7 +399,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             o2.v = fElement;
         }
         /// <summary>
-        /// 组件取参数
+        ///组件取参数，一般情况下组件回填页面传回来的参数时用到
         /// </summary>
         /// <param name="oavParams">参数oav</param>
         /// <param name="paramName">参数名</param>
@@ -419,7 +419,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 组件取参数
+        /// 组件获取参数，一般情况下中组件从部件中取回参数时用到
         /// </summary>
         /// <param name="oavParams">参数oav</param>
         /// <param name="paramName">参数名</param>
@@ -778,7 +778,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             o.v = string.Empty;
         }
         /// <summary>
-        /// 抽取制品数据
+        /// 抽取制品数据【pvd，状态图】
         /// </summary>
         /// <param name="compntGroupNo">组件组合编号</param>
         /// <param name="diagramNo">图号</param>
@@ -797,12 +797,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 switch (type)
                 {
                     case "pvd":
-                        message.Add("artifact_table", "presentation,view,view_block,data,control");
+                        message.Add("artifact_table", "data,view,view_block,presentation,model,m_v,control,c_m");
                         message.Add("diagram_type_no", "DT00001");
                         break;
                     case "state":
-                        message.Add("artifact_table", "presentation,view,view_block,data,control");
-                        message.Add("diagram_type_no", "DT00001");
+                        message.Add("artifact_table", "machine_evevts");
+                        message.Add("diagram_type_no", "DT00002");
                         break;
                 }
                 Dictionary<string, object> condition = new Dictionary<string, object>();
@@ -810,10 +810,17 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 message.Add("query_condition", condition);
                 message.Add("diagram_no", diagramNo);
                 Dictionary<string, object> resultDic = messageOp.SendSyncMessage("MongoDataChannelService.getfieldinfobyparafieldinfo", message);
-                if (resultDic != null && resultDic.ContainsKey("ReplyContent"))
+                if (resultDic != null && resultDic.ContainsKey("ReplyControl"))
                 {
-                    string result = resultDic["ReplyContent"].ToString();
-                    o.v = result;
+                    Dictionary<string, object> dic = JsonHelper.ToObject<Dictionary<string,object>>(resultDic["ReplyControl"].ToString());
+                    if (dic!=null&&dic.ContainsKey("code"))
+                    {
+                        string str = dic["code"].ToString();
+                        if (str.Equals("1"))
+                        {
+                            o.v = "succ";
+                        }
+                    }
                 }
             }
         }
