@@ -14,6 +14,7 @@ using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 using System.Reflection;
 using System.Resources;
+using System.Configuration;
 
 namespace Victop.Frame.CmptRuntime.AtomicOperation
 {
@@ -1197,6 +1198,19 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         #endregion
-       
+        /// <summary> 
+        /// 返回文件url地址 
+        /// </summary> 
+        /// <param name="filePath">文件编号</param> 
+        /// <param name="oav">接受oav</param> 
+        /// <param name="productId">产品id默认feidao</param> 
+        public void GetFileUrlByFilePath(string filePath, object oav, string productId = "feidao")
+        {
+            dynamic o = oav;
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                o.v = ConfigurationManager.AppSettings["downloadfilehttp"] + "?id=" + filePath + "&productid=" + productId;
+            }
+        }
     }
 }

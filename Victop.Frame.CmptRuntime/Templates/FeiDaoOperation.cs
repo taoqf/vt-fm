@@ -587,6 +587,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetDataGridColumnValueList(pblockName, rowId, oav, fieldName);
         }
+
         #endregion
 
         #region 系统操作
@@ -989,6 +990,17 @@ namespace Victop.Frame.CmptRuntime
         public void SendGetCodeMessage(string SystemId, string iPName, string iCodeRule, object oav)
         {
             systemOperation.SendGetCodeMessage(SystemId, iPName, iCodeRule, oav);
+        }
+
+        /// <summary> 
+        /// 返回文件url地址 
+        /// </summary> 
+        /// <param name="filePath">文件编号</param> 
+        /// <param name="oav">接受oav</param> 
+        /// <param name="productId">产品id默认feidao</param> 
+        public void GetFileUrlByFilePath(string filePath, object oav, string productId = "feidao")
+        {
+            systemOperation.GetFileUrlByFilePath(filePath, oav, productId);
         }
         /// <summary>
         /// 返回指定名称资源的值
@@ -1739,5 +1751,7 @@ namespace Victop.Frame.CmptRuntime
             ;
         }
         #endregion
+
+
     }
 }

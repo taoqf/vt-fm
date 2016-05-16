@@ -160,5 +160,6 @@
         "SetPBlockDtIsHavaExist":"SetPBlockDtIsHavaExist",
 		"ComponentVisioPropertyLoad":"ComponentVisioPropertyLoad",
         "ExtractProductData":"ExtractProductData",
+	"GetFileUrlByFilePath":"GetFileUrlByFilePath",
 		"UpdateBlockByOAV":"UpdateBlockByOAV"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
