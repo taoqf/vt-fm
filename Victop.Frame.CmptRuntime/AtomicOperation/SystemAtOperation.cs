@@ -778,7 +778,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             o.v = string.Empty;
         }
         /// <summary>
-        /// 抽取制品数据
+        /// 抽取制品数据【pvd，状态图】
         /// </summary>
         /// <param name="compntGroupNo">组件组合编号</param>
         /// <param name="diagramNo">图号</param>
@@ -801,8 +801,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         message.Add("diagram_type_no", "DT00001");
                         break;
                     case "state":
-                        message.Add("artifact_table", "data,view,view_block,presentation,model,m_v,control,c_m");
-                        message.Add("diagram_type_no", "DT00001");
+                        message.Add("artifact_table", "machine_evevts");
+                        message.Add("diagram_type_no", "DT00002");
                         break;
                 }
                 Dictionary<string, object> condition = new Dictionary<string, object>();

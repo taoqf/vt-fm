@@ -1704,7 +1704,7 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetPBlockDtIsHavaExist(pBlockName, key, value, oav);
         }
         /// <summary>
-        /// 抽取制品数据
+        /// 抽取制品数据【pvd，状态图】
         /// </summary>
         /// <param name="compntGroupNo">组件组合编号</param>
         /// <param name="diagramNo">图号</param>
