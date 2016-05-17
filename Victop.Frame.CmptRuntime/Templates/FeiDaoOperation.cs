@@ -1718,13 +1718,14 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 抽取制品数据【pvd，状态图】
         /// </summary>
+        /// <param name="pageNo">页面编号</param>
         /// <param name="compntGroupNo">组件组合编号</param>
         /// <param name="diagramNo">图号</param>
         /// <param name="type">获取数据类型</param>
         /// <param name="oav">返回消息oav</param>
-        public void ExtractProductData(object compntGroupNo, object diagramNo, string type, object oav)
+        public void ExtractProductData(object pageNo, object compntGroupNo, object diagramNo, string type, object oav)
         {
-            systemOperation.ExtractProductData(compntGroupNo, diagramNo, type, oav);
+            systemOperation.ExtractProductData(pageNo, compntGroupNo, diagramNo, type, oav);
         }
         #endregion
 

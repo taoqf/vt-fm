@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 
@@ -80,6 +81,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         case "VicRadioButtonNormal":
                             VicRadioButtonNormal radiobutton = element as VicRadioButtonNormal;
                             radiobutton.Content = content;
+                            break;
+                        case "VicImageNormal":
+                            VicImageNormal img = element as VicImageNormal;
+                            img.ImgSource = new BitmapImage(new Uri(content.ToString()));
                             break;
                         default:
                             break;
