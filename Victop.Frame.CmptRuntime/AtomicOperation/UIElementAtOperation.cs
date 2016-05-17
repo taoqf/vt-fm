@@ -82,9 +82,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                             VicRadioButtonNormal radiobutton = element as VicRadioButtonNormal;
                             radiobutton.Content = content;
                             break;
-                        case "VicImageNormal":
-                            VicImageNormal img = element as VicImageNormal;
-                            img.ImgSource = new BitmapImage(new Uri(content.ToString()));
+                        case "Image":
+                            Image img = element as Image;
+                            img.Source = new BitmapImage(new Uri(content.ToString()));
                             break;
                         default:
                             break;
