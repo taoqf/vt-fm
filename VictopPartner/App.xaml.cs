@@ -61,16 +61,6 @@ namespace VictopPartner
                     Process updatePro = Process.Start(ConfigurationManager.AppSettings["updateconfig"] + ".exe", Process.GetCurrentProcess().Id.ToString());
                     updatePro.WaitForExit();
                 }
-                #region 单例判断
-                Process[] processes = Process.GetProcessesByName("VictopPartner");
-                if (processes.Length > 1)
-                {
-                    string appName = ConfigManager.GetAttributeOfNodeByName("System", "AppName");
-                    MessageBox.Show(appName + "已在运行中……", "提示", MessageBoxButton.OK, MessageBoxImage.Stop);
-                    Thread.Sleep(1000);
-                    Environment.Exit(1);
-                }
-                #endregion
             }
             #endregion
             #region 启动内置HttpServer
@@ -159,7 +149,7 @@ namespace VictopPartner
             {
                 using (HttpListener listerner = new HttpListener())
                 {
-                    string httpweb = ConfigManager.GetLocalHttpServerBaseUrl();
+                    string httpweb = ConfigManager.GetLocalHttpServerBaseUrl(true);
                     listerner.AuthenticationSchemes = AuthenticationSchemes.Anonymous;//指定身份验证 Anonymous匿名访问
                     listerner.Prefixes.Add(httpweb);
                     listerner.Start();

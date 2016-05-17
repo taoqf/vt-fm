@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
@@ -124,12 +126,36 @@ namespace Victop.Frame.PublicLib.Managers
         }
         /// <summary>
         /// 获取本地httpServer基础url
+        /// <param name="initHttpServer">是否为初始化httpServer</param>
         /// </summary>
         /// <returns>"http://localhost:端口/"</returns>
-        public static string GetLocalHttpServerBaseUrl()
+        public static string GetLocalHttpServerBaseUrl(bool initHttpServer = false)
         {
             string urlPort = GetAttributeOfNodeByName("System", "StartPoint");
-            return string.Format("http://localhost:{0}/", urlPort);
+            int serverPort = Convert.ToInt32(urlPort);
+            if (initHttpServer)
+            {
+                PortCheck(ref serverPort);
+                Dictionary<string, string> attrDic = new Dictionary<string, string>();
+                attrDic.Add("StartPoint", serverPort.ToString());
+                SaveAttributeOfNodeByName("System", attrDic);
+            }
+            return string.Format("http://localhost:{0}/", serverPort);
+        }
+        private static bool PortCheck(ref int defaultPort)
+        {
+            var bakPort = defaultPort;
+            bool flag = false;
+            IPGlobalProperties ipProperties = IPGlobalProperties.GetIPGlobalProperties();
+            IPEndPoint[] ipEndPoints = ipProperties.GetActiveTcpListeners();//获取所有的监听连接
+            IPEndPoint point = ipEndPoints.ToList().Find(it => it.Port.Equals(bakPort));
+            if (point != null)
+            {
+                bakPort++;
+                flag = PortCheck(ref bakPort);
+            }
+            defaultPort = bakPort;
+            return flag;
         }
         /// <summary>
         ///  加载配置文件
