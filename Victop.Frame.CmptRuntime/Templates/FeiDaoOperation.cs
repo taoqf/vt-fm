@@ -1757,6 +1757,15 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ExtractProductData(pageNo, compntGroupNo, diagramNo, type, oav);
         }
+        /// <summary>
+        /// 生成绘图数据
+        /// </summary>
+        /// <param name="diagramNo">图号</param>
+        /// <param name="oav">返回消息oav</param>
+        public void ExtractDrawingData(object diagramNo, object oav)
+        {
+            systemOperation.ExtractDrawingData(diagramNo, oav);
+        }
         #endregion
 
         #region 动态构建的ComponentVisioProperty初始化方法
