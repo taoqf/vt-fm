@@ -1220,5 +1220,30 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 o.v = ConfigurationManager.AppSettings["downloadfilehttp"] + "getfile?id=" + filePath + "&productid=" + productId;
             }
         }
+
+        /// <summary>
+        /// 获取Dictionary集合
+        /// </summary>
+        /// <returns>Dictionary集合</returns>
+        public void GetDictionary(object oav)
+        {
+            dynamic o = oav;
+            o.v = new Dictionary<string, object>();
+        }
+
+        /// <summary>
+        /// 将对象加入Dictionary集合结尾处
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <param name="value">值</param>
+        /// <param name="paramDic">集合</param>
+        public void DictionaryAdd(string key, object value, object paramDic)
+        {
+            Dictionary<string, object> dic = (Dictionary<string, object>)paramDic;
+            if (dic != null && !dic.ContainsKey(key))
+            {
+                dic.Add(key, value);
+            }
+        }
     }
 }
