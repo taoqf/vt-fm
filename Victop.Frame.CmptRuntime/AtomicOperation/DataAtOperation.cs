@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
@@ -1476,10 +1477,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <summary>
         /// 判断在pblock表中某列中的某个值是否存在
         /// </summary>
-        /// <param name="pBlockName"></param>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <param name="oav"></param>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="key">表中列名</param>
+        /// <param name="value">列值</param>
+        /// <param name="oav">接收OAV</param>
         public void SetPBlockDtIsHavaExist(string pBlockName, string key, string value, object oav)
         {
             dynamic o = oav;
@@ -1494,6 +1495,54 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+
+
+        /// <summary>
+        /// dgridName中某列字段值在界面显示时，状态转换成用户想要显示的结果
+        /// </summary>
+        /// <param name="dgridName">列表名称</param>
+        /// <param name="fieldName">字段</param>
+        /// <param name="relation">键值对关系的类型</param>
+        public void SetDgridColumnValueStateChange(string dgridName, string fieldName, Dictionary<string, object> relation)
+        {
+             VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
+            if (dgrid != null)
+            {
+                DataTable dataSource = dgrid.ItemsSource as DataTable;
+                if (dataSource == null)
+                    return;
+                for (int i = 0; i < dgrid.Columns.Count; i++)
+                {
+                    DataGridColumn column = dgrid.Columns[i];
+                    if (column.Header.Equals(fieldName))
+                    {
+                        dgrid.Columns.Remove(column);
+                        VicDataGridComboBoxColumn comboxColOlder = column as VicDataGridComboBoxColumn;
+                        Binding binding = comboxColOlder.SelectedValueBinding as Binding;
+                        string field = binding != null ? binding.Path.Path : "";
+                        if (string.IsNullOrEmpty(field))
+                            continue;
+
+                        VicDataGridComboBoxColumn comboxCol = new VicDataGridComboBoxColumn();
+                        
+                            comboxCol.ItemsSource = relation;
+                        
+                        comboxCol.SelectedValuePath = "Key";
+                        comboxCol.DisplayMemberPath = "Value";
+                        comboxCol.SelectedValueBinding = new Binding(field) { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+
+                        comboxCol.Header = fieldName;
+
+                        comboxCol.Visibility = comboxColOlder.Visibility;
+                        comboxCol.IsReadOnly = comboxColOlder.IsReadOnly;
+                        comboxCol.Width = comboxColOlder.Width;
+                        dgrid.Columns.Insert(i, comboxCol);
+                        
+                    }
+                }
+            }
+        }
+
         #region 规则机台专用原子操作
         /// <summary>
         /// 规则机台模板then专用原子操作

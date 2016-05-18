@@ -588,6 +588,19 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetDataGridColumnValueList(pblockName, rowId, oav, fieldName);
         }
 
+
+        /// <summary>
+        /// dgridName中某列字段值在界面显示时，状态转换成用户想要显示的结果
+        /// </summary>
+        /// <param name="dgridName">列表名称</param>
+        /// <param name="fieldName">字段</param>
+        /// <param name="relation">键值对关系的类型</param>
+        public void SetDgridColumnValueStateChange(string dgridName, string fieldName, Dictionary<string, object> relation)
+        {
+            dataOperation.SetDgridColumnValueStateChange(dgridName, fieldName, relation);
+        }
+
+
         #endregion
 
         #region 系统操作
