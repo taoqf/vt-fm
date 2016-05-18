@@ -161,5 +161,6 @@
 		"ComponentVisioPropertyLoad":"ComponentVisioPropertyLoad",
         "ExtractProductData":"ExtractProductData",
 	"GetFileUrlByFilePath":"GetFileUrlByFilePath",
-		"UpdateBlockByOAV":"UpdateBlockByOAV"
+		"UpdateBlockByOAV":"UpdateBlockByOAV",
+           "ExtractDrawingData":"ExtractDrawingData"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

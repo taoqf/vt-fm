@@ -833,6 +833,39 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+
+        /// <summary>
+        /// 生成绘图数据
+        /// </summary>
+        /// <param name="diagramNo">图号</param>
+        /// <param name="oav">返回消息oav</param>
+        public void ExtractDrawingData(object diagramNo, object oav)
+        {
+            dynamic o = oav;
+            o.v = "faile";
+            if (!string.IsNullOrWhiteSpace(diagramNo.ToString()))
+            {
+                DataMessageOperation messageOp = new DataMessageOperation();
+                Dictionary<string, object> message = new Dictionary<string, object>();
+                message.Add("systemid", "18");
+                message.Add("spaceid", "feidao");
+                message.Add("diagram_no", diagramNo);
+                Dictionary<string, object> resultDic = messageOp.SendSyncMessage("MongoDataChannelService.paintinfotobasefieldinfo", message);
+                if (resultDic != null && resultDic.ContainsKey("ReplyContent"))
+                {
+                    string str = resultDic["ReplyContent"].ToString();
+                    if (str.Equals("succ"))
+                    {
+                        o.v = "succ";
+                    }
+                    else
+                    {
+                        o.v = str;
+                    }
+                }
+            }
+        }
+
         #region 字符串处理
         /// <summary>
         /// 指定的字符串是否出现在字符串实例中
