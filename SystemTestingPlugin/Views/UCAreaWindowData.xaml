@@ -201,10 +201,7 @@
             <ctrl:VicTabItemNormal Header="飞道FTP" AllowDelete="False">
                 <local:UCVictopFTP/>
             </ctrl:VicTabItemNormal>
-            <ctrl:VicTabItemNormal Header="动作列表" AllowDelete="False">
-            </ctrl:VicTabItemNormal>
         </ctrl:VicTabControlNormal>
-
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Unloaded">
                 <i:InvokeCommandAction Command="{Binding UCMainUnloadedCommand}" CommandParameter="{Binding ElementName=UCMain, Path=Uid}"/>
