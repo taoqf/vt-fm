@@ -754,5 +754,19 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         }
 
         #endregion
+
+        /// <summary>
+        /// 初始化控件
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="paramDic"></param>
+        public void TemplateControlLoad(string name,object paramDic)
+        {
+            Dictionary<string, object> dicParam = (Dictionary<string, object>)paramDic;
+            TemplateControl tc = MainView.FindName(name) as TemplateControl;
+            if (tc == null)
+                return;
+            tc.Excute(dicParam);
+        }
     }
 }

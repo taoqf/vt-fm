@@ -239,7 +239,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收OAV</param>
         public void GetPBlockDataRowColumnValue(string pBlockName, string condition, string columnName, object oav)
         {
-            dataOperation.GetPBlockDataRowColumnValue(pBlockName,condition,columnName,oav);
+            dataOperation.GetPBlockDataRowColumnValue(pBlockName, condition, columnName, oav);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void ParamsLastRowGet(string pblockName, string paramName, object oav)
         {
-            dataOperation.ParamsLastRowGet(pblockName, paramName, oav);            
+            dataOperation.ParamsLastRowGet(pblockName, paramName, oav);
         }
 
         /// <summary>
@@ -588,6 +588,19 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetDataGridColumnValueList(pblockName, rowId, oav, fieldName);
         }
 
+
+        /// <summary>
+        /// dgridName中某列字段值在界面显示时，状态转换成用户想要显示的结果
+        /// </summary>
+        /// <param name="dgridName">列表名称</param>
+        /// <param name="fieldName">字段</param>
+        /// <param name="relation">键值对关系的类型</param>
+        public void SetDgridColumnValueStateChange(string dgridName, string fieldName, Dictionary<string, object> relation)
+        {
+            dataOperation.SetDgridColumnValueStateChange(dgridName, fieldName, relation);
+        }
+
+
         #endregion
 
         #region 系统操作
@@ -718,9 +731,9 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="list">集合</param>
         /// <param name="count">长度</param>
-        public void GetListCount(object list,object count)
+        public void GetListCount(object list, object count)
         {
-            systemOperation.GetListCount(list,count);
+            systemOperation.GetListCount(list, count);
         }
         /// <summary>
         /// 移除指定位置元素
@@ -759,7 +772,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="paramDt">oav</param>
         public void SetComboBoxDtRow(string keyValue, string displayValue, object paramDt)
         {
-            systemOperation.SetComboBoxDtRow(keyValue, displayValue,paramDt);
+            systemOperation.SetComboBoxDtRow(keyValue, displayValue, paramDt);
 
         }
         /// <summary>
@@ -1059,7 +1072,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="str">字符串实例</param>
         /// <param name="oav">接收oav</param>
-        public void GetStrLength(object str,  object oav)
+        public void GetStrLength(object str, object oav)
         {
             systemOperation.GetStrLength(str, oav);
         }
@@ -1071,12 +1084,12 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="join">指定的字符串连接符</param>
         /// <param name="oav">接收oav</param>
         /// <param name="sort">排序方式true正序false倒序</param>
-        public void AppendStr(object str,string join, object oav,bool sort=true)
+        public void AppendStr(object str, string join, object oav, bool sort = true)
         {
             systemOperation.AppendStr(str, join, oav, sort);
         }
 
-       
+
 
         /// <summary>
         /// 日期类型转为自定义格式字符串
@@ -1154,7 +1167,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetDateTime(oav, day);
         }
         #endregion
-       
+
         /// <summary>
         /// 比较数字大小
         /// </summary>
@@ -1177,8 +1190,28 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetSysVariableValue(sysVariableName, oav);
         }
-        #endregion       
-        
+        #endregion
+
+        /// <summary>
+        /// 获取Dictionary集合
+        /// </summary>
+        /// <returns>Dictionary集合</returns>
+        public void GetDictionary(object oav)
+        {
+            systemOperation.GetDictionary(oav);
+        }
+
+        /// <summary>
+        /// 将对象加入Dictionary集合结尾处
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <param name="value">值</param>
+        /// <param name="paramDic">集合</param>
+        public void DictionaryAdd(string key, object value, object paramDic)
+        {
+            systemOperation.DictionaryAdd(key, value, paramDic);
+        }
+
         #endregion
 
         #region UI操作
@@ -1251,9 +1284,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="elementName">元素名称</param>
         /// <param name="visibility">是否显示</param>
         ///  <param name="type">占空间还是不占空间隐藏：0,不占空间;1;不占空间</param>
-        public void SetElementVisility(string elementName, bool visibility,int type=0)
+        public void SetElementVisility(string elementName, bool visibility, int type = 0)
         {
-            uIElementOperation.SetElementVisility(elementName, visibility,type);
+            uIElementOperation.SetElementVisility(elementName, visibility, type);
         }
         /// <summary>
         /// 根据DataGrid名称获取当前选择行中某一字段的值
@@ -1332,7 +1365,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="type">展示类型</param>
         public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF", string type = "editor")
         {
-            uIElementOperation.UnitWebBrowserLoad(unitWebBrowserName, content, pblockName, columnName, ctrl, executeJsFunc,type);
+            uIElementOperation.UnitWebBrowserLoad(unitWebBrowserName, content, pblockName, columnName, ctrl, executeJsFunc, type);
         }
         /// <summary>
         /// 源编辑器
@@ -1361,6 +1394,16 @@ namespace Victop.Frame.CmptRuntime
         public void UnitListBoxFontIconRuleRefresh(string unitName)
         {
             uIElementOperation.UnitListBoxFontIconRuleRefresh(unitName);
+        }
+
+        /// <summary>
+        /// 初始化控件
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="paramDic"></param>
+        public void TemplateControlLoad(string name, object paramDic)
+        {
+            uIElementOperation.TemplateControlLoad(name, paramDic);
         }
         #endregion
 
@@ -1663,7 +1706,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitListBoxDynamicRuleGetChosedRows(unitName, oav);
         }
-        #endregion 
+        #endregion
 
         #region webVisio部件专用原子操作
         /// <summary>
@@ -1752,16 +1795,14 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">节点所属P名称</param>
         /// <param name="formatNo">节点所属版式编号</param>
         public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, string pageType,
-                                               string nodeNo, string nodeTypeNo,string nodeTypeName, string pblockNo = "",
+                                               string nodeNo, string nodeTypeNo, string nodeTypeName, string pblockNo = "",
                                                string pblockName = "", string formatNo = "")
         {
-            uIElementOperation.ComponentVisioPropertyLoad( unitName,  pblockNameProperty,  pageType,
-                                                nodeNo,  nodeTypeNo,nodeTypeName,  pblockNo ,
-                                                pblockName ,  formatNo )
+            uIElementOperation.ComponentVisioPropertyLoad(unitName, pblockNameProperty, pageType,
+                                                nodeNo, nodeTypeNo, nodeTypeName, pblockNo,
+                                                pblockName, formatNo)
             ;
         }
         #endregion
-
-
     }
 }

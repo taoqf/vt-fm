@@ -158,9 +158,12 @@
         "SetElementVisilityOrHidden":"SetElementVisilityOrHidden",
         "SetPBlockCurrentRowByKey":"SetPBlockCurrentRowByKey",
         "SetPBlockDtIsHavaExist":"SetPBlockDtIsHavaExist",
-		"ComponentVisioPropertyLoad":"ComponentVisioPropertyLoad",
+	"ComponentVisioPropertyLoad":"ComponentVisioPropertyLoad",
         "ExtractProductData":"ExtractProductData",
 	"GetFileUrlByFilePath":"GetFileUrlByFilePath",
-		"UpdateBlockByOAV":"UpdateBlockByOAV",
-           "ExtractDrawingData":"ExtractDrawingData"
+	"UpdateBlockByOAV":"UpdateBlockByOAV",
+	"DictionaryAdd":"DictionaryAdd",
+	"GetDictionary":"GetDictionary",
+	"TemplateControlLoad":"TemplateControlLoad",
+        "SetDgridColumnValueStateChange":"SetDgridColumnValueStateChange"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
