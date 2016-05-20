@@ -165,5 +165,7 @@
 	"DictionaryAdd":"DictionaryAdd",
 	"GetDictionary":"GetDictionary",
 	"TemplateControlLoad":"TemplateControlLoad",
-        "SetDgridColumnValueStateChange":"SetDgridColumnValueStateChange"
+        "SetDgridColumnValueStateChange":"SetDgridColumnValueStateChange",
+		"SetPBlockCurrentRowByDataRow":"SetPBlockCurrentRowByDataRow",
+		"GetListDataRowByFileName":"GetListDataRowByFileName"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

@@ -280,6 +280,25 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetPBlockCurrentRow(pBlockName);
         }
         /// <summary>
+        /// 根据指定行设置block选中行数据
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="oavdr">指定行</param>
+        public void SetPBlockCurrentRowByDataRow(string pBlockName, object oavdr)
+        {
+            dataOperation.SetPBlockCurrentRowByDataRow(pBlockName, oavdr);
+        }
+        /// <summary>
+        /// 根据指定行设置block选中行数据
+        /// </summary>
+        /// <param name="oavdrs">datarow集合</param>
+        /// <param name="fileName">字段名称</param>
+        /// <param name="oavstr">指定行</param>
+        public void GetListDataRowByFileName(object oavdrs, string fileName, object oavstr)
+        {
+            dataOperation.GetListDataRowByFileName(oavdrs, fileName, oavstr);
+        }
+        /// <summary>
         /// 新增行
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
@@ -318,7 +337,6 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
         }
-
         /// <summary>
         /// 获取最后一行的列值
         /// </summary>
