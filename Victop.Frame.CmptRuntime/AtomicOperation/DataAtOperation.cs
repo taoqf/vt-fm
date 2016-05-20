@@ -485,6 +485,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             List<DataRow> drs = (List<DataRow>)oavdrs;
             string str = string.Empty;
+            dynamic o1 = oavstr;
+            o1.v = str;
             if (drs.Count > 0)
             {
                 foreach (DataRow dr in drs)
@@ -494,8 +496,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         str += dr[fieldName].ToString() + ",";
                     }
                 }
-                dynamic oav = oavstr;
-                oav.v = str.TrimEnd(',');
+                o1.v = str.TrimEnd(',');
             }
         }
         /// <summary>
@@ -508,7 +509,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             List<DataRow> drs = (List<DataRow>)oavdrs;
             List<object> list = new List<object>();
-            string str = string.Empty;
+            dynamic o1 = oavstr;
+            o1.v = list;
             if (drs.Count > 0)
             {
                 foreach (DataRow dr in drs)
@@ -518,8 +520,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         list.Add(dr[fieldName]);
                     }
                 }
-                dynamic oav = oavstr;
-                oav.v = list;
+                o1.v = list;
             }
         }
         /// <summary>
