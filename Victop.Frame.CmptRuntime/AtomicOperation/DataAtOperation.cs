@@ -461,6 +461,44 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 根据指定行设置block选中行数据
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="oavdr">指定行</param>
+        public void SetPBlockCurrentRowByDataRow(string pBlockName, object oavdr)
+        {
+            DataRow dr = (DataRow)oavdr;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            if (dr != null && pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
+            {
+                pBlock.PreBlockSelectedRow = dr;
+                pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
+            }
+        }
+        /// <summary>
+        /// 根据指定行设置block选中行数据
+        /// </summary>
+        /// <param name="oavdrs">datarow集合</param>
+        /// <param name="fileName">字段名称</param>
+        /// <param name="oavstr">指定行</param>
+        public void GetListDataRowByFileName(object oavdrs, string fileName, object oavstr)
+        {
+            List<DataRow> drs = (List<DataRow>)oavdrs;
+            string str = string.Empty;
+            if (drs.Count > 0)
+            {
+                foreach (DataRow dr in drs)
+                {
+                    if (dr.Table.Columns.Contains(fileName))
+                    {
+                        str += dr[fileName].ToString() + ",";
+                    }
+                }
+                dynamic oav = oavstr;
+                oav.v = str.TrimEnd(',');
+            }
+        }
+        /// <summary>
         /// 获取block数据指定条件的列值
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
@@ -529,6 +567,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+
         /// <summary>
         /// 插入行
         /// </summary>
@@ -1383,12 +1422,33 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dynamic o = oav;
             List<object> list = new List<object>();
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            if (pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
             {
-                DataRow[] drArray = pBlock.ViewBlockDataTable.Select("VicCheckFlag = 'true'");
-                if (drArray.Length > 0)
+                if (pBlock != null && pBlock.ViewBlockDataTable != null)
                 {
-                    foreach (DataRow dr in drArray)
+                    DataRow[] drArray = pBlock.ViewBlockDataTable.Select("VicCheckFlag = 'true'");
+                    if (drArray.Length > 0)
+                    {
+                        foreach (DataRow dr in drArray)
+                        {
+                            Dictionary<string, object> value = new Dictionary<string, object>();
+                            for (int i = 0; i < fieldName.Count; i++)
+                            {
+                                if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName[i].ToString()))
+                                {
+                                    value.Add(fieldName[i].ToString(), dr[fieldName[i].ToString()]);
+                                }
+                            }
+                            list.Add(value);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (pBlock != null && pBlock.ViewBlockDataTable != null)
+                {
+                    foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
                     {
                         Dictionary<string, object> value = new Dictionary<string, object>();
                         for (int i = 0; i < fieldName.Count; i++)
@@ -1404,7 +1464,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             o.v = list;
         }
-
         /// <summary>
         /// 获取列表选中行数（VicCheckFlag）
         /// </summary>
@@ -1505,7 +1564,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="relation">键值对关系的类型</param>
         public void SetDgridColumnValueStateChange(string dgridName, string fieldName, Dictionary<string, object> relation)
         {
-             VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
+            VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
             if (dgrid != null)
             {
                 DataTable dataSource = dgrid.ItemsSource as DataTable;
@@ -1524,9 +1583,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                             continue;
 
                         VicDataGridComboBoxColumn comboxCol = new VicDataGridComboBoxColumn();
-                        
-                            comboxCol.ItemsSource = relation;
-                        
+
+                        comboxCol.ItemsSource = relation;
+
                         comboxCol.SelectedValuePath = "Key";
                         comboxCol.DisplayMemberPath = "Value";
                         comboxCol.SelectedValueBinding = new Binding(field) { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
@@ -1537,7 +1596,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         comboxCol.IsReadOnly = comboxColOlder.IsReadOnly;
                         comboxCol.Width = comboxColOlder.Width;
                         dgrid.Columns.Insert(i, comboxCol);
-                        
+
                     }
                 }
             }
