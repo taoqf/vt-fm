@@ -167,6 +167,7 @@
 	"TemplateControlLoad":"TemplateControlLoad",
         "SetDgridColumnValueStateChange":"SetDgridColumnValueStateChange",
 		"SetPBlockCurrentRowByDataRow":"SetPBlockCurrentRowByDataRow",
-		"GetListDataRowByFileName":"GetListDataRowByFileName",
-		"GetDictionaryKeyValue":"GetDictionaryKeyValue"
+		"GetStrFromListDataRow":"GetStrFromListDataRow",
+		"GetDictionaryKeyValue":"GetDictionaryKeyValue",
+		"GetListFromListDataRow":"GetListFromListDataRow"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

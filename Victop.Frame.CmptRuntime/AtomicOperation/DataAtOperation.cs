@@ -476,12 +476,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 根据指定行设置block选中行数据
+        /// 把行集合中指定列转换成逗号拼接的字符串
         /// </summary>
         /// <param name="oavdrs">datarow集合</param>
-        /// <param name="fileName">字段名称</param>
+        /// <param name="fieldName">字段名称</param>
         /// <param name="oavstr">指定行</param>
-        public void GetListDataRowByFileName(object oavdrs, string fileName, object oavstr)
+        public void GetStrFromListDataRow(object oavdrs, string fieldName, object oavstr)
         {
             List<DataRow> drs = (List<DataRow>)oavdrs;
             string str = string.Empty;
@@ -489,13 +489,37 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 foreach (DataRow dr in drs)
                 {
-                    if (dr.Table.Columns.Contains(fileName))
+                    if (dr.Table.Columns.Contains(fieldName))
                     {
-                        str += dr[fileName].ToString() + ",";
+                        str += dr[fieldName].ToString() + ",";
                     }
                 }
                 dynamic oav = oavstr;
                 oav.v = str.TrimEnd(',');
+            }
+        }
+        /// <summary>
+        /// 把行集合中指定列转换成字符串集合
+        /// </summary>
+        /// <param name="oavdrs">datarow集合</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="oavstr">指定行</param>
+        public void GetListFromListDataRow(object oavdrs, string fieldName, object oavstr)
+        {
+            List<DataRow> drs = (List<DataRow>)oavdrs;
+            List<object> list = new List<object>();
+            string str = string.Empty;
+            if (drs.Count > 0)
+            {
+                foreach (DataRow dr in drs)
+                {
+                    if (dr.Table.Columns.Contains(fieldName))
+                    {
+                        list.Add(dr[fieldName]);
+                    }
+                }
+                dynamic oav = oavstr;
+                oav.v = list;
             }
         }
         /// <summary>
