@@ -1212,6 +1212,16 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.DictionaryAdd(key, value, paramDic);
         }
 
+        /// <summary>
+        /// 获取键值中指定key的value
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <param name="paramDic">集合</param>
+        /// <param name="value">返回值</param>
+        public void GetDictionaryKeyValue(string key, object paramDic, object value)
+        {
+            systemOperation.GetDictionaryKeyValue(key, paramDic, value);
+        }
         #endregion
 
         #region UI操作

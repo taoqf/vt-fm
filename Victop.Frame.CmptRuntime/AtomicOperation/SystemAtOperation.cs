@@ -1278,5 +1278,25 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 dic.Add(key, value);
             }
         }
+
+        /// <summary>
+        /// 获取键值中指定key的value
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <param name="paramDic">集合</param>
+        /// <param name="value">返回值</param>
+        public void GetDictionaryKeyValue(string key, object paramDic, object value)
+        {
+            dynamic o = value;
+            Dictionary<string, object> dic = (Dictionary<string, object>)paramDic;
+            if (dic != null && !string.IsNullOrWhiteSpace(key) && dic.ContainsKey(key))
+            {
+                o.v = dic[key];
+            }
+            else
+            {
+                o.v = string.Empty;
+            }
+        }
     }
 }
