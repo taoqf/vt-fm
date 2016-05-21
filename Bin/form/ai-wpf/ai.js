@@ -169,5 +169,6 @@
 		"SetPBlockCurrentRowByDataRow":"SetPBlockCurrentRowByDataRow",
 		"GetStrFromListDataRow":"GetStrFromListDataRow",
 		"GetDictionaryKeyValue":"GetDictionaryKeyValue",
-		"SendCodeServiceMessage":"SendCodeServiceMessage"
+		"SendCodeServiceMessage":"SendCodeServiceMessage",
+		"GetListFromListDataRow":"GetListFromListDataRow"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
