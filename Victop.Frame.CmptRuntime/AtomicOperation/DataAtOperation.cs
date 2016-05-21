@@ -1755,6 +1755,30 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 return string.Empty;
             }
         }
+        /// <summary>
+        /// 判断当前模型是否有修改
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="oav">返回结果（true:有修改尚未保存服务器；false:无需要提交的修改）</param>
+        public void GetChangedData(string pBlockName, object oav)
+        {
+            dynamic o = oav;
+            o.v = false;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            if (pBlock != null
+                && pBlock.ViewBlock != null
+                && !string.IsNullOrEmpty(pBlock.ViewBlock.ViewModel.ViewId))
+            {
+                DataMessageOperation dataOp = new DataMessageOperation(); ;
+                string changedData = dataOp.GetCurdListData(pBlock.ViewBlock.ViewModel.ViewId);
+                List<object> listChangedData = JsonHelper.ToObject<List<object>>(changedData);
+                if (listChangedData != null && listChangedData.Count > 0)
+                {
+                    o.v = true;
+                }
+            }
+
+        }
         #endregion
     }
 }

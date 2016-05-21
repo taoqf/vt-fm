@@ -1891,6 +1891,51 @@ namespace Victop.Frame.CmptRuntime
         }
         #endregion
 
+        #region 操作分析封装的原子操作
+
+        /// <summary>
+        /// 操作分析组件渲染数据
+        /// </summary>
+        /// <param name="componetName">组件名称</param>
+        /// <param name="pblockName">pBlock名称</param>
+        /// <param name="maintable">主表</param>
+        /// <param name="secondtable">二层第一张表</param>
+        /// <param name="secendtwotable">二层第二张表</param>
+        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable)
+        {
+            uIElementOperation.ComponentOperationAnalysisRender(componetName, pblockName, maintable, secondtable, secendtwotable);
+        }
+        /// <summary>
+        /// 获取组件中的值
+        /// </summary>
+        /// <param name="componetName">组件名称</param>
+        /// <param name="key">key值</param>
+        /// <param name="oav">返回参数</param>
+        public void GetComponentParamDictData(string componetName, string key, object oav)
+        {
+            uIElementOperation.GetComponentParamDictData(componetName, key, oav);
+        }
+        /// <summary>
+        /// 获取combox选择值
+        /// </summary>
+        /// <param name="elementName"></param>
+        /// <param name="oav"></param>
+        public void GetComBoxSelectValue(string elementName, object oav)
+        {
+            uIElementOperation.GetComBoxSelectValue(elementName, oav);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 判断当前模型是否有修改
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="oav">返回结果（true:有修改尚未保存服务器；false:无需要提交的修改）</param>
+        public void GetChangedData(string pBlockName, object oav)
+        {
+            dataOperation.GetChangedData(pBlockName, oav);
+        }
         #endregion
     }
 }

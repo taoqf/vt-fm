@@ -670,6 +670,93 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+        /// <summary>
+        /// 操作分析组件渲染数据
+        /// </summary>
+        /// <param name="componetName">组件名称</param>
+        /// <param name="pblockName">pBlock名称</param>
+        /// <param name="maintable">主表</param>
+        /// <param name="secondtable">二层第一张表</param>
+        /// <param name="secendtwotable">二层第二张表</param>
+        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable)
+        {
+            TemplateControl tc = MainView.FindName(componetName) as TemplateControl;
+            if (tc != null)
+            {
+                PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+                string chanleId = pBlock.ViewBlock.ViewModel.ViewId;
+                Dictionary<string, object> dicParam = new Dictionary<string, object>();
+                dicParam.Add("MessageType", "Rendering");
+                Dictionary<string, object> dicContentParam = new Dictionary<string, object>();
+                dicContentParam.Add("channelId", chanleId);
+                dicContentParam.Add("mainDtName", maintable);
+                dicContentParam.Add("operationFlowDtName", secondtable);
+                dicContentParam.Add("pageFlowDtName", secendtwotable);
+                dicParam.Add("MessageContent", dicContentParam);
+                tc.Excute(dicParam);
+            }
+        }
+
+        /// <summary>
+        /// 获取组件中的值
+        /// </summary>
+        /// <param name="componetName">组件名称</param>
+        /// <param name="key">key值</param>
+        /// <param name="oav">返回参数</param>
+        public void GetComponentParamDictData(string componetName, string key, object oav)
+        {
+            if (!string.IsNullOrEmpty(componetName))
+            {
+                TemplateControl tc = (TemplateControl)MainView.FindName(componetName);
+                if (tc != null && tc.ParamDict != null && tc.ParamDict.ContainsKey(key))
+                {
+                    dynamic o = oav;
+                    o.v = tc.ParamDict[key];
+                }
+            }
+        }
+        /// <summary>
+        /// 获取combox选择值
+        /// </summary>
+        /// <param name="elementName"></param>
+        /// <param name="oav"></param>
+        public void GetComBoxSelectValue(string elementName, object oav)
+        {
+            if (!string.IsNullOrEmpty(elementName))
+            {
+                dynamic o = oav;
+                FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
+                if (element != null)
+                {
+                    string typeName = element.GetType().Name;
+                    switch (typeName)
+                    {
+                        case "VicComboBoxNormal":
+                            VicComboBoxNormal cmbox = element as VicComboBoxNormal;
+                            if (cmbox.SelectedItem != null)
+                            {
+                                DataRow dataRow = ((DataRowView)cmbox.SelectedItem).Row;
+                                if (dataRow != null)
+                                {
+                                    o.v = dataRow["value"];
+                                }
+                                else
+                                {
+                                    o.v = "";
+                                }
+                            }
+                            else
+                            {
+                                o.v = "";
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
         #region 动态构建的Listbox部件初始化或者刷新方法
         /// <summary>
         /// 动态构建的Listbox部件初始化或者刷新方法
@@ -861,5 +948,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             template.Excute(dicMessage);
         }
         #endregion
+
+
     }
 }
