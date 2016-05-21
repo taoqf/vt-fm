@@ -768,5 +768,98 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 return;
             tc.Excute(dicParam);
         }
+
+        #region 原型图形部件
+        /// <summary>
+        /// 原型图形部件初始化
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pageType">页面类型</param>
+        /// <param name="width">宽度</param>
+        public void UnitUCDesignerRuleLoad(string unitName, object pageType, object width)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "refresh");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("pageType", pageType);
+            dicContent.Add("width", width);
+            dicMessage.Add("MessageContent", dicContent);
+
+            template.Excute(dicMessage);
+        }
+        /// <summary>
+        /// 原型图形部件加载文件
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="fileName">文件物理地址</param>
+        public void UnitUCDesignerRuleLoadFile(string unitName, object fileName)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "loadFile");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("fileName", fileName);
+            dicMessage.Add("MessageContent", dicContent);
+
+            template.Excute(dicMessage);
+        }
+        /// <summary>
+        /// 原型图形部件保存页面布局（返回布局文件串）
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="oav">接收oav</param>
+        public void UnitUCDesignerRuleSavePageLayout(string unitName, object oav)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "savePageLayout");
+            template.Excute(dicMessage);
+            if (template.ParamDict != null && template.ParamDict.ContainsKey("result"))
+            {
+                dynamic o = oav;
+                o.v = template.ParamDict["result"];
+            }
+        }
+        /// <summary>
+        /// 原型图形部件导入页面布局
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="elementStr">布局文件字符串</param>
+        public void UnitUCDesignerRuleDropPageLayout(string unitName, object elementStr)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "dropPageLayout");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("elementStr", elementStr);
+            dicMessage.Add("MessageContent", dicContent);
+
+            template.Excute(dicMessage);
+        }
+        #endregion
     }
 }

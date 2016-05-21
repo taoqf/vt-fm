@@ -170,5 +170,9 @@
 		"GetStrFromListDataRow":"GetStrFromListDataRow",
 		"GetDictionaryKeyValue":"GetDictionaryKeyValue",
 		"SendCodeServiceMessage":"SendCodeServiceMessage",
+		"UnitUCDesignerRuleLoad":"UnitUCDesignerRuleLoad",
+		"UnitUCDesignerRuleLoadFile":"UnitUCDesignerRuleLoadFile",
+		"UnitUCDesignerRuleSavePageLayout":"UnitUCDesignerRuleSavePageLayout",
+		"UnitUCDesignerRuleDropPageLayout":"UnitUCDesignerRuleDropPageLayout",
 		"GetListFromListDataRow":"GetListFromListDataRow"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
