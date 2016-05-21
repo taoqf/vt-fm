@@ -458,6 +458,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
             {
                 pBlock.PreBlockSelectedRow = pBlock.ViewBlockDataTable.Rows[0];
+                pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
             }
         }
         /// <summary>
