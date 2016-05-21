@@ -175,5 +175,8 @@
 		"UnitUCDesignerRuleSavePageLayout":"UnitUCDesignerRuleSavePageLayout",
 		"UnitUCDesignerRuleDropPageLayout":"UnitUCDesignerRuleDropPageLayout",
 		"GetListFromListDataRow":"GetListFromListDataRow",
-		"DownLoadFile":"DownLoadFile"
+		"DownLoadFile":"DownLoadFile",
+		"ComponentOperationAnalysisRender":"ComponentOperationAnalysisRender",
+		"GetComponentParamDictData":"GetComponentParamDictData",
+		"GetComBoxSelectValue":"GetComBoxSelectValue"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
