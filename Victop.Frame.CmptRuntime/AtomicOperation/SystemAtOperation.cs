@@ -1238,6 +1238,35 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 o.v = string.Empty;
             }
         }
+        /// <summary>
+        /// 发送编码服务
+        /// </summary>
+        /// <param name="paramDic">服务参数{"productid": "feidao","spaceid": "feidao",	"systemid": "11","no": "bm00001","templateno": "BH101"}
+        /// <param name="oav">返回参数Dictionary<string, object>,key:"code","msg"</param>
+        public void SendCodeServiceMessage(object paramDic, object oav)
+        {
+            dynamic o = oav;
+            Dictionary<string, object> dicParam = (Dictionary<string, object>)paramDic;
+            Dictionary<string, object> dicReturn = new Dictionary<string, object>();
+            if (dicParam != null)
+            {
+                string MessageType = "MongoDataChannelService.encodingRules";
+                DataMessageOperation messageOp = new DataMessageOperation();
+                Dictionary<string, object> contentDic = new Dictionary<string, object>();
+                contentDic.Add("productid", dicParam["productid"].ToString());
+                contentDic.Add("spaceid", dicParam["spaceid"].ToString());
+                contentDic.Add("systemid", dicParam["systemid"].ToString());
+                contentDic.Add("no", dicParam["no"].ToString());
+                contentDic.Add("templateno", dicParam["templateno"].ToString());
+                Dictionary<string, object> returnsDic = messageOp.SendSyncMessage(MessageType, contentDic);
+                if (returnsDic != null || returnsDic.ContainsKey("ReplyContent"))
+                {
+                    dicReturn.Add("code", JsonHelper.ReadJsonString(returnsDic["ReplyContent"].ToString(), "code"));
+                    dicReturn.Add("msg", JsonHelper.ReadJsonString(returnsDic["ReplyContent"].ToString(), "msg"));
+                }
+            }
+            o.v = dicReturn;
+        }
         #endregion
         /// <summary> 
         /// 返回文件url地址 

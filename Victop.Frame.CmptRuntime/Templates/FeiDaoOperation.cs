@@ -1023,6 +1023,16 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.SendGetCodeMessage(SystemId, iPName, iCodeRule, oav);
         }
 
+        /// <summary>
+        /// 发送编码服务
+        /// </summary>
+        /// <param name="paramDic">服务参数{"productid": "feidao","spaceid": "feidao",	"systemid": "11","no": "bm00001","templateno": "BH101"}
+        /// <param name="oav">返回参数Dictionary<string, object>,key:"code","msg"</param>
+        public void SendCodeServiceMessage(object paramDic, object oav)
+        {
+            systemOperation.SendCodeServiceMessage(paramDic, oav);
+        }
+
         /// <summary> 
         /// 返回文件url地址 
         /// </summary> 
