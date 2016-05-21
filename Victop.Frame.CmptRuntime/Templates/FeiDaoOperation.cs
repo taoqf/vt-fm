@@ -1003,15 +1003,15 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.SaveWriteTextToFile(content, oav);
         }
         /// <summary>
-        /// 上传文件或者替换文件
+        /// 下载文件
         /// </summary>
+        /// <param name="filePath">下载地址</param>
         /// <param name="localFilePath">本地文件地址</param>
-        /// <param name="filePath">新的文件路径或者老的文件路径</param>
-        /// <param name="oav">接受oav</param>
-        /// <param name="productId">产品ID,默认“feidao”</param>
-        public void UpLoadFile(string localFilePath, object filePath, object oav, string productId = "feidao")
+        /// <param name="oav">接受oav全路径</param>
+        /// <param name="productId">产品路径</param>
+        public void DownLoadFile(string localFilePath, string filePath, object oav, string productId = "feidao")
         {
-            systemOperation.UpLoadFile(localFilePath, filePath, oav, productId);
+            systemOperation.DownLoadFile(localFilePath, filePath, oav, productId);
         }
         /// <summary>
         /// 获取一个新的guid

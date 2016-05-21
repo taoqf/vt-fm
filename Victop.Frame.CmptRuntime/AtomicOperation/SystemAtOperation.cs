@@ -749,6 +749,45 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 下载文件
+        /// </summary>
+        /// <param name="filePath">下载地址</param>
+        /// <param name="localFilePath">本地文件地址</param>
+        /// <param name="oav">接受oav全路径</param>
+        /// <param name="productId">产品路径</param>
+        public void DownLoadFile(string filePath, string localFilePath, object oav, string productId = "feidao")
+        {
+            dynamic o1 = oav;
+            try
+            {
+                string path = AppDomain.CurrentDomain.BaseDirectory + localFilePath;
+
+                //if (Directory.Exists(localFilePath.Substring(0, localFilePath.LastIndexOf("\\"))) == false)//如果不存在就创建file文件夹
+                //{
+                //    Directory.CreateDirectory(localFilePath.Substring(0, localFilePath.LastIndexOf("\\")));
+                //}
+                if (!File.Exists(path))
+                    File.Create(localFilePath).Dispose();
+                DataMessageOperation messageOperation = new DataMessageOperation();
+                Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                Dictionary<string, string> address = new Dictionary<string, string>();
+                address.Add("DownloadFileId", filePath);
+                address.Add("DownloadToPath", localFilePath);
+                address.Add("ProductId", productId);
+                messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+                Dictionary<string, object> returnDic = messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument", messageContent);
+                if (returnDic != null && returnDic["ReplyMode"].ToString() != "0")
+                    o1.v = path;
+                else
+                    o1.v = "";
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.InfoFormat("下载文件异常(bool DownLoadVisioFile)：{0}", ex.Message);
+                o1.v = "";
+            }
+        }
+        /// <summary>
         /// 获取一个新的guid
         /// </summary>
         /// <param name="oav">接受oav</param>

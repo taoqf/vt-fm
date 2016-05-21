@@ -174,5 +174,6 @@
 		"UnitUCDesignerRuleLoadFile":"UnitUCDesignerRuleLoadFile",
 		"UnitUCDesignerRuleSavePageLayout":"UnitUCDesignerRuleSavePageLayout",
 		"UnitUCDesignerRuleDropPageLayout":"UnitUCDesignerRuleDropPageLayout",
-		"GetListFromListDataRow":"GetListFromListDataRow"
+		"GetListFromListDataRow":"GetListFromListDataRow",
+		"DownLoadFile":"DownLoadFile"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
