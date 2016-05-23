@@ -1895,9 +1895,10 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="itemTitle">控件模具名</param>
         /// <param name="point">鼠标位置</param>
         /// <param name="itemBase">版式所属组件图形</param>
-        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object point, object itemBase)
+        /// <param name="id">新增控件id</param>
+        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object point, object itemBase,object id)
         {
-            uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, point, itemBase);
+            uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, point, itemBase,id);
         }
         #endregion
 

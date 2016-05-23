@@ -1019,7 +1019,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="itemTitle">控件模具名</param>
         /// <param name="point">鼠标位置</param>
         /// <param name="itemBase">版式所属组件图形</param>
-        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object point, object itemBase)
+        /// <param name="id">新增控件id</param>
+        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object point, object itemBase,object id)
         {
             TemplateControl template = MainView.FindName(unitName) as TemplateControl;
             if (template == null)
@@ -1034,6 +1035,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicContent.Add("itemTitle", itemTitle);
             dicContent.Add("point", point);
             dicContent.Add("itemBase", itemBase);
+            dicContent.Add("id", id);
             dicMessage.Add("MessageContent", dicContent);
 
             template.Excute(dicMessage);
