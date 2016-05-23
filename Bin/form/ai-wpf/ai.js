@@ -178,5 +178,6 @@
 		"DownLoadFile":"DownLoadFile",
 		"ComponentOperationAnalysisRender":"ComponentOperationAnalysisRender",
 		"GetComponentParamDictData":"GetComponentParamDictData",
-		"GetComBoxSelectValue":"GetComBoxSelectValue"
+		"GetComBoxSelectValue":"GetComBoxSelectValue",
+                "GetChangedData":"GetChangedData"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
