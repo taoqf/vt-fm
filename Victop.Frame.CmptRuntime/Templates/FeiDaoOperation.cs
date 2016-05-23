@@ -1830,6 +1830,77 @@ namespace Victop.Frame.CmptRuntime
         }
         #endregion
 
+        #region 原型图形部件
+        /// <summary>
+        /// 原型图形部件初始化
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pageType">页面类型</param>
+        /// <param name="width">宽度</param>
+        public void UnitUCDesignerRuleLoad(string unitName, object pageType, object width)
+        {
+            uIElementOperation.UnitUCDesignerRuleLoad(unitName, pageType, width);
+        }
+        /// <summary>
+        /// 原型图形部件加载文件
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="fileName">文件物理地址</param>
+        public void UnitUCDesignerRuleLoadFile(string unitName, object fileName)
+        {
+            uIElementOperation.UnitUCDesignerRuleLoadFile(unitName, fileName);
+        }
+        /// <summary>
+        /// 原型图形部件保存页面布局（返回布局文件串）
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="oav">接收oav</param>
+        public void UnitUCDesignerRuleSavePageLayout(string unitName, object oav)
+        {
+            uIElementOperation.UnitUCDesignerRuleSavePageLayout(unitName, oav);
+        }
+        /// <summary>
+        /// 原型图形部件导入页面布局
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="elementStr">布局文件字符串</param>
+        public void UnitUCDesignerRuleDropPageLayout(string unitName, object elementStr)
+        {
+            uIElementOperation.UnitUCDesignerRuleDropPageLayout(unitName, elementStr);
+        }
+        /// <summary>
+        /// 原型图形部件导入版式
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="elementStr">版式文件字符串</param>
+        /// <param name="point">鼠标位置</param>
+        /// <param name="itemBase">版式所属组件图形</param>
+        public void UnitUCDesignerRuleDropFormat(string unitName, object elementStr, object point, object itemBase)
+        {
+            uIElementOperation.UnitUCDesignerRuleDropFormat(unitName, elementStr, point, itemBase);
+        }
+        /// <summary>
+        /// 原型图形部件保存版式（返回版式文件串）
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="oav">接收oav</param>
+        public void UnitUCDesignerRuleSaveFormat(string unitName, object oav)
+        {
+            uIElementOperation.UnitUCDesignerRuleSaveFormat(unitName, oav);
+        }
+        /// <summary>
+        /// 原型图形部件拖拽控件
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="itemTitle">控件模具名</param>
+        /// <param name="point">鼠标位置</param>
+        /// <param name="itemBase">版式所属组件图形</param>
+        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object point, object itemBase)
+        {
+            uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, point, itemBase);
+        }
+        #endregion
+
         #region 动态构建的ComponentVisioProperty初始化方法
         /// <summary>
         ///  动态构建的ComponentVisioProperty初始化方法
@@ -1852,45 +1923,6 @@ namespace Victop.Frame.CmptRuntime
                                                 pblockName, formatNo)
             ;
         }
-        #region 原型图形部件
-        /// <summary>
-        /// 原型图形部件初始化
-        /// </summary>
-        /// <param name="unitName">部件</param>
-        /// <param name="pageType">页面类型</param>
-        /// <param name="width">宽度</param>
-        public void UnitUCDesignerRuleLoad(string unitName, object pageType, object width)
-        {
-            uIElementOperation.UnitUCDesignerRuleLoad(unitName,pageType,width);
-        }
-        /// <summary>
-        /// 原型图形部件加载文件
-        /// </summary>
-        /// <param name="unitName">部件</param>
-        /// <param name="fileName">文件物理地址</param>
-        public void UnitUCDesignerRuleLoadFile(string unitName, object fileName)
-        {
-           uIElementOperation.UnitUCDesignerRuleLoadFile(unitName, fileName);
-        }
-        /// <summary>
-        /// 原型图形部件保存页面布局（返回布局文件串）
-        /// </summary>
-        /// <param name="unitName">部件</param>
-        /// <param name="oav">接收oav</param>
-        public void UnitUCDesignerRuleSavePageLayout(string unitName, object oav)
-        {
-            uIElementOperation.UnitUCDesignerRuleSavePageLayout(unitName, oav);
-        }
-        /// <summary>
-        /// 原型图形部件导入页面布局
-        /// </summary>
-        /// <param name="unitName">部件</param>
-        /// <param name="elementStr">布局文件字符串</param>
-        public void UnitUCDesignerRuleDropPageLayout(string unitName, object elementStr)
-        {
-            uIElementOperation.UnitUCDesignerRuleDropPageLayout(unitName, elementStr);
-        }
-        #endregion
 
         #region 操作分析封装的原子操作
 

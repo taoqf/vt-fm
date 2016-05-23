@@ -964,6 +964,80 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
 
             template.Excute(dicMessage);
         }
+        /// <summary>
+        /// 原型图形部件导入版式
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="elementStr">版式文件字符串</param>
+        /// <param name="point">鼠标位置</param>
+        /// <param name="itemBase">版式所属组件图形</param>
+        public void UnitUCDesignerRuleDropFormat(string unitName, object elementStr, object point, object itemBase)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "dropFormat");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("elementStr", elementStr);
+            dicContent.Add("point", point);
+            dicContent.Add("itemBase", itemBase);
+            dicMessage.Add("MessageContent", dicContent);
+
+            template.Excute(dicMessage);
+        }
+        /// <summary>
+        /// 原型图形部件保存版式（返回版式文件串）
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="oav">接收oav</param>
+        public void UnitUCDesignerRuleSaveFormat(string unitName, object oav)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "saveFormat");
+            template.Excute(dicMessage);
+            if (template.ParamDict != null && template.ParamDict.ContainsKey("result"))
+            {
+                dynamic o = oav;
+                o.v = template.ParamDict["result"];
+            }
+        }
+        /// <summary>
+        /// 原型图形部件拖拽控件
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="itemTitle">控件模具名</param>
+        /// <param name="point">鼠标位置</param>
+        /// <param name="itemBase">版式所属组件图形</param>
+        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object point, object itemBase)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "dropItem");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("itemTitle", itemTitle);
+            dicContent.Add("point", point);
+            dicContent.Add("itemBase", itemBase);
+            dicMessage.Add("MessageContent", dicContent);
+
+            template.Excute(dicMessage);
+        }
         #endregion
 
 
