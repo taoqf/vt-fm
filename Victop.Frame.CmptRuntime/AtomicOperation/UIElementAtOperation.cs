@@ -698,6 +698,23 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         }
 
         /// <summary>
+        /// 操作分析组件添加主数据
+        /// </summary>
+        /// <param name="componetName">组件名称</param>
+        public void ComponentOperationAnalysisAdd(string componetName)
+        {
+            TemplateControl tc = MainView.FindName(componetName) as TemplateControl;
+            if (tc != null)
+            {
+                Dictionary<string, object> dicParam = new Dictionary<string, object>();
+                dicParam.Add("MessageType", "Add");
+                Dictionary<string, object> dicContentParam = new Dictionary<string, object>();
+                dicParam.Add("MessageContent", dicContentParam);
+                tc.Excute(dicParam);
+            }
+        }
+
+        /// <summary>
         /// 获取组件中的值
         /// </summary>
         /// <param name="componetName">组件名称</param>

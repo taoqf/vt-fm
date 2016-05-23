@@ -179,5 +179,6 @@
 		"ComponentOperationAnalysisRender":"ComponentOperationAnalysisRender",
 		"GetComponentParamDictData":"GetComponentParamDictData",
 		"GetComBoxSelectValue":"GetComBoxSelectValue",
-                "GetChangedData":"GetChangedData"
+                "GetChangedData":"GetChangedData",
+                "ComponentOperationAnalysisAdd":"ComponentOperationAnalysisAdd"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

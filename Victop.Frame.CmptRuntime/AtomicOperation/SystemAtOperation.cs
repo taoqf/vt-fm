@@ -849,6 +849,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         condition.Add("compnt_group_no", compntGroupNo);
                         condition.Add("page_no", pageNo);
                         break;
+                    case "pvrelation":
+                        message.Add("artifact_table", "format_view_list,data_str,structure");
+                        message.Add("diagram_type_no", "DT00003");
+                        condition.Add("pub_compnt_format_no", compntGroupNo);
+                        break;
                     default:
                         message.Add("artifact_table", "");
                         message.Add("diagram_type_no", "");

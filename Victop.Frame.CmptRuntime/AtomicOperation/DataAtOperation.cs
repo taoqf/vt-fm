@@ -485,9 +485,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void GetStrFromListDataRow(object oavdrs, string fieldName, object oavstr)
         {
             List<DataRow> drs = (List<DataRow>)oavdrs;
-            string str = string.Empty;
+            string str = "";
             dynamic o1 = oavstr;
-            o1.v = str;
+            o1.v = "";
             if (drs.Count > 0)
             {
                 foreach (DataRow dr in drs)
@@ -1495,17 +1495,38 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="oav">返回结果</param>
-        public void GetDataGridSelectRowsCount(string pblockName, object oav)
+        /// <param name="type">类型</param>
+        public void GetDataGridSelectRowsCount(string pblockName, object oav, string type = "")
         {
             dynamic o = oav;
-            int count = 0;
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            if (!string.IsNullOrWhiteSpace(type))
             {
-                DataRow[] drArray = pBlock.ViewBlockDataTable.Select("VicCheckFlag = 'true'");
-                count = drArray.Length;
+                if (type=="1")
+                {
+                    List<DataRow> list=new List<DataRow>();
+                    PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+                    if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+                    {
+                        DataRow[] drArray = pBlock.ViewBlockDataTable.Select("VicCheckFlag = 'true'");
+                        foreach (DataRow dataRow in drArray)
+                        {
+                            list.Add(dataRow);
+                        }
+                    }
+                    o.v = list;
+                }
             }
-            o.v = count;
+            else
+            {
+                int count = 0;
+                PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+                if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+                {
+                    DataRow[] drArray = pBlock.ViewBlockDataTable.Select("VicCheckFlag = 'true'");
+                    count = drArray.Length;
+                }
+                o.v = count;   
+            }
         }
 
         /// <summary>

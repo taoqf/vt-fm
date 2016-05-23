@@ -600,9 +600,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="oav">返回结果</param>
-        public void GetDataGridSelectRowsCount(string pblockName, object oav)
+        /// <param name="type">类型</param>
+        public void GetDataGridSelectRowsCount(string pblockName, object oav,string type="")
         {
-            dataOperation.GetDataGridSelectRowsCount(pblockName, oav);
+            dataOperation.GetDataGridSelectRowsCount(pblockName, oav,type);
         }
         /// <summary>
         /// 对确定行字段赋值
@@ -1906,6 +1907,14 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.ComponentOperationAnalysisRender(componetName, pblockName, maintable, secondtable, secendtwotable);
         }
         /// <summary>
+        /// 操作分析组件添加主数据
+        /// </summary>
+        /// <param name="componetName">组件名称</param>
+        public void ComponentOperationAnalysisAdd(string componetName)
+        {
+            uIElementOperation.ComponentOperationAnalysisAdd(componetName);
+        }
+        /// <summary>
         /// 获取组件中的值
         /// </summary>
         /// <param name="componetName">组件名称</param>
@@ -1924,7 +1933,6 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.GetComBoxSelectValue(elementName, oav);
         }
-
         #endregion
 
         /// <summary>
