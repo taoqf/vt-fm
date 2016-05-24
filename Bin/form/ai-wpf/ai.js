@@ -177,6 +177,8 @@
 		"UnitUCDesignerRuleDropFormat":"UnitUCDesignerRuleDropFormat",
 		"UnitUCDesignerRuleSaveFormat":"UnitUCDesignerRuleSaveFormat",
 		"UnitUCDesignerRuleDropItem":"UnitUCDesignerRuleDropItem",
+		"UnitUCDesignerRuleDomLoad":"UnitUCDesignerRuleDomLoad",
+		"UnitUCDesignerRuleSaveFormat":"UnitUCDesignerRuleSaveFormat",
 		"GetListFromListDataRow":"GetListFromListDataRow",
 		"DownLoadFile":"DownLoadFile",
 		"ComponentOperationAnalysisRender":"ComponentOperationAnalysisRender",
