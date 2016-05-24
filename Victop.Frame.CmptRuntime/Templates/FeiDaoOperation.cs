@@ -1400,7 +1400,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pageSize">数据条数</param>
         public void UnitPageRuleLoad(string unitPageName, string pblockName, int currentPage = 1, int pageSize = 20)
         {
-            uIElementOperation.UnitPageRuleLoad(unitPageName, pblockName, currentPage = 1, pageSize = 20);
+            uIElementOperation.UnitPageRuleLoad(unitPageName, pblockName, currentPage, pageSize);
         }
         /// <summary>
         /// UnitUCWebBrowserRule加载
