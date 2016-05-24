@@ -601,9 +601,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">区块名称</param>
         /// <param name="oav">返回结果</param>
         /// <param name="type">类型</param>
-        public void GetDataGridSelectRowsCount(string pblockName, object oav,string type="")
+        public void GetDataGridSelectRowsCount(string pblockName, object oav, string type = "")
         {
-            dataOperation.GetDataGridSelectRowsCount(pblockName, oav,type);
+            dataOperation.GetDataGridSelectRowsCount(pblockName, oav, type);
         }
         /// <summary>
         /// 对确定行字段赋值
@@ -1432,9 +1432,11 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">区块名称</param>
         /// <param name="imagecolumName">图片列</param>
         /// <param name="titlecolumName">标题列</param>
-        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName)
+        /// <param name="width">图片宽度</param>
+        /// <param name="height">图片高度</param>
+        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName, double width = 80, double height = 100)
         {
-            uIElementOperation.UnitGalleryRuleLoad(unitName, pblockName, imagecolumName, titlecolumName);
+            uIElementOperation.UnitGalleryRuleLoad(unitName, pblockName, imagecolumName, titlecolumName, width, height);
         }
         /// <summary>
         /// UnitListBoxFontIconRule部件刷新
@@ -1896,9 +1898,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="point">鼠标位置</param>
         /// <param name="itemBase">版式所属组件图形</param>
         /// <param name="id">新增控件id</param>
-        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object point, object itemBase,object id)
+        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object point, object itemBase, object id)
         {
-            uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, point, itemBase,id);
+            uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, point, itemBase, id);
         }
         /// <summary>
         /// 原型图形控件Dom树加载后处理
@@ -1911,7 +1913,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="nodeRoot">Dom树根节点</param>
         public void UnitUCDesignerRuleDomLoad(string unitName, string pDomName, string pDomTypeName, object pageType, object pageNo, object nodeRoot)
         {
-           uIElementOperation.UnitUCDesignerRuleDomLoad( unitName,  pDomName,  pDomTypeName,  pageType,  pageNo,  nodeRoot);
+            uIElementOperation.UnitUCDesignerRuleDomLoad(unitName, pDomName, pDomTypeName, pageType, pageNo, nodeRoot);
         }
         /// <summary>
         /// 原型图形部件得到页面布局父节点
@@ -1928,7 +1930,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="unitName">部件</param>
         /// <param name="id">组件id</param>
-        public void UnitUCDesignerRuleSelectCom(string unitName, object id=null)
+        public void UnitUCDesignerRuleSelectCom(string unitName, object id = null)
         {
             uIElementOperation.UnitUCDesignerRuleSelectCom(unitName, id);
         }

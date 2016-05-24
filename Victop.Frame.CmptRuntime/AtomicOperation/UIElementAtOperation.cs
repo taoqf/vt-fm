@@ -620,7 +620,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockName">区块名称</param>
         /// <param name="imagecolumName">图片列</param>
         /// <param name="titlecolumName">标题列</param>
-        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName)
+        /// <param name="width">图片宽度</param>
+        /// <param name="height">图片高度</param>
+        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName, double width = 80, double height = 100)
         {
             TemplateControl unitGallery = MainView.FindName(unitName) as TemplateControl;
             if (unitGallery == null)
@@ -633,6 +635,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicContentParam.Add("data", dtData);
             dicContentParam.Add("image", imagecolumName);
             dicContentParam.Add("title", titlecolumName);
+            dicContentParam.Add("width", width);
+            dicContentParam.Add("height", height);
             dicParam.Add("MessageContent", dicContentParam);
             unitGallery.Excute(dicParam);
         }
@@ -815,7 +819,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 o.v = list;
             }
         }
-        #endregion 
+        #endregion
 
         #region 动态构建的ComponentVisioProperty初始化方法
 
@@ -831,7 +835,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockNo">节点所属P编号</param>
         /// <param name="pblockName">节点所属P名称</param>
         /// <param name="formatNo">节点所属版式编号</param>
-        public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, string pageType, string nodeNo, string nodeTypeNo,string nodeTypeName, string pblockNo , string pblockName , string formatNo)
+        public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, string pageType, string nodeNo, string nodeTypeNo, string nodeTypeName, string pblockNo, string pblockName, string formatNo)
         {
             TemplateControl componentVisioProperty = MainView.FindName(unitName) as TemplateControl;
             if (componentVisioProperty == null)
@@ -864,7 +868,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="name"></param>
         /// <param name="paramDic"></param>
-        public void TemplateControlLoad(string name,object paramDic)
+        public void TemplateControlLoad(string name, object paramDic)
         {
             Dictionary<string, object> dicParam = (Dictionary<string, object>)paramDic;
             TemplateControl tc = MainView.FindName(name) as TemplateControl;
@@ -1020,7 +1024,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="point">鼠标位置</param>
         /// <param name="itemBase">版式所属组件图形</param>
         /// <param name="id">新增控件id</param>
-        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object point, object itemBase,object id)
+        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object point, object itemBase, object id)
         {
             TemplateControl template = MainView.FindName(unitName) as TemplateControl;
             if (template == null)
@@ -1112,13 +1116,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 return;
             }
-          
+
             Dictionary<string, object> dicMessage = new Dictionary<string, object>();
             //类型
             dicMessage.Add("MessageType", "selectCom");
             //参数
             Dictionary<string, object> dicContent = new Dictionary<string, object>();
-            dicContent.Add("id", id!=null?id:"");
+            dicContent.Add("id", id != null ? id : "");
             dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
         }
