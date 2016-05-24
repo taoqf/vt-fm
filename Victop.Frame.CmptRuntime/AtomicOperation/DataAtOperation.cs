@@ -460,6 +460,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 pBlock.PreBlockSelectedRow = pBlock.ViewBlockDataTable.Rows[0];
                 pBlock.SetCurrentRow(pBlock.PreBlockSelectedRow);
             }
+            else if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count == 0)
+            {
+                pBlock.PreBlockSelectedRow = null;
+            }
         }
         /// <summary>
         /// 根据指定行设置block选中行数据
