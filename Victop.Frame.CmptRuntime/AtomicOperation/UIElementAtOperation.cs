@@ -1079,7 +1079,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="unitName">部件</param>
         /// <param name="pageType">页面类型</param>
         /// <param name="oav">接收oav</param>
-        public void UnitUCDesignerRuleSaveFormat(string unitName,object pageType, object oav)
+        public void UnitUCDesignerRuleGetPageLayoutSuperiors(string unitName, object pageType, object oav)
         {
             TemplateControl template = MainView.FindName(unitName) as TemplateControl;
             if (template == null)
@@ -1088,7 +1088,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
             Dictionary<string, object> dicMessage = new Dictionary<string, object>();
             //类型
-            dicMessage.Add("MessageType", "saveFormat");
+            dicMessage.Add("MessageType", "getPageLayoutSuperiors");
             template.Excute(dicMessage);
             //参数
             Dictionary<string, object> dicContent = new Dictionary<string, object>();
@@ -1099,6 +1099,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 dynamic o = oav;
                 o.v = template.ParamDict["result"];
             }
+        }
+        /// <summary>
+        /// 原型图形控件选择组件图形刷新
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="id">组件id</param>
+        public void UnitUCDesignerRuleSelectCom(string unitName, object id)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+          
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "selectCom");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("id", id!=null?id:"");
+            dicMessage.Add("MessageContent", dicContent);
+            template.Excute(dicMessage);
         }
         #endregion
 

@@ -1919,9 +1919,18 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="unitName">部件</param>
         /// <param name="pageType">页面类型</param>
         /// <param name="oav">接收oav</param>
-        public void UnitUCDesignerRuleSaveFormat(string unitName, object pageType, object oav)
+        public void UnitUCDesignerRuleGetPageLayoutSuperiors(string unitName, object pageType, object oav)
         {
-            uIElementOperation.UnitUCDesignerRuleSaveFormat(unitName, pageType, oav);
+            uIElementOperation.UnitUCDesignerRuleGetPageLayoutSuperiors(unitName, pageType, oav);
+        }
+        /// <summary>
+        /// 原型图形控件选择组件图形刷新
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="id">组件id</param>
+        public void UnitUCDesignerRuleSelectCom(string unitName, object id=null)
+        {
+            uIElementOperation.UnitUCDesignerRuleSelectCom(unitName, id);
         }
         #endregion
 
