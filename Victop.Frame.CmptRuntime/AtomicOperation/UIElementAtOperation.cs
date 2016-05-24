@@ -1040,6 +1040,66 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
 
             template.Excute(dicMessage);
         }
+        /// <summary>
+        /// 原型图形控件Dom树加载后处理
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pDomName">Dom树P块名称</param>
+        /// <param name="pDomTypeName">Dom类型P块名称</param>
+        /// <param name="pageType">页面类型</param>
+        /// <param name="pageNo">页面编号</param>
+        /// <param name="nodeRoot">Dom树根节点</param>
+        public void UnitUCDesignerRuleDomLoad(string unitName, string pDomName, string pDomTypeName, object pageType, object pageNo, object nodeRoot)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            DataTable dtDom = MainView.GetPresentationBlockModel(pDomName).ViewBlockDataTable;
+            DataTable dtDomType = MainView.GetPresentationBlockModel(pDomTypeName).ViewBlockDataTable;
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "domLoad");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("dtDom", dtDom);
+            dicContent.Add("dtDomType", dtDomType);
+            dicContent.Add("pageType", pageType);
+            dicContent.Add("pageNo", pageNo);
+            dicContent.Add("nodeRoot", pageNo);
+            dicMessage.Add("MessageContent", dicContent);
+            template.Excute(dicMessage);
+
+            MainView.GetPresentationBlockModel(pDomName).SaveData();
+        }
+        /// <summary>
+        /// 原型图形部件得到页面布局父节点
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pageType">页面类型</param>
+        /// <param name="oav">接收oav</param>
+        public void UnitUCDesignerRuleSaveFormat(string unitName,object pageType, object oav)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "saveFormat");
+            template.Excute(dicMessage);
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("pageType", pageType);
+            dicMessage.Add("MessageContent", dicContent);
+            if (template.ParamDict != null && template.ParamDict.ContainsKey("result"))
+            {
+                dynamic o = oav;
+                o.v = template.ParamDict["result"];
+            }
+        }
         #endregion
 
 

@@ -1900,6 +1900,29 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, point, itemBase,id);
         }
+        /// <summary>
+        /// 原型图形控件Dom树加载后处理
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pDomName">Dom树P块名称</param>
+        /// <param name="pDomTypeName">Dom类型P块名称</param>
+        /// <param name="pageType">页面类型</param>
+        /// <param name="pageNo">页面编号</param>
+        /// <param name="nodeRoot">Dom树根节点</param>
+        public void UnitUCDesignerRuleDomLoad(string unitName, string pDomName, string pDomTypeName, object pageType, object pageNo, object nodeRoot)
+        {
+           uIElementOperation.UnitUCDesignerRuleDomLoad( unitName,  pDomName,  pDomTypeName,  pageType,  pageNo,  nodeRoot);
+        }
+        /// <summary>
+        /// 原型图形部件得到页面布局父节点
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pageType">页面类型</param>
+        /// <param name="oav">接收oav</param>
+        public void UnitUCDesignerRuleSaveFormat(string unitName, object pageType, object oav)
+        {
+            uIElementOperation.UnitUCDesignerRuleSaveFormat(unitName, pageType, oav);
+        }
         #endregion
 
         #region 动态构建的ComponentVisioProperty初始化方法
