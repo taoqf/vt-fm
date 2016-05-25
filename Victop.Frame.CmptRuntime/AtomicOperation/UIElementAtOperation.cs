@@ -1071,7 +1071,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicContent.Add("dtDomType", dtDomType);
             dicContent.Add("pageType", pageType);
             dicContent.Add("pageNo", pageNo);
-            dicContent.Add("nodeRoot", pageNo);
+            dicContent.Add("nodeRoot", nodeRoot);
             dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
 
