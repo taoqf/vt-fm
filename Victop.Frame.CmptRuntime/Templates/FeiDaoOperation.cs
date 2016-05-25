@@ -747,6 +747,16 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetList(oav);
         }
         /// <summary>
+        /// 获取集合中的值
+        /// </summary>
+        /// <param name="oav">List集合</param>
+        /// <param name="index">索引</param>
+        /// <param name="oavValue">返回结果</param>
+        public void GetListValueByIndex(object oav, int index, object oavValue)
+        {
+            systemOperation.GetListValueByIndex(oav, index, oavValue);
+        }
+        /// <summary>
         /// 将对象加入List集合结尾处
         /// </summary>
         /// <param name="value">集合中的项</param>
@@ -1002,6 +1012,26 @@ namespace Victop.Frame.CmptRuntime
         public void SaveWriteTextToFile(object content, object oav)
         {
             systemOperation.SaveWriteTextToFile(content, oav);
+        }
+        /// <summary>
+        /// 上传文件或者替换文件
+        /// </summary>
+        /// <param name="localFilePath">本地文件地址</param>
+        /// <param name="filePath">新的文件路径或者老的文件路径</param>
+        /// <param name="oav">接受oav</param>
+        /// <param name="productId">产品ID,默认“feidao”</param>
+        public void UpLoadFile(string localFilePath, object filePath, object oav, string productId = "feidao")
+        {
+            systemOperation.UpLoadFile(localFilePath, filePath,oav,productId);
+        }
+        /// <summary>
+        /// 打开文件
+        /// </summary>
+        /// <param name="fileType">文件类型(image,autio,video,file)</param>
+        /// <param name="oav">接受oav文件路径</param>
+        public void OpenFile(string fileType, object oav)
+        {
+            systemOperation.OpenFile(fileType, oav);
         }
         /// <summary>
         /// 下载文件
