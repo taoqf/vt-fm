@@ -1505,9 +1505,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dynamic o = oav;
             if (!string.IsNullOrWhiteSpace(type))
             {
-                if (type=="1")
+                if (type == "1")
                 {
-                    List<DataRow> list=new List<DataRow>();
+                    List<DataRow> list = new List<DataRow>();
                     PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
                     if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
                     {
@@ -1529,7 +1529,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     DataRow[] drArray = pBlock.ViewBlockDataTable.Select("VicCheckFlag = 'true'");
                     count = drArray.Length;
                 }
-                o.v = count;   
+                o.v = count;
             }
         }
 
@@ -1543,7 +1543,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void SetDataGridColumnValueList(string pblockName, string rowId, object oav, List<object> fieldName)
         {
             List<object> getlist = (List<object>)oav;
-            if (getlist != null)
+            if (getlist != null && getlist.Count > 0)
             {
                 Dictionary<string, object> dic = (Dictionary<string, object>)getlist[0];
                 List<string> list = dic.Keys.ToList();
