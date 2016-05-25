@@ -1905,11 +1905,12 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="unitName">部件</param>
         /// <param name="elementStr">版式文件字符串</param>
-        /// <param name="point">鼠标位置</param>
+        /// <param name="pointx">鼠标位置</param>
+        /// <param name="pointy">鼠标位置</param>
         /// <param name="itemBase">版式所属组件图形</param>
-        public void UnitUCDesignerRuleDropFormat(string unitName, object elementStr, object point, object itemBase)
+        public void UnitUCDesignerRuleDropFormat(string unitName, object elementStr, object pointx, object pointy, object itemBase)
         {
-            uIElementOperation.UnitUCDesignerRuleDropFormat(unitName, elementStr, point, itemBase);
+            uIElementOperation.UnitUCDesignerRuleDropFormat(unitName, elementStr, pointx,pointy, itemBase);
         }
         /// <summary>
         /// 原型图形部件保存版式（返回版式文件串）
@@ -1925,12 +1926,13 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="unitName">部件</param>
         /// <param name="itemTitle">控件模具名</param>
-        /// <param name="point">鼠标位置</param>
+        /// <param name="pointx">鼠标位置</param>
+        /// <param name="pointy">鼠标位置</param>
         /// <param name="itemBase">版式所属组件图形</param>
         /// <param name="id">新增控件id</param>
-        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object point, object itemBase, object id)
+        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object pointx, object pointy, object itemBase, object id)
         {
-            uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, point, itemBase, id);
+            uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, pointx, pointy ,itemBase, id);
         }
         /// <summary>
         /// 原型图形控件Dom树加载后处理
