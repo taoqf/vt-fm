@@ -1093,11 +1093,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             Dictionary<string, object> dicMessage = new Dictionary<string, object>();
             //类型
             dicMessage.Add("MessageType", "getPageLayoutSuperiors");
-            template.Excute(dicMessage);
             //参数
             Dictionary<string, object> dicContent = new Dictionary<string, object>();
             dicContent.Add("pageType", pageType);
             dicMessage.Add("MessageContent", dicContent);
+            template.Excute(dicMessage);
             if (template.ParamDict != null && template.ParamDict.ContainsKey("result"))
             {
                 dynamic o = oav;

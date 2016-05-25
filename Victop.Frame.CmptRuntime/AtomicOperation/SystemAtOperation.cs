@@ -196,6 +196,22 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             o.v = new List<object>();
         }
         /// <summary>
+        /// 获取集合中的值
+        /// </summary>
+        /// <param name="oav">List集合</param>
+        /// <param name="index">索引</param>
+        /// <param name="oavValue">返回结果</param>
+        public void GetListValueByIndex(object oav, int index, object oavValue)
+        {
+            dynamic o = oav;
+            dynamic oValue = oavValue;
+            List<object> list = (List<object>)o.v;
+            if (list != null && list.Count > index)
+            {
+                oValue.v = list[index];
+            }
+        }
+        /// <summary>
         /// 将对象加入List集合结尾处
         /// </summary>
         /// <param name="value">集合中的项</param>
@@ -249,10 +265,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             dynamic o = getcontent;
             List<object> getlist = (List<object>)list;
-            object content = new object();
+            Dictionary<string, object> content = new Dictionary<string, object>();
             if (getlist != null && getlist.Count >= setcount)
             {
-                content = getlist[setcount];
+                content = (Dictionary<string, object>)getlist[setcount];
                 o.v = content;
             }
             else
@@ -746,6 +762,41 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 LoggerHelper.InfoFormat("上传文件异常(string UpLoadFile)：{0}", ex.Message);
                 o.v = "";
+            }
+        }
+        /// <summary>
+        /// 打开文件
+        /// </summary>
+        /// <param name="fileType">文件类型(image,autio,video,file)</param>
+        /// <param name="oav">接受oav文件路径</param>
+        public void OpenFile(string fileType, object oav)
+        {
+            dynamic o1 = oav;
+            OpenFileDialog ofd = new OpenFileDialog();
+            switch (fileType)
+            {
+                case "image":
+                    ofd.Filter = "图片文件|*.png;*.jpg;*.gif;*.bmp;*.jpeg;*.svg";
+                    break;
+                case "audio":
+                    ofd.Filter = "音频文件|*.mp3;*.wav";
+                    break;
+                case "video":
+                    ofd.Filter = "视频文件|*.wmv;*.mp4;*.avi;*.dat;*.rm;*.rmvb;*.mpg;*.mpeg;*.3gp;*.mov;*.m4v;*.dvix;*.dv;*.mkv;*.flv;*.vob;*.qt;*.divx;*.cpk;*.fli;*.flc;*.mod";
+                    break;
+                case "file":
+                default:
+                    ofd.Filter = "所有文件|*.*";
+                    break;
+            }
+            ofd.FileName = string.Empty;
+            ofd.CheckFileExists = true;
+            ofd.CheckPathExists = true;
+            ofd.ValidateNames = false;
+            if (ofd.ShowDialog() == true)
+            {
+                ofd.FileName = ofd.FileName.TrimEnd('\r');
+                o1.v = ofd.FileName;
             }
         }
         /// <summary>
