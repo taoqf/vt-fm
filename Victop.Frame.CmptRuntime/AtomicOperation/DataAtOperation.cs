@@ -485,8 +485,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="oavdrs">datarow集合</param>
         /// <param name="fieldName">字段名称</param>
+        ///  <param name="oavstr">接受oav</param>
         /// <param name="listIndex">datarow集合索引</param>
-        /// <param name="oavstr">接受oav</param>
         public void GetStrFromListDataRow(object oavdrs, string fieldName, object oavstr, int listIndex = -1)
         {
             List<DataRow> drs = (List<DataRow>)oavdrs;

@@ -294,9 +294,10 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oavdrs">datarow集合</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="oavstr">指定行</param>
-        public void GetStrFromListDataRow(object oavdrs, string fieldName, object oavstr)
+        /// <param name="listIndex">datarow集合索引</param>
+        public void GetStrFromListDataRow(object oavdrs, string fieldName, object oavstr, int listIndex = -1)
         {
-            dataOperation.GetStrFromListDataRow(oavdrs, fieldName, oavstr);
+            dataOperation.GetStrFromListDataRow(oavdrs, fieldName, oavstr, listIndex);
         }
         /// <summary>
         /// 把行集合中指定列转换成字符串集合
@@ -1022,7 +1023,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="productId">产品ID,默认“feidao”</param>
         public void UpLoadFile(string localFilePath, object filePath, object oav, string productId = "feidao")
         {
-            systemOperation.UpLoadFile(localFilePath, filePath,oav,productId);
+            systemOperation.UpLoadFile(localFilePath, filePath, oav, productId);
         }
         /// <summary>
         /// 打开文件
@@ -1945,7 +1946,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="itemBase">版式所属组件图形</param>
         public void UnitUCDesignerRuleDropFormat(string unitName, object elementStr, object pointx, object pointy, object itemBase)
         {
-            uIElementOperation.UnitUCDesignerRuleDropFormat(unitName, elementStr, pointx,pointy, itemBase);
+            uIElementOperation.UnitUCDesignerRuleDropFormat(unitName, elementStr, pointx, pointy, itemBase);
         }
         /// <summary>
         /// 原型图形部件保存版式（返回版式文件串）
@@ -1967,7 +1968,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="id">新增控件id</param>
         public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object pointx, object pointy, object itemBase, object id)
         {
-            uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, pointx, pointy ,itemBase, id);
+            uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, pointx, pointy, itemBase, id);
         }
         /// <summary>
         /// 原型图形控件Dom树加载后处理
