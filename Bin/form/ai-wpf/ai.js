@@ -140,6 +140,7 @@
 	"RoundNumbers":"RoundNumbers",
 	"SetConditionSearchMoreOrLess":"SetConditionSearchMoreOrLess",
 	"AddThenTemplate":"AddThenTemplate",
+	"IsAllowComOrSplit":"IsAllowComOrSplit",
 	"GetStringByObject":"GetStringByObject",
 	"GetPBlockDataRowColumnValue":"GetPBlockDataRowColumnValue",
 	"UnitAvalonEditLoad":"UnitAvalonEditLoad",

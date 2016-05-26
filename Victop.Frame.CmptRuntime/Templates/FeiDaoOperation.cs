@@ -1763,6 +1763,18 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.AddThenTemplate(pblockrhs, pblockparams, action_no, rule_no, oav);
         }
+        /// <summary>
+        /// 是否允许组合或拆分
+        /// </summary>
+        /// <param name="pBlockName">区块名称page_dom_struct对应的P块</param>
+        /// <param name="page_no">页面编号</param>
+        /// <param name="drList">选中的行集合</param>
+        /// <param name="type">组合或拆分0组合1拆分</param>
+        /// <param name="oav">接受oav(true,false)</param>
+        public void IsAllowComOrSplit(string pBlockName, string page_no, List<DataRow> drList, int type, object oav)
+        {
+            dataOperation.IsAllowComOrSplit(pBlockName, page_no, drList, type, oav);
+        }
         #endregion
 
         #region 动态构建的Listbox部件初始化或者刷新方法
