@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -9,6 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Victop.Frame.DataMessageManager;
+using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
 using Victop.Wpf.Controls;
 
@@ -902,26 +905,113 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
 
             template.Excute(dicMessage);
         }
+
         /// <summary>
         /// 原型图形部件加载文件
         /// </summary>
         /// <param name="unitName">部件</param>
-        /// <param name="fileName">文件物理地址</param>
-        public void UnitUCDesignerRuleLoadFile(string unitName, object fileName)
+        /// <param name="filePath">文件服务地址</param>
+        /// <param name="oav">是否加载成功</param>
+        public void UnitUCDesignerRuleLoadFile(string unitName, object filePath, object oav)
+        {
+            dynamic o = oav;
+            o.v = false;
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            string fileAddress = AppDomain.CurrentDomain.BaseDirectory + "\\Stencils\\WebComBuilderSaveDefault.xml";
+            if (!File.Exists(fileAddress))
+                File.Create(fileAddress).Dispose();
+            DataMessageOperation messageOperation = new DataMessageOperation();
+            Dictionary<string, object> messageContent = new Dictionary<string, object>();
+            Dictionary<string, string> address = new Dictionary<string, string>();
+            address.Add("DownloadFileId", filePath.ToString());
+            address.Add("DownloadToPath", fileAddress);
+            address.Add("ProductId", "feidao");
+            messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+            Dictionary<string, object> returnDic =
+                messageOperation.SendSyncMessage("ServerCenterService.DownloadDocument", messageContent);
+            if (returnDic != null && returnDic["ReplyMode"].ToString() != "0")
+            {
+                Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+                //类型
+                dicMessage.Add("MessageType", "loadFile");
+                //参数
+                Dictionary<string, object> dicContent = new Dictionary<string, object>();
+                dicContent.Add("fileName", fileAddress);
+                dicMessage.Add("MessageContent", dicContent);
+
+                template.Excute(dicMessage);
+
+                o.v = true;
+            }
+        }
+        /// <summary>
+        /// 原型图形部件保存上传文件
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="filePath">文件服务地址</param>
+        /// <param name="oav">是否上传成功</param>
+        public void UnitUCDesignerRuleSaveFile(string unitName, object filePath, object oav)
+        {
+            dynamic o = oav;
+            o.v = false;
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            string fileAddress = AppDomain.CurrentDomain.BaseDirectory + "\\Stencils\\WebComBuilderSaveDefault.xml";
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "saveFile");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("fileName", fileAddress);
+            dicMessage.Add("MessageContent", dicContent);
+
+            template.Excute(dicMessage);
+
+            Dictionary<string, object> messageContent = new Dictionary<string, object>();
+            Dictionary<string, string> address = new Dictionary<string, string>();
+            address.Add("UploadFromPath", fileAddress);
+            address.Add("DelFileId",filePath.ToString());
+            address.Add("ProductId", "feidao");
+            messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+            Dictionary<string, object> returnDic = new DataMessageOperation().SendSyncMessage("ServerCenterService.UploadDocument", messageContent);
+            if (returnDic != null && returnDic["ReplyMode"].ToString() != "0")
+            {
+                o.v = true;
+            }
+        }
+
+        /// <summary>
+        /// 原型图形部件选择选中P块状态改变
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pDomName">Dom树P块名称</param>
+        /// <param name="pPName">P表P块名称</param>
+        /// <param name="formatId">版式id</param>
+        public void UnitUCDesignerRuleSelectPState(string unitName, string pDomName, string pPName, object formatId)
         {
             TemplateControl template = MainView.FindName(unitName) as TemplateControl;
             if (template == null)
             {
                 return;
             }
+            DataTable dtDom = MainView.GetPresentationBlockModel(pDomName).ViewBlockDataTable;
+            DataTable dtP = MainView.GetPresentationBlockModel(pPName).ViewBlockDataTable;
             Dictionary<string, object> dicMessage = new Dictionary<string, object>();
             //类型
-            dicMessage.Add("MessageType", "loadFile");
+            dicMessage.Add("MessageType", "selectPState");
             //参数
             Dictionary<string, object> dicContent = new Dictionary<string, object>();
-            dicContent.Add("fileName", fileName);
+            dicContent.Add("dtDom", dtDom);
+            dicContent.Add("dtP", dtP);
+            dicContent.Add("formatId", formatId);
             dicMessage.Add("MessageContent", dicContent);
-
             template.Excute(dicMessage);
         }
         /// <summary>

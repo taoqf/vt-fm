@@ -174,6 +174,8 @@
 		"SendCodeServiceMessage":"SendCodeServiceMessage",
 		"UnitUCDesignerRuleLoad":"UnitUCDesignerRuleLoad",
 		"UnitUCDesignerRuleLoadFile":"UnitUCDesignerRuleLoadFile",
+		"UnitUCDesignerRuleSaveFile":"UnitUCDesignerRuleSaveFile",
+		"UnitUCDesignerRuleSelectPState":"UnitUCDesignerRuleSelectPState",
 		"UnitUCDesignerRuleSavePageLayout":"UnitUCDesignerRuleSavePageLayout",
 		"UnitUCDesignerRuleDropPageLayout":"UnitUCDesignerRuleDropPageLayout",
 		"UnitUCDesignerRuleDropFormat":"UnitUCDesignerRuleDropFormat",

@@ -1877,10 +1877,33 @@ namespace Victop.Frame.CmptRuntime
         /// 原型图形部件加载文件
         /// </summary>
         /// <param name="unitName">部件</param>
-        /// <param name="fileName">文件物理地址</param>
-        public void UnitUCDesignerRuleLoadFile(string unitName, object fileName)
+        /// <param name="filePath">文件服务地址</param>
+        /// <param name="oav">是否加载成功</param>
+        public void UnitUCDesignerRuleLoadFile(string unitName, object filePath, object oav)
         {
-            uIElementOperation.UnitUCDesignerRuleLoadFile(unitName, fileName);
+            uIElementOperation.UnitUCDesignerRuleLoadFile(unitName, filePath, oav);
+        }
+        /// <summary>
+        /// 原型图形部件保存上传文件
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="filePath">文件服务地址</param>
+        /// <param name="oav">是否上传成功</param>
+        public void UnitUCDesignerRuleSaveFile(string unitName, object filePath, object oav)
+        {
+            uIElementOperation.UnitUCDesignerRuleSaveFile(unitName, filePath, oav);
+        }
+
+        /// <summary>
+        /// 原型图形部件选择选中P块状态改变
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pDomName">Dom树P块名称</param>
+        /// <param name="pPName">P表P块名称</param>
+        /// <param name="formatId">版式id</param>
+        public void UnitUCDesignerRuleSelectPState(string unitName, string pDomName, string pPName, object formatId)
+        {
+            uIElementOperation.UnitUCDesignerRuleSelectPState(unitName, pDomName, pPName, formatId);
         }
         /// <summary>
         /// 原型图形部件保存页面布局（返回布局文件串）
