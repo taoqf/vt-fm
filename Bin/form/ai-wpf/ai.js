@@ -191,5 +191,7 @@
 		"GetComponentParamDictData":"GetComponentParamDictData",
 		"GetComBoxSelectValue":"GetComBoxSelectValue",
                 "GetChangedData":"GetChangedData",
-                "ComponentOperationAnalysisAdd":"ComponentOperationAnalysisAdd"
+                "ComponentOperationAnalysisAdd":"ComponentOperationAnalysisAdd",
+				"SetDataGridCheckFromTwoPblock":"SetDataGridCheckFromTwoPblock",
+                "OperationAnalysisAddTable":"OperationAnalysisAddTable"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
