@@ -29,7 +29,7 @@ namespace Victop.Frame.PublicLib.Helpers
             ConsoleAppender console = CreateConsoleAppender();
             BasicConfigurator.Configure(console);
             console.ActivateOptions();
-            bool autoClean = ConfigManager.GetAttributeOfNodeByName("Log", "Clean").Equals("0") ? true : false;
+            bool autoClean = ConfigManager.GetAttributeOfNodeByName("Log", "Clean").Equals("0") ? false : true;
             if (autoClean)
             {
                 CleanLogFile();
@@ -46,7 +46,7 @@ namespace Victop.Frame.PublicLib.Helpers
             info.AddFilter(infoFilter);
             BasicConfigurator.Configure(info);
             info.ActivateOptions();
-            bool debugFlag = ConfigManager.GetAttributeOfNodeByName("Log","Debug").Equals("0") ? true : false;
+            bool debugFlag = ConfigManager.GetAttributeOfNodeByName("Log","Debug").Equals("0") ? false : true;
             if (debugFlag)
             {
                 BasicConfigurator.Configure(debug);

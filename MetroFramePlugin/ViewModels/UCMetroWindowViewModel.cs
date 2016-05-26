@@ -29,6 +29,7 @@ using System.Text.RegularExpressions;
 using Victop.Frame.PublicLib.Managers;
 using Victop.Frame.DataMessageManager.Models;
 using Victop.Server.Controls.MVVM;
+using Microsoft.Win32;
 
 namespace MetroFramePlugin.ViewModels
 {
@@ -57,6 +58,7 @@ namespace MetroFramePlugin.ViewModels
         private bool isFirstLoad = true;
         private bool isDebug = true;
         private VicPasswordBoxNormal pwdLockSpace;
+        private string localIEVersion;
         /// <summary>
         /// 门户插件用户信息
         /// </summary>
@@ -99,9 +101,6 @@ namespace MetroFramePlugin.ViewModels
                 }
             }
         }
-
-
-
         /// <summary>
         /// 活动插件数目
         /// </summary>
@@ -443,7 +442,25 @@ namespace MetroFramePlugin.ViewModels
                 RaisePropertyChanged((() => SelectedFourMenuModel));
             }
         }
+        /// <summary>
+        /// 本地IE版本
+        /// </summary>
+        public string LocalIEVersion
+        {
+            get
+            {
+                return localIEVersion;
+            }
 
+            set
+            {
+                if (localIEVersion != value)
+                {
+                    localIEVersion = value;
+                    RaisePropertyChanged(() => LocalIEVersion);
+                }
+            }
+        }
         #endregion
 
         #region 命令
@@ -464,18 +481,14 @@ namespace MetroFramePlugin.ViewModels
                     pwdLockSpace = (VicPasswordBoxNormal)mainWindow.FindName("pwdLockSpace");
                     mainTabControl = (VicTabControlNormal)mainWindow.FindName("MainTabControl");
                     btnPluginList = mainWindow.FindName("btnPluginList") as VicButtonNormal;
-                    //mainWindow.MouseDown += mainWindow_MouseDown;
-                    //toggleLock.IsCheckedChanged += toggleLock_IsCheckedChanged;
                     Rect rect = SystemParameters.WorkArea;
                     mainWindow.MaxWidth = rect.Width;
                     mainWindow.MaxHeight = rect.Height;
                     mainWindow.WindowState = WindowState.Maximized;
                     ChangeFrameWorkTheme();
                     AppVersionCode = GetAppVersion();
+                    LocalIEVersion = GetLocalIEVersion();
                     LoadJsonMenuListLocal();
-                    //OverlayWindow overlayWin = new OverlayWindow();
-                    //OverlayWindow.VicTabCtrl = mainTabControl;
-                    //overlayWin.Show();
                     UserLogin();
                     DataMessageOperation messageOp = new DataMessageOperation();
                     Dictionary<string, object> result = messageOp.SendSyncMessage("ServerCenterService.GetUserInfo", new Dictionary<string, object>());
@@ -1634,8 +1647,6 @@ namespace MetroFramePlugin.ViewModels
         }
         #endregion
 
-        #endregion
-
         #region 关于WebBrowser相关的操作
 
         /// <summary>
@@ -1716,6 +1727,31 @@ namespace MetroFramePlugin.ViewModels
             }
 
         }
+        /// <summary>
+        /// 获取本地IE的版本
+        /// </summary>
+        /// <returns></returns>
+        private string GetLocalIEVersion()
+        {
+            RegistryKey uninstallNode = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Internet Explorer");
+            if (uninstallNode != null)
+            {
+                var version = uninstallNode.GetValue("svcVersion");
+                if (version != null)
+                {
+                    return "本机Internet Explorer浏览器版本为:" + version.ToString();
+                }
+                else
+                {
+                    return "未检测到Internet Explorer浏览器版本";
+                }
+            }
+            else
+            {
+                return "未安装未检测到Internet Explorer浏览器";
+            }
+        }
+        #endregion
         #endregion
 
         ///<summary>

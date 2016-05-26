@@ -114,6 +114,7 @@
                 </Grid>
                 <Grid Grid.Row="1" Background="{DynamicResource MainFrmButtomBackground}">
                     <DockPanel  VerticalAlignment="Center"  HorizontalAlignment="Right" Margin="0,0,10,0">
+                        <controls:VicButtonNormal Width="Auto" Height="25" FontSize="12" Margin="0,0,5,0" BorderThickness="0" Content="{Binding LocalIEVersion}" Foreground="{DynamicResource MainFrmUserNameColor}" Background="Transparent"/>
                         <controls:VicButtonNormal Width="Auto" Height="25" FontSize="12" Cursor="Hand" BorderThickness="0" Content="{Binding AppVersionCode}" Foreground="{DynamicResource MainFrmUserNameColor}" Background="Transparent" Command="{Binding btnViewUpdateLogClickCommand}"/>
                     </DockPanel>
                 </Grid>
