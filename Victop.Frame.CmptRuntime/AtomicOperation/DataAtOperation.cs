@@ -485,8 +485,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="oavdrs">datarow集合</param>
         /// <param name="fieldName">字段名称</param>
-        /// <param name="oavstr">指定行</param>
-        public void GetStrFromListDataRow(object oavdrs, string fieldName, object oavstr)
+        /// <param name="listIndex">datarow集合索引</param>
+        /// <param name="oavstr">接受oav</param>
+        public void GetStrFromListDataRow(object oavdrs, string fieldName, object oavstr, int listIndex = -1)
         {
             List<DataRow> drs = (List<DataRow>)oavdrs;
             string str = "";
@@ -494,14 +495,25 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             o1.v = "";
             if (drs.Count > 0)
             {
-                foreach (DataRow dr in drs)
+                if (listIndex == -1)
                 {
-                    if (dr.Table.Columns.Contains(fieldName))
+                    foreach (DataRow dr in drs)
                     {
-                        str += dr[fieldName].ToString() + ",";
+                        if (dr.Table.Columns.Contains(fieldName))
+                        {
+                            str += dr[fieldName].ToString() + ",";
+                        }
+                    }
+                    o1.v = str.TrimEnd(',');
+                }
+                else if (listIndex >= 0 && drs.Count > listIndex)
+                {
+                    DataRow row = drs[listIndex];
+                    if (row.Table.Columns.Contains(fieldName))
+                    {
+                        o1.v = row[fieldName].ToString();
                     }
                 }
-                o1.v = str.TrimEnd(',');
             }
         }
         /// <summary>
