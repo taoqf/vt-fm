@@ -1924,5 +1924,92 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             o1.v = flag;
         }
         #endregion
+
+        #region 操作分析使用
+
+        /// <summary>
+        /// 设置第一个Pblock的复选框复选
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="pblockNameTwo">另一区块名称</param>
+        /// <param name="filed">字段值</param>
+        /// <param name="pageflow">字段值</param>
+        ///  <param name="type">类型</param>
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string type = "")
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            PresentationBlockModel pblockTwo = MainView.GetPresentationBlockModel(pblockNameTwo);
+            if (string.IsNullOrWhiteSpace(type))
+            {
+                if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockTwo.ViewBlockDataTable.Rows.Count > 0 && pblockTwo.ViewBlockDataTable.Columns.Contains(filed))
+                {
+                    foreach (DataRow dataRow in pBlock.ViewBlockDataTable.Rows)
+                    {
+                        DataRow[] drc = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                        if (drc.Length > 0)
+                        {
+                            dataRow["VicCheckFlag"] = true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                switch (type)
+                {
+                    case "1":
+                        if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockTwo.ViewBlockDataTable.Columns.Contains(filed))
+                        {
+
+                            DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag = '{0}'", "True"));
+                            object a = pBlock.ViewBlockDataTable.Rows[0]["VicCheckFlag"];
+                            foreach (DataRow dataRow in drc)
+                            {
+                                DataRow[] drcadd = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                                if (drcadd.Length == 0)
+                                {
+                                    DataRow drNew = pblockTwo.ViewBlockDataTable.NewRow();
+                                    foreach (DataColumn column in pblockTwo.ViewBlockDataTable.Columns)
+                                    {
+                                        switch (column.ColumnName)
+                                        {
+                                            case "_id":
+                                                drNew[column.ColumnName] = Guid.NewGuid().ToString();
+                                                break;
+                                            case "steps_no":
+                                                drNew[column.ColumnName] = dataRow["steps_no"];
+                                                break;
+                                            case "steps_name":
+                                                drNew[column.ColumnName] = dataRow["steps_name"];
+                                                break;
+                                            case "job_no":
+                                                drNew[column.ColumnName] = dataRow["job_no"];
+                                                break;
+                                            case "page_flow_no":
+                                                drNew[column.ColumnName] = pageflow;
+                                                break;
+                                        }
+                                    }
+                                    pblockTwo.ViewBlockDataTable.Rows.Add(drNew);
+                                }
+                            }
+                            DataRow[] drcs = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag = '{0}'", "False"));
+                            foreach (DataRow dataRow in drcs)
+                            {
+                                DataRow[] drcadd = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                                if (drcadd.Length > 0)
+                                {
+                                    drcadd[0].Delete();
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        #endregion
     }
 }

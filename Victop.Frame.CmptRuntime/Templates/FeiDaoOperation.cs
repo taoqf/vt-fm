@@ -2037,9 +2037,10 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="maintable">主表</param>
         /// <param name="secondtable">二层第一张表</param>
         /// <param name="secendtwotable">二层第二张表</param>
-        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable)
+        /// <param name="jobno">工作编号</param>
+        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable, string jobno)
         {
-            uIElementOperation.ComponentOperationAnalysisRender(componetName, pblockName, maintable, secondtable, secendtwotable);
+            uIElementOperation.ComponentOperationAnalysisRender(componetName, pblockName, maintable, secondtable, secendtwotable, jobno);
         }
         /// <summary>
         /// 操作分析组件添加主数据
@@ -2067,6 +2068,31 @@ namespace Victop.Frame.CmptRuntime
         public void GetComBoxSelectValue(string elementName, object oav)
         {
             uIElementOperation.GetComBoxSelectValue(elementName, oav);
+        }
+        /// <summary>
+        /// 设置第一个Pblock的复选框复选
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="pblockNameTwo">另一区块名称</param>
+        /// <param name="filed">字段值</param>
+        /// <param name="pageflow">字段值</param>
+        ///  <param name="type">类型</param>
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string type = "")
+        {
+            dataOperation.SetDataGridCheckFromTwoPblock(pblockName, pblockNameTwo, filed, pageflow, type);
+        }
+        /// <summary>
+        /// 动态构建的Listbox部件获取复选框选中的数据集合
+        /// <param name="compntname">部件名称</param>
+        /// <param name="params1">接收OAV</param>
+        /// <param name="params2">接收OAV</param>
+        /// <param name="params3">接收OAV</param>
+        /// <param name="param4">接收OAV</param>
+        /// <param name="type">接收OAV</param>
+        /// </summary>
+        public void OperationAnalysisAddTable(string compntname, object params1, string params2, string params3, string param4, string type = "1")
+        {
+            uIElementOperation.OperationAnalysisAddTable(compntname, params1, params2, params3, param4, type);
         }
         #endregion
 
