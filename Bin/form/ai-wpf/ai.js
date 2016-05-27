@@ -184,6 +184,7 @@
 		"UnitUCDesignerRuleDropItem":"UnitUCDesignerRuleDropItem",
 		"UnitUCDesignerRuleDomLoad":"UnitUCDesignerRuleDomLoad",
 		"UnitUCDesignerRuleGetPageLayoutSuperiors":"UnitUCDesignerRuleGetPageLayoutSuperiors",
+		"UnitUCDesignerRuleDeleteItem":"UnitUCDesignerRuleDeleteItem",
 		"UnitUCDesignerRuleSelectCom":"UnitUCDesignerRuleSelectCom",
 		"GetListFromListDataRow":"GetListFromListDataRow",
 		"DownLoadFile":"DownLoadFile",
@@ -193,6 +194,5 @@
                 "GetChangedData":"GetChangedData",
                 "ComponentOperationAnalysisAdd":"ComponentOperationAnalysisAdd",
 				"SetDataGridCheckFromTwoPblock":"SetDataGridCheckFromTwoPblock",
-                "OperationAnalysisAddTable":"OperationAnalysisAddTable",
-				"SetDataGridColumnValueByAllRow":"SetDataGridColumnValueByAllRow"
+                "OperationAnalysisAddTable":"OperationAnalysisAddTable"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

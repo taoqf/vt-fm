@@ -759,17 +759,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     {
                         case "VicComboBoxNormal":
                             VicComboBoxNormal cmbox = element as VicComboBoxNormal;
-                            if (cmbox.SelectedItem != null)
+                            if (cmbox.SelectedValue != null)
                             {
-                                DataRow dataRow = ((DataRowView)cmbox.SelectedItem).Row;
-                                if (dataRow != null)
-                                {
-                                    o.v = dataRow["value"];
-                                }
-                                else
-                                {
-                                    o.v = "";
-                                }
+                                o.v = cmbox.SelectedValue;
                             }
                             else
                             {
@@ -1283,6 +1275,23 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             Dictionary<string, object> dicContent = new Dictionary<string, object>();
             dicContent.Add("id", id != null ? id : "");
             dicMessage.Add("MessageContent", dicContent);
+            template.Excute(dicMessage);
+        }
+        /// <summary>
+        /// 原型图形控件删除
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        public void UnitUCDesignerRuleDeleteItem(string unitName)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "deleteItem");
+            
             template.Excute(dicMessage);
         }
         #endregion
