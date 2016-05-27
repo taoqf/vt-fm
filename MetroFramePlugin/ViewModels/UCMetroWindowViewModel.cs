@@ -1739,16 +1739,16 @@ namespace MetroFramePlugin.ViewModels
                 var version = uninstallNode.GetValue("svcVersion");
                 if (version != null)
                 {
-                    return "本机Internet Explorer浏览器版本为:" + version.ToString();
+                    return "IE浏览器版本:" + version.ToString();
                 }
                 else
                 {
-                    return "未检测到Internet Explorer浏览器版本";
+                    return "IE浏览器版本:未知";
                 }
             }
             else
             {
-                return "未安装未检测到Internet Explorer浏览器";
+                return "未安装IE浏览器";
             }
         }
         #endregion
