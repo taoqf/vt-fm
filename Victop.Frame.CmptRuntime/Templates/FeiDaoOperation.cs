@@ -2001,6 +2001,16 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitUCDesignerRuleSelectCom(unitName, id);
         }
+
+        /// <summary>
+        /// 原型图形控件删除
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        public void UnitUCDesignerRuleDeleteItem(string unitName)
+        {
+            uIElementOperation.UnitUCDesignerRuleDeleteItem(unitName);
+        }
+
         #endregion
 
         #region 动态构建的ComponentVisioProperty初始化方法

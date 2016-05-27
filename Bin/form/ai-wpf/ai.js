@@ -184,6 +184,7 @@
 		"UnitUCDesignerRuleDropItem":"UnitUCDesignerRuleDropItem",
 		"UnitUCDesignerRuleDomLoad":"UnitUCDesignerRuleDomLoad",
 		"UnitUCDesignerRuleGetPageLayoutSuperiors":"UnitUCDesignerRuleGetPageLayoutSuperiors",
+		"UnitUCDesignerRuleDeleteItem":"UnitUCDesignerRuleDeleteItem",
 		"UnitUCDesignerRuleSelectCom":"UnitUCDesignerRuleSelectCom",
 		"GetListFromListDataRow":"GetListFromListDataRow",
 		"DownLoadFile":"DownLoadFile",
