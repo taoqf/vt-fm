@@ -485,8 +485,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="oavdrs">datarow集合</param>
         /// <param name="fieldName">字段名称</param>
-        /// <param name="oavstr">指定行</param>
-        public void GetStrFromListDataRow(object oavdrs, string fieldName, object oavstr)
+        ///  <param name="oavstr">接受oav</param>
+        /// <param name="listIndex">datarow集合索引</param>
+        public void GetStrFromListDataRow(object oavdrs, string fieldName, object oavstr, int listIndex = -1)
         {
             List<DataRow> drs = (List<DataRow>)oavdrs;
             string str = "";
@@ -494,14 +495,25 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             o1.v = "";
             if (drs.Count > 0)
             {
-                foreach (DataRow dr in drs)
+                if (listIndex == -1)
                 {
-                    if (dr.Table.Columns.Contains(fieldName))
+                    foreach (DataRow dr in drs)
                     {
-                        str += dr[fieldName].ToString() + ",";
+                        if (dr.Table.Columns.Contains(fieldName))
+                        {
+                            str += dr[fieldName].ToString() + ",";
+                        }
+                    }
+                    o1.v = str.TrimEnd(',');
+                }
+                else if (listIndex >= 0 && drs.Count > listIndex)
+                {
+                    DataRow row = drs[listIndex];
+                    if (row.Table.Columns.Contains(fieldName))
+                    {
+                        o1.v = row[fieldName].ToString();
                     }
                 }
-                o1.v = str.TrimEnd(',');
             }
         }
         /// <summary>
@@ -1564,6 +1576,25 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+
+        /// <summary>
+        /// 对当前block所有行赋值指定列
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段</param>
+        /// <param name="fieldValue">字段值</param>
+        public void SetDataGridColumnValueByAllRow(string pblockName, string fieldName, object fieldValue)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+            {
+                foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
+                {
+                    dr[fieldName] = fieldValue;
+                }
+            }
+        }
+
         /// <summary>
         /// 通过字段值设置block当前选中行
         /// </summary>
@@ -1804,6 +1835,200 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
 
         }
+        #endregion
+
+        #region 原型机台专用原子操作
+        /// <summary>
+        /// 是否允许组合或拆分
+        /// </summary>
+        /// <param name="pBlockName">区块名称page_dom_struct对应的P块</param>
+        /// <param name="page_no">页面编号</param>
+        /// <param name="drList">选中的行集合</param>
+        /// <param name="type">组合或拆分0组合1拆分</param>
+        /// <param name="oav">接受oav(true,false)</param>
+        public void IsAllowComOrSplit(string pBlockName, string page_no, List<DataRow> drList, int type, object oav)
+        {
+            //合并：执行条件：1、选中的组件片段大于等于2个
+            //                2、选中的组件编号只关联1个组件片段
+            //                3、组件片段的section_no在<page_dom_struct>表中对应nodeid的父级一致
+            //拆分：执行条件：1、选中的组件片段大于等于2个
+            //                2、选中的组件片段编号对应的组件编号一致	
+            bool flag = false;
+            dynamic o1 = oav;
+            if (!string.IsNullOrEmpty(page_no) && !string.IsNullOrEmpty(pBlockName))
+            {
+                if (type == 0)
+                {
+                    if (drList != null && drList.Count >= 2)
+                    {
+                        DataTable dtcompntsnippet = drList[0].Table;
+                        bool con2 = true;
+                        foreach (DataRow row in drList)
+                        {
+                            DataRow[] csrows = dtcompntsnippet.Select("compnt_group_no='" + row["compnt_group_no"].ToString() + "'");
+                            if (csrows.Length != 1)
+                            {
+                                con2 = false;
+                                break;
+                            }
+                        }
+                        if (con2)
+                        {
+                            List<object> listso = new List<object>();
+                            foreach (DataRow rowso in drList)
+                            {
+                                listso.Add(rowso["section_no"].ToString());
+                            }
+                            SetConditionSearch(pBlockName, "page_no", page_no);
+                            SetConditionSearchIn(pBlockName, "nodeid", listso);
+                            SearchData(pBlockName);
+                            GetPBlockData(pBlockName);
+                            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+                            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
+                            {
+                                bool con3 = true;
+                                string superiors = string.Empty;
+                                for (int i = 0; i < pBlock.ViewBlockDataTable.Rows.Count; i++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        superiors = pBlock.ViewBlockDataTable.Rows[i]["superiors"].ToString();
+                                    }
+                                    else
+                                    {
+                                        if (!superiors.Equals(pBlock.ViewBlockDataTable.Rows[i]["superiors"].ToString()))
+                                        {
+                                            con3 = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (con3)
+                                {
+                                    flag = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (type == 1)
+                {
+                    if (drList != null && drList.Count >= 2)
+                    {
+                        bool con2 = true;
+                        string compnt_group_no = string.Empty;
+                        DataTable dtcompntsnippet = drList[0].Table;
+                        for (int i = 0; i < dtcompntsnippet.Rows.Count; i++)
+                        {
+                            if (i == 0)
+                            {
+                                compnt_group_no = dtcompntsnippet.Rows[i]["compnt_group_no"].ToString();
+                            }
+                            else
+                            {
+                                if (!compnt_group_no.Equals(dtcompntsnippet.Rows[i]["compnt_group_no"].ToString()))
+                                {
+                                    con2 = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (con2)
+                        {
+                            flag = true;
+                        }
+                    }
+                }
+            }
+            o1.v = flag;
+        }
+        #endregion
+
+        #region 操作分析使用
+
+        /// <summary>
+        /// 设置第一个Pblock的复选框复选
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="pblockNameTwo">另一区块名称</param>
+        /// <param name="filed">字段值</param>
+        /// <param name="pageflow">字段值</param>
+        ///  <param name="type">类型</param>
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string type = "")
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            PresentationBlockModel pblockTwo = MainView.GetPresentationBlockModel(pblockNameTwo);
+            if (string.IsNullOrWhiteSpace(type))
+            {
+                if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockTwo.ViewBlockDataTable.Rows.Count > 0 && pblockTwo.ViewBlockDataTable.Columns.Contains(filed))
+                {
+                    foreach (DataRow dataRow in pBlock.ViewBlockDataTable.Rows)
+                    {
+                        DataRow[] drc = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                        if (drc.Length > 0)
+                        {
+                            dataRow["VicCheckFlag"] = true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                switch (type)
+                {
+                    case "1":
+                        if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockTwo.ViewBlockDataTable.Columns.Contains(filed))
+                        {
+
+                            DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag = '{0}'", "True"));
+                            object a = pBlock.ViewBlockDataTable.Rows[0]["VicCheckFlag"];
+                            foreach (DataRow dataRow in drc)
+                            {
+                                DataRow[] drcadd = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                                if (drcadd.Length == 0)
+                                {
+                                    DataRow drNew = pblockTwo.ViewBlockDataTable.NewRow();
+                                    foreach (DataColumn column in pblockTwo.ViewBlockDataTable.Columns)
+                                    {
+                                        switch (column.ColumnName)
+                                        {
+                                            case "_id":
+                                                drNew[column.ColumnName] = Guid.NewGuid().ToString();
+                                                break;
+                                            case "steps_no":
+                                                drNew[column.ColumnName] = dataRow["steps_no"];
+                                                break;
+                                            case "steps_name":
+                                                drNew[column.ColumnName] = dataRow["steps_name"];
+                                                break;
+                                            case "job_no":
+                                                drNew[column.ColumnName] = dataRow["job_no"];
+                                                break;
+                                            case "page_flow_no":
+                                                drNew[column.ColumnName] = pageflow;
+                                                break;
+                                        }
+                                    }
+                                    pblockTwo.ViewBlockDataTable.Rows.Add(drNew);
+                                }
+                            }
+                            DataRow[] drcs = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag = '{0}'", "False"));
+                            foreach (DataRow dataRow in drcs)
+                            {
+                                DataRow[] drcadd = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                                if (drcadd.Length > 0)
+                                {
+                                    drcadd[0].Delete();
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
         #endregion
     }
 }

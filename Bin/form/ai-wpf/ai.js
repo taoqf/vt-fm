@@ -140,6 +140,7 @@
 	"RoundNumbers":"RoundNumbers",
 	"SetConditionSearchMoreOrLess":"SetConditionSearchMoreOrLess",
 	"AddThenTemplate":"AddThenTemplate",
+	"IsAllowComOrSplit":"IsAllowComOrSplit",
 	"GetStringByObject":"GetStringByObject",
 	"GetPBlockDataRowColumnValue":"GetPBlockDataRowColumnValue",
 	"UnitAvalonEditLoad":"UnitAvalonEditLoad",
@@ -190,5 +191,8 @@
 		"GetComponentParamDictData":"GetComponentParamDictData",
 		"GetComBoxSelectValue":"GetComBoxSelectValue",
                 "GetChangedData":"GetChangedData",
-                "ComponentOperationAnalysisAdd":"ComponentOperationAnalysisAdd"
+                "ComponentOperationAnalysisAdd":"ComponentOperationAnalysisAdd",
+				"SetDataGridCheckFromTwoPblock":"SetDataGridCheckFromTwoPblock",
+                "OperationAnalysisAddTable":"OperationAnalysisAddTable",
+				"SetDataGridColumnValueByAllRow":"SetDataGridColumnValueByAllRow"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

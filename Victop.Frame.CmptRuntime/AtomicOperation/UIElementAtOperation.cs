@@ -685,7 +685,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="maintable">主表</param>
         /// <param name="secondtable">二层第一张表</param>
         /// <param name="secendtwotable">二层第二张表</param>
-        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable)
+        /// <param name="jobno">工作编号</param>
+        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable, string jobno)
         {
             TemplateControl tc = MainView.FindName(componetName) as TemplateControl;
             if (tc != null)
@@ -699,6 +700,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 dicContentParam.Add("mainDtName", maintable);
                 dicContentParam.Add("operationFlowDtName", secondtable);
                 dicContentParam.Add("pageFlowDtName", secendtwotable);
+                dicContentParam.Add("job_no", jobno);
                 dicParam.Add("MessageContent", dicContentParam);
                 tc.Excute(dicParam);
             }
@@ -879,7 +881,70 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 return;
             tc.Excute(dicParam);
         }
-
+        /// <summary>
+        /// 动态构建的Listbox部件获取复选框选中的数据集合
+        /// <param name="compntname">部件名称</param>
+        /// <param name="params1">接收OAV</param>
+        /// <param name="params2">接收OAV</param>
+        /// <param name="params3">接收OAV</param>
+        /// <param name="param4">接收OAV</param>
+        /// <param name="type">接收OAV</param>
+        /// </summary>
+        public void OperationAnalysisAddTable(string compntname, object params1, string params2, string params3, string param4, string type = "1")
+        {
+            if (!string.IsNullOrEmpty(compntname))
+            {
+                TemplateControl tc = (TemplateControl)MainView.FindName(compntname);
+                if (tc != null)
+                {
+                    switch (type)
+                    {
+                        case "1":
+                            Dictionary<string, object> dic = new Dictionary<string, object>();
+                            dic.Add("MessageType", "Rendering");
+                            Dictionary<string, object> diccontent = new Dictionary<string, object>();
+                            diccontent.Add("data_block_no", params1);
+                            dic.Add("MessageContent", diccontent);
+                            tc.Excute(dic);
+                            break;
+                        case "2":
+                            Dictionary<string, object> dic2 = new Dictionary<string, object>();
+                            dic2.Add("MessageType", "Add");
+                            Dictionary<string, object> diccontent2 = new Dictionary<string, object>();
+                            diccontent2.Add("tabletype", params1);
+                            diccontent2.Add("rel_type", params2);
+                            diccontent2.Add("table_name", param4);
+                            diccontent2.Add("table_title", param4);
+                            diccontent2.Add("tableid", params3);
+                            dic2.Add("MessageContent", diccontent2);
+                            tc.Excute(dic2);
+                            break;
+                        case "3":
+                            Dictionary<string, object> dic3 = new Dictionary<string, object>();
+                            dic3.Add("MessageType", "Delete");
+                            Dictionary<string, object> diccontent3 = new Dictionary<string, object>();
+                            dic3.Add("MessageContent", diccontent3);
+                            tc.Excute(dic3);
+                            break;
+                        case "4":
+                            Dictionary<string, object> dic4 = new Dictionary<string, object>();
+                            dic4.Add("MessageType", "Save");
+                            Dictionary<string, object> diccontent4 = new Dictionary<string, object>();
+                            dic4.Add("MessageContent", diccontent4);
+                            tc.Excute(dic4);
+                            break;
+                        case "5":
+                            Dictionary<string, object> dic5 = new Dictionary<string, object>();
+                            dic5.Add("MessageType", "AddElement");
+                            Dictionary<string, object> diccontent5 = new Dictionary<string, object>();
+                            diccontent5.Add("element_list", params1);
+                            dic5.Add("MessageContent", diccontent5);
+                            tc.Excute(dic5);
+                            break;
+                    }
+                }
+            }
+        }
         #region 原型图形部件
         /// <summary>
         /// 原型图形部件初始化

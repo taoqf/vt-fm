@@ -294,9 +294,10 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oavdrs">datarow集合</param>
         /// <param name="fieldName">字段名称</param>
         /// <param name="oavstr">指定行</param>
-        public void GetStrFromListDataRow(object oavdrs, string fieldName, object oavstr)
+        /// <param name="listIndex">datarow集合索引</param>
+        public void GetStrFromListDataRow(object oavdrs, string fieldName, object oavstr, int listIndex = -1)
         {
-            dataOperation.GetStrFromListDataRow(oavdrs, fieldName, oavstr);
+            dataOperation.GetStrFromListDataRow(oavdrs, fieldName, oavstr, listIndex);
         }
         /// <summary>
         /// 把行集合中指定列转换成字符串集合
@@ -617,6 +618,16 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetDataGridColumnValueList(pblockName, rowId, oav, fieldName);
         }
 
+        /// <summary>
+        /// 对当前block所有行赋值指定列
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="fieldName">字段</param>
+        /// <param name="fieldValue">字段值</param>
+        public void SetDataGridColumnValueByAllRow(string pblockName, string fieldName, object fieldValue)
+        {
+            dataOperation.SetDataGridColumnValueByAllRow(pblockName, fieldName, fieldValue);
+        }
 
         /// <summary>
         /// dgridName中某列字段值在界面显示时，状态转换成用户想要显示的结果
@@ -1022,7 +1033,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="productId">产品ID,默认“feidao”</param>
         public void UpLoadFile(string localFilePath, object filePath, object oav, string productId = "feidao")
         {
-            systemOperation.UpLoadFile(localFilePath, filePath,oav,productId);
+            systemOperation.UpLoadFile(localFilePath, filePath, oav, productId);
         }
         /// <summary>
         /// 打开文件
@@ -1763,6 +1774,18 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.AddThenTemplate(pblockrhs, pblockparams, action_no, rule_no, oav);
         }
+        /// <summary>
+        /// 是否允许组合或拆分
+        /// </summary>
+        /// <param name="pBlockName">区块名称page_dom_struct对应的P块</param>
+        /// <param name="page_no">页面编号</param>
+        /// <param name="drList">选中的行集合</param>
+        /// <param name="type">组合或拆分0组合1拆分</param>
+        /// <param name="oav">接受oav(true,false)</param>
+        public void IsAllowComOrSplit(string pBlockName, string page_no, List<DataRow> drList, int type, object oav)
+        {
+            dataOperation.IsAllowComOrSplit(pBlockName, page_no, drList, type, oav);
+        }
         #endregion
 
         #region 动态构建的Listbox部件初始化或者刷新方法
@@ -1933,7 +1956,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="itemBase">版式所属组件图形</param>
         public void UnitUCDesignerRuleDropFormat(string unitName, object elementStr, object pointx, object pointy, object itemBase)
         {
-            uIElementOperation.UnitUCDesignerRuleDropFormat(unitName, elementStr, pointx,pointy, itemBase);
+            uIElementOperation.UnitUCDesignerRuleDropFormat(unitName, elementStr, pointx, pointy, itemBase);
         }
         /// <summary>
         /// 原型图形部件保存版式（返回版式文件串）
@@ -1955,7 +1978,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="id">新增控件id</param>
         public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object pointx, object pointy, object itemBase, object id)
         {
-            uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, pointx, pointy ,itemBase, id);
+            uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, pointx, pointy, itemBase, id);
         }
         /// <summary>
         /// 原型图形控件Dom树加载后处理
@@ -2024,9 +2047,10 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="maintable">主表</param>
         /// <param name="secondtable">二层第一张表</param>
         /// <param name="secendtwotable">二层第二张表</param>
-        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable)
+        /// <param name="jobno">工作编号</param>
+        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable, string jobno)
         {
-            uIElementOperation.ComponentOperationAnalysisRender(componetName, pblockName, maintable, secondtable, secendtwotable);
+            uIElementOperation.ComponentOperationAnalysisRender(componetName, pblockName, maintable, secondtable, secendtwotable, jobno);
         }
         /// <summary>
         /// 操作分析组件添加主数据
@@ -2054,6 +2078,31 @@ namespace Victop.Frame.CmptRuntime
         public void GetComBoxSelectValue(string elementName, object oav)
         {
             uIElementOperation.GetComBoxSelectValue(elementName, oav);
+        }
+        /// <summary>
+        /// 设置第一个Pblock的复选框复选
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="pblockNameTwo">另一区块名称</param>
+        /// <param name="filed">字段值</param>
+        /// <param name="pageflow">字段值</param>
+        ///  <param name="type">类型</param>
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string type = "")
+        {
+            dataOperation.SetDataGridCheckFromTwoPblock(pblockName, pblockNameTwo, filed, pageflow, type);
+        }
+        /// <summary>
+        /// 动态构建的Listbox部件获取复选框选中的数据集合
+        /// <param name="compntname">部件名称</param>
+        /// <param name="params1">接收OAV</param>
+        /// <param name="params2">接收OAV</param>
+        /// <param name="params3">接收OAV</param>
+        /// <param name="param4">接收OAV</param>
+        /// <param name="type">接收OAV</param>
+        /// </summary>
+        public void OperationAnalysisAddTable(string compntname, object params1, string params2, string params3, string param4, string type = "1")
+        {
+            uIElementOperation.OperationAnalysisAddTable(compntname, params1, params2, params3, param4, type);
         }
         #endregion
 
