@@ -1092,16 +1092,20 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void BlockSelectRowsUpdate(string blockName, string filedName, string filedValue)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(filedName) && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
-            {
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(filedName))
+            {                
                 foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
                 {
-                    if (Convert.ToBoolean(dr["VicCheckFlag"].ToString()))
+                    if (pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
                     {
-                        if (dr.Table.Columns.Contains(filedName))
+                        if (Convert.ToBoolean(dr["VicCheckFlag"].ToString()))
                         {
                             dr[filedName] = filedValue;
                         }
+                    }
+                    else
+                    {
+                        dr[filedName] = filedValue;
                     }
                 }
             }
@@ -1573,24 +1577,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                             }
                         }
                     }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 对当前block所有行赋值指定列
-        /// </summary>
-        /// <param name="pblockName">区块名称</param>
-        /// <param name="fieldName">字段</param>
-        /// <param name="fieldValue">字段值</param>
-        public void SetDataGridColumnValueByAllRow(string pblockName, string fieldName, object fieldValue)
-        {
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
-            {
-                foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
-                {
-                    dr[fieldName] = fieldValue;
                 }
             }
         }

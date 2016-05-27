@@ -193,6 +193,5 @@
                 "GetChangedData":"GetChangedData",
                 "ComponentOperationAnalysisAdd":"ComponentOperationAnalysisAdd",
 				"SetDataGridCheckFromTwoPblock":"SetDataGridCheckFromTwoPblock",
-                "OperationAnalysisAddTable":"OperationAnalysisAddTable",
-				"SetDataGridColumnValueByAllRow":"SetDataGridColumnValueByAllRow"
+                "OperationAnalysisAddTable":"OperationAnalysisAddTable"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

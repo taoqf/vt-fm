@@ -619,17 +619,6 @@ namespace Victop.Frame.CmptRuntime
         }
 
         /// <summary>
-        /// 对当前block所有行赋值指定列
-        /// </summary>
-        /// <param name="pblockName">区块名称</param>
-        /// <param name="fieldName">字段</param>
-        /// <param name="fieldValue">字段值</param>
-        public void SetDataGridColumnValueByAllRow(string pblockName, string fieldName, object fieldValue)
-        {
-            dataOperation.SetDataGridColumnValueByAllRow(pblockName, fieldName, fieldValue);
-        }
-
-        /// <summary>
         /// dgridName中某列字段值在界面显示时，状态转换成用户想要显示的结果
         /// </summary>
         /// <param name="dgridName">列表名称</param>

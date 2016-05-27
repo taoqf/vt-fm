@@ -759,17 +759,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     {
                         case "VicComboBoxNormal":
                             VicComboBoxNormal cmbox = element as VicComboBoxNormal;
-                            if (cmbox.SelectedItem != null)
+                            if (cmbox.SelectedValue != null)
                             {
-                                DataRow dataRow = ((DataRowView)cmbox.SelectedItem).Row;
-                                if (dataRow != null)
-                                {
-                                    o.v = dataRow["value"];
-                                }
-                                else
-                                {
-                                    o.v = "";
-                                }
+                                o.v = cmbox.SelectedValue;
                             }
                             else
                             {
