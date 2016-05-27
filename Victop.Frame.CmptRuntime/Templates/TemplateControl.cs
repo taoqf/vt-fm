@@ -79,6 +79,10 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         public int ShowType { get; set; }
         /// <summary>
+        /// 飞道原子操作
+        /// </summary>
+        public FeiDaoOperation FeiDaoOp;
+        /// <summary>
         /// 模板委托代理
         /// </summary>
         /// <param name="sender">事件对象</param>
@@ -280,7 +284,8 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="fileUrl"></param>
         private void InitWebBrowser(string fileUrl)
         {
-            BuiltBrowser.ObjectForScripting = new FeiDaoOperation(this);
+            FeiDaoOp = new FeiDaoOperation(this);
+            BuiltBrowser.ObjectForScripting = FeiDaoOp;
             BuiltBrowser.Navigating += BuiltBrowser_Navigating;
             BuiltBrowser.Source = new Uri(fileUrl);
             BuiltBrowser.Visibility = Visibility.Collapsed;

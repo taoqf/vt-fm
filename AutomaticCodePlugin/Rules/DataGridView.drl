@@ -10,7 +10,7 @@ rule "r3"
 	then
 	{
 		feidao.GetPBlockData("masterPBlock");
-		feidao.InsertFact("param","productid");
+		feidao.oav_insert("param","productid");
 	}
 }
 rule "r3_1" 
@@ -26,7 +26,7 @@ rule "r3_1"
 	{
 		feidao.ParamsInterCompntParse(a,"productid",o2);
 		feidao.GetPBlockData("masterPBlock");
-		feidao.RemoveFact(a);
-		feidao.RemoveFact(o2);
+		feidao.oav_remove(a);
+		feidao.oav_remove(o2);
 	}
 }

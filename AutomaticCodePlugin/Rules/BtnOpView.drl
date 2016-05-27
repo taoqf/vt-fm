@@ -13,7 +13,7 @@ rule "r3"
 	}
 	then
 	{
-		feidao.InsertFact("param","productid","001");
+		feidao.oav_insert("param","productid","001");
 	}
 }
 rule "r3_1"
@@ -29,7 +29,7 @@ rule "r3_1"
 	{
 		feidao.ParamsInterCompntAdd(o2,o1);
 		feidao.ExcutePageTrigger("search",o1.v);
-		feidao.RemoveFact(o1);
-		feidao.RemoveFact(o2);
+		feidao.oav_remove(o1);
+		feidao.oav_remove(o2);
 	}
 }
