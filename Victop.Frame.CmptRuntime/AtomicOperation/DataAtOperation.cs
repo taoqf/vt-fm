@@ -1993,6 +1993,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                                             case "page_flow_no":
                                                 drNew[column.ColumnName] = pageflow;
                                                 break;
+                                            case "page_no":
+                                                drNew[column.ColumnName] = pageflow;
+                                                break;
                                         }
                                     }
                                     pblockTwo.ViewBlockDataTable.Rows.Add(drNew);
