@@ -2014,26 +2014,26 @@ namespace Victop.Frame.CmptRuntime
         #endregion
 
         #region 动态构建的ComponentVisioProperty初始化方法
+
         /// <summary>
         ///  动态构建的ComponentVisioProperty初始化方法
         /// </summary>
         /// <param name="unitName">组件名</param>
-        /// <param name="pblockNameProperty">节点属性P名称</param>
+        /// <param name="pblockNameProperty">节点属性Pblock名称</param>
         /// <param name="pageType">客户端类型</param>
+        /// <param name="nodeId">节点id</param>
         /// <param name="nodeNo">节点编号</param>
         /// <param name="nodeTypeNo">节点类型编号</param>
         /// <param name="nodeTypeName">节点类型名称</param>
         /// <param name="pblockNo">节点所属P编号</param>
-        /// <param name="pblockName">节点所属P名称</param>
         /// <param name="formatNo">节点所属版式编号</param>
         public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, string pageType,
-                                               string nodeNo, string nodeTypeNo, string nodeTypeName, string pblockNo = "",
-                                               string pblockName = "", string formatNo = "")
+                                               string nodeId, string nodeNo, string nodeTypeNo, string nodeTypeName,
+                                               string pblockNo, string formatNo)
         {
             uIElementOperation.ComponentVisioPropertyLoad(unitName, pblockNameProperty, pageType,
-                                                nodeNo, nodeTypeNo, nodeTypeName, pblockNo,
-                                                pblockName, formatNo)
-            ;
+                                                          nodeId, nodeNo, nodeTypeNo, nodeTypeName, pblockNo,
+                                                          formatNo);
         }
 
         #region 操作分析封装的原子操作
