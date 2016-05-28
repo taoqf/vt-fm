@@ -2027,9 +2027,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="nodeTypeName">节点类型名称</param>
         /// <param name="pblockNo">节点所属P编号</param>
         /// <param name="formatNo">节点所属版式编号</param>
-        public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, string pageType,
-                                               string nodeId, string nodeNo, string nodeTypeNo, string nodeTypeName,
-                                               string pblockNo, string formatNo)
+        public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, object pageType,
+                                               object nodeId, object nodeNo, object nodeTypeNo, object nodeTypeName,
+                                               object pblockNo=null, object formatNo=null)
         {
             uIElementOperation.ComponentVisioPropertyLoad(unitName, pblockNameProperty, pageType,
                                                           nodeId, nodeNo, nodeTypeNo, nodeTypeName, pblockNo,
