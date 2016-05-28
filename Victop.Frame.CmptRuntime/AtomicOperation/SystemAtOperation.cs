@@ -297,7 +297,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="keyValue">selectValue值</param>
         /// <param name="displayValue">displaymember值</param>
         /// <param name="paramDt">oav</param>
-        public void SetComboBoxDtRow(string keyValue, string displayValue, object paramDt)
+        public void SetComboBoxDtRow(object keyValue, string displayValue, object paramDt)
         {
 
             DataTable dt = (DataTable)paramDt;

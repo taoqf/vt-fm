@@ -686,7 +686,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="secondtable">二层第一张表</param>
         /// <param name="secendtwotable">二层第二张表</param>
         /// <param name="jobno">工作编号</param>
-        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable, string jobno)
+        /// <param name="productid">产品ID</param>
+        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable, string jobno, string productid)
         {
             TemplateControl tc = MainView.FindName(componetName) as TemplateControl;
             if (tc != null)
@@ -701,6 +702,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 dicContentParam.Add("operationFlowDtName", secondtable);
                 dicContentParam.Add("pageFlowDtName", secendtwotable);
                 dicContentParam.Add("job_no", jobno);
+                dicContentParam.Add("productid", productid);
                 dicParam.Add("MessageContent", dicContentParam);
                 tc.Excute(dicParam);
             }
@@ -710,16 +712,31 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 操作分析组件添加主数据
         /// </summary>
         /// <param name="componetName">组件名称</param>
-        public void ComponentOperationAnalysisAdd(string componetName)
+        /// <param name="type">1:代表添加，2：代表保存</param>
+        public void ComponentOperationAnalysisAdd(string componetName, string type = "1")
         {
             TemplateControl tc = MainView.FindName(componetName) as TemplateControl;
             if (tc != null)
             {
-                Dictionary<string, object> dicParam = new Dictionary<string, object>();
-                dicParam.Add("MessageType", "Add");
-                Dictionary<string, object> dicContentParam = new Dictionary<string, object>();
-                dicParam.Add("MessageContent", dicContentParam);
-                tc.Excute(dicParam);
+                switch (type)
+                {
+                    case "1":
+                        Dictionary<string, object> dicParam = new Dictionary<string, object>();
+                        dicParam.Add("MessageType", "Add");
+                        Dictionary<string, object> dicContentParam = new Dictionary<string, object>();
+                        dicParam.Add("MessageContent", dicContentParam);
+                        tc.Excute(dicParam);
+                        break;
+                    case "2":
+                        Dictionary<string, object> dicParamSave = new Dictionary<string, object>();
+                        dicParamSave.Add("MessageType", "Save");
+                        Dictionary<string, object> dicParamSaves = new Dictionary<string, object>();
+                        dicParamSave.Add("MessageContent", dicParamSaves);
+                        tc.Excute(dicParamSave);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 

@@ -809,7 +809,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="keyValue">selectValue值</param>
         /// <param name="displayValue">displaymember值</param>
         /// <param name="paramDt">oav</param>
-        public void SetComboBoxDtRow(string keyValue, string displayValue, object paramDt)
+        public void SetComboBoxDtRow(object keyValue, string displayValue, object paramDt)
         {
             systemOperation.SetComboBoxDtRow(keyValue, displayValue, paramDt);
 
@@ -2047,17 +2047,19 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="secondtable">二层第一张表</param>
         /// <param name="secendtwotable">二层第二张表</param>
         /// <param name="jobno">工作编号</param>
-        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable, string jobno)
+        /// <param name="productid">产品ID</param>
+        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable, string jobno, string productid)
         {
-            uIElementOperation.ComponentOperationAnalysisRender(componetName, pblockName, maintable, secondtable, secendtwotable, jobno);
+            uIElementOperation.ComponentOperationAnalysisRender(componetName, pblockName, maintable, secondtable, secendtwotable, jobno, productid);
         }
         /// <summary>
         /// 操作分析组件添加主数据
         /// </summary>
         /// <param name="componetName">组件名称</param>
-        public void ComponentOperationAnalysisAdd(string componetName)
+        /// <param name="type">1:代表添加，2：代表保存</param>
+        public void ComponentOperationAnalysisAdd(string componetName, string type = "1")
         {
-            uIElementOperation.ComponentOperationAnalysisAdd(componetName);
+            uIElementOperation.ComponentOperationAnalysisAdd(componetName, type);
         }
         /// <summary>
         /// 获取组件中的值
