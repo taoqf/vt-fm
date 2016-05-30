@@ -921,8 +921,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                             dic2.Add("MessageType", "Add");
                             Dictionary<string, object> diccontent2 = new Dictionary<string, object>();
                             diccontent2.Add("tabletype", params1);
-                            diccontent2.Add("rel_type", params2);
-                            diccontent2.Add("table_name", param4);
+                            diccontent2.Add("rel_type", "");
+                            diccontent2.Add("table_name", params2);
                             diccontent2.Add("table_title", param4);
                             diccontent2.Add("tableid", params3);
                             dic2.Add("MessageContent", diccontent2);
