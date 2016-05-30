@@ -118,6 +118,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                             VicRadioButtonNormal radiobutton = element as VicRadioButtonNormal;
                             radiobutton.IsChecked = isChecked;
                             break;
+                        case "VicRadioButtonRectangle":
+                            VicRadioButtonRectangle radiobuttonRectangle = element as VicRadioButtonRectangle;
+                            radiobuttonRectangle.IsChecked = isChecked;
+                            break;
                         default:
                             break;
                     }
@@ -868,8 +872,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicContent.Add("nodeNo", nodeNo);
             dicContent.Add("nodeTypeNo", nodeTypeNo);
             dicContent.Add("nodeTypeName", nodeTypeName);
-            dicContent.Add("pblockNo", pblockNo==null?"":pblockNo);
-            dicContent.Add("formatNo", formatNo==null?"":formatNo);
+            dicContent.Add("pblockNo", pblockNo == null ? "" : pblockNo);
+            dicContent.Add("formatNo", formatNo == null ? "" : formatNo);
             dicMessage.Add("MessageContent", dicContent);
 
             componentVisioProperty.Excute(dicMessage);
@@ -1051,7 +1055,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             Dictionary<string, object> messageContent = new Dictionary<string, object>();
             Dictionary<string, string> address = new Dictionary<string, string>();
             address.Add("UploadFromPath", fileAddress);
-            address.Add("DelFileId",filePath.ToString());
+            address.Add("DelFileId", filePath.ToString());
             address.Add("ProductId", "feidao");
             messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
             Dictionary<string, object> returnDic = new DataMessageOperation().SendSyncMessage("ServerCenterService.UploadDocument", messageContent);
@@ -1308,7 +1312,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             Dictionary<string, object> dicMessage = new Dictionary<string, object>();
             //类型
             dicMessage.Add("MessageType", "deleteItem");
-            
+
             template.Excute(dicMessage);
         }
         #endregion
