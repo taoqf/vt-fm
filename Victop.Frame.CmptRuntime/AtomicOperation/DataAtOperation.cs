@@ -163,6 +163,45 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+
+        /// <summary>
+        /// 设置区块查询条件or子查询
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="listOr">or子查询集合</param>
+        public void SetConditionSearchOr(string pBlockName, string paramField, object listOr)
+        {
+            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && listOr != null)
+            {
+                List<object> list = listOr as List<object>;
+                if (list != null)
+                {
+                    Dictionary<string, object> orDic = new Dictionary<string, object>();
+                    orDic.Add("$or", list);
+                    if (conditionModelDic.ContainsKey(pBlockName))
+                    {
+                        Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
+                        if (paramDic.ContainsKey(paramField))
+                        {
+                            paramDic[paramField] = orDic;
+                        }
+                        else
+                        {
+                            paramDic.Add(paramField, orDic);
+                        }
+                    }
+                    else
+                    {
+                        ViewsConditionModel viewConModel = new ViewsConditionModel();
+                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                        paramDic.Add(paramField, orDic);
+                        viewConModel.TableCondition = paramDic;
+                        conditionModelDic.Add(pBlockName, viewConModel);
+                    }
+                }
+            }
+        }
         /// <summary>
         /// 设置区块查询条件子查询
         /// </summary>

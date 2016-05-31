@@ -146,6 +146,17 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetConditionSearchMoreOrLess(pBlockName, paramField, paramValue, operatorStr);
         }
 
+
+        /// <summary>
+        /// 设置区块查询条件or子查询
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="paramField">参数字段</param>
+        /// <param name="listOr">or子查询集合</param>
+        public void SetConditionSearchOr(string pBlockName, string paramField, object listOr)
+        {
+            dataOperation.SetConditionSearchOr(pBlockName, paramField, listOr);
+        }
         /// <summary>
         /// 设置区块查询条件In子查询
         /// </summary>
