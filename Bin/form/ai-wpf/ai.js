@@ -186,6 +186,7 @@
 		"UnitUCDesignerRuleGetPageLayoutSuperiors":"UnitUCDesignerRuleGetPageLayoutSuperiors",
 		"UnitUCDesignerRuleDeleteItem":"UnitUCDesignerRuleDeleteItem",
 		"UnitUCDesignerRuleSelectCom":"UnitUCDesignerRuleSelectCom",
+		"UnitUCDesignerRuleAddSection":"UnitUCDesignerRuleAddSection",
 		"GetListFromListDataRow":"GetListFromListDataRow",
 		"DownLoadFile":"DownLoadFile",
 		"ComponentOperationAnalysisRender":"ComponentOperationAnalysisRender",

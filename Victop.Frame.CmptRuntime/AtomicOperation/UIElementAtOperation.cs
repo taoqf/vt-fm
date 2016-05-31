@@ -961,6 +961,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+
         #region 原型图形部件
         /// <summary>
         /// 原型图形部件初始化
@@ -1284,7 +1285,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="unitName">部件</param>
         /// <param name="id">组件id</param>
-        public void UnitUCDesignerRuleSelectCom(string unitName, object id)
+        /// <param name="isFloat">是否浮动组件</param>
+        public void UnitUCDesignerRuleSelectCom(string unitName, object id, object isFloat)
         {
             TemplateControl template = MainView.FindName(unitName) as TemplateControl;
             if (template == null)
@@ -1298,6 +1300,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             //参数
             Dictionary<string, object> dicContent = new Dictionary<string, object>();
             dicContent.Add("id", id != null ? id : "");
+            dicContent.Add("isFloat", isFloat);
             dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
         }
@@ -1316,6 +1319,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             //类型
             dicMessage.Add("MessageType", "deleteItem");
 
+            template.Excute(dicMessage);
+        }
+        /// <summary>
+        /// 原型图形控件新增浮动组件
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="id">组件id</param>
+        public void UnitUCDesignerRuleAddSection(string unitName, object id)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "addSection");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("id", id);
+            dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
         }
         #endregion
