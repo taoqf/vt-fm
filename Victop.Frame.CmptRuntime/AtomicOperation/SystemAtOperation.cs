@@ -1230,7 +1230,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void ConvertDateTimeToString(object oav, object datetime, string format = "yyyy-MM-dd HH:mm:ss")
         {
             dynamic o = oav;
-            if (datetime == null)
+            if (datetime == null || string.IsNullOrWhiteSpace(datetime.ToString()))
             {
                 o.v = "";
                 return;
