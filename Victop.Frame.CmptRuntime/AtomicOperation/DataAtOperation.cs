@@ -168,11 +168,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 设置区块查询条件or子查询
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        /// <param name="paramField">参数字段</param>
         /// <param name="listOr">or子查询集合</param>
-        public void SetConditionSearchOr(string pBlockName, string paramField, object listOr)
+        public void SetConditionSearchOr(string pBlockName, object listOr)
         {
-            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && listOr != null)
+            if (!string.IsNullOrEmpty(pBlockName)  && listOr != null)
             {
                 List<object> list = listOr as List<object>;
                 if (list != null)
@@ -182,20 +181,12 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     if (conditionModelDic.ContainsKey(pBlockName))
                     {
                         Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
-                        if (paramDic.ContainsKey(paramField))
-                        {
-                            paramDic[paramField] = orDic;
-                        }
-                        else
-                        {
-                            paramDic.Add(paramField, orDic);
-                        }
+                        paramDic.Add("param", orDic);
                     }
                     else
                     {
                         ViewsConditionModel viewConModel = new ViewsConditionModel();
                         Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                        paramDic.Add(paramField, orDic);
                         viewConModel.TableCondition = paramDic;
                         conditionModelDic.Add(pBlockName, viewConModel);
                     }
@@ -208,37 +199,58 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pBlockName">区块名称</param>
         /// <param name="paramField">参数字段</param>
         /// <param name="listIn">子查询集合</param>
-        public void SetConditionSearchIn(string pBlockName, string paramField, object listIn)
+        public void SetConditionSearchIn(string pBlockName, string paramField, object listIn, object oav = null)
         {
-            if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && listIn != null)
+            if (oav == null)
             {
-                List<object> list = listIn as List<object>;
-                if (list != null)
+                if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && listIn != null)
                 {
-                    Dictionary<string, object> inDic = new Dictionary<string, object>();
-                    inDic.Add("$in", list);
-                    if (conditionModelDic.ContainsKey(pBlockName))
+                    List<object> list = listIn as List<object>;
+                    if (list != null)
                     {
-                        Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
-                        if (paramDic.ContainsKey(paramField))
+                        Dictionary<string, object> inDic = new Dictionary<string, object>();
+                        inDic.Add("$in", list);
+                        if (conditionModelDic.ContainsKey(pBlockName))
                         {
-                            paramDic[paramField] = inDic;
+                            Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
+                            if (paramDic.ContainsKey(paramField))
+                            {
+                                paramDic[paramField] = inDic;
+                            }
+                            else
+                            {
+                                paramDic.Add(paramField, inDic);
+                            }
                         }
                         else
                         {
+                            ViewsConditionModel viewConModel = new ViewsConditionModel();
+                            Dictionary<string, object> paramDic = new Dictionary<string, object>();
                             paramDic.Add(paramField, inDic);
+                            viewConModel.TableCondition = paramDic;
+                            conditionModelDic.Add(pBlockName, viewConModel);
                         }
-                    }
-                    else
-                    {
-                        ViewsConditionModel viewConModel = new ViewsConditionModel();
-                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                        paramDic.Add(paramField, inDic);
-                        viewConModel.TableCondition = paramDic;
-                        conditionModelDic.Add(pBlockName, viewConModel);
                     }
                 }
             }
+            else
+            {
+                dynamic o = oav;
+                if (!string.IsNullOrEmpty(pBlockName) && !string.IsNullOrEmpty(paramField) && listIn != null)
+                {
+                    List<object> list = listIn as List<object>;
+                    if (list != null)
+                    {
+                        Dictionary<string, object> inDic = new Dictionary<string, object>();
+                        inDic.Add("$in", list);
+                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                        paramDic.Add(paramField, inDic);
+                        o.v = paramDic;
+                    }
+                }
+
+            }
+
         }
         /// <summary>
         /// 设置区块查询条件NotIn子查询
@@ -1132,7 +1144,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(blockName);
             if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(filedName))
-            {                
+            {
                 foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
                 {
                     if (pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
@@ -1662,52 +1674,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
 
-
-        /// <summary>
-        /// dgridName中某列字段值在界面显示时，状态转换成用户想要显示的结果
-        /// </summary>
-        /// <param name="dgridName">列表名称</param>
-        /// <param name="fieldName">字段</param>
-        /// <param name="relation">键值对关系的类型</param>
-        public void SetDgridColumnValueStateChange(string dgridName, string fieldName, Dictionary<string, object> relation)
-        {
-            VicDataGrid dgrid = MainView.FindName(dgridName) as VicDataGrid;
-            if (dgrid != null)
-            {
-                DataTable dataSource = dgrid.ItemsSource as DataTable;
-                if (dataSource == null)
-                    return;
-                for (int i = 0; i < dgrid.Columns.Count; i++)
-                {
-                    DataGridColumn column = dgrid.Columns[i];
-                    if (column.Header.Equals(fieldName))
-                    {
-                        dgrid.Columns.Remove(column);
-                        VicDataGridComboBoxColumn comboxColOlder = column as VicDataGridComboBoxColumn;
-                        Binding binding = comboxColOlder.SelectedValueBinding as Binding;
-                        string field = binding != null ? binding.Path.Path : "";
-                        if (string.IsNullOrEmpty(field))
-                            continue;
-
-                        VicDataGridComboBoxColumn comboxCol = new VicDataGridComboBoxColumn();
-
-                        comboxCol.ItemsSource = relation;
-
-                        comboxCol.SelectedValuePath = "Key";
-                        comboxCol.DisplayMemberPath = "Value";
-                        comboxCol.SelectedValueBinding = new Binding(field) { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
-
-                        comboxCol.Header = fieldName;
-
-                        comboxCol.Visibility = comboxColOlder.Visibility;
-                        comboxCol.IsReadOnly = comboxColOlder.IsReadOnly;
-                        comboxCol.Width = comboxColOlder.Width;
-                        dgrid.Columns.Insert(i, comboxCol);
-
-                    }
-                }
-            }
-        }
 
         #region 规则机台专用原子操作
         /// <summary>

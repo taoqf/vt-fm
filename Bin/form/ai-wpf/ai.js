@@ -168,7 +168,6 @@
 	"DictionaryAdd":"DictionaryAdd",
 	"GetDictionary":"GetDictionary",
 	"TemplateControlLoad":"TemplateControlLoad",
-        "SetDgridColumnValueStateChange":"SetDgridColumnValueStateChange",
 		"SetPBlockCurrentRowByDataRow":"SetPBlockCurrentRowByDataRow",
 		"GetStrFromListDataRow":"GetStrFromListDataRow",
 		"GetDictionaryKeyValue":"GetDictionaryKeyValue",

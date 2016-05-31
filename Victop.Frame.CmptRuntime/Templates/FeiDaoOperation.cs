@@ -151,11 +151,10 @@ namespace Victop.Frame.CmptRuntime
         /// 设置区块查询条件or子查询
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        /// <param name="paramField">参数字段</param>
         /// <param name="listOr">or子查询集合</param>
-        public void SetConditionSearchOr(string pBlockName, string paramField, object listOr)
+        public void SetConditionSearchOr(string pBlockName, object listOr)
         {
-            dataOperation.SetConditionSearchOr(pBlockName, paramField, listOr);
+            dataOperation.SetConditionSearchOr(pBlockName, listOr);
         }
         /// <summary>
         /// 设置区块查询条件In子查询
@@ -163,9 +162,10 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pBlockName">区块名称</param>
         /// <param name="paramField">参数字段</param>
         /// <param name="listIn">In子查询集合</param>
-        public void SetConditionSearchIn(string pBlockName, string paramField, object listIn)
+        ///   /// <param name="oav">接收结果的oav</param>
+        public void SetConditionSearchIn(string pBlockName, string paramField, object listIn,object oav=null)
         {
-            dataOperation.SetConditionSearchIn(pBlockName, paramField, listIn);
+            dataOperation.SetConditionSearchIn(pBlockName, paramField, listIn,oav);
         }
 
         /// <summary>
@@ -685,19 +685,6 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetDataGridColumnValueList(pblockName, rowId, oav, fieldName);
         }
-
-        /// <summary>
-        /// dgridName中某列字段值在界面显示时，状态转换成用户想要显示的结果
-        /// </summary>
-        /// <param name="dgridName">列表名称</param>
-        /// <param name="fieldName">字段</param>
-        /// <param name="relation">键值对关系的类型</param>
-        public void SetDgridColumnValueStateChange(string dgridName, string fieldName,
-                                                   Dictionary<string, object> relation)
-        {
-            dataOperation.SetDgridColumnValueStateChange(dgridName, fieldName, relation);
-        }
-
 
         #endregion
 
