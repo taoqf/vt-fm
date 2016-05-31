@@ -187,6 +187,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     {
                         ViewsConditionModel viewConModel = new ViewsConditionModel();
                         Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                        paramDic.Add("param", orDic);
                         viewConModel.TableCondition = paramDic;
                         conditionModelDic.Add(pBlockName, viewConModel);
                     }
