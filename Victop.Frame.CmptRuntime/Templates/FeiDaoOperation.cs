@@ -2019,20 +2019,18 @@ namespace Victop.Frame.CmptRuntime
         ///  动态构建的ComponentVisioProperty初始化方法
         /// </summary>
         /// <param name="unitName">组件名</param>
-        /// <param name="pblockNameProperty">节点属性Pblock名称</param>
+        /// <param name="pblockNameProperty">节点属性Pblock名称+属性模板Pblock名称+属性可选值Pblock名称(p1,p2,p3)</param>
         /// <param name="pageType">客户端类型</param>
         /// <param name="nodeId">节点id</param>
-        /// <param name="nodeNo">节点编号</param>
         /// <param name="nodeTypeNo">节点类型编号</param>
         /// <param name="nodeTypeName">节点类型名称</param>
         /// <param name="pblockNo">节点所属P编号</param>
         /// <param name="formatNo">节点所属版式编号</param>
-        public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, object pageType,
-                                               object nodeId, object nodeNo, object nodeTypeNo, object nodeTypeName,
-                                               object pblockNo=null, object formatNo=null)
+        public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, object pageType, object nodeId, object nodeTypeNo, object nodeTypeName, object pblockNo=null, object formatNo=null)
+        
         {
             uIElementOperation.ComponentVisioPropertyLoad(unitName, pblockNameProperty, pageType,
-                                                          nodeId, nodeNo, nodeTypeNo, nodeTypeName, pblockNo,
+                                                          nodeId, nodeTypeNo, nodeTypeName, pblockNo,
                                                           formatNo);
         }
 
