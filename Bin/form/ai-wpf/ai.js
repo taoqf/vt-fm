@@ -192,6 +192,7 @@
 		"ComponentOperationAnalysisRender":"ComponentOperationAnalysisRender",
 		"GetComponentParamDictData":"GetComponentParamDictData",
 		"GetComBoxSelectValue":"GetComBoxSelectValue",
+		"SetComBoxSelectValue":"SetComBoxSelectValue",
                 "GetChangedData":"GetChangedData",
                 "ComponentOperationAnalysisAdd":"ComponentOperationAnalysisAdd",
 				"SetDataGridCheckFromTwoPblock":"SetDataGridCheckFromTwoPblock",

@@ -796,6 +796,32 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
 
+        /// <summary>
+        /// 设置combox选择值
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="selectValue">选中值</param>
+        public void SetComBoxSelectValue(string elementName, object selectValue)
+        {
+            if (!string.IsNullOrEmpty(elementName))
+            {
+                FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
+                if (element != null)
+                {
+                    string typeName = element.GetType().Name;
+                    switch (typeName)
+                    {
+                        case "VicComboBoxNormal":
+                            VicComboBoxNormal cmbox = element as VicComboBoxNormal;
+                            cmbox.SelectedValue = selectValue;
+                            break;                        
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
         #region 动态构建的Listbox部件初始化或者刷新方法
         /// <summary>
         /// 动态构建的Listbox部件初始化或者刷新方法

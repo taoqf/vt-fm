@@ -2318,6 +2318,15 @@ namespace Victop.Frame.CmptRuntime
         }
 
         /// <summary>
+        /// 设置combox选择值
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="selectValue">选中值</param>
+        public void SetComBoxSelectValue(string elementName, object selectValue)
+        {
+            uIElementOperation.SetComBoxSelectValue(elementName, selectValue);
+        }
+        /// <summary>
         /// 设置第一个Pblock的复选框复选
         /// </summary>
         /// <param name="pblockName">区块名称</param>
