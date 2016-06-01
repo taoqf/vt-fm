@@ -284,7 +284,6 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="fileUrl"></param>
         private void InitWebBrowser(string fileUrl)
         {
-            FeiDaoOp = new FeiDaoOperation(this);
             BuiltBrowser.ObjectForScripting = FeiDaoOp;
             BuiltBrowser.Navigating += BuiltBrowser_Navigating;
             BuiltBrowser.Source = new Uri(fileUrl);
@@ -351,6 +350,7 @@ namespace Victop.Frame.CmptRuntime
         public override void EndInit()
         {
             base.EndInit();
+            FeiDaoOp = new FeiDaoOperation(this);
             if (BusinessModel.Equals(1) && !DesignerProperties.GetIsInDesignMode(this))
             {
                 string url = string.Format("{0}/{1}", ConfigManager.GetLocalHttpServerBaseUrl(), ConfigurationManager.AppSettings["businesspath"]);
