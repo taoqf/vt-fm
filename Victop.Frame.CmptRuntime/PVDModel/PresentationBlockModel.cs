@@ -318,9 +318,14 @@ namespace Victop.Frame.CmptRuntime
                     ViewBlockDataTable = dt;
                 }
             }
-            if (ViewBlockDataTable != null && ViewBlockDataTable.Rows.Count > 0)
+            if (ViewBlockDataTable != null)
             {
-                PreBlockSelectedRow = ViewBlockDataTable.Rows[0];
+                if (ViewBlockDataTable.Rows.Count > 0)
+                    PreBlockSelectedRow = ViewBlockDataTable.Rows[0];
+                else
+                {
+                    PreBlockSelectedRow = null;
+                }
             }
         }
         /// <summary>
