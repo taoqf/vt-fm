@@ -1343,6 +1343,29 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
         }
+        /// <summary>
+        /// 原型图形控件属性改变
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="propertyName">属性名</param>
+        /// <param name="propertyValue">属性值</param>
+        public void UnitUCDesignerRuleChangeItemState(string unitName, object propertyName, object propertyValue)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "changeItemState");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("propertyName", propertyName);
+            dicContent.Add("propertyValue", propertyValue);
+            dicMessage.Add("MessageContent", dicContent);
+            template.Excute(dicMessage);
+        }
         #endregion
 
 

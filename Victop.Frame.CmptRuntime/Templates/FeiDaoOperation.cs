@@ -156,6 +156,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetConditionSearchOr(pBlockName, listOr);
         }
+
         /// <summary>
         /// 设置区块查询条件In子查询
         /// </summary>
@@ -2228,6 +2229,17 @@ namespace Victop.Frame.CmptRuntime
         public void UnitUCDesignerRuleAddSection(string unitName, object id)
         {
             uIElementOperation.UnitUCDesignerRuleAddSection(unitName, id);
+        }
+
+        /// <summary>
+        /// 原型图形控件属性改变
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="propertyName">属性名</param>
+        /// <param name="propertyValue">属性值</param>
+        public void UnitUCDesignerRuleChangeItemState(string unitName, object propertyName, object propertyValue)
+        {
+            uIElementOperation.UnitUCDesignerRuleChangeItemState(unitName, propertyName, propertyValue);
         }
 
         #endregion
