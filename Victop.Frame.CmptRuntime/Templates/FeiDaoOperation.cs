@@ -163,9 +163,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="paramField">参数字段</param>
         /// <param name="listIn">In子查询集合</param>
         ///   /// <param name="oav">接收结果的oav</param>
-        public void SetConditionSearchIn(string pBlockName, string paramField, object listIn,object oav=null)
+        public void SetConditionSearchIn(string pBlockName, string paramField, object listIn, object oav = null)
         {
-            dataOperation.SetConditionSearchIn(pBlockName, paramField, listIn,oav);
+            dataOperation.SetConditionSearchIn(pBlockName, paramField, listIn, oav);
         }
 
         /// <summary>
@@ -1345,6 +1345,18 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetDateTime(oav, day);
         }
 
+        #endregion
+
+        #region 获取单点登录ticket
+        /// <summary>
+        /// 获取单点登录ticket
+        /// </summary>
+        /// <param name="oav">接受OAV</param>
+        /// <returns></returns>
+        public string GetCurrentUserSSOTicket(object oav)
+        {
+            return systemOperation.GetCurrentUserSSOTicket(oav);
+        }
         #endregion
 
         /// <summary>

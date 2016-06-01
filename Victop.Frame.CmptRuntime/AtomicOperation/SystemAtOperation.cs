@@ -1220,6 +1220,22 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             o.v = result;
         }
         #endregion
+        /// <summary>
+        /// 获取当前用户单点登录的Ticket
+        /// </summary>
+        /// <returns></returns>
+        public string GetCurrentUserSSOTicket(object oav)
+        {
+            DataMessageOperation messageOp = new DataMessageOperation();
+            Dictionary<string, object> resultDic = messageOp.SendSyncMessage("LoginService.createLoginTicket", new Dictionary<string, object>());
+            string result = resultDic["ReplyContent"].ToString();
+            if (oav != null)
+            {
+                dynamic o = oav;
+                o.v = result;
+            }
+            return result;
+        }
 
         /// <summary>
         /// 日期类型转为自定义格式字符串
