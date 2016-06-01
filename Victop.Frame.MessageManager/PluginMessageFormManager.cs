@@ -54,14 +54,14 @@ namespace Victop.Frame.MessageManager
                 }
                 else
                 {
-                    ReturnReplyMessageToPlugin(callBack, MesssageStatusEnum.EXIST);
+                    ReturnReplyMessageToPlugin(callBack, MesssageStatusEnum.EXIST,validTime);
                 }
             }
         }
 
-        private void ReturnReplyMessageToPlugin(WaitCallback callBack, MesssageStatusEnum messageStatus)
+        private void ReturnReplyMessageToPlugin(WaitCallback callBack, MesssageStatusEnum messageStatus,long validTime)
         {
-            RequestMessage message = CreateMessage(callBack);
+            RequestMessage message = CreateMessage(callBack,validTime);
             //1.调用自身方法创建对应的消息格式信息。
             ReplyMessage replyMessage = new ReplyMessage();
             switch (messageStatus)
@@ -86,7 +86,7 @@ namespace Victop.Frame.MessageManager
         /// <param name="callBack"></param>
         /// <param name="pluginMessageManager"></param>
         /// <returns></returns>
-        private RequestMessage CreateMessage(WaitCallback callBack)
+        private RequestMessage CreateMessage(WaitCallback callBack, long validTime)
         {
             PluginMessageManager pluginMessageManager = new PluginMessageManager();
             RequestMessage message = new RequestMessage()
@@ -96,7 +96,7 @@ namespace Victop.Frame.MessageManager
             bool result = pluginMessageManager.InsertPluginMessage(message.MessageId, new PluginMessageInfo()
             {
                 MessageBody = message,
-                MessageEffectiveTime = DateTime.Now.AddSeconds(15),
+                MessageEffectiveTime = DateTime.Now.AddSeconds(validTime),
                 MessageId = message.MessageId,
                 MessageCallBack = callBack
             });

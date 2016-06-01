@@ -34,10 +34,10 @@ namespace Victop.Frame.MessageManager
                 PluginMessageManager pluginMessageManager = new PluginMessageManager();
                 Thread thread = new Thread(new ThreadStart(pluginMessageManager.CheckPluginMessageValid));
                 thread.IsBackground = true;
-                if (!ConfigManager.GetAttributeOfNodeByName("Client", "Debug").Equals("1"))
-                {
-                    thread.Start();
-                }
+                //if (!ConfigManager.GetAttributeOfNodeByName("Client", "Debug").Equals("1"))
+                //{
+                //    thread.Start();
+                //}
             }
             return instance;
         }

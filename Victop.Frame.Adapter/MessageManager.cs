@@ -8,6 +8,7 @@ namespace Victop.Frame.Adapter
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Threading;
@@ -100,7 +101,12 @@ namespace Victop.Frame.Adapter
         /// </summary>
         public virtual ReplyMessage SubmitRequest(RequestMessage message)
         {
-            return SubmitRequest(message, 30000);
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            ReplyMessage replyMsg = SubmitRequest(message, 30000);
+            sw.Stop();
+            LoggerHelper.DebugFormat("本次消息Id:{0}请求时间为:{1}毫秒", message.MessageId, sw.ElapsedMilliseconds);
+            return replyMsg;
         }
 
         /// <summary>

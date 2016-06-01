@@ -217,7 +217,6 @@ namespace SystemTestingPlugin.ViewModels
                         DataMessageOperation messageOp = new DataMessageOperation();
                         Dictionary<string, object> contentDic = new Dictionary<string, object>();
                         contentDic.Add("systemid", DataInfoModel.SystemId.Trim());
-                        //contentDic.Add("configsystemid", DataInfoModel.ConfigsystemId);
                         contentDic.Add("refsystemid", string.IsNullOrEmpty(DataInfoModel.RefSystemId) ? DataInfoModel.SystemId.Trim() : DataInfoModel.RefSystemId.Trim());
                         contentDic.Add("emptydataflag", DataInfoModel.EmptyFlag ? 0 : 1);
                         contentDic.Add("modelid", DataInfoModel.ModelId.Trim());
@@ -251,7 +250,7 @@ namespace SystemTestingPlugin.ViewModels
                         {
                             contentDic.Add("DataChannelId", DataInfoModel.ChannelId);
                         }
-                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
+                        Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic, DataInfoModel.WaitTime == 0 ? 15 : DataInfoModel.WaitTime);
                         if (returnDic != null && !returnDic["ReplyMode"].ToString().Equals("0"))
                         {
                             DataInfoModel.ChannelId = returnDic["DataChannelId"].ToString();

@@ -35,6 +35,7 @@
                                 <ctrl:VicLabelNormal>TableName:</ctrl:VicLabelNormal>
                                 <ctrl:VicTextBoxNormal Width="100" Height="24" Name="tBoxTableName" VicText="{Binding DataInfoModel.TableName}" TabIndex="6"/>
                                 <ctrl:VicCheckBoxNormal  Name="cBoxEmpty" Content="数据" IsChecked="{Binding DataInfoModel.EmptyFlag}"/>
+                                <ctrl:VicTextBoxNormal Name="tboxTime" WaterMark="等待时间" Width="100" VicText="{Binding DataInfoModel.WaitTime}"/>
                                 <ctrl:VicButtonNormal Width="100" Height="24" Name="btnSearch" ToolTip="查询" ToolTipService.ShowOnDisabled="True" ToolTipService.ShowDuration="3000" Content="查询" Command="{Binding btnSearchClickCommand,UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=dgridSearch}" TabIndex="6"/>
                                 <ctrl:VicButtonNormal Width="100" Height="24" Name="btnGetData" ToolTip="获取数据" Content="获取数据" Command="{Binding btnGetDataClickCommand,UpdateSourceTrigger=PropertyChanged}"/>
                                 <ctrl:VicButtonNormal Width="100" Height="24" Name="btnViewJsonData" Content="查看Json数据" Command="{Binding btnViewJsonDataClickCommand,UpdateSourceTrigger=PropertyChanged}"/>

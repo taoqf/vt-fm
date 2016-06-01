@@ -290,6 +290,26 @@ namespace SystemTestingPlugin.Models
                 RaisePropertyChanged(() => RefDataTable);
             }
         }
+        private int waitTime=15;
+        /// <summary>
+        /// 等待时间
+        /// </summary>
+        public int WaitTime
+        {
+            get
+            {
+                return waitTime;
+            }
+
+            set
+            {
+                if (waitTime != value)
+                {
+                    waitTime = value;
+                    RaisePropertyChanged(()=>WaitTime);
+                }
+            }
+        }
         #region 窄表相关
         /// <summary>
         /// 窄表行值
