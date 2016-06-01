@@ -168,7 +168,6 @@
 	"DictionaryAdd":"DictionaryAdd",
 	"GetDictionary":"GetDictionary",
 	"TemplateControlLoad":"TemplateControlLoad",
-        "SetDgridColumnValueStateChange":"SetDgridColumnValueStateChange",
 		"SetPBlockCurrentRowByDataRow":"SetPBlockCurrentRowByDataRow",
 		"GetStrFromListDataRow":"GetStrFromListDataRow",
 		"GetDictionaryKeyValue":"GetDictionaryKeyValue",
@@ -186,6 +185,7 @@
 		"UnitUCDesignerRuleGetPageLayoutSuperiors":"UnitUCDesignerRuleGetPageLayoutSuperiors",
 		"UnitUCDesignerRuleDeleteItem":"UnitUCDesignerRuleDeleteItem",
 		"UnitUCDesignerRuleSelectCom":"UnitUCDesignerRuleSelectCom",
+		"UnitUCDesignerRuleAddSection":"UnitUCDesignerRuleAddSection",
 		"GetListFromListDataRow":"GetListFromListDataRow",
 		"DownLoadFile":"DownLoadFile",
 		"ComponentOperationAnalysisRender":"ComponentOperationAnalysisRender",
@@ -194,5 +194,6 @@
                 "GetChangedData":"GetChangedData",
                 "ComponentOperationAnalysisAdd":"ComponentOperationAnalysisAdd",
 				"SetDataGridCheckFromTwoPblock":"SetDataGridCheckFromTwoPblock",
-                "OperationAnalysisAddTable":"OperationAnalysisAddTable"
+                "OperationAnalysisAddTable":"OperationAnalysisAddTable",
+                "SetConditionSearchOr":"SetConditionSearchOr"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

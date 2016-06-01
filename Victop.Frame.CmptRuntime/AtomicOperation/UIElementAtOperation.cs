@@ -845,15 +845,14 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         ///  动态构建的ComponentVisioProperty初始化方法
         /// </summary>
         /// <param name="unitName">组件名</param>
-        /// <param name="pblockNameProperty">节点属性Pblock名称</param>
+        /// <param name="pblockNameProperty">节点属性Pblock名称+属性模板Pblock名称+属性可选值Pblock名称(p1,p2,p3)</param>
         /// <param name="pageType">客户端类型</param>
         /// <param name="nodeId">节点id</param>
-        /// <param name="nodeNo">节点编号</param>
         /// <param name="nodeTypeNo">节点类型编号</param>
         /// <param name="nodeTypeName">节点类型名称</param>
         /// <param name="pblockNo">节点所属P编号</param>
         /// <param name="formatNo">节点所属版式编号</param>
-        public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, object pageType, object nodeId, object nodeNo, object nodeTypeNo, object nodeTypeName, object pblockNo, object formatNo)
+        public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, object pageType, object nodeId, object nodeTypeNo, object nodeTypeName, object pblockNo, object formatNo)
         {
             TemplateControl componentVisioProperty = MainView.FindName(unitName) as TemplateControl;
             if (componentVisioProperty == null)
@@ -865,11 +864,15 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicMessage.Add("MessageType", "init");
             //参数
             Dictionary<string, object> dicContent = new Dictionary<string, object>();
-            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockNameProperty);
+            string[] str = pblockNameProperty.Split(',');
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(str[0]);
+            PresentationBlockModel pBlockTem = MainView.GetPresentationBlockModel(str[1]);
+            PresentationBlockModel pBlockValue = MainView.GetPresentationBlockModel(str[2]);
             dicContent.Add("dtNodeProperty", pBlock.ViewBlockDataTable);
+            dicContent.Add("dtPropertyTem", pBlockTem.ViewBlockDataTable);
+            dicContent.Add("dtPropertyValue", pBlockValue.ViewBlockDataTable);
             dicContent.Add("pageType", pageType);
             dicContent.Add("nodeId", nodeId);
-            dicContent.Add("nodeNo", nodeNo);
             dicContent.Add("nodeTypeNo", nodeTypeNo);
             dicContent.Add("nodeTypeName", nodeTypeName);
             dicContent.Add("pblockNo", pblockNo == null ? "" : pblockNo);
@@ -958,6 +961,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+
         #region 原型图形部件
         /// <summary>
         /// 原型图形部件初始化
@@ -1281,7 +1285,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="unitName">部件</param>
         /// <param name="id">组件id</param>
-        public void UnitUCDesignerRuleSelectCom(string unitName, object id)
+        /// <param name="isFloat">是否浮动组件</param>
+        public void UnitUCDesignerRuleSelectCom(string unitName, object id, object isFloat)
         {
             TemplateControl template = MainView.FindName(unitName) as TemplateControl;
             if (template == null)
@@ -1295,6 +1300,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             //参数
             Dictionary<string, object> dicContent = new Dictionary<string, object>();
             dicContent.Add("id", id != null ? id : "");
+            dicContent.Add("isFloat", isFloat);
             dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
         }
@@ -1313,6 +1319,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             //类型
             dicMessage.Add("MessageType", "deleteItem");
 
+            template.Excute(dicMessage);
+        }
+        /// <summary>
+        /// 原型图形控件新增浮动组件
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="id">组件id</param>
+        public void UnitUCDesignerRuleAddSection(string unitName, object id)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "addSection");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("id", id);
+            dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
         }
         #endregion

@@ -27,30 +27,37 @@ namespace Victop.Frame.CmptRuntime
         private TemplateControl MainView;
 
         #region 分类原子操作实例
+
         /// <summary>
         /// 自定义服务
         /// </summary>
         private CustomServiceAtOperation customServiceOperation;
+
         /// <summary>
         /// 数据操作
         /// </summary>
         private DataAtOperation dataOperation;
+
         /// <summary>
         /// 系统原子操作
         /// </summary>
         private SystemAtOperation systemOperation;
+
         /// <summary>
         /// UI元素原子操作
         /// </summary>
         private UIElementAtOperation uIElementOperation;
+
         /// <summary>
         /// 凭证原子操作
         /// </summary>
         private VoucherAtOperation vercherAtOperation;
+
         /// <summary>
         /// webvisio原子操作
         /// </summary>
         private WebVisioAtOperation webvisioAtOperation;
+
         #endregion
 
         /// <summary>
@@ -69,6 +76,7 @@ namespace Victop.Frame.CmptRuntime
         }
 
         #region 自定义服务操作
+
         /// <summary>
         /// 服务参数设置
         /// </summary>
@@ -79,6 +87,7 @@ namespace Victop.Frame.CmptRuntime
         {
             customServiceOperation.ServiceParamSet(serviceName, paramName, paramValue);
         }
+
         /// <summary>
         /// 发送服务消息
         /// </summary>
@@ -100,6 +109,7 @@ namespace Victop.Frame.CmptRuntime
         #endregion
 
         #region 数据操作
+
         /// <summary>
         /// 设置区块查询条件日期区间
         /// </summary>
@@ -111,6 +121,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetConditionSearchDate(pBlockName, paramField, startDate, endDate);
         }
+
         /// <summary>
         /// 设置区块查询条件模糊匹配
         /// </summary>
@@ -135,16 +146,28 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetConditionSearchMoreOrLess(pBlockName, paramField, paramValue, operatorStr);
         }
 
+
+        /// <summary>
+        /// 设置区块查询条件or子查询
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="listOr">or子查询集合</param>
+        public void SetConditionSearchOr(string pBlockName, object listOr)
+        {
+            dataOperation.SetConditionSearchOr(pBlockName, listOr);
+        }
         /// <summary>
         /// 设置区块查询条件In子查询
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="paramField">参数字段</param>
         /// <param name="listIn">In子查询集合</param>
-        public void SetConditionSearchIn(string pBlockName, string paramField, object listIn)
+        ///   /// <param name="oav">接收结果的oav</param>
+        public void SetConditionSearchIn(string pBlockName, string paramField, object listIn,object oav=null)
         {
-            dataOperation.SetConditionSearchIn(pBlockName, paramField, listIn);
+            dataOperation.SetConditionSearchIn(pBlockName, paramField, listIn,oav);
         }
+
         /// <summary>
         /// 设置区块查询条件NotIn子查询
         /// </summary>
@@ -155,6 +178,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetConditionSearchNotIn(pBlockName, paramField, listNotIn);
         }
+
         /// <summary>
         /// 设置区块查询条件"不等于"查询
         /// </summary>
@@ -165,6 +189,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetConditionSearchNotEqual(pBlockName, paramField, NotEqual);
         }
+
         /// <summary>
         /// 设置区块查询条件
         /// </summary>
@@ -175,6 +200,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetConditionSearch(pBlockName, paramField, paramValue);
         }
+
         /// <summary>
         /// 设置区块排序
         /// </summary>
@@ -185,6 +211,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetConditionSort(pBlockName, paramField, sort);
         }
+
         /// <summary>
         /// 设置区块分页
         /// </summary>
@@ -195,6 +222,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetConditionPaging(pBlockName, index, size);
         }
+
         /// <summary>
         /// 设置区块是否取空数据
         /// </summary>
@@ -204,6 +232,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetConditionIsEmptyData(blockName, isEmptyData);
         }
+
         /// <summary>
         /// 查询
         /// </summary>
@@ -212,6 +241,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SearchData(pBlockName);
         }
+
         /// <summary>
         /// 获取BlockData的数据
         /// </summary>
@@ -220,6 +250,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetPBlockData(pBlockName);
         }
+
         /// <summary>
         /// 获取BlockData行数
         /// </summary>
@@ -251,6 +282,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetPBlockCurrentRowByElement(pBlockName, element);
         }
+
         /// <summary>
         /// 设置元素选中行
         /// </summary>
@@ -260,6 +292,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetPBlockCurrentRowByName(pBlockName, name);
         }
+
         /// <summary>
         /// 提交BlockData的数据
         /// </summary>
@@ -271,6 +304,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SavePBlockData(pBlockName, oav, isSaveServer);
         }
+
         /// <summary>
         /// 设置block选中行数据
         /// </summary>
@@ -279,6 +313,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetPBlockCurrentRow(pBlockName);
         }
+
         /// <summary>
         /// 根据指定行设置block选中行数据
         /// </summary>
@@ -288,6 +323,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetPBlockCurrentRowByDataRow(pBlockName, oavdr);
         }
+
         /// <summary>
         /// 把行集合中指定列转换成逗号拼接的字符串
         /// </summary>
@@ -299,6 +335,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetStrFromListDataRow(oavdrs, fieldName, oavstr, listIndex);
         }
+
         /// <summary>
         /// 把行集合中指定列转换成字符串集合
         /// </summary>
@@ -309,6 +346,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetListFromListDataRow(oavdrs, fieldName, oavstr);
         }
+
         /// <summary>
         /// 新增行
         /// </summary>
@@ -318,6 +356,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.PBlockAddRow(pBlockName, oav);
         }
+
         /// <summary>
         /// 根据OAV和旧值更新block中的数据
         /// </summary>
@@ -328,6 +367,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.UpdateBlockByOAV(oav, oldValue, newValue);
         }
+
         /// <summary>
         /// 插入行
         /// </summary>
@@ -338,6 +378,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.BlockInsertRow(blockName, position, oav);
         }
+
         /// <summary>
         /// 获取选中行的列值
         /// </summary>
@@ -348,6 +389,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.ParamsCurrentRowGet(pblockName, paramName, oav);
         }
+
         /// <summary>
         /// 获取最后一行的列值
         /// </summary>
@@ -370,6 +412,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.ParamsRowSet(pblockName, rowid, paramName, paramValue);
         }
+
         /// <summary>
         /// 获取选中行的上一行列值
         /// </summary>
@@ -380,6 +423,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.ParamsCurrentRowUpGet(pblockName, paramName, oav);
         }
+
         /// <summary>
         /// 获取选中行的下一行列值
         /// </summary>
@@ -390,6 +434,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.ParamsCurrentRowDownGet(pblockName, paramName, oav);
         }
+
         /// <summary>
         /// 数据行列值交换
         /// </summary>
@@ -401,6 +446,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.BlockDataExChange(pblockName, valueCurrentRow, valueUpOrDown, fieldName);
         }
+
         /// <summary>
         /// 获取最大序号加1
         /// </summary>
@@ -411,6 +457,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetMaxNumber(pblockName, fieldName, oav);
         }
+
         /// <summary>
         /// 获取最小序号减1
         /// </summary>
@@ -421,6 +468,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetMinNumber(pblockName, fieldName, oav);
         }
+
         /// <summary>
         /// 重新排序
         /// </summary>
@@ -430,6 +478,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetBlockAgainOrder(pblockName, fieldName);
         }
+
         /// <summary>
         /// 设置排序
         /// </summary>
@@ -440,6 +489,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetBlockOrder(pblockName, fieldName, sort);
         }
+
         /// <summary>
         /// 赋值选中行的列值
         /// </summary>
@@ -450,6 +500,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.ParamsCurrentRowSet(pblockName, paramName, value);
         }
+
         /// <summary>
         /// 删除选中行
         /// </summary>
@@ -458,6 +509,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.VicDataGridSelectRowDelete(pblockName);
         }
+
         /// <summary>
         /// 删除最后一行
         /// </summary>
@@ -466,6 +518,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.VicDataGridtLastRowDelete(pblockName);
         }
+
         /// <summary>
         /// 区块数据转换OAV
         /// </summary>
@@ -475,6 +528,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.BlockToOAV(blockName, fieldName);
         }
+
         /// <summary>
         /// 批量修改区块选中的数据集合中的某列值
         /// </summary>
@@ -485,6 +539,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.BlockSelectRowsUpdate(blockName, filedName, filedValue);
         }
+
         /// <summary>
         /// 区块选中的数据集合转换OAV
         /// </summary>
@@ -494,6 +549,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.BlockSelectRowsToOAV(blockName, fieldName);
         }
+
         /// <summary>
         /// 清除区块生成的OAV
         /// </summary>
@@ -502,6 +558,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.ClearOAVByBlock(blockName);
         }
+
         /// <summary>
         /// 清除区块数据
         /// </summary>
@@ -510,6 +567,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.ClearBlockData(blockName);
         }
+
         /// <summary>
         /// 设置选中集合
         /// </summary>
@@ -520,6 +578,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetSelectRows(pblockName, fieldName, fieldValue);
         }
+
         /// <summary>
         /// 设置全不选
         /// </summary>
@@ -528,6 +587,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetSelectRowsNull(pblockName);
         }
+
         /// <summary>
         /// 设置全选
         /// </summary>
@@ -536,6 +596,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetSelectRowsAll(pblockName);
         }
+
         /// <summary>
         /// 获取最大序号加1(字段中首字母为字母)
         /// </summary>
@@ -547,6 +608,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetMaxNumberFromOneLetter(pblockName, fieldName, firstLetter, oav);
         }
+
         /// <summary>
         ///复制控件内容到剪贴板
         /// </summary>
@@ -556,6 +618,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.CopyControlContent(elementName);
         }
+
         /// <summary>
         ///将json转换成DT
         /// </summary>
@@ -565,6 +628,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.JsonToDataTable(str, elementName);
         }
+
         /// <summary>
         /// 数据存在性验证
         /// </summary>
@@ -575,6 +639,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.DataExistenceVerification(pblockName, fieldName, oav);
         }
+
         /// <summary>
         /// 格式正确性验证 
         /// </summary>
@@ -586,6 +651,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.FormatCorrectnessVerification(pblockName, fieldName, length, oav);
         }
+
         /// <summary>
         /// 获取选中列的确定字段值集合（VicCheckFlag）
         /// </summary>
@@ -596,6 +662,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetDataGridColumnValueList(pblockName, oav, fieldName);
         }
+
         /// <summary>
         /// 获取列表选中行数（VicCheckFlag）
         /// </summary>
@@ -606,6 +673,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetDataGridSelectRowsCount(pblockName, oav, type);
         }
+
         /// <summary>
         /// 对确定行字段赋值
         /// </summary>
@@ -618,21 +686,10 @@ namespace Victop.Frame.CmptRuntime
             dataOperation.SetDataGridColumnValueList(pblockName, rowId, oav, fieldName);
         }
 
-        /// <summary>
-        /// dgridName中某列字段值在界面显示时，状态转换成用户想要显示的结果
-        /// </summary>
-        /// <param name="dgridName">列表名称</param>
-        /// <param name="fieldName">字段</param>
-        /// <param name="relation">键值对关系的类型</param>
-        public void SetDgridColumnValueStateChange(string dgridName, string fieldName, Dictionary<string, object> relation)
-        {
-            dataOperation.SetDgridColumnValueStateChange(dgridName, fieldName, relation);
-        }
-
-
         #endregion
 
         #region 系统操作
+
         /// <summary>
         /// 系统输出
         /// </summary>
@@ -641,6 +698,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.SysConsole(consoleText);
         }
+
         /// <summary>
         /// 设置分组，对应set_focus
         /// </summary>
@@ -701,6 +759,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.TranslationState(triggerName, triggerSource);
         }
+
         /// <summary>
         /// 执行页面动作
         /// </summary>
@@ -710,6 +769,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ExcutePageTrigger(pageTrigger, paramInfo);
         }
+
         /// <summary>
         /// 执行组件动作
         /// </summary>
@@ -720,6 +780,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ExcuteComponentTrigger(compntName, compntTrigger, paramInfo);
         }
+
         /// <summary>
         /// 获取页面参数值
         /// </summary>
@@ -729,6 +790,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ParamsPageGet(paramName, oav);
         }
+
         /// <summary>
         /// 获取组件参数值
         /// </summary>
@@ -738,6 +800,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ParamsCompntGet(paramName, oav);
         }
+
         /// <summary>
         /// 获取List集合
         /// </summary>
@@ -746,6 +809,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetList(oav);
         }
+
         /// <summary>
         /// 获取集合中的值
         /// </summary>
@@ -756,6 +820,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetListValueByIndex(oav, index, oavValue);
         }
+
         /// <summary>
         /// 将对象加入List集合结尾处
         /// </summary>
@@ -765,6 +830,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ListAdd(value, paramList);
         }
+
         /// <summary>
         /// 获取集合长度
         /// </summary>
@@ -774,6 +840,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetListCount(list, count);
         }
+
         /// <summary>
         /// 移除指定位置元素
         /// </summary>
@@ -783,6 +850,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.RemoveListSetCount(list, setcount);
         }
+
         /// <summary>
         /// 获取集合指定位置元素
         /// </summary>
@@ -793,6 +861,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetListSetCountContent(list, setcount, getcontent);
         }
+
         /// <summary>
         /// 获取ComboBox的DT
         /// </summary>
@@ -803,6 +872,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetComboBoxDt(oav);
 
         }
+
         /// <summary>
         ///给ComboBox的Dt赋值
         /// </summary>
@@ -814,6 +884,7 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.SetComboBoxDtRow(keyValue, displayValue, paramDt);
 
         }
+
         /// <summary>
         /// 将DT表绑到ComboBox数据源
         /// </summary>
@@ -823,6 +894,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.SetComboItemsSource(elementName, paramDt);
         }
+
         /// <summary>
         /// 获取Dictionary中参数值
         /// </summary>
@@ -833,6 +905,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ParamsGetByDictionary(oavDic, paramName, oav);
         }
+
         /// <summary>
         /// 获取第一个数组中Dictionary中参数值
         /// </summary>
@@ -843,6 +916,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ParamsGetByListDictionary(oavDic, paramName, oav);
         }
+
         /// <summary>
         /// 新增页面参数值
         /// </summary>
@@ -852,6 +926,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ParamsPageAdd(paramName, paramValue);
         }
+
         /// <summary>
         /// 组件参数封装
         /// </summary>
@@ -861,6 +936,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ParamsInterCompntAdd(oavCom, oavPage);
         }
+
         /// <summary>
         /// 组件取参数，一般情况下组件回填页面传回来的参数时用到
         /// </summary>
@@ -871,6 +947,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ParamsInterCompntParse(oavParams, paramName, oav);
         }
+
         /// <summary>
         /// 组件取参数，一般情况下中组件从部件中取回参数时用到
         /// </summary>
@@ -881,6 +958,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetParamsInterCompntParse(oavParams, paramName, oav);
         }
+
         /// <summary>
         /// 弹框展示组件操作
         /// </summary>
@@ -891,6 +969,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.UCCompntShowDialog(compntName, height, width);
         }
+
         /// <summary>
         /// 弹框展示组件操作
         /// </summary>
@@ -901,6 +980,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.UCCompntShow(compntName, height, width);
         }
+
         /// <summary>
         /// 使用window弹出内容
         /// </summary>
@@ -909,6 +989,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ShowVicWindowContent(content);
         }
+
         /// <summary>
         /// 设置组件参数
         /// </summary>
@@ -919,6 +1000,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.SetCompntParamDic(compntName, paramName, paramValue);
         }
+
         /// <summary>
         /// 弹框关闭操作
         /// </summary>
@@ -926,6 +1008,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.UCCompntClose();
         }
+
         /// <summary>
         /// 弹出提示信息
         /// </summary>
@@ -934,6 +1017,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ShowMessage(messageInfo);
         }
+
         /// <summary>
         /// 弹出提示询问
         /// </summary>
@@ -944,6 +1028,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ShowMessageResult(messageInfo, caption, oav);
         }
+
         /// <summary>
         /// 日志输出
         /// </summary>
@@ -952,6 +1037,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.SysFeiDaoLog(content);
         }
+
         /// <summary>
         /// 赋值
         /// </summary>
@@ -961,6 +1047,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.SetParamValue(paramValue, oav);
         }
+
         /// <summary>
         /// 设置页面显示元素
         /// </summary>
@@ -970,6 +1057,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.SetCompontVisility(paramValue, visibility);
         }
+
         /// <summary>
         /// 设置警戒条件
         /// </summary>
@@ -980,6 +1068,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.SetActionGuard(se, oav, oavmsg);
         }
+
         /// <summary>
         /// 弹框展示当前组件中的一部分
         /// </summary>
@@ -988,6 +1077,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.UcCurrentCompntContentShow(layoutName);
         }
+
         /// <summary>
         /// 弹框关闭操作
         /// </summary>
@@ -996,6 +1086,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.UcCurrentCompntContentClose(layoutName);
         }
+
         /// <summary>
         /// 将规则文件另存
         /// </summary>
@@ -1004,6 +1095,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.WriteTextToFile(content);
         }
+
         /// <summary>
         /// 保存规则文件
         /// </summary>
@@ -1013,6 +1105,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.SaveWriteTextToFile(content, oav);
         }
+
         /// <summary>
         /// 上传文件或者替换文件
         /// </summary>
@@ -1024,6 +1117,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.UpLoadFile(localFilePath, filePath, oav, productId);
         }
+
         /// <summary>
         /// 打开文件
         /// </summary>
@@ -1033,6 +1127,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.OpenFile(fileType, oav);
         }
+
         /// <summary>
         /// 下载文件
         /// </summary>
@@ -1044,6 +1139,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.DownLoadFile(localFilePath, filePath, oav, productId);
         }
+
         /// <summary>
         /// 获取一个新的guid
         /// </summary>
@@ -1052,6 +1148,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetNewGuid(oav);
         }
+
         /// <summary>
         /// 发送获取编码消息
         /// </summary>
@@ -1084,6 +1181,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetFileUrlByFilePath(filePath, oav, productId);
         }
+
         /// <summary>
         /// 返回指定名称资源的值
         /// </summary>
@@ -1095,6 +1193,7 @@ namespace Victop.Frame.CmptRuntime
         }
 
         #region 字符串处理
+
         /// <summary>
         /// 指定的字符串是否出现在字符串实例中
         /// </summary>
@@ -1105,6 +1204,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.StrContains(strValue, value, oav);
         }
+
         /// <summary>
         /// 从当前 System.String 对象移除数组中指定的一组字符的所有尾部匹配项
         /// </summary>
@@ -1115,6 +1215,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.StrTrimEnd(strValue, value, oav);
         }
+
         /// <summary>
         /// 从当前 System.String 对象移除数组中指定的一组字符的所有头部匹配项
         /// </summary>
@@ -1125,6 +1226,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.StrTrimStart(strValue, value, oav);
         }
+
         /// <summary>
         /// 比较字符串一致性
         /// </summary>
@@ -1170,9 +1272,11 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ConvertDateTimeToString(oav, datetime, format);
         }
+
         #endregion
 
         #region 加减乘除
+
         /// <summary>
         /// 数相加
         /// </summary>
@@ -1183,6 +1287,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.NumAdd(v1, v2, oav);
         }
+
         /// <summary>
         /// 数相减
         /// </summary>
@@ -1193,6 +1298,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.NumMinux(v1, v2, oav);
         }
+
         /// <summary>
         /// 数相乘
         /// </summary>
@@ -1203,6 +1309,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.NumMultiply(v1, v2, oav);
         }
+
         /// <summary>
         /// 数相除
         /// </summary>
@@ -1213,6 +1320,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.NumDivide(v1, v2, oav);
         }
+
         #endregion
 
         /// <summary>
@@ -1226,6 +1334,7 @@ namespace Victop.Frame.CmptRuntime
         }
 
         #region 时间
+
         /// <summary>
         /// 获取服务器时间
         /// </summary>
@@ -1235,6 +1344,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetDateTime(oav, day);
         }
+
         #endregion
 
         /// <summary>
@@ -1250,6 +1360,7 @@ namespace Victop.Frame.CmptRuntime
         }
 
         #region 获取系统变量
+
         /// <summary>
         /// 获取系统变量值
         /// </summary>
@@ -1259,6 +1370,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetSysVariableValue(sysVariableName, oav);
         }
+
         #endregion
 
         /// <summary>
@@ -1291,9 +1403,11 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetDictionaryKeyValue(key, paramDic, value);
         }
+
         #endregion
 
         #region UI操作
+
         /// <summary>
         /// 设置元素内容
         /// </summary>
@@ -1303,6 +1417,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.SetElementContent(elementName, content);
         }
+
         /// <summary>
         /// 设置元素是否选中
         /// </summary>
@@ -1312,6 +1427,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.SetElementChecked(elementName, isChecked);
         }
+
         /// <summary>
         /// 获取元素内容
         /// </summary>
@@ -1321,6 +1437,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.GetElementContent(elementName, oav);
         }
+
         /// <summary>
         /// 设置元素选中项索引
         /// </summary>
@@ -1330,6 +1447,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.SetElementSelectIndex(elementName, selectedIndex);
         }
+
         /// <summary>
         /// 获取界面元素名称
         /// </summary>
@@ -1339,6 +1457,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.GetElementName(element, oav);
         }
+
         /// <summary>
         /// 设置按钮是否被选择
         /// </summary>
@@ -1348,6 +1467,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.SetButtonSelect(paramValue, isSelect);
         }
+
         /// <summary>
         /// 设置元素是否启用
         /// </summary>
@@ -1357,6 +1477,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.SetElementIsEnabled(elementName, state);
         }
+
         /// <summary>
         /// 设置元素是否可见
         /// </summary>
@@ -1367,6 +1488,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.SetElementVisility(elementName, visibility, type);
         }
+
         /// <summary>
         /// 根据DataGrid名称获取当前选择行中某一字段的值
         /// </summary>
@@ -1377,6 +1499,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.ParamsCurrentRowGetFromGridName(gridName, paramName, oav);
         }
+
         /// <summary>
         /// 获取元素是否选中
         /// </summary>
@@ -1386,6 +1509,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.GetElementIsChecked(elementName, oav);
         }
+
         /// <summary>
         /// 是否有选中项
         /// </summary>
@@ -1396,6 +1520,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicDataGridIsSelectItem(itemsControlName, oav, oavmsg);
         }
+
         /// <summary>
         /// 更新列
         /// </summary>
@@ -1404,6 +1529,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicDataGridUpdateColumn(dgridName);
         }
+
         /// <summary>
         /// VicDataGrid是否只读
         /// </summary>
@@ -1413,6 +1539,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicDataGridIsReadOnly(dgridName, state);
         }
+
         /// <summary>
         /// 清除dgrid数据集合
         /// </summary>
@@ -1421,6 +1548,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.VicDataGridClearData(dgridName);
         }
+
         /// <summary>
         /// UnitPageRule分页加载
         /// </summary>
@@ -1432,6 +1560,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitPageRuleLoad(unitPageName, pblockName, currentPage, pageSize);
         }
+
         /// <summary>
         /// UnitUCWebBrowserRule加载
         /// </summary>
@@ -1442,10 +1571,14 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="ctrl">控制是否支持提交修改默认true</param>
         /// <param name="executeJsFunc">接收JS方法名默认ExcuteWPF</param>
         /// <param name="type">展示类型</param>
-        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "", string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF", string type = "editor")
+        public void UnitWebBrowserLoad(string unitWebBrowserName, object content, string pblockName = "",
+                                       string columnName = "", bool ctrl = true, string executeJsFunc = "ExcuteWPF",
+                                       string type = "editor")
         {
-            uIElementOperation.UnitWebBrowserLoad(unitWebBrowserName, content, pblockName, columnName, ctrl, executeJsFunc, type);
+            uIElementOperation.UnitWebBrowserLoad(unitWebBrowserName, content, pblockName, columnName, ctrl,
+                                                  executeJsFunc, type);
         }
+
         /// <summary>
         /// 源编辑器
         /// </summary>
@@ -1455,6 +1588,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitAvalonEditLoad(unitAE, text);
         }
+
         /// <summary>
         /// 画廊部件初始化
         /// </summary>
@@ -1464,10 +1598,12 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="titlecolumName">标题列</param>
         /// <param name="width">图片宽度</param>
         /// <param name="height">图片高度</param>
-        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName, double width = 80, double height = 100)
+        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName,
+                                        double width = 80, double height = 100)
         {
             uIElementOperation.UnitGalleryRuleLoad(unitName, pblockName, imagecolumName, titlecolumName, width, height);
         }
+
         /// <summary>
         /// UnitListBoxFontIconRule部件刷新
         /// </summary>
@@ -1486,9 +1622,11 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.TemplateControlLoad(name, paramDic);
         }
+
         #endregion
 
         #region 错误处理方法
+
         /// <summary>
         /// 错误处理(JS专用)
         /// </summary>
@@ -1497,6 +1635,7 @@ namespace Victop.Frame.CmptRuntime
         {
             SysFeiDaoLog("js businessmachine error:" + MainView.Name + args);
         }
+
         /// <summary>
         /// 确认初始化(JS专用)
         /// </summary>
@@ -1504,6 +1643,7 @@ namespace Victop.Frame.CmptRuntime
         {
             MainView.BuiltBrowserInit();
         }
+
         /// <summary>
         /// 确认加载
         /// </summary>
@@ -1511,9 +1651,11 @@ namespace Victop.Frame.CmptRuntime
         {
             MainView.MainViewLoaded();
         }
+
         #endregion
 
         #region webviso原子操作
+
         /// <summary>
         /// 更新节点数据
         /// </summary>
@@ -1526,6 +1668,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.UpdateNodeData(drawingName, canvasId, nodeId, dataNo, Data);
         }
+
         /// <summary>
         /// 更新节点文本
         /// </summary>
@@ -1534,10 +1677,12 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="nodeId">节点id</param>
         /// <param name="nodeText">数据</param>
         /// <param name="textIndex">当模具是状态图时，0是标题，1是文本，其余模具可以使用默认值0</param>
-        public void UpdateNodeText(string drawingName, string canvasId, string nodeId, string nodeText, int textIndex = 0)
+        public void UpdateNodeText(string drawingName, string canvasId, string nodeId, string nodeText,
+                                   int textIndex = 0)
         {
             webvisioAtOperation.UpdateNodeText(drawingName, canvasId, nodeId, nodeText);
         }
+
         /// <summary>
         /// 删除节点
         /// </summary>
@@ -1548,6 +1693,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.DeleteNode(drawingName, canvasId, nodeIds);
         }
+
         /// <summary>
         /// 连接元素
         /// </summary>
@@ -1559,6 +1705,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.ConnectElements(drawingName, canvasId, targetNodeId, lineId);
         }
+
         /// <summary>
         /// 克隆元素
         /// </summary>
@@ -1569,6 +1716,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.CloneElement(drawingName, canvasId, nodeId);
         }
+
         /// <summary>
         /// 选中元素
         /// </summary>
@@ -1579,6 +1727,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.SelectElement(drawingName, canvasId, nodeId);
         }
+
         /// <summary>
         ///  断开target线连接
         /// </summary>
@@ -1589,6 +1738,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.BreakTargetConnection(drawingName, canvasId, lineId);
         }
+
         /// <summary>
         /// 删除画布
         /// </summary>
@@ -1598,6 +1748,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.DeletePage(drawingName, canvasId);
         }
+
         /// <summary>
         /// 导入
         /// </summary>
@@ -1608,6 +1759,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.WebVisioImportData(drawingName, content);
         }
+
         /// <summary>
         /// 导入模板
         /// </summary>
@@ -1618,6 +1770,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.WebVisioImportTemplateData(drawingName, content);
         }
+
         /// <summary>
         /// 更新节点颜色
         /// </summary>
@@ -1630,6 +1783,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.UpdateShapeColor(drawingName, canvasId, nodeId, color);
         }
+
         /// <summary>
         /// 改变元素类型
         /// </summary>
@@ -1642,6 +1796,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.ChangeElement(drawingName, canvasId, nodeId, targetType);
         }
+
         /// <summary>
         /// 设置图形缩放比例
         /// </summary>
@@ -1650,10 +1805,12 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="nodeId">节点id</param>
         /// <param name="scaleWidth">宽度缩放倍数</param>
         /// <param name="scaleHeight">高度缩放倍数</param>
-        public void SetShapeScale(string drawingName, string canvasId, string nodeId, double scaleWidth, double scaleHeight)
+        public void SetShapeScale(string drawingName, string canvasId, string nodeId, double scaleWidth,
+                                  double scaleHeight)
         {
             webvisioAtOperation.SetShapeScale(drawingName, canvasId, nodeId, scaleWidth, scaleHeight);
         }
+
         /// <summary>
         /// 生成图形
         /// </summary>
@@ -1662,10 +1819,12 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="businessType">业务类型</param>
         /// <param name="positionX">X轴坐标</param>
         /// <param name="positionY">Y轴坐标</param>
-        public void CreateShapeElement(string drawingName, string canvasId, string businessType, double positionX, double positionY)
+        public void CreateShapeElement(string drawingName, string canvasId, string businessType, double positionX,
+                                       double positionY)
         {
             webvisioAtOperation.CreateShapeElement(drawingName, canvasId, businessType, positionX, positionY);
         }
+
         /// <summary>
         /// 生成连接线
         /// </summary>
@@ -1674,10 +1833,12 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="businessType">业务类型</param>
         /// <param name="sourceId">源端图形id</param>
         /// <param name="targetId">目标图形id</param>
-        public void CreateLineElement(string drawingName, string canvasId, string businessType, string sourceId, string targetId)
+        public void CreateLineElement(string drawingName, string canvasId, string businessType, string sourceId,
+                                      string targetId)
         {
             webvisioAtOperation.CreateLineElement(drawingName, canvasId, businessType, sourceId, targetId);
         }
+
         /// <summary>
         /// 获取画布中的所有元素
         /// </summary>
@@ -1688,6 +1849,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.GetAllElement(drawingName, canvasId);
         }
+
         /// <summary>
         /// 获取图形上离开线集合
         /// </summary>
@@ -1698,6 +1860,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.GetOutLinesByShape(drawingName, canvasId, nodeId);
         }
+
         /// <summary>
         /// 获取图形进入线集合
         /// </summary>
@@ -1708,6 +1871,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.GetInLinesByShape(drawingName, canvasId, nodeId);
         }
+
         /// <summary>
         /// 获取线源端的图形
         /// </summary>
@@ -1719,6 +1883,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.GetSourceShapeByLine(drawingName, canvasId, nodeId);
         }
+
         /// <summary>
         /// 获取线源端的图形
         /// </summary>
@@ -1730,6 +1895,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.GetTargetShapeByLine(drawingName, canvasId, nodeId);
         }
+
         /// <summary>
         /// 获取导出图形内容
         /// </summary>
@@ -1739,6 +1905,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.GetExportData(drawingName, oav);
         }
+
         /// <summary>
         /// 消息转OAV
         /// </summary>
@@ -1748,9 +1915,11 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.MessageToOAV(drawingName, keyName);
         }
+
         #endregion
 
         #region 专用原子操作
+
         /// <summary>
         /// 规则机台模板then专用原子操作
         /// </summary>
@@ -1763,6 +1932,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.AddThenTemplate(pblockrhs, pblockparams, action_no, rule_no, oav);
         }
+
         /// <summary>
         /// 是否允许组合或拆分
         /// </summary>
@@ -1775,9 +1945,11 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.IsAllowComOrSplit(pBlockName, page_no, drList, type, oav);
         }
+
         #endregion
 
         #region 动态构建的Listbox部件初始化或者刷新方法
+
         /// <summary>
         /// 动态构建的Listbox部件初始化或者刷新方法
         /// </summary>
@@ -1787,9 +1959,11 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitListBoxDynamicRuleRefresh(unitName, pblockName);
         }
+
         #endregion
 
         #region 动态构建的Listbox部件获取复选框选中的数据集合
+
         /// <summary>
         /// 动态构建的Listbox部件获取复选框选中的数据集合
         /// <param name="unitName">部件名称</param>
@@ -1799,9 +1973,11 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitListBoxDynamicRuleGetChosedRows(unitName, oav);
         }
+
         #endregion
 
         #region webVisio部件专用原子操作
+
         /// <summary>
         /// webVisio部件渲染数据
         /// </summary>
@@ -1811,6 +1987,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.WebVisionDoRender(drawingName, message);
         }
+
         /// <summary>
         /// 获取webVisio中Tag中的值
         /// </summary>
@@ -1821,6 +1998,7 @@ namespace Victop.Frame.CmptRuntime
         {
             webvisioAtOperation.WebVisionGetParams(drawingName, key, oav);
         }
+
         /// <summary>
         /// 设置元素是否可见(占空间)
         /// </summary>
@@ -1830,6 +2008,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.SetElementVisilityOrHidden(elementName, visibility);
         }
+
         /// <summary>
         /// 通过字段值设置block当前选中行
         /// </summary>
@@ -1840,6 +2019,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetPBlockCurrentRowByKey(pBlockName, key, param);
         }
+
         /// <summary>
         /// 判断在pblock表中某列中的某个值是否存在
         /// </summary>
@@ -1851,6 +2031,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetPBlockDtIsHavaExist(pBlockName, key, value, oav);
         }
+
         /// <summary>
         /// 抽取制品数据【pvd，状态图】
         /// </summary>
@@ -1863,6 +2044,7 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ExtractProductData(pageNo, compntGroupNo, diagramNo, type, oav);
         }
+
         /// <summary>
         /// 生成绘图数据
         /// </summary>
@@ -1872,9 +2054,11 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ExtractDrawingData(diagramNo, oav);
         }
+
         #endregion
 
         #region 原型图形部件
+
         /// <summary>
         /// 原型图形部件初始化
         /// </summary>
@@ -1885,6 +2069,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitUCDesignerRuleLoad(unitName, pageType, width);
         }
+
         /// <summary>
         /// 原型图形部件加载文件
         /// </summary>
@@ -1895,6 +2080,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitUCDesignerRuleLoadFile(unitName, filePath, oav);
         }
+
         /// <summary>
         /// 原型图形部件保存上传文件
         /// </summary>
@@ -1917,6 +2103,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitUCDesignerRuleSelectPState(unitName, pDomName, pPName, formatId);
         }
+
         /// <summary>
         /// 原型图形部件保存页面布局（返回布局文件串）
         /// </summary>
@@ -1926,6 +2113,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitUCDesignerRuleSavePageLayout(unitName, oav);
         }
+
         /// <summary>
         /// 原型图形部件导入页面布局
         /// </summary>
@@ -1935,6 +2123,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitUCDesignerRuleDropPageLayout(unitName, elementStr);
         }
+
         /// <summary>
         /// 原型图形部件导入版式
         /// </summary>
@@ -1943,10 +2132,12 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pointx">鼠标位置</param>
         /// <param name="pointy">鼠标位置</param>
         /// <param name="itemBase">版式所属组件图形</param>
-        public void UnitUCDesignerRuleDropFormat(string unitName, object elementStr, object pointx, object pointy, object itemBase)
+        public void UnitUCDesignerRuleDropFormat(string unitName, object elementStr, object pointx, object pointy,
+                                                 object itemBase)
         {
             uIElementOperation.UnitUCDesignerRuleDropFormat(unitName, elementStr, pointx, pointy, itemBase);
         }
+
         /// <summary>
         /// 原型图形部件保存版式（返回版式文件串）
         /// </summary>
@@ -1956,6 +2147,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitUCDesignerRuleSaveFormat(unitName, oav);
         }
+
         /// <summary>
         /// 原型图形部件拖拽控件
         /// </summary>
@@ -1965,10 +2157,12 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pointy">鼠标位置</param>
         /// <param name="itemBase">版式所属组件图形</param>
         /// <param name="id">新增控件id</param>
-        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object pointx, object pointy, object itemBase, object id)
+        public void UnitUCDesignerRuleDropItem(string unitName, object itemTitle, object pointx, object pointy,
+                                               object itemBase, object id)
         {
             uIElementOperation.UnitUCDesignerRuleDropItem(unitName, itemTitle, pointx, pointy, itemBase, id);
         }
+
         /// <summary>
         /// 原型图形控件Dom树加载后处理
         /// </summary>
@@ -1978,10 +2172,12 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pageType">页面类型</param>
         /// <param name="pageNo">页面编号</param>
         /// <param name="nodeRoot">Dom树根节点</param>
-        public void UnitUCDesignerRuleDomLoad(string unitName, string pDomName, string pDomTypeName, object pageType, object pageNo, object nodeRoot)
+        public void UnitUCDesignerRuleDomLoad(string unitName, string pDomName, string pDomTypeName, object pageType,
+                                              object pageNo, object nodeRoot)
         {
             uIElementOperation.UnitUCDesignerRuleDomLoad(unitName, pDomName, pDomTypeName, pageType, pageNo, nodeRoot);
         }
+
         /// <summary>
         /// 原型图形部件得到页面布局父节点
         /// </summary>
@@ -1992,14 +2188,15 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitUCDesignerRuleGetPageLayoutSuperiors(unitName, pageType, oav);
         }
+
         /// <summary>
         /// 原型图形控件选择组件图形刷新
         /// </summary>
         /// <param name="unitName">部件</param>
-        /// <param name="id">组件id</param>
-        public void UnitUCDesignerRuleSelectCom(string unitName, object id = null)
+        /// <param name="isFloat">是否浮动组件</param>
+        public void UnitUCDesignerRuleSelectCom(string unitName, object id = null, object isFloat = null)
         {
-            uIElementOperation.UnitUCDesignerRuleSelectCom(unitName, id);
+            uIElementOperation.UnitUCDesignerRuleSelectCom(unitName, id, isFloat);
         }
 
         /// <summary>
@@ -2011,6 +2208,16 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.UnitUCDesignerRuleDeleteItem(unitName);
         }
 
+        /// <summary>
+        /// 原型图形控件新增浮动组件
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="id">组件id</param>
+        public void UnitUCDesignerRuleAddSection(string unitName, object id)
+        {
+            uIElementOperation.UnitUCDesignerRuleAddSection(unitName, id);
+        }
+
         #endregion
 
         #region 动态构建的ComponentVisioProperty初始化方法
@@ -2019,20 +2226,19 @@ namespace Victop.Frame.CmptRuntime
         ///  动态构建的ComponentVisioProperty初始化方法
         /// </summary>
         /// <param name="unitName">组件名</param>
-        /// <param name="pblockNameProperty">节点属性Pblock名称</param>
+        /// <param name="pblockNameProperty">节点属性Pblock名称+属性模板Pblock名称+属性可选值Pblock名称(p1,p2,p3)</param>
         /// <param name="pageType">客户端类型</param>
         /// <param name="nodeId">节点id</param>
-        /// <param name="nodeNo">节点编号</param>
         /// <param name="nodeTypeNo">节点类型编号</param>
         /// <param name="nodeTypeName">节点类型名称</param>
         /// <param name="pblockNo">节点所属P编号</param>
         /// <param name="formatNo">节点所属版式编号</param>
         public void ComponentVisioPropertyLoad(string unitName, string pblockNameProperty, object pageType,
-                                               object nodeId, object nodeNo, object nodeTypeNo, object nodeTypeName,
-                                               object pblockNo=null, object formatNo=null)
+                                               object nodeId, object nodeTypeNo, object nodeTypeName,
+                                               object pblockNo = null, object formatNo = null)
         {
             uIElementOperation.ComponentVisioPropertyLoad(unitName, pblockNameProperty, pageType,
-                                                          nodeId, nodeNo, nodeTypeNo, nodeTypeName, pblockNo,
+                                                          nodeId, nodeTypeNo, nodeTypeName, pblockNo,
                                                           formatNo);
         }
 
@@ -2048,10 +2254,14 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="secendtwotable">二层第二张表</param>
         /// <param name="jobno">工作编号</param>
         /// <param name="productid">产品ID</param>
-        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable, string secondtable, string secendtwotable, string jobno, string productid)
+        public void ComponentOperationAnalysisRender(string componetName, string pblockName, string maintable,
+                                                     string secondtable, string secendtwotable, string jobno,
+                                                     string productid)
         {
-            uIElementOperation.ComponentOperationAnalysisRender(componetName, pblockName, maintable, secondtable, secendtwotable, jobno, productid);
+            uIElementOperation.ComponentOperationAnalysisRender(componetName, pblockName, maintable, secondtable,
+                                                                secendtwotable, jobno, productid);
         }
+
         /// <summary>
         /// 操作分析组件添加主数据
         /// </summary>
@@ -2061,6 +2271,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.ComponentOperationAnalysisAdd(componetName, type);
         }
+
         /// <summary>
         /// 获取组件中的值
         /// </summary>
@@ -2071,6 +2282,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.GetComponentParamDictData(componetName, key, oav);
         }
+
         /// <summary>
         /// 获取combox选择值
         /// </summary>
@@ -2080,6 +2292,7 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.GetComBoxSelectValue(elementName, oav);
         }
+
         /// <summary>
         /// 设置第一个Pblock的复选框复选
         /// </summary>
@@ -2088,10 +2301,12 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="filed">字段值</param>
         /// <param name="pageflow">字段值</param>
         ///  <param name="type">类型</param>
-        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string type = "")
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow,
+                                                  string type = "")
         {
             dataOperation.SetDataGridCheckFromTwoPblock(pblockName, pblockNameTwo, filed, pageflow, type);
         }
+
         /// <summary>
         /// 动态构建的Listbox部件获取复选框选中的数据集合
         /// <param name="compntname">部件名称</param>
@@ -2101,10 +2316,12 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="param4">接收OAV</param>
         /// <param name="type">接收OAV</param>
         /// </summary>
-        public void OperationAnalysisAddTable(string compntname, object params1, string params2, string params3, string param4, string type = "1")
+        public void OperationAnalysisAddTable(string compntname, object params1, string params2, string params3,
+                                              string param4, string type = "1")
         {
             uIElementOperation.OperationAnalysisAddTable(compntname, params1, params2, params3, param4, type);
         }
+
         #endregion
 
         /// <summary>
@@ -2116,6 +2333,7 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetChangedData(pBlockName, oav);
         }
+
         #endregion
     }
 }
