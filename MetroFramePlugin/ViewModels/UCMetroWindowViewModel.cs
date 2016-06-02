@@ -1288,7 +1288,18 @@ namespace MetroFramePlugin.ViewModels
                 paramDic.Add("configsystemid", "11");
                 paramDic.Add("formid", selectedFourthMenu.FormId);
                 paramDic.Add("authoritycode", selectedFourthMenu.AuthorityCode);
-                PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = selectedFourthMenu.PackageUrl, ShowTitle = selectedFourthMenu.MenuName }, paramDic);
+                string pluginName = string.Empty;
+                if (selectedFourthMenu.PackageUrl.StartsWith("http://"))
+                {
+                    paramDic["formid"] = selectedFourthMenu.PackageUrl;
+                    pluginName = "FeiDaoBrowserPlugin";
+                }
+                else
+                {
+                    pluginName = selectedFourthMenu.PackageUrl;
+                }
+                PluginModel pluginModel = pluginOp.StartPlugin(new ExcutePluginParamModel() { PluginName = pluginName, ShowTitle = selectedFourthMenu.MenuName }, paramDic);
+
                 if (string.IsNullOrEmpty(pluginModel.ErrorMsg))
                 {
                     PluginShow(pluginModel, selectedFourthMenu.MenuName);
