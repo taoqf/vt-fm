@@ -2242,6 +2242,21 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.UnitUCDesignerRuleChangeItemState(unitName, propertyName, propertyValue);
         }
 
+        /// <summary>
+        /// 原型图形控件新增图形
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pDomName">Dom树P块名称</param>
+        /// <param name="pDomTypeName">Dom类型P块名称</param>
+        /// <param name="pageType">页面类型</param>
+        /// <param name="pageNo">页面编号</param>
+        /// <param name="itemBase">新增图形信息</param>
+        public void UnitUCDesignerRuleAddItem(string unitName, string pDomName, string pDomTypeName, object pageType,
+                                              object pageNo, object itemBase)
+        {
+            uIElementOperation.UnitUCDesignerRuleAddItem(unitName, pDomName, pDomTypeName, pageType, pageNo, itemBase);
+        }
+
         #endregion
 
         #region 动态构建的ComponentVisioProperty初始化方法

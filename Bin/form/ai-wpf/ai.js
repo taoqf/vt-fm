@@ -187,6 +187,7 @@
 		"UnitUCDesignerRuleSelectCom":"UnitUCDesignerRuleSelectCom",
 		"UnitUCDesignerRuleAddSection":"UnitUCDesignerRuleAddSection",
 		"UnitUCDesignerRuleChangeItemState":"UnitUCDesignerRuleChangeItemState",
+		"UnitUCDesignerRuleAddItem":"UnitUCDesignerRuleAddItem",
 		"GetListFromListDataRow":"GetListFromListDataRow",
 		"DownLoadFile":"DownLoadFile",
 		"ComponentOperationAnalysisRender":"ComponentOperationAnalysisRender",

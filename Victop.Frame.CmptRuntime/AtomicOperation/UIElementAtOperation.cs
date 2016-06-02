@@ -1392,6 +1392,39 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
         }
+        /// <summary>
+        /// 原型图形控件新增图形
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pDomName">Dom树P块名称</param>
+        /// <param name="pDomTypeName">Dom类型P块名称</param>
+        /// <param name="pageType">页面类型</param>
+        /// <param name="pageNo">页面编号</param>
+        /// <param name="itemBase">新增图形信息</param>
+        public void UnitUCDesignerRuleAddItem(string unitName, string pDomName, string pDomTypeName, object pageType, object pageNo, object itemBase)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            DataTable dtDom = MainView.GetPresentationBlockModel(pDomName).ViewBlockDataTable;
+            DataTable dtDomType = MainView.GetPresentationBlockModel(pDomTypeName).ViewBlockDataTable;
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "addItem");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("dtDom", dtDom);
+            dicContent.Add("dtDomType", dtDomType);
+            dicContent.Add("pageType", pageType);
+            dicContent.Add("pageNo", pageNo);
+            dicContent.Add("itemBase", itemBase);
+            dicMessage.Add("MessageContent", dicContent);
+            template.Excute(dicMessage);
+
+            MainView.GetPresentationBlockModel(pDomName).SaveData();
+        }
         #endregion
 
 
