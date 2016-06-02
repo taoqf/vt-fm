@@ -1445,13 +1445,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             template.Excute(dicMessage);
         }
         /// <summary>
-        /// 原型图形控件新增图形
+        /// 原型图形控件新增图形(页面模板)
         /// </summary>
         /// <param name="unitName">部件</param>
         /// <param name="pDomName">Dom树P块名称</param>
         /// <param name="pDomTypeName">Dom类型P块名称</param>
         /// <param name="pageType">页面类型</param>
-        /// <param name="pageNo">页面编号</param>
+        /// <param name="pageNo">页面模板编号</param>
         /// <param name="itemBase">新增图形信息</param>
         public void UnitUCDesignerRuleAddItem(string unitName, string pDomName, string pDomTypeName, object pageType, object pageNo, object itemBase)
         {
