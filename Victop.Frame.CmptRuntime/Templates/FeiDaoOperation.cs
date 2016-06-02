@@ -864,39 +864,6 @@ namespace Victop.Frame.CmptRuntime
         }
 
         /// <summary>
-        /// 获取ComboBox的DT
-        /// </summary>
-        /// <param name="oav">接收oav</param>
-        /// <returns>DT</returns>
-        public void GetComboBoxDt(object oav)
-        {
-            systemOperation.GetComboBoxDt(oav);
-
-        }
-
-        /// <summary>
-        ///给ComboBox的Dt赋值
-        /// </summary>
-        /// <param name="keyValue">selectValue值</param>
-        /// <param name="displayValue">displaymember值</param>
-        /// <param name="paramDt">oav</param>
-        public void SetComboBoxDtRow(object keyValue, string displayValue, object paramDt)
-        {
-            systemOperation.SetComboBoxDtRow(keyValue, displayValue, paramDt);
-
-        }
-
-        /// <summary>
-        /// 将DT表绑到ComboBox数据源
-        /// </summary>
-        /// <param name="elementName">元素名称</param>
-        /// <param name="paramDt">oav</param>
-        public void SetComboItemsSource(string elementName, object paramDt)
-        {
-            systemOperation.SetComboItemsSource(elementName, paramDt);
-        }
-
-        /// <summary>
         /// 获取Dictionary中参数值
         /// </summary>
         /// <param name="oavDic">存储dic类型的oav</param>
@@ -1636,6 +1603,39 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.TemplateControlLoad(name, paramDic);
         }
 
+
+        /// <summary>
+        /// 获取ComboBox的DT
+        /// </summary>
+        /// <param name="oav">接收oav</param>
+        /// <returns>DT</returns>
+        public void GetComboBoxDt(object oav)
+        {
+            uIElementOperation.GetComboBoxDt(oav);
+
+        }
+
+        /// <summary>
+        ///给ComboBox的Dt赋值
+        /// </summary>
+        /// <param name="keyValue">selectValue值</param>
+        /// <param name="displayValue">displaymember值</param>
+        /// <param name="paramDt">oav</param>
+        public void SetComboBoxDtRow(object keyValue, string displayValue, object paramDt)
+        {
+            uIElementOperation.SetComboBoxDtRow(keyValue, displayValue, paramDt);
+
+        }
+
+        /// <summary>
+        /// 将DT表绑到ComboBox数据源
+        /// </summary>
+        /// <param name="elementName">元素名称</param>
+        /// <param name="paramDt">oav</param>
+        public void SetComboItemsSource(string elementName, object paramDt)
+        {
+            uIElementOperation.SetComboItemsSource(elementName, paramDt);
+        }
         #endregion
 
         #region 错误处理方法
