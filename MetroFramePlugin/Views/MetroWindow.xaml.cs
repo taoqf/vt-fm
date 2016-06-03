@@ -24,7 +24,7 @@ namespace MetroFramePlugin.Views
         public MetroWindow()
         {
             InitializeComponent();
-            this.gridTitleState.MouseLeftButtonDown += gridTitleState_MouseLeftButtonDown;
+            //this.gridTitleState.MouseLeftButtonDown += gridTitleState_MouseLeftButtonDown;
         }
         int i = 0;
         void gridTitleState_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

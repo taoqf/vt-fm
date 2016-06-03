@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FeiDaoBrowserPlugin.Handers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -30,31 +31,15 @@ namespace FeiDaoBrowserPlugin.Views
             ShowType = showType;
         }
 
-        private void feidaoBrowser_Navigating(object sender, NavigatingCancelEventArgs e)
-        {
-            SuppressScriptErrors((WebBrowser)sender, true);
-        }
-        #region 私有方法
-        private void SuppressScriptErrors(WebBrowser webBrowser, bool Hide)
-        {
-            FieldInfo fiComWebBrowser = typeof(WebBrowser).GetField("_axIWebBrowser2", BindingFlags.Instance | BindingFlags.NonPublic);
-            if (fiComWebBrowser == null) return;
-
-            object objComWebBrowser = fiComWebBrowser.GetValue(webBrowser);
-            if (objComWebBrowser == null) return;
-
-            objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { Hide });
-        }
-        #endregion
-
         private void mainView_Loaded(object sender, RoutedEventArgs e)
         {
             if (firstLoaded && ParamDict != null && ParamDict.ContainsKey("formid"))
             {
                 firstLoaded = false;
                 string ticket = FeiDaoOp.GetCurrentUserSSOTicket(null);
-                string webUrl = string.Format("{0}{1}", ParamDict["formid"].ToString(), ticket);
-                feidaoBrowser.Navigate(webUrl);
+                string webUrl = string.Format("{0}{1}", ParamDict["formid"].ToString(), string.Empty);
+                feidaoBrowser.MenuHandler = new MenuHandler();
+                feidaoBrowser.Address = webUrl;
             }
         }
     }

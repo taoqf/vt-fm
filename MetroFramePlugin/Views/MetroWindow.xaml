@@ -69,7 +69,7 @@
             </Grid.RowDefinitions>
             <Grid Name="gridTitle" Grid.Row="0" Visibility="Collapsed">
                 <!--Width="260"-->
-                <StackPanel Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <StackPanel Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonDown="gridTitleState_MouseLeftButtonDown">
                     <!--<Button Name="btnFeedBack" Width="34"  Height="34" Style="{DynamicResource btnMainFeedBackStyle}"/>-->
                     <!--插件集合-->
                     <controls:VicButtonNormal Name="btnCountDown" Visibility="Collapsed" Style="{DynamicResource btnCountDownStyle}" ToolTip="倒计时">

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CefSharp;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -67,6 +68,9 @@ namespace VictopPartner
             VicServerThread = new Thread(new ParameterizedThreadStart(RefreshSessionThreadProc));
             VicServerThread.Start(this);
             #endregion
+            #region 初始化CefSharp
+            Init(false);
+            #endregion
             if (FrameInit.GetInstance().FrameRun())
             {
                 try
@@ -88,7 +92,7 @@ namespace VictopPartner
                                 DeleteFolder(devPluginPath);
                             }
                             FrameInit.GetInstance().FrameUnload();
-                            //Environment.Exit(0);
+                            Cef.Shutdown();
                             Process.GetCurrentProcess().Kill();
                             break;
                         }
@@ -212,7 +216,6 @@ namespace VictopPartner
                 //VicServerThread.Start(this);
             }
         }
-
         #region 换肤
         /// <summary>
         /// 获取当前皮肤
@@ -236,6 +239,26 @@ namespace VictopPartner
             contentDic.Add("ServiceParams", JsonHelper.ToJson(ServiceParams));
             DataMessageOperation messageOp = new DataMessageOperation();
             messageOp.SendMessage(messageType, contentDic);
+        }
+        #endregion
+
+        #region CefSharp相关
+        public static void Init(bool multiThreadedMessageLoop)
+        {
+            if (!Cef.IsInitialized)
+            {
+                CefSettings cefSettings = new CefSettings();
+                //支持WebRTC
+                cefSettings.CefCommandLineArgs.Add("enable-media-stream", "1");
+                //GPU防止渲染闪屏
+                cefSettings.CefCommandLineArgs.Add("disable-gpu", "1");
+                //flash播放
+                cefSettings.CefCommandLineArgs.Add("ppapi-flash-path", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CefSharp", "pepflashplayer.dll"));
+                cefSettings.CefCommandLineArgs.Add("ppapi-flash-version", "20.0.0.306");
+                cefSettings.LocalesDirPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CefSharp", "locales");
+                cefSettings.Locale = @"zh-CN.pak";
+                Cef.Initialize(cefSettings, true, false);
+            }
         }
         #endregion
     }
