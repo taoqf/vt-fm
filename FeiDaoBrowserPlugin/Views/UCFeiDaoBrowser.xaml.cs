@@ -53,7 +53,7 @@ namespace FeiDaoBrowserPlugin.Views
             {
                 firstLoaded = false;
                 string ticket = FeiDaoOp.GetCurrentUserSSOTicket(null);
-                string webUrl = string.Format("{0}?ticket={1}", ParamDict["formid"].ToString(), ticket);
+                string webUrl = string.Format("{0}{1}", ParamDict["formid"].ToString(), ticket);
                 feidaoBrowser.Navigate(webUrl);
             }
         }
