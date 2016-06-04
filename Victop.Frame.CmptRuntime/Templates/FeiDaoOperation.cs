@@ -2265,6 +2265,29 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitUCDesignerRuleAddItem(unitName, pDomName, pDomTypeName, pageType, pageNo, itemBase);
         }
+        /// <summary>
+        /// 原型图形控件生成P结构(版式模板)
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pDomName">Dom树P块名称</param>
+        /// <param name="pStructureName">P结构P块名称</param>
+        /// <param name="compntFormatNo">版式模板编号</param>
+        public void UnitUCDesignerRuleAddPStructure(string unitName, string pDomName, string pStructureName, object compntFormatNo)
+        {
+            uIElementOperation.UnitUCDesignerRuleAddPStructure(unitName, pDomName, pStructureName, compntFormatNo);
+        }
+        /// <summary>
+        /// 原型图形控件扩展P(版式模板)
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pDomName">Dom树P块名称</param>
+        /// <param name="pStructureName">P结构P块名称</param>
+        /// <param name="compntFormatNo">版式模板编号</param>
+        /// <param name="itemPId">需扩展的P图形id</param>
+        public void UnitUCDesignerRuleExtendP(string unitName, string pDomName, string pStructureName, object compntFormatNo, object itemPId)
+        {
+            uIElementOperation.UnitUCDesignerRuleExtendP(unitName, pDomName, pStructureName, compntFormatNo, itemPId);
+        }
 
         #endregion
 
