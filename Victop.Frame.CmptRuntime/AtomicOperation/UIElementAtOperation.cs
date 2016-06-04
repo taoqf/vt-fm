@@ -1477,6 +1477,68 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
 
             MainView.GetPresentationBlockModel(pDomName).SaveData();
         }
+        /// <summary>
+        /// 原型图形控件生成P结构(版式模板)
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pDomName">Dom树P块名称</param>
+        /// <param name="pStructureName">P结构P块名称</param>
+        /// <param name="compntFormatNo">版式模板编号</param>
+        public void UnitUCDesignerRuleAddPStructure(string unitName, string pDomName, string pStructureName, object compntFormatNo)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            DataTable dtDom = MainView.GetPresentationBlockModel(pDomName).ViewBlockDataTable;
+            DataTable dtStructure = MainView.GetPresentationBlockModel(pStructureName).ViewBlockDataTable;
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "addPStructure");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("dtDom", dtDom);
+            dicContent.Add("pStructureName", pStructureName);
+            dicContent.Add("compntFormatNo", compntFormatNo);
+            dicMessage.Add("MessageContent", dicContent);
+            template.Excute(dicMessage);
+
+            MainView.GetPresentationBlockModel(pDomName).SaveData();
+            MainView.GetPresentationBlockModel(pStructureName).SaveData();
+        }
+        /// <summary>
+        /// 原型图形控件扩展P(版式模板)
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pDomName">Dom树P块名称</param>
+        /// <param name="pStructureName">P结构P块名称</param>
+        /// <param name="compntFormatNo">版式模板编号</param>
+        /// <param name="itemPId">需扩展的P图形id</param>
+        public void UnitUCDesignerRuleExtendP(string unitName, string pDomName, string pStructureName, object compntFormatNo, object itemPId)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            DataTable dtDom = MainView.GetPresentationBlockModel(pDomName).ViewBlockDataTable;
+            DataTable dtStructure = MainView.GetPresentationBlockModel(pStructureName).ViewBlockDataTable;
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "extendP");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("dtDom", dtDom);
+            dicContent.Add("pStructureName", pStructureName);
+            dicContent.Add("compntFormatNo", compntFormatNo);
+            dicContent.Add("itemPId", itemPId);
+            dicMessage.Add("MessageContent", dicContent);
+            template.Excute(dicMessage);
+
+            MainView.GetPresentationBlockModel(pDomName).SaveData();
+            MainView.GetPresentationBlockModel(pStructureName).SaveData();
+        }
         #endregion
 
 

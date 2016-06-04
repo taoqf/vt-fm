@@ -599,15 +599,15 @@ namespace Victop.Frame.CmptRuntime
         }
 
         /// <summary>
-        /// 获取最大序号加1(字段中首字母为字母)
+        ///获取block数据中指定某个字段名首字母或首部字符串的最大序号加1
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
-        /// <param name="firstLetter">首字母</param>
+        /// <param name="firstLetters">首字母或首部字符串</param>
         /// <param name="oav">接收oav</param>
-        public void GetMaxNumberFromOneLetter(string pblockName, string fieldName, string firstLetter, object oav)
+        public void GetMaxNumberFromOneLetter(string pblockName, string fieldName, string firstLetters, object oav)
         {
-            dataOperation.GetMaxNumberFromOneLetter(pblockName, fieldName, firstLetter, oav);
+            dataOperation.GetMaxNumberFromOneLetter(pblockName, fieldName, firstLetters, oav);
         }
 
         /// <summary>
@@ -2264,6 +2264,29 @@ namespace Victop.Frame.CmptRuntime
                                               object pageNo, object itemBase)
         {
             uIElementOperation.UnitUCDesignerRuleAddItem(unitName, pDomName, pDomTypeName, pageType, pageNo, itemBase);
+        }
+        /// <summary>
+        /// 原型图形控件生成P结构(版式模板)
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pDomName">Dom树P块名称</param>
+        /// <param name="pStructureName">P结构P块名称</param>
+        /// <param name="compntFormatNo">版式模板编号</param>
+        public void UnitUCDesignerRuleAddPStructure(string unitName, string pDomName, string pStructureName, object compntFormatNo)
+        {
+            uIElementOperation.UnitUCDesignerRuleAddPStructure(unitName, pDomName, pStructureName, compntFormatNo);
+        }
+        /// <summary>
+        /// 原型图形控件扩展P(版式模板)
+        /// </summary>
+        /// <param name="unitName">部件</param>
+        /// <param name="pDomName">Dom树P块名称</param>
+        /// <param name="pStructureName">P结构P块名称</param>
+        /// <param name="compntFormatNo">版式模板编号</param>
+        /// <param name="itemPId">需扩展的P图形id</param>
+        public void UnitUCDesignerRuleExtendP(string unitName, string pDomName, string pStructureName, object compntFormatNo, object itemPId)
+        {
+            uIElementOperation.UnitUCDesignerRuleExtendP(unitName, pDomName, pStructureName, compntFormatNo, itemPId);
         }
 
         #endregion

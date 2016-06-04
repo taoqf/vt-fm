@@ -188,6 +188,8 @@
 		"UnitUCDesignerRuleSelectCom":"UnitUCDesignerRuleSelectCom",
 		"UnitUCDesignerRuleAddSection":"UnitUCDesignerRuleAddSection",
 		"UnitUCDesignerRuleChangeItemState":"UnitUCDesignerRuleChangeItemState",
+		"UnitUCDesignerRuleAddPStructure":"UnitUCDesignerRuleAddPStructure",
+		"UnitUCDesignerRuleExtendP":"UnitUCDesignerRuleExtendP",
 		"UnitUCDesignerRuleAddItem":"UnitUCDesignerRuleAddItem",
 		"GetListFromListDataRow":"GetListFromListDataRow",
 		"DownLoadFile":"DownLoadFile",
