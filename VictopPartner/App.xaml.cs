@@ -69,7 +69,7 @@ namespace VictopPartner
             VicServerThread.Start(this);
             #endregion
             #region 初始化CefSharp
-            Init(false);
+            Init();
             #endregion
             if (FrameInit.GetInstance().FrameRun())
             {
@@ -243,21 +243,36 @@ namespace VictopPartner
         #endregion
 
         #region CefSharp相关
-        public static void Init(bool multiThreadedMessageLoop)
+        public void Init()
         {
-            if (!Cef.IsInitialized)
+            var settings = new CefSettings();
+            settings.MultiThreadedMessageLoop = true;
+            settings.WindowlessRenderingEnabled = true;
+            settings.EnableInternalPdfViewerOffScreen();
+            settings.CefCommandLineArgs.Add("disable-gpu", "1");
+            settings.FocusedNodeChangedEnabled = true;
+            Cef.OnContextInitialized = delegate
             {
-                CefSettings cefSettings = new CefSettings();
-                //支持WebRTC
-                cefSettings.CefCommandLineArgs.Add("enable-media-stream", "1");
-                //GPU防止渲染闪屏
-                cefSettings.CefCommandLineArgs.Add("disable-gpu", "1");
-                //flash播放
-                cefSettings.CefCommandLineArgs.Add("ppapi-flash-path", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CefSharp", "pepflashplayer.dll"));
-                cefSettings.CefCommandLineArgs.Add("ppapi-flash-version", "20.0.0.306");
-                cefSettings.LocalesDirPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CefSharp", "locales");
-                cefSettings.Locale = @"zh-CN.pak";
-                Cef.Initialize(cefSettings, true, false);
+                var cookieManager = Cef.GetGlobalCookieManager();
+                cookieManager.SetStoragePath("cookies", true);
+                cookieManager.SetSupportedSchemes("custom");
+                using (var context = Cef.GetGlobalRequestContext())
+                {
+                    string errorMessage;
+                    context.SetPreference("webkit.webprefs.plugins_enabled", true, out errorMessage);
+                }
+            };
+            settings.LocalesDirPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CefSharp", "locales");
+            settings.Locale = @"zh-CN";
+            //支持WebRTC
+            //settings.CefCommandLineArgs.Add("enable-media-stream", "1");
+            //使用系统的falsh
+            //settings.CefCommandLineArgs.Add("enable-system-flash", "1");
+            settings.CefCommandLineArgs.Add("ppapi-flash-path", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CefSharp", "pepflashplayer.dll"));
+            settings.CefCommandLineArgs.Add("ppapi-flash-version", "20.0.0.306");
+            if (!Cef.Initialize(settings, true, true))
+            {
+                LoggerHelper.DebugFormat("Unable to Initialize Cef");
             }
         }
         #endregion
