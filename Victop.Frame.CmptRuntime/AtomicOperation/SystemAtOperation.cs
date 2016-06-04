@@ -715,6 +715,38 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 删除文件
+        /// </summary>
+        /// <param name="filePath">文件地址，一个或者多个，中间用英文逗号隔开（如：“eb2dee52-85ba-4030-b8ce-c23439aa2fc7,ffb1d365-4d24-41df-b4a7-cb831b9340ff”）</param>
+        /// <param name="oav">接受oav（true,false）</param>
+        /// <param name="productId">产品ID，默认为“feidao”</param>
+        public void DeleteFile(string filePath, object oav, string productId = "feidao")
+        {
+            dynamic o1 = oav;
+            try
+            {
+                Dictionary<string, object> messageContent = new Dictionary<string, object>();
+                Dictionary<string, string> address = new Dictionary<string, string>();
+                address.Add("FilePath", filePath);
+                address.Add("ProductId", productId);
+                messageContent.Add("ServiceParams", JsonHelper.ToJson(address));
+                Dictionary<string, object> returnDic = new DataMessageOperation().SendSyncMessage("ServerCenterService.DeleteDocument", messageContent);
+                if (returnDic != null && returnDic["ReplyMode"].ToString() != "0")
+                {
+                    o1.v = true;
+                }
+                else
+                {
+                    o1.v = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                LoggerHelper.InfoFormat("删除文件异常(bool DeleteFile)：{0}", ex.Message);
+                o1.v = false;
+            }
+        }
+        /// <summary>
         /// 打开文件
         /// </summary>
         /// <param name="fileType">文件类型(image,autio,video,file)</param>

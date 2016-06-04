@@ -75,6 +75,7 @@
 	"WriteTextToFile":"WriteTextToFile",
 	"SaveWriteTextToFile":"SaveWriteTextToFile",
 	"UpLoadFile":"UpLoadFile",
+	"DeleteFile":"DeleteFile",
 	"OpenFile":"OpenFile",
 	"GetNewGuid":"GetNewGuid",
 	"SendGetCodeMessage":"SendGetCodeMessage",
