@@ -36,10 +36,14 @@ namespace FeiDaoBrowserPlugin.Views
             if (firstLoaded && ParamDict != null && ParamDict.ContainsKey("formid"))
             {
                 firstLoaded = false;
-                string ticket = FeiDaoOp.GetCurrentUserSSOTicket(null);
-                string webUrl = string.Format("{0}{1}", ParamDict["formid"].ToString(), string.Empty);
+                string url = ParamDict["formid"].ToString();
+                if (url.EndsWith("="))
+                {
+                    string ticket = FeiDaoOp.GetCurrentUserSSOTicket(null);
+                    url = string.Format("{0}{1}", ParamDict["formid"].ToString(), ticket);
+                }
                 feidaoBrowser.MenuHandler = new MenuHandler();
-                feidaoBrowser.Address = webUrl;
+                feidaoBrowser.Address = url;
             }
         }
     }
