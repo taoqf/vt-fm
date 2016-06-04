@@ -599,15 +599,15 @@ namespace Victop.Frame.CmptRuntime
         }
 
         /// <summary>
-        /// 获取最大序号加1(字段中首字母为字母)
+        ///获取block数据中指定某个字段名首字母或首部字符串的最大序号加1
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
-        /// <param name="firstLetter">首字母</param>
+        /// <param name="firstLetters">首字母或首部字符串</param>
         /// <param name="oav">接收oav</param>
-        public void GetMaxNumberFromOneLetter(string pblockName, string fieldName, string firstLetter, object oav)
+        public void GetMaxNumberFromOneLetter(string pblockName, string fieldName, string firstLetters, object oav)
         {
-            dataOperation.GetMaxNumberFromOneLetter(pblockName, fieldName, firstLetter, oav);
+            dataOperation.GetMaxNumberFromOneLetter(pblockName, fieldName, firstLetters, oav);
         }
 
         /// <summary>
