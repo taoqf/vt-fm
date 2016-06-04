@@ -1,6 +1,6 @@
-﻿using FeiDaoBrowserPlugin.Handers;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -12,8 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Victop.Frame.CmptRuntime;
+using Victop.Frame.PublicLib.Helpers;
 
 namespace FeiDaoBrowserPlugin.Views
 {
@@ -42,9 +42,24 @@ namespace FeiDaoBrowserPlugin.Views
                     string ticket = FeiDaoOp.GetCurrentUserSSOTicket(null);
                     url = string.Format("{0}{1}", ParamDict["formid"].ToString(), ticket);
                 }
-                feidaoBrowser.MenuHandler = new MenuHandler();
-                feidaoBrowser.Address = url;
+                feidaoBrowser.Navigate(url);
             }
         }
+        private void feidaoBrowser_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            SuppressScriptErrors((WebBrowser)sender, true);
+        }
+        #region 私有方法
+        private void SuppressScriptErrors(WebBrowser webBrowser, bool Hide)
+        {
+            FieldInfo fiComWebBrowser = typeof(WebBrowser).GetField("_axIWebBrowser2", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (fiComWebBrowser == null) return;
+
+            object objComWebBrowser = fiComWebBrowser.GetValue(webBrowser);
+            if (objComWebBrowser == null) return;
+
+            objComWebBrowser.GetType().InvokeMember("Silent", BindingFlags.SetProperty, null, objComWebBrowser, new object[] { Hide });
+        }
+        #endregion
     }
 }

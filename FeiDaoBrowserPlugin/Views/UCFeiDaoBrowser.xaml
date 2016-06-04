@@ -5,11 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FeiDaoBrowserPlugin.Views"
              xmlns:ctrl="http://schemas.ifeidao.com/wpfcontrol"
-             xmlns:cef="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
              xmlns:tc="clr-namespace:Victop.Frame.CmptRuntime;assembly=Victop.Frame.CmptRuntime"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Name="mainView" Loaded="mainView_Loaded">
     <ctrl:VicGridNormal>
-        <cef:ChromiumWebBrowser Name="feidaoBrowser"/>
+        <WebBrowser Name="feidaoBrowser" Navigating="feidaoBrowser_Navigating"/>
     </ctrl:VicGridNormal>
 </tc:TemplateControl>
