@@ -9,6 +9,10 @@
              xmlns:tc="clr-namespace:Victop.Frame.CmptRuntime;assembly=Victop.Frame.CmptRuntime"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Name="mainView" Loaded="mainView_Loaded">
+    <UserControl.InputBindings>
+        <KeyBinding Modifiers="Alt" Key="F12" Command="{Binding btnShowDevToolsCommand}"/>
+        <KeyBinding Modifiers="Alt" Key="F" Command="{Binding btnRefreshCommand}"/>
+    </UserControl.InputBindings>
     <ctrl:VicGridNormal>
         <cef:ChromiumWebBrowser Name="feidaoBrowser"/>
     </ctrl:VicGridNormal>
