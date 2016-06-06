@@ -1499,7 +1499,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             //参数
             Dictionary<string, object> dicContent = new Dictionary<string, object>();
             dicContent.Add("dtDom", dtDom);
-            dicContent.Add("pStructureName", pStructureName);
+            dicContent.Add("dtStructure", dtStructure);
             dicContent.Add("compntFormatNo", compntFormatNo);
             dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
