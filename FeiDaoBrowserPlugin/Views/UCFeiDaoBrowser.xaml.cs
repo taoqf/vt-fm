@@ -1,4 +1,5 @@
-﻿using FeiDaoBrowserPlugin.Handers;
+﻿using CefSharp;
+using FeiDaoBrowserPlugin.Handers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Victop.Frame.CmptRuntime;
+using Victop.Server.Controls.MVVM;
 
 namespace FeiDaoBrowserPlugin.Views
 {
@@ -36,14 +38,50 @@ namespace FeiDaoBrowserPlugin.Views
             if (firstLoaded && ParamDict != null && ParamDict.ContainsKey("formid"))
             {
                 firstLoaded = false;
-                string url = ParamDict["formid"].ToString();
-                if (url.EndsWith("="))
-                {
-                    string ticket = FeiDaoOp.GetCurrentUserSSOTicket(null);
-                    url = string.Format("{0}{1}", ParamDict["formid"].ToString(), ticket);
-                }
+                string url = GetUrlInfo();
                 feidaoBrowser.MenuHandler = new MenuHandler();
                 feidaoBrowser.Address = url;
+            }
+        }
+        /// <summary>
+        /// 获取Url信息
+        /// </summary>
+        /// <returns></returns>
+        private string GetUrlInfo()
+        {
+            string url = ParamDict["formid"].ToString();
+            if (url.EndsWith("="))
+            {
+                string ticket = FeiDaoOp.GetCurrentUserSSOTicket(null);
+                url = string.Format("{0}{1}", ParamDict["formid"].ToString(), ticket);
+            }
+
+            return url;
+        }
+        /// <summary>
+        /// 打开开发工具
+        /// </summary>
+        public ICommand btnShowDevToolsCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    feidaoBrowser.ShowDevTools();
+                });
+            }
+        }
+        /// <summary>
+        /// 刷新页面
+        /// </summary>
+        public ICommand btnRefreshCommand
+        {
+            get
+            {
+                return new RelayCommand(() =>
+                {
+                    feidaoBrowser.Address = GetUrlInfo();
+                });
             }
         }
     }

@@ -251,17 +251,6 @@ namespace VictopPartner
             settings.EnableInternalPdfViewerOffScreen();
             settings.CefCommandLineArgs.Add("disable-gpu", "1");
             settings.FocusedNodeChangedEnabled = true;
-            Cef.OnContextInitialized = delegate
-            {
-                var cookieManager = Cef.GetGlobalCookieManager();
-                cookieManager.SetStoragePath("cookies", true);
-                cookieManager.SetSupportedSchemes("custom");
-                using (var context = Cef.GetGlobalRequestContext())
-                {
-                    string errorMessage;
-                    context.SetPreference("webkit.webprefs.plugins_enabled", true, out errorMessage);
-                }
-            };
             settings.LocalesDirPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CefSharp", "locales");
             settings.Locale = @"zh-CN";
             //支持WebRTC

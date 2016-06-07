@@ -87,7 +87,14 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                             break;
                         case "Image":
                             Image img = element as Image;
-                            img.Source = new BitmapImage(new Uri(content.ToString()));
+                            try
+                            {
+                                img.Source = new BitmapImage(new Uri(content.ToString()));
+                            }
+                            catch (Exception ex)
+                            {
+                                
+                            }
                             break;
                         default:
                             break;
@@ -1499,7 +1506,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             //参数
             Dictionary<string, object> dicContent = new Dictionary<string, object>();
             dicContent.Add("dtDom", dtDom);
-            dicContent.Add("pStructureName", pStructureName);
+            dicContent.Add("dtStructure", dtStructure);
             dicContent.Add("compntFormatNo", compntFormatNo);
             dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
