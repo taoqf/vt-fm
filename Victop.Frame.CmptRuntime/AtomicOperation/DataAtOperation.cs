@@ -1347,7 +1347,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        ///获取block数据中指定某个字段名首字母或首部字符串的最大序号加1
+        ///获取block数据中指定某个字段值的首字母或首部字符串的最大序号加1
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
