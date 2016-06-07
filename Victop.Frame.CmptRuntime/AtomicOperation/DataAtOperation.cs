@@ -176,19 +176,18 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 List<object> list = listOr as List<object>;
                 if (list != null)
                 {
-                    Dictionary<string, object> orDic = new Dictionary<string, object>();
-                    orDic.Add("$or", list);
                     if (conditionModelDic.ContainsKey(pBlockName))
                     {
-                        Dictionary<string, object> paramDic = conditionModelDic[pBlockName].TableCondition;
-                        paramDic.Add("param", orDic);
+                       
+                        Dictionary<string, object> orDic = conditionModelDic[pBlockName].TableCondition;
+                        orDic.Add("$or", list);
                     }
                     else
                     {
                         ViewsConditionModel viewConModel = new ViewsConditionModel();
-                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                        paramDic.Add("param", orDic);
-                        viewConModel.TableCondition = paramDic;
+                        Dictionary<string, object> orDic = new Dictionary<string, object>();
+                        orDic.Add("$or", list);
+                        viewConModel.TableCondition = orDic;
                         conditionModelDic.Add(pBlockName, viewConModel);
                     }
                 }
