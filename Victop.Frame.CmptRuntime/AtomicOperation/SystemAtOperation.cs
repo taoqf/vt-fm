@@ -750,7 +750,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// 打开文件
         /// </summary>
         /// <param name="fileType">文件类型(image,autio,video,file)</param>
-        /// <param name="oav">接受oav文件路径</param>
+        /// <param name="oav">接收oav文件路径</param>
         public void OpenFile(string fileType, object oav)
         {
             dynamic o1 = oav;
@@ -786,7 +786,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="filePath">下载地址</param>
         /// <param name="localFilePath">本地文件地址</param>
-        /// <param name="oav">接受oav全路径</param>
+        /// <param name="oav">接收oav全路径</param>
         /// <param name="productId">产品路径</param>
         public void DownLoadFile(string filePath, string localFilePath, object oav, string productId = "feidao")
         {

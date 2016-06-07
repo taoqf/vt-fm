@@ -599,7 +599,7 @@ namespace Victop.Frame.CmptRuntime
         }
 
         /// <summary>
-        ///获取block数据中指定某个字段名首字母或首部字符串的最大序号加1
+        ///获取block数据中指定某个字段值的首字母或首部字符串的最大序号加1
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="fieldName">字段名称</param>
@@ -1099,7 +1099,7 @@ namespace Victop.Frame.CmptRuntime
         /// 打开文件
         /// </summary>
         /// <param name="fileType">文件类型(image,autio,video,file)</param>
-        /// <param name="oav">接受oav文件路径</param>
+        /// <param name="oav">接收oav文件路径</param>
         public void OpenFile(string fileType, object oav)
         {
             systemOperation.OpenFile(fileType, oav);
@@ -1110,7 +1110,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="filePath">下载地址</param>
         /// <param name="localFilePath">本地文件地址</param>
-        /// <param name="oav">接受oav全路径</param>
+        /// <param name="oav">接收oav全路径</param>
         /// <param name="productId">产品路径</param>
         public void DownLoadFile(string localFilePath, string filePath, object oav, string productId = "feidao")
         {
