@@ -252,6 +252,7 @@ namespace VictopPartner
             settings.CefCommandLineArgs.Add("disable-gpu", "1");
             settings.FocusedNodeChangedEnabled = true;
             settings.LocalesDirPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CefSharp", "locales");
+            settings.ResourcesDirPath= Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CefSharp","resouces");
             settings.Locale = @"zh-CN";
             //支持WebRTC
             //settings.CefCommandLineArgs.Add("enable-media-stream", "1");
