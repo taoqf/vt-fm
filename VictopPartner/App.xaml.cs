@@ -46,7 +46,15 @@ namespace VictopPartner
             }
             VicMessageBoxNormal.Show(alertInfo, "未知错误", MessageBoxButton.OK, MessageBoxImage.Error);
             LoggerHelper.Error(errorInfo);
-            e.Handled = true;
+            if (e.Exception.Source.Equals("CefSharp"))
+            {
+                Cef.Shutdown();
+                Process.GetCurrentProcess().Kill();
+            }
+            else
+            {
+                e.Handled = true;
+            }
 
         }
         private Thread VicServerThread { get; set; }
