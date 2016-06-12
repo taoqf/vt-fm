@@ -479,13 +479,13 @@
                             <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
                             <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
                             <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
                             <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
                             <Setter Property="CornerRadius" TargetName="Bd" Value="10,10,0,0"></Setter>
                             <Setter Property="Background" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
                             <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource SkinColor}"/>
