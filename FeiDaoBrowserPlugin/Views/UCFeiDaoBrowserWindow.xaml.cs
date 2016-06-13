@@ -10,13 +10,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Victop.Wpf.Controls;
 
 namespace FeiDaoBrowserPlugin.Views
 {
     /// <summary>
     /// UCFeiDaoBrowserWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class UCFeiDaoBrowserWindow : Window
+    public partial class UCFeiDaoBrowserWindow : VicMetroWindow
     {
         public UCFeiDaoBrowserWindow(Dictionary<string, object> paramDict, int showType)
         {
