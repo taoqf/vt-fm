@@ -529,7 +529,16 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.BlockToOAV(blockName, fieldName);
         }
-
+        /// <summary>
+        /// 字符串集合转oav
+        /// </summary>
+        /// <param name="str">字符串集合</param>
+        /// <param name="o">o</param>
+        /// <param name="a">a</param>
+        public void ListStrToOAV(object strList, string o, string a)
+        {
+            dataOperation.ListStrToOAV(strList, o, a);
+        }
         /// <summary>
         /// 批量修改区块选中的数据集合中的某列值
         /// </summary>
