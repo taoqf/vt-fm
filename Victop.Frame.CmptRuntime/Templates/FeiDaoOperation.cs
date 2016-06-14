@@ -1233,7 +1233,25 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.GetStrLength(str, oav);
         }
-
+        /// <summary>
+        /// 获取指定字符或字符串在大字符串中首次出现的位置
+        /// </summary>
+        /// <param name="str">大字符串</param>
+        /// <param name="childStr">指定字符或字符串</param>
+        /// <param name="oav">接收oav</param>
+        public void GetStrPosition(string str,string childStr, object oav)
+        {
+            systemOperation.GetStrPosition(str,childStr ,oav);
+        }
+        /// <summary>
+        /// 获取截取的字符串子串
+        /// </summary>
+        /// <param name="str">字符串实例</param>
+        /// <param name="oav">接收oav</param>
+        public void GetChildStr(string str, int length, object oav)
+        {
+            systemOperation.GetChildStr(str,length, oav);
+        }
         /// <summary>
         /// 拼接字符串
         /// </summary>

@@ -201,5 +201,7 @@
                 "ComponentOperationAnalysisAdd":"ComponentOperationAnalysisAdd",
 				"SetDataGridCheckFromTwoPblock":"SetDataGridCheckFromTwoPblock",
                 "OperationAnalysisAddTable":"OperationAnalysisAddTable",
-                "SetConditionSearchOr":"SetConditionSearchOr"
+                "SetConditionSearchOr":"SetConditionSearchOr",
+                "GetStrPosition":"GetStrPosition",
+                "GetChildStr":"GetChildStr"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

@@ -1020,6 +1020,38 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 o.v = 0;
             else o.v = str.ToString().Length;
         }
+        /// <summary>
+        /// 获取指定字符或字符串在大字符串中首次出现的位置
+        /// </summary>
+        /// <param name="str">大字符串</param>
+        /// <param name="childStr">指定字符或字符串</param>
+        /// <param name="oav">接收oav</param>
+        public void GetStrPosition(string str, string childStr, object oav)
+        {
+            dynamic o = oav;
+            if (str == null)
+                o.v = null;
+            else
+            {
+                o.v = str.IndexOf(childStr);
+            }
+        }
+        /// <summary>
+        /// 获取截取的字符串
+        /// </summary>
+        /// <param name="str">字符串实例</param>
+        /// <param name="oav">接收oav</param>
+        public void GetChildStr(string str,int length, object oav)
+        {
+            dynamic o = oav;
+            if (str == null)
+                o.v = "";
+            else
+            {
+                o.v = str.Substring(0, length);
+            }
+          
+        }
 
         /// <summary>
         /// 拼接字符串
