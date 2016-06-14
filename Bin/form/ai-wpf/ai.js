@@ -192,6 +192,7 @@
 		"UnitUCDesignerRuleAddPStructure":"UnitUCDesignerRuleAddPStructure",
 		"UnitUCDesignerRuleExtendP":"UnitUCDesignerRuleExtendP",
 		"UnitUCDesignerRuleAddItem":"UnitUCDesignerRuleAddItem",
+		"UnitUCDesignerRulePreview":"UnitUCDesignerRulePreview",
 		"GetListFromListDataRow":"GetListFromListDataRow",
 		"DownLoadFile":"DownLoadFile",
 		"ComponentOperationAnalysisRender":"ComponentOperationAnalysisRender",

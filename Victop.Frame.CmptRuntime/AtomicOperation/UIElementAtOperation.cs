@@ -1546,6 +1546,56 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             MainView.GetPresentationBlockModel(pDomName).SaveData();
             MainView.GetPresentationBlockModel(pStructureName).SaveData();
         }
+        /// <summary>
+        /// 原型图形控件预览
+        /// </summary>
+        /// <param name="unitName">部件名</param>
+        /// <param name="isPage1">是否原型1</param>
+        /// <param name="pageNo">页面编号</param>
+        /// <param name="productid">产品id</param>
+        /// <param name="pDomName">dom树P名称</param>
+        /// <param name="pProTemName">控件属性模板P名称</param>
+        /// <param name="pDynamicName">动效P名称</param>
+        /// <param name="pDynamicProTemName">动效属性模板P名称</param>
+        public void UnitUCDesignerRulePreview(string unitName, bool isPage1, object pageNo, object productid, string pDomName, string pProTemName, string pDynamicName, string pDynamicProTemName)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            DataTable dtLayoutTree = MainView.GetPresentationBlockModel(pDomName).ViewBlockDataTable;
+            string channelIdPage = MainView.GetPresentationBlockModel(pDomName).ViewBlock.ViewId;
+            DataTable dtPropertyTem = MainView.GetPresentationBlockModel(pProTemName).ViewBlockDataTable;
+           
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "preview");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("pageNo", pageNo);
+            dicContent.Add("isPage1", isPage1);
+            dicContent.Add("productid", productid);
+            dicContent.Add("dtLayoutTree", dtLayoutTree);
+            dicMessage.Add("channelIdPage", channelIdPage);
+            dicContent.Add("dtPropertyTem", dtPropertyTem);
+            if (pDynamicName != null && pDynamicProTemName != null)
+            {
+                DataTable dtDynamic = MainView.GetPresentationBlockModel(pDynamicName).ViewBlockDataTable;
+                string channelIdDynamic = MainView.GetPresentationBlockModel(pDynamicName).ViewBlock.ViewId;
+                DataTable dtDynamicProTem = MainView.GetPresentationBlockModel(pDynamicProTemName).ViewBlockDataTable;
+                dicMessage.Add("dtDynamic", dtDynamic);
+                dicContent.Add("channelIdDynamic", channelIdDynamic);
+                dicMessage.Add("dtDynamicProTem", dtDynamicProTem);
+            }
+            else
+            {
+                dicMessage.Add("dtDynamic", new DataTable());
+                dicContent.Add("channelIdDynamic", "");
+                dicMessage.Add("dtDynamicProTem", new DataTable());
+            }
+            template.Excute(dicMessage);
+        }
         #endregion
 
 

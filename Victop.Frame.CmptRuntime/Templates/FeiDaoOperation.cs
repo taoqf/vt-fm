@@ -2297,6 +2297,21 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitUCDesignerRuleExtendP(unitName, pDomName, pStructureName, compntFormatNo, itemPId);
         }
+        /// <summary>
+        /// 原型图形控件预览
+        /// </summary>
+        /// <param name="unitName">部件名</param>
+        /// <param name="isPage1">是否原型1</param>
+        /// <param name="pageNo">页面编号</param>
+        /// <param name="productid">产品id</param>
+        /// <param name="pDomName">dom树P名称</param>
+        /// <param name="pProTemName">控件属性模板P名称</param>
+        /// <param name="pDynamicName">动效P名称</param>
+        /// <param name="pDynamicProTemName">动效属性模板P名称</param>
+        public void UnitUCDesignerRulePreview(string unitName, bool isPage1, object pageNo, object productid,string pDomName, string pProTemName, string pDynamicName = null,string pDynamicProTemName = null)
+        {
+            uIElementOperation.UnitUCDesignerRulePreview(unitName, isPage1, pageNo, productid,pDomName, pProTemName, pDynamicName,pDynamicProTemName);
+        }
 
         #endregion
 
