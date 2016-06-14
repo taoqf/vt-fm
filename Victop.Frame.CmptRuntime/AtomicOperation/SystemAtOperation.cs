@@ -1030,25 +1030,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             dynamic o = oav;
             if (str == null)
-                o.v = null;
+                o.v = -1;
             else
             {
                 o.v = str.IndexOf(childStr);
             }
         }
         /// <summary>
-        /// 获取截取的字符串
+        /// 获取截取的字符串子串
         /// </summary>
         /// <param name="str">字符串实例</param>
+        /// <param name="position">指定的位置</param>
+        /// <param name="length">截取长度</param>
         /// <param name="oav">接收oav</param>
-        public void GetChildStr(string str,int length, object oav)
+        public void GetChildStr(string str,int position,int length, object oav)
         {
             dynamic o = oav;
             if (str == null)
                 o.v = "";
             else
             {
-                o.v = str.Substring(0, length);
+                o.v = str.Substring(position, length);
             }
           
         }

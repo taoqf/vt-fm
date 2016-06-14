@@ -1247,10 +1247,12 @@ namespace Victop.Frame.CmptRuntime
         /// 获取截取的字符串子串
         /// </summary>
         /// <param name="str">字符串实例</param>
+        /// <param name="position">指定的位置</param>
+        /// <param name="length">截取长度</param>
         /// <param name="oav">接收oav</param>
-        public void GetChildStr(string str, int length, object oav)
+        public void GetChildStr(string str, int position, int length, object oav)
         {
-            systemOperation.GetChildStr(str,length, oav);
+            systemOperation.GetChildStr(str, position,length, oav);
         }
         /// <summary>
         /// 拼接字符串
