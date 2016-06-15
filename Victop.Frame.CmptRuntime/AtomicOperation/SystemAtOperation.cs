@@ -1413,6 +1413,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 o.v = ConfigurationManager.AppSettings["downloadfilehttp"] + "getfile?id=" + filePath + "&productid=" + productId;
             }
+            else
+            {
+                string filepath = Guid.NewGuid().ToString();
+                o.v = ConfigurationManager.AppSettings["downloadfilehttp"] + "getfile?id=" + filepath + "&productid=" + productId;
+            }
         }
 
         /// <summary>
