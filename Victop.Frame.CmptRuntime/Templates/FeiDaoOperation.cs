@@ -1972,7 +1972,7 @@ namespace Victop.Frame.CmptRuntime
         #region 专用原子操作
 
         /// <summary>
-        /// 规则机台模板then专用原子操作
+        /// 规则机台模板then专用原子操作(后来改逻辑了，不用这个了)
         /// </summary>
         /// <param name="pblockrhs">规则右实例block</param>
         /// <param name="pblockparams">规则右实例参数block</param>
