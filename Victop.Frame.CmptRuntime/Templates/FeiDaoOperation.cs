@@ -1239,9 +1239,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="str">大字符串</param>
         /// <param name="childStr">指定字符或字符串</param>
         /// <param name="oav">接收oav</param>
-        public void GetStrPosition(string str,string childStr, object oav)
+        public void GetStrPosition(string str, string childStr, object oav)
         {
-            systemOperation.GetStrPosition(str,childStr ,oav);
+            systemOperation.GetStrPosition(str, childStr, oav);
         }
         /// <summary>
         /// 获取截取的字符串子串
@@ -1252,7 +1252,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void GetChildStr(string str, int position, int length, object oav)
         {
-            systemOperation.GetChildStr(str, position,length, oav);
+            systemOperation.GetChildStr(str, position, length, oav);
         }
         /// <summary>
         /// 拼接字符串
@@ -1630,6 +1630,8 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.UnitListBoxFontIconRuleRefresh(unitName);
         }
+
+
 
         /// <summary>
         /// 初始化控件
@@ -2328,9 +2330,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pProTemName">控件属性模板P名称</param>
         /// <param name="pDynamicName">动效P名称</param>
         /// <param name="pDynamicProTemName">动效属性模板P名称</param>
-        public void UnitUCDesignerRulePreview(string unitName, bool isPage1, object pageNo, object productid,string pDomName, string pProTemName, string pDynamicName = null,string pDynamicProTemName = null)
+        public void UnitUCDesignerRulePreview(string unitName, bool isPage1, object pageNo, object productid, string pDomName, string pProTemName, string pDynamicName = null, string pDynamicProTemName = null)
         {
-            uIElementOperation.UnitUCDesignerRulePreview(unitName, isPage1, pageNo, productid,pDomName, pProTemName, pDynamicName,pDynamicProTemName);
+            uIElementOperation.UnitUCDesignerRulePreview(unitName, isPage1, pageNo, productid, pDomName, pProTemName, pDynamicName, pDynamicProTemName);
         }
 
         #endregion
@@ -2469,6 +2471,20 @@ namespace Victop.Frame.CmptRuntime
         public void SetDataGridVicCheckFlagColumnToFalse(string pblockName, int type = 1)
         {
             dataOperation.SetDataGridVicCheckFlagColumnToFalse(pblockName, type);
+        }
+        #endregion
+
+        #region 动作部件
+        /// <summary>
+        /// 动作部件勾选并设置不可用
+        /// </summary>
+        /// <param name="unitName">动作部件名称</param>
+        /// <param name="mepblockName">事件p块名称</param>
+        /// <param name="meapblockName">核销动作p块名称</param>
+        /// <param name="machine_evevt_no">当前选择的事件编号</param>
+        public void CompntActionListSetChecked(string unitName, string mepblockName, string meapblockName, string machine_evevt_no)
+        {
+            uIElementOperation.CompntActionListSetChecked(unitName, mepblockName, meapblockName, machine_evevt_no);
         }
         #endregion
     }

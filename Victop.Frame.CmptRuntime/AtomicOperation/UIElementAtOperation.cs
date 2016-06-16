@@ -969,6 +969,45 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
 
         #endregion
 
+        #region 动作部件
+        /// <summary>
+        /// 动作部件勾选并设置不可用
+        /// </summary>
+        /// <param name="unitName">动作部件名称</param>
+        /// <param name="mepblockName">事件p块名称</param>
+        /// <param name="meapblockName">核销动作p块名称</param>
+        /// <param name="machine_evevt_no">当前选择的事件编号</param>
+        public void CompntActionListSetChecked(string unitName, string mepblockName, string meapblockName, string machine_evevt_no)
+        {
+            TemplateControl CompntAction = MainView.FindName(unitName) as TemplateControl;
+            if (CompntAction != null && !string.IsNullOrEmpty(machine_evevt_no))
+            {
+                Dictionary<string, List<string>> dic = new Dictionary<string, List<string>>();
+                PresentationBlockModel pBlockme = MainView.GetPresentationBlockModel(mepblockName);
+                PresentationBlockModel pBlockmea = MainView.GetPresentationBlockModel(meapblockName);
+                foreach (DataRow drme in pBlockme.ViewBlockDataTable.Rows)
+                {
+                    List<string> listaction = new List<string>();
+                    dic.Add(drme["machine_evevt_no"].ToString(), listaction);
+                    pBlockme.PreBlockSelectedRow = drme;
+                    pBlockme.SetCurrentRow(drme);
+                    pBlockmea.GetData();
+                    foreach (DataRow drmea in pBlockmea.ViewBlockDataTable.Rows)
+                    {
+                        listaction.Add(drmea["action_no"].ToString());
+                    }
+                }
+                Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+                dicMessage.Add("MessageType", "SetCboxChecked");
+                Dictionary<string, object> dicContent = new Dictionary<string, object>();
+                dicContent.Add("DicData", dic);
+                dicContent.Add("machine_evevt_no", machine_evevt_no);
+                dicMessage.Add("MessageContent", dicContent);
+                CompntAction.Excute(dicMessage);
+            }
+        }
+        #endregion
+
         /// <summary>
         /// 初始化控件
         /// </summary>

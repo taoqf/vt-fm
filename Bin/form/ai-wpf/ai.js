@@ -164,6 +164,7 @@
         "SetPBlockCurrentRowByKey":"SetPBlockCurrentRowByKey",
         "SetPBlockDtIsHavaExist":"SetPBlockDtIsHavaExist",
 	"ComponentVisioPropertyLoad":"ComponentVisioPropertyLoad",
+	"CompntActionListSetChecked":"CompntActionListSetChecked",
         "ExtractProductData":"ExtractProductData",
 	"GetFileUrlByFilePath":"GetFileUrlByFilePath",
 	"UpdateBlockByOAV":"UpdateBlockByOAV",
