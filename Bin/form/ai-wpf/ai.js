@@ -206,5 +206,6 @@
                 "SetConditionSearchOr":"SetConditionSearchOr",
                 "GetStrPosition":"GetStrPosition",
                 "GetChildStr":"GetChildStr",
-               "SetDataGridVicCheckFlagColumnToFalse":"SetDataGridVicCheckFlagColumnToFalse"
+               "SetDataGridVicCheckFlagColumnToFalse":"SetDataGridVicCheckFlagColumnToFalse",
+               "ExtractDrawingData":"ExtractDrawingData"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
