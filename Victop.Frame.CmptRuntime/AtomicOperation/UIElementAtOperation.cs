@@ -1565,7 +1565,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 return;
             }
             DataTable dtLayoutTree = MainView.GetPresentationBlockModel(pDomName).ViewBlockDataTable;
-            string channelIdPage = MainView.GetPresentationBlockModel(pDomName).ViewBlock.ViewId;
+            string channelIdPage = MainView.GetPresentationBlockModel(pDomName).ViewBlock.ViewModel.ViewId;
             DataTable dtPropertyTem = MainView.GetPresentationBlockModel(pProTemName).ViewBlockDataTable;
            
             Dictionary<string, object> dicMessage = new Dictionary<string, object>();
@@ -1577,23 +1577,24 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicContent.Add("isPage1", isPage1);
             dicContent.Add("productid", productid);
             dicContent.Add("dtLayoutTree", dtLayoutTree);
-            dicMessage.Add("channelIdPage", channelIdPage);
+            dicContent.Add("channelIdPage", channelIdPage);
             dicContent.Add("dtPropertyTem", dtPropertyTem);
             if (pDynamicName != null && pDynamicProTemName != null)
             {
                 DataTable dtDynamic = MainView.GetPresentationBlockModel(pDynamicName).ViewBlockDataTable;
-                string channelIdDynamic = MainView.GetPresentationBlockModel(pDynamicName).ViewBlock.ViewId;
+                string channelIdDynamic = MainView.GetPresentationBlockModel(pDynamicName).ViewBlock.ViewModel.ViewId;
                 DataTable dtDynamicProTem = MainView.GetPresentationBlockModel(pDynamicProTemName).ViewBlockDataTable;
-                dicMessage.Add("dtDynamic", dtDynamic);
+                dicContent.Add("dtDynamic", dtDynamic);
                 dicContent.Add("channelIdDynamic", channelIdDynamic);
-                dicMessage.Add("dtDynamicProTem", dtDynamicProTem);
+                dicContent.Add("dtDynamicProTem", dtDynamicProTem);
             }
             else
             {
-                dicMessage.Add("dtDynamic", new DataTable());
+                dicContent.Add("dtDynamic", new DataTable());
                 dicContent.Add("channelIdDynamic", "");
-                dicMessage.Add("dtDynamicProTem", new DataTable());
+                dicContent.Add("dtDynamicProTem", new DataTable());
             }
+            dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
         }
         #endregion
