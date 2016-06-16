@@ -205,5 +205,6 @@
                 "OperationAnalysisAddTable":"OperationAnalysisAddTable",
                 "SetConditionSearchOr":"SetConditionSearchOr",
                 "GetStrPosition":"GetStrPosition",
-                "GetChildStr":"GetChildStr"
+                "GetChildStr":"GetChildStr",
+               "SetDataGridVicCheckFlagColumnToFalse":"SetDataGridVicCheckFlagColumnToFalse"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

@@ -862,7 +862,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             dynamic o = oav;
             o.v = "faile";
-            if (compntGroupNo != null && diagramNo != null && !string.IsNullOrWhiteSpace(compntGroupNo.ToString()) && !string.IsNullOrWhiteSpace(diagramNo.ToString()))
+            if (diagramNo != null && !string.IsNullOrWhiteSpace(diagramNo.ToString()))
             {
                 DataMessageOperation messageOp = new DataMessageOperation();
                 Dictionary<string, object> message = new Dictionary<string, object>();
@@ -886,6 +886,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         message.Add("artifact_table", "format_view_list,data_str,structure");
                         message.Add("diagram_type_no", "DT00003");
                         condition.Add("pub_compnt_format_no", compntGroupNo);
+                        break;
+                    case "vdrelation":
+                        message.Add("artifact_table", "views_list,compnt_data_struct,compnt_presentation_struct");
+                        message.Add("diagram_type_no", "DT00004");
+                        condition.Add("formatno", compntGroupNo);
                         break;
                     default:
                         message.Add("artifact_table", "");
@@ -1407,6 +1412,11 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (!string.IsNullOrEmpty(filePath))
             {
                 o.v = ConfigurationManager.AppSettings["downloadfilehttp"] + "getfile?id=" + filePath + "&productid=" + productId;
+            }
+            else
+            {
+                string filepath = Guid.NewGuid().ToString();
+                o.v = ConfigurationManager.AppSettings["downloadfilehttp"] + "getfile?id=" + filepath + "&productid=" + productId;
             }
         }
 

@@ -2075,5 +2075,28 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         }
 
         #endregion
+
+        #region 清除所有DataGrid清除复选框所有选中
+        /// <summary>
+        /// 清除所有DataGrid清除复选框所有选中
+        /// </summary>
+        /// <param name="pblockName">区块名称</param>
+        /// <param name="type">是否清楚选中行0 清除 1：不清除</param>
+        public void SetDataGridVicCheckFlagColumnToFalse(string pblockName,int type)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            {
+                foreach (DataRow dr in pBlock.ViewBlockDataTable.Rows)
+                {
+                    dr["VicCheckFlag"] = false;
+                }
+                if (type==0)
+                {
+                    pBlock.PreBlockSelectedRow = null;
+                }
+            }
+        }
+        #endregion
     }
 }

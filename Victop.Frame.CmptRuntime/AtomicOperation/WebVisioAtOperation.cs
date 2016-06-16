@@ -513,10 +513,24 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 TemplateControl tc = (TemplateControl)MainView.FindName(drawingName);
                 if (tc != null)
                 {
-                    Dictionary<string, object> dic = new Dictionary<string, object>();
-                    dic.Add("MessageType", "diagram_render");
-                    dic.Add("MessageContent", message);
-                    tc.Excute(dic);
+                    if (message.Equals("{}"))
+                    {
+                        Dictionary<string,object> dicnode=new Dictionary<string, object>();
+                        dicnode.Add("nodes",new List<Dictionary<string, object>>());
+                        dicnode.Add("edges", new List<Dictionary<string, object>>());
+                        string json = JsonHelper.ToJson(dicnode);
+                        Dictionary<string, object> dic = new Dictionary<string, object>();
+                        dic.Add("MessageType", "diagram_render");
+                        dic.Add("MessageContent", json);
+                        tc.Excute(dic);
+                    }
+                    else
+                    {
+                        Dictionary<string, object> dic = new Dictionary<string, object>();
+                        dic.Add("MessageType", "diagram_render");
+                        dic.Add("MessageContent", message);
+                        tc.Excute(dic);
+                    }
                 }
             }
         }
