@@ -256,7 +256,7 @@ namespace Victop.Frame.CmptRuntime
         /// 获取BlockData行数
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetPBlockDataRowCount(string pBlockName, object oav)
         {
             dataOperation.GetPBlockDataRowCount(pBlockName, oav);
@@ -298,7 +298,7 @@ namespace Victop.Frame.CmptRuntime
         /// 提交BlockData的数据
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
-        /// <param name="oav">接受oav返回结果true或false</param>
+        /// <param name="oav">接收oav返回结果true或false</param>
         /// <param name="isSaveServer">是否提交服务器</param>
         /// <returns>返回保存成功true，失败false</returns>
         public void SavePBlockData(string pBlockName, object oav = null, bool isSaveServer = true)
@@ -1077,7 +1077,7 @@ namespace Victop.Frame.CmptRuntime
         /// 保存规则文件
         /// </summary>
         /// <param name="content">规则内容</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void SaveWriteTextToFile(object content, object oav)
         {
             systemOperation.SaveWriteTextToFile(content, oav);
@@ -1088,7 +1088,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="localFilePath">本地文件地址</param>
         /// <param name="filePath">新的文件路径或者老的文件路径</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         /// <param name="productId">产品ID,默认“feidao”</param>
         public void UpLoadFile(string localFilePath, object filePath, object oav, string productId = "feidao")
         {
@@ -1098,7 +1098,7 @@ namespace Victop.Frame.CmptRuntime
         /// 删除文件
         /// </summary>
         /// <param name="filePath">文件地址，一个或者多个，中间用英文逗号隔开（如：“eb2dee52-85ba-4030-b8ce-c23439aa2fc7,ffb1d365-4d24-41df-b4a7-cb831b9340ff”）</param>
-        /// <param name="oav">接受oav（true,false）</param>
+        /// <param name="oav">接收oav（true,false）</param>
         /// <param name="productId">产品ID，默认为“feidao”</param>
         public void DeleteFile(string filePath, object oav, string productId = "feidao")
         {
@@ -1129,7 +1129,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 获取一个新的guid
         /// </summary>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetNewGuid(object oav)
         {
             systemOperation.GetNewGuid(oav);
@@ -1141,7 +1141,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="SystemId">系统ID</param>
         /// <param name="iPName">规则名称(例如:"BH005")</param>
         /// <param name="iCodeRule">编码规则</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void SendGetCodeMessage(string SystemId, string iPName, string iCodeRule, object oav)
         {
             systemOperation.SendGetCodeMessage(SystemId, iPName, iCodeRule, oav);
@@ -1161,7 +1161,7 @@ namespace Victop.Frame.CmptRuntime
         /// 返回文件url地址 
         /// </summary> 
         /// <param name="filePath">文件编号</param> 
-        /// <param name="oav">接受oav</param> 
+        /// <param name="oav">接收oav</param> 
         /// <param name="productId">产品id默认feidao</param> 
         public void GetFileUrlByFilePath(string filePath, object oav, string productId = "feidao")
         {
@@ -1172,7 +1172,7 @@ namespace Victop.Frame.CmptRuntime
         /// 返回指定名称资源的值
         /// </summary>
         /// <param name="name">资源名称</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetStringByResourceName(string name, object oav)
         {
             systemOperation.GetStringByResourceName(name, oav);
@@ -1185,7 +1185,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="strValue">字符串实例</param>
         /// <param name="value">指定的字符串</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void StrContains(object strValue, string value, object oav)
         {
             systemOperation.StrContains(strValue, value, oav);
@@ -1196,7 +1196,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="strValue">字符串实例</param>
         /// <param name="value">一组字符组成的字符串</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void StrTrimEnd(object strValue, string value, object oav)
         {
             systemOperation.StrTrimEnd(strValue, value, oav);
@@ -1207,7 +1207,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="strValue">字符串实例</param>
         /// <param name="value">一组字符组成的字符串</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void StrTrimStart(object strValue, string value, object oav)
         {
             systemOperation.StrTrimStart(strValue, value, oav);
@@ -1218,7 +1218,7 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="firstValue">字符串实例</param>
         /// <param name="secondValue">指定的字符串</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void CmpStrIsEqual(string firstValue, string secondValue, object oav)
         {
             systemOperation.CmpStrIsEqual(firstValue, secondValue, oav);
@@ -1344,7 +1344,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 获取服务器时间
         /// </summary>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         /// <param name="day">指定要添加的天数默认0</param>
         public void GetDateTime(object oav, int day = 0)
         {
@@ -1357,7 +1357,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 获取单点登录ticket
         /// </summary>
-        /// <param name="oav">接受OAV</param>
+        /// <param name="oav">接收OAV</param>
         /// <returns></returns>
         public string GetCurrentUserSSOTicket(object oav)
         {
@@ -1371,7 +1371,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="firstNum">数字实例</param>
         /// <param name="secondNum">指定的数字</param>
         /// <param name="type">比较类型</param>
-        /// <param name="oav">接受oav(>:0，<:1，=:2,条件不合法：-1)</param>
+        /// <param name="oav">接收oav(>:0，<:1，=:2,条件不合法：-1)</param>
         public void CompareNum(object firstNum, object secondNum, object oav)
         {
             systemOperation.CompareNum(firstNum, secondNum, oav);
@@ -1383,7 +1383,7 @@ namespace Victop.Frame.CmptRuntime
         /// 获取系统变量值
         /// </summary>
         /// <param name="sysVariableName">变量名称（用户编号：usercode 用户姓名：username 客户端编号：clientno 产品ID：productid 服务器时间：timestemp 命名空间:spaceid）</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetSysVariableValue(string sysVariableName, object oav)
         {
             systemOperation.GetSysVariableValue(sysVariableName, oav);
@@ -1953,7 +1953,7 @@ namespace Victop.Frame.CmptRuntime
         /// 获取导出图形内容
         /// </summary>
         /// <param name="drawingName">webvisio部件名称</param>
-        /// <param name="oav">接受oav</param>
+        /// <param name="oav">接收oav</param>
         public void GetExportData(string drawingName, object oav)
         {
             webvisioAtOperation.GetExportData(drawingName, oav);
@@ -1980,11 +1980,11 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockparams">规则右实例参数block</param>
         /// <param name="action_no">原子操作实例编号</param>
         /// <param name="rule_no">规则编号</param>
-        /// <param name="oav">接受oav</param>
-        public void AddThenTemplate(string pblockrhs, string pblockparams, string action_no, string rule_no, object oav)
-        {
-            dataOperation.AddThenTemplate(pblockrhs, pblockparams, action_no, rule_no, oav);
-        }
+        /// <param name="oav">接收oav</param>
+        //public void AddThenTemplate(string pblockrhs, string pblockparams, string action_no, string rule_no, object oav)
+       // {
+       //     dataOperation.AddThenTemplate(pblockrhs, pblockparams, action_no, rule_no, oav);
+      //  }
 
         /// <summary>
         /// 是否允许组合或拆分
@@ -1993,7 +1993,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="page_no">页面编号</param>
         /// <param name="drList">选中的行集合</param>
         /// <param name="type">组合或拆分0组合1拆分</param>
-        /// <param name="oav">接受oav(true,false)</param>
+        /// <param name="oav">接收oav(true,false)</param>
         public void IsAllowComOrSplit(string pBlockName, string page_no, List<DataRow> drList, int type, object oav)
         {
             dataOperation.IsAllowComOrSplit(pBlockName, page_no, drList, type, oav);
