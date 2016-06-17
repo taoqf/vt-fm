@@ -208,5 +208,6 @@
                 "GetStrPosition":"GetStrPosition",
                 "GetChildStr":"GetChildStr",
                "SetDataGridVicCheckFlagColumnToFalse":"SetDataGridVicCheckFlagColumnToFalse",
+               "GetRowInfoListByCondition":"GetRowInfoListByCondition",
                "ExtractDrawingData":"ExtractDrawingData"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

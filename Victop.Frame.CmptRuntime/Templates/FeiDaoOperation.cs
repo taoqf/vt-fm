@@ -672,7 +672,18 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetDataGridColumnValueList(pblockName, oav, fieldName);
         }
-
+        /// <summary>
+        /// 获取符合查询条件的pBlock数据
+        /// </summary>
+        /// <param name="pblockName"区块名称>区块名称</param>
+        /// <param name="fieldName">字段名</param>
+        /// <param name="fieldValue">字段值</param>
+        /// <param name="fieldNameList">指定的字段列表</param>
+        /// <param name="oav">接收OAV</param>
+        public void GetRowInfoListByCondition(string pBlockName, string fieldName, string fieldValue, object oav)
+        {
+            dataOperation.GetRowInfoListByCondition(pBlockName, fieldName, fieldValue,  oav);
+        }
         /// <summary>
         /// 获取列表选中行数（VicCheckFlag）
         /// </summary>

@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
 using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
@@ -1611,6 +1612,36 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
             o.v = list;
+        }
+        /// <summary>
+        /// 获取符合查询条件的pBlock数据
+        /// </summary>
+        /// <param name="pblockName"区块名称>区块名称</param>
+        /// <param name="fieldName">字段名</param>
+        /// <param name="fieldValue">字段值</param>
+        /// <param name="fieldNameList">指定的字段列表</param>
+        /// <param name="oav">接收OAV</param>
+        public void GetRowInfoListByCondition(string pBlockName, string fieldName, string fieldValue, object oav)
+        {
+            List<Dictionary<string, object>> list= new List<Dictionary<string, object>>();
+            Dictionary<string,object> dic=new Dictionary<string, object>();
+            dynamic o = oav;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
+            {
+                DataRow[] drs = pBlock.ViewBlockDataTable.Select(string.Format(fieldName + "='{0}'", fieldValue));
+                for (int i=0;i<drs.Length; i++)
+                 {
+                     foreach (string dc in pBlock.ViewBlockDataTable.Columns)
+                     {
+                         dic.Add(dc, drs[i][dc]);
+                     }
+                     list.Add(dic);
+                 }
+               
+                o.v = list;
+            }
+            
         }
         /// <summary>
         /// 获取列表选中行数（VicCheckFlag）
