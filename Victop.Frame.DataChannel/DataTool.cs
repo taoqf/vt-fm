@@ -281,7 +281,7 @@ namespace Victop.Frame.DataChannel
         }
         #endregion
 
-        /// <summary>
+        //// <summary>
         /// 依据路径获取数据
         /// </summary>
         /// <param name="viewId"></param>
@@ -312,7 +312,6 @@ namespace Victop.Frame.DataChannel
                         }
                         else if (i % 2 == 1)
                         {
-                            #region C#
                             Dictionary<string, string> pathDic = JsonHelper.ToObject<Dictionary<string, string>>(pathList[i].ToString());
                             if (pathDic != null)
                             {
@@ -334,12 +333,11 @@ namespace Victop.Frame.DataChannel
                                     }
                                 }
                             }
-                            #endregion
                         }
                     }
                 }
-                #endregion
                 return string.Empty;
+                #endregion
             }
             catch (Exception ex)
             {
@@ -543,7 +541,7 @@ namespace Victop.Frame.DataChannel
             {
                 foreach (SaveDataModel item in saveDataList)
                 {
-                    UpdateCurdList(viewId, item.DataPath, item.SaveDataDic, item.OriginalDataDic, item.OpStatus,bakFlag);
+                    UpdateCurdList(viewId, item.DataPath, item.SaveDataDic, item.OriginalDataDic, item.OpStatus, bakFlag);
                 }
                 return true;
             }
