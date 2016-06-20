@@ -26,7 +26,7 @@
             </i:Interaction.Triggers>
         </Border>
   
-        <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Visible" Width="72"  Visibility="{Binding IsShowMenu}"  Style="{DynamicResource MenuScrollViewer}">
+        <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Visible" Width="65"  Visibility="{Binding IsShowMenu}"  Style="{DynamicResource MenuScrollViewer}">
             
             <Grid Style="{DynamicResource LeftGrid}">
                 <i:Interaction.Triggers>
@@ -40,8 +40,8 @@
                                          Style="{DynamicResource MainFrmUserPictrueGridStyle}" Command="{Binding btnUserLoginClickCommand}"/>
                         <controls:VicTextBlockNormal  Text="{Binding UserInfo.UserName}" Style="{DynamicResource MainFrmUserName}"/>
                     </StackPanel>
-                    <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="70" Height="1" HorizontalAlignment="Center" Margin="0,3,0,0"/>
-                    <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="70" Height="1" HorizontalAlignment="Center"/>
+                    <Border Background="{DynamicResource FirstMenuItemNormalBorderBrush}" Width="70" Height="1" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                    <Border Background="{DynamicResource FirstMenuItemNormalBorderBrush}" Width="70" Height="1" HorizontalAlignment="Center"/>
                     <!--<controls:VicRadioButtonNormal Content="飞道" Margin="5,14,0,0" Style="{DynamicResource RadioButtonFirstLevelMenu}"/>-->
                     <Expander Header="飞道" Margin="0,10,0,3" Foreground="{DynamicResource MainFrmUserNameColor}" HorizontalAlignment="Center" Style="{DynamicResource ExpanderFirstLevel}" IsExpanded="True">
                     </Expander>
@@ -55,8 +55,8 @@
                 <!--<controls:VicButtonNormal   Name="lock" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="White" BorderThickness="0" Background="Transparent"  Content="解锁" Command="{Binding LockMenuList}" CommandParameter="{Binding ElementName=lock}">
                 </controls:VicButtonNormal>-->
                 <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                    <Border Background="{DynamicResource SecondMenuItemNormalBorderBrush}" Width="70" Height="1" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-                    <Border Background="{DynamicResource SecondMenuItemNormalBorderDropColor}" Width="70" Height="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    <Border Background="{DynamicResource FirstMenuItemNormalBorderBrush}" Width="70" Height="1" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    <Border Background="{DynamicResource FirstMenuItemNormalBorderBrush}" Width="70" Height="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                     <controls:VicToggleSwitchNormal  Name="toggleLock" VerticalAlignment="Bottom" HorizontalAlignment="Center" IsChecked="{Binding IsLockMenu, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></controls:VicToggleSwitchNormal>
                 </StackPanel>
             </Grid>

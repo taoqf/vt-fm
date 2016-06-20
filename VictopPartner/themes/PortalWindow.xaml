@@ -1020,8 +1020,8 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
     <local:StringToBackgroundConverter x:Key="StringToBackgroundConverter"/>
 
     <Style x:Key="MetroListBoxFourthMenuListStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="Background" Value="{DynamicResource DataGridRowBackground}"/>
-        <Setter Property="Foreground" Value="{DynamicResource SecondMenuItemNormalForeground}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource ListBoxFourthMenuListForegroundStyle}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -1063,14 +1063,16 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                                       
-                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListHotBdStyle}"/>
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListPressedBgStyle}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource ListBoxFourthMenuListHotForegroundStyle}"/>
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-                        
+                                        <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListPressedBdStyle}"/>
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListPressedBgStyle}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource ListBoxFourthMenuListPressedForegroundStyle}"/>
                                     </Trigger>
                                    <MultiTrigger>
                                         <MultiTrigger.Conditions>
@@ -1141,14 +1143,16 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-
-                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListHotBdStyle}"/>
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListPressedBgStyle}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource ListBoxFourthMenuListHotForegroundStyle}"/>
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-
+                                        <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListPressedBdStyle}"/>
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListPressedBgStyle}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource ListBoxFourthMenuListPressedForegroundStyle}"/>
                                     </Trigger>
                                     <MultiTrigger>
                                         <MultiTrigger.Conditions>
@@ -1220,14 +1224,16 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger  Property="IsMouseOver" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-
-                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListHotBdStyle}"/>
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListPressedBgStyle}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource ListBoxFourthMenuListHotForegroundStyle}"/>
                                         <Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="true">
-                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource DataGridRowSelectBgColor}"/>
-
+                                        <Setter Property="BorderBrush" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListPressedBdStyle}"/>
+                                        <Setter Property="Background" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListPressedBgStyle}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource ListBoxFourthMenuListPressedForegroundStyle}"/>
                                     </Trigger>
                                     <MultiTrigger>
                                         <MultiTrigger.Conditions>
