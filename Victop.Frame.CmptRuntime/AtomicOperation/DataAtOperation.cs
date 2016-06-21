@@ -1623,8 +1623,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="oav">接收OAV</param>
         public void GetRowInfoListByCondition(string pBlockName, string fieldName, string fieldValue, List<object> fieldNameList, object oav)
         {
-          
-            List<Dictionary<string, object>> list= new List<Dictionary<string, object>>();
+
+            List<object> list = new List<object>();
             Dictionary<string,object> dic=new Dictionary<string, object>();
             dynamic o = oav;
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
@@ -1640,8 +1640,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                          dic.Add(fieldNameList[i].ToString(), dr[fieldNameList[i].ToString()]);
                      }
                      list.Add(dic);
-                 }
-               
+                    }
                 o.v = list;
                 }
             }
@@ -1695,7 +1694,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="fieldName">字段</param>
         public void SetDataGridColumnValueList(string pblockName, string rowId, object oav, List<object> fieldName)
         {
-            List<object> getlist = (List<object>)oav;
+           List<object> getlist = oav as List<object>;
             if (getlist != null && getlist.Count > 0)
             {
                 Dictionary<string, object> dic = (Dictionary<string, object>)getlist[0];
