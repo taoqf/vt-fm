@@ -1621,8 +1621,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="fieldValue">字段值</param>
         /// <param name="fieldNameList">指定的字段列表</param>
         /// <param name="oav">接收OAV</param>
-        public void GetRowInfoListByCondition(string pBlockName, string fieldName, string fieldValue, object oav)
+        public void GetRowInfoListByCondition(string pBlockName, string fieldName, string fieldValue, List<object> fieldNameList, object oav)
         {
+          
             List<Dictionary<string, object>> list= new List<Dictionary<string, object>>();
             Dictionary<string,object> dic=new Dictionary<string, object>();
             dynamic o = oav;
@@ -1630,16 +1631,19 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
             {
                 DataRow[] drs = pBlock.ViewBlockDataTable.Select(string.Format(fieldName + "='{0}'", fieldValue));
-                for (int i=0;i<drs.Length; i++)
-                 {
-                     foreach (string dc in pBlock.ViewBlockDataTable.Columns)
+                if (drs.Length > 0 && fieldNameList.Count > 0)
+                {
+                    foreach (DataRow dr in drs)
+                    {
+                        for (int i = 0; i < fieldNameList.Count; i++)
                      {
-                         dic.Add(dc, drs[i][dc]);
+                         dic.Add(fieldNameList[i].ToString(), dr[fieldNameList[i].ToString()]);
                      }
                      list.Add(dic);
                  }
                
                 o.v = list;
+                }
             }
             
         }
