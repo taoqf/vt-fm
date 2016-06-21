@@ -174,6 +174,22 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 新增组件参数值
+        /// </summary>
+        /// <param name="paramName">参数名</param>
+        /// <param name="paramValue">参数值</param>
+        public void ParamsCompntAdd(string paramName, object paramValue)
+        {
+            if (MainView.ParamDict.ContainsKey(paramName))
+            {
+                MainView.ParamDict[paramName] = paramValue;
+            }
+            else
+            {
+                MainView.ParamDict.Add(paramName, paramValue);
+            }
+        }
+        /// <summary>
         /// 获取组件参数值
         /// </summary>
         /// <param name="paramName">参数名</param>

@@ -811,7 +811,15 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.ParamsPageGet(paramName, oav);
         }
-
+        /// <summary>
+        /// 新增组件参数值
+        /// </summary>
+        /// <param name="paramName">参数名</param>
+        /// <param name="paramValue">参数值</param>
+        public void ParamsCompntAdd(string paramName, object paramValue)
+        {
+            systemOperation.ParamsCompntAdd(paramName,paramValue);
+        }
         /// <summary>
         /// 获取组件参数值
         /// </summary>
