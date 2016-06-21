@@ -101,6 +101,7 @@
     <Compile Include="BillModel\DynamicFieldsModel.cs" />
     <Compile Include="BillModel\EncodedServiceModel.cs" />
     <Compile Include="BillModel\GsdocstateModel.cs" />
+    <Compile Include="Templates\FeiDaoBrowserOperation.cs" />
     <Compile Include="Templates\BaseBusinessMachine.cs" />
     <Compile Include="PVDModel\CompntDefinModel.cs" />
     <Compile Include="PVDModel\DefinPresentationModel.cs" />
