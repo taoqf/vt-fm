@@ -47,6 +47,7 @@
 	"ExcutePageTrigger":"ExcutePageTrigger",
 	"ExcuteComponentTrigger":"ExcuteComponentTrigger",
 	"ParamsPageGet":"ParamsPageGet",
+	"ParamsCompntAdd":"ParamsCompntAdd",
 	"ParamsCompntGet":"ParamsCompntGet",
 	"GetList":"GetList",
 	"GetListValueByIndex":"GetListValueByIndex",
