@@ -276,7 +276,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 o.v = content;
             }
         }
-        
+
         /// <summary>
         /// 获取Dictionary中参数值
         /// </summary>
@@ -1048,7 +1048,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="position">指定的位置</param>
         /// <param name="length">截取长度</param>
         /// <param name="oav">接收oav</param>
-        public void GetChildStr(string str,int position,int length, object oav)
+        public void GetChildStr(string str, int position, int length, object oav)
         {
             dynamic o = oav;
             if (str == null)
@@ -1057,7 +1057,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 o.v = str.Substring(position, length);
             }
-          
+
         }
 
         /// <summary>
@@ -1249,7 +1249,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
             DataMessageOperation messageOp = new DataMessageOperation();
             Dictionary<string, object> resultDic = messageOp.SendSyncMessage("LoginService.createLoginTicket", new Dictionary<string, object>());
-            string result = resultDic["ReplyContent"].ToString();
+            string result = JsonHelper.ReadJsonString(resultDic["ReplyContent"].ToString(), "login_ticket");
             if (oav != null)
             {
                 dynamic o = oav;
