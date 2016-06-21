@@ -680,7 +680,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="fieldValue">字段值</param>
         /// <param name="fieldNameList">指定的字段列表</param>
         /// <param name="oav">接收OAV</param>
-        public void GetRowInfoListByCondition(string pBlockName, string fieldName, string fieldValue, string fieldNameList, object oav)
+        public void GetRowInfoListByCondition(string pBlockName, string fieldName, string fieldValue, List<object> fieldNameList, object oav)
         {
             dataOperation.GetRowInfoListByCondition(pBlockName, fieldName, fieldValue, fieldNameList, oav);
         }
