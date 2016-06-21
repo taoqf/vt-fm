@@ -31,7 +31,7 @@ namespace FeiDaoBrowserPlugin.Views
             this.DataContext = this;
             ParamDict = paramDict;
             ShowType = showType;
-            feidaoBrowser.RegisterJsObject("feidao", new FeiDaoBrowserOperation(), false);
+            feidaoBrowser.RegisterJsObject("window.external", new FeiDaoBrowserOperation(), false);
         }
 
         private void mainView_Loaded(object sender, RoutedEventArgs e)
