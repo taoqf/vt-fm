@@ -658,7 +658,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     //{
                     //    drs[0][columName] = newValue;
                     //}
-                    foreach(DataRow dr in drs)
+                    foreach (DataRow dr in drs)
                     {
                         dr[columName] = newValue;
                     }
@@ -1625,7 +1625,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         {
 
             List<object> list = new List<object>();
-            Dictionary<string,object> dic=new Dictionary<string, object>();
+            Dictionary<string, object> dic = new Dictionary<string, object>();
             dynamic o = oav;
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
             if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
@@ -1636,15 +1636,15 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     foreach (DataRow dr in drs)
                     {
                         for (int i = 0; i < fieldNameList.Count; i++)
-                     {
-                         dic.Add(fieldNameList[i].ToString(), dr[fieldNameList[i].ToString()]);
-                     }
-                     list.Add(dic);
+                        {
+                            dic.Add(fieldNameList[i].ToString(), dr[fieldNameList[i].ToString()]);
+                        }
+                        list.Add(dic);
                     }
-                o.v = list;
+                    o.v = list;
                 }
             }
-            
+
         }
         /// <summary>
         /// 获取列表选中行数（VicCheckFlag）
@@ -1694,7 +1694,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="fieldName">字段</param>
         public void SetDataGridColumnValueList(string pblockName, string rowId, object oav, List<object> fieldName)
         {
-           List<object> getlist = oav as List<object>;
+            List<object> getlist = oav as List<object>;
             if (getlist != null && getlist.Count > 0)
             {
                 Dictionary<string, object> dic = (Dictionary<string, object>)getlist[0];
@@ -2029,18 +2029,20 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockNameTwo">另一区块名称</param>
         /// <param name="filed">字段值</param>
         /// <param name="pageflow">字段值</param>
+        /// <param name="pblockNameThree">根据作业编号获取的数据</param>
         ///  <param name="type">类型</param>
-        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string type = "")
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow,string pblockNameThree, string type = "")
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             PresentationBlockModel pblockTwo = MainView.GetPresentationBlockModel(pblockNameTwo);
+            PresentationBlockModel pblockThree = MainView.GetPresentationBlockModel(pblockNameThree);
             if (string.IsNullOrWhiteSpace(type))
             {
-                if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockTwo.ViewBlockDataTable.Rows.Count > 0 && pblockTwo.ViewBlockDataTable.Columns.Contains(filed))
+                if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockThree.ViewBlockDataTable.Rows.Count > 0 && pblockThree.ViewBlockDataTable.Columns.Contains(filed))
                 {
                     foreach (DataRow dataRow in pBlock.ViewBlockDataTable.Rows)
                     {
-                        DataRow[] drc = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                        DataRow[] drc = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
                         if (drc.Length > 0)
                         {
                             dataRow["VicCheckFlag"] = true;
@@ -2053,13 +2055,21 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 switch (type)
                 {
                     case "1":
-                        if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockTwo.ViewBlockDataTable.Columns.Contains(filed))
+                        if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockTwo.ViewBlockDataTable.Columns.Contains(filed) && pblockThree!=null)
                         {
-
                             DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag = '{0}'", "True"));
-                            object a = pBlock.ViewBlockDataTable.Rows[0]["VicCheckFlag"];
                             foreach (DataRow dataRow in drc)
                             {
+                                DataRow[] drcpageandstep = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                                if (drcpageandstep.Length>0)
+                                {
+                                    if (drcpageandstep[0]["page_flow_no"] != null && !drcpageandstep[0]["page_flow_no"].ToString().Equals(pageflow))
+                                    {
+                                        continue;
+                                    }
+                                }
+
+
                                 DataRow[] drcadd = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
                                 if (drcadd.Length == 0)
                                 {
@@ -2100,10 +2110,166 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                                     drcadd[0].Delete();
                                 }
                             }
+                            pblockTwo.SaveData(false);
                         }
                         break;
                     default:
                         break;
+                }
+            }
+        }
+        /// <summary>
+        /// 操作分析保存时判断页面是否全部关联原子操作
+        /// </summary>
+        /// <param name="pblockname">PBlockName（作为检查主表）</param>
+        /// <param name="pblocknameTwo">pblocknameTwo（作为核查的表）</param>
+        /// <param name="pblocknameThree">pblocknameThree（获取数据的表）</param>
+        /// <param name="filed">作为核查的字段</param>
+        /// <param name="oav">验证返回的结果（1：成功，0:失败）</param>
+        public void ComponentOperationAnalysisIsCanSave(string pblockname, string pblocknameTwo,string pblocknameThree,string filed, object oav)
+        {
+            dynamic o = oav;
+            o.v = "1";
+            bool isHave = true;
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockname);
+            PresentationBlockModel pblockTwo = MainView.GetPresentationBlockModel(pblocknameTwo);
+            PresentationBlockModel pblockThree = MainView.GetPresentationBlockModel(pblocknameThree);
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed))
+            {
+                foreach (DataRow dataRows in pBlock.ViewBlockDataTable.Rows)
+                {
+                    pBlock.SetCurrentRow(dataRows);
+                    pblockThree.GetData();
+                    foreach (DataRow dataRow in pblockThree.ViewBlockDataTable.Rows)
+                    {
+                        DataRow[] drc = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                        if (drc.Length == 0)
+                        {
+                            o.v = "0";
+                            isHave = false;
+                            break;
+                        }
+                    }
+                    if (!isHave)
+                    {
+                        break;
+                    }
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// 判断页面关联操作步骤是否可以选择
+        /// </summary>
+        /// <param name="pblockname">操作步骤的Pblock</param>
+        /// <param name="pblocknameTwo">当前作业关联的Pblock</param>
+        /// <param name="pblocknameThree">页面</param>
+        /// <param name="filed">关联字段</param>
+        /// <param name="value">当前选择的操作步骤编号</param>
+        /// <param name="filedtwo">关联字段2</param>
+        /// <param name="valuetwo">当前页面编号2</param>
+        /// <param name="oav">返回结果oav</param>
+        /// <param name="oavmsg">返回失败结果</param>
+        public void ComponentOperationAnalysisStepAndPageIsCanClick(string pblockname, string pblocknameTwo, string pblocknameThree, string filed, string value, string filedtwo, string valuetwo, object oav, object oavmsg)
+        {
+            dynamic o = oav;
+            dynamic o1 = oavmsg;
+            o.v = "1";
+            o1.v = "";
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockname);
+            PresentationBlockModel pblockTwo = MainView.GetPresentationBlockModel(pblocknameTwo);
+            PresentationBlockModel pblockThree = MainView.GetPresentationBlockModel(pblocknameThree);
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed))
+            {
+                DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", value));
+                if (drc.Length == 1 && drc[0]["VicCheckFlag"] != null)
+                {
+                    if (!Convert.ToBoolean(drc[0]["VicCheckFlag"]))
+                    {
+                        DataRow[] drcpage = pblockThree.ViewBlockDataTable.Select(string.Format(filedtwo + "='{0}'", valuetwo));
+                        if (drcpage.Length == 1)
+                        {
+                            int fzno = Convert.ToInt32(drc[0]["fzno"].ToString());
+                            for (int i = 1; i < fzno; i++)
+                            {
+                                DataRow[] drcStep = pBlock.ViewBlockDataTable.Select(string.Format("fzno='{0}'", i));
+                                if (drcStep.Length == 1)
+                                {
+                                    if (drcStep[0]["VicCheckFlag"] != null && !Convert.ToBoolean(drcStep[0]["VicCheckFlag"]))
+                                    {
+                                        o.v = "0";
+                                        o1.v = "请选择相连的操作步骤后在进行操作！";
+                                        break;
+                                    }
+                                    DataRow[] drcpageandstep = pblockTwo.ViewBlockDataTable.Select(string.Format("steps_no='{0}'", drcStep[0]["steps_no"])); //and page_flow_no='{1}', drcpage[0]["page_flow_no"]
+                                    if (drcpageandstep.Length == 1)
+                                    {
+                                        if (drcpageandstep[0]["page_flow_no"] != null && drcpage[0]["page_flow_no"] != null && drcpageandstep[0]["page_flow_no"].ToString().Equals(drcpage[0]["page_flow_no"]))
+                                        {
+                                            if (drc[0]["client_style"] != null && drcStep[0]["client_style"] != null && !drc[0]["client_style"].ToString().Equals(drcStep[0]["client_style"]))
+                                            {
+                                                o.v = "0";
+                                                o1.v = "请选择相同客户端的操作步骤后再进行关联！";
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (drc[0]["client_style"] != null && drcStep[0]["client_style"] != null && !drc[0]["client_style"].ToString().Equals(drcStep[0]["client_style"]))
+                                        {
+                                            o.v = "0";
+                                            o1.v = "请选择相同客户端的操作步骤后再进行关联！";
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            o.v = "0";
+                            o1.v = "页面数据丢失，请切换操作步骤后再次查看数据！";
+                        }
+                    }
+                    else
+                    {
+                        DataRow[] drcpage = pblockThree.ViewBlockDataTable.Select(string.Format(filedtwo + "='{0}'", valuetwo));
+                        if (drcpage.Length == 1)
+                        {
+                            DataRow[] drcpageandstep = pblockTwo.ViewBlockDataTable.Select(string.Format("steps_no='{0}'", drc[0]["steps_no"])); //and page_flow_no='{1}', drcpage[0]["page_flow_no"]
+                            if (drcpageandstep.Length == 1)
+                            {
+                                if (drcpageandstep[0]["page_flow_no"] != null && drcpage[0]["page_flow_no"] != null && !drcpageandstep[0]["page_flow_no"].ToString().Equals(drcpage[0]["page_flow_no"]))
+                                {
+                                    o.v = "0";
+                                    o1.v = "请选择该页面关联的操作步骤后再进行操作！";
+                                }
+                            }
+                            int fzno = Convert.ToInt32(drc[0]["fzno"].ToString());
+                            for (int i = fzno+1; i < pBlock.ViewBlockDataTable.Rows.Count+1; i++)
+                            {
+                                DataRow[] drcStep = pBlock.ViewBlockDataTable.Select(string.Format("fzno='{0}'", i));
+                                if (drcStep[0]["VicCheckFlag"] != null && Convert.ToBoolean(drcStep[0]["VicCheckFlag"]))
+                                {
+                                    o.v = "0";
+                                    o1.v = "该页面下的操作步骤存在已经关联的操作步骤，故不能取消！";
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            o.v = "0";
+                            o1.v = "页面数据丢失，请切换操作步骤后再次查看数据！";
+                        }
+                    }
+                }
+                else
+                {
+                    o.v = "0";
+                    o1.v = "操作步骤数据丢失，请切换操作步骤后再次查看数据！";
                 }
             }
         }
@@ -2116,7 +2282,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="pblockName">区块名称</param>
         /// <param name="type">是否清楚选中行0 清除 1：不清除</param>
-        public void SetDataGridVicCheckFlagColumnToFalse(string pblockName,int type)
+        public void SetDataGridVicCheckFlagColumnToFalse(string pblockName, int type)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
@@ -2125,7 +2291,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 {
                     dr["VicCheckFlag"] = false;
                 }
-                if (type==0)
+                if (type == 0)
                 {
                     pBlock.PreBlockSelectedRow = null;
                 }

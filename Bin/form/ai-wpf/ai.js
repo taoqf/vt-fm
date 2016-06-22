@@ -210,5 +210,7 @@
                 "GetChildStr":"GetChildStr",
                "SetDataGridVicCheckFlagColumnToFalse":"SetDataGridVicCheckFlagColumnToFalse",
                "GetRowInfoListByCondition":"GetRowInfoListByCondition",
-               "ExtractDrawingData":"ExtractDrawingData"
+               "ExtractDrawingData":"ExtractDrawingData",
+			   "ComponentOperationAnalysisIsCanSave":"ComponentOperationAnalysisIsCanSave",
+			   "ComponentOperationAnalysisStepAndPageIsCanClick":"ComponentOperationAnalysisStepAndPageIsCanClick"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());
