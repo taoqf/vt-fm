@@ -21,7 +21,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
                     <Grid x:Name="Root" Margin="0" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" RenderTransformOrigin="0.5,0.5" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
-                        
+
                         <Grid x:Name="Overlay" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0" Background="{TemplateBinding Background}" Opacity="{TemplateBinding Opacity}"/>
                         <Grid x:Name="ContentRoot" Margin="0" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" RenderTransformOrigin="0.5,0.5" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
                             <Grid.RenderTransform>
@@ -64,7 +64,7 @@
                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                                  Text="{TemplateBinding Content}"/>
-                               
+
                             </StackPanel>
                         </Border>
                     </BulletDecorator>
@@ -91,30 +91,32 @@
                     <Setter Property="Foreground" Value="{DynamicResource SkinColor}"/>
                     <Setter Property="HorizontalAlignment" Value="Center"></Setter>
                     <Setter Property="Margin" Value="46,10,-5,10"></Setter>
+                    <Setter Property="Width" Value="120"/>
+                    <Setter Property="Height" Value="100"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                    <Border BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="100" CornerRadius="8">
-                                        <Border.BorderBrush>
-                                            <LinearGradientBrush SpreadMethod="Repeat" StartPoint="0,5" EndPoint="5,0" MappingMode="Absolute">
-                                                <LinearGradientBrush.GradientStops>
-                                                    <GradientStop Color="#6E6E6E" Offset="0"/>
-                                                    <GradientStop Color="#6E6E6E" Offset="0.2"/>
-                                                    <GradientStop Color="Transparent" Offset="0.4"/>
-                                                    <GradientStop Color="Transparent" Offset="0.6"/>
-                                                    <GradientStop Color="#6E6E6E" Offset="0.8"/>
-                                                    <GradientStop Color="#6E6E6E" Offset="1"/>
-                                                </LinearGradientBrush.GradientStops>
-                                            </LinearGradientBrush>
-                                        </Border.BorderBrush>
-                                        <Grid Margin="25">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition  Height="35" />
-                                        <RowDefinition  Height="20" />
-                                    </Grid.RowDefinitions>
-                                    <Label Name="lbl" Foreground="{TemplateBinding Foreground}" Style="{DynamicResource RadioButtonStyle}"></Label>
-                                    <TextBlock Grid.Row="1" Foreground="{TemplateBinding Foreground}" Name="txtBlock" FontSize="12"  HorizontalAlignment="Center" Text="{Binding Role_Name}"/>
-                                </Grid>
+                                <Border BorderThickness="1" HorizontalAlignment="Center"  Background="{TemplateBinding Background}" VerticalAlignment="Center" CornerRadius="8" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush SpreadMethod="Repeat" StartPoint="0,5" EndPoint="5,0" MappingMode="Absolute">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStop Color="#6E6E6E" Offset="0"/>
+                                                <GradientStop Color="#6E6E6E" Offset="0.2"/>
+                                                <GradientStop Color="Transparent" Offset="0.4"/>
+                                                <GradientStop Color="Transparent" Offset="0.6"/>
+                                                <GradientStop Color="#6E6E6E" Offset="0.8"/>
+                                                <GradientStop Color="#6E6E6E" Offset="1"/>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Border.BorderBrush>
+                                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition  Height="35" />
+                                            <RowDefinition  Height="20" />
+                                        </Grid.RowDefinitions>
+                                        <Label Name="lbl" Foreground="{TemplateBinding Foreground}" Style="{DynamicResource RadioButtonStyle}"></Label>
+                                        <TextBlock Grid.Row="1" Foreground="{TemplateBinding Foreground}" Name="txtBlock" FontSize="12"  HorizontalAlignment="Center" Text="{Binding Role_Name}"/>
+                                    </Grid>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsSelected" Value="True">
@@ -594,12 +596,12 @@
     <Style x:Key="loginMainGridStyle" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{DynamicResource WhiteShade}"/>
     </Style>
-    
+
     <Style x:Key="loginMainUserPhotoGridStyle" TargetType="{x:Type Grid}">
         <Setter Property="Background" Value="{DynamicResource UserPhoto}"/>
     </Style>
 
-   
+
 
     <Style x:Key="btnLoginSetStyle" TargetType="{x:Type controls:VicButtonNormal}">
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
@@ -633,7 +635,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="LoginVicTabControlStyle" TargetType="{x:Type controls:VicTabControlNormal}">
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle"/>
         <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle"/>
@@ -846,7 +848,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-<!--密码修改界面样式开始-->
+    <!--密码修改界面样式开始-->
     <Style x:Key="lblModifyPwd" TargetType="controls:VicLabelNormal">
         <Setter Property="Foreground" Value="{DynamicResource SkinColor}"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -1042,8 +1044,8 @@
         </Setter>
     </Style>
     <!--登录界面VicComboBoxNormal开始-->
-    
-   
+
+
     <Style x:Key="logoComboBoxCheck" TargetType="{x:Type CheckBox}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="{DynamicResource CheckBoxFillNormal}"/>
