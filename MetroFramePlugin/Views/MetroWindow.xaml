@@ -25,9 +25,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Border>
-  
         <ScrollViewer x:Name="scrollViewer" VerticalScrollBarVisibility="Visible" Width="65"  Visibility="{Binding IsShowMenu}"  Style="{DynamicResource MenuScrollViewer}">
-            
             <Grid Style="{DynamicResource LeftGrid}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeave">
@@ -61,7 +59,6 @@
                 </StackPanel>
             </Grid>
         </ScrollViewer>
-  
         <Grid Name="gridMain">
             <Grid.RowDefinitions>
                 <RowDefinition RowDefinition.Height="0"/>

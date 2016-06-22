@@ -75,12 +75,10 @@
                     <RowDefinition Height="46"/>
                     <RowDefinition Height="46"/>
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="0" Width="192" Height="30"   HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding LoginInfoModel.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalContentAlignment="Center"/>
+                <controls:VicTextBoxNormal Grid.Row="0" Width="192" Height="30"   HorizontalAlignment="Center" VerticalAlignment="Center" VicText="{Binding LoginInfoModel.UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  VerticalContentAlignment="Center"/>
                 <controls:VicPasswordBoxKeyNormal Grid.Row="1" Name="pwBox" Width="192" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center"  
-                            PasswordText="{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              BorderBrush="{DynamicResource SkinBorderBrush}"  Background="White">
-                </controls:VicPasswordBoxKeyNormal>
-                <controls:VicComboBoxNormal Width="192" Style="{DynamicResource logoComboBox}" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="2" Height="30" Name="CloudSOAComboBox"  
+                            PasswordText="{Binding LoginInfoModel.UserPwd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <controls:VicComboBoxNormal Width="192" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="2" Height="30" Name="CloudSOAComboBox"  
                         ItemsSource="{Binding GalleryList,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value"
                         SelectedValue="{Binding SelectedGallery,UpdateSourceTrigger=PropertyChanged}">
                     <i:Interaction.Triggers>
@@ -94,7 +92,7 @@
                     <controls:VicButtonNormal Margin="32,0,0,0" Style="{DynamicResource LoginButtonStyle}" Content="取消" IsCancel="True"  Command="{Binding btnCancelClickCommand}"/>
                 </StackPanel>
             </controls:VicGridNormal>
-            <StackPanel Orientation="Horizontal" Margin="70,0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" >
+            <StackPanel Orientation="Horizontal" Margin="83,10,0,10" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left" RenderTransformOrigin="-0.5,0.484" >
                 <controls:VicButtonNormal IsEnabled="{Binding VisSystemSet, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"  Name="btnSystemSet" HorizontalAlignment="Right" Style="{DynamicResource btnLoginSetStyle}"  Command="{Binding btnSystemSetClickCommand}"/>
             </StackPanel>
         </controls:VicGridNormal>

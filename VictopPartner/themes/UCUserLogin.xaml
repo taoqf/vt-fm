@@ -1044,12 +1044,11 @@
         </Setter>
     </Style>
     <!--登录界面VicComboBoxNormal开始-->
-
-
-    <Style x:Key="logoComboBoxCheck" TargetType="{x:Type CheckBox}">
+<!--20160622yxp停用，统一在皮肤项目里控制-->
+    <!--<Style x:Key="logoComboBoxCheck" TargetType="{x:Type CheckBox}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Background" Value="{DynamicResource CheckBoxFillNormal}"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Background" Value="{DynamicResource TabControlNormalBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TabControlNormalBorderBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Height" Value="29"></Setter>
         <Setter Property="Template">
@@ -1080,7 +1079,7 @@
         <Setter Property="AllowDrop" Value="true"/>
         <Setter Property="IsEnabled" Value="False"/>
         <Setter Property="MinWidth" Value="0"/>
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="{DynamicResource TabControlNormalBorderBrush}"/>
         <Setter Property="MinHeight" Value="0"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
@@ -1093,12 +1092,12 @@
     </Style>
     <Style x:Key="logoComboBox" TargetType="{x:Type controls:VicComboBoxNormal}">
         <Setter Property="Foreground" Value="{DynamicResource SkinForeground}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource SkinBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TabControlNormalBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="SnapsToDevicePixels" Value="true"/>
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="{DynamicResource TabControlNormalBorderBrush}"/>
         <Setter Property="MinWidth" Value="100"></Setter>
         <Setter Property="Height" Value="30"></Setter>
         <Setter Property="Template">
@@ -1149,7 +1148,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
     <!--登录界面样式结束-->
     <!--新登录界面样式结束-->
 </ResourceDictionary>
