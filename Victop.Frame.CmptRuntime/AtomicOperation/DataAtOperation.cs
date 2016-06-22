@@ -2134,7 +2134,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockname);
             PresentationBlockModel pblockTwo = MainView.GetPresentationBlockModel(pblocknameTwo);
             PresentationBlockModel pblockThree = MainView.GetPresentationBlockModel(pblocknameThree);
-            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed))
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
             {
                 foreach (DataRow dataRows in pBlock.ViewBlockDataTable.Rows)
                 {
@@ -2245,17 +2245,35 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                                 {
                                     o.v = "0";
                                     o1.v = "请选择该页面关联的操作步骤后再进行操作！";
+                                    return;
                                 }
                             }
                             int fzno = Convert.ToInt32(drc[0]["fzno"].ToString());
                             for (int i = fzno+1; i < pBlock.ViewBlockDataTable.Rows.Count+1; i++)
                             {
+                                DataRow drr = pBlock.ViewBlockDataTable.Rows[i-1];
                                 DataRow[] drcStep = pBlock.ViewBlockDataTable.Select(string.Format("fzno='{0}'", i));
-                                if (drcStep[0]["VicCheckFlag"] != null && Convert.ToBoolean(drcStep[0]["VicCheckFlag"]))
+                                DataRow[] drccc = pblockTwo.ViewBlockDataTable.Select(string.Format("steps_no='{0}'", drr["steps_no"]));
+                                if (drccc.Length == 1)
                                 {
-                                    o.v = "0";
-                                    o1.v = "该页面下的操作步骤存在已经关联的操作步骤，故不能取消！";
-                                    break;
+                                    if (drccc[0]["page_flow_no"] != null && drcpage[0]["page_flow_no"] != null && drccc[0]["page_flow_no"].ToString().Equals(drcpage[0]["page_flow_no"]))
+                                    {
+                                        if (drcStep[0]["VicCheckFlag"] != null && Convert.ToBoolean(drcStep[0]["VicCheckFlag"]))
+                                        {
+                                            o.v = "0";
+                                            o1.v = "该操作步骤序号下已经存在关联，故不能取消！";
+                                            break;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (drcStep[0]["VicCheckFlag"] != null && Convert.ToBoolean(drcStep[0]["VicCheckFlag"]))
+                                    {
+                                        o.v = "0";
+                                        o1.v = "该操作步骤序号下已经存在关联，故不能取消！";
+                                        break;
+                                    }
                                 }
                             }
                         }
