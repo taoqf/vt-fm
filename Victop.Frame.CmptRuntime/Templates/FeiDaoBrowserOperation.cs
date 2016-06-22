@@ -32,18 +32,18 @@ namespace Victop.Frame.CmptRuntime
                 string replyCode = resultDic["ReplyMode"].ToString();
                 if (replyCode.Equals("1"))
                 {
-                    messageDic.Add("code", replyCode);
+                    messageDic.Add("code", Convert.ToInt32(replyCode));
                     messageDic.Add("message", resultDic["ReplyContent"]);
                 }
                 else
                 {
-                    messageDic.Add("code", replyCode);
+                    messageDic.Add("code", Convert.ToInt32(replyCode));
                     messageDic.Add("message", resultDic["ReplyAlertMessage"]);
                 }
             }
             else
             {
-                messageDic.Add("code", "-1");
+                messageDic.Add("code", -1);
                 messageDic.Add("message", "发送消息异常");
             }
             LoggerHelper.DebugFormat("wpf return string:{0}", JsonHelper.ToJson(messageDic));

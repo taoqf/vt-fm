@@ -2445,11 +2445,11 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockNameTwo">另一区块名称</param>
         /// <param name="filed">字段值</param>
         /// <param name="pageflow">字段值</param>
+        /// <param name="pblockNameThree">根据作业编号获取的数据</param>
         ///  <param name="type">类型</param>
-        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow,
-                                                  string type = "")
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string pblockNameThree, string type = "")
         {
-            dataOperation.SetDataGridCheckFromTwoPblock(pblockName, pblockNameTwo, filed, pageflow, type);
+            dataOperation.SetDataGridCheckFromTwoPblock(pblockName, pblockNameTwo, filed, pageflow,pblockNameThree, type);
         }
 
         /// <summary>
@@ -2505,6 +2505,38 @@ namespace Victop.Frame.CmptRuntime
         {
             uIElementOperation.CompntActionListSetChecked(unitName, mepblockName, meapblockName, machine_evevt_no);
         }
+        #endregion
+
+        #region 操作分析专用原子操作
+        /// <summary>
+        /// 操作分析保存时判断页面是否全部关联原子操作
+        /// </summary>
+        /// <param name="pblockname">PBlockName（作为检查主表）</param>
+        /// <param name="pblocknameTwo">pblocknameTwo（作为核查的表）</param>
+        /// <param name="pblocknameThree">pblocknameThree（获取数据的表）</param>
+        /// <param name="filed">作为核查的字段</param>
+        /// <param name="oav">验证返回的结果（1：成功，0:失败）</param>
+        public void ComponentOperationAnalysisIsCanSave(string pblockname, string pblocknameTwo, string pblocknameThree, string filed, object oav)
+        {
+            dataOperation.ComponentOperationAnalysisIsCanSave(pblockname, pblocknameTwo,pblocknameThree, filed, oav);
+        }
+        /// <summary>
+        /// 判断页面关联操作步骤是否可以选择
+        /// </summary>
+        /// <param name="pblockname">操作步骤的Pblock</param>
+        /// <param name="pblocknameTwo">当前作业关联的Pblock</param>
+        /// <param name="pblocknameThree">页面</param>
+        /// <param name="filed">关联字段</param>
+        /// <param name="value">当前选择的操作步骤编号</param>
+        /// <param name="filedtwo">关联字段2</param>
+        /// <param name="valuetwo">当前页面编号2</param>
+        /// <param name="oav">返回结果oav</param>
+        /// <param name="oavmsg">返回失败结果</param>
+        public void ComponentOperationAnalysisStepAndPageIsCanClick(string pblockname, string pblocknameTwo, string pblocknameThree, string filed, string value, string filedtwo, string valuetwo, object oav, object oavmsg)
+        {
+            dataOperation.ComponentOperationAnalysisStepAndPageIsCanClick(pblockname, pblocknameTwo, pblocknameThree, filed, value,filedtwo,valuetwo, oav, oavmsg);
+        }
+
         #endregion
     }
 }
