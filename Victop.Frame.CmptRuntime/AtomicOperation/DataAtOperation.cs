@@ -1994,21 +1994,22 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     {
                         bool con2 = true;
                         string compnt_group_no = string.Empty;
-                        DataTable dtcompntsnippet = drList[0].Table;
-                        for (int i = 0; i < dtcompntsnippet.Rows.Count; i++)
+                        int i = 0;
+                        foreach (DataRow row2 in drList)
                         {
                             if (i == 0)
                             {
-                                compnt_group_no = dtcompntsnippet.Rows[i]["compnt_group_no"].ToString();
+                                compnt_group_no = row2["compnt_group_no"].ToString();
                             }
                             else
                             {
-                                if (!compnt_group_no.Equals(dtcompntsnippet.Rows[i]["compnt_group_no"].ToString()))
+                                if (!compnt_group_no.Equals(row2["compnt_group_no"].ToString()))
                                 {
                                     con2 = false;
                                     break;
                                 }
                             }
+                            i++;
                         }
                         if (con2)
                         {
