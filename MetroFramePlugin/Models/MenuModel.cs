@@ -211,7 +211,7 @@ namespace MetroFramePlugin.Models
         /// 图标路径
         /// </summary>
         [JsonProperty(PropertyName = "Icon")]
-        private string icon = "\ue7f0";
+        private string icon = "\ue495";
         [JsonIgnore]
         public string Icon
         {
