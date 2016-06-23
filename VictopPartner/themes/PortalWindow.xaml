@@ -1075,13 +1075,13 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                         <Setter Property="Background" TargetName="Bd" Value="{DynamicResource ListBoxFourthMenuListPressedBgStyle}"/>
                                         <Setter Property="Foreground" Value="{DynamicResource ListBoxFourthMenuListPressedForegroundStyle}"/>
                                     </Trigger>
-                                   <MultiTrigger>
+                                    <MultiTrigger>
                                         <MultiTrigger.Conditions>
                                             <Condition Property="IsSelected" Value="true"/>
                                             <Condition Property="Selector.IsSelectionActive" Value="false"/>
                                         </MultiTrigger.Conditions>
                                         <Setter Property="Background" TargetName="Bd" Value="WhiteSmoke"/>
-                                      
+
                                     </MultiTrigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -1373,52 +1373,37 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         </Setter>
     </Style>
     <Style x:Key="MetroWindowStyle"  TargetType ="{ x:Type  controls:VicMetroWindow }">
-
         <Setter  Property ="WindowStyle"  Value ="None"/>
         <Setter Property="Left" Value="0"/>
         <Setter Property="Top" Value="0"/>
         <Setter  Property ="Background" Value="{DynamicResource MainBackgroundImage}"/>
         <Setter  Property ="BorderBrush"  Value ="Transparent"/>
-
         <Setter  Property ="BorderThickness"  Value ="1"/>
-
         <Setter  Property ="MinWidth"  Value ="200"/>
-
         <Setter  Property ="MinHeight"  Value ="80"/>
-
+        <!--<Setter Property="Title" Value="飞道体系"></Setter>
+        <Setter Property="Icon" Value="/victop.ico"></Setter>
+        <Setter Property="ShowDefaultHeader" Value="False"></Setter>-->
         <Setter  Property ="VerticalContentAlignment"  Value ="Stretch"/>
-
         <Setter  Property ="HorizontalContentAlignment"  Value ="Stretch"/>
-
         <Setter  Property ="Template">
-
             <Setter.Value >
-
                 <ControlTemplate  TargetType ="{x:Type  controls:VicMetroWindow}">
-
                     <Border  BorderBrush ="Transparent"  
-                    BorderThickness ="1">
-                        <Grid  SnapsToDevicePixels ="True" Background ="{ TemplateBinding  Background }">
+                    BorderThickness ="1"  Background="{TemplateBinding Background}">
+                        <Grid  SnapsToDevicePixels ="True">
                             <Grid.RowDefinitions >
-                                <RowDefinition  Height ="30" />
+                                <RowDefinition  Height ="35" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <Grid  Name ="PART_HeaderContainer"  Background ="Transparent" VerticalAlignment="Bottom">
-                                <StackPanel  Orientation ="Horizontal"  Margin ="4,0"  Visibility ="{ Binding  RelativeSource ={ RelativeSource TemplatedParent},  Path =ShowDefaultHeader,  Converter ={ StaticResource  BoolToVisibilityConverter }}">
-                                    <Image  Height ="24"  Width ="24"  HorizontalAlignment ="Left"  VerticalAlignment ="Center"  Source ="{ TemplateBinding  Icon }"/>
-                                    <TextBlock  Text ="{ TemplateBinding  Title }"  
-
-                           Margin ="4,0"                                 
-
-                           VerticalAlignment ="Center"  
-
-                           FontFamily ="Arial"  
-
-                           FontSize ="15"  
-
-                           Foreground ="#FFFFFFFF"  
-
-                           TextWrapping="NoWrap"/>
+                            <Grid VerticalAlignment="Top" Margin="0" Height="35" Name ="PART_HeaderContainer"  Background ="{DynamicResource TitleBackGround}" >
+                                <!--<StackPanel  Orientation ="Horizontal"  Margin ="2"   Visibility ="{ Binding  RelativeSource ={ RelativeSource TemplatedParent},  Path =ShowDefaultHeader,  Converter ={ StaticResource  BoolToVisibilityConverter }}">
+                                    <Image  Height ="15"  Width ="15"  HorizontalAlignment ="Left"  VerticalAlignment ="Center"  Source ="{ TemplateBinding  Icon }"/>
+                                    <TextBlock  Text ="{ TemplateBinding  Title }"     VerticalAlignment ="Center"   Foreground ="{DynamicResource SkinForeground}"    TextWrapping="NoWrap"/>
+                                </StackPanel>-->
+                                <StackPanel Orientation ="Horizontal" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                    <Grid  Width="15" Height="15" Background="{DynamicResource Logo}"     Margin="2,2,2,0"/>
+                                    <Label  Foreground="{DynamicResource SkinForeground}"  Width="71" Content="飞道体系" />
                                 </StackPanel>
                                 <StackPanel  HorizontalAlignment ="Right"  Orientation ="Horizontal"  Margin ="0,0,10,0">
                                     <controls:VicButtonNormal Name="btnChangeSkin" Visibility="Visible" Style="{DynamicResource btnChangeSkinStyle}" ToolTip="皮肤管理"  Command="{Binding DataContext.btnChangeSkinClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" ></controls:VicButtonNormal>
@@ -1433,9 +1418,11 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
 
                                     <Button  x:Name ="PART_CloseButton"  IsTabStop ="False"  Cursor ="Hand" Style ="{ StaticResource  styleMainWindowButtonClose }"  Width ="30"  Height ="16" FontSize="15"  Margin ="0,0,0,0"  ToolTip ="关闭"/>
 
-                                </StackPanel> 
+                                </StackPanel>
                                 <ContentPresenter   VerticalAlignment ="Stretch"  HorizontalAlignment ="Stretch"/>
                             </Grid>
+                            <Border Background="{DynamicResource FirstMenuItemNormalBorderBrush}" MinWidth="200" VerticalAlignment="Bottom" Height="2"  Margin="0,0,0,0"/>
+                            <Border Background="{DynamicResource FirstMenuItemNormalBorderBrush}" MinWidth="200" Height="1" VerticalAlignment="Bottom"/>
                             <Grid  Grid.RowSpan ="2"  x:Name ="PART_ResizerContainers"  Visibility ="Hidden">
                                 <Grid.Resources>
                                     <sys:Double x:Key ="StraightResizerSize">8</sys:Double >
@@ -1451,7 +1438,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                                 <ControlTemplate >
 
                                                     <Rectangle  Fill ="Transparent"/>
-                                                        
+
                                                 </ControlTemplate>
 
                                             </Setter.Value>
@@ -1486,7 +1473,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
 
                       BorderThickness ="2"  
 
-                      Margin ="6,0,6,6"  
+                      Margin ="6,2,6,6"  
 
                       ClipToBounds ="True">
 
@@ -1499,7 +1486,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                     HorizontalAlignment ="{ TemplateBinding  HorizontalContentAlignment }"/>
 
                                 </AdornerDecorator>
-                     
+
                             </Border>
 
                         </Grid>
