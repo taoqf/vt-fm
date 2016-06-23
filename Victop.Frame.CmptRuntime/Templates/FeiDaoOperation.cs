@@ -1633,12 +1633,13 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">区块名称</param>
         /// <param name="imagecolumName">图片列</param>
         /// <param name="titlecolumName">标题列</param>
+        /// <param name="nocolumName">编号列</param>
         /// <param name="width">图片宽度</param>
         /// <param name="height">图片高度</param>
-        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName,
+        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName, string nocolumName = "",
                                         double width = 80, double height = 100)
         {
-            uIElementOperation.UnitGalleryRuleLoad(unitName, pblockName, imagecolumName, titlecolumName, width, height);
+            uIElementOperation.UnitGalleryRuleLoad(unitName, pblockName, imagecolumName, titlecolumName,nocolumName, width, height);
         }
 
         /// <summary>
@@ -2446,10 +2447,11 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="filed">字段值</param>
         /// <param name="pageflow">字段值</param>
         /// <param name="pblockNameThree">根据作业编号获取的数据</param>
+        /// <param name="elementName">DataGrid名称</param>
         ///  <param name="type">类型</param>
-        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string pblockNameThree, string type = "")
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string pblockNameThree, string elementName, string type = "")
         {
-            dataOperation.SetDataGridCheckFromTwoPblock(pblockName, pblockNameTwo, filed, pageflow,pblockNameThree, type);
+            dataOperation.SetDataGridCheckFromTwoPblock(pblockName, pblockNameTwo, filed, pageflow,pblockNameThree,elementName, type);
         }
 
         /// <summary>

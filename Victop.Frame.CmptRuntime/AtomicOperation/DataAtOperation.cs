@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Media;
 using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
@@ -1993,21 +1994,22 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     {
                         bool con2 = true;
                         string compnt_group_no = string.Empty;
-                        DataTable dtcompntsnippet = drList[0].Table;
-                        for (int i = 0; i < dtcompntsnippet.Rows.Count; i++)
+                        int i = 0;
+                        foreach (DataRow row2 in drList)
                         {
                             if (i == 0)
                             {
-                                compnt_group_no = dtcompntsnippet.Rows[i]["compnt_group_no"].ToString();
+                                compnt_group_no = row2["compnt_group_no"].ToString();
                             }
                             else
                             {
-                                if (!compnt_group_no.Equals(dtcompntsnippet.Rows[i]["compnt_group_no"].ToString()))
+                                if (!compnt_group_no.Equals(row2["compnt_group_no"].ToString()))
                                 {
                                     con2 = false;
                                     break;
                                 }
                             }
+                            i++;
                         }
                         if (con2)
                         {
@@ -2030,22 +2032,55 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="filed">字段值</param>
         /// <param name="pageflow">字段值</param>
         /// <param name="pblockNameThree">根据作业编号获取的数据</param>
+        /// <param name="elementName">DataGrid名称</param>
         ///  <param name="type">类型</param>
-        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow,string pblockNameThree, string type = "")
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow,string pblockNameThree,string elementName, string type = "")
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             PresentationBlockModel pblockTwo = MainView.GetPresentationBlockModel(pblockNameTwo);
             PresentationBlockModel pblockThree = MainView.GetPresentationBlockModel(pblockNameThree);
             if (string.IsNullOrWhiteSpace(type))
             {
-                if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockThree.ViewBlockDataTable.Rows.Count > 0 && pblockThree.ViewBlockDataTable.Columns.Contains(filed))
+                FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
+                if (element!=null)
                 {
-                    foreach (DataRow dataRow in pBlock.ViewBlockDataTable.Rows)
+                    VicDataGrid dgGrid = element as VicDataGrid;
+                    if (dgGrid!=null)
                     {
-                        DataRow[] drc = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
-                        if (drc.Length > 0)
+                        if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockThree.ViewBlockDataTable.Rows.Count > 0 && pblockThree.ViewBlockDataTable.Columns.Contains(filed))
                         {
-                            dataRow["VicCheckFlag"] = true;
+                            foreach (DataRow dataRow in pBlock.ViewBlockDataTable.Rows)
+                            {
+                                DataRow[] drc = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                                if (drc.Length > 0)
+                                {
+                                    dataRow["VicCheckFlag"] = true;
+                                }
+                            }
+                        }
+                        foreach (object item in dgGrid.Items)
+                        {
+                            dgGrid.UpdateLayout();
+                            DataGridRow gridRow = (DataGridRow)dgGrid.ItemContainerGenerator.ContainerFromItem(item);
+                            if (gridRow != null)
+                                gridRow.Background = Brushes.Transparent;
+                        }
+                        foreach (object item in dgGrid.Items)
+                        {
+                            DataRowView rowView = item as DataRowView;
+                            dgGrid.UpdateLayout();
+                            DataGridRow gridRow = (DataGridRow)dgGrid.ItemContainerGenerator.ContainerFromItem(item);
+                            if (gridRow != null && rowView!=null)
+                            {
+                                DataRow[] drcpageandstep = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", rowView[filed]));
+                                if (drcpageandstep.Length>0)
+                                {
+                                    if (drcpageandstep[0]["page_flow_no"] != null && !drcpageandstep[0]["page_flow_no"].ToString().Equals(pageflow))
+                                    {
+                                        gridRow.Background = Brushes.WhiteSmoke;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -2134,7 +2169,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockname);
             PresentationBlockModel pblockTwo = MainView.GetPresentationBlockModel(pblocknameTwo);
             PresentationBlockModel pblockThree = MainView.GetPresentationBlockModel(pblocknameThree);
-            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed))
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
             {
                 foreach (DataRow dataRows in pBlock.ViewBlockDataTable.Rows)
                 {
@@ -2245,17 +2280,35 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                                 {
                                     o.v = "0";
                                     o1.v = "请选择该页面关联的操作步骤后再进行操作！";
+                                    return;
                                 }
                             }
                             int fzno = Convert.ToInt32(drc[0]["fzno"].ToString());
                             for (int i = fzno+1; i < pBlock.ViewBlockDataTable.Rows.Count+1; i++)
                             {
+                                DataRow drr = pBlock.ViewBlockDataTable.Rows[i-1];
                                 DataRow[] drcStep = pBlock.ViewBlockDataTable.Select(string.Format("fzno='{0}'", i));
-                                if (drcStep[0]["VicCheckFlag"] != null && Convert.ToBoolean(drcStep[0]["VicCheckFlag"]))
+                                DataRow[] drccc = pblockTwo.ViewBlockDataTable.Select(string.Format("steps_no='{0}'", drr["steps_no"]));
+                                if (drccc.Length == 1)
                                 {
-                                    o.v = "0";
-                                    o1.v = "该页面下的操作步骤存在已经关联的操作步骤，故不能取消！";
-                                    break;
+                                    if (drccc[0]["page_flow_no"] != null && drcpage[0]["page_flow_no"] != null && drccc[0]["page_flow_no"].ToString().Equals(drcpage[0]["page_flow_no"]))
+                                    {
+                                        if (drcStep[0]["VicCheckFlag"] != null && Convert.ToBoolean(drcStep[0]["VicCheckFlag"]))
+                                        {
+                                            o.v = "0";
+                                            o1.v = "该操作步骤序号下已经存在关联，故不能取消！";
+                                            break;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (drcStep[0]["VicCheckFlag"] != null && Convert.ToBoolean(drcStep[0]["VicCheckFlag"]))
+                                    {
+                                        o.v = "0";
+                                        o1.v = "该操作步骤序号下已经存在关联，故不能取消！";
+                                        break;
+                                    }
                                 }
                             }
                         }

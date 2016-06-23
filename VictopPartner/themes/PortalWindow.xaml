@@ -227,7 +227,7 @@
         <Setter Property="Width" Value="30"/>
         <Setter Property="MenuItem.FontFamily" Value="/VictopPartner;component/Fonts/#iconfont"/>
         <Setter Property="Foreground" Value="{DynamicResource MainFrmUserNameColor}"/>
-        <Setter Property="Content" Value="&#xe61d;"/>
+        <Setter Property="Content" Value="&#xee70;"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Height" Value="18"/>
@@ -807,7 +807,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="Width" Value="30"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="FontSize" Value="10"/>
-        <Setter Property="Content" Value="&#xe64e;"/>
+        <Setter Property="Content" Value="&#xe032;"/>
         <Setter Property="Height" Value="30"/>
         <Setter Property="Template" >
             <Setter.Value>
@@ -887,7 +887,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Margin" Value="0,-2,0,0"></Setter>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Content" Value="&#xe6e8;"/>
+        <Setter Property="Content" Value="&#xe024;"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
