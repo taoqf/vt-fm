@@ -634,9 +634,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockName">区块名称</param>
         /// <param name="imagecolumName">图片列</param>
         /// <param name="titlecolumName">标题列</param>
+        /// <param name="nocolumName">编号列</param>
         /// <param name="width">图片宽度</param>
         /// <param name="height">图片高度</param>
-        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName, double width = 80, double height = 100)
+        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName,string nocolumName="", double width = 80, double height = 100)
         {
             TemplateControl unitGallery = MainView.FindName(unitName) as TemplateControl;
             if (unitGallery == null)
@@ -649,6 +650,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicContentParam.Add("data", dtData);
             dicContentParam.Add("image", imagecolumName);
             dicContentParam.Add("title", titlecolumName);
+            dicContentParam.Add("no", nocolumName);
             dicContentParam.Add("width", width);
             dicContentParam.Add("height", height);
             dicParam.Add("MessageContent", dicContentParam);

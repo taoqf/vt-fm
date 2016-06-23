@@ -1633,12 +1633,13 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">区块名称</param>
         /// <param name="imagecolumName">图片列</param>
         /// <param name="titlecolumName">标题列</param>
+        /// <param name="nocolumName">编号列</param>
         /// <param name="width">图片宽度</param>
         /// <param name="height">图片高度</param>
-        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName,
+        public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName, string nocolumName = "",
                                         double width = 80, double height = 100)
         {
-            uIElementOperation.UnitGalleryRuleLoad(unitName, pblockName, imagecolumName, titlecolumName, width, height);
+            uIElementOperation.UnitGalleryRuleLoad(unitName, pblockName, imagecolumName, titlecolumName,nocolumName, width, height);
         }
 
         /// <summary>
