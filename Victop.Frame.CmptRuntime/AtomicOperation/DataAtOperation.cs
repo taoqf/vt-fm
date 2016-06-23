@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Media;
 using Victop.Frame.DataMessageManager;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Server.Controls.Models;
@@ -2030,22 +2031,55 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="filed">字段值</param>
         /// <param name="pageflow">字段值</param>
         /// <param name="pblockNameThree">根据作业编号获取的数据</param>
+        /// <param name="elementName">DataGrid名称</param>
         ///  <param name="type">类型</param>
-        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow,string pblockNameThree, string type = "")
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow,string pblockNameThree,string elementName, string type = "")
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             PresentationBlockModel pblockTwo = MainView.GetPresentationBlockModel(pblockNameTwo);
             PresentationBlockModel pblockThree = MainView.GetPresentationBlockModel(pblockNameThree);
             if (string.IsNullOrWhiteSpace(type))
             {
-                if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockThree.ViewBlockDataTable.Rows.Count > 0 && pblockThree.ViewBlockDataTable.Columns.Contains(filed))
+                FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
+                if (element!=null)
                 {
-                    foreach (DataRow dataRow in pBlock.ViewBlockDataTable.Rows)
+                    VicDataGrid dgGrid = element as VicDataGrid;
+                    if (dgGrid!=null)
                     {
-                        DataRow[] drc = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
-                        if (drc.Length > 0)
+                        if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockThree.ViewBlockDataTable.Rows.Count > 0 && pblockThree.ViewBlockDataTable.Columns.Contains(filed))
                         {
-                            dataRow["VicCheckFlag"] = true;
+                            foreach (DataRow dataRow in pBlock.ViewBlockDataTable.Rows)
+                            {
+                                DataRow[] drc = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                                if (drc.Length > 0)
+                                {
+                                    dataRow["VicCheckFlag"] = true;
+                                }
+                            }
+                        }
+                        foreach (object item in dgGrid.Items)
+                        {
+                            dgGrid.UpdateLayout();
+                            DataGridRow gridRow = (DataGridRow)dgGrid.ItemContainerGenerator.ContainerFromItem(item);
+                            if (gridRow != null)
+                                gridRow.Background = Brushes.Transparent;
+                        }
+                        foreach (object item in dgGrid.Items)
+                        {
+                            DataRowView rowView = item as DataRowView;
+                            dgGrid.UpdateLayout();
+                            DataGridRow gridRow = (DataGridRow)dgGrid.ItemContainerGenerator.ContainerFromItem(item);
+                            if (gridRow != null && rowView!=null)
+                            {
+                                DataRow[] drcpageandstep = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", rowView[filed]));
+                                if (drcpageandstep.Length>0)
+                                {
+                                    if (drcpageandstep[0]["page_flow_no"] != null && !drcpageandstep[0]["page_flow_no"].ToString().Equals(pageflow))
+                                    {
+                                        gridRow.Background = Brushes.WhiteSmoke;
+                                    }
+                                }
+                            }
                         }
                     }
                 }

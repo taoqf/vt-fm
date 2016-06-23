@@ -2446,10 +2446,11 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="filed">字段值</param>
         /// <param name="pageflow">字段值</param>
         /// <param name="pblockNameThree">根据作业编号获取的数据</param>
+        /// <param name="elementName">DataGrid名称</param>
         ///  <param name="type">类型</param>
-        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string pblockNameThree, string type = "")
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string pblockNameThree, string elementName, string type = "")
         {
-            dataOperation.SetDataGridCheckFromTwoPblock(pblockName, pblockNameTwo, filed, pageflow,pblockNameThree, type);
+            dataOperation.SetDataGridCheckFromTwoPblock(pblockName, pblockNameTwo, filed, pageflow,pblockNameThree,elementName, type);
         }
 
         /// <summary>
