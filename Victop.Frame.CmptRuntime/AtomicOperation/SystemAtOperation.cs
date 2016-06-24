@@ -513,6 +513,16 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             win.Title = ucCom.Tag == null ? "" : ucCom.Tag.ToString();
             win.Content = ucCom;
             win.Show();
+            win.Closing += win_Closing;
+        }
+
+        private void win_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            VicWindowNormal win = sender as VicWindowNormal;
+            if (win!=null&&win.Owner!=null)
+            {
+                win.Owner.Activate();   
+            }
         }
         /// <summary>
         /// 使用window弹出内容
