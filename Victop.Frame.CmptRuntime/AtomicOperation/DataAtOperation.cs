@@ -2049,6 +2049,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     {
                         if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockThree.ViewBlockDataTable.Rows.Count > 0 && pblockThree.ViewBlockDataTable.Columns.Contains(filed))
                         {
+                            DataView dv = pBlock.ViewBlockDataTable.DefaultView;
+                            dv.Sort = "fzno Asc";
                             foreach (DataRow dataRow in pBlock.ViewBlockDataTable.Rows)
                             {
                                 DataRow[] drc = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
