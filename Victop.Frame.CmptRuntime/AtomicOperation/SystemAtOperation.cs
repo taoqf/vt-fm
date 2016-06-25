@@ -1381,7 +1381,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 contentDic.Add("pname", iPName);
                 contentDic.Add("setinfo", iCodeRule);
                 Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
-                if (returnDic != null || returnDic.ContainsKey("ReplyContent"))
+                if (returnDic != null && returnDic["ReplyMode"].ToString().Equals("1"))
                 {
                     o.v = JsonHelper.ReadJsonString(returnDic["ReplyContent"].ToString(), "result");
                 }
