@@ -1402,8 +1402,8 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                     <TextBlock  Text ="{ TemplateBinding  Title }"     VerticalAlignment ="Center"   Foreground ="{DynamicResource SkinForeground}"    TextWrapping="NoWrap"/>
                                 </StackPanel>-->
                                 <StackPanel Orientation ="Horizontal" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                    <Grid  Width="15" Height="15" Background="{DynamicResource Logo}"     Margin="2,2,2,0"/>
-                                    <Label  Foreground="{DynamicResource SkinForeground}"  Width="71" Content="飞道体系" />
+                                    <Grid  Width="15" Height="15" Background="{DynamicResource Logo}"     Margin="8,2,0,2"/>
+                                    <Label  Foreground="{DynamicResource SkinForeground}"  Width="71" Content="飞道系统" />
                                 </StackPanel>
                                 <StackPanel  HorizontalAlignment ="Right"  Orientation ="Horizontal"  Margin ="0,0,10,0">
                                     <controls:VicButtonNormal Name="btnChangeSkin" Visibility="Visible" Style="{DynamicResource btnChangeSkinStyle}" ToolTip="皮肤管理"  Command="{Binding DataContext.btnChangeSkinClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" ></controls:VicButtonNormal>
@@ -1421,8 +1421,8 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 </StackPanel>
                                 <ContentPresenter   VerticalAlignment ="Stretch"  HorizontalAlignment ="Stretch"/>
                             </Grid>
-                            <Border Background="{DynamicResource FirstMenuItemNormalBorderBrush}" MinWidth="200" VerticalAlignment="Bottom" Height="2"  Margin="0,0,0,0"/>
-                            <Border Background="{DynamicResource FirstMenuItemNormalBorderBrush}" MinWidth="200" Height="1" VerticalAlignment="Bottom"/>
+                            <Border Background="#000000" MinWidth="200" VerticalAlignment="Bottom" Height="2"/>
+                            <Border Background="#363636" MinWidth="200" Height="1" VerticalAlignment="Bottom"/>
                             <Grid  Grid.RowSpan ="2"  x:Name ="PART_ResizerContainers"  Visibility ="Hidden">
                                 <Grid.Resources>
                                     <sys:Double x:Key ="StraightResizerSize">8</sys:Double >
@@ -1467,64 +1467,30 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 <Thumb  Width ="{ StaticResource  SlantResizerSize }"  Height ="{ StaticResource  SlantResizerSize }"  HorizontalAlignment ="Left"  VerticalAlignment ="Bottom"  Cursor ="SizeNESW"  x:Name ="PART_BottomLeftResizer"/>
 
                             </Grid>
-                            <Border  x:Name ="PART_ContentBorder"  Grid.Row ="1"  
-                                
-                      BorderBrush ="Transparent"  
-
-                      BorderThickness ="2"  
-
-                      Margin ="6,2,6,6"  
-
-                      ClipToBounds ="True">
-
+                            <Border  x:Name ="PART_ContentBorder"  Grid.Row ="1"  BorderBrush ="Transparent"  BorderThickness ="2"    Margin ="0"   ClipToBounds ="True">
                                 <AdornerDecorator >
-
                                     <ContentPresenter  Margin ="{ TemplateBinding  Padding }"  
-
                                     VerticalAlignment ="{ TemplateBinding  VerticalContentAlignment }"  
-
                                     HorizontalAlignment ="{ TemplateBinding  HorizontalContentAlignment }"/>
-
                                 </AdornerDecorator>
-
                             </Border>
-
                         </Grid>
-
                     </Border>
-
                     <ControlTemplate.Triggers>
-
                         <MultiTrigger >
-
                             <MultiTrigger.Conditions >
-
                                 <Condition  Property ="CanResize"  Value ="True"/>
-
                                 <Condition  Property ="WindowState"  Value ="Normal"/>
-
                             </MultiTrigger.Conditions>
-
                             <Setter  TargetName ="PART_ResizerContainers"  Property ="Visibility"  Value ="Visible"/>
-
                         </MultiTrigger>
-
                         <Trigger  Property ="WindowState"  Value ="Maximized">
-
                             <Setter  TargetName ="PART_ContentBorder"  Property ="Margin"  Value ="0"/>
-
                             <Setter  TargetName ="PART_ContentBorder"  Property ="BorderThickness"  Value ="0,2,0,0"/>
-
                         </Trigger>
-
                     </ControlTemplate.Triggers>
-
                 </ControlTemplate>
-
             </Setter.Value>
-
         </Setter>
-
-
     </Style >
 </ResourceDictionary>

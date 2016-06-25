@@ -257,6 +257,7 @@ namespace MetroFramePlugin.ViewModels
                     homeItem.Header = "飞道科技";
                     WebBrowser browser = new WebBrowser();
                     browser.Source = new Uri("http://www.daokes.com");
+                    browser.Margin = new Thickness(20);
                     homeItem.Content = browser;
                     tabItemList.Add(homeItem);
 
