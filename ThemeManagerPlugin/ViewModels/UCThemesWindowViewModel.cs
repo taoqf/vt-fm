@@ -1520,8 +1520,7 @@ namespace ThemeManagerPlugin.ViewModels
             string channelId = string.Empty;
             string MessageType = "MongoDataChannelService.findBusiData";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "18");
-            contentDic.Add("configsystemid", "11");
+            contentDic.Add("systemid", "12");
             contentDic.Add("modelid", "feidao-model-fd_wallpaper_category-0001");
             List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
             Dictionary<string, object> conDic = new Dictionary<string, object>();
@@ -1556,8 +1555,7 @@ namespace ThemeManagerPlugin.ViewModels
             string channelId = string.Empty;
             string MessageType = "MongoDataChannelService.findBusiData";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "18");
-            contentDic.Add("configsystemid", "11");
+            contentDic.Add("systemid", "12");
             contentDic.Add("modelid", "feidao-model-fd_wallpaper-0001");
             List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
             Dictionary<string, object> conDic = new Dictionary<string, object>();
@@ -1613,8 +1611,7 @@ namespace ThemeManagerPlugin.ViewModels
             string channelId = string.Empty;
             string MessageType = "MongoDataChannelService.findBusiData";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "18");
-            contentDic.Add("configsystemid", "11");
+            contentDic.Add("systemid", "12");
             contentDic.Add("modelid", "feidao-model-fd_skin_category-0002");
             List<object> conList = new List<object>();
             Dictionary<string, object> conDic = new Dictionary<string, object>();
@@ -1650,8 +1647,7 @@ namespace ThemeManagerPlugin.ViewModels
             string channelId = string.Empty;
             string MessageType = "MongoDataChannelService.findBusiData";
             Dictionary<string, object> contentDic = new Dictionary<string, object>();
-            contentDic.Add("systemid", "18");
-            contentDic.Add("configsystemid", "11");
+            contentDic.Add("systemid", "12");
             contentDic.Add("modelid", "feidao-model-fd_skin-0001");
             List<Dictionary<string, object>> conList = new List<Dictionary<string, object>>();
             Dictionary<string, object> conDic = new Dictionary<string, object>();
