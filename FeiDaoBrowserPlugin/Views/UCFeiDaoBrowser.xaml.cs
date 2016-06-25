@@ -91,7 +91,7 @@ namespace FeiDaoBrowserPlugin.Views
                 string messageType = paramDic["MessageType"].ToString();
                 switch (messageType)
                 {
-                    case "CefSharpClear":
+                    case "WPFClear":
                         feidaoBrowser.Dispose();
                         break;
                     default:
