@@ -33,7 +33,6 @@ namespace FeiDaoBrowserPlugin.Views
             ShowType = showType;
             feidaoBrowser.RegisterJsObject("feidao", new FeiDaoBrowserOperation(), false);
         }
-
         private void mainView_Loaded(object sender, RoutedEventArgs e)
         {
             if (firstLoaded && ParamDict != null && ParamDict.ContainsKey("formid"))
@@ -84,6 +83,22 @@ namespace FeiDaoBrowserPlugin.Views
                     feidaoBrowser.Address = GetUrlInfo();
                 });
             }
+        }
+        public override void Excute(Dictionary<string, object> paramDic)
+        {
+            if (paramDic != null && paramDic.ContainsKey("MessageType"))
+            {
+                string messageType = paramDic["MessageType"].ToString();
+                switch (messageType)
+                {
+                    case "WPFClear":
+                        feidaoBrowser.Dispose();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            base.Excute(paramDic);
         }
     }
 }

@@ -30,6 +30,7 @@ using Victop.Frame.PublicLib.Managers;
 using Victop.Frame.DataMessageManager.Models;
 using Victop.Server.Controls.MVVM;
 using Microsoft.Win32;
+using Victop.Frame.CmptRuntime;
 
 namespace MetroFramePlugin.ViewModels
 {
@@ -1064,7 +1065,14 @@ namespace MetroFramePlugin.ViewModels
             {
                 return new RelayCommand(() =>
                 {
-                    UserControl tabCtrl = (UserControl)(SelectedTabItem.Content);
+                    TemplateControl tctrl = SelectedTabItem.Content as TemplateControl;
+                    if (tctrl != null)
+                    {
+                        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                        paramDic.Add("MessageType", "WPFClear");
+                        tctrl.Excute(paramDic);
+                    }
+                    UserControl tabCtrl = tctrl != null ? tctrl : (UserControl)(SelectedTabItem.Content);
                     DataMessageOperation messageOp = new DataMessageOperation();
                     if (!string.IsNullOrEmpty(tabCtrl.Uid))
                     {
@@ -1223,7 +1231,14 @@ namespace MetroFramePlugin.ViewModels
             menuModel.ShowType = "0";
             menuModel.PackageUrl = item.Package_url;
             menuModel.ShowType = string.IsNullOrEmpty(item.Show_type) ? "1" : item.Show_type;
-            menuModel.Icon = !string.IsNullOrEmpty(item.Icon) ? Regex.Unescape(item.Icon) : item.Icon;
+            try
+            {
+                menuModel.Icon = !string.IsNullOrEmpty(item.Icon) ? Regex.Unescape(item.Icon) : item.Icon;
+            }
+            catch (Exception ex)
+            {
+                
+            }
             menuModel.PluginBG = item.Background;
             menuModel.Description = item.Description;
             menuModel.AuthorityCode = item.AuthCode;

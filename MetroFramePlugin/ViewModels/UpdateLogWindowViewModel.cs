@@ -74,7 +74,7 @@ namespace MetroFramePlugin.ViewModels
                     string MessageType = "MongoDataChannelService.findBusiData";
                     DataMessageOperation messageOp = new DataMessageOperation();
                     Dictionary<string, object> contentDic = new Dictionary<string, object>();
-                    contentDic.Add("systemid", "11");
+                    contentDic.Add("systemid", "12");
                     contentDic.Add("modelid", "feidao-model-update_log-0001");
                     List<object> conditionList = new List<object>();
                     Dictionary<string, object> conditionDic = new Dictionary<string, object>();

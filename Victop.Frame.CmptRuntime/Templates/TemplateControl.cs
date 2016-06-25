@@ -211,6 +211,17 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="paramDic">通用参数</param>
         public virtual void Excute(Dictionary<string, object> paramDic)
         {
+            if (paramDic != null && paramDic.ContainsKey("MessageType") && paramDic["MessageType"].ToString().Equals("WPFClear"))
+            {
+                BuiltBrowser.Dispose();
+                if (DefinModel != null && DefinModel.CompntPresentation.PresentationBlocks.Count > 0)
+                {
+                    foreach (var item in DefinModel.CompntPresentation.PresentationBlocks)
+                    {
+                        item.ViewBlockDataTable.Dispose();
+                    }
+                }
+            }
         }
 
         /// <summary>

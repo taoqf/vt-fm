@@ -513,6 +513,16 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             win.Title = ucCom.Tag == null ? "" : ucCom.Tag.ToString();
             win.Content = ucCom;
             win.Show();
+            win.Closing += win_Closing;
+        }
+
+        private void win_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            VicWindowNormal win = sender as VicWindowNormal;
+            if (win!=null&&win.Owner!=null)
+            {
+                win.Owner.Activate();   
+            }
         }
         /// <summary>
         /// 使用window弹出内容
@@ -1371,7 +1381,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 contentDic.Add("pname", iPName);
                 contentDic.Add("setinfo", iCodeRule);
                 Dictionary<string, object> returnDic = messageOp.SendSyncMessage(MessageType, contentDic);
-                if (returnDic != null || returnDic.ContainsKey("ReplyContent"))
+                if (returnDic != null && returnDic["ReplyMode"].ToString().Equals("1"))
                 {
                     o.v = JsonHelper.ReadJsonString(returnDic["ReplyContent"].ToString(), "result");
                 }

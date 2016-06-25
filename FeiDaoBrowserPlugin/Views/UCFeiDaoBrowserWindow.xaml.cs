@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Victop.Frame.CmptRuntime;
 using Victop.Wpf.Controls;
 
 namespace FeiDaoBrowserPlugin.Views
@@ -24,7 +25,19 @@ namespace FeiDaoBrowserPlugin.Views
             InitializeComponent();
             UCFeiDaoBrowser mainView = new UCFeiDaoBrowser(paramDict, showType);
             mainView.Uid = Uid;
+            this.Closing += UCFeiDaoBrowserWindow_Closing;
             this.Content = mainView;
+        }
+
+        private void UCFeiDaoBrowserWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            TemplateControl tctrl = Content as TemplateControl;
+            if (tctrl != null)
+            {
+                Dictionary<string, object> paramDic = new Dictionary<string, object>();
+                paramDic.Add("MessageType", "CefSharpClear");
+                tctrl.Excute(paramDic);
+            }
         }
     }
 }
