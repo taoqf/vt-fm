@@ -213,6 +213,10 @@ namespace Victop.Frame.CmptRuntime
         {
             if (paramDic != null && paramDic.ContainsKey("MessageType") && paramDic["MessageType"].ToString().Equals("WPFClear"))
             {
+                foreach (var item in listCompnt.Keys)
+                {
+                    listCompnt[item].Excute(paramDic);
+                }
                 BuiltBrowser.Dispose();
                 if (DefinModel != null && DefinModel.CompntPresentation.PresentationBlocks.Count > 0)
                 {

@@ -35,7 +35,7 @@ namespace FeiDaoBrowserPlugin.Views
             if (tctrl != null)
             {
                 Dictionary<string, object> paramDic = new Dictionary<string, object>();
-                paramDic.Add("MessageType", "CefSharpClear");
+                paramDic.Add("MessageType", "WPFClear");
                 tctrl.Excute(paramDic);
             }
         }
