@@ -1467,7 +1467,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 <Thumb  Width ="{ StaticResource  SlantResizerSize }"  Height ="{ StaticResource  SlantResizerSize }"  HorizontalAlignment ="Left"  VerticalAlignment ="Bottom"  Cursor ="SizeNESW"  x:Name ="PART_BottomLeftResizer"/>
 
                             </Grid>
-                            <Border  x:Name ="PART_ContentBorder"  Grid.Row ="1"  BorderBrush ="Transparent"  BorderThickness ="2"    Margin ="0"   ClipToBounds ="True">
+                            <Border  x:Name ="PART_ContentBorder"  Grid.Row ="1"  BorderBrush ="Transparent"  BorderThickness ="2"    Margin ="1.5,0,1.5,1"   ClipToBounds ="True">
                                 <AdornerDecorator >
                                     <ContentPresenter  Margin ="{ TemplateBinding  Padding }"  
                                     VerticalAlignment ="{ TemplateBinding  VerticalContentAlignment }"  

@@ -13,7 +13,7 @@
         <KeyBinding Modifiers="Alt" Key="F12" Command="{Binding btnShowDevToolsCommand}"/>
         <KeyBinding Modifiers="Alt" Key="F" Command="{Binding btnRefreshCommand}"/>
     </UserControl.InputBindings>
-    <ctrl:VicGridNormal>
+    <ctrl:VicGridNormal Margin="20">
         <cef:ChromiumWebBrowser Name="feidaoBrowser"/>
     </ctrl:VicGridNormal>
 </tc:TemplateControl>
