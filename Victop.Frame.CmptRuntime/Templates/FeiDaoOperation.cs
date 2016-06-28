@@ -2355,6 +2355,18 @@ namespace Victop.Frame.CmptRuntime
             uIElementOperation.UnitUCDesignerRulePreview(unitName, isPage1, pageNo, productid, pDomName, pProTemName, pDynamicName, pDynamicProTemName);
         }
 
+        /// <summary>
+        /// 原型图形控件粘贴
+        /// </summary>
+        /// <param name="unitName">部件名</param>
+        /// <param name="pageNo">页面编号</param>
+        /// <param name="pDomName">dom树P名称</param>
+        /// <param name="pControlName">基础控件P名称</param>
+        public void UnitUCDesignerRulePastItemBase(string unitName, object pageNo, string pDomName, string pControlName)
+        {
+            uIElementOperation.UnitUCDesignerRulePastItemBase(unitName, pageNo, pDomName, pControlName);
+        }
+
         #endregion
 
         #region 动态构建的ComponentVisioProperty初始化方法
