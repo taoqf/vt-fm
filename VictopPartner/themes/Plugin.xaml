@@ -210,7 +210,7 @@
                                 <Rectangle Fill="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" HorizontalAlignment="Right" Width="1" Height="40"/>
                             </Grid>
                             <ContentPresenter Grid.Column="2" ContentSource="Header" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
-                            <Path x:Name="RightArrow" Grid.Column="5" Data="M 0,0 L 4,3.5 L 0,7 Z" Fill="Black" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <Path x:Name="RightArrow" Grid.Column="5" Data="M 0,0 L 4,3.5 L 0,7 Z" Fill="{DynamicResource SkinForeground}" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Path.LayoutTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>

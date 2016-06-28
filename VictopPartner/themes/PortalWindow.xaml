@@ -958,25 +958,28 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
         <Setter Property="MinHeight" Value="20"></Setter>
         <Setter Property="MinWidth" Value="20"></Setter>
         <Setter Property="FontSize" Value="20"></Setter>
-        <Setter Property="Foreground" Value="#9AD8F7"/>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource BtnNormalForeground}"/>
         <!--修改模板属性-->
         <Setter Property="Template">
             <Setter.Value>
                 <!--控件模板-->
                 <ControlTemplate TargetType="{x:Type controls:VicButtonNormal}">
                     <!--背景色-->
-
-                    <!--按钮内容-->
+                    <Border x:Name="PART_Border"   BorderThickness="0"  Background="{TemplateBinding Background}">
+                        <!--按钮内容-->
                     <ContentPresenter x:Name="content" HorizontalAlignment="Center"  VerticalAlignment="Center" Content="{TemplateBinding  Content}">
                         <ContentPresenter.BitmapEffect>
                             <DropShadowBitmapEffect Color="#000" Direction="-90" ShadowDepth="2" Softness="0.1" Opacity="0.3" />
                         </ContentPresenter.BitmapEffect>
                     </ContentPresenter>
+                        </Border>
                     <!--触发器-->
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="#086F9E"></Setter>
-
+                            <!--<Setter Property="Background" Value="{DynamicResource BtnHotBackground}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource BtnHotBorderBrush}"/>-->
+                            <Setter Property="Foreground" Value="{DynamicResource BtnHotForeground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -1403,7 +1406,7 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                                 </StackPanel>-->
                                 <StackPanel Orientation ="Horizontal" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center">
                                     <Grid  Width="15" Height="15" Background="{DynamicResource Logo}"     Margin="8,2,0,2"/>
-                                    <Label  Foreground="{DynamicResource SkinForeground}"  Width="71" Content="飞道系统" />
+                                    <Label  Foreground="{DynamicResource SkinForeground}"  Width="71" Content="飞道体系" />
                                 </StackPanel>
                                 <StackPanel  HorizontalAlignment ="Right"  Orientation ="Horizontal"  Margin ="0,0,10,0">
                                     <controls:VicButtonNormal Name="btnChangeSkin" Visibility="Visible" Style="{DynamicResource btnChangeSkinStyle}" ToolTip="皮肤管理"  Command="{Binding DataContext.btnChangeSkinClickCommand,RelativeSource={RelativeSource AncestorType=Window}}" ></controls:VicButtonNormal>
