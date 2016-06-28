@@ -1638,6 +1638,37 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
         }
+        /// <summary>
+        /// 原型图形控件粘贴
+        /// </summary>
+        /// <param name="unitName">部件名</param>
+        /// <param name="pageNo">页面编号</param>
+        /// <param name="pDomName">dom树P名称</param>
+        /// <param name="pControlName">基础控件P名称</param>
+        public void UnitUCDesignerRulePastItemBase(string unitName, object pageNo, string pDomName, string pControlName)
+        {
+            TemplateControl template = MainView.FindName(unitName) as TemplateControl;
+            if (template == null)
+            {
+                return;
+            }
+            DataTable dtDom = MainView.GetPresentationBlockModel(pDomName).ViewBlockDataTable;
+            string channenlIdDom = MainView.GetPresentationBlockModel(pDomName).ViewBlock.ViewModel.ViewId;
+            DataTable dtControl = MainView.GetPresentationBlockModel(pControlName).ViewBlockDataTable;
+
+            Dictionary<string, object> dicMessage = new Dictionary<string, object>();
+            //类型
+            dicMessage.Add("MessageType", "pastItemBase");
+            //参数
+            Dictionary<string, object> dicContent = new Dictionary<string, object>();
+            dicContent.Add("pageNo", pageNo);
+            dicContent.Add("dtDom", dtDom);
+            dicContent.Add("channenlIdDom", channenlIdDom);
+            dicContent.Add("dtControl", dtControl);
+
+            dicMessage.Add("MessageContent", dicContent);
+            template.Excute(dicMessage);
+        }
         #endregion
 
 

@@ -195,6 +195,7 @@
 		"UnitUCDesignerRuleExtendP":"UnitUCDesignerRuleExtendP",
 		"UnitUCDesignerRuleAddItem":"UnitUCDesignerRuleAddItem",
 		"UnitUCDesignerRulePreview":"UnitUCDesignerRulePreview",
+		"UnitUCDesignerRulePastItemBase":"UnitUCDesignerRulePastItemBase",
 		"GetListFromListDataRow":"GetListFromListDataRow",
 		"DownLoadFile":"DownLoadFile",
 		"ComponentOperationAnalysisRender":"ComponentOperationAnalysisRender",
