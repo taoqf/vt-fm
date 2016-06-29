@@ -1925,10 +1925,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="oav">接受oav(true,false)</param>
         public void IsAllowComOrSplit(string pBlockName, string page_no, List<DataRow> drList, int type, object oav)
         {
-            //合并：执行条件：1、选中的组件片段大于等于2个
+            //合并：执行条件：1、选中的组件片段大于等于2个,都不是蒙层
             //                2、选中的组件编号只关联1个组件片段
             //                3、组件片段的section_no在<page_dom_struct>表中对应nodeid的父级一致
-            //拆分：执行条件：1、选中的组件片段大于等于2个
+            //拆分：执行条件：1、选中的组件片段大于等于2个,都不是蒙层
             //                2、选中的组件片段编号对应的组件编号一致	
             bool flag = false;
             dynamic o1 = oav;
@@ -1939,50 +1939,59 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     if (drList != null && drList.Count >= 2)
                     {
                         DataTable dtcompntsnippet = drList[0].Table;
-                        bool con2 = true;
-                        foreach (DataRow row in drList)
+                        bool con1 = true;
+                        DataRow[] rows = dtcompntsnippet.Select("is_float = true");
+                        if (rows.Length > 0)
                         {
-                            DataRow[] csrows = dtcompntsnippet.Select("compnt_group_no='" + row["compnt_group_no"].ToString() + "'");
-                            if (csrows.Length != 1)
-                            {
-                                con2 = false;
-                                break;
-                            }
+                            con1 = false;
                         }
-                        if (con2)
+                        if (con1)
                         {
-                            List<object> listso = new List<object>();
-                            foreach (DataRow rowso in drList)
+                            bool con2 = true;
+                            foreach (DataRow row in drList)
                             {
-                                listso.Add(rowso["section_no"].ToString());
-                            }
-                            SetConditionSearch(pBlockName, "page_no", page_no);
-                            SetConditionSearchIn(pBlockName, "nodeid", listso);
-                            SearchData(pBlockName);
-                            GetPBlockData(pBlockName);
-                            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
-                            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
-                            {
-                                bool con3 = true;
-                                string superiors = string.Empty;
-                                for (int i = 0; i < pBlock.ViewBlockDataTable.Rows.Count; i++)
+                                DataRow[] csrows = dtcompntsnippet.Select("compnt_group_no='" + row["compnt_group_no"].ToString() + "'");
+                                if (csrows.Length != 1)
                                 {
-                                    if (i == 0)
+                                    con2 = false;
+                                    break;
+                                }
+                            }
+                            if (con2)
+                            {
+                                List<object> listso = new List<object>();
+                                foreach (DataRow rowso in drList)
+                                {
+                                    listso.Add(rowso["section_no"].ToString());
+                                }
+                                SetConditionSearch(pBlockName, "page_no", page_no);
+                                SetConditionSearchIn(pBlockName, "nodeid", listso);
+                                SearchData(pBlockName);
+                                GetPBlockData(pBlockName);
+                                PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+                                if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0)
+                                {
+                                    bool con3 = true;
+                                    string superiors = string.Empty;
+                                    for (int i = 0; i < pBlock.ViewBlockDataTable.Rows.Count; i++)
                                     {
-                                        superiors = pBlock.ViewBlockDataTable.Rows[i]["superiors"].ToString();
-                                    }
-                                    else
-                                    {
-                                        if (!superiors.Equals(pBlock.ViewBlockDataTable.Rows[i]["superiors"].ToString()))
+                                        if (i == 0)
                                         {
-                                            con3 = false;
-                                            break;
+                                            superiors = pBlock.ViewBlockDataTable.Rows[i]["superiors"].ToString();
+                                        }
+                                        else
+                                        {
+                                            if (!superiors.Equals(pBlock.ViewBlockDataTable.Rows[i]["superiors"].ToString()))
+                                            {
+                                                con3 = false;
+                                                break;
+                                            }
                                         }
                                     }
-                                }
-                                if (con3)
-                                {
-                                    flag = true;
+                                    if (con3)
+                                    {
+                                        flag = true;
+                                    }
                                 }
                             }
                         }
@@ -1992,28 +2001,38 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 {
                     if (drList != null && drList.Count >= 2)
                     {
-                        bool con2 = true;
-                        string compnt_group_no = string.Empty;
-                        int i = 0;
-                        foreach (DataRow row2 in drList)
+                        DataTable dtcompntsnippet = drList[0].Table;
+                        bool con1 = true;
+                        DataRow[] rows = dtcompntsnippet.Select("is_float = true");
+                        if (rows.Length > 0)
                         {
-                            if (i == 0)
-                            {
-                                compnt_group_no = row2["compnt_group_no"].ToString();
-                            }
-                            else
-                            {
-                                if (!compnt_group_no.Equals(row2["compnt_group_no"].ToString()))
-                                {
-                                    con2 = false;
-                                    break;
-                                }
-                            }
-                            i++;
+                            con1 = false;
                         }
-                        if (con2)
+                        if (con1)
                         {
-                            flag = true;
+                            bool con2 = true;
+                            string compnt_group_no = string.Empty;
+                            int i = 0;
+                            foreach (DataRow row2 in drList)
+                            {
+                                if (i == 0)
+                                {
+                                    compnt_group_no = row2["compnt_group_no"].ToString();
+                                }
+                                else
+                                {
+                                    if (!compnt_group_no.Equals(row2["compnt_group_no"].ToString()))
+                                    {
+                                        con2 = false;
+                                        break;
+                                    }
+                                }
+                                i++;
+                            }
+                            if (con2)
+                            {
+                                flag = true;
+                            }
                         }
                     }
                 }
