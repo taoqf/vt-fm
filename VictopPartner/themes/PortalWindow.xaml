@@ -977,9 +977,9 @@ Color="Black" Direction="0" Opacity="0.6" RenderingBias="Performance" ShadowDept
                     <!--触发器-->
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <!--<Setter Property="Background" Value="{DynamicResource BtnHotBackground}"/>
-                            <Setter Property="BorderBrush" Value="{DynamicResource BtnHotBorderBrush}"/>-->
-                            <Setter Property="Foreground" Value="{DynamicResource BtnHotForeground}"/>
+                            <Setter Property="Background" TargetName="PART_Border" Value="{DynamicResource BtnPressedBackground}"/>
+                            <Setter Property="BorderBrush" TargetName="PART_Border" Value="{DynamicResource BtnPressedBackground}"/>
+                            <Setter Property="Foreground"  Value="{DynamicResource BtnHotForeground}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
