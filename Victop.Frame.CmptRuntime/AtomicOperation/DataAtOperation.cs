@@ -1324,6 +1324,57 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
+        /// 行集合转oav
+        /// </summary>
+        /// <param name="drList">行集合</param>
+        /// <param name="blockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        public void ListDataRowToOAV(object drList, string blockName, string fieldName)
+        {
+            List<DataRow> rows = (List<DataRow>)drList;
+            if (rows != null)
+            {
+                List<dynamic> listOAV = new List<dynamic>();
+                foreach (DataRow dr in rows)
+                {
+                    if (dr.RowState == DataRowState.Deleted) continue;
+                    string objectName = blockName + ":" + dr["_id"].ToString();
+                    if (dr.Table.Columns.Contains(fieldName))
+                    {
+                        dynamic oav = MainView.FeiDaoMachine.InsertFact(objectName, fieldName, dr[fieldName]);
+                        listOAV.Add(oav);
+                    }
+                }
+                //存在oav清除
+                if (blockOAVDic.ContainsKey(blockName) && blockOAVDic[blockName].ContainsKey(fieldName))
+                {
+                    try
+                    {
+                        foreach (dynamic oav in blockOAVDic[blockName][fieldName])
+                        {
+                            MainView.FeiDaoMachine.RemoveFact(oav);
+                        }
+                        blockOAVDic[blockName].Remove(fieldName);
+                    }
+                    catch (Exception ex)
+                    {
+                        blockOAVDic[blockName].Remove(fieldName);
+                        LoggerHelper.Error(ex.ToString());
+                    }
+                }
+                if (blockOAVDic.ContainsKey(blockName))
+                {
+                    blockOAVDic[blockName].Add(fieldName, listOAV);
+                }
+                else
+                {
+                    Dictionary<string, List<dynamic>> dicOAV = new Dictionary<string, List<dynamic>>();
+                    dicOAV.Add(fieldName, listOAV);
+                    blockOAVDic.Add(blockName, dicOAV);
+                }
+            }
+        }
+        /// <summary>
         /// 清除区块生成的OAV
         /// </summary>
         /// <param name="blockName">区块名称</param>
@@ -2053,7 +2104,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockNameThree">根据作业编号获取的数据</param>
         /// <param name="elementName">DataGrid名称</param>
         ///  <param name="type">类型</param>
-        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow,string pblockNameThree,string elementName, string type = "")
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string pblockNameThree, string elementName, string type = "")
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             PresentationBlockModel pblockTwo = MainView.GetPresentationBlockModel(pblockNameTwo);
@@ -2061,10 +2112,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             if (string.IsNullOrWhiteSpace(type))
             {
                 FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
-                if (element!=null)
+                if (element != null)
                 {
                     VicDataGrid dgGrid = element as VicDataGrid;
-                    if (dgGrid!=null)
+                    if (dgGrid != null)
                     {
                         if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockThree.ViewBlockDataTable.Rows.Count > 0 && pblockThree.ViewBlockDataTable.Columns.Contains(filed))
                         {
@@ -2091,10 +2142,10 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                             DataRowView rowView = item as DataRowView;
                             dgGrid.UpdateLayout();
                             DataGridRow gridRow = (DataGridRow)dgGrid.ItemContainerGenerator.ContainerFromItem(item);
-                            if (gridRow != null && rowView!=null)
+                            if (gridRow != null && rowView != null)
                             {
                                 DataRow[] drcpageandstep = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", rowView[filed]));
-                                if (drcpageandstep.Length>0)
+                                if (drcpageandstep.Length > 0)
                                 {
                                     if (drcpageandstep[0]["page_flow_no"] != null && !drcpageandstep[0]["page_flow_no"].ToString().Equals(pageflow))
                                     {
@@ -2111,13 +2162,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 switch (type)
                 {
                     case "1":
-                        if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockTwo.ViewBlockDataTable.Columns.Contains(filed) && pblockThree!=null)
+                        if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockTwo.ViewBlockDataTable.Columns.Contains(filed) && pblockThree != null)
                         {
                             DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag = '{0}'", "True"));
                             foreach (DataRow dataRow in drc)
                             {
                                 DataRow[] drcpageandstep = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
-                                if (drcpageandstep.Length>0)
+                                if (drcpageandstep.Length > 0)
                                 {
                                     if (drcpageandstep[0]["page_flow_no"] != null && !drcpageandstep[0]["page_flow_no"].ToString().Equals(pageflow))
                                     {
@@ -2182,7 +2233,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblocknameThree">pblocknameThree（获取数据的表）</param>
         /// <param name="filed">作为核查的字段</param>
         /// <param name="oav">验证返回的结果（1：成功，0:失败）</param>
-        public void ComponentOperationAnalysisIsCanSave(string pblockname, string pblocknameTwo,string pblocknameThree,string filed, object oav)
+        public void ComponentOperationAnalysisIsCanSave(string pblockname, string pblocknameTwo, string pblocknameThree, string filed, object oav)
         {
             dynamic o = oav;
             o.v = "1";
@@ -2305,9 +2356,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                                 }
                             }
                             int fzno = Convert.ToInt32(drc[0]["fzno"].ToString());
-                            for (int i = fzno+1; i < pBlock.ViewBlockDataTable.Rows.Count+1; i++)
+                            for (int i = fzno + 1; i < pBlock.ViewBlockDataTable.Rows.Count + 1; i++)
                             {
-                                DataRow drr = pBlock.ViewBlockDataTable.Rows[i-1];
+                                DataRow drr = pBlock.ViewBlockDataTable.Rows[i - 1];
                                 DataRow[] drcStep = pBlock.ViewBlockDataTable.Select(string.Format("fzno='{0}'", i));
                                 DataRow[] drccc = pblockTwo.ViewBlockDataTable.Select(string.Format("steps_no='{0}'", drr["steps_no"]));
                                 if (drccc.Length == 1)

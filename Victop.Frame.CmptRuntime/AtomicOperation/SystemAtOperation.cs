@@ -898,7 +898,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 switch (type)
                 {
                     case "pvd":
-                        message.Add("artifact_table", "data,view,view_block,presentation,model,m_v,control,c_m");
+                        message.Add("artifact_table", "data,view,view_block,presentation,m_model,m_v,control,c_m");
                         message.Add("diagram_type_no", "DT00001");
                         condition.Add("compnt_group_no", compntGroupNo);
                         break;
