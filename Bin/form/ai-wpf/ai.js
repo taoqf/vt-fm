@@ -33,7 +33,6 @@
 	"ParamsCurrentRowSet":"ParamsCurrentRowSet",
 	"VicDataGridSelectRowDelete":"VicDataGridSelectRowDelete",
 	"BlockToOAV":"BlockToOAV",
-	"ListStrToOAV":"ListStrToOAV",
 	"ListDataRowToOAV":"ListDataRowToOAV",
 	"ClearOAVByBlock":"ClearOAVByBlock",
 	"BlockSelectRowsUpdate":"BlockSelectRowsUpdate",
