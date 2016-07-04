@@ -1277,53 +1277,6 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             }
         }
         /// <summary>
-        /// 字符串集合转oav
-        /// </summary>
-        /// <param name="str">字符串集合</param>
-        /// <param name="o">o</param>
-        /// <param name="a">a</param>
-        public void ListStrToOAV(object strList, string o, string a)
-        {
-            List<object> objList = (List<object>)strList;
-            if (objList != null)
-            {
-                List<dynamic> listOAV = new List<dynamic>();
-                foreach (object obj in objList)
-                {
-                    string objectName = o + ":" + Guid.NewGuid().ToString();
-                    dynamic oav = MainView.FeiDaoMachine.InsertFact(objectName, a, obj);
-                    listOAV.Add(oav);
-                }
-                //存在oav清除
-                if (blockOAVDic.ContainsKey(o) && blockOAVDic[o].ContainsKey(a))
-                {
-                    try
-                    {
-                        foreach (dynamic oav in blockOAVDic[o][a])
-                        {
-                            MainView.FeiDaoMachine.RemoveFact(oav);
-                        }
-                        blockOAVDic[o].Remove(a);
-                    }
-                    catch (Exception ex)
-                    {
-                        blockOAVDic[o].Remove(a);
-                        LoggerHelper.Error(ex.ToString());
-                    }
-                }
-                if (blockOAVDic.ContainsKey(o))
-                {
-                    blockOAVDic[o].Add(a, listOAV);
-                }
-                else
-                {
-                    Dictionary<string, List<dynamic>> dicOAV = new Dictionary<string, List<dynamic>>();
-                    dicOAV.Add(a, listOAV);
-                    blockOAVDic.Add(o, dicOAV);
-                }
-            }
-        }
-        /// <summary>
         /// 行集合转oav
         /// </summary>
         /// <param name="drList">行集合</param>

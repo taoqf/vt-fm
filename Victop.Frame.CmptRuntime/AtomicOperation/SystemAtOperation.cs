@@ -1108,7 +1108,24 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
-
+        /// <summary>
+        /// oav的v值
+        /// </summary>
+        /// <param name="v">oav的v值</param>
+        /// <param name="oav">接收oav</param>
+        public void IsEmpty(object v,object oav)
+        {
+            dynamic o1 = oav;
+            o1.v = false;
+            if (v == null)
+            {
+                o1.v = true;
+            }
+            else if (v == DBNull.Value || string.IsNullOrEmpty(v.ToString()))
+            {
+                o1.v = true;
+            }
+        }
         #endregion
 
         #region 加减乘除

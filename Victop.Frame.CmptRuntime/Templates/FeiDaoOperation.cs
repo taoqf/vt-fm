@@ -1285,7 +1285,15 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.AppendStr(str, join, oav, sort);
         }
 
-
+        /// <summary>
+        /// oav的v值
+        /// </summary>
+        /// <param name="v">oav的v值</param>
+        /// <param name="oav">接收oav</param>
+        public void IsEmpty(object v, object oav)
+        {
+            systemOperation.IsEmpty(v,oav);
+        }
 
         /// <summary>
         /// 日期类型转为自定义格式字符串

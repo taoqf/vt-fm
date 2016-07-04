@@ -138,6 +138,7 @@
 	"NumDivide":"NumDivide",
 	"CmpStrIsEqual":"CmpStrIsEqual",
         "AppendStr":"AppendStr",
+		 "IsEmpty":"IsEmpty",
         "GetStrLength":"GetStrLength",
         "StrTrimStart":"StrTrimStart",
 	"RoundNumbers":"RoundNumbers",
