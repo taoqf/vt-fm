@@ -879,28 +879,29 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
                 {
-                    //if (Int32.TryParse(pBlock.PreBlockSelectedRow[fieldName].ToString(), out index))
+                    int index = 1;
+                    if (Int32.TryParse(pBlock.PreBlockSelectedRow[fieldName].ToString(), out index))
+                    {
+                        dynamic o = oav;
+                        if (index > 1)
+                        {
+                            o.v = index - 1;
+                        }
+                        else if (index == 1)
+                        {
+                            o.v = index;
+                        }
+                    }
+                    //dynamic o = oav;
+                    //int currentindex = pBlock.ViewBlockDataTable.Rows.IndexOf(pBlock.PreBlockSelectedRow);
+                    //if (currentindex == 0)
                     //{
-                    //    dynamic o = oav;
-                    //    if (index > 1)
-                    //    {
-                    //        o.v = index - 1;
-                    //    }
-                    //    else if (index == 1)
-                    //    {
-                    //        o.v = index;
-                    //    }
+                    //    o.v = pBlock.ViewBlockDataTable.Rows[currentindex][fieldName];
                     //}
-                    dynamic o = oav;
-                    int currentindex = pBlock.ViewBlockDataTable.Rows.IndexOf(pBlock.PreBlockSelectedRow);
-                    if (currentindex == 0)
-                    {
-                        o.v = pBlock.ViewBlockDataTable.Rows[currentindex][fieldName];
-                    }
-                    else
-                    {
-                        o.v = pBlock.ViewBlockDataTable.Rows[currentindex-1][fieldName];
-                    }
+                    //else
+                    //{
+                    //    o.v = pBlock.ViewBlockDataTable.Rows[currentindex-1][fieldName];
+                    //}
                 }
             }
         }
@@ -917,28 +918,29 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
                 {
-                    //if (Int32.TryParse(pBlock.PreBlockSelectedRow[fieldName].ToString(), out index))
+                    int index = 1;
+                    if (Int32.TryParse(pBlock.PreBlockSelectedRow[fieldName].ToString(), out index))
+                    {
+                        dynamic o = oav;
+                        if (index < pBlock.ViewBlockDataTable.Rows.Count)
+                        {
+                            o.v = index + 1;
+                        }
+                        else if (index == pBlock.ViewBlockDataTable.Rows.Count)
+                        {
+                            o.v = index;
+                        }
+                    }
+                    //dynamic o = oav;
+                    //int currentindex = pBlock.ViewBlockDataTable.Rows.IndexOf(pBlock.PreBlockSelectedRow);
+                    //if (currentindex == pBlock.ViewBlockDataTable.Rows.Count - 1)
                     //{
-                    //    dynamic o = oav;
-                    //    if (index < pBlock.ViewBlockDataTable.Rows.Count)
-                    //    {
-                    //        o.v = index + 1;
-                    //    }
-                    //    else if (index == pBlock.ViewBlockDataTable.Rows.Count)
-                    //    {
-                    //        o.v = index;
-                    //    }
+                    //    o.v = pBlock.ViewBlockDataTable.Rows[pBlock.ViewBlockDataTable.Rows.Count-1][fieldName];
                     //}
-                    dynamic o = oav;
-                    int currentindex = pBlock.ViewBlockDataTable.Rows.IndexOf(pBlock.PreBlockSelectedRow);
-                    if (currentindex == pBlock.ViewBlockDataTable.Rows.Count - 1)
-                    {
-                        o.v = pBlock.ViewBlockDataTable.Rows[pBlock.ViewBlockDataTable.Rows.Count-1][fieldName];
-                    }
-                    else
-                    {
-                        o.v = pBlock.ViewBlockDataTable.Rows[currentindex + 1][fieldName];
-                    }
+                    //else
+                    //{
+                    //    o.v = pBlock.ViewBlockDataTable.Rows[currentindex + 1][fieldName];
+                    //}
                 }
             }
         }
