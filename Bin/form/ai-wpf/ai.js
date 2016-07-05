@@ -214,5 +214,8 @@
                "GetRowInfoListByCondition":"GetRowInfoListByCondition",
                "ExtractDrawingData":"ExtractDrawingData",
 			   "ComponentOperationAnalysisIsCanSave":"ComponentOperationAnalysisIsCanSave",
-			   "ComponentOperationAnalysisStepAndPageIsCanClick":"ComponentOperationAnalysisStepAndPageIsCanClick"
+			   "ComponentOperationAnalysisStepAndPageIsCanClick":"ComponentOperationAnalysisStepAndPageIsCanClick",
+			   "GetDataGridSelectVicCheckFlagIsHaveNull":"GetDataGridSelectVicCheckFlagIsHaveNull",
+			   "SetDataGridSelectVicCheckFlagRowDataByFiled":"SetDataGridSelectVicCheckFlagRowDataByFiled",
+			   "GetDataGridSelectVicCheckFlagRowByValue":"GetDataGridSelectVicCheckFlagRowByValue"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

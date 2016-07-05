@@ -2513,6 +2513,39 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.SetDataGridVicCheckFlagColumnToFalse(pblockName, type);
         }
+        /// <summary>
+        /// 判断pblock中某个字段中选择行是否全部为空
+        /// </summary>
+        /// <param name="pblockName">PBlock名称</param>
+        /// <param name="filed">作为判断的字段名称</param>
+        /// <param name="oav">返回消息oav</param>
+        public void GetDataGridSelectVicCheckFlagIsHaveNull(string pblockName,string filed,object oav)
+        {
+            dataOperation.GetDataGridSelectVicCheckFlagIsHaveNull(pblockName, filed, oav);
+        }
+        /// <summary>
+        /// 设置pblock中某一字段的值
+        /// </summary>
+        /// <param name="pblockName">PBlock名称</param>
+        /// <param name="filed">作为判断的字段名称</param>
+        /// <param name="value">作为判断的字段值</param>
+        /// <param name="fieldtwo">赋值的字段</param>
+        /// <param name="valuetwo">赋值的值</param>
+        /// <param name="type">类型（0：需要查询  1：不需要查询）</param>
+        public void SetDataGridSelectVicCheckFlagRowDataByFiled(string pblockName, string filed,object value,string fieldtwo, object valuetwo,int type=0)
+        {
+            dataOperation.SetDataGridSelectVicCheckFlagRowDataByFiled(pblockName, filed, value, fieldtwo, valuetwo, type);
+        }
+        /// <summary>
+        /// 获取datagrid中选中行中某一字段值在选择行中不存在
+        /// </summary>
+        /// <param name="pblockName">PBlock名称</param>
+        /// <param name="filed">字段值</param>
+        /// <param name="oav">返回消息oav</param>
+        public void GetDataGridSelectVicCheckFlagRowByValue(string pblockName, string filed, object oav)
+        {
+            dataOperation.GetDataGridSelectVicCheckFlagRowByValue(pblockName, filed, oav);
+        }
         #endregion
 
         #region 动作部件

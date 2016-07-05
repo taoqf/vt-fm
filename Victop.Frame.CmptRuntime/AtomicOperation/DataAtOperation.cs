@@ -2375,6 +2375,101 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                 }
             }
         }
+
+        /// <summary>
+        /// 判断pblock中某个字段中选择行是否全部为空
+        /// </summary>
+        /// <param name="pblockName">PBlock名称</param>
+        /// <param name="filed">作为判断的字段名称</param>
+        /// <param name="oav">返回消息oav</param>
+        public void GetDataGridSelectVicCheckFlagIsHaveNull(string pblockName, string filed, object oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            dynamic o = oav;
+            o.v = "1";
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            {
+                DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag='{0}'", true));
+                if (drc.Length > 0)
+                {
+                    foreach (DataRow dataRow in drc)
+                    {
+                        if (dataRow["render_chain"] != null && !string.IsNullOrWhiteSpace(dataRow["render_chain"].ToString()))
+                        {
+                            o.v = "0";
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    o.v = "0";
+                }
+            }
+            else
+            {
+                o.v = "0";
+            }
+        }
+
+        /// <summary>
+        /// 设置pblock中某一字段的值
+        /// </summary>
+        /// <param name="pblockName">PBlock名称</param>
+        /// <param name="filed">作为判断的字段名称</param>
+        /// <param name="value">作为判断的字段值</param>
+        /// <param name="fieldtwo">赋值的字段</param>
+        /// <param name="valuetwo">赋值的值</param>
+        /// <param name="type">类型（0：需要查询  1：不需要查询）</param>
+        public void SetDataGridSelectVicCheckFlagRowDataByFiled(string pblockName, string filed, object value, string fieldtwo, object valuetwo, int type)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 &&pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag")&&pBlock.ViewBlockDataTable.Columns.Contains(fieldtwo))
+            {
+                if (type==0)
+                {
+                    DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag='{0}'", true));
+                    foreach (DataRow dataRow in drc)
+                    {
+                        dataRow[fieldtwo] = valuetwo;
+                    }
+                }
+                else if (type==1)
+                {
+                    DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", value));
+                    foreach (DataRow dataRow in drc)
+                    {
+                        dataRow[fieldtwo] = valuetwo;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取datagrid中选中行中某一字段值在选择行中不存在
+        /// </summary>
+        /// <param name="pblockName">PBlock名称</param>
+        /// <param name="filed">字段值</param>
+        /// <param name="oav">返回消息oav</param>
+        public void GetDataGridSelectVicCheckFlagRowByValue(string pblockName, string filed, object oav)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
+            dynamic o = oav;
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag"))
+            {
+                DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag='{0}'", true));
+                foreach (DataRow dataRow in drc)
+                {
+                    DataRow[] drcc = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag='{0}' and p_block_name='{1}'", true, dataRow["superiors"]));
+                    if (drcc.Length == 0)
+                    {
+                        o.v = dataRow[filed];
+                        break;
+                    }
+                }
+            }
+        }
+
         #endregion
     }
 }
