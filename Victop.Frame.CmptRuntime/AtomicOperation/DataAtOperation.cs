@@ -879,18 +879,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
                 {
-                    int index = 1;
-                    if (Int32.TryParse(pBlock.PreBlockSelectedRow[fieldName].ToString(), out index))
+                    //if (Int32.TryParse(pBlock.PreBlockSelectedRow[fieldName].ToString(), out index))
+                    //{
+                    //    dynamic o = oav;
+                    //    if (index > 1)
+                    //    {
+                    //        o.v = index - 1;
+                    //    }
+                    //    else if (index == 1)
+                    //    {
+                    //        o.v = index;
+                    //    }
+                    //}
+                    dynamic o = oav;
+                    int currentindex = pBlock.ViewBlockDataTable.Rows.IndexOf(pBlock.PreBlockSelectedRow);
+                    if (currentindex == 0)
                     {
-                        dynamic o = oav;
-                        if (index > 1)
-                        {
-                            o.v = index - 1;
-                        }
-                        else if (index == 1)
-                        {
-                            o.v = index;
-                        }
+                        o.v = pBlock.ViewBlockDataTable.Rows[currentindex][fieldName];
+                    }
+                    else
+                    {
+                        o.v = pBlock.ViewBlockDataTable.Rows[currentindex-1][fieldName];
                     }
                 }
             }
@@ -908,18 +917,27 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 if (pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
                 {
-                    int index = 1;
-                    if (Int32.TryParse(pBlock.PreBlockSelectedRow[fieldName].ToString(), out index))
+                    //if (Int32.TryParse(pBlock.PreBlockSelectedRow[fieldName].ToString(), out index))
+                    //{
+                    //    dynamic o = oav;
+                    //    if (index < pBlock.ViewBlockDataTable.Rows.Count)
+                    //    {
+                    //        o.v = index + 1;
+                    //    }
+                    //    else if (index == pBlock.ViewBlockDataTable.Rows.Count)
+                    //    {
+                    //        o.v = index;
+                    //    }
+                    //}
+                    dynamic o = oav;
+                    int currentindex = pBlock.ViewBlockDataTable.Rows.IndexOf(pBlock.PreBlockSelectedRow);
+                    if (currentindex == pBlock.ViewBlockDataTable.Rows.Count - 1)
                     {
-                        dynamic o = oav;
-                        if (index < pBlock.ViewBlockDataTable.Rows.Count)
-                        {
-                            o.v = index + 1;
-                        }
-                        else if (index == pBlock.ViewBlockDataTable.Rows.Count)
-                        {
-                            o.v = index;
-                        }
+                        o.v = pBlock.ViewBlockDataTable.Rows[pBlock.ViewBlockDataTable.Rows.Count-1][fieldName];
+                    }
+                    else
+                    {
+                        o.v = pBlock.ViewBlockDataTable.Rows[currentindex + 1][fieldName];
                     }
                 }
             }
@@ -2424,9 +2442,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void SetDataGridSelectVicCheckFlagRowDataByFiled(string pblockName, string filed, object value, string fieldtwo, object valuetwo, int type)
         {
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
-            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 &&pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag")&&pBlock.ViewBlockDataTable.Columns.Contains(fieldtwo))
+            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains("VicCheckFlag") && pBlock.ViewBlockDataTable.Columns.Contains(fieldtwo))
             {
-                if (type==0)
+                if (type == 0)
                 {
                     DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag='{0}'", true));
                     foreach (DataRow dataRow in drc)
@@ -2434,7 +2452,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         dataRow[fieldtwo] = valuetwo;
                     }
                 }
-                else if (type==1)
+                else if (type == 1)
                 {
                     DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", value));
                     foreach (DataRow dataRow in drc)
