@@ -326,11 +326,13 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             {
                 if (isSelect)
                 {
-                    tcButton.Background = Brushes.DarkCyan;
+                   //tcButton.Background = Brushes.DarkCyan;
+                    tcButton.SetResourceReference(VicButtonNormal.StyleProperty, "selectButton");
                 }
                 else
                 {
-                    tcButton.Background = Brushes.Transparent;
+                 // tcButton.Background = Brushes.Transparent;
+                    tcButton.SetResourceReference(VicButtonNormal.StyleProperty, "noSelectButton");  //20160707改动的跟着皮肤颜色更新
                 }
             }
         }
