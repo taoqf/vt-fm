@@ -207,8 +207,8 @@ namespace Victop.Frame.CmptRuntime
         /// </summary>
         /// <param name="pBlockName">区块名称</param>
         /// <param name="paramField">参数字段</param>
-        /// <param name="sort">排序方式1正序-1倒序</param>
-        public void SetConditionSort(string pBlockName, string paramField, int sort)
+        /// <param name="sort">排序方式1正序,-1倒序,可不填写,若省略时默认值为1</param>
+        public void SetConditionSort(string pBlockName, string paramField, int sort = 1)
         {
             dataOperation.SetConditionSort(pBlockName, paramField, sort);
         }
