@@ -15,6 +15,7 @@ using Victop.Wpf.Controls;
 using System.Reflection;
 using System.Resources;
 using System.Configuration;
+using Victop.Frame.PublicLib.Managers;
 
 namespace Victop.Frame.CmptRuntime.AtomicOperation
 {
@@ -592,30 +593,32 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="messageInfo">消息内容</param>
         /// <param name="caption">标题,可不填,不填写时标题默认值为"调试状态提示"</param>
         /// <paramref name="information">提示图标,可选提示图标值有:info,error,warn,hand,stop,这里也可不填,默认值为info</paramref>
-        public void ShowBebugMessage(object messageInfo, string caption, string information)
+        public void ShowDebugMessage(object messageInfo, string caption, string information)
         {
-            switch (information)
+            if (ConfigManager.GetAttributeOfNodeByName("Client", "Debug").Equals("1"))
             {
-                case "info":
-                    VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Information);
-                    break;
-                case "error":
-                    VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Error);
-                    break;
-                case "warn":
-                    VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Warning);
-                    break;
-                case "hand":
-                    VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Hand);
-                    break;
-                case "stop":
-                    VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Stop);
-                    break;
-                default:
-                    VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString());
-                    break;
+                switch (information)
+                {
+                    case "info":
+                        VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+                    case "error":
+                        VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                    case "warn":
+                        VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Warning);
+                        break;
+                    case "hand":
+                        VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Hand);
+                        break;
+                    case "stop":
+                        VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Stop);
+                        break;
+                    default:
+                        VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString());
+                        break;
+                } 
             }
-
         }
         /// <summary>
         /// 弹出提示询问
