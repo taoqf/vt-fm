@@ -1011,7 +1011,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="messageInfo">消息内容</param>
         /// <param name="caption">标题,可不填,不填写时标题默认值为"飞道提示"</param>
         /// <paramref name="information">提示图标,可选提示图标值有:info,error,warn,hand,stop,这里也可不填,默认值为info</paramref>
-        public void ShowMessageShowMessage(object messageInfo, string caption = "飞道提示", string information = "info")
+        public void ShowMessage(object messageInfo, string caption = "飞道提示", string information = "info")
         {
             systemOperation.ShowMessage(messageInfo,caption,information);
         }
