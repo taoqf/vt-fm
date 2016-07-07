@@ -66,7 +66,7 @@
 	"SetCompntParamDic":"SetCompntParamDic",
 	"UCCompntClose":"UCCompntClose",
 	"ShowMessage":"ShowMessage",
-        "ShowBebugMessage":"ShowBebugMessage",
+        "ShowDebugMessage":"ShowDebugMessage",
 	"ShowMessageResult":"ShowMessageResult",
 	"SysFeiDaoLog":"SysFeiDaoLog",
 	"SetParamValue":"SetParamValue",
