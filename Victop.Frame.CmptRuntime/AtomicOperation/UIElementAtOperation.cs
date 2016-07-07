@@ -1412,7 +1412,8 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="unitName">部件</param>
         /// <param name="id">组件id</param>
         /// <param name="isFloat">是否浮动组件</param>
-        public void UnitUCDesignerRuleSelectCom(string unitName, object id, object isFloat)
+        /// <param name="isSelect">是否选中图形</param>
+        public void UnitUCDesignerRuleSelectCom(string unitName, object id, object isFloat, bool isSelect)
         {
             TemplateControl template = MainView.FindName(unitName) as TemplateControl;
             if (template == null)
@@ -1427,6 +1428,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             Dictionary<string, object> dicContent = new Dictionary<string, object>();
             dicContent.Add("id", id != null ? id : "");
             dicContent.Add("isFloat", isFloat);
+            dicContent.Add("isSelect", isSelect);
             dicMessage.Add("MessageContent", dicContent);
             template.Excute(dicMessage);
         }
