@@ -2285,10 +2285,12 @@ namespace Victop.Frame.CmptRuntime
         /// 原型图形控件选择组件图形刷新
         /// </summary>
         /// <param name="unitName">部件</param>
+        /// <param name="id">Dom树节点id</param>
         /// <param name="isFloat">是否浮动组件</param>
-        public void UnitUCDesignerRuleSelectCom(string unitName, object id = null, object isFloat = null)
+        /// <param name="isSelect">是否选中图形</param>
+        public void UnitUCDesignerRuleSelectCom(string unitName, object id = null, object isFloat = null, bool isSelect=true)
         {
-            uIElementOperation.UnitUCDesignerRuleSelectCom(unitName, id, isFloat);
+            uIElementOperation.UnitUCDesignerRuleSelectCom(unitName, id, isFloat, isSelect);
         }
 
         /// <summary>
