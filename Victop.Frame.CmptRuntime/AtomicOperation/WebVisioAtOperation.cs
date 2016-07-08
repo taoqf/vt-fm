@@ -521,7 +521,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                         string json = JsonHelper.ToJson(dicnode);
                         Dictionary<string, object> dic = new Dictionary<string, object>();
                         dic.Add("MessageType", "diagram_render");
-                        dic.Add("MessageContent", json);
+                        dic.Add("MessageContent", "");
                         tc.Excute(dic);
                     }
                     else
