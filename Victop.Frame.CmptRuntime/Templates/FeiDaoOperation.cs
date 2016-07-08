@@ -261,7 +261,18 @@ namespace Victop.Frame.CmptRuntime
         {
             dataOperation.GetPBlockDataRowCount(pBlockName, oav);
         }
-
+        /// <summary>
+        /// 获取PBlock指定列拼接的字符串
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="join">指定的字符串连接符</param>
+        /// <param name="oav">接收oav</param>
+        /// <param name="sort">排序方式:true正序false倒序</param>
+        public void GetPBlockColumnAppendStr(string pBlockName, string fieldName,string join, object oav,bool sort= true)
+        {
+            dataOperation.GetPBlockColumnAppendStr(pBlockName, fieldName,join,oav,sort);
+        }
         /// <summary>
         /// 获取block数据指定条件的列值
         /// </summary>

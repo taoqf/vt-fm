@@ -485,6 +485,39 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             dynamic o = oav;
             o.v = rowcount;
         }
+
+        /// <summary>
+        /// 获取PBlock指定列拼接的字符串
+        /// </summary>
+        /// <param name="pBlockName">区块名称</param>
+        /// <param name="fieldName">字段名称</param>
+        /// <param name="join">指定的字符串连接符</param>
+        /// <param name="oav">接收oav</param>
+        /// <param name="sort">排序方式:true正序false倒序</param>
+        public void GetPBlockColumnAppendStr(string pBlockName, string fieldName,string join, object oav,bool sort)
+        {
+            PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pBlockName);
+            if (pBlock != null && pBlock.ViewBlockDataTable != null && pBlock.ViewBlockDataTable.Columns.Contains(fieldName))
+            {
+                dynamic o = oav;
+                 if (sort)
+                     foreach (DataRow row in pBlock.ViewBlockDataTable.Rows)
+                         o.v += row[fieldName] + join;
+                   
+                 else
+                 {
+                    if (o.v == null)
+                        foreach (DataRow row in pBlock.ViewBlockDataTable.Rows)
+                            o.v = join + row[fieldName];
+                        else
+                        {
+                            foreach (DataRow row in pBlock.ViewBlockDataTable.Rows)
+                            o.v = join + row[fieldName] + o.v;
+                        }
+                }
+            }
+        }
+
         /// <summary>
         /// 提交BlockData的数据
         /// </summary>
