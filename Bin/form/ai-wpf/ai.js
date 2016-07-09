@@ -219,5 +219,6 @@
 			   "ComponentOperationAnalysisStepAndPageIsCanClick":"ComponentOperationAnalysisStepAndPageIsCanClick",
 			   "GetDataGridSelectVicCheckFlagIsHaveNull":"GetDataGridSelectVicCheckFlagIsHaveNull",
 			   "SetDataGridSelectVicCheckFlagRowDataByFiled":"SetDataGridSelectVicCheckFlagRowDataByFiled",
-			   "GetDataGridSelectVicCheckFlagRowByValue":"GetDataGridSelectVicCheckFlagRowByValue"
+			   "GetDataGridSelectVicCheckFlagRowByValue":"GetDataGridSelectVicCheckFlagRowByValue",
+			   "UpDateDictionaryKeyValue":"UpDateDictionaryKeyValue"
 };})());})((function(){return window.ai_map || (window.ai_map = {})})());

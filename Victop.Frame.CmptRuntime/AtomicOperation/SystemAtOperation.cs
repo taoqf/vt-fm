@@ -520,9 +520,9 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         private void win_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             VicWindowNormal win = sender as VicWindowNormal;
-            if (win!=null&&win.Owner!=null)
+            if (win != null && win.Owner != null)
             {
-                win.Owner.Activate();   
+                win.Owner.Activate();
             }
         }
         /// <summary>
@@ -567,25 +567,25 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             switch (information)
             {
                 case "info":
-                 VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(),caption,MessageBoxButton.OK, MessageBoxImage.Information);
-                 break;
+                    VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Information);
+                    break;
                 case "error":
-                 VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Error);
-                 break;
+                    VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Error);
+                    break;
                 case "warn":
-                 VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Warning);
-                 break;
+                    VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    break;
                 case "hand":
-                 VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Hand);
-                 break;
+                    VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Hand);
+                    break;
                 case "stop":
-                 VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Stop);
+                    VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Stop);
                     break;
                 default:
                     VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString());
                     break;
             }
-            
+
         }
         /// <summary>
         /// 调试状态弹框提示信息
@@ -617,7 +617,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
                     default:
                         VicMessageBoxNormal.Show(messageInfo == null ? "空值" : messageInfo.ToString());
                         break;
-                } 
+                }
             }
         }
         /// <summary>
@@ -1170,7 +1170,7 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// </summary>
         /// <param name="v">oav的v值</param>
         /// <param name="oav">接收oav</param>
-        public void IsEmpty(object v,object oav)
+        public void IsEmpty(object v, object oav)
         {
             dynamic o1 = oav;
             o1.v = false;
@@ -1554,7 +1554,16 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         public void GetDictionaryKeyValue(string key, object paramDic, object value)
         {
             dynamic o = value;
-            Dictionary<string, object> dic = (Dictionary<string, object>)paramDic;
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            switch (paramDic.GetType().Name)
+            {
+                case "Dictionary`2":
+                    dic = (Dictionary<string, object>)paramDic;
+                    break;
+                case "JObject":
+                    dic = JsonHelper.ToObject<Dictionary<string, object>>(paramDic.ToString());
+                    break;
+            }
             if (dic != null && !string.IsNullOrWhiteSpace(key) && dic.ContainsKey(key))
             {
                 o.v = dic[key];
@@ -1562,6 +1571,33 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             else
             {
                 o.v = string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 修改键值中指定key的value
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <param name="paramDic">集合</param>
+        /// <param name="value">修改值</param>
+        /// <param name="oav">实例</param>
+        public void UpDateDictionaryKeyValue(string key, object paramDic, object value, object oav)
+        {
+            dynamic o = oav;
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            switch (paramDic.GetType().Name)
+            {
+                case "Dictionary`2":
+                    dic = (Dictionary<string, object>)paramDic;
+                    break;
+                case "JObject":
+                    dic = JsonHelper.ToObject<Dictionary<string, object>>(paramDic.ToString());
+                    break;
+            }
+            if (dic != null && !string.IsNullOrWhiteSpace(key) && dic.ContainsKey(key))
+            {
+                dic[key] = value;
+                o.v = dic;
             }
         }
     }

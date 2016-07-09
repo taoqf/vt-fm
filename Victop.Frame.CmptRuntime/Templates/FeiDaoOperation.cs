@@ -269,9 +269,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="join">指定的字符串连接符</param>
         /// <param name="oav">接收oav</param>
         /// <param name="sort">排序方式:true正序false倒序</param>
-        public void GetPBlockColumnAppendStr(string pBlockName, string fieldName,string join, object oav,bool sort= true)
+        public void GetPBlockColumnAppendStr(string pBlockName, string fieldName, string join, object oav, bool sort = true)
         {
-            dataOperation.GetPBlockColumnAppendStr(pBlockName, fieldName,join,oav,sort);
+            dataOperation.GetPBlockColumnAppendStr(pBlockName, fieldName, join, oav, sort);
         }
         /// <summary>
         /// 获取block数据指定条件的列值
@@ -829,7 +829,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="paramValue">参数值</param>
         public void ParamsCompntAdd(string paramName, object paramValue)
         {
-            systemOperation.ParamsCompntAdd(paramName,paramValue);
+            systemOperation.ParamsCompntAdd(paramName, paramValue);
         }
         /// <summary>
         /// 获取组件参数值
@@ -1024,7 +1024,7 @@ namespace Victop.Frame.CmptRuntime
         /// <paramref name="information">提示图标,可选提示图标值有:info,error,warn,hand,stop,这里也可不填,默认值为info</paramref>
         public void ShowMessage(object messageInfo, string caption = "飞道提示", string information = "info")
         {
-            systemOperation.ShowMessage(messageInfo,caption,information);
+            systemOperation.ShowMessage(messageInfo, caption, information);
         }
         /// <summary>
         ///  调试状态弹框提示信息
@@ -1314,7 +1314,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">接收oav</param>
         public void IsEmpty(object v, object oav)
         {
-            systemOperation.IsEmpty(v,oav);
+            systemOperation.IsEmpty(v, oav);
         }
 
         /// <summary>
@@ -1471,6 +1471,16 @@ namespace Victop.Frame.CmptRuntime
             systemOperation.GetDictionaryKeyValue(key, paramDic, value);
         }
 
+        /// <summary>
+        /// 修改键值中指定key的value
+        /// </summary>
+        /// <param name="key">key</param>
+        /// <param name="paramDic">集合</param>
+        /// <param name="value">修改值</param>
+        public void UpDateDictionaryKeyValue(string key, object paramDic, object value, object oav)
+        {
+            systemOperation.UpDateDictionaryKeyValue(key, paramDic, value, oav);
+        }
         #endregion
 
         #region UI操作
@@ -1669,7 +1679,7 @@ namespace Victop.Frame.CmptRuntime
         public void UnitGalleryRuleLoad(string unitName, string pblockName, string imagecolumName, string titlecolumName, string nocolumName = "",
                                         double width = 80, double height = 100)
         {
-            uIElementOperation.UnitGalleryRuleLoad(unitName, pblockName, imagecolumName, titlecolumName,nocolumName, width, height);
+            uIElementOperation.UnitGalleryRuleLoad(unitName, pblockName, imagecolumName, titlecolumName, nocolumName, width, height);
         }
 
         /// <summary>
@@ -2032,9 +2042,9 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="rule_no">规则编号</param>
         /// <param name="oav">接收oav</param>
         //public void AddThenTemplate(string pblockrhs, string pblockparams, string action_no, string rule_no, object oav)
-       // {
-       //     dataOperation.AddThenTemplate(pblockrhs, pblockparams, action_no, rule_no, oav);
-      //  }
+        // {
+        //     dataOperation.AddThenTemplate(pblockrhs, pblockparams, action_no, rule_no, oav);
+        //  }
 
         /// <summary>
         /// 是否允许组合或拆分
@@ -2299,7 +2309,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="id">Dom树节点id</param>
         /// <param name="isFloat">是否浮动组件</param>
         /// <param name="isSelect">是否选中图形</param>
-        public void UnitUCDesignerRuleSelectCom(string unitName, object id = null, object isFloat = null, bool isSelect=true)
+        public void UnitUCDesignerRuleSelectCom(string unitName, object id = null, object isFloat = null, bool isSelect = true)
         {
             uIElementOperation.UnitUCDesignerRuleSelectCom(unitName, id, isFloat, isSelect);
         }
@@ -2495,7 +2505,7 @@ namespace Victop.Frame.CmptRuntime
         ///  <param name="type">类型</param>
         public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string pblockNameThree, string elementName, string type = "")
         {
-            dataOperation.SetDataGridCheckFromTwoPblock(pblockName, pblockNameTwo, filed, pageflow,pblockNameThree,elementName, type);
+            dataOperation.SetDataGridCheckFromTwoPblock(pblockName, pblockNameTwo, filed, pageflow, pblockNameThree, elementName, type);
         }
 
         /// <summary>
@@ -2543,7 +2553,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="pblockName">PBlock名称</param>
         /// <param name="filed">作为判断的字段名称</param>
         /// <param name="oav">返回消息oav</param>
-        public void GetDataGridSelectVicCheckFlagIsHaveNull(string pblockName,string filed,object oav)
+        public void GetDataGridSelectVicCheckFlagIsHaveNull(string pblockName, string filed, object oav)
         {
             dataOperation.GetDataGridSelectVicCheckFlagIsHaveNull(pblockName, filed, oav);
         }
@@ -2556,7 +2566,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="fieldtwo">赋值的字段</param>
         /// <param name="valuetwo">赋值的值</param>
         /// <param name="type">类型（0：需要查询  1：不需要查询）</param>
-        public void SetDataGridSelectVicCheckFlagRowDataByFiled(string pblockName, string filed,object value,string fieldtwo, object valuetwo,int type=0)
+        public void SetDataGridSelectVicCheckFlagRowDataByFiled(string pblockName, string filed, object value, string fieldtwo, object valuetwo, int type = 0)
         {
             dataOperation.SetDataGridSelectVicCheckFlagRowDataByFiled(pblockName, filed, value, fieldtwo, valuetwo, type);
         }
@@ -2597,7 +2607,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oav">验证返回的结果（1：成功，0:失败）</param>
         public void ComponentOperationAnalysisIsCanSave(string pblockname, string pblocknameTwo, string pblocknameThree, string filed, object oav)
         {
-            dataOperation.ComponentOperationAnalysisIsCanSave(pblockname, pblocknameTwo,pblocknameThree, filed, oav);
+            dataOperation.ComponentOperationAnalysisIsCanSave(pblockname, pblocknameTwo, pblocknameThree, filed, oav);
         }
         /// <summary>
         /// 判断页面关联操作步骤是否可以选择
@@ -2613,7 +2623,7 @@ namespace Victop.Frame.CmptRuntime
         /// <param name="oavmsg">返回失败结果</param>
         public void ComponentOperationAnalysisStepAndPageIsCanClick(string pblockname, string pblocknameTwo, string pblocknameThree, string filed, string value, string filedtwo, string valuetwo, object oav, object oavmsg)
         {
-            dataOperation.ComponentOperationAnalysisStepAndPageIsCanClick(pblockname, pblocknameTwo, pblocknameThree, filed, value,filedtwo,valuetwo, oav, oavmsg);
+            dataOperation.ComponentOperationAnalysisStepAndPageIsCanClick(pblockname, pblocknameTwo, pblocknameThree, filed, value, filedtwo, valuetwo, oav, oavmsg);
         }
 
         #endregion
