@@ -952,7 +952,51 @@ namespace Victop.Frame.DataMessageManager
             DataOperation dataOp = new DataOperation();
             return dataOp.ClearStorageData(pluginName, paramName);
         }
-
+        /// <summary>
+        /// 添加数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="newData"></param>
+        /// <param name="viewId"></param>
+        /// <param name="dataPath"></param>
+        /// <returns></returns>
+        public virtual bool AddData<T>(T newData,string viewId,List<object> dataPath)
+        {
+            DataOperation dataOp = new DataOperation();
+            bool result= dataOp.AddData<T>(newData, viewId, dataPath);
+            return result;
+        }
+        /// <summary>
+        /// 修改数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="modifyData"></param>
+        /// <param name="viewId"></param>
+        /// <param name="blockPath"></param>
+        /// <returns></returns>
+        public bool ModifyData<T>(T modifyData, string viewId, List<object> blockPath)
+        {
+            DataOperation dataOp = new DataOperation();
+            bool result = dataOp.ModifyData<T>(modifyData, viewId, blockPath);
+            return result;
+        }
+        /// <summary>
+        /// 删除数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="deleteData"></param>
+        /// <param name="viewId"></param>
+        /// <param name="blockPath"></param>
+        /// <returns></returns>
+        public bool DeleteData<T>(T deleteData, string viewId, List<object> blockPath)
+        {
+            DataOperation dataOp = new DataOperation();
+            bool result = dataOp.DeleteData<T>(deleteData, viewId, blockPath);
+            return result;
+        }
         #region 私有方法
         /// <summary>
         /// 根据结构Path获取数据Table

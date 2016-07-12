@@ -7,6 +7,7 @@ using System.Data;
 using Victop.Server.Controls.Models;
 using Victop.Frame.PublicLib.Helpers;
 using Victop.Frame.DataMessageManager;
+using System.Collections.ObjectModel;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -329,6 +330,68 @@ namespace Victop.Frame.CmptRuntime
             }
         }
         /// <summary>
+        /// 获取数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T">类型</typeparam>
+        /// <returns></returns>
+        public ObservableCollection<T> GetData<T>()
+        {
+            string jsonData = ViewBlock.ViewModel.GetJsonData(JsonHelper.ToJson(ViewBlock.BlockDataPath));
+            string dataArray = JsonHelper.ReadJsonString(jsonData, "dataArray");
+            return JsonHelper.ToObject<ObservableCollection<T>>(dataArray);
+        }
+        /// <summary>
+        /// 添加数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="newData"></param>
+        /// <param name="addToServer"></param>
+        /// <returns></returns>
+        public bool AddData<T>(T newData, bool addToServer = true)
+        {
+            bool result = ViewBlock.ViewModel.AddData<T>(newData, ViewBlock.BlockDataPath);
+            if (result && addToServer)
+            {
+                return SaveData();
+            }
+            return result;
+        }
+        /// <summary>
+        /// 修改数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="modifyData"></param>
+        /// <param name="modifyToServer"></param>
+        /// <returns></returns>
+        public bool ModifyData<T>(T modifyData,bool modifyToServer=true)
+        {
+            bool result = ViewBlock.ViewModel.ModifyData<T>(modifyData, ViewBlock.BlockDataPath);
+            if (result && modifyToServer)
+            {
+                return SaveData();
+            }
+            return result;
+        }
+        /// <summary>
+        /// 删除数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="deleteData"></param>
+        /// <param name="deleteToServer"></param>
+        /// <returns></returns>
+        public bool DeleteData<T>(T deleteData, bool deleteToServer = true)
+        {
+            bool result = ViewBlock.ViewModel.DeleteData<T>(deleteData, ViewBlock.BlockDataPath);
+            if (result && deleteToServer)
+            {
+                return SaveData();
+            }
+            return result;
+        }
+        /// <summary>
         /// 查询数据
         /// </summary>
         public void SearchData()
@@ -461,6 +524,15 @@ namespace Victop.Frame.CmptRuntime
                 ViewBlockDataTable.AcceptChanges();
             }
             return ViewBlock.ViewModel.SaveData(saveToServer);
+        }
+        /// <summary>
+        /// 保存数据
+        /// 3.0
+        /// </summary>
+        /// <returns></returns>
+        public bool SaveData()
+        {
+            return ViewBlock.ViewModel.SaveData();
         }
         /// <summary>
         /// 重置数据

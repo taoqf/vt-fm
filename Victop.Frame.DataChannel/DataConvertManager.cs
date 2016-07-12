@@ -312,6 +312,67 @@ namespace Victop.Frame.DataChannel
             }
         }
 
+        /// <summary>
+        /// 添加数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="newData"></param>
+        /// <param name="viewId"></param>
+        /// <param name="dataPath"></param>
+        /// <returns></returns>
+        internal bool AddData<T>(T newData, string viewId, List<object> dataPath)
+        {
+            string dataStr = JsonHelper.ToJson(newData);
+            Dictionary<string, object> addDic = JsonHelper.ToObject<Dictionary<string, object>>(dataStr);
+            return DataTool.SaveCurdDataByPath(viewId, dataPath, addDic, null, OpreateStateEnum.Added);
+        }
+        /// <summary>
+        /// 修改数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="modifyData"></param>
+        /// <param name="viewId"></param>
+        /// <param name="blockPath"></param>
+        /// <returns></returns>
+        internal bool ModifyData<T>(T modifyData, string viewId, List<object> blockPath)
+        {
+            string dataStr = JsonHelper.ToJson(modifyData);
+            Dictionary<string, object> modifyDic = JsonHelper.ToObject<Dictionary<string, object>>(dataStr);
+            if (modifyDic != null && modifyDic.ContainsKey("_id"))
+            {
+                List<object> newPath = new List<object>();
+                foreach (var item in blockPath)
+                {
+                    newPath.Add(item);
+                }
+                Dictionary<string, object> idDic = new Dictionary<string, object>();
+                idDic.Add("key", "_id");
+                idDic.Add("value", modifyDic["_id"]);
+                newPath.Add(idDic);
+                return DataTool.SaveCurdDataByPath(viewId, newPath, modifyDic, null, OpreateStateEnum.Modified);
+            }
+            else
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// 删除数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="deleteData"></param>
+        /// <param name="viewId"></param>
+        /// <param name="blockPath"></param>
+        /// <returns></returns>
+        internal bool DeleteData<T>(T deleteData, string viewId, List<object> blockPath)
+        {
+            string dataStr = JsonHelper.ToJson(deleteData);
+            Dictionary<string, object> deleteDic = JsonHelper.ToObject<Dictionary<string, object>>(dataStr);
+            return DataTool.SaveCurdDataByPath(viewId, blockPath, deleteDic, null, OpreateStateEnum.Deleted);
+        }
         private static void CreateDataRowValue(Dictionary<string, object> itemDic, DataRow objectDr, DataColumn dtCol, bool refTypeFlag = false)
         {
             try

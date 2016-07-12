@@ -293,6 +293,49 @@ namespace Victop.Frame.DataChannel
             LocalDBManager dbManager = new LocalDBManager();
             return dbManager.DeleteByCondition(pluginName,paramName);
         }
+        /// <summary>
+        /// 添加数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="newData"></param>
+        /// <param name="viewId"></param>
+        /// <param name="blockPath"></param>
+        /// <returns></returns>
+        public bool AddData<T>(T newData, string viewId, List<object> blockPath)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.AddData<T>(newData,viewId, blockPath);
+        }
+
+        /// <summary>
+        /// 修改数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="modifyData"></param>
+        /// <param name="viewId"></param>
+        /// <param name="blockPath"></param>
+        /// <returns></returns>
+        public bool ModifyData<T>(T modifyData, string viewId, List<object> blockPath)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.ModifyData<T>(modifyData, viewId, blockPath);
+        }
+        /// <summary>
+        /// 删除数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="deleteData"></param>
+        /// <param name="viewId"></param>
+        /// <param name="blockPath"></param>
+        /// <returns></returns>
+        public bool DeleteData<T>(T deleteData, string viewId, List<object> blockPath)
+        {
+            DataConvertManager convertManager = new DataConvertManager();
+            return convertManager.DeleteData<T>(deleteData, viewId, blockPath);
+        }
     }
 }
 

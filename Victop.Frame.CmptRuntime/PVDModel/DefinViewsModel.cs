@@ -346,5 +346,46 @@ namespace Victop.Frame.CmptRuntime
                 return false;
             }
         }
+
+        /// <summary>
+        /// 添加数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="newData"></param>
+        /// <param name="blockPath"></param>
+        /// <returns></returns>
+        public bool AddData<T>(T newData,List<object> blockPath)
+        {
+            DataMessageOperation messageOp = new DataMessageOperation();
+            return messageOp.AddData(newData, ViewId, blockPath);
+        }
+        /// <summary>
+        /// 删除数据
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="deleteData"></param>
+        /// <param name="blockPath"></param>
+        /// <returns></returns>
+        internal bool DeleteData<T>(T deleteData, List<object> blockPath)
+        {
+            DataMessageOperation messageOp = new DataMessageOperation();
+            return messageOp.DeleteData(deleteData, ViewId, blockPath);
+        }
+
+        /// <summary>
+        /// 保存数据
+        /// 3.0
+        /// </summary>
+        internal bool SaveData()
+        {
+            return SendSaveDataMessage();
+        }
+        internal bool ModifyData<T>(T modifyData, List<object> blockPath)
+        {
+            DataMessageOperation messageOp = new DataMessageOperation();
+            return messageOp.ModifyData(modifyData, ViewId, blockPath);
+        }
     }
 }
