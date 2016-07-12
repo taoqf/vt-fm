@@ -2106,128 +2106,152 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
         /// <param name="pblockName">区块名称</param>
         /// <param name="pblockNameTwo">另一区块名称</param>
         /// <param name="filed">字段值</param>
-        /// <param name="pageflow">字段值</param>
+        /// <param name="pblockPageflow">字段值</param>
         /// <param name="pblockNameThree">根据作业编号获取的数据</param>
         /// <param name="elementName">DataGrid名称</param>
         ///  <param name="type">类型</param>
-        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pageflow, string pblockNameThree, string elementName, string type = "")
+        public void SetDataGridCheckFromTwoPblock(string pblockName, string pblockNameTwo, string filed, string pblockPageflow, string pblockNameThree, string elementName, string type = "")
         {
+            object pageno = string.Empty;
+            object pageflow = string.Empty;
             PresentationBlockModel pBlock = MainView.GetPresentationBlockModel(pblockName);
             PresentationBlockModel pblockTwo = MainView.GetPresentationBlockModel(pblockNameTwo);
             PresentationBlockModel pblockThree = MainView.GetPresentationBlockModel(pblockNameThree);
-            if (string.IsNullOrWhiteSpace(type))
+            PresentationBlockModel pblockPageFlow = MainView.GetPresentationBlockModel(pblockPageflow);
+            if (pblockPageFlow.PreBlockSelectedRow != null && pblockPageFlow.ViewBlockDataTable.Columns.Contains("page_no") && pblockPageFlow.ViewBlockDataTable.Columns.Contains("page_flow_no"))
             {
-                FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
-                if (element != null)
+                pageno = pblockPageFlow.PreBlockSelectedRow["page_no"];
+                pageflow = pblockPageFlow.PreBlockSelectedRow["page_flow_no"];
+            }
+            if (pageflow != null && !string.IsNullOrWhiteSpace(pageflow.ToString()))
+            {
+                if (string.IsNullOrWhiteSpace(type))
                 {
-                    VicDataGrid dgGrid = element as VicDataGrid;
-                    if (dgGrid != null)
+                    FrameworkElement element = MainView.FindName(elementName) as FrameworkElement;
+                    if (element != null)
                     {
-                        if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockThree.ViewBlockDataTable.Rows.Count > 0 && pblockThree.ViewBlockDataTable.Columns.Contains(filed))
+                        VicDataGrid dgGrid = element as VicDataGrid;
+                        if (dgGrid != null)
                         {
-                            DataView dv = pBlock.ViewBlockDataTable.DefaultView;
-                            dv.Sort = "fzno Asc";
-                            foreach (DataRow dataRow in pBlock.ViewBlockDataTable.Rows)
+                            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockThree.ViewBlockDataTable.Rows.Count > 0 && pblockThree.ViewBlockDataTable.Columns.Contains(filed))
                             {
-                                DataRow[] drc = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
-                                if (drc.Length > 0)
+                                DataView dv = pBlock.ViewBlockDataTable.DefaultView;
+                                dv.Sort = "fzno Asc";
+                                foreach (DataRow dataRow in pBlock.ViewBlockDataTable.Rows)
                                 {
-                                    dataRow["VicCheckFlag"] = true;
+                                    DataRow[] drc = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                                    if (drc.Length > 0)
+                                    {
+                                        dataRow["VicCheckFlag"] = true;
+                                    }
                                 }
                             }
-                        }
-                        foreach (object item in dgGrid.Items)
-                        {
-                            dgGrid.UpdateLayout();
-                            DataGridRow gridRow = (DataGridRow)dgGrid.ItemContainerGenerator.ContainerFromItem(item);
-                            if (gridRow != null)
-                                gridRow.Background = Brushes.Transparent;
-                        }
-                        foreach (object item in dgGrid.Items)
-                        {
-                            DataRowView rowView = item as DataRowView;
-                            dgGrid.UpdateLayout();
-                            DataGridRow gridRow = (DataGridRow)dgGrid.ItemContainerGenerator.ContainerFromItem(item);
-                            if (gridRow != null && rowView != null)
+                            foreach (object item in dgGrid.Items)
                             {
-                                DataRow[] drcpageandstep = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", rowView[filed]));
-                                if (drcpageandstep.Length > 0)
+                                dgGrid.UpdateLayout();
+                                DataGridRow gridRow = (DataGridRow)dgGrid.ItemContainerGenerator.ContainerFromItem(item);
+                                if (gridRow != null)
+                                    gridRow.Background = Brushes.Transparent;
+                            }
+                            foreach (object item in dgGrid.Items)
+                            {
+                                DataRowView rowView = item as DataRowView;
+                                dgGrid.UpdateLayout();
+                                DataGridRow gridRow = (DataGridRow)dgGrid.ItemContainerGenerator.ContainerFromItem(item);
+                                if (gridRow != null && rowView != null)
                                 {
-                                    if (drcpageandstep[0]["page_flow_no"] != null && !drcpageandstep[0]["page_flow_no"].ToString().Equals(pageflow))
+                                    DataRow[] drcpageandstep = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", rowView[filed]));
+                                    if (drcpageandstep.Length > 0)
                                     {
-                                        gridRow.Background = Brushes.WhiteSmoke;
+                                        if (drcpageandstep[0]["page_flow_no"] != null && !drcpageandstep[0]["page_flow_no"].ToString().Equals(pageflow))
+                                        {
+                                            gridRow.Background = Brushes.WhiteSmoke;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
-            else
-            {
-                switch (type)
+                else
                 {
-                    case "1":
-                        if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockTwo.ViewBlockDataTable.Columns.Contains(filed) && pblockThree != null)
-                        {
-                            DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag = '{0}'", "True"));
-                            foreach (DataRow dataRow in drc)
+                    switch (type)
+                    {
+                        case "1":
+                            if (pBlock != null && pBlock.ViewBlockDataTable.Rows.Count > 0 && pBlock.ViewBlockDataTable.Columns.Contains(filed) && pblockTwo != null && pblockTwo.ViewBlockDataTable.Columns.Contains(filed) && pblockThree != null)
                             {
-                                DataRow[] drcpageandstep = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
-                                if (drcpageandstep.Length > 0)
+                                DataRow[] drc = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag = '{0}'", "True"));
+                                foreach (DataRow dataRow in drc)
                                 {
-                                    if (drcpageandstep[0]["page_flow_no"] != null && !drcpageandstep[0]["page_flow_no"].ToString().Equals(pageflow))
+                                    DataRow[] drcpageandstep = pblockThree.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                                    if (drcpageandstep.Length > 0)
                                     {
-                                        continue;
-                                    }
-                                }
-
-
-                                DataRow[] drcadd = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
-                                if (drcadd.Length == 0)
-                                {
-                                    DataRow drNew = pblockTwo.ViewBlockDataTable.NewRow();
-                                    foreach (DataColumn column in pblockTwo.ViewBlockDataTable.Columns)
-                                    {
-                                        switch (column.ColumnName)
+                                        if (drcpageandstep[0]["page_flow_no"] != null && !drcpageandstep[0]["page_flow_no"].ToString().Equals(pageflow))
                                         {
-                                            case "_id":
-                                                drNew[column.ColumnName] = Guid.NewGuid().ToString();
-                                                break;
-                                            case "steps_no":
-                                                drNew[column.ColumnName] = dataRow["steps_no"];
-                                                break;
-                                            case "steps_name":
-                                                drNew[column.ColumnName] = dataRow["steps_name"];
-                                                break;
-                                            case "job_no":
-                                                drNew[column.ColumnName] = dataRow["job_no"];
-                                                break;
-                                            case "page_flow_no":
-                                                drNew[column.ColumnName] = pageflow;
-                                                break;
-                                            case "page_no":
-                                                drNew[column.ColumnName] = pageflow;
-                                                break;
+                                            continue;
                                         }
                                     }
-                                    pblockTwo.ViewBlockDataTable.Rows.Add(drNew);
+
+
+                                    DataRow[] drcadd = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                                    if (drcadd.Length == 0)
+                                    {
+                                        DataRow drNew = pblockTwo.ViewBlockDataTable.NewRow();
+                                        foreach (DataColumn column in pblockTwo.ViewBlockDataTable.Columns)
+                                        {
+                                            switch (column.ColumnName)
+                                            {
+                                                case "_id":
+                                                    drNew[column.ColumnName] = Guid.NewGuid().ToString();
+                                                    break;
+                                                case "steps_no":
+                                                    drNew[column.ColumnName] = dataRow["steps_no"];
+                                                    break;
+                                                case "steps_name":
+                                                    drNew[column.ColumnName] = dataRow["steps_name"];
+                                                    break;
+                                                case "job_no":
+                                                    drNew[column.ColumnName] = dataRow["job_no"];
+                                                    break;
+                                                case "page_flow_no":
+                                                    drNew[column.ColumnName] = pageflow;
+                                                    break;
+                                                case "page_no":
+                                                    drNew[column.ColumnName] = pageno;
+                                                    break;
+                                            }
+                                        }
+                                        pblockTwo.ViewBlockDataTable.Rows.Add(drNew);
+                                    }
+                                    else
+                                    {
+                                        drcadd[0]["page_no"] = pageno;
+                                    }
                                 }
-                            }
-                            DataRow[] drcs = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag = '{0}'", "False"));
-                            foreach (DataRow dataRow in drcs)
-                            {
-                                DataRow[] drcadd = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
-                                if (drcadd.Length > 0)
+                                DataRow[] drcs = pBlock.ViewBlockDataTable.Select(string.Format("VicCheckFlag = '{0}'", "False"));
+                                foreach (DataRow dataRow in drcs)
                                 {
-                                    drcadd[0].Delete();
+                                    DataRow[] drcadd = pblockTwo.ViewBlockDataTable.Select(string.Format(filed + "='{0}'", dataRow[filed]));
+                                    if (drcadd.Length > 0)
+                                    {
+                                        drcadd[0].Delete();
+                                    }
                                 }
+                                pblockTwo.SaveData(false);
+                                foreach (DataRow dataRow in pblockTwo.ViewBlockDataTable.Rows)
+                                {
+                                    DataRow[] drcsss = pBlock.ViewBlockDataTable.Select(string.Format("steps_no = '{0}'", dataRow["steps_no"]));
+                                    if (drcsss.Length==0)
+                                    {
+                                        dataRow.Delete();
+                                    }
+                                }
+                                pblockTwo.SaveData(false);
                             }
-                            pblockTwo.SaveData(false);
-                        }
-                        break;
-                    default:
-                        break;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
