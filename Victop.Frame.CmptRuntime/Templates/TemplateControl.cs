@@ -25,7 +25,7 @@ namespace Victop.Frame.CmptRuntime
         /// <summary>
         /// 内置浏览器
         /// </summary>
-        internal WebBrowser BuiltBrowser;
+        internal WebBrowser BuiltBrowser = new WebBrowser();
         private bool initFlag;
         private int businessModel;
         private Dictionary<string, object> paramDict;
@@ -371,7 +371,6 @@ namespace Victop.Frame.CmptRuntime
             FeiDaoOp = new FeiDaoOperation(this);
             if (BusinessModel.Equals(1) && !DesignerProperties.GetIsInDesignMode(this))
             {
-                BuiltBrowser = new WebBrowser();
                 string url = string.Format("{0}/{1}", ConfigManager.GetLocalHttpServerBaseUrl(), ConfigurationManager.AppSettings["businesspath"]);
                 LoggerHelper.DebugFormat("BuiltBrowser url:{0}", url);
                 InitWebBrowser(url);

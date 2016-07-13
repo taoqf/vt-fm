@@ -116,6 +116,14 @@ namespace Victop.Frame.CmptRuntime.AtomicOperation
             LoggerHelper.Info(content);
         }
         /// <summary>
+        /// Debug日志输出
+        /// </summary>
+        /// <param name="content">输出内容</param>
+        public void SysFeiDaoDebugLog(object content)
+        {
+            LoggerHelper.Debug(content);
+        }
+        /// <summary>
         /// 设置警戒条件
         /// </summary>
         /// <param name="se">状体转移实体</param>

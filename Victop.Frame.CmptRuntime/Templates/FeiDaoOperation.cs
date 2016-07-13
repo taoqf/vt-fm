@@ -1055,7 +1055,14 @@ namespace Victop.Frame.CmptRuntime
         {
             systemOperation.SysFeiDaoLog(content);
         }
-
+        /// <summary>
+        /// Debug日志输出
+        /// </summary>
+        /// <param name="content">输出内容</param>
+        public void SysFeiDaoDebugLog(object content)
+        {
+            systemOperation.SysFeiDaoDebugLog(content);
+        }
         /// <summary>
         /// 赋值
         /// </summary>

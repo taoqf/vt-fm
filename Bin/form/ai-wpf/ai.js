@@ -69,6 +69,7 @@
         "ShowDebugMessage":"ShowDebugMessage",
 	"ShowMessageResult":"ShowMessageResult",
 	"SysFeiDaoLog":"SysFeiDaoLog",
+	"SysFeiDaoDebugLog":"SysFeiDaoDebugLog",
 	"SetParamValue":"SetParamValue",
 	"SetCompontVisility":"SetCompontVisility",
 	"SetElementVisility":"SetElementVisility",
