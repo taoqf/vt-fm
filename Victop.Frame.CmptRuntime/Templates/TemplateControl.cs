@@ -219,13 +219,13 @@ namespace Victop.Frame.CmptRuntime
                 }
                 if (BuiltBrowser != null)
                 {
-                    BuiltBrowser.Dispose();
+                    BuiltBrowser = null;
                 }
                 if (DefinModel != null && DefinModel.CompntPresentation.PresentationBlocks.Count > 0)
                 {
                     foreach (var item in DefinModel.CompntPresentation.PresentationBlocks)
                     {
-                        item.ViewBlockDataTable.Dispose();
+                        item.ViewBlockDataTable = null;
                     }
                 }
             }
