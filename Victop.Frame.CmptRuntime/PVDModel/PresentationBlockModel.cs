@@ -392,6 +392,14 @@ namespace Victop.Frame.CmptRuntime
             return result;
         }
         /// <summary>
+        /// 设置当前实体
+        /// 3.0
+        /// </summary>
+        public void SetCurrentEntity<T>(T entity)
+        {
+            ViewBlock.SetCurrentEntity(entity);
+        }
+        /// <summary>
         /// 查询数据
         /// </summary>
         public void SearchData()

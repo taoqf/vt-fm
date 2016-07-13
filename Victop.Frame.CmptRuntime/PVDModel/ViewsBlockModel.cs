@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using System.Data;
+using Victop.Frame.PublicLib.Helpers;
 
 namespace Victop.Frame.CmptRuntime
 {
@@ -178,7 +179,26 @@ namespace Victop.Frame.CmptRuntime
             }
             RebuildPath();
         }
-
+        /// <summary>
+        /// 设置当前实体
+        /// 3.0
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity"></param>
+        internal void SetCurrentEntity<T>(T entity)
+        {
+            if (CurrentRow == null)
+            {
+                CurrentRow = new Dictionary<string, object>();
+            }
+            CurrentRow.Clear();
+            if (entity != null)
+            {
+                string entityStr = JsonHelper.ToJson(entity);
+                CurrentRow = JsonHelper.ToObject<Dictionary<string, object>>(entityStr);
+            }
+            RebuildPath();
+        }
         private void RebuildPath()
         {
             ViewId = ViewModel.ViewId;
